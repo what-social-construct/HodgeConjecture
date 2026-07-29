@@ -1,8 +1,10 @@
 import HodgeConjecture.BoundaryDifferent
 import HodgeConjecture.BoundaryInertia
 import HodgeConjecture.BoundaryProjector
+import HodgeConjecture.ChowProjector
 import HodgeConjecture.Collision
 import HodgeConjecture.CohomologicalProjector
+import HodgeConjecture.CompactificationProjector
 import HodgeConjecture.DecompositionDefect
 import HodgeConjecture.HeightOneDifferent
 import HodgeConjecture.InertiaSaturation

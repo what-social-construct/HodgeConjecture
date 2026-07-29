@@ -11,7 +11,7 @@ adds:
 - the diagonal obstruction and residual annihilator;
 - the square-zero overlap defect;
 - the contact quotient;
-- the equivalence between vanishing defects and an idempotent decomposition.
+- the equivalence between vanishing defects and an idempotent decomposition;
 - the Noether different and its canonical contact-quotient equivalence;
 - the identification of the ramification locus with the support of relative
   Kähler differentials;
@@ -36,7 +36,21 @@ adds:
   including a separate splitting of every preserved bigraded piece;
 - a boundary selector-extension interface and the theorem that a realized
   bigraded projector exists exactly when the collision different avoids the
-  chosen boundary prime.
+  chosen boundary prime;
+- a compactification/purity interface for an arbitrary family of height-one
+  boundary components, proving that a global projector exists exactly when
+  the collision different avoids every boundary prime;
+- a Chow-style presentation by a raw cycle ring modulo a
+  rational-equivalence ideal;
+- the canonical descent of the raw cycle action to the quotient, including
+  the theorem that rationally equivalent cycles act identically;
+- the combined compactified Chow and Hodge-style bigraded projector criterion
+  \[
+  \bigl(\exists\text{ global bigraded Chow projector}\bigr)
+  \iff
+  \forall i,\quad
+  \mathfrak D_{\mathrm{coll}}\not\subseteq P_i.
+  \]
 
 The formalized implication chain is therefore:
 
@@ -45,21 +59,25 @@ The formalized implication chain is therefore:
 \Longrightarrow
 \text{product ring and affine-scheme decomposition}
 \Longrightarrow
-\text{cohomological projector},
+\text{Chow-class and cohomological projector},
 \]
 
-with boundary inertia controlling existence of the extended selector used in
-the final arrow.
+with boundary inertia controlling codimension-one extension and the
+compactification/purity interface converting those local extensions into a
+global selector.
 
-The remaining work is geometric rather than hidden in the formalization.  For
+The remaining work is to instantiate the explicit geometric interfaces.  For
 a concrete compactification one must supply:
 
 1. the local comparison between the collision Noether different and the
    valuation-theoretic different;
 2. the realization of ramification by relative inertia in a Galois closure;
-3. the actual boundary extension object carrying the idempotent selector;
-4. the proper algebraic cycle or correspondence and its action on the desired
-   Chow, motivic, or Hodge realization.
+3. the purity theorem identifying global selector extensions with extension
+   across every height-one boundary component;
+4. the actual proper correspondence-cycle ring, its rational-equivalence
+   ideal, and the selector cycle class;
+5. the action of those cycles on the desired motivic or Hodge realization and
+   the proof that rational equivalence acts trivially.
 
 Mathlib does not yet provide a general Chow-correspondence or Hodge-structure
 library.  The project therefore isolates those later constructions behind
