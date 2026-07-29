@@ -51,7 +51,7 @@ residue-separability hypotheses.
 structure HeightOneInertiaRealization : Prop where
   ramified_iff_inertiaIndex_ne_one :
     (¬ Algebra.IsUnramifiedAt R P) ↔
-      CollisionIdeals.inertiaIndexAtSheet I H (baseSheet H) ≠ 1
+      CollisionFoundations.inertiaIndexAtSheet I H (baseSheet H) ≠ 1
 
 /--
 The collision different meets the boundary prime exactly when inertia
@@ -66,7 +66,7 @@ theorem collisionDifferent_le_prime_iff_not_inertiaSaturated
     collisionNoetherDifferentIdeal R S ≤ P ↔
         ¬ Algebra.IsUnramifiedAt R P :=
       collisionNoetherDifferent_le_prime_iff_ramified R S hDifferent
-    _ ↔ CollisionIdeals.inertiaIndexAtSheet I H (baseSheet H) ≠ 1 :=
+    _ ↔ CollisionFoundations.inertiaIndexAtSheet I H (baseSheet H) ≠ 1 :=
       hInertia.ramified_iff_inertiaIndex_ne_one
     _ ↔ ¬ InertiaSaturated I H {baseSheet H} :=
       not_congr (inertiaIndexAtBaseSheet_eq_one_iff_saturated I H)

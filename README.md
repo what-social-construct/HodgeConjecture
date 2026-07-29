@@ -4,9 +4,21 @@ This Lean project develops collision ideals as scheme-theoretic lifts of
 correspondence decompositions, with boundary ramification and inertia measuring
 the failure of generic idempotents to extend.
 
-The initial formalization reuses the sibling `collision-ideals` project and
-adds:
+The formalization reuses a pinned revision of the `collision-ideals` project
+and adds:
 
+- locally owned, dimension-independent copies of the foundational
+  collision modules:
+  - `Diagonal`, `Basic`, and `CollisionDiagonal` for
+    \(I_\Delta\), \(I_R\), \(\mathcal O\!bs=I_\Delta/I_R\), and the quotient
+    diagonal map;
+  - `OffDiagonal` for the colon residual, saturation, clopen idempotents,
+    complementary ideals, and the Chinese-remainder decomposition;
+  - `FiberProduct`, `UniversalProperty`, and `PolynomialFiberProduct` for
+    the canonical equivalence between the collision quotient and
+    \(A\otimes_B A\);
+  - `GaloisSheets`, `InertiaQuotient`, and `DecompositionSheets` for the
+    dimension-independent sheet action and inertia indices;
 - an abstract tensor-product collision algebra `A ⊗[B] A`;
 - the diagonal obstruction and residual annihilator;
 - the square-zero overlap defect;
@@ -51,6 +63,13 @@ adds:
   \forall i,\quad
   \mathfrak D_{\mathrm{coll}}\not\subseteq P_i.
   \]
+- local copies of the planar `ExternalAssumptions`, `ConditionalVanishing`,
+  and `Conclusion` modules, moved into the `HodgeConjecture.Planar`
+  namespace so they can evolve independently here;
+- a planar Chow-projector layer built on those local copies:
+  branch purity, finite-étale rigidity, and no hidden inertia force the
+  planar off-diagonal collision idempotent to vanish, while that idempotent
+  independently realizes as a bigraded Chow/cohomological projector.
 
 The formalized implication chain is therefore:
 
@@ -65,6 +84,27 @@ The formalized implication chain is therefore:
 with boundary inertia controlling codimension-one extension and the
 compactification/purity interface converting those local extensions into a
 global selector.
+
+There are two deliberately distinct purity layers.  The imported
+`BranchPurityA2` statement says that absence of codimension-one ramification
+forces the finite normalization to be étale.  The local interface
+`CompactificationSelectorExtension` says that extension of a selector at all
+height-one boundary components forces a global idempotent extension.  The
+locally copied planar modules preserve the first layer without changing the
+source files in `collision-ideals`.  The module
+[`Planar/ChowProjector`](HodgeConjecture/Planar/ChowProjector.lean) connects it
+to the Chow/Hodge realization machinery without conflating it with the second.
+Its explicit-hypothesis theorem is accompanied by a wrapper using the copied
+standard-geometry assumptions, so `#print axioms` continues to expose the
+unformalized geometric input.
+
+The copied foundational modules live under
+[`HodgeConjecture/Foundations`](HodgeConjecture/Foundations).  Their imports
+have been redirected to one another, and the Hodge-native collision and
+inertia modules now consume these local copies.  The original
+`collision-ideals` worktree remains unchanged; its pinned dependency is kept
+for the planar normalization/Keller compatibility layer that has not yet been
+generalized away from polynomial maps.
 
 The remaining work is to instantiate the explicit geometric interfaces.  For
 a concrete compactification one must supply:

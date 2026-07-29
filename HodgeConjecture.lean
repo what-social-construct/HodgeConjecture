@@ -6,6 +6,9 @@ import HodgeConjecture.Collision
 import HodgeConjecture.CohomologicalProjector
 import HodgeConjecture.CompactificationProjector
 import HodgeConjecture.DecompositionDefect
+import HodgeConjecture.Foundations.CollisionDiagonal
+import HodgeConjecture.Foundations.PolynomialFiberProduct
 import HodgeConjecture.HeightOneDifferent
 import HodgeConjecture.InertiaSaturation
+import HodgeConjecture.Planar.ChowProjector
 import HodgeConjecture.SchemeDecomposition

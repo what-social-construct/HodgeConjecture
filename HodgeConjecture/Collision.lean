@@ -1,4 +1,5 @@
-import CollisionIdeals.OffDiagonal
+import HodgeConjecture.Foundations.FiberProduct
+import HodgeConjecture.Foundations.OffDiagonal
 import Mathlib.RingTheory.Kaehler.Basic
 
 /-!
@@ -29,12 +30,12 @@ variable [CommRing B] [CommRing A] [Algebra B A]
 
 /-- The coordinate ring of the abstract self-collision fiber product. -/
 abbrev CollisionAlgebra :=
-  A ⊗[B] A
+  CollisionFoundations.SelfFiberProductAlgebra (B := B) (A := A)
 
 /-- Tensor multiplication, dual to the relative diagonal. -/
 abbrev collisionMultiplication :
     CollisionAlgebra B A →ₐ[B] A :=
-  TensorProduct.lmul' B
+  CollisionFoundations.diagonalMultiplication
 
 /-- The ideal of the relative diagonal in the collision algebra. -/
 abbrev collisionObstructionIdeal :
@@ -50,7 +51,7 @@ def collisionOffDiagonalIdeal :
 The off-diagonal ideal is the quotient form of the first-colon construction.
 
 This is the abstract tensor-product version of
-`CollisionIdeals.comap_annihilator_map_quotient_eq_colon`.
+`CollisionFoundations.comap_annihilator_map_quotient_eq_colon`.
 -/
 theorem collisionOffDiagonalIdeal_eq_annihilator :
     collisionOffDiagonalIdeal B A =
