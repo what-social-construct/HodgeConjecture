@@ -6,9 +6,12 @@ Last audited: 2026-09-10.
 
 ## Scope and target
 
-This queue audits the proof presented in `paper/paper1.tex` against the Lean
-implementation in `HodgeConjecture/Boundary/Normalization/`.  The intended
-self-contained normalization endpoint is:
+This queue audits the proof originally presented in
+`research/archive/manuscripts/paper1.tex` against the Lean implementation in
+`HodgeConjecture/Boundary/Normalization/`. Section numbers below refer to
+that archived draft. The active manuscript is `paper/main.tex`; its
+fixed-ring argument is a technical appendix, and only `paper/main.pdf` is an
+active publication PDF. The intended self-contained normalization endpoint is:
 
 ```text
 height-one normalization prime Q
@@ -204,7 +207,7 @@ remove the generic conditional descent theorem.
 
 | Artifact | Disposition | Reason |
 |---|---|---|
-| `paper/paper1.tex`, Sections 2--4 | CORE PROSE | Closely tracks the compiled generic descent. |
+| `research/archive/manuscripts/paper1.tex`, Sections 2--4 | ARCHIVED PROSE | Historical account of the compiled generic descent; current prose belongs in the technical appendix of `paper/main.tex`. |
 | Section 5.1's “external input” discussion | REWRITE AFTER CLOSURE | It will be false as a description of the final repository once the DVR theorem is internal.  Keep the Stacks citations as provenance. |
 | Section 6 valuation comparison | SLIM TO REVERSE CONTAINMENT | The current equality proof includes the Jacobian-inherited forward direction, but the diagram endpoint needs only `I_Q <= I_val <= H`. |
 | `Challenge.lean` / `Solution.lean` | SEPARATE CONDITIONAL PACKAGE | Internally consistent and useful for Palomar, but not parity evidence for a new unconditional normalization result. |

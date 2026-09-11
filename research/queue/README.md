@@ -11,9 +11,13 @@ formatting, and submission. A file belongs here only when:
 - a human mathematical review has been recorded; and
 - novelty language is calibrated against the literature search.
 
-Queue status: empty. The canonical draft is `../../paper/main.tex`; its
+Queue status: empty. The single canonical draft is `../../paper/main.tex`,
+producing `../../paper/main.pdf`; its
 structural plan remains in `../working/` while human source matching,
 mathematical review, and novelty checks are completed.
+
+The former Paper I/Paper II sources and PDFs are archived in
+`../archive/manuscripts/` and are not queue candidates or active build targets.
 
 The Palomar fixed-ring package also remains in `../working/`: its Lean
 Challenge/Solution pair builds, but the required toolchain migration,

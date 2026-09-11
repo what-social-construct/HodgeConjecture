@@ -19,6 +19,12 @@ Historical source that is no longer part of the active, self-contained Lean
 library is retained under `archive/`. Archived modules are provenance
 snapshots, not build targets or current theorem claims.
 
+The single active manuscript is [`../paper/main.tex`](../paper/main.tex),
+producing [`../paper/main.pdf`](../paper/main.pdf). The former Paper I and
+Paper II sources and PDFs are preserved in
+[`archive/manuscripts/`](archive/manuscripts/) as historical snapshots,
+outside the release build requirements.
+
 The queue is for publication candidates, not for brainstorming. A queued
 item must say whether it is:
 

@@ -16,6 +16,10 @@ an independent mathematical object.  Compatibility wrappers, conversion
 theorems, and implementation lemmas are marked **prose only**; inventing a
 second symbol for them would conceal rather than cure semantic duplication.
 
+The single active manuscript is `paper/main.tex`, producing `paper/main.pdf`.
+The former Paper I/Paper II sources and PDFs are preserved in
+`research/archive/manuscripts/` and are excluded from release build gates.
+
 ## Dispositions
 
 - **CANONICAL**: the unique active representation of a mathematical object.
@@ -191,8 +195,9 @@ or hypothesis in its statement.
 - [ ] Conditional research modules are absent from root umbrella imports and
       release verification.
 - [x] `lake build` and `lake env lean research/Verification.lean` succeed.
-- [x] The canonical manuscript and both provenance manuscripts build without
-      undefined references or citations.
+- [x] The canonical manuscript `paper/main.tex` builds to `paper/main.pdf`
+      without undefined references or citations. Archived provenance PDFs are
+      not release build targets.
 - [ ] The source and claim ledgers describe only the active proof path.
 - [x] The working-tree changes introduce no project axiom, `sorry`, or
       `admit` under `HodgeConjecture/`.

@@ -59,6 +59,9 @@ and human review.
 
 ## Reproducibility and submission
 
+- [ ] Build the single canonical manuscript `paper/main.tex` to
+      `paper/main.pdf`; historical files in `research/archive/manuscripts/`
+      are preserved snapshots, not release build targets.
 - [ ] Add an explicit repository license.
 - [ ] Add author names, affiliations, acknowledgements, and contribution
       statements supplied by the authors.
@@ -77,9 +80,13 @@ projector extension criteria while leaving actual purity/gluing explicit. The
 only build warnings are the two deliberate statement holes in
 `Challenge.lean`; there are no `sorry`, `admit`, or project-level `axiom`
 tokens under `HodgeConjecture/`.  `research/Verification.lean`, JSON parsing of
-`comparator.json`, and `git diff --check` also succeed.  The canonical
-manuscript and both provenance manuscripts build with `latexmk`; their logs
-contain no warning, undefined-reference,
+`comparator.json`, and `git diff --check` also succeed. The canonical
+manuscript `paper/main.tex` builds with `latexmk` to `paper/main.pdf`; its log
+contains no warning, undefined-reference,
 undefined-citation, overfull, or underfull diagnostics.  This is not yet a
 clean-clone or Comparator/NanoDa check, and the current Lean 4.24 toolchain is
 below Palomar's current 4.28 minimum.
+
+The earlier successful builds of Paper I and Paper II are historical checks.
+Their sources and PDFs now live in `research/archive/manuscripts/`, outside
+the active manuscript and release build requirements.

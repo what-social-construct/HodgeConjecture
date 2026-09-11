@@ -1,9 +1,13 @@
 # Paper II: finite-group and marked-sheet projectors in Lean
 
-Status: WORKING DRAFT -- not yet queued for submission.
+Status: HISTORICAL SCOPE NOTE -- superseded by the unified manuscript.
 
-Current author-review manuscript: [`../../paper/paper2.tex`](../../paper/paper2.tex)
-([PDF](../../paper/paper2.pdf)).
+Archived manuscript: [`../archive/manuscripts/paper2.tex`](../archive/manuscripts/paper2.tex)
+([PDF](../archive/manuscripts/paper2.pdf)). The Paper I/Paper II positioning
+below records the earlier plan. The current author-review manuscript is
+[`../../paper/main.tex`](../../paper/main.tex)
+([PDF](../../paper/main.pdf)), with its organization governed by
+[`0006-lean-spine-manuscript-outline.md`](0006-lean-spine-manuscript-outline.md).
 
 ## Proposed positioning
 
@@ -20,7 +24,7 @@ as a constructed Chow compactification.
 The finite-etale torsor/collision comparison A8 is a conditional application,
 not part of the unconditional core.  The height-one fixed-ring and inertia
 results A12, A14, and A15 belong to Paper I and should be cited from
-`../../paper/paper1.tex` rather than presented again as Paper II results.
+`../archive/manuscripts/paper1.tex` rather than presented again as Paper II results.
 The marked Chow/Hodge endpoint C5b belongs only in a conditional outlook.
 
 ## Draft abstract

@@ -298,9 +298,10 @@ Hecke projectors, the marked-sheet block form, the codimension-one boundary
 endpoint, the compactification fork, and the exact conditional realization
 gap.  Fixed-ring localization and source inputs are supporting appendices.
 
-The earlier [`paper1.pdf`](paper/paper1.pdf) and
-[`paper2.pdf`](paper/paper2.pdf) remain provenance drafts rather than a
-two-paper publication plan.  No manuscript has been placed in the publication
+`paper/main.pdf` is the single current manuscript PDF. The earlier drafts
+and their sources are preserved in the
+[manuscript archive](research/archive/manuscripts/README.md), outside the
+current build and release checks. No manuscript has been placed in the publication
 queue.  The canonical draft does not identify the free span algebra with Chow
 correspondences, does not claim an unconditional boundary extension, and does
 not prove a new Hodge case.  Licensing, literature/novelty review, and final

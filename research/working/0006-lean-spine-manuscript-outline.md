@@ -5,9 +5,10 @@ Status: IMPLEMENTED IN `paper/main.tex`; HUMAN REVIEW OPEN.
 Opened: 2026-09-11.
 
 This note replaces the historical Paper I/Paper II narrative with one
-dependency-ordered proof account.  The two old sources remain provenance
-drafts; the publication candidate is one manuscript whose sections terminate
-at named Lean declarations.
+dependency-ordered proof account. The two old sources and their PDFs are
+preserved under `research/archive/manuscripts/`. The sole active publication
+source and PDF are `paper/main.tex` and `paper/main.pdf`; its sections
+terminate at named Lean declarations. Archived drafts are not build targets.
 
 ## Editorial decision
 
