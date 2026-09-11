@@ -325,6 +325,29 @@ a global algebra map from the generic algebra back to the compactified
 algebra: such a section would assert that every generic correspondence
 extends and is much stronger than the projector-specific claim.
 
+Two narrower algebraic bridges are now formal.  First,
+`AlgebraProjectorClosure` records a raw compactified closure `Π` satisfying
+only `restriction Π = γ`.  Its convolution defect
+
+```lean
+Π * Π - Π
+```
+
+is proved to restrict to zero.  This places the defect in the kernel of the
+supplied restriction map, but it does not identify that kernel with
+boundary-supported Chow classes and does not prove the defect itself is
+zero.  The zero-defect witnesses form exactly the subtype from which an
+`AlgebraProjectorExtension` can be constructed.
+
+Second, `CompactifiedDeckGraphComparison` treats the stronger situation in
+which the deck action itself and its graph-algebra realization have already
+been extended, and the generic--compactified restriction square commutes on
+`ℚ[G]`.  In that case every group-algebra idempotent maps directly to a
+compactified idempotent with the correct restriction; its defect is zero by
+multiplicativity.  This is a projector-specific sufficient construction, not
+a section of the entire generic correspondence algebra.  The remaining
+geometric problem is to construct that square in an actual Chow model.
+
 An upstream source proposition is boundary avoidance
 
 ```lean
@@ -337,7 +360,7 @@ from inertia saturation to this target is a field of
 `CompactifiedSubgroupProjectorExtension`; it packages the still-unproved
 cycle-extraction, support, refined-convolution, and purity/gluing comparison.
 
-## What the existing purity citations buy
+## Why Tag 0BMB is not a dependency
 
 The sibling collision repository already cites Stacks Tag `0BMB`.  Pointwise,
 under its locally Noetherian, normal-source, regular-target,
@@ -348,11 +371,36 @@ unramified at every dimension-one specialization
   -> étale at the selected point.
 ```
 
-This is source material for a concrete instance of `NormalizationPurity`; it
-does not by itself prove that global abstract interface or construct a
-correspondence on a compactification.  The archived sibling manuscript also
+This does not by itself prove the global abstract `NormalizationPurity`
+interface or construct a correspondence on a compactification.  In
+particular, the present interface does not expose the regular-target,
+local-dimension, or specialization hypotheses needed for an exact match.
+Tag `0BMB` is therefore retained only as audited background and is not a
+dependency or a project axiom.  The archived sibling manuscript also
 explicitly warns that generic collision components can meet in an integral
 model and therefore does not assert extension of their generic idempotents.
+The sibling Lean declaration `branchPurityA2` is itself an explicit axiom,
+and its final idempotent-vanishing theorem concerns a commutative collision
+quotient ring rather than a Chow-convolution algebra.  Consequently that
+endgame can guide the normalization and boundary-separation architecture but
+cannot be copied as a proof of Chow boundary-defect vanishing.
+
+What *has* been duplicated and adapted is the self-contained conjugate
+boundary-separation layer.  Canonical conjugate normalization legs pull the
+marked visible boundary back to the common normal-closure normalization.
+For a nontrivial subgroup, `fixedMovingBoundaryIdeal` adds its fixed-locus
+ideal to all boundary ideals of sheets it moves.
+`ConjugateBoundarySeparation` says this sum lies in no height-one prime.
+Given the separately named center and ramification realizations and formal
+unramifiedness of the marked visible morphism, Lean proves
+`NoCodimensionOneRamification`.  It does not prove the separation hypothesis
+or promote that local conclusion to global étaleness.  Separate wrappers now
+feed the resulting empty ramified-point family into the existing selector and
+subgroup-projector extension criteria; those wrappers still take the actual
+purity/gluing packages as inputs.  Analogous normalization wrappers combine
+the same local theorem with separately supplied normalization-purity and
+finite-étale-rigidity inputs to trivialize the normal closure and marked
+intermediate extension.
 
 There is nevertheless a more precise source chain for a *one-way*, concrete
 compactification theorem under additional hypotheses:

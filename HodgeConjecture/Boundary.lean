@@ -1,10 +1,14 @@
 import HodgeConjecture.Boundary.AveragingAction
+import HodgeConjecture.Boundary.CompactifiedGraphProjector
 import HodgeConjecture.Boundary.Different
 import HodgeConjecture.Boundary.ExtensionCriterion
 import HodgeConjecture.Boundary.GaloisProjectorExtension
 import HodgeConjecture.Boundary.HeightOneDifferent
 import HodgeConjecture.Boundary.NoetherDifferentRamification
+import HodgeConjecture.Boundary.ProjectorClosureDefect
 import HodgeConjecture.Boundary.Normalization.DeckAction
+import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
+import HodgeConjecture.Boundary.Normalization.ConjugateNormalization
 import HodgeConjecture.Boundary.Normalization.ExtensionBridge
 import HodgeConjecture.Boundary.Normalization.FixedRingUnramified
 import HodgeConjecture.Boundary.Normalization.FixedRingLocalization

@@ -597,6 +597,98 @@ theorem compactifiedSubgroupProjectorLift_nonempty_of_formallyUnramified
     D.compactifiedSubgroupProjectorExtension_nonempty_of_formallyUnramified
       R hFormal hNoHidden α genericRealization E
 
+omit [IsFractionRing B K] in
+/--
+Fixed--moving conjugate-boundary separation supplies all local inertia
+conditions needed by the compactified subgroup-projector extension package.
+The package's extension/purity equivalence remains a visible hypothesis.
+-/
+theorem compactifiedSubgroupProjectorExtension_nonempty_of_conjugateBoundarySeparation
+    [IsNoetherianRing B]
+    (D : Diagram C)
+    (R : D.ConjugateBoundaryData)
+    (hFormal :
+      FormallyUnramified
+        (j ≫
+          intermediateNormalizationToBase
+            (B := B) (L := L)))
+    (hSeparation : ConjugateBoundarySeparation C)
+    {T X : Scheme.{u}} {pX : X ⟶ T}
+    (α :
+      SchemeCorrespondence.FiniteDeckAction
+        pX C.normalClosure.galoisGroup)
+    [Fintype C.normalClosure.intermediateFixingSubgroup]
+    {genericAlgebra : Type q}
+    [Ring genericAlgebra] [Algebra ℚ genericAlgebra]
+    (genericRealization :
+      SchemeCorrespondence.FiniteEtaleFreeAlgebra pX →ₐ[ℚ]
+        genericAlgebra)
+    {compactifiedAlgebra : Type w}
+    [Ring compactifiedAlgebra]
+    [Algebra ℚ compactifiedAlgebra]
+    (E :
+      SchemeCorrespondence.CompactifiedSubgroupProjectorExtension
+        pX α
+        (RamifiedCodimensionOnePoint (B := B) (N := N))
+        (fun Q ↦
+          CollisionFoundations.inertiaGroupAt K
+            (D.valuationAt Q).valuationRing)
+        C.normalClosure.intermediateFixingSubgroup
+        genericAlgebra genericRealization
+        compactifiedAlgebra) :
+    Nonempty E.Extension := by
+  apply E.extension_nonempty_iff_forall_inertiaSaturated.mpr
+  exact
+    D.forall_inertiaSaturated_of_conjugateBoundarySeparation
+      R hFormal hSeparation
+      {baseSheet C.normalClosure.intermediateFixingSubgroup}
+
+omit [IsFractionRing B K] in
+/--
+The same separation route produces the corresponding algebraic-projector
+lift for every supplied rational action of the compactified algebra.
+-/
+theorem compactifiedSubgroupProjectorLift_nonempty_of_conjugateBoundarySeparation
+    [IsNoetherianRing B]
+    (D : Diagram C)
+    (R : D.ConjugateBoundaryData)
+    (hFormal :
+      FormallyUnramified
+        (j ≫
+          intermediateNormalizationToBase
+            (B := B) (L := L)))
+    (hSeparation : ConjugateBoundarySeparation C)
+    {T X : Scheme.{u}} {pX : X ⟶ T}
+    (α :
+      SchemeCorrespondence.FiniteDeckAction
+        pX C.normalClosure.galoisGroup)
+    [Fintype C.normalClosure.intermediateFixingSubgroup]
+    {genericAlgebra : Type q}
+    [Ring genericAlgebra] [Algebra ℚ genericAlgebra]
+    (genericRealization :
+      SchemeCorrespondence.FiniteEtaleFreeAlgebra pX →ₐ[ℚ]
+        genericAlgebra)
+    {compactifiedAlgebra : Type w}
+    [Ring compactifiedAlgebra]
+    [Algebra ℚ compactifiedAlgebra]
+    (E :
+      SchemeCorrespondence.CompactifiedSubgroupProjectorExtension
+        pX α
+        (RamifiedCodimensionOnePoint (B := B) (N := N))
+        (fun Q ↦
+          CollisionFoundations.inertiaGroupAt K
+            (D.valuationAt Q).valuationRing)
+        C.normalClosure.intermediateFixingSubgroup
+        genericAlgebra genericRealization
+        compactifiedAlgebra)
+    {V : Type z} [AddCommGroup V] [Module ℚ V]
+    (ρ : RationalCorrespondenceAction compactifiedAlgebra V) :
+    Nonempty (E.toAlgebraProjectorExtension.LiftWitness ρ) := by
+  rw [E.toAlgebraProjectorExtension.liftWitness_nonempty_iff]
+  exact
+    D.compactifiedSubgroupProjectorExtension_nonempty_of_conjugateBoundarySeparation
+      R hFormal hSeparation α genericRealization E
+
 end Diagram
 
 end DiagramProjectorExtension

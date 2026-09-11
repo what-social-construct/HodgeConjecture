@@ -14,12 +14,13 @@ discharge that premise mathematically.
 
 Paper II documents the finite-étale free span algebra, transport of
 group-algebra and Hecke idempotents to formal convolution projectors, the
-marked Galois-sheet block calculation, and a separately labeled conditional
-realization criterion. It also states the different-avoidance boundary
-endpoint only as a forward conditional corollary with every remaining input
-visible. Its free span algebra is not identified with a Chow correspondence
-algebra. It does not claim an unconditional boundary extension or a new case
-of the Hodge conjecture. Literature and novelty review remain pending.
+marked Galois-sheet block calculation, the self-contained conjugate-boundary
+separation endpoint, and a separately labeled conditional realization
+criterion. It also states the different-avoidance boundary endpoint only as
+a forward conditional corollary with every remaining input visible. Its free
+span algebra is not identified with a Chow correspondence algebra. It does
+not claim an unconditional boundary extension or a new case of the Hodge
+conjecture. Literature and novelty review remain pending.
 
 Build from this directory with:
 

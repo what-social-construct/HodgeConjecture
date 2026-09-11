@@ -50,6 +50,8 @@
   \leanpath{HodgeConjecture/Boundary/Sheets/#1}}
 \newcommand{\normsrc}[1]{%
   \leanpath{HodgeConjecture/Boundary/Normalization/#1}}
+\newcommand{\boundarysrc}[1]{%
+  \leanpath{HodgeConjecture/Boundary/#1}}
 \newcommand{\chowsrc}[1]{%
   \leanpath{HodgeConjecture/Realization/Chow/#1}}
 
@@ -76,9 +78,18 @@ finite ordered orthogonal decompositions transport to formal correspondence
 projectors and diagonal decompositions.  For finite groups we obtain
 normalized averaging and complementary projectors, and for finite subgroups
 we construct the normalized Hecke corner and its double-coset operators.  For
+a supplied comparison square between generic and compactified graph
+realizations, every group-algebra idempotent has a compactified idempotent
+image with the prescribed generic restriction.  For an arbitrary raw closure
+we prove only that its convolution-idempotence defect restricts to zero, and
+isolate zero defect as the additional condition recovering an idempotent
+extension.  For
 a marked normal closure, we also construct the induced deck action on the
 affine integral-closure normalization and identify normalization in a fixed
-field with the corresponding fixed subring.
+field with the corresponding fixed subring.  Canonical conjugate
+normalization legs then define fixed--moving boundary ideals; under explicit
+center, ramification, and boundary-separation hypotheses, they rule out
+codimension-one ramification.
 
 For a marked quotient \(G/H\), we prove that multiplication by the base-sheet
 selector in \(\Q^{G/H}\) is \(\operatorname{diag}(1,0)\) in selector
@@ -159,6 +170,10 @@ The two principal formal results are as follows.
         to the finite-\'etale free correspondence algebra.  It transports
         group-algebra idempotents and orthogonal decompositions to
         convolution projectors and diagonal decompositions.
+  \item A supplied generic--compactified graph square transports those
+        idempotents to a supplied compactified algebra with zero convolution
+        defect.  For arbitrary closure classes, restriction kills the defect
+        but does not force it to vanish.
   \item Multiplication by a marked sheet selector is diagonal in its
         image--kernel coordinates and graph-shaped in the splitting marked
         by the constant unit.  The transition between these descriptions is
@@ -410,6 +425,107 @@ Central idempotents are useful when one wants canonical isotypic summands,
 but idempotence transport uses only \(e^2=e\).
 \end{remark}
 
+\section{Compactified graph comparison and closure defects}
+\label{sec:compactified-graph}
+
+The group-algebra calculation also separates a useful sufficient condition
+for compactified idempotence.  Let
+\(p_\eta:X_\eta\to S_\eta\) and
+\(\bar p:\bar X\to\bar S\) carry actions \(a_\eta\) and \(\bar a\) of the
+same group \(G\).  Supply rational algebras \(A_\eta\) and \(\bar A\),
+algebra maps
+
+\[
+  c_\eta:\mathcal C_{\fe}^{\mathrm{free}}(X_\eta/S_\eta)
+    \longrightarrow A_\eta,
+  \qquad
+  \bar c:\mathcal C_{\fe}^{\mathrm{free}}(\bar X/\bar S)
+    \longrightarrow\bar A,
+\]
+
+and a restriction map \(r:\bar A\to A_\eta\).  The comparison datum is the
+commutative square on the rational group algebra
+
+\begin{equation}
+\label{eq:compactified-graph-square}
+  r\,\bar c\,\gamma_{\bar a}
+  =c_\eta\,\gamma_{a_\eta}:\Q[G]\longrightarrow A_\eta.
+\end{equation}
+
+The word ``compactified'' names the intended application.  The formal datum
+does not itself relate the two schemes, construct either cycle map, or
+identify \(\bar A\) with a Chow ring.
+
+\begin{proposition}[Projectors through a supplied compactified graph square]
+\label{prop:compactified-graph-projector}
+If \(e\in\Q[G]\) satisfies \(e^2=e\), put
+
+\[
+  \Pi_e=\bar c\bigl(\gamma_{\bar a}(e)\bigr)\in\bar A.
+\]
+
+Then
+
+\[
+  \Pi_e^2=\Pi_e,
+  \qquad
+  r(\Pi_e)=c_\eta\bigl(\gamma_{a_\eta}(e)\bigr),
+  \qquad
+  \Pi_e^2-\Pi_e=0.
+\]
+
+The same construction for the normalized average of a finite subgroup
+produces a compactified projector-extension package with a singleton witness
+type.
+\end{proposition}
+
+\begin{proof}
+Both graph maps and both supplied cycle maps are algebra homomorphisms, so
+they preserve the equation \(e^2=e\).  The restriction identity is exactly
+Equation~\eqref{eq:compactified-graph-square} evaluated at \(e\).  The defect
+identity is the idempotence equation rewritten by subtraction.
+\end{proof}
+
+There is a weaker construction for a closure not known to arise from a
+global graph map.  Let \(e_\eta\in A_\eta\) be idempotent and let a raw closure
+class \(\Pi\in\bar A\) satisfy \(r(\Pi)=e_\eta\).  Define its convolution
+defect by
+
+\[
+  \delta(\Pi)=\Pi^2-\Pi.
+\]
+
+Then algebra-map compatibility gives only
+
+\begin{equation}
+\label{eq:defect-restricts-zero}
+  r\bigl(\delta(\Pi)\bigr)
+  =e_\eta^2-e_\eta=0.
+\end{equation}
+
+Thus the defect belongs to the kernel of generic restriction.  The subtype
+of closure witnesses satisfying \(\delta(\Pi)=0\) canonically forms an
+\leanpath{AlgebraProjectorExtension}.
+
+\begin{leanfiles}
+The comparison square, compactified projector, restriction and idempotence
+theorems, zero-defect theorem, and subgroup-average specialization are in
+\boundarysrc{CompactifiedGraphProjector.lean}, under
+\leanpath{CompactifiedDeckGraphComparison}.  Raw closure classes and
+Equation~\eqref{eq:defect-restricts-zero} are in
+\boundarysrc{ProjectorClosureDefect.lean}, under
+\leanpath{AlgebraProjectorClosure}.
+\end{leanfiles}
+
+\begin{remark}[Kernel membership is not boundary vanishing]
+Equation~\eqref{eq:defect-restricts-zero} is the precise formal precursor to
+a boundary-support statement.  The present model neither identifies the
+restriction kernel with boundary-supported Chow classes nor proves that a
+class in that kernel vanishes.  Proposition
+~\ref{prop:compactified-graph-projector} avoids this issue only because the
+supplied global graph algebra map makes idempotence formal from the outset.
+\end{remark}
+
 \section{Finite-subgroup Hecke corners}
 \label{sec:hecke}
 
@@ -634,6 +750,108 @@ Proposition~\ref{prop:fixed-normalization} constructs an action on the affine
 normalization.  It does not assert that the normalization map is finite
 \'etale, extend the action to an independently chosen compactification, or
 prove a scheme-quotient universal property.
+\end{remark}
+
+Every \(g\in G\) also gives a conjugate \(B\)-algebra embedding
+\(L\to N\), hence a canonical normalization leg
+
+\[
+  c_g:\operatorname{Spec}\operatorname{IntCl}_B(N)
+    \longrightarrow
+    \operatorname{Spec}\operatorname{IntCl}_B(L).
+\]
+
+It depends only on the right coset \(gH\) and lies over
+\(\operatorname{Spec}B\).  If \(j:U\hookrightarrow
+\operatorname{Spec}\operatorname{IntCl}_B(L)\) is a marked visible open, let
+\(J_g\) be the vanishing ideal of the complement of \(c_g^{-1}(U)\).
+For a subgroup \(I\leq G\), let \(I_{\mathrm{fix}}\) be generated by all
+differences \(\sigma(t)-t\), with \(\sigma\in I\), and put
+
+\[
+  J_{\mathrm{fm}}(I)
+  =I_{\mathrm{fix}}+
+    \sum_{g:\,I\not\leq gHg^{-1}}J_g.
+\]
+
+The formal sum is implemented as a supremum of ideals, so no finiteness of
+the indexing type is needed for its definition.
+
+\begin{proposition}[Conjugate-boundary separation endpoint]
+\label{prop:conjugate-boundary-separation}
+Assume \(B\) is Noetherian and supply a normalization--inertia diagram whose
+double-coset centers agree with the canonical legs \(c_g\), whose relative
+inertia indices agree with geometric ramification indices.  Assume also that
+the marked visible morphism to \(\operatorname{Spec}B\) is formally
+unramified.  If
+
+\[
+  I\neq 1,\quad \operatorname{ht}(\mathfrak p)=1
+  \quad\Longrightarrow\quad
+  J_{\mathrm{fm}}(I)\not\subseteq\mathfrak p,
+\]
+
+for every subgroup \(I\leq G\) and every prime \(\mathfrak p\) of the
+normal-closure normalization, then that normalization is unramified over
+\(B\) at every height-one prime.
+\end{proposition}
+
+\begin{proof}
+If a height-one prime \(\mathfrak p\) were ramified, its valuation inertia
+group \(I_{\mathfrak p}\) would be nontrivial.  Residue-field triviality puts
+every generator \(\sigma(t)-t\) in \(\mathfrak p\), so
+\(I_{\mathrm{fix}}\subseteq\mathfrak p\).  Whenever
+\(I_{\mathfrak p}\not\leq gHg^{-1}\), the corresponding relative inertia
+index is nontrivial.  The supplied ramification comparison and formal
+unramifiedness force that conjugate center into the deleted visible boundary;
+the supplied center comparison then gives \(J_g\subseteq\mathfrak p\).
+Consequently \(J_{\mathrm{fm}}(I_{\mathfrak p})\subseteq\mathfrak p\),
+contradicting separation.
+\end{proof}
+
+\begin{corollary}[Conditional projector extension from separation]
+\label{cor:separation-projector-extension}
+Under the hypotheses of Proposition
+~\ref{prop:conjugate-boundary-separation}, every selected set of generic
+sheets satisfies all packaged height-one inertia-saturation conditions.
+Consequently, a supplied selector-purity/gluing equivalence produces a
+global selector extension.  A supplied subgroup-projector extension package
+likewise produces a compactified correspondence projector and, under any
+supplied rational action, an algebraic-projector lift.
+\end{corollary}
+
+\begin{proof}
+The proposition makes the type of ramified height-one points empty, so every
+local saturation condition follows by elimination.  The three conclusions
+are then the forward directions of the supplied extension interfaces.
+\end{proof}
+
+\begin{leanfiles}
+The conjugate embeddings, normalization legs, right-coset invariance, and
+base compatibility are in \normsrc{ConjugateNormalization.lean}.  The
+pulled-back boundary ideals, fixed--moving ideal, separation predicate, and
+Proposition~\ref{prop:conjugate-boundary-separation} are in
+\normsrc{ConjugateBoundary.lean}, under
+\leanpath{ConjugateBoundarySeparation} and
+\leanpath{noCodimensionOneRamification_of_conjugateBoundarySeparation}.
+The selector and subgroup-projector wrappers in Corollary
+~\ref{cor:separation-projector-extension} are in
+\boundarysrc{SheetProjectorExtension.lean} and
+\boundarysrc{GaloisProjectorExtension.lean}.
+All four modules are native to this repository and import no sibling project.
+\end{leanfiles}
+
+\begin{remark}[The remaining purity arrow]
+The proposition proves only the codimension-one conclusion.  It neither
+proves the displayed separation hypothesis nor promotes that conclusion to
+global \'etaleness.  In particular, Stacks Project Tag \texttt{0BMB} is not
+installed as an axiom here: its pointwise statement has regularity,
+quasi-finiteness, local-dimension, and specialization hypotheses not exposed
+by the present global interface.  Normalization purity remains a separately
+supplied input.  If that input and the separate finite-\'etale rigidity input
+are supplied, \normsrc{GlobalExtension.lean} composes them with Proposition
+~\ref{prop:conjugate-boundary-separation} to trivialize the normal closure and
+the marked intermediate extension.
 \end{remark}
 
 The cosets \(G/H\) index the \(K\)-embeddings of \(L\) into \(N\).  Chosen
@@ -1115,6 +1333,9 @@ The verified dependency spine is
   \text{group/Hecke idempotent}
   \longrightarrow
   \text{formal convolution projector},\\
+  \text{supplied compactified graph square}
+  \longrightarrow
+  \text{compactified idempotent with correct restriction},\\
   \text{marked pointwise selector}
   \longrightarrow
   \text{diagonal and graph block forms}.
@@ -1146,9 +1367,11 @@ detection.  The following are not results of this note:
 
 In particular, a pointwise idempotent in a sheet-function algebra must not be
 advertised as a Chow idempotent.  Even when a generic cycle has a closure,
-compatibility of restriction with correspondence composition is needed to
-show that its idempotence defect is boundary-supported, and an additional
-argument is needed to show that such a boundary-supported defect vanishes.
+compatibility of restriction with correspondence composition shows only that
+its idempotence defect lies in the restriction kernel.  Identifying that
+kernel geometrically with boundary-supported classes, and then proving that
+the particular defect vanishes or can be corrected, require additional
+arguments.
 
 The checked development uses Lean~4.24.0 and Mathlib revision
 \texttt{f897ebcf72cd16f89ab4}\allowbreak
@@ -1186,8 +1409,9 @@ linear algebra.
 The conditional realization criterion shows precisely what further data
 would connect that block identity to a cycle-class statement.  Constructing
 those data geometrically remains open in this repository.  The present
-contribution is therefore the formal correspondence calculus, the marked
-block theorem, and auditable interfaces for the missing realization and
+contribution is therefore the formal correspondence calculus, the supplied
+compactified-graph comparison and raw-defect calculus, the marked block
+theorem, and auditable interfaces for the missing realization and
 boundary-extension steps.
 
 \paragraph{Acknowledgment.}

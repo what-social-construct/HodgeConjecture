@@ -20,6 +20,13 @@ Record a date, commit hash, and reviewer beside each completed item.
 - [ ] Free span algebras are not called Chow rings.
 - [ ] Coordinate-ring idempotence is not conflated with convolution
       idempotence.
+- [ ] A defect killed by generic restriction is described only as a kernel
+      element until boundary support and vanishing are proved separately.
+- [ ] `CompactifiedDeckGraphComparison` is described as supplied comparison
+      data, not as a constructed compactification or Chow realization.
+- [ ] `ConjugateBoundarySeparation`, its center/ramification realizations, and
+      every global purity/gluing package remain visible hypotheses; Tag
+      `0BMB` is not cited as discharging the packaged global implication.
 - [ ] The prescribed-target realization equality is never presented as a
       consequence of the construction.
 - [ ] Fixed-codimension, one-model/all-codimension, and all-varieties Hodge
@@ -60,10 +67,13 @@ Record a date, commit hash, and reviewer beside each completed item.
 Build observation for the current working tree on 2026-09-11:
 the full default `lake build` completed successfully after the localized
 fixed-ring descent, exact prime-inertia endpoint, Palomar wrappers, abstract
-Hodge target/equivalence, and marked Galois block and conditional realization
-modules were added, together with the transparent conditional
-different-avoidance corollary
-(2794 jobs).  The only warnings are the two deliberate statement holes in
+Hodge target/equivalence, marked Galois block and conditional realization,
+compactified graph comparison, raw closure-defect calculus, and self-contained
+conjugate-boundary separation modules were added (2798 jobs).  The separation
+wrappers discharge the local side of the existing selector and subgroup-
+projector extension criteria while leaving actual purity/gluing explicit.
+Tag `0BMB` is recorded as background rather than installed as an axiom.  The
+only build warnings are the two deliberate statement holes in
 `Challenge.lean`; there are no `sorry`, `admit`, or project-level `axiom`
 tokens under `HodgeConjecture/`.  `research/Verification.lean`, JSON parsing of
 `comparator.json`, and `git diff --check` also succeed.  Both manuscript PDFs

@@ -328,8 +328,10 @@ or any case of the Hodge conjecture.
   contains marked normal closures, valuation inertia, affine normalization
   models, invariant-ring descriptions of intermediate normalizations, exact
   prime inertia and its Noetherian height-one localization comparison with
-  centered valuation inertia, the collision-to-sheet-selector comparison,
-  visible-unramifiedness lemmas, and the normalization–inertia diagram.
+  centered valuation inertia, canonical conjugate normalization legs,
+  fixed--moving boundary ideals and their conditional separation endpoint,
+  the collision-to-sheet-selector comparison, visible-unramifiedness lemmas,
+  and the normalization–inertia diagram.
   Literature inputs such as the local fixed-inertia theorem, purity, and
   finite-étale rigidity remain explicit assumptions.
 - [`Boundary`](HodgeConjecture/Boundary) contains the collision different,
@@ -540,6 +542,15 @@ The project also formalizes:
   \]
   so the extended idempotent restricts to the realized subgroup average
   without reversing the natural cycle-realization map;
+- a supplied generic--compactified graph comparison square transports every
+  rational group-algebra idempotent directly to a compactified idempotent
+  with the prescribed restriction; the resulting convolution defect is
+  formally zero, but the comparison does not construct a compactification or
+  identify the supplied algebra with a Chow ring;
+- for a raw compactified closure not obtained from such a global graph map,
+  its convolution defect `Π * Π - Π` is proved to restrict to zero; the
+  zero-defect witnesses recover `AlgebraProjectorExtension`, while geometric
+  boundary support and actual defect vanishing remain separate inputs;
 - locally and over a family of height-one components, such an extension—and
   hence its induced algebraic projector lift—exists exactly when the
   collision different avoids the relevant primes, subject to the stated
@@ -560,6 +571,12 @@ The project also formalizes:
   supplies the normalization-side saturation needed by the compactified
   extension package;
 - normalization towers and conjugate centers indexed by double cosets;
+- canonical conjugate normalization legs and pulled-back boundary ideals are
+  constructed internally; under supplied center/ramification realizations,
+  visible formal unramifiedness, and the explicit fixed--moving boundary
+  separation condition, they imply no codimension-one ramification and
+  discharge the local side of the existing selector and subgroup-projector
+  extension criteria; actual gluing remains the explicit purity input;
 - visible-unramifiedness results sending positive-inertia centers to the
   deleted boundary;
 - abstract height-one different and purity interfaces used by the extension
@@ -588,10 +605,14 @@ are:
    bivariant correspondence algebras;
 6. instantiate the restriction, cohomological action, and
    selector-to-correspondence purity comparison in that presentation;
-7. prove the explicit target equality identifying the resulting extended
+7. construct the compactified deck action and graph-cycle comparison square,
+   or instead identify the restriction kernel with boundary-supported cycle
+   classes and prove that the raw closure defect vanishes or admits a
+   correction;
+8. prove the explicit target equality identifying the resulting extended
    subgroup average, or a supplied idempotent from its Hecke corner, with the
    prescribed motivic or Hodge summand;
-8. extend beyond the finite-monodromy branch when a genuinely broader source
+9. extend beyond the finite-monodromy branch when a genuinely broader source
    of algebraic correspondence idempotents is available.
 
 Mathlib does not currently provide a general Chow-correspondence or pure

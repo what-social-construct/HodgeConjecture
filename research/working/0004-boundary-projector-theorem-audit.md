@@ -162,9 +162,12 @@ Chow.
 
 ### Ramification, purity, and extension inputs
 
-6. Match the chosen boundary valuations and primes to the marked
-   normal-closure data and prove the application-specific
-   `ConjugateRamificationRealization` comparison.
+6. Instantiate the now-canonical conjugate normalization legs against the
+   chosen boundary valuations by proving `ConjugateCenterRealization` and
+   `ConjugateRamificationRealization`, then prove the application-specific
+   `ConjugateBoundarySeparation` condition.  The formal endpoint already
+   turns these data and visible formal unramifiedness into
+   `NoCodimensionOneRamification`.
 7. Use Paper I's prime-inertia and localization results with their exact
    hypotheses.  The fixed-prime-inertia unramifiedness theorem corresponding
    to Stacks Tag `0BST` remains an explicit source input in the Lean path.
@@ -173,6 +176,9 @@ Chow.
    `BoundarySubgroupProjectorExtension`, and
    `CompactifiedSubgroupProjectorExtension` package this conclusion as a
    field; they do not establish it for a compactification.
+   Stacks Tag `0BMB` is not a dependency for this step: its pointwise
+   regularity, dimension, quasi-finiteness, and specialization hypotheses do
+   not directly match the present packaged global interface.
 9. Prove that the resulting global class remains idempotent.  Extending a
    finite-etale cover or taking the closure of a cycle does not by itself
    kill a boundary-supported convolution defect.
@@ -211,6 +217,32 @@ separate the generic and compactified algebras.  Once an extension element is
 supplied, its idempotence and generic restriction are available by fields.
 `PrescribedChowProjectorLift` additionally stores the equality with an
 independently prescribed cohomological operator.
+
+The closure stage is now separated one step earlier by
+`AlgebraProjectorClosure`.  For any raw closure class, Lean proves that the
+convolution defect `Π * Π - Π` restricts to zero.  This is only membership in
+the kernel of generic restriction, not a theorem that the defect is supported
+on a geometrically defined boundary or vanishes in Chow.  Zero-defect
+witnesses recover `AlgebraProjectorExtension`.
+
+There is also a clean sufficient route through
+`CompactifiedDeckGraphComparison`: if generic and compactified deck actions,
+their graph-cycle algebra maps, and the restriction square are supplied, an
+idempotent of `ℚ[G]` has a compactified idempotent image with the prescribed
+generic restriction.  This derives defect zero rather than assuming it, but
+constructing the compactified action and graph-cycle square remains geometric
+input.
+
+The Jacobian-derived normalization geometry has likewise been duplicated and
+adapted rather than imported.  `ConjugateNormalization.lean` constructs the
+canonical right-coset-invariant conjugate legs, and
+`ConjugateBoundary.lean` constructs their boundary ideals and the
+fixed--moving separation predicate.  Its final theorem derives only
+codimension-one unramifiedness from explicit center, ramification, visible,
+and separation inputs.  New wrappers use the resulting empty ramified-point
+family to discharge the local side of the selector and subgroup-projector
+extension criteria.  They do not assert the separation input or a purity
+theorem; the actual gluing packages remain supplied.
 
 The newer C5b endpoint is sharper.  From a supplied compactified marked
 selector, residual map, and intertwining square it detects the lower-left

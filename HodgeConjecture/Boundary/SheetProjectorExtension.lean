@@ -1,4 +1,5 @@
 import HodgeConjecture.Boundary.Normalization.ExtensionBridge
+import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
 
 /-!
 # Extension of selected-sheet projectors
@@ -19,8 +20,9 @@ arbitrary selected set, ramification need not destroy saturation: inertia
 may permute sheets entirely within the selected set.  Consequently the
 different criteria below retain the required local realization explicitly.
 
-The final normalization wrappers connect this interface to the existing
-formal-unramifiedness and no-hidden-inertia machinery.
+The final normalization wrappers connect this interface both to the existing
+formal-unramifiedness/no-hidden-inertia machinery and to the canonical
+fixed--moving conjugate-boundary separation route.
 -/
 
 set_option autoImplicit false
@@ -406,6 +408,40 @@ theorem forall_inertiaSaturated_of_formallyUnramified
 
 omit [IsFractionRing B K] in
 /--
+The canonical fixed--moving boundary separation route eliminates the same
+ramified height-one index type, without passing through the separate
+`NoHiddenInertia` predicate.  The center and ramification comparisons remain
+visible in `ConjugateBoundaryData`, while separation itself is an explicit
+geometric hypothesis.
+-/
+theorem forall_inertiaSaturated_of_conjugateBoundarySeparation
+    [IsNoetherianRing B]
+    (D : Diagram C)
+    (R : D.ConjugateBoundaryData)
+    (hFormal :
+      FormallyUnramified
+        (j ≫ intermediateNormalizationToBase (B := B) (L := L)))
+    (hSeparation : ConjugateBoundarySeparation C)
+    (selected :
+      Set
+        (CollisionFoundations.GaloisSheets
+          C.normalClosure.intermediateFixingSubgroup)) :
+    ∀ E : RamifiedCodimensionOnePoint (B := B) (N := N),
+      InertiaSaturated
+        (CollisionFoundations.inertiaGroupAt K
+          (D.valuationAt E).valuationRing)
+        C.normalClosure.intermediateFixingSubgroup
+        selected := by
+  have hEmpty :
+      IsEmpty
+        (RamifiedCodimensionOnePoint (B := B) (N := N)) :=
+    D.ramifiedCodimensionOnePoint_isEmpty_of_conjugateBoundarySeparation
+      R hFormal hSeparation
+  intro E
+  exact isEmptyElim E
+
+omit [IsFractionRing B K] in
+/--
 Combining the normalization theorem with the explicit selector-purity input
 produces an actual global idempotent extension.
 -/
@@ -445,6 +481,48 @@ theorem globalSheetSelectorExtension_of_formallyUnramified
   exact
     D.forall_inertiaSaturated_of_formallyUnramified
       R hFormal hNoHidden selected
+
+omit [IsFractionRing B K] in
+/--
+Fixed--moving boundary separation supplies the local side of the global
+selector-extension criterion.  The actual gluing step remains precisely the
+supplied `GaloisProjectorExtensionPurity` input.
+-/
+theorem globalSheetSelectorExtension_of_conjugateBoundarySeparation
+    [IsNoetherianRing B]
+    (A : Type t) [CommRing A]
+    (Λ : Type w) [CommRing Λ]
+    (D : Diagram C)
+    (R : D.ConjugateBoundaryData)
+    (hFormal :
+      FormallyUnramified
+        (j ≫ intermediateNormalizationToBase (B := B) (L := L)))
+    (hSeparation : ConjugateBoundarySeparation C)
+    (selected :
+      Set
+        (CollisionFoundations.GaloisSheets
+          C.normalClosure.intermediateFixingSubgroup))
+    (genericRestriction :
+      A →+*
+        GenericSheetAlgebra Λ
+          C.normalClosure.intermediateFixingSubgroup)
+    (hPurity :
+      GaloisProjectorExtensionPurity
+        A Λ
+        (RamifiedCodimensionOnePoint (B := B) (N := N))
+        (fun E =>
+          CollisionFoundations.inertiaGroupAt K
+            (D.valuationAt E).valuationRing)
+        C.normalClosure.intermediateFixingSubgroup
+        selected genericRestriction) :
+    Nonempty
+      (GlobalSheetSelectorExtension
+        A Λ C.normalClosure.intermediateFixingSubgroup
+        selected genericRestriction) := by
+  apply hPurity.extension_nonempty_iff_forall_inertiaSaturated.mpr
+  exact
+    D.forall_inertiaSaturated_of_conjugateBoundarySeparation
+      R hFormal hSeparation selected
 
 end Diagram
 

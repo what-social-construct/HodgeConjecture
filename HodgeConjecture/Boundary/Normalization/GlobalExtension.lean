@@ -1,4 +1,4 @@
-import HodgeConjecture.Boundary.Normalization.InertiaDiagram
+import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
 import Mathlib.AlgebraicGeometry.Morphisms.Etale
 
 /-!
@@ -170,6 +170,47 @@ theorem intermediateExtensionTrivial_of_formallyUnramified
   C.normalClosure.intermediateExtensionTrivial_of_extensionTrivial
     (D.normalClosureExtensionTrivial_of_formallyUnramified
       R G hFormal hNoHidden)
+
+omit [IsFractionRing B K] in
+/--
+The fixed--moving conjugate-boundary route reaches the conditional global
+normalization endgame.  Boundary separation supplies codimension-one
+unramifiedness; the two actual global steps remain the explicitly supplied
+purity and finite-étale rigidity inputs.
+-/
+theorem normalClosureExtensionTrivial_of_conjugateBoundarySeparation
+    [IsNoetherianRing B]
+    (D : Diagram C)
+    (R : D.ConjugateBoundaryData)
+    (G : NormalizationLiteratureInputs C)
+    (hFormal :
+      FormallyUnramified
+        (j ≫ intermediateNormalizationToBase (B := B) (L := L)))
+    (hSeparation : ConjugateBoundarySeparation C) :
+    C.normalClosure.ExtensionTrivial :=
+  G.finiteEtaleRigidity C.finiteNormalClosureModel
+    (G.purity C.finiteNormalClosureModel
+      (D.noCodimensionOneRamification_of_conjugateBoundarySeparation
+        R hFormal hSeparation))
+
+omit [IsFractionRing B K] in
+/--
+The same separation, purity, and rigidity inputs trivialize the marked
+intermediate extension.
+-/
+theorem intermediateExtensionTrivial_of_conjugateBoundarySeparation
+    [IsNoetherianRing B]
+    (D : Diagram C)
+    (R : D.ConjugateBoundaryData)
+    (G : NormalizationLiteratureInputs C)
+    (hFormal :
+      FormallyUnramified
+        (j ≫ intermediateNormalizationToBase (B := B) (L := L)))
+    (hSeparation : ConjugateBoundarySeparation C) :
+    CollisionFoundations.NormalClosureData.IntermediateExtensionTrivial K L :=
+  C.normalClosure.intermediateExtensionTrivial_of_extensionTrivial
+    (D.normalClosureExtensionTrivial_of_conjugateBoundarySeparation
+      R G hFormal hSeparation)
 
 end Diagram
 

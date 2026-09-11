@@ -12,6 +12,11 @@ formal correspondence and marked-normal-closure package A1--A7 and A9--A11b
 from `../CLAIM_LEDGER.md`.  It does not claim a proof, a new case, or a
 reduction of the Hodge conjecture.
 
+The supplied compactified-graph comparison A5a, conjugate-boundary endpoint
+C3a, and raw closure-defect calculus C4a sharpen the boundary audit.  They
+should be presented as an exact factorization of the remaining geometry, not
+as a constructed Chow compactification.
+
 The finite-etale torsor/collision comparison A8 is a conditional application,
 not part of the unconditional core.  The height-one fixed-ring and inertia
 results A12, A14, and A15 belong to Paper I and should be cited from
@@ -29,6 +34,12 @@ convolution-reversing involution.  A deck action gives an algebra map from the
 rational group algebra, carrying supplied idempotents and orthogonal
 decompositions to formal correspondence projectors.  Finite subgroup averages
 and normalized Hecke corners give explicit examples.
+
+Given a supplied commutative square between generic and compactified graph
+realizations, every group-algebra idempotent maps to a compactified idempotent
+with the prescribed generic restriction.  For an arbitrary raw closure, its
+convolution defect restricts to zero; actual vanishing remains an additional
+condition.
 
 For a marked finite normal closure, we construct the canonical deck action on
 the affine integral-closure normalization and identify the marked intermediate
@@ -63,6 +74,17 @@ The public theorem inventory is deliberately partitioned.
   normalized-collision statements must begin with “given an explicit torsor
   comparison and a `FiniteEtaleAlgebraModel`.”  Paper II does not construct
   either input for every finite-etale Galois cover.
+- **Supplied compactified graph and raw-defect layer (A5a, C4a).**  A
+  compatible global graph realization derives compactified idempotence and
+  zero defect.  Without it, raw closure gives only a defect in the kernel of
+  generic restriction.  Neither construction identifies that kernel with
+  boundary-supported Chow classes.
+- **Conjugate-boundary separation layer (C3a).**  Canonical conjugate
+  normalization legs and their pulled-back boundary ideals are constructed
+  internally.  The codimension-one endpoint still assumes the center and
+  ramification realizations, visible formal unramifiedness, and the explicit
+  separation condition.  It discharges the local side of the existing
+  extension criteria but proves neither purity nor global étaleness.
 - **Imported Paper I input (A12, A14, A15).**  Cite *Height-One Fixed-Ring
   Descent: Localization and Formal Unramifiedness* for prime inertia,
   valuation/localization comparison, and selected fixed-ring descent.  Keep
@@ -115,8 +137,9 @@ Those are separate Paper II/outlook interfaces.
 - A8 is conditional and is not evidence for an unconditional Chow
   realization.
 - A12, A14, and A15 are cited Paper I material, not a second novelty claim.
-- Boundary purity, compactified correspondence extension, residual motivic
-  realization, and lower-left Chow detection are interfaces.
+- Boundary purity, construction of the compactified graph square, geometric
+  identification of the restriction kernel, raw-defect vanishing, residual
+  motivic realization, and lower-left Chow detection remain interfaces.
 - C5b is a conditional implication.  No coverage, replacement, or concrete
   Chow/Hodge instance is constructed.
 - Equality with a prescribed Hodge projector is assumed or derived only from
@@ -130,12 +153,14 @@ Those are separate Paper II/outlook interfaces.
 
 1. Span correspondences and the finite-etale free convolution algebra
    (A1--A4).
-2. Deck-group, averaging, and Hecke projectors (A5--A7).
-3. Marked normal closures and fixed intermediate normalizations (A9--A10).
-4. Collision tensors, sheet evaluation, and the marked block calculation
+2. Deck-group and averaging projectors, followed by the supplied
+   compactified-graph and raw-defect comparison (A5--A6, A5a, C4a).
+3. Hecke projectors (A7).
+4. Marked normal closures and fixed intermediate normalizations (A9--A10).
+5. Collision tensors, sheet evaluation, and the marked block calculation
    (A11--A11b).
-5. Conditional Galois collision realization (A8).
-6. Relation to Paper I and the conditional Chow/Hodge outlook (C5b).
+6. Conditional Galois collision realization (A8).
+7. Relation to Paper I and the conditional Chow/Hodge outlook (C5b).
 
 ## Remaining work before queueing
 
