@@ -1,0 +1,11 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "HodgeConjecture.Palomar.fixedPoints_heightOne_contraction",
+    "HodgeConjecture.Palomar.heightOne_fixedRing_unramified_descent"
+  ],
+  "definition_names": [],
+  "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
+  "enable_nanoda": true
+}

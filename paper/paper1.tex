@@ -1,0 +1,801 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{hyperref}
+
+\titleformat{\section}
+  {\normalfont\LARGE\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\Large\bfseries}{\thesubsection}{1em}{}
+
+\hypersetup{
+  pdftitle={Height-One Fixed-Ring Descent: Localization and Formal
+    Unramifiedness},
+  pdfauthor={Chloe van der Vlugt},
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  citecolor=green!40!black,
+  urlcolor=blue!60!black
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Frac}{Frac}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\htop}{ht}
+
+\newcommand{\kq}[1]{\kappa(#1)}
+\newcommand{\m}{\mathfrak m}
+\newcommand{\p}{\mathfrak p}
+\newcommand{\q}{\mathfrak q}
+\newcommand{\leanpath}[1]{\texttt{\nolinkurl{#1}}}
+\newcommand{\leansrc}[1]{%
+  \leanpath{HodgeConjecture/Boundary/Normalization/#1}}
+
+\newenvironment{leanfiles}
+  {\par\medskip\begingroup\footnotesize\raggedright\noindent
+   \textit{Lean correspondence.}\ }
+  {\par\endgroup\medskip}
+
+\title{Height-One Fixed-Ring Descent:\\
+  Localization and Formal Unramifiedness}
+\author{Chloe van der Vlugt}
+\date{Draft of September 10, 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Let a finite group \(G\) act by algebra automorphisms on a domain \(S\),
+and let \(I\leq H\leq G\).  For a height-one prime \(Q\subset S\), write
+\(\q_J=Q\cap S^J\).  We prove that invariants of finite-group actions
+satisfy going down, that every \(\q_J\) again has height one, and that
+\((S^J)_{\q_J}\) is a discrete valuation ring when \(S^J\) is Noetherian
+and normal.  We then construct the canonical local injection
+
+\[
+  (S^H)_{\q_H}\longrightarrow (S^I)_{\q_I}
+\]
+
+and use it to descend formal unramifiedness at the selected prime from
+\(S^I\) to \(S^H\).  In a finite normal-closure normalization, this gives
+an exact endpoint based over the literal full invariant ring \(S^G\).
+The identification of valuation inertia with prime inertia is also proved
+from the height-one localization.
+
+The fixed-prime-inertia theorem of the Stacks Project, Tag \texttt{0BST},
+is not reproved in Lean: its local unramifiedness conclusion remains an
+explicit hypothesis of the machine-checked endpoint.  Mathematically,
+Tag \texttt{0BST} discharges that hypothesis, and we state the resulting
+corollary separately.  None of these results asserts global \'etaleness,
+purity, or the Hodge conjecture.
+\end{abstract}
+
+\begin{center}
+  \small Manuscript draft for author review.  No license assertion is
+  made in this draft.
+\end{center}
+
+\begingroup
+\small
+\tableofcontents
+\endgroup
+
+\section{Introduction}
+\label{sec:introduction}
+
+Let \(S\) be a domain equipped with an action of a finite group \(G\).
+For \(H\leq G\), the inclusion of fixed rings is contravariant:
+
+\[
+  I\leq H
+  \qquad\Longrightarrow\qquad
+  S^H\subseteq S^I.
+\]
+
+If \(Q\subset S\) is a selected prime, contraction therefore gives a
+tower of local rings
+
+\[
+  (S^G)_{\q_G}\longrightarrow
+  (S^H)_{\q_H}\longrightarrow
+  (S^I)_{\q_I},
+  \qquad \q_J=Q\cap S^J.
+\]
+
+In the intended normalization application, \(I=I_Q\) is the inertia
+group of \(Q\).  Stacks Project Tag \texttt{0BST} proves that the map from
+the full invariant ring \(S^G\) to the \(I_Q\)-fixed ring is
+\'etale at the selected prime \cite{StacksPrimeInertiaEtale}.  The Mathlib
+revision used here does not yet contain that theorem.  The formalization
+therefore takes precisely its local unramifiedness conclusion as input and
+proves the remaining arrows internally.
+
+The commutative-algebra argument has four parts.
+
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.6em]
+  \item finite-group invariants give a special going-down argument;
+  \item height one survives contraction to every subgroup-fixed ring;
+  \item normality and Noetherianity turn the selected localization into a
+        discrete valuation ring;
+  \item formal unramifiedness descends through the canonical local map
+        from \(S^H\) to \(S^I\).
+\end{enumerate}
+
+For the geometric interface, there is one additional comparison.  A
+normalization diagram initially supplies the inertia group of a centered
+valuation.  At height one over a Noetherian affine base, the centered
+valuation ring is the localization \(S_Q\).  This identifies valuation
+inertia with the ring-theoretic prime inertia occurring in
+Tag \texttt{0BST}.
+
+The purpose of this note is deliberately narrow.  It records these local
+algebraic implications, their hypotheses, and their Lean verification.  It
+does not turn selected-prime unramifiedness into a global finite
+\'etale cover, extend a cover across a compactification, construct
+a Chow projector, or prove any case of the Hodge conjecture.  The underlying
+commutative-algebra ingredients are classical; the contribution recorded
+here is their exact synthesis and reusable machine-checked interface.
+
+\section{Finite invariants and height}
+\label{sec:height}
+
+Fix a commutative ring \(A\), an \(A\)-algebra \(S\) which is a domain,
+and a finite group \(G\) acting on \(S\) by \(A\)-algebra automorphisms.
+For \(H\leq G\), put
+
+\[
+  R_H=S^H=\{x\in S:h(x)=x\text{ for every }h\in H\}.
+\]
+
+Every \(x\in S\) is integral over \(R_H\): the orbit polynomial
+
+\[
+  \prod_{h\in H}(T-h(x))
+\]
+
+is monic and has coefficients in \(R_H\).  We also use the fact that
+\(H\) acts transitively on the primes of \(S\) above any fixed prime of
+\(R_H\).  Both statements are collected in Stacks Project
+Tag \texttt{0BRI} \cite{StacksInvariantPrimeTransitivity}.
+
+\begin{proposition}[Going down for a finite-group fixed ring]
+\label{prop:going-down}
+The integral extension \(R_H\subseteq S\) has going down.  Explicitly, if
+\(\p\subseteq\q\) are primes of \(R_H\) and \(Q\subset S\) lies over
+\(\q\), then there is a prime \(P\subseteq Q\) lying over \(\p\).
+\end{proposition}
+
+\begin{proof}
+By lying over, choose a prime \(P_0\subset S\) above \(\p\)
+\cite{StacksLyingOver}.  Apply going up to the integral extension
+\(R_H\subseteq S\), the inclusion \(\p\subseteq\q\), and \(P_0\).  This
+gives a prime \(Q'\supseteq P_0\) above \(\q\) \cite{StacksGoingUp}.  The
+transitivity statement for invariant primes gives \(h\in H\) such that
+\(h(Q')=Q\).  Then
+
+\[
+  P=h(P_0)\subseteq h(Q')=Q.
+\]
+
+Since every element of \(R_H\) is fixed by \(h\), contraction is unchanged:
+\(P\cap R_H=P_0\cap R_H=\p\).  Thus \(P\) is the required lift.
+\end{proof}
+
+\begin{leanfiles}
+This is formalized as
+\leanpath{NormalizationInertia.fixedPoints_hasGoingDown} in
+\leansrc{FixedRingLocalization.lean}.  The Lean proof performs the same
+three operations: lying over, going up, and conjugation of the terminal
+prime by invariant-prime transitivity.
+\end{leanfiles}
+
+\begin{proposition}[Height-one contraction]
+\label{prop:height-one}
+Let \(Q\subset S\) be a prime of height one.  For every \(H\leq G\),
+
+\[
+  \htop(Q\cap R_H)=1.
+\]
+\end{proposition}
+
+\begin{proof}
+Going down lifts every strict chain ending at \(Q\cap R_H\) to a chain of
+the same length ending at \(Q\).  Hence
+
+\[
+  \htop(Q\cap R_H)\leq\htop(Q)=1.
+\]
+
+It remains to exclude height zero.  The height-one prime \(Q\) is nonzero,
+because \(S\) is a domain.  In an integral extension of domains, a prime
+whose contraction is zero must itself be zero.  Thus \(Q\cap R_H\neq0\).
+The zero ideal is the unique minimal prime of the domain \(R_H\), so the
+nonzero prime \(Q\cap R_H\) has positive height.  The two inequalities give
+the result.
+\end{proof}
+
+\begin{leanfiles}
+Lean separates the general chain inequality, its fixed-ring specialization,
+and its height-one consequence as
+\leanpath{primeHeight_under_le_of_hasGoingDown},
+\leanpath{fixedPoints_primeHeight_under_le}, and
+\leanpath{fixedPoints_primeHeight_under_eq_one}, respectively, all in
+\leansrc{FixedRingLocalization.lean}.  Lean's prime height agrees with the
+usual chain-height convention; compare Tag \texttt{00KF}
+\cite{StacksPrimeHeight}.
+\end{leanfiles}
+
+\section{The selected local morphism}
+\label{sec:local-map}
+
+Suppose \(I\leq H\leq G\), and let \(Q\subset S\) be prime.  Write
+
+\[
+  \q_H=Q\cap R_H,
+  \qquad
+  \q_I=Q\cap R_I.
+\]
+
+The inclusion \(R_H\hookrightarrow R_I\) carries
+\(R_H\setminus \q_H\) into \(R_I\setminus \q_I\).  The universal property of
+localization therefore gives a canonical map
+
+\begin{equation}
+\label{eq:local-map}
+  \varphi_{I,H,Q}\colon
+  (R_H)_{\q_H}\longrightarrow(R_I)_{\q_I}.
+\end{equation}
+
+\begin{proposition}[Canonical local injection]
+\label{prop:local-injection}
+The morphism \eqref{eq:local-map} is local.  It is injective because both
+fixed rings embed in the domain \(S\).
+\end{proposition}
+
+\begin{proof}
+The maximal ideals of the two localizations are \(\q_H(R_H)_{\q_H}\) and
+\(\q_I(R_I)_{\q_I}\).  The equality
+
+\[
+  \q_I\cap R_H=Q\cap R_I\cap R_H=Q\cap R_H=\q_H
+\]
+
+shows that the second maximal ideal contracts to the first, so
+\(\varphi_{I,H,Q}\) is local.  To see injectivity, represent an element of
+\((R_H)_{\q_H}\) as \(a/s\).  If its image vanishes, then some
+\(t\in R_I\setminus \q_I\) satisfies \(ta=0\) in \(R_I\subseteq S\).
+The domain hypothesis gives \(a=0\), and hence \(a/s=0\).
+\end{proof}
+
+\begin{leanfiles}
+The map itself is
+\leanpath{NormalizationInertia.fixedPointsLocalRingHom}; locality and
+injectivity are
+\leanpath{fixedPointsLocalRingHom_isLocalHom} and
+\leanpath{fixedPointsLocalRingHom_injective}.  They are defined and proved
+in \leansrc{FixedRingUnramified.lean}.
+\end{leanfiles}
+
+\begin{proposition}[The local DVR bridge]
+\label{prop:dvr}
+Let \(R\) be a Noetherian normal domain and let \(\q\subset R\) have height
+one.  Then \(R_{\q}\) is a discrete valuation ring.
+\end{proposition}
+
+\begin{proof}
+Localization preserves Noetherianity and normality
+\cite{StacksNoetherianLocalization,StacksNormalLocalization}.  The
+dimension of \(R_{\q}\) is the height of
+\(\q\), hence is one.  Moreover \(\q\neq0\), so \(R_{\q}\) is not a field.
+Thus \(R_{\q}\) is a one-dimensional Noetherian normal local domain, and
+the DVR criterion applies \cite{StacksDVRCriterion}.
+\end{proof}
+
+\begin{leanfiles}
+This is formalized as
+\leanpath{localizationAtPrime_isDiscreteValuationRing_of_primeHeight_eq_one}
+in \leansrc{FixedRingLocalization.lean}.  Its proof constructs the local
+dimension bound and invokes Mathlib's equivalent characterizations of a
+discrete valuation ring.
+\end{leanfiles}
+
+\section{Conditional unramified descent}
+\label{sec:unramified}
+
+For an \(A\)-algebra \(R\) and a prime \(\q\subset R\), we say that \(R\)
+is \emph{unramified over \(A\) at \(\q\)} when \(R_{\q}\) is formally
+unramified over \(A\).  Equivalently,
+
+\[
+  \Omega_{R_{\q}/A}=0.
+\]
+
+When \(R\) is of finite type over \(A\), this is equivalent to the familiar
+local criterion: if \(\p=\q\cap A\), then
+\(\kq{\q}/\kq{\p}\) is finite separable and
+\(\p R_{\q}=\q R_{\q}\)
+\cite{StacksUnramifiedNecessary,StacksUnramifiedLocalCriterion}.
+
+\begin{theorem}[Height-one fixed-ring descent]
+\label{thm:fixed-ring-descent}
+Let \(A\) be a Noetherian commutative ring, let \(S\) be a domain finite as an
+\(A\)-module, and let a finite group \(G\) act on \(S\) by \(A\)-algebra
+automorphisms.  Let \(Q\subset S\) be a height-one prime and
+\(I\leq H\leq G\).  Put \(R_J=S^J\) and \(\q_J=Q\cap R_J\), and assume that
+\(R_H\) is integrally closed.  If
+
+\[
+  A\longrightarrow (R_I)_{\q_I}
+\]
+
+is formally unramified, then
+
+\[
+  A\longrightarrow (R_H)_{\q_H}
+\]
+
+is formally unramified.
+\end{theorem}
+
+\begin{proof}
+As an \(A\)-submodule of the finite module \(S\), the fixed ring \(R_H\)
+is finite over \(A\), because \(A\) is Noetherian.  It is therefore
+Noetherian
+\cite{StacksNoetherianSubmodules,StacksNoetherianLocalization}.
+Proposition~\ref{prop:height-one} gives
+\(\htop(\q_H)=1\).  Since \(R_H\) is integrally closed,
+Proposition~\ref{prop:dvr} therefore shows that
+
+\[
+  U=(R_H)_{\q_H}
+\]
+
+is a DVR\@.  Likewise \(\htop(\q_I)=1\).  Put
+\(V=(R_I)_{\q_I}\).  The map \(U\to V\) is the local injection of
+Proposition~\ref{prop:local-injection}.  The fixed ring \(R_I\) is a finite
+\(A\)-module, so its localization \(V\) is Noetherian; moreover, \(A\to R_I\) is
+finite and hence of finite type.  The local unramifiedness criterion
+therefore applies.
+
+Let \(\p=\q_H\cap A=\q_I\cap A\).  Formal unramifiedness at \(\q_I\) gives
+
+\[
+  \p V=\m_V
+  \qquad\text{and}\qquad
+  \kq{\q_I}/\kq{\p}\text{ is finite separable}.
+\]
+
+Locality gives \(\m_V\cap U=\m_U\); together with injectivity, this embeds
+\(\kq{\q_H}\) into \(\kq{\q_I}\).  Finite separability descends to
+intermediate fields, so
+\(\kq{\q_H}/\kq{\p}\) is finite separable.
+
+It remains to prove \(\p U=\m_V\cap U=\m_U\).  The ideal \(\m_V\) is nonzero
+because \(\q_I\) has height one.  Hence \(\p U\neq0\), since otherwise
+\(\p V=(\p U)V=0\).  Every nonzero ideal of the DVR \(U\) is a power of
+\(\m_U\).  If \(\p U\subsetneq\m_U\), then
+\(\p U\subseteq\m_U^2\), and extension to \(V\) gives
+
+\[
+  \m_V=\p V\subseteq\m_U^2V\subseteq\m_V^2.
+\]
+
+Thus \(\m_V=\m_V^2\).  Since \(V\) is Noetherian and local, Nakayama's
+lemma would give \(\m_V=0\), a contradiction.  Hence
+\(\p U=\m_U\).  The local criterion now proves that \(U\), and therefore
+\(R_H\) at \(\q_H\), is formally unramified over \(A\).
+\end{proof}
+
+\begin{leanfiles}
+The local descent with an explicit Dedekind hypothesis is
+\leanpath{fixedRing_isUnramifiedAt_of_inertia_le_localized} in
+\leansrc{FixedRingUnramified.lean}.  The theorem above, which discharges
+that hypothesis from height one and normality, is
+\leanpath{fixedRing_isUnramifiedAt_of_inertia_le_of_primeHeight_eq_one} in
+\leansrc{FixedRingLocalization.lean}.  The structure
+\leanpath{InertiaFixedRingUnramifiedAt} packages only the displayed source
+premise; it does not assert that \(I\) is an inertia group.  The Lean proof
+uses \leanpath{Algebra.IsUnramifiedAt.of_liesOver}, whose Dedekind-domain
+statement encapsulates the local descent used above.
+\end{leanfiles}
+
+\begin{remark}[Local, not global]
+Theorem~\ref{thm:fixed-ring-descent} concerns the one chosen contraction
+\(\q_H\).  It does not say that \(S^H\) is globally Dedekind, that
+\(S^G\to S^H\) is globally unramified, or that the associated cover is
+finite \'etale everywhere.
+\end{remark}
+
+The fraction-field analogue---unramifiedness descending to a finite
+intermediate extension over a DVR---is classical; see Stacks Project
+Tag \texttt{0EXR} \cite{StacksUnramifiedSubextensions}.
+Theorem~\ref{thm:fixed-ring-descent}
+is instead phrased directly at the two selected fixed-ring localizations.
+
+\section{Normal-closure normalization}
+\label{sec:normalization}
+
+Let \(B\) be a Noetherian domain with fraction field \(K\), let \(N/K\) be
+a finite normal extension, and put
+
+\[
+  S=\operatorname{IntCl}_B(N),
+  \qquad
+  G=\Aut_K(N).
+\]
+
+Assume that \(S\) is finite over \(B\).  For every \(H\leq G\), the fixed
+normalization ring is canonically identified with
+
+\[
+  S^H\simeq\operatorname{IntCl}_B(N^H).
+\]
+
+The right-hand side is normal in this finite-extension setting
+\cite{StacksIntegralClosureNormal}.  It follows from
+Propositions~\ref{prop:height-one} and~\ref{prop:dvr} that, for every
+height-one \(Q\subset S\), the local ring
+
+\[
+  (S^H)_{Q\cap S^H}
+\]
+
+is a DVR\@.  This conclusion is local; the fixed ring need not have global
+dimension one.
+
+\begin{leanfiles}
+The fixed-field comparison is
+\leanpath{fixedFieldNormalizationEquivFixedRing} in
+\leansrc{InvariantIntermediate.lean}.  Its DVR specialization is
+\leanpath{fixedSubgroupNormalizationRing_localization_isDiscreteValuationRing}
+in \leansrc{FixedRingLocalization.lean}.  The full-invariant base is named
+\leanpath{FullInvariantNormalizationRing} in
+\leansrc{PrimeInertia.lean}.  Given marked data
+\leanpath{D : NormalClosureData K L N} for an additional intermediate field
+\(L/K\), if \(K\) is perfect and \(B\) is integrally closed, the separate
+equivalence
+\leanpath{baseEquivFullInvariantNormalizationRing} identifies \(B\) with
+\(S^G\); no such identification is silently assumed here.  Compare the
+normal/Galois integral-closure background in Tag \texttt{0BRK}
+\cite{StacksGaloisIntegralClosure}.
+\end{leanfiles}
+
+\subsection{Prime inertia and the external input}
+\label{subsec:prime-inertia}
+
+For a prime \(Q\subset S\), define
+
+\[
+  I_Q=
+  \{\sigma\in G:
+    \sigma(Q)=Q\text{ and }
+    \sigma(x)-x\in Q\text{ for every }x\in S\}.
+\]
+
+Thus \(I_Q\) is the kernel of the action of the decomposition group on the
+residue field at \(Q\).  This is exactly the subgroup used in Stacks
+Project Tag \texttt{0BST} \cite{StacksPrimeInertiaEtale}.
+
+We isolate the following premise:
+
+\begin{equation}
+\label{eq:fixed-inertia-input}
+  S^G\longrightarrow
+  (S^{I_Q})_{Q\cap S^{I_Q}}
+  \quad\text{is formally unramified.}
+\end{equation}
+
+Tag \texttt{0BST} proves the stronger local
+\'etaleness statement.  Tag \texttt{09EH} is a related DVR
+specialization \cite{StacksDVRInertiaEtale}.  In the formal development,
+\eqref{eq:fixed-inertia-input} is an explicit argument rather than an
+axiom or a proved theorem.
+
+\begin{theorem}[Prime-inertia endpoint]
+\label{thm:prime-inertia-endpoint}
+In the normalization setting above, let \(Q\subset S\) have height one and
+let \(H\leq G\).  Assume \(I_Q\leq H\) and the fixed-inertia input
+\eqref{eq:fixed-inertia-input}.  Then
+
+\[
+  S^G\longrightarrow (S^H)_{Q\cap S^H}
+\]
+
+is formally unramified.
+\end{theorem}
+
+\begin{proof}
+Take \(A=S^G\), \(I=I_Q\), and \(R_H=S^H\) in
+Theorem~\ref{thm:fixed-ring-descent}.  The ring \(S^G\) is finite over the
+Noetherian ring \(B\), and hence is Noetherian.  The ring \(S\) is finite
+over \(S^G\), while \(S^H\) is normal by the fixed-field normalization
+comparison.  All hypotheses of that theorem are therefore satisfied.
+Its source premise is exactly \eqref{eq:fixed-inertia-input}, and the
+subgroup hypothesis is \(I_Q\leq H\).
+\end{proof}
+
+\begin{leanfiles}
+Prime inertia is
+\leanpath{normalizationPrimeInertiaGroup}, and the explicit source premise
+is \leanpath{NormalizationPrimeInertiaFixedRingUnramifiedAt}, both in
+\leansrc{PrimeInertia.lean}.
+The exact composite is
+\leanpath{normalizationFixedRing_isUnramifiedAt_of_primeInertia_le} in
+\leansrc{PrimeInertiaDescent.lean}.
+\end{leanfiles}
+
+\begin{corollary}[Prime-inertia descent via Tag \texttt{0BST}]
+\label{cor:prime-inertia-stacks}
+In the normalization setting above, let \(Q\subset S\) have height one and
+let \(H\leq G\).  If \(I_Q\leq H\), then
+
+\[
+  S^G\longrightarrow (S^H)_{Q\cap S^H}
+\]
+
+is formally unramified at the selected contraction.
+\end{corollary}
+
+\begin{proof}
+Tag \texttt{0BST} says that \(S^G\to S^{I_Q}\) is \'etale at
+\(Q\cap S^{I_Q}\), so the localized map in
+\eqref{eq:fixed-inertia-input} is formally unramified.  Apply
+Theorem~\ref{thm:prime-inertia-endpoint}.
+\end{proof}
+
+\begin{remark}[Mathematical versus formal input]
+Corollary~\ref{cor:prime-inertia-stacks} invokes Tag \texttt{0BST} as a
+mathematical theorem.  Because that theorem is absent from the pinned
+Mathlib revision, the Lean declaration stops one arrow earlier at
+Theorem~\ref{thm:prime-inertia-endpoint}, with
+\eqref{eq:fixed-inertia-input} as an explicit parameter.
+\end{remark}
+
+\section{From valuation inertia to prime inertia}
+\label{sec:valuation}
+
+A normalization diagram may encode ramification by a discrete valuation
+ring \(V\subset N\) centered at \(Q\), rather than directly by \(I_Q\).
+Write \(I_V\) for the subgroup preserving \(V\) and acting trivially on its
+residue field.  Preservation of \(V\) stabilizes its maximal ideal, so
+\(Q=\m_V\cap S\) gives \(\sigma(Q)=Q\) for every \(\sigma\in I_V\).
+Centeredness and triviality on the residue field also give
+
+\[
+  I_V\leq I_Q:
+\]
+
+indeed, if \(\sigma\in I_V\) and \(x\in S\), then
+\(\sigma(x)-x\in\m_V\), whose contraction to \(S\) is \(Q\).
+
+The reverse inclusion needs more than centeredness.  It follows after
+identifying \(V\) with \(S_Q\).  This distinction is essential: a centered
+valuation ring need not be the local ring at its center without additional
+hypotheses.  The definitions of decomposition and inertia groups are
+reviewed in Stacks Project Tags \texttt{0BSD} and \texttt{09EC}
+\cite{StacksRamificationTheory,StacksDVRInertiaDefinition}.
+
+\begin{proposition}[Height-one localization of the centered valuation]
+\label{prop:valuation-localization}
+Suppose \(S\) is the finite normalization above, \(Q\subset S\) has height
+one, and \(V\) is a discrete valuation subring of \(N\) with fraction field
+\(N\).  Assume that the embedding \(S\to V\) is centered at \(Q\), meaning
+\(\m_V\cap S=Q\), and agrees with the given embeddings of both rings into
+\(N\).
+Then the centered map extends to an isomorphism
+
+\[
+  S_Q\xrightarrow{\sim}V
+\]
+
+compatible with the two embeddings into \(N\).
+\end{proposition}
+
+\begin{proof}
+The finite \(B\)-algebra \(S\) is Noetherian.  As an integral closure in a
+finite field extension, it is normal.  Thus \(S_Q\) is a DVR by
+Proposition~\ref{prop:dvr}.  Since the maximal ideal of \(V\) contracts to
+\(Q\), every element of \(S\setminus Q\) maps to a unit of \(V\), and the
+centered map extends uniquely to a local injection \(S_Q\to V\).
+
+Since \(K=\Frac(B)\) and \(N/K\) is finite, the fraction field of \(S\) is \(N\).
+Thus both rings are valuation subrings of the common fraction field \(N\),
+and the map is compatible with their embeddings in \(N\).  Maximality of a
+valuation ring under local domination forces equality;
+see the valuation-ring formulation in Tag \texttt{00I9}
+\cite{StacksValuationRings}.  Hence the local map is an isomorphism.  The
+factorization
+of a centered map through a local ring is also the scheme-theoretic content
+of Tag \texttt{01J6} \cite{StacksLocalRingFactorization}.
+\end{proof}
+
+\begin{proposition}[Equality of inertia groups]
+\label{prop:inertia-equality}
+Under the hypotheses of Proposition~\ref{prop:valuation-localization},
+
+\[
+  I_V=I_Q.
+\]
+\end{proposition}
+
+\begin{proof}
+We already have \(I_V\leq I_Q\).  Conversely, let \(\sigma\in I_Q\).
+Because \(\sigma(Q)=Q\), the automorphism of \(S\) extends uniquely to an
+automorphism of \(S_Q\).  For \(a/t\in S_Q\), with \(t\notin Q\), the
+congruences \(\sigma(a)\equiv a\pmod Q\) and
+\(\sigma(t)\equiv t\pmod Q\) show that
+
+\[
+  \frac{\sigma(a)}{\sigma(t)}
+  \equiv\frac{a}{t}\pmod{QS_Q}.
+\]
+
+Thus \(\sigma\) acts trivially on the residue field of \(S_Q\).  Transport
+through \(S_Q\simeq V\) shows that \(\sigma\in I_V\), proving the reverse
+inclusion.
+\end{proof}
+
+\begin{leanfiles}
+The compatible localization datum is
+\leanpath{ValuationLocalizationAt}.  Its existence at a height-one point
+is \leanpath{Diagram.hasValuationLocalizationAt_of_isNoetherianRing}; the
+reverse inclusion is
+\leanpath{ValuationLocalizationAt.primeInertia_le_valuationInertia}; and
+the equality is
+\leanpath{Diagram.valuationInertia_eq_normalizationPrimeInertiaGroup_%
+of_isNoetherianRing}.
+These declarations are in \leansrc{LocalizationBridge.lean}.
+The direct centeredness inclusion is
+\leanpath{Diagram.valuationInertia_le_normalizationPrimeInertiaGroup} in
+\leansrc{PrimeInertia.lean}.  The diagram-level theorem is instantiated for
+\leanpath{D : Diagram C} and
+\leanpath{E : RamifiedCodimensionOnePoint}.  The structures also retain the
+restriction of the valuation to \(K\) as a discrete valuation, nontrivial
+valuation inertia, and the assertion that \(Q\) is a ramified height-one
+point.  These hypotheses are stronger than the standalone
+commutative-algebra statement.
+\end{leanfiles}
+
+\begin{corollary}[Valuation-inertia endpoint]
+\label{cor:valuation-endpoint}
+Under the hypotheses and notation of
+Proposition~\ref{prop:valuation-localization}, let \(H\leq G\).  If
+\(I_V\leq H\), then
+\(S^G\longrightarrow(S^H)_{Q\cap S^H}\) is formally unramified.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:inertia-equality} turns \(I_V\leq H\) into
+\(I_Q\leq H\).  Apply Corollary~\ref{cor:prime-inertia-stacks}.
+\end{proof}
+
+\begin{leanfiles}
+The containment conversion is
+\leanpath{Diagram.normalizationPrimeInertia_le_of_valuationInertia_le_%
+of_isNoetherianRing}
+in \leansrc{LocalizationBridge.lean}.  The final composite is
+\leanpath{NormalizationInertia.Diagram.fixedRing_isUnramifiedAt_of_%
+valuationInertia_le}
+in \leansrc{PrimeInertiaDescent.lean}.  That declaration is the structured
+normalization-diagram specialization of the slightly more general
+ring-theoretic corollary stated here.  Because Tag \texttt{0BST} is not in
+the pinned Mathlib revision, the Lean declaration retains
+\eqref{eq:fixed-inertia-input} as an explicit argument.
+\end{leanfiles}
+
+\section{Formal status and limitations}
+\label{sec:status}
+
+The verified dependency chain is
+
+\[
+\begin{gathered}
+  \text{finite invariants}
+  \Longrightarrow
+  \text{going down}
+  \Longrightarrow
+  \htop(\q_H)=1
+  \Longrightarrow
+  (S^H)_{\q_H}\text{ is a DVR},\\[4pt]
+  I_V\leq H
+  \Longrightarrow
+  I_Q\leq H,
+  \qquad
+  \bigl[\text{fixed-inertia unramifiedness at }\q_I\bigr]
+  \Longrightarrow
+  \bigl[\text{unramifiedness at }\q_H\bigr].
+\end{gathered}
+\]
+
+The bracketed source statement is the explicit external input to Lean and
+is supplied mathematically by Tag \texttt{0BST}.  The following claims are
+not results of this note:
+
+\begin{itemize}[leftmargin=2.2em]
+  \item a Lean proof of Tag \texttt{0BST} or Tag \texttt{09EH};
+  \item global unramifiedness or global \'etaleness of a fixed-ring
+        cover;
+  \item a purity theorem or extension across a compactification boundary;
+  \item construction or extension of a Chow projector;
+  \item any partial or complete proof of the Hodge conjecture.
+\end{itemize}
+
+In particular, replacing the literal source \(S^G\) by the original affine
+ring \(B\) is a separate theorem.  The formalized equivalence requires marked
+normal-closure data, a perfect fraction field \(K\), and an integrally closed
+base \(B\); it has not been composed into the endpoint above.  Without such
+hypotheses, no identification with \(B\) is asserted: \(S^G\) remains the
+integral closure of \(B\) in the full fixed field \(N^G\).
+
+The checked development uses Lean~4.24.0 and Mathlib revision
+\texttt{f897ebcf72cd16f89ab4}\allowbreak
+\texttt{577d0c826cd14afaafc7}.  The proof modules
+cited in this note contain no \leanpath{sorry}, \leanpath{admit}, or added
+axiom; the fixed-inertia statement is exposed instead as the explicit
+premise \eqref{eq:fixed-inertia-input}.
+
+The working source is at
+\url{https://github.com/what-social-construct/HodgeConjecture}.  This draft
+does not yet name an immutable release commit or archive; one must be
+assigned before publication.
+
+A compact challenge-facing surface appears in the repository-root files
+\leanpath{Challenge.lean} and \leanpath{Solution.lean}.  The former
+intentionally contains two \leanpath{sorry} placeholders for the advertised
+proof holes; the checked implementations live in \leanpath{Solution.lean}
+and the imported proof modules.  The surface advertises only height-one
+contraction and the conditional fixed-ring descent theorem.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+The height-one fixed-ring problem admits a clean local factorization.  A
+finite group action supplies going down by combining lying over, going up,
+and transitivity on primes over a fixed contraction.  This preserves height
+one.  Normality and Noetherianity then make the selected fixed-ring
+localization a DVR, while subgroup containment produces a canonical local
+injection between the relevant localizations.  These ingredients descend
+formal unramifiedness from the inertia-fixed ring to any larger subgroup
+containing inertia.
+
+For a finite normal-closure normalization over a Noetherian base, the same
+height-one localization identifies centered valuation inertia with prime
+inertia.  Consequently the valuation-theoretic subgroup condition used by
+the normalization diagram feeds the fixed-ring descent without changing
+the source ring: it remains \(S^G\).
+
+Tag \texttt{0BST} supplies the fixed-prime-inertia premise mathematically,
+so Corollaries~\ref{cor:prime-inertia-stacks}
+and~\ref{cor:valuation-endpoint} follow without an additional mathematical
+hypothesis.  In Lean the endpoint remains exact but conditional: all
+localization and descent steps after that explicit premise are verified in
+Lean~4 with Mathlib \cite{Lean4,Mathlib}.
+
+\paragraph{Acknowledgment.}
+OpenAI Codex assisted with the Lean formalization and manuscript draft.
+The manuscript remains subject to author review; responsibility for its
+final statements, proofs, and citations belongs to the author.
+
+\begingroup
+\small
+\bibliographystyle{alpha}
+\bibliography{references}
+\endgroup
+
+\end{document}

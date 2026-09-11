@@ -1,0 +1,1204 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{hyperref}
+
+\titleformat{\section}
+  {\normalfont\LARGE\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\Large\bfseries}{\thesubsection}{1em}{}
+
+\hypersetup{
+  pdftitle={Finite-Etale Span Projectors and Marked Galois-Sheet Blocks in Lean},
+  pdfauthor={Chloe van der Vlugt},
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  citecolor=green!40!black,
+  urlcolor=blue!60!black
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\DeclareMathOperator{\Corr}{Corr}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\ev}{ev}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\CH}{CH}
+
+\newcommand{\Q}{\mathbf Q}
+\newcommand{\one}{\mathbf 1}
+\newcommand{\fe}{\mathrm{f\acute et}}
+\newcommand{\leanpath}[1]{\texttt{\nolinkurl{#1}}}
+\newcommand{\corrsrc}[1]{%
+  \leanpath{HodgeConjecture/Correspondence/#1}}
+\newcommand{\sheetsrc}[1]{%
+  \leanpath{HodgeConjecture/Boundary/Sheets/#1}}
+\newcommand{\normsrc}[1]{%
+  \leanpath{HodgeConjecture/Boundary/Normalization/#1}}
+\newcommand{\chowsrc}[1]{%
+  \leanpath{HodgeConjecture/Realization/Chow/#1}}
+
+\newenvironment{leanfiles}
+  {\par\medskip\begingroup\footnotesize\raggedright\noindent
+   \textit{Lean correspondence.}\ }
+  {\par\endgroup\medskip}
+
+\title{Finite-\'Etale Span Projectors and\\
+  Marked Galois-Sheet Blocks in Lean}
+\author{Chloe van der Vlugt}
+\date{Draft of September 11, 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We formalize in Lean~4 a convolution algebra built from isomorphism classes
+of scheme endocorrespondences whose legs are finite \'etale.  An action by
+deck transformations induces a rational algebra homomorphism from the group
+algebra to this free correspondence algebra; consequently, idempotents and
+finite ordered orthogonal decompositions transport to formal correspondence
+projectors and diagonal decompositions.  For finite groups we obtain
+normalized averaging and complementary projectors, and for finite subgroups
+we construct the normalized Hecke corner and its double-coset operators.  For
+a marked normal closure, we also construct the induced deck action on the
+affine integral-closure normalization and identify normalization in a fixed
+field with the corresponding fixed subring.
+
+For a marked quotient \(G/H\), we prove that multiplication by the base-sheet
+selector in \(\Q^{G/H}\) is \(\operatorname{diag}(1,0)\) in selector
+coordinates and the graph projector of \(q-1\) in constant-unit coordinates.
+The two forms are related by an explicit shear, and the comparison is natural
+under rational maps of the residual factor.  We finally isolate a conditional
+realization criterion: a supplied extension package and chosen compactified
+idempotent, residual realization, action-intertwining square, and lower-left
+detection map place the resulting class in the range of a supplied
+cycle-class model.
+We also record a forward conditional boundary corollary: different avoidance
+produces a prescribed compactified-algebra idempotent only after cycle
+extraction, compactified idempotence, one-way purity, inertia, restriction,
+and prescribed-action inputs are separately supplied.
+
+The free span algebra constructed here is not a Chow correspondence algebra.
+No concrete Chow realization, boundary extension, or new case of the Hodge
+conjecture is proved.
+\end{abstract}
+
+\begin{center}
+  \small Manuscript draft for author review.  No license assertion is made
+  in this draft.  A literature and novelty review is still pending.
+\end{center}
+
+\begingroup
+\small
+\tableofcontents
+\endgroup
+
+\section{Introduction}
+\label{sec:introduction}
+
+Let \(p_X:X\to S\) be a morphism of schemes.  A correspondence from \(X\)
+to itself over \(S\) is a span
+
+\[
+  X \xleftarrow{\ell} Z \xrightarrow{r} X
+\]
+
+whose two maps to \(S\) agree.  Two such spans compose by taking the fiber
+product over the middle copy of \(X\).  The diagonal span is the identity.
+Raw fiber-product composition is associative and unital only up to canonical
+isomorphism; passage to carrier-isomorphism classes makes these laws strict.
+
+The present note studies the free rational algebra on the classes whose two
+legs are finite \'etale.  This setting is large enough to contain graphs of
+automorphisms, is closed under composition and transpose, and is small enough
+to avoid imposing additivity on arbitrary infinite coproducts.  Its product
+is convolution of correspondences.
+
+Three algebras must be kept distinct throughout:
+
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.6em]
+  \item the pointwise function algebra on a finite set of generic sheets;
+  \item the group algebra, and its Hecke corners, with convolution product;
+  \item a prospective Chow correspondence algebra on a compactification.
+\end{enumerate}
+
+A characteristic function in the first algebra is pointwise idempotent.  That
+fact alone does not say that a sum of graph correspondences is idempotent in
+the second or third algebra.  For example, the graph of a nonidentity
+automorphism \(g\) satisfies
+
+\[
+  [\Gamma_g]^2=[\Gamma_{g^2}],
+\]
+
+not \([\Gamma_g]^2=[\Gamma_g]\) in general.  The convolution projectors in
+this note instead come from actual idempotents of a group algebra or a Hecke
+corner.  The marked function-algebra selector enters later through a separate
+operator comparison.
+
+The two principal formal results are as follows.
+
+\begin{itemize}[leftmargin=2.2em]
+  \item A deck action induces an algebra map from the rational group algebra
+        to the finite-\'etale free correspondence algebra.  It transports
+        group-algebra idempotents and orthogonal decompositions to
+        convolution projectors and diagonal decompositions.
+  \item Multiplication by a marked sheet selector is diagonal in its
+        image--kernel coordinates and graph-shaped in the splitting marked
+        by the constant unit.  The transition between these descriptions is
+        an explicit lower shear.
+\end{itemize}
+
+Section~\ref{sec:conditional-realization} gives a conditional interface
+connecting the second result to a supplied cycle-class model.  The interface
+exposes rather than proves the missing geometry: compactification, a residual
+realization, an intertwining square, and lower-left block detection.
+The same section records the honest current form of the boundary slogan as a
+forward conditional corollary with every remaining geometric input visible.
+
+\paragraph{Literature status.}
+The underlying group-algebra and graph calculations are classical.  This
+draft is positioned only as a formalization and infrastructure report.  A
+systematic comparison with prior formalizations and the mathematical
+literature has not yet been completed, so no novelty or priority claim is
+made here.
+
+\section{Scheme correspondences and the free convolution algebra}
+\label{sec:correspondences}
+
+Fix morphisms \(p_X:X\to S\) and \(p_Y:Y\to S\).  A relative scheme
+correspondence \(P:X\dashrightarrow Y\) consists of a carrier \(P_0\), two
+maps
+
+\[
+  X\xleftarrow{\,P_\ell\,}P_0
+   \xrightarrow{\,P_r\,}Y,
+  \qquad
+  P_\ell p_X=P_r p_Y,
+\]
+
+where compositions are written in diagrammatic order in this display.  The
+compatibility supplies a canonical support map
+
+\[
+  P_0\longrightarrow X\times_S Y.
+\]
+
+If \(P:X\dashrightarrow Y\) and \(Q:Y\dashrightarrow T\), their composite
+\(Q\circ P\) has carrier \(P_0\times_YQ_0\), left map induced by \(P_\ell\),
+and right map induced by \(Q_r\).  Canonical pullback isomorphisms give
+
+\[
+  1_Y\circ P\simeq P,
+  \qquad
+  P\circ1_X\simeq P,
+  \qquad
+  R\circ(Q\circ P)\simeq(R\circ Q)\circ P.
+\]
+
+An isomorphism of correspondences is an isomorphism of carriers commuting
+with both legs.  Write \(\langle P\rangle\) for the corresponding isomorphism
+class.
+
+\begin{proposition}[Strict convolution after quotienting]
+\label{prop:class-monoid}
+For fixed \(p_X:X\to S\), isomorphism classes of endocorrespondences form a
+monoid under
+
+\[
+  \langle Q\rangle\,\langle P\rangle
+  =\langle Q\circ P\rangle.
+\]
+
+Its unit is the class of the diagonal correspondence.
+\end{proposition}
+
+\begin{proof}
+Composition respects carrier isomorphisms.  The canonical unit and
+associativity isomorphisms above become equalities after quotienting, which
+are precisely the monoid laws.
+\end{proof}
+
+\begin{leanfiles}
+The raw span, composition, carrier isomorphism, unit isomorphisms, and
+associativity isomorphism are in \corrsrc{Scheme.lean}.  The quotient and
+monoid instance are in \corrsrc{Classes.lean}, under
+\leanpath{SchemeCorrespondence.Class} and
+\leanpath{SchemeCorrespondence.classMonoid}.
+\end{leanfiles}
+
+Call \(P\) finite \'etale when both \(P_\ell\) and \(P_r\) are finite
+\'etale.  This condition is invariant under correspondence isomorphism and
+is preserved by the diagonal, transpose, and fiber-product composition.  It
+therefore cuts out a submonoid
+
+\[
+  \Corr_{\fe}(X/S)
+  \subseteq \Corr(X/S).
+\]
+
+We define the finite-\'etale free correspondence algebra by
+
+\begin{equation}
+\label{eq:free-algebra}
+  \mathcal C_{\fe}^{\mathrm{free}}(X/S)
+  :=\Q[\Corr_{\fe}(X/S)].
+\end{equation}
+
+Thus a finite-\'etale span class is a basis vector, multiplication is induced
+by fiber-product composition, and the diagonal class is the unit.
+
+\begin{theorem}[Finite-\'etale correspondence algebra]
+\label{thm:finite-etale-algebra}
+Finite-\'etale correspondence classes are closed under convolution and form
+a monoid.  The algebra \eqref{eq:free-algebra} is consequently a unital,
+generally noncommutative rational algebra.  Transpose extends linearly to an
+involution satisfying
+
+\[
+  (ab)^{\mathsf t}=b^{\mathsf t}a^{\mathsf t},
+  \qquad
+  (a^{\mathsf t})^{\mathsf t}=a.
+\]
+\end{theorem}
+
+\begin{proof}
+Finiteness and \'etaleness are stable under isomorphism, composition, and
+base change.  For a composite, each new leg is a base-changed old leg
+followed by the other old leg.  This proves closure.  Pullback symmetry
+identifies the transpose of \(Q\circ P\) with
+\(P^{\mathsf t}\circ Q^{\mathsf t}\); quotienting and extending linearly give
+the displayed anti-multiplicative involution.
+\end{proof}
+
+\begin{leanfiles}
+Closure of the admissible class is in \corrsrc{Etale.lean} and
+\corrsrc{EtaleClasses.lean}.  The free algebra is
+\leanpath{FiniteEtaleFreeAlgebra}.  Transpose and its ring involution are in
+\corrsrc{TransposeAlgebra.lean}; the principal multiplication theorem is
+\leanpath{finiteEtaleFreeTranspose_mul}.
+\end{leanfiles}
+
+\begin{remark}[Not a Chow algebra]
+The construction is intentionally free.  It does not impose rational
+equivalence, pure-dimension conditions, or refined-intersection relations.
+It also does not identify a disjoint union with a sum:
+
+\[
+  \langle P\amalg Q\rangle
+  =\langle P\rangle+\langle Q\rangle
+\]
+
+is not a relation in
+\(\mathcal C_{\fe}^{\mathrm{free}}(X/S)\).  Such an equality belongs to a
+separately supplied additive realization.
+\end{remark}
+
+\section{Deck actions and rational projectors}
+\label{sec:deck-projectors}
+
+An automorphism of \(X\) over \(S\) has graph correspondence
+
+\[
+  \Gamma_\sigma=
+  \bigl(X\xleftarrow{1_X}X\xrightarrow{\sigma}X\bigr).
+\]
+
+Both legs are isomorphisms and hence finite \'etale.  Under the convention of
+Proposition~\ref{prop:class-monoid}, graph composition agrees with
+automorphism multiplication:
+
+\begin{equation}
+\label{eq:graph-product}
+  \langle\Gamma_\sigma\rangle
+  \langle\Gamma_\tau\rangle
+  =\langle\Gamma_{\sigma\tau}\rangle.
+\end{equation}
+
+Consequently an action
+
+\[
+  a:G\longrightarrow\operatorname{Aut}_S(X)
+\]
+
+induces an algebra homomorphism
+
+\begin{equation}
+\label{eq:deck-algebra-map}
+  \gamma_a:\Q[G]\longrightarrow
+  \mathcal C_{\fe}^{\mathrm{free}}(X/S),
+  \qquad
+  [g]\longmapsto\langle\Gamma_{a(g)}\rangle.
+\end{equation}
+
+The Lean name \leanpath{FiniteDeckAction} denotes an action by a group of
+deck transformations.  Despite the name, the definition itself neither
+requires \(G\) to be finite nor asserts that \(p_X\) is a finite-\'etale
+cover.
+
+\begin{theorem}[Deck-action projector transport]
+\label{thm:deck-transport}
+Let \(p_X:X\to S\) be a scheme morphism and let \(G\) act on \(X\) by
+\(S\)-automorphisms.  The graph assignment induces the rational algebra map
+\eqref{eq:deck-algebra-map}.  It has the following consequences.
+
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.6em]
+  \item If \(e\in\Q[G]\) satisfies \(e^2=e\), then
+        \(\gamma_a(e)^2=\gamma_a(e)\) for correspondence convolution.
+  \item Let \(I\) be finite and let \((e_i)_{i\in I}\) be idempotents in
+        \(\Q[G]\) satisfying
+        \[
+          e_ie_j=0\quad(i\ne j),
+          \qquad
+          \sum_{i\in I}e_i=1.
+        \]
+        Then \((\gamma_a(e_i))_{i\in I}\) is an ordered orthogonal family of
+        convolution idempotents whose sum is the diagonal unit.
+  \item If \(G\) is finite, the normalized average
+        \[
+          e_G=\frac{1}{|G|}\sum_{g\in G}[g]
+        \]
+        and \(1-e_G\) map to complementary convolution idempotents.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Equation~\eqref{eq:graph-product} and the identity-graph comparison produce
+the algebra homomorphism.  Algebra homomorphisms preserve multiplication,
+zero, one, addition, and finite sums, so they preserve the equations in
+parts~(i) and~(ii).  For part~(iii), multiplication by any basis element
+permutes the finite group sum.  Hence
+
+\[
+  \left(\sum_{g\in G}[g]\right)^2
+  =|G|\sum_{g\in G}[g],
+\]
+
+and \(e_G^2=e_G\).  The complement of any idempotent is idempotent and is
+orthogonal to it.
+\end{proof}
+
+\begin{leanfiles}
+Graph composition and the graph algebra map are in \corrsrc{Graph.lean}.
+The action map \leanpath{FiniteDeckAction.toFiniteEtaleAlgebra}, the average,
+and its complement are in \corrsrc{FiniteGroupProjector.lean}.  Transport of
+arbitrary idempotents and finite ordered orthogonal decompositions is in
+\corrsrc{GroupAlgebraProjector.lean}, principally
+\leanpath{groupAlgebraCorrespondence_isIdempotent} and
+\leanpath{GroupAlgebraDiagonalDecomposition.correspondence_sum_eq_diagonal}.
+\end{leanfiles}
+
+\begin{remark}[Centrality]
+Centrality of \(e\) is not required for Theorem~\ref{thm:deck-transport}.
+Central idempotents are useful when one wants canonical isotypic summands,
+but idempotence transport uses only \(e^2=e\).
+\end{remark}
+
+\section{Finite-subgroup Hecke corners}
+\label{sec:hecke}
+
+Let \(H\leq G\) be finite, with \(G\) not necessarily finite, and put
+
+\[
+  e_H=\frac{1}{|H|}\sum_{h\in H}[h]\in\Q[G].
+\]
+
+The element \(e_H\) is idempotent.  Its corner
+
+\[
+  \mathcal H(G,H)=e_H\Q[G]e_H
+\]
+
+is a unital ring whose unit is \(e_H\), not the ambient unit of
+\(\Q[G]\).  For \(g\in G\), define the normalized sandwiched operator
+
+\[
+  T_g=e_H[g]e_H\in\mathcal H(G,H).
+\]
+
+\begin{theorem}[Hecke-corner transport]
+\label{thm:hecke}
+The element \(T_g\) depends only on the double coset \(HgH\).  The deck-action
+map \(\gamma_a\) restricts to a unital ring homomorphism
+
+\[
+  e_H\Q[G]e_H
+  \longrightarrow
+  \gamma_a(e_H)
+    \mathcal C_{\fe}^{\mathrm{free}}(X/S)
+    \gamma_a(e_H).
+\]
+
+Every idempotent in the source corner therefore determines a convolution
+idempotent in the finite-\'etale correspondence algebra.
+\end{theorem}
+
+\begin{proof}
+For \(h,k\in H\), left and right invariance of the subgroup average give
+
+\[
+  e_H[hgk]e_H=e_H[g]e_H.
+\]
+
+This proves double-coset invariance.  A unital ring homomorphism sends an
+idempotent corner to the corner of its image; applying this construction to
+\(\gamma_a\) gives the displayed homomorphism and preserves idempotence.
+\end{proof}
+
+\begin{leanfiles}
+The general corner map, normalized subgroup average, double-coset
+factorization, and correspondence-corner map are in
+\corrsrc{HeckeProjector.lean}.  The key declarations are
+\leanpath{SubgroupHeckeAlgebra}, \leanpath{heckeElement_eq_of_rel},
+\leanpath{heckeToCorrespondenceCorner}, and
+\leanpath{heckeCorrespondence_isIdempotent}.
+\end{leanfiles}
+
+\begin{remark}[Normalization and scope]
+The element \(T_g=e_H[g]e_H\) is not the raw characteristic sum of the
+finite set \(HgH\); the two differ by a stabilizer-dependent rational factor.
+The construction neither proves that every \(T_g\) is idempotent nor asserts
+commutativity, a double-coset basis, or structure constants for the corner.
+\end{remark}
+
+\section{The conditional Galois collision formula}
+\label{sec:galois-collision}
+
+Let \(f:X\to Y\) be finite \'etale and let \(G\) be finite.  The formalized
+Galois collision statement does not infer a torsor decomposition merely from
+these hypotheses.  Instead, it accepts explicit data consisting of
+
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.6em]
+  \item an action of \(G\) on \(X\) over \(Y\);
+  \item an isomorphism
+        \[
+          \coprod_{g\in G}X\xrightarrow{\sim}X\times_YX;
+        \]
+  \item compatibility of the two collision projections with the identity
+        and \(g\) on the \(g\)-summand.
+\end{enumerate}
+
+These fields comprise \leanpath{GaloisCollisionDecomposition}.  To express
+finite additivity, let \(Y\to S\) be a further base map and let
+
+\[
+  \chi:\mathcal C_{\fe}^{\mathrm{free}}(X/S)\longrightarrow\Gamma
+\]
+
+be a rational algebra homomorphism which, as separately supplied data, maps
+finite admissible coproducts to sums.  This is the interface
+\leanpath{FiniteEtaleAlgebraModel}.
+
+\begin{theorem}[Galois collision comparison, given the torsor data]
+\label{thm:galois-collision}
+Under the data above,
+
+\begin{equation}
+\label{eq:galois-graph-sum}
+  \chi\bigl([X\times_YX]\bigr)
+  =\sum_{g\in G}\chi([\Gamma_g]).
+\end{equation}
+
+Consequently the normalized collision class
+
+\[
+  c_G=\frac{1}{|G|}\chi\bigl([X\times_YX]\bigr)
+\]
+
+is an idempotent in \(\Gamma\).
+\end{theorem}
+
+\begin{proof}
+The supplied torsor isomorphism identifies the collision correspondence with
+the indexed coproduct of the graph correspondences.  Finite additivity of
+\(\chi\) gives \eqref{eq:galois-graph-sum}.  The right side, after division
+by \(|G|\), is the image under \(\chi\) of the graph average from
+Theorem~\ref{thm:deck-transport}; it is therefore idempotent.
+\end{proof}
+
+\begin{leanfiles}
+The decomposition record, graph-sum theorem, comparison with the group
+average, and idempotence theorem are in \corrsrc{GaloisCollision.lean}:
+\leanpath{GaloisCollisionDecomposition},
+\leanpath{classOf_collision_eq_sum_graph},
+\leanpath{averagingProjector_realizes_normalizedCollisionClass}, and
+\leanpath{normalizedCollisionClass_isIdempotent}.  The finite-additivity
+interface is in \corrsrc{FiniteEtaleModel.lean}.
+\end{leanfiles}
+
+\begin{remark}[The off-diagonal class]
+Under the same supplied Galois collision decomposition and model \(\chi\),
+suppose one separately supplies a
+\leanpath{CollisionSchemeDecomposition} \(E_{\mathrm{cl}}\) of \(f\).  Write
+\(E_{\mathrm{off}}\) for its off-diagonal self-correspondence.  Additivity
+then gives the realized identity
+
+\[
+  \chi([E_{\mathrm{off}}])
+  =\sum_{g\in G}\chi([\Gamma_g])-1_{\Gamma}.
+\]
+
+This is an additive identity.  The off-diagonal class is not asserted to be
+convolution-idempotent, normalized or otherwise.
+\end{remark}
+
+\section{Marked normal closures and generic sheets}
+\label{sec:generic-sheets}
+
+We next record how a marked field extension produces the sheet-function
+algebra used in the block calculation.  Let \(L/K\) be finite and let \(N\)
+be a supplied finite normal closure together with a distinguished embedding
+\(\iota:L\hookrightarrow N\).  Put
+
+\[
+  G=\Gal(N/K),
+  \qquad
+  H=\{g\in G:g|_{\iota(L)}=1\}.
+\]
+
+Before constructing the generic evaluation, we record the compatible affine
+normalization statement.  Let \(B\) be a commutative ring equipped with
+compatible algebra maps to \(K\), \(L\), and \(N\).  Write
+\(\operatorname{IntCl}_B(M)\) for the integral closure of \(B\) in a field
+\(M\).
+
+\begin{proposition}[Normal-closure deck action and fixed normalization]
+\label{prop:fixed-normalization}
+Every \(\sigma\in\Gal(N/K)\) restricts to a \(B\)-algebra automorphism of
+\(\operatorname{IntCl}_B(N)\).  By contravariance of affine spectrum, these
+automorphisms define a canonical action over \(\operatorname{Spec}B\) on
+\[
+  \operatorname{Spec}\operatorname{IntCl}_B(N).
+\]
+For every subgroup \(J\leq\Gal(N/K)\), there is a canonical \(B\)-algebra
+equivalence
+\[
+  \operatorname{IntCl}_B(N^J)
+  \simeq_B
+  \bigl(\operatorname{IntCl}_B(N)\bigr)^J.
+\]
+If \(K\) is perfect and \(J=H\) is the subgroup fixing the marked copy of
+\(L\), this specializes to
+\[
+  \operatorname{IntCl}_B(L)
+  \simeq_B
+  \bigl(\operatorname{IntCl}_B(N)\bigr)^H.
+\]
+\end{proposition}
+
+\begin{proof}
+A \(K\)-automorphism of \(N\) fixes the image of \(B\) because the maps
+factor through \(K\).  Integrality over \(B\) is preserved by algebra
+automorphisms, so restriction gives the first action.  Applying
+\(\operatorname{Spec}\) to the inverse ring automorphism makes the scheme
+construction multiplicative and preserves the structure map to
+\(\operatorname{Spec}B\).
+
+An element of \(\operatorname{IntCl}_B(N)\) is fixed by \(J\) exactly when
+its image in \(N\) lies in \(N^J\).  Integrality over \(B\) is the same on
+both sides, which gives the displayed fixed-ring equivalence.  For the marked
+subgroup \(H\), finite Galois correspondence over a perfect base identifies
+\(N^H\) with the distinguished image of \(L\), giving the specialization.
+\end{proof}
+
+\begin{leanfiles}
+Restriction of automorphisms to the integral closure and the affine scheme
+action are in \normsrc{DeckAction.lean}, under
+\leanpath{normalClosureNormalizationRingEquiv},
+\leanpath{normalClosureDeckTransformation}, and
+\leanpath{normalClosureFiniteDeckAction}.  The fixed-ring equivalence and its
+marked perfect-field specialization are
+\leanpath{fixedFieldNormalizationEquivFixedRing} and
+\leanpath{intermediateNormalizationEquivFixedRing} in
+\normsrc{InvariantIntermediate.lean}.
+\end{leanfiles}
+
+\begin{remark}[No \'{e}taleness or quotient assertion]
+Proposition~\ref{prop:fixed-normalization} constructs an action on the affine
+normalization.  It does not assert that the normalization map is finite
+\'etale, extend the action to an independently chosen compactification, or
+prove a scheme-quotient universal property.
+\end{remark}
+
+The cosets \(G/H\) index the \(K\)-embeddings of \(L\) into \(N\).  Chosen
+quotient representatives give an evaluation map
+
+\begin{equation}
+\label{eq:collision-sheet-evaluation}
+  \epsilon:L\otimes_KL\longrightarrow (G/H\to N),
+  \qquad
+  \epsilon(x\otimes y)(gH)=\iota(x)\,g(\iota(y)).
+\end{equation}
+
+The formula is independent of the representative because \(H\) fixes the
+marked copy of \(L\).
+
+Assume \(L/K\) is formally unramified and essentially of finite type.  Its
+chosen diagonal element
+
+\[
+  \delta_{L/K}\in L\otimes_KL
+\]
+
+has multiplication image \(1\) and is killed by the usual differences
+\(1\otimes x-x\otimes1\).  These properties identify its sheet evaluations.
+
+\begin{proposition}[The diagonal element selects the marked sheet]
+\label{prop:diagonal-selector}
+Under the hypotheses above,
+
+\[
+  \epsilon(\delta_{L/K})=q,
+\]
+
+where \(q\in (G/H\to N)\) is the characteristic function of the base coset
+\(H\).  In particular, \(\delta_{L/K}\) is idempotent.  If \(K\) is perfect,
+normal-closure base change gives an \(N\)-algebra equivalence
+
+\[
+  N\otimes_KL\simeq (G/H\to N).
+\]
+\end{proposition}
+
+\begin{proof}
+At the base coset, evaluation is multiplication followed by the distinguished
+embedding, so the value is \(1\).  At a nonbase coset, the associated
+embedding differs from \(\iota\) on some \(x\in L\).  Applying the relation
+\((1\otimes x-x\otimes1)\delta_{L/K}=0\) and using that \(N\) is a field
+forces the value to vanish.  Thus the image is \(q\).  Idempotence follows
+from the same defining relations for the diagonal element.  Over a perfect
+base, separability and the finite-dimensional rank comparison upgrade the
+normal-closure evaluation map to the stated equivalence.
+\end{proof}
+
+\begin{leanfiles}
+The marked normal-closure record and fixing subgroup are in
+\normsrc{NormalClosure.lean}.  The evaluation maps and selector comparison
+are in \normsrc{SelectorComparison.lean}, especially
+\leanpath{NormalClosureData.collisionToGenericSheets_elem_eq_baseSheetSelector},
+\leanpath{formallyUnramifiedElem_isIdempotent}, and
+\leanpath{NormalClosureData.normalClosureTensorGenericSheetsEquiv}.
+The intermediate integral-closure normalization is identified with the
+subgroup-fixed normalization ring in
+\normsrc{InvariantIntermediate.lean}.
+\end{leanfiles}
+
+\begin{remark}[Generic, not compactified]
+Proposition~\ref{prop:diagonal-selector} is a generic algebra statement.  It
+does not extend the selector across a compactification and does not identify
+pointwise selector multiplication with graph convolution.
+\end{remark}
+
+\section{The marked-sheet block normal form}
+\label{sec:marked-block}
+
+Let \(G\) be a group, \(H\leq G\), and
+
+\[
+  F=\Q^{G/H}.
+\]
+
+Finiteness of \(G/H\) is unnecessary for the linear identities in this
+section.  Let \(s_0=H\) be the base sheet, let \(q\in F\) be its
+characteristic function, and put
+
+\[
+  E=\ker(\ev_{s_0}:F\to\Q),
+  \qquad
+  r=q-\one\in E.
+\]
+
+There are two natural splittings of evaluation.  The selector splitting is
+
+\[
+  \Phi_q:F\xrightarrow{\sim}\Q\oplus E,
+  \qquad
+  \Phi_q(f)=
+    \bigl(f(s_0),f-f(s_0)q\bigr),
+\]
+
+with inverse \((t,x)\mapsto tq+x\).  The constant-unit splitting is
+
+\[
+  \Phi_1:F\xrightarrow{\sim}\Q\oplus E,
+  \qquad
+  \Phi_1(f)=
+    \bigl(f(s_0),f-f(s_0)\one\bigr),
+\]
+
+with inverse \((t,x)\mapsto t\one+x\).
+
+Let \(m_q:F\to F\) denote pointwise multiplication by \(q\), and define
+
+\[
+  P_0(t,x)=(t,0),
+  \qquad
+  e_r(t,x)=(t,tr),
+  \qquad
+  U_r(t,x)=(t,x+tr).
+\]
+
+\begin{theorem}[Marked-sheet block normal form]
+\label{thm:marked-block}
+The marked selector satisfies
+
+\begin{align}
+  \Phi_qm_q\Phi_q^{-1}&=P_0,\label{eq:selector-diagonal}\\
+  \Phi_1m_q\Phi_1^{-1}&=e_r,\label{eq:selector-graph}\\
+  \Phi_1\Phi_q^{-1}&=U_r,\label{eq:selector-shear}\\
+  e_r&=U_rP_0U_r^{-1}.\label{eq:shear-conjugacy}
+\end{align}
+
+In particular, \(m_q\), \(P_0\), and \(e_r\) are idempotent.
+\end{theorem}
+
+\begin{proof}
+Take \((t,x)\in\Q\oplus E\).  Since \(x(s_0)=0\), pointwise multiplication
+by \(q\) kills \(x\).  Therefore
+
+\[
+  m_q(tq+x)=tq,
+\]
+
+which proves \eqref{eq:selector-diagonal}.  In the constant-unit splitting,
+
+\[
+  m_q(t\one+x)=tq
+  =t\one+t(q-\one),
+\]
+
+which proves \eqref{eq:selector-graph}.  Comparing the two inverse splittings
+gives
+
+\[
+  \Phi_1\Phi_q^{-1}(t,x)
+  =\Phi_1(tq+x)=(t,x+tr),
+\]
+
+and hence \eqref{eq:selector-shear}.  Conjugating
+\eqref{eq:selector-diagonal} by this transition gives
+\eqref{eq:shear-conjugacy}.  Idempotence also follows directly from
+\(q^2=q\).
+\end{proof}
+
+\begin{leanfiles}
+The two splittings, multiplication operator, graph operator, shear, and all
+four identities are in \sheetsrc{MarkedBlockProjector.lean}.  The principal
+theorems are \leanpath{decomposition_conj_multiplication},
+\leanpath{selectorDecomposition_conj_multiplication},
+\leanpath{selectorToMarked_eq_shear}, and
+\leanpath{shear_conj_diagonalOperator}.
+\end{leanfiles}
+
+The same graph operator occurs in the Tate-block encoding of a rational
+class.  If \(V\) is a rational vector space and \(\alpha\in V\), put
+
+\[
+  e_\alpha:\Q\oplus V\longrightarrow\Q\oplus V,
+  \qquad
+  e_\alpha(t,v)=(t,t\alpha).
+\]
+
+Evaluation of \(e_\alpha\) at \((1,0)\), followed by projection to \(V\),
+recovers \(\alpha\).  Thus \(\alpha\mapsto e_\alpha\) is injective.
+
+\begin{proposition}[Naturality of the marked graph]
+\label{prop:marked-naturality}
+For every rational linear map \(\theta:E\to V\), let
+
+\[
+  \Theta=\operatorname{id}_{\Q}\oplus\theta,
+  \qquad
+  \alpha=\theta(r).
+\]
+
+Then
+
+\begin{equation}
+\label{eq:graph-naturality}
+  \Theta e_r=e_\alpha\Theta.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Both sides send \((t,x)\) to \((t,t\theta(r))\).
+\end{proof}
+
+\begin{leanfiles}
+The rational graph projector, its idempotence, shear form, and class
+detection are in \chowsrc{TateGraphProjector.lean}.  The identification of
+the marked-sheet graph operator with that construction and
+Equation~\eqref{eq:graph-naturality} are in
+\chowsrc{GaloisMarkedBlock.lean}, under
+\leanpath{graphOperator_eq_classGraphProjector} and
+\leanpath{productRealization_intertwines_selectorMultiplication}.
+\end{leanfiles}
+
+\begin{remark}[Naturality is not realization]
+Proposition~\ref{prop:marked-naturality} applies to every rational linear map
+\(\theta\).  It does not construct \(\theta\) from geometry, show that it is
+motivic, or prove that \(\theta(r)\) is the class of an algebraic cycle.
+\end{remark}
+
+\section{A conditional realization criterion}
+\label{sec:conditional-realization}
+
+The exact remaining comparison can be stated without identifying the
+pointwise sheet algebra with a correspondence algebra.  Let \(\Gamma\) be a
+possibly noncommutative rational algebra.  Supply an
+\leanpath{AlgebraProjectorExtension} \(\mathcal E\) with generic algebra
+\(F\), compactified algebra \(\Gamma\), and generic projector \(q\).
+Thus \(\mathcal E\) includes an algebra homomorphism
+
+\[
+  \operatorname{res}:\Gamma\longrightarrow F,
+\]
+
+a type of extension witnesses, and for each witness \(x\) an idempotent
+\(\mathcal E.\operatorname{projector}(x)\in\Gamma\) whose restriction is
+exactly \(q\).  Choose such an \(x\), put
+\(\Pi=\mathcal E.\operatorname{projector}(x)\), and let \(\Gamma\) act on
+\(\Q\oplus V\):
+
+\[
+  \rho:\Gamma\longrightarrow
+  \End_{\Q}(\Q\oplus V).
+\]
+
+Let \(\theta:E\to V\) be linear, put
+\(\Theta=\operatorname{id}_{\Q}\oplus\theta\), and assume
+
+\begin{equation}
+\label{eq:action-square}
+  \rho(\Pi)\Theta=\Theta e_r.
+\end{equation}
+
+This equation is substantive input: it compares the action of a compactified
+correspondence with generic selector multiplication.
+
+\begin{proposition}[Marked-selector realization criterion]
+\label{prop:conditional-realization}
+Assume Equation~\eqref{eq:action-square} and
+\(\theta(r)=\alpha\in V\).  Then the lower-left class of \(\rho(\Pi)\) is
+\(\alpha\):
+
+\[
+  \operatorname{pr}_V\bigl(\rho(\Pi)(1,0)\bigr)=\alpha.
+\]
+
+If \(\theta\) is surjective, then the whole operator is the graph projector,
+
+\[
+  \rho(\Pi)=e_\alpha.
+\]
+\end{proposition}
+
+\begin{proof}
+Evaluate \eqref{eq:action-square} at \((1,0)\).  Its right side is
+\(\Theta(1,r)=(1,\alpha)\), which proves the first assertion.  If \(\theta\)
+is surjective, then \(\Theta\) is surjective.  Proposition
+~\ref{prop:marked-naturality} and \eqref{eq:action-square} give
+
+\[
+  \rho(\Pi)\Theta=\Theta e_r=e_\alpha\Theta.
+\]
+
+Surjective cancellation proves \(\rho(\Pi)=e_\alpha\).
+\end{proof}
+
+Now let \(M\) be a supplied rational cycle-class model, consisting of a
+rational module \(A\), a rational vector space \(V\), an independently
+distinguished Hodge-class subspace of \(V\), and a cycle-class map
+
+\[
+  \operatorname{cl}:A\longrightarrow V.
+\]
+
+The model also requires
+\(\operatorname{im}(\operatorname{cl})\) to lie in that distinguished
+subspace; it does not define the Hodge subspace to be the cycle-class image.
+
+A lower-left detection map is a supplied linear map
+
+\[
+  d:\Gamma\longrightarrow A
+\]
+
+compatible with the action in the sense that
+
+\[
+  \operatorname{cl}(d(z))
+  =\operatorname{pr}_V\bigl(\rho(z)(1,0)\bigr)
+  \qquad(z\in\Gamma).
+\]
+
+\begin{corollary}[Conditional cycle-class detection]
+\label{cor:conditional-detection}
+Under the hypotheses of Proposition~\ref{prop:conditional-realization} and a
+supplied compatible lower-left detection map,
+
+\[
+  \operatorname{cl}(d(\Pi))=\alpha.
+\]
+
+Thus \(\alpha\) belongs to the range of the supplied cycle-class map.
+Surjectivity of \(\theta\) is not needed for this conclusion.
+\end{corollary}
+
+\begin{leanfiles}
+The comparison record, lower-left calculation, surjective cancellation, and
+cycle-class conclusion are in \chowsrc{GaloisMarkedRealization.lean}, under
+\leanpath{MarkedGaloisSelectorComparison},
+\leanpath{lowerLeftClass_action_eq}, \leanpath{realizes}, and
+\leanpath{isAlgebraicHodgeClass_of_comparison}.  The cycle-class model and
+the definition of its cycle-class range are in
+\leanpath{HodgeConjecture/Realization/HodgeClasses.lean}.
+\end{leanfiles}
+
+\begin{remark}[Why the ambient algebra may be noncommutative]
+The graph projectors satisfy
+
+\[
+  e_\alpha e_\beta=e_\alpha,
+  \qquad
+  e_\beta e_\alpha=e_\beta.
+\]
+
+They commute exactly when \(\alpha=\beta\).  Therefore one fixed commutative
+correspondence algebra acting through an algebra homomorphism cannot realize
+distinct graph projectors.  The conditional interface deliberately keeps
+the generic sheet algebra commutative while permitting \(\Gamma\) to be
+noncommutative.
+\end{remark}
+
+\begin{remark}[No Hodge consequence in the present draft]
+Corollary~\ref{cor:conditional-detection} is a theorem about supplied abstract
+data.  The repository does not construct, for a smooth projective complex
+variety, the Chow module \(A\), Betti cohomology \(V\), the Hodge-class
+subspace, the Tate-augmented correspondence algebra, the compactified
+extension package \(\mathcal E\), its restriction map or idempotent \(\Pi\),
+the residual map \(\theta\), Equation
+~\eqref{eq:action-square}, or the detection map \(d\).  In particular, it
+does not establish a new class of varieties or Hodge classes satisfying the
+Hodge conjecture.
+\end{remark}
+
+\subsection{A transparent conditional boundary corollary}
+\label{subsec:conditional-boundary}
+
+The formal development also records the following forward-only endpoint.
+Let \(R\to A\) be an essentially finite-type map of commutative rings, let
+\((P_\lambda)_{\lambda\in\Lambda}\) be a chosen family of prime ideals of
+\(A\), and let \((J_\lambda)_{\lambda\in\Lambda}\) be a chosen family of
+subgroups of a deck-transformation group \(G\).  Fix a finite subgroup
+\(D\leq G\), and write \(a_D\) for the generic subgroup-average
+correspondence.  Supply generic and compactified rational algebras
+\(\Gamma_{\mathrm{gen}}\) and
+\(\Gamma_{\mathrm{cpt}}\), a rational Chow-correspondence model \(\chi\),
+and a prescribed rational cohomological projector with underlying operator
+\(T\).  Write \(\operatorname{cl}_{\chi,\mathrm{gen}}\),
+\(\operatorname{res}_{\chi}\), and \(\rho_{\chi}\) for the model's generic
+cycle-class, restriction, and cohomological-action maps.
+
+\begin{corollary}[Conditional different-avoidance boundary endpoint]
+\label{cor:conditional-boundary}
+Suppose the following data and implications are supplied separately:
+
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.6em]
+  \item a type \(\mathcal X\) of proposed extensions and a compactified-class
+        extraction map \(c:\mathcal X\to\Gamma_{\mathrm{cpt}}\);
+  \item compactified idempotence, \(c(x)^2=c(x)\) for every
+        \(x\in\mathcal X\);
+  \item the restriction identity
+        \[
+          \operatorname{res}_{\chi}(c(x))
+          =\operatorname{cl}_{\chi,\mathrm{gen}}(a_D)
+          \qquad(x\in\mathcal X);
+        \]
+  \item the one-way purity implication that simultaneous inertia saturation
+        of the base sheet under every \(J_\lambda\) yields a witness in
+        \(\mathcal X\);
+  \item for every chosen prime \(P_\lambda\), a supplied
+        \leanpath{HeightOneInertiaRealization} comparing the relevant
+        algebraic ramification data with \(J_\lambda\), \(D\), and
+        \(P_\lambda\);
+  \item the prescribed-action identity
+        \[
+          \rho_{\chi}(c(x))=T
+          \qquad(x\in\mathcal X);
+        \]
+  \item avoidance of the collision Noether different at every chosen prime:
+        \[
+          \mathfrak D_{A/R}^{\mathrm{coll}}\not\subseteq P_\lambda
+          \qquad(\lambda\in\Lambda).
+        \]
+\end{enumerate}
+
+Then there exists \(\Pi\in\Gamma_{\mathrm{cpt}}\) such that
+
+\[
+  \Pi^2=\Pi,
+  \qquad
+  \operatorname{res}_{\chi}(\Pi)
+    =\operatorname{cl}_{\chi,\mathrm{gen}}(a_D),
+  \qquad
+  \rho_{\chi}(\Pi)=T.
+\]
+\end{corollary}
+
+\begin{proof}
+Essential finite type supplies collision-different detection at every
+\(P_\lambda\).  For each \(\lambda\), combine that detection, the supplied
+\leanpath{HeightOneInertiaRealization}, and different avoidance with the
+base-sheet extension criterion to obtain \(J_\lambda\)-saturation of the
+base sheet.  The one-way purity implication then gives some
+\(x\in\mathcal X\).
+Taking \(\Pi=c(x)\), the separately supplied idempotence, restriction, and
+prescribed-action hypotheses give the three displayed conclusions.
+\end{proof}
+
+The essential finite-type hypothesis supplies only the detection of the
+non-unramified locus by the collision Noether different, in the sense of
+Stacks Project, Lemma~49.6.8, Tag~\texttt{0BVU}
+\cite{StacksNoetherDifferent}.  It does not supply the inertia realization,
+purity implication, compactified class, restriction comparison, or
+prescribed-action equality.  The primes \(P_\lambda\) are merely the chosen prime
+ideals in the Lean statement; they are not encoded there as an exhaustive
+boundary family or as height-one primes.  The name of the supplied inertia
+interface records its intended height-one application.
+
+\begin{leanfiles}
+This is
+\leanpath{exists_prescribed_subgroupAverage_chowProjector_of_different_away}
+in \chowsrc{GaloisProjector.lean}.  Its conclusion is an idempotent in an
+abstract compactified algebra with restriction and action equations, not a
+constructed element of a concrete Chow ring.
+\end{leanfiles}
+
+\begin{remark}[Exact force of the boundary slogan]
+Corollary~\ref{cor:conditional-boundary} is the honest current formal form of
+``different avoidance extends the projector.''  It is a one-way conditional
+packaging theorem, not the desired unconditional boundary-extension theorem
+and not an equivalence.
+\end{remark}
+
+\section{Formal status and limitations}
+\label{sec:status}
+
+The verified dependency spine is
+
+\[
+\begin{gathered}
+  \text{finite-\'etale span classes}
+  \longrightarrow
+  \mathcal C_{\fe}^{\mathrm{free}}(X/S),\\
+  \text{deck action}
+  \longrightarrow
+  \Q[G]\longrightarrow
+  \mathcal C_{\fe}^{\mathrm{free}}(X/S),\\
+  \text{group/Hecke idempotent}
+  \longrightarrow
+  \text{formal convolution projector},\\
+  \text{marked pointwise selector}
+  \longrightarrow
+  \text{diagonal and graph block forms}.
+\end{gathered}
+\]
+
+The conditional Galois collision theorem additionally consumes the explicit
+torsor/coproduct comparison and a finite-additive algebra realization.  The
+conditional marked realization criterion additionally consumes the
+compactified extension, residual map, action square, and detection map.  The
+conditional boundary corollary consumes the separately listed class
+extraction, compactified idempotence, purity, inertia, restriction, and
+prescribed-action inputs; essential finite type discharges only different
+detection.  The following are not results of this note:
+
+\begin{itemize}[leftmargin=2.2em]
+  \item identification of the free span algebra with a Chow or bivariant
+        correspondence algebra;
+  \item extraction of pure-dimensional proper cycle classes or compatibility
+        with refined Chow convolution;
+  \item extension of a generic selector or cover across a compactification;
+  \item equivalence of selector invariance, inertia triviality, and vanishing
+        of a different or conductor obstruction;
+  \item construction of a Chow-motivic residual map or proof of the action
+        square \eqref{eq:action-square};
+  \item a concrete Chow, cohomology, Hodge-structure, or cycle-class model;
+  \item any partial or complete proof of the Hodge conjecture.
+\end{itemize}
+
+In particular, a pointwise idempotent in a sheet-function algebra must not be
+advertised as a Chow idempotent.  Even when a generic cycle has a closure,
+compatibility of restriction with correspondence composition is needed to
+show that its idempotence defect is boundary-supported, and an additional
+argument is needed to show that such a boundary-supported defect vanishes.
+
+The checked development uses Lean~4.24.0 and Mathlib revision
+\texttt{f897ebcf72cd16f89ab4}\allowbreak
+\texttt{577d0c826cd14afaafc7}.  Lean and Mathlib are described in
+\cite{Lean4,Mathlib}.  An immutable release commit or archive has not yet
+been assigned.
+
+The working source is at
+\url{https://github.com/what-social-construct/HodgeConjecture}.  Before any
+submission, the statements and source-line mappings must be checked against
+the release commit, the bibliography and neighboring literature must be
+audited, author and license metadata must be finalized, and an independent
+mathematical review must be recorded.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+Finite-\'etale scheme spans provide a small admissible correspondence class
+whose convolution is stable under the basic geometric operations used by
+finite group actions.  Passing to isomorphism classes and then to the rational
+monoid algebra makes the convolution laws strict.  Graphs consequently turn
+every rational group-algebra idempotent into a formal correspondence
+idempotent, transport orthogonal group-algebra decompositions to decompositions
+of the diagonal, produce normalized finite-group projectors and
+Hecke-corner/double-coset operators, and transport supplied idempotents of the
+Hecke corner.
+
+The marked-sheet calculation supplies a separate and exact bridge at the
+linear level.  A base-sheet selector is diagonal in selector coordinates but
+becomes the canonical graph projector of \(q-1\) in constant-unit coordinates.
+This is a change of splitting, not an identification of pointwise and
+convolution products.  Naturality under a residual linear map remains pure
+linear algebra.
+
+The conditional realization criterion shows precisely what further data
+would connect that block identity to a cycle-class statement.  Constructing
+those data geometrically remains open in this repository.  The present
+contribution is therefore the formal correspondence calculus, the marked
+block theorem, and auditable interfaces for the missing realization and
+boundary-extension steps.
+
+\paragraph{Acknowledgment.}
+OpenAI Codex assisted with the Lean formalization and manuscript draft.  The
+manuscript remains subject to author review; responsibility for its final
+statements, proofs, citations, and release terms belongs to the author.
+
+\begingroup
+\small
+\bibliographystyle{alpha}
+\bibliography{references}
+\endgroup
+
+\end{document}

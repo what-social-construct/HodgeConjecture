@@ -1,63 +1,32 @@
-import HodgeConjecture.Foundations.FiberProduct
-import HodgeConjecture.Foundations.OffDiagonal
-import Mathlib.RingTheory.Kaehler.Basic
+import HodgeConjecture.Collision.Algebra
+import HodgeConjecture.Collision.ClopenDecomposition
+import HodgeConjecture.Collision.ComponentSelectors
+import HodgeConjecture.Collision.CollisionDiagonal
+import HodgeConjecture.Collision.EtaleDecomposition
+import HodgeConjecture.Collision.GlobalGeometry
+import HodgeConjecture.Collision.PolynomialFiberProduct
+import HodgeConjecture.Collision.SchemeDecomposition
 
 /-!
-# Abstract collision algebras
+# Collision stage
 
-This file extracts the tensor-product collision algebra from the polynomial
-presentation used in `CollisionIdeals`.
+This umbrella module collects the complete collision stage:
 
-For an algebra `B → A`, the self-collision algebra is `A ⊗[B] A`.  Its
-diagonal obstruction is the kernel of tensor multiplication.  The canonical
-off-diagonal ideal is the annihilator of this obstruction, equivalently the
-first colon ideal in any ambient quotient presentation.
+* polynomial and tensor-product collision algebras;
+* the global self-fiber product `R_f = X ×[Y] X`;
+* the relative diagonal and its obstruction ideal sheaf;
+* intrinsic annihilator and ambient sheaf-colon residuals;
+* diagonal/off-diagonal component-selector conventions;
+* affine compatibility with `A ⊗[B] A`;
+* the canonical affine-scheme coproduct decomposition, with its first
+  component identified with the actual relative diagonal;
+* the global clopen collision decomposition for separated étale—and hence
+  finite étale—morphisms;
+* a reusable global witness for a literal decomposition
+  `X ×[Y] X ≅ X ⨿ Rᵒᶠᶠ`, together with the component maps into `X ×[S] X`.
+
+The idempotents in this stage use multiplication in a coordinate ring and
+classify clopen scheme components.  Turning their components into Chow
+correspondences, and proving idempotence for correspondence composition, are
+separate realization inputs.
 -/
-
-set_option autoImplicit false
-
-namespace HodgeConjecture
-
-open Algebra
-open scoped TensorProduct
-
-noncomputable section
-
-universe u v
-
-variable (B : Type u) (A : Type v)
-variable [CommRing B] [CommRing A] [Algebra B A]
-
-/-- The coordinate ring of the abstract self-collision fiber product. -/
-abbrev CollisionAlgebra :=
-  CollisionFoundations.SelfFiberProductAlgebra (B := B) (A := A)
-
-/-- Tensor multiplication, dual to the relative diagonal. -/
-abbrev collisionMultiplication :
-    CollisionAlgebra B A →ₐ[B] A :=
-  CollisionFoundations.diagonalMultiplication
-
-/-- The ideal of the relative diagonal in the collision algebra. -/
-abbrev collisionObstructionIdeal :
-    Ideal (CollisionAlgebra B A) :=
-  KaehlerDifferential.ideal B A
-
-/-- The canonical residual off-diagonal ideal inside the collision algebra. -/
-def collisionOffDiagonalIdeal :
-    Ideal (CollisionAlgebra B A) :=
-  (collisionObstructionIdeal B A).annihilator
-
-/--
-The off-diagonal ideal is the quotient form of the first-colon construction.
-
-This is the abstract tensor-product version of
-`CollisionFoundations.comap_annihilator_map_quotient_eq_colon`.
--/
-theorem collisionOffDiagonalIdeal_eq_annihilator :
-    collisionOffDiagonalIdeal B A =
-      (collisionObstructionIdeal B A).annihilator :=
-  rfl
-
-end
-
-end HodgeConjecture

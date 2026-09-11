@@ -10,12 +10,19 @@ package «hodge-conjecture» where
   ]
 
 /-!
-Reuse the formally verified collision and inertia machinery at a pinned
-revision so fresh clones reproduce the same dependency graph.
+Pin Mathlib directly so fresh clones reproduce the verified dependency graph.
 -/
-require «collision-ideals» from git
-  "https://github.com/what-social-construct/collision-ideals.git" @
-  "a409db9922279907493d96f691b5ea9eb71baaf9"
+require mathlib from git
+  "https://github.com/leanprover-community/mathlib4" @
+  "f897ebcf72cd16f89ab4577d0c826cd14afaafc7"
 
 @[default_target]
 lean_lib HodgeConjecture
+
+@[default_target]
+lean_lib Challenge where
+  roots := #[`Challenge]
+
+@[default_target]
+lean_lib Solution where
+  roots := #[`Solution]

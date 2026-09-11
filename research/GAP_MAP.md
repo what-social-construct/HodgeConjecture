@@ -1,0 +1,728 @@
+# Current gap map
+
+Last audited: 2026-09-10.
+
+This note follows the semantic discipline of the sibling
+`jacobian-collision-geometry` project: source and target propositions are
+named exactly, proved arrows are separated from parameterized arrows, and a
+geometric interface is not treated as a theorem merely because later record
+assembly is formal.
+
+## Classical target and formal model schema
+
+For a fixed smooth projective complex variety `X` and a codimension `p`, the
+classical rational Hodge target is
+
+```text
+HodgeConjectureAt(X, p) :=
+  for every α in H^(2p)(X, ℚ) ∩ H^(p,p),
+    there exists z in CH^p(X)_ℚ with cl(z) = α.
+```
+
+`Realization/HodgeClasses.lean` records exactly this logical shape for
+supplied linear-algebra data.  A
+`RationalHodgeCycleClassModel Chow H` specifies the rational Chow module, the
+degree-`2p` rational cohomology module, the independently defined submodule of
+rational Hodge classes, and the cycle-class map.  Then
+
+```lean
+RationalHodgeConjectureAt M :=
+  M.hodgeClasses ≤ LinearMap.range M.cycleClass
+
+RationalHodgeConjectureForModel M :=
+  ∀ p, RationalHodgeConjectureAt (M p)
+
+RationalHodgeConjectureForFamily M :=
+  ∀ X p, RationalHodgeConjectureAt (M X p)
+```
+
+The all-codimension model uses cohomological degree `2 * p`; the family form
+also quantifies over an explicit indexing type.  It becomes the universal
+classical conjecture only when that type indexes all smooth projective
+complex varieties and `M` supplies their genuine geometric data.  Lean proves
+that the pointwise statement is equivalent both to the explicit `∀ α, ∃ z`
+formulation and to equality of the cycle-class image with the Hodge-class
+submodule.  The repository does not yet construct these data for a concrete
+`X`, let alone the universal family; in particular it has no concrete Chow
+group, Betti cohomology, or pure Hodge structure implementation.
+
+There is now a non-circular projector reformulation in
+`Realization/Chow/TateGraphProjector.lean`.  A class `α` is encoded by the
+canonical graph projector on the underlying rational module of
+`ℚ(-p) ⊕ H^(2p)(X, ℚ)`:
+
+```text
+e_α(t, x) = (t, t α),       e_α^2 = e_α.
+```
+
+Evaluation at `(1, 0)` followed by the second projection recovers `α`.
+`ClassGraphProjectorConstruction` records construction and realization of the
+Chow block `[[1, 0], [z, 0]]`; `ClassGraphProjectorDetection` records
+extraction of the lower-left Chow block and its cycle-class compatibility.
+Neither interface mentions Hodge membership, surjectivity, or the conjecture.
+The two directions are formalized separately, and together give
+
+```lean
+RationalHodgeConjectureAt M ↔
+  EveryHodgeClassHasGraphProjectorLift M ρ.
+```
+
+This is the equivalence target.  It is conditional only on the displayed
+Tate-block construction and detection maps, not on the two implications being
+postulated.  To instantiate it geometrically still requires the actual Chow
+correspondence algebra of `ℚ(-p) ⊕ h(X)`, its action on cohomology, and the two
+block-comparison laws.  `ClassGraphProjectorHodgeCompatibility` separately
+names the expected equivalence
+
+```text
+α is a rational (p,p) class  <->  e_α is a morphism of Hodge structures.
+```
+
+With that interface, Lean also proves the equivalent formulation quantifying
+over graph operators that are Hodge morphisms.  No Hodge structure or this
+compatibility is currently instantiated.
+
+The current finite-cover branch does **not** yet prove the right-hand side for
+every Hodge class.  A `PrescribedChowProjectorLift` for
+`ClassGraphProjector.projector α` gives the appropriate algebraic projector
+lift for one `α` once its abstract action is identified with the Tate-block
+action.  With lower-left block detection,
+`PrescribedChowProjectorLift.isAlgebraicHodgeClass_of_classGraphProjector`
+formally extracts its Chow representative, and
+`ClassIndexedFiniteCoverGraphCoverage` permits the extension package to vary
+with `α` over fixed deck-action data and a fixed finite subgroup.  The
+abstract context does not assert that `pX` is finite or étale; those are
+requirements on a genuine cover instance.  Together with detection, coverage
+implies the Hodge target.  The older theorem with one fixed extension package
+is retained as a stronger fixed-package sufficient hypothesis.  A realistic
+formulation may need even the cover and subgroup to vary with `α`.
+
+This remains a one-way sufficient criterion, not an equivalence with the
+finite-cover branch.  The Hodge conjecture gives an arbitrary Chow graph
+lift; it does not imply that the lift factors through some `E.Extension`, has
+the prescribed generic restriction, or belongs to a cover-generated image.
+`GraphProjectorLiftFactorizationThroughFixedDeckData` now names exactly that
+missing arrow, for a supplied target predicate, from an algebraic graph lift
+to a prescribed lift through class-indexed extension data.  Using the
+rational Hodge-class predicate, this explicit unproved factorization plus
+construction and detection gives a Lean conditional iff between the Hodge
+target and class-indexed coverage.  The factorization may be strictly
+stronger than Hodge and may only be plausible for a specified family or
+Hodge subspace.
+
+The quantifier order of this existing coverage declaration is important.  The
+map `pX`, group and deck action, subgroup, correspondence model, and generic
+and compactified algebras are fixed; only the extension package varies with
+the class:
+
+```text
+[pX, G, deck, D, χ fixed],
+  ∀ α, IsRationalHodgeClass M α →
+    ∃ Eα, PrescribedChowProjectorLift χ Eα e_α.
+```
+
+A faithful class-indexed Galois target may instead need
+
+```text
+∀ α, IsRationalHodgeClass M α →
+  ∃ (Gα, coverα, Hα ≤ Gα, χα, Pα, θα, Eα),
+    θα carries the marked residual class to α ∧
+    Eα compactifies Pα compatibly with χα.
+```
+
+Thus the cover, Galois group, marked stabilizer, comparison, and extension may
+all depend on `α`.  The new
+`ClassDependentMarkedGaloisSelectorWitness` represents the finite group,
+marked subgroup, abstract extension package, and residual comparison with
+this quantifier order while keeping one ambient noncommutative algebra and
+action.  It still omits the actual cover or normal-closure datum, its map to
+the sheet algebra, and a geometric construction of the comparison.  Thus it
+is a logically correct intermediate schema, not yet the faithful geometric
+witness displayed above.
+
+There is also a motivic algebra mismatch to resolve explicitly.  The conventional
+compactified algebra `CH^d(X × X)_ℚ` described by the current `χ` has no
+Tate-to-`X` lower-left block by itself.  The graph reduction instead needs the
+Tate-augmented algebra `End(ℚ(-p) ⊕ h(X))`, with its action restricted to the
+Tate line and degree-`2p` cohomology, plus a comparison from the finite-cover
+model.  Constructing that algebra must fix the covariant/contravariant motive
+convention and, if correspondence composition reverses the chosen action,
+use the appropriate opposite algebra.
+
+### Marked Galois block route
+
+Block diagonality is not itself an obstruction.  For the standard Tate graph,
+put
+
+```text
+P₀(t, x) = (t, 0),
+U_α(t, x) = (t, x + t α).
+```
+
+Lean now proves that `U_α` is a rational linear equivalence with inverse
+`U_{-α}` and
+
+```text
+e_α = U_α P₀ U_α⁻¹.
+```
+
+It also proves that `r_α = 2e_α - 1` is an involution and
+`e_α = (1 + r_α)/2`.  These are exact linear identities, not constructions of
+an algebraic shear or deck involution.
+
+The Galois-sheet algebra supplies a non-circular source for the same block
+shape.  Let `q` be the characteristic function of the marked base sheet in
+`F = ℚ^(G/H)` and let `E = ker(ev_base)`.  Multiplication by `q` is
+`diag(1,0)` in the selector/CRT decomposition `F ≃ ℚq ⊕ E`.  In the
+constant-unit marked decomposition `F ≃ ℚ1 ⊕ E`, the same multiplication map
+is
+
+```text
+(t, x) ↦ (t, t · (q - 1)).
+```
+
+The two decompositions differ by the lower shear with residual class `q - 1`.
+This is formalized in `Boundary/Sheets/MarkedBlockProjector.lean`; the
+identification with `ClassGraphProjector.operator (q - 1)` and its naturality
+under a residual linear map are in
+`Realization/Chow/GaloisMarkedBlock.lean`.  It precisely mirrors the sibling
+marked-root/CRT construction, where product decomposition and compatibility
+with first projection are proved separately.
+
+`Realization/Chow/GaloisMarkedRealization.lean` now isolates the next exact
+conditional arrow.  An `AlgebraProjectorExtension` separates the commutative
+generic sheet algebra from a possibly noncommutative compactified
+correspondence algebra `Γ`; its chosen compactified idempotent restricts to
+`q`.  A `MarkedGaloisSelectorComparison` consists of a residual realization
+`θ`, the equality `θ(q - 1) = α`, and the square intertwining the compactified
+idempotent's action with multiplication by `q`.  Evaluating the square at the
+marked unit proves that the lower-left class is `α`, so Chow-block detection
+already yields an algebraic representative without surjectivity.  If `θ` is
+surjective, naturality and cancellation additionally prove—rather than
+assume—the whole target equality
+
+```text
+ρ(e) = e_α.
+```
+
+This algebra separation is necessary, not cosmetic.  If one fixed
+commutative selector algebra were also used as the correspondence algebra for
+all classes, all induced projectors would commute.  But
+`e_α e_β = e_α` and `e_β e_α = e_β`, so two graph projectors commute only
+when `α = β`; since the zero class is always Hodge, such fixed-commutative
+coverage could cover only the zero Hodge subspace.  Allowing the ambient
+correspondence algebra to be noncommutative removes that artificial collapse.
+
+Under this surjectivity, the compactified idempotent is consequently an
+`AlgebraicProjectorLift`.  The
+class-dependent witness package keeps `Γ` and its action fixed but permits the
+finite group, marked subgroup, extension package and element, and residual
+comparison to vary with `α`.  Coverage by surjective witnesses implies the
+modeled `RationalHodgeConjectureAt`.  A reverse conditional iff uses the
+separately named strong replacement predicate
+`StrongGraphProjectorLiftReplacementByClassDependentMarkedGaloisSelector`.
+That predicate asserts existence replacement; it does not produce or relate
+a particular factorization map.
+
+The remaining Galois-to-Hodge arrow is therefore a geometrically constructed
+Chow-motivic map
+
+```text
+θ_α : E_α(-p) → h(X)
+```
+
+whose cohomological realization sends `q_α - 1` to `α` and supplies the
+compactified action square.  An arbitrary rational linear map satisfies only
+the pure graph-naturality identity; it does not supply that geometric square
+or prove algebraicity.  Constructing `θ_α` from an already known Chow
+representative of `α` would be circular; it must arise independently from the
+cover geometry.  The conditional structure does not provide `θ_α`, the
+extension package, the action square, or Chow detection.  Surjectivity is a
+strong additional sufficient hypothesis used to identify the action on all
+of `ℚ × H`, rather than only on the image of the sheet realization.  The
+abstract class-dependent witness also does not yet bundle an actual finite
+cover or normal-closure datum.
+
+The subgroup-average branch remains distinct.  Under the obvious blockwise
+action on `ℚ(-p) ⊕ H`, its matrix is `diag(1, Av_D)`.  It can be used only
+after isolating a marked summand on which the invariant line and residual
+kernel have the required block form, or after an explicit comparison with the
+sheet-selector construction.  Fixedness of a selector under averaging is not
+equality of the two algebra elements.
+
+## The adjacent finite-cover endpoint
+
+For fixed compactification data `E`, an abstract rational
+Chow-correspondence model `χ`, and a separately prescribed rational
+cohomological projector `e`, the nearest source and target propositions in
+the finite-cover branch are
+
+```lean
+P := Nonempty E.Extension
+
+Q := Nonempty
+  (HodgeConjecture.SchemeCorrespondence.PrescribedChowProjectorLift χ E e)
+```
+
+The conditional bridge is
+`PrescribedChowProjectorLift.nonempty_iff_extension_nonempty` in
+`HodgeConjecture/Realization/Chow/GaloisProjector.lean`.  Besides restriction
+compatibility, its substantive input is
+
+```lean
+∀ x : E.Extension,
+  χ.cohomologicalAction.action (E.projector x) = e.operator
+```
+
+Once this equality is supplied, constructing the target is record assembly.
+Thus this conditional iff is not a proof that `e` is algebraic: its
+`hRealizes` hypothesis already supplies the hard target-identification
+equality.  Proving that equality for an independently specified `e` is
+geometric or Hodge-theoretic.  Generic restriction does not prove it:
+boundary-supported corrections can have nonzero cohomological action.
+
+The forward-facing theorem
+`exists_prescribed_subgroupAverage_chowProjector_of_different_away` now
+unpacks this interface instead of hiding it in an extension structure.  Under
+essential finite type it discharges collision-different detection and returns
+an explicit compactified idempotent, but it takes compactified cycle
+extraction, convolution-idempotence, one-way purity, height-one inertia
+comparison, generic restriction, and prescribed realization as separate
+hypotheses.  Its indexed ideals are prime, but their height-one status and
+completeness as a boundary family are not asserted by the theorem.  It is
+therefore the strongest honest form of the slogan
+"different avoidance produces the prescribed subgroup-average projector" on
+the current tree, not a proof of the proposed unconditional boundary theorem.
+
+The current API asks for the equality for every extension witness.  For the
+single implication `P -> Q`, the logically minimal missing proposition would
+instead be one compatible witness:
+
+```lean
+∃ x : E.Extension,
+  χ.cohomologicalAction.action (E.projector x) = e.operator
+```
+
+## The compactification lift before that endpoint
+
+Let `γ` be the generic finite-group or subgroup averaging projector.  The
+relevant diagram is
+
+```text
+                         restriction
+  compactified algebra  ------------->  generic algebra
+          Π              |------------>       γ
+          |
+          | cohomological action
+          v
+      End(H*)
+       e.operator
+```
+
+The problem is to find a compactified idempotent `Π` over `γ` and then prove
+that its action is the prescribed operator.  It should not be represented by
+a global algebra map from the generic algebra back to the compactified
+algebra: such a section would assert that every generic correspondence
+extends and is much stronger than the projector-specific claim.
+
+An upstream source proposition is boundary avoidance
+
+```lean
+P_boundary :=
+  ∀ i, ¬ collisionNoetherDifferentIdeal R A ≤ P i
+```
+
+and the adjacent target is `Nonempty E.Extension`.  The current implication
+from inertia saturation to this target is a field of
+`CompactifiedSubgroupProjectorExtension`; it packages the still-unproved
+cycle-extraction, support, refined-convolution, and purity/gluing comparison.
+
+## What the existing purity citations buy
+
+The sibling collision repository already cites Stacks Tag `0BMB`.  Pointwise,
+under its locally Noetherian, normal-source, regular-target,
+quasi-finite/equal-positive-dimension hypotheses, it gives the implication
+
+```text
+unramified at every dimension-one specialization
+  -> étale at the selected point.
+```
+
+This is source material for a concrete instance of `NormalizationPurity`; it
+does not by itself prove that global abstract interface or construct a
+correspondence on a compactification.  The archived sibling manuscript also
+explicitly warns that generic collision components can meet in an integral
+model and therefore does not assert extension of their generic idempotents.
+
+There is nevertheless a more precise source chain for a *one-way*, concrete
+compactification theorem under additional hypotheses:
+
+```text
+codimension-one unramified finite étale cover of a dense open
+  -- Stacks 0H2W, under regular locally Noetherian boundary hypotheses
+      --> finite étale cover of the compactification
+  -- Stacks 0BQF, under its punctured strict-henselian connectedness hypotheses
+      --> extension of deck transformations
+  -- Stacks 0FG3 / 0FG0 plus the finite-group averaging calculation
+      --> graph-average Chow idempotent
+```
+
+Tags `0EY6` and `0EY7` describe related extension mechanisms rather than
+interchangeable proofs of the first arrow: `0EY6` constructs a finite
+reflexive-algebra extension under depth-two hypotheses and needs local
+freeness for étaleness, while `0EY7` assumes purity at every omitted local
+ring.  None applies automatically to a singular compactification.
+
+Tag `0BQF` proves full faithfulness of restriction; extending an automorphism
+uses it for the automorphism and its inverse.  Tags `0FG3` and `0FG0` supply
+correspondence composition and graph functoriality in the smooth projective
+setting.  Idempotence of the normalized graph average is the rational
+finite-group corollary, not the literal statement of either tag.  This chain
+would prove the existence direction needed here only after the concrete
+cover, compactification, action, and restriction comparisons are constructed.
+It does not prove the current abstract equivalence
+
+```lean
+Nonempty E.Extension ↔ ∀ i, inertiaSaturatedAtBaseClass ...
+```
+
+and the global cover theorem requires unramifiedness at every relevant
+boundary point.  A condition at one selected sheet cannot be substituted
+without proving the conjugacy/intermediate-cover comparison.
+
+At the level of cycles, Stacks Tags `02RA` and `02RX` give only a raw lift:
+
+```text
+generic Chow class lifts to the compactification
+  -> its idempotence defect is supported on the boundary.
+```
+
+The assertion that the idempotence defect is boundary-supported additionally
+uses compatibility of restriction with correspondence composition; Tags
+`02RA` and `02RX` do not supply that comparison.  They do not show that the
+boundary defect is zero.  Thus the compactification gap should be tracked as
+three separate tasks:
+
+1. extend the finite étale cover and its deck action;
+2. construct an idempotent graph average (or correct a boundary-supported
+   defect);
+3. identify the resulting cohomological action with `e.operator`.
+
+Wildeshaus, *Intermediate extension of Chow motives of Abelian type*,
+Theorem 0.1(d), extends an idempotent on the relevant direct factor of a
+proper smooth Kuga-family motive to its motivic intermediate extension in the
+paper's neat pure-Shimura/Baily--Borel setting and under its technical
+Shimura-datum hypothesis.  Realization compatibility is a separate theorem in
+that paper.  This is a plausible route to a publishable conditional or
+special-case theorem if the intended family and the repository's abstract
+Chow model are identified with that setting; it is not a general discharge of
+`CompactifiedSubgroupProjectorExtension` or of the equality with `e.operator`.
+
+For the near-term Lean architecture, the source-backed interface should ask
+first for the implication
+
+```lean
+(∀ i, inertiaSaturatedAtBaseClass ...) → Nonempty E.Extension
+```
+
+rather than requiring an if-and-only-if whose reverse direction none of the
+identified compactification sources supplies.
+
+## What is inherited from the Jacobian-collision project
+
+The Jacobian repository does not begin with a bundled finite-étale cover.
+Its `PolynomialNormalizedCover` packages a marked normal closure, module
+finiteness of the two integral-closure models, and an open immersion of the
+visible affine sheet.  It then keeps the arrows
+
+```text
+finite normalized cover
+  -> no codimension-one ramification
+  -> étale normalization                 [branch-purity input]
+  -> trivial normal-closure extension      [base-specific rigidity input]
+```
+
+separate.  In the optional planar research spine, the last two arrows are
+installed as project axioms `branchPurityA2` and
+`affinePlaneFiniteEtaleRigidity`; they are not proved by the finite-cover
+record.  The active degree-two paper does not use that normalization spine.
+
+The Hodge files `Normalization/Model.lean`, `NormalClosure.lean`,
+`ValuationInertia.lean`, and `InertiaDiagram.lean` already contain the
+presentation-independent version of this architecture.  Copying the planar
+cover record again would therefore add no theorem.
+
+One construction had not been exposed on the Hodge side.  The Jacobian
+boundary code observes that a Galois automorphism of `N / K` restricts to an
+automorphism of the integral closure of `B` in `N`.  This has now been
+packaged scheme-theoretically as
+
+```lean
+normalClosureFiniteDeckAction :
+  Gal(N / K) →*
+    Aut_{Spec B}(Norm_N(Spec B)).
+```
+
+in `Boundary/Normalization/DeckAction.lean`.  This fills the normalization
+deck-action morphism without a purity assumption and can be fed directly to
+the finite-group graph-projector calculus.  It removes the need to supply an
+abstract deck action when the scheme in question is the affine
+normal-closure normalization.
+
+Here `FiniteDeckAction` means an action of a finite group by automorphisms;
+it does not assert that the normalization's structure map is finite étale.
+The Galois-collision decomposition later requires finiteness and étaleness of
+that map, plus an explicit torsor/coproduct comparison, as separate inputs.
+
+This port also exposes a distinction that must not be suppressed in the gap
+statement.  There are currently three different algebras in play:
+
+```text
+pointwise functions on generic sheets     (characteristic-function selector)
+convolution/group algebra of deck maps    (normalized graph average)
+compactified Chow correspondences         (the desired geometric projector).
+```
+
+Two commutative-algebra arrows between the normalization and selector levels
+are now formal.  First,
+
+```lean
+intermediateNormalizationEquivFixedRing :
+  IntCl_B(L) ≃ₐ[B] (IntCl_B(N))^H
+```
+
+identifies the marked intermediate normalization with the invariant ring.
+Second,
+
+```lean
+collisionToGenericSheets :
+  L ⊗[K] L →ₐ[K] (G / H → N)
+```
+
+is defined using chosen quotient representatives and sends
+`Algebra.FormallyUnramified.elem K L` exactly to the singleton
+base-sheet selector.  This proves the projector comparison without assuming
+tensor splitting.  Separately, under `PerfectField K`, Lean proves that the
+base-changed evaluation map `N ⊗[K] L → (G / H → N)` is bijective and packages
+it as `normalClosureTensorGenericSheetsEquiv`.
+
+At a selected prime `Q` of the normal-closure normalization, the exact
+ring-theoretic subgroup used by Stacks is now formalized as
+
+```lean
+primeInertiaSubgroup Q =
+  {g | g • Q = Q ∧ ∀ x, g • x - x ∈ Q}.
+```
+
+Lean also proves the unique-prime statement
+
+```lean
+eq_of_under_primeInertiaSubgroup_eq :
+  Q'.under S^(I_Q) = Q.under S^(I_Q) → Q' = Q.
+```
+
+It uses only finite-group invariant-prime transitivity and the containment of
+prime inertia in the stabilizer; it needs no domain, height-one, Noetherian,
+DVR, or unramifiedness assumption.  This closes the unique-prime-over-`q_I`
+component of an internal DVR proof.  It does not prove that the fixed-inertia
+map is unramified.
+
+The normalization specialization is `normalizationPrimeInertiaGroup`, based
+on `FullInvariantNormalizationRing = S^G`.  The proposition
+`NormalizationPrimeInertiaFixedRingUnramifiedAt Q` names the exact local
+formal-unramifiedness conclusion still consumed by Lean.  Tag `0BST` proves
+the stronger statement that `S^G → S^(I_Q)` is étale at the exact contraction
+`q_I = Q ∩ S^(I_Q)`, but that theorem is not in Mathlib.  For the marked finite
+normal closure, when the fraction field is perfect and the affine base is
+integrally closed in it,
+`baseEquivFullInvariantNormalizationRing` formally identifies that source
+ring with `B`; without these hypotheses the source is generally the
+normalization of `B` in `K`, not `B`.
+
+The valuation inertia already present in `Diagram` is deliberately kept
+separate.  The ported Jacobian lemma proves only
+
+```lean
+Diagram.valuationInertia_le_normalizationPrimeInertiaGroup :
+  I_val ≤ I_Q.
+```
+
+This is enough to verify that valuation inertia acts trivially at its center,
+but by itself it is in the wrong direction for replacing a hypothesis
+`I_val ≤ H` by the prime-inertia hypothesis `I_Q ≤ H` required by the
+fixed-ring descent.  `LocalizationBridge.lean` now supplies the reverse
+direction.  `HasValuationLocalizationAt` records a compatible identification
+of the centered valuation ring with the localization at `Q`, and
+`ValuationLocalizationAt.primeInertia_le_valuationInertia` proves
+`I_Q ≤ I_val` by extending a prime stabilizer to the localization and
+comparing residue actions.
+
+The localization datum and the containment needed by the main path are
+derived from the existing diagram under the single additional hypothesis
+`[IsNoetherianRing B]`:
+
+```lean
+Diagram.hasValuationLocalizationAt_of_isNoetherianRing
+Diagram.normalizationPrimeInertia_le_of_valuationInertia_le_of_isNoetherianRing
+```
+
+Indeed, the finite normalization ring is then Noetherian and normal; its
+localization at the supplied height-one prime is a one-dimensional normal
+Noetherian local domain, hence a valuation ring.  The centered local map into
+the diagram's valuation ring is an isomorphism by maximality of valuation
+subrings in the common fraction field.  The minimal Noetherian proof path uses
+only
+
+```text
+I_Q ≤ I_val ≤ H  ->  I_Q ≤ H.
+```
+
+The separately recorded equality `I_val = I_Q` combines this reverse
+containment with the Jacobian-inherited forward containment and is an optional
+comparison corollary, not a dependency of the descent endpoint.  Without
+Noetherianity (or a direct localization realization),
+`PrimeInertiaComparisonAt` remains a generic compatibility interface;
+centeredness alone is not enough.  It is not an exposed premise of the
+intended Noetherian endpoint.
+
+Tag `09EH` gives an alternative local route in its DVR setting: a DVR
+base, a finite Galois field extension, its integral closure, and a selected
+maximal ideal.  It identifies the inertia fixed ring with the integral
+closure in the inertia fixed field and proves the selected localization
+étale.  The Lean localization bridge proves the height-one identification and
+the needed containment `I_Q ≤ I_val`; it does not prove unramifiedness of the
+inertia-fixed map.  Equality `I_val = I_Q` follows only after adding the
+independent forward containment.  Formalizing the local fixed-inertia
+unramifiedness consequence remains the next normalization step.  Tag `09EH`
+still does not establish global étaleness over an arbitrary affine base.
+
+The former dimension mismatch in the downstream helper is now removed.
+`fixedRing_isUnramifiedAt_of_inertia_le_localized` contracts `Q` to
+`q_H \subset S^H` and `q_I \subset S^I`, constructs the induced local map
+`(S^H)_{q_H} \to (S^I)_{q_I}`, proves that its maximal ideals lie over one
+another, and runs the Dedekind descent there.  Its Dedekind hypothesis is only
+on `(S^H)_{q_H}`, so it is compatible with a higher-dimensional fixed ring.
+The original `fixedRing_isUnramifiedAt_of_inertia_le` is retained as a
+global-Dedekind compatibility wrapper.  This closes the localization
+plumbing.  Moreover, `fixedPoints_primeHeight_under_eq_one` proves the
+required height transfer for finite group actions by an invariant-theoretic
+going-down argument, and
+`fixedSubgroupNormalizationRing_localization_isDiscreteValuationRing` shows
+that the local Dedekind hypothesis is automatic for the finite
+normal-closure normalization over a Noetherian affine base.  The status split
+is therefore: unique-prime, localization, containment, and local descent are
+formal; the fixed-inertia unramifiedness conclusion is open as a compiled Lean
+theorem; the forward containment and two-sided inertia equality are optional
+comparisons.  These local algebra lemmas do not themselves prove the open
+input or any compactification-purity statement.
+`PrimeInertiaDescent.lean` now records the exact composite endpoint:
+`normalizationFixedRing_isUnramifiedAt_of_primeInertia_le` consumes the
+literal `NormalizationPrimeInertiaFixedRingUnramifiedAt` premise, and
+`Diagram.fixedRing_isUnramifiedAt_of_valuationInertia_le` first converts
+`I_val ≤ H` to `I_Q ≤ H`.  Both conclusions remain over the full invariant
+ring `S^G`; transport to `B` is a separate operation and is not assumed here.
+
+The first projector extends across an integral model only when the selected
+generic components remain clopen; inertia saturation is the local criterion
+for that descent problem.  The second projector already exists on the affine
+normal-closure normalization for every subgroup, because every Galois
+automorphism preserves the integral closure and hence has a global graph.
+Its existence therefore cannot be equivalent to `I <= H`.  The sibling
+Jacobian code does not identify the pointwise sheet algebra with the graph
+convolution algebra, and `SheetActionCompatibility` in
+`Boundary/AveragingAction.lean` compares their actions only; it is not an
+algebra isomorphism or a compactification theorem.
+
+Accordingly, the remaining comparison problem is no longer the generic
+collision-to-sheet-selector map.  It is the passage from the selector or
+graph average to an actual compactified Chow correspondence, followed by
+identification of its cohomological action.  The abstract
+`RationalDegreeTransfer` calculation proves that `(1/d) q^* q_*` is
+idempotent once the degree formula is supplied, but Mathlib does not yet
+construct the required Chow pullback and pushforward maps.  The mere
+existence of the affine graph average must not be advertised as an
+inertia-controlled extension theorem.
+
+It does **not** extend that action to an independently chosen proper or
+projective compactification, identify a Chow-correspondence restriction map,
+or prove the prescribed cohomological action.  Those remain the next
+morphisms after this port.
+
+The sibling lemma does **not** prove a full equivalence between local
+ramification and nontrivial inertia.  Its structure
+`ConjugateRamificationRealization` explicitly assumes that the
+group-theoretic inertia index equals the geometric ramification index.  It
+then uses only
+
+```text
+unramified at the selected prime
+  -> geometric ramification index = 1
+  -> group-theoretic inertia index = 1.
+```
+
+The more concrete sibling lemma `inertia_sub_mem_ramifiedPrime` is reusable
+but points in a different direction: an element already known to lie in the
+valuation-theoretic inertia group acts trivially modulo the centered prime.
+It does not deduce nontrivial inertia from a ramified local ring.  That fact
+is useful for residue-action comparisons, but it is not the missing premise
+of the present extension-existence argument and has therefore not been used
+as a substitute for the explicit index-realization input.
+
+The Hodge repository already contains the same one-way argument in
+`Boundary/Normalization/InertiaDiagram.lean`.  It must not be cited as if it
+discharged `HeightOneInertiaRealization`, whose field is the stronger
+equivalence
+
+```lean
+(¬ Algebra.IsUnramifiedAt B P) ↔ inertiaIndexAtSheet I H baseSheet ≠ 1.
+```
+
+For extension existence, however, the full equivalence is unnecessary.  The
+proved Lean chain is now
+
+```text
+collision different avoids P
+  -> unramified at P
+  -> geometric ramification index = 1
+  -> base-sheet inertia index = 1
+  -> the base sheet is inertia-saturated.
+```
+
+The first arrow is
+`collisionDifferentDetectsRamificationAt_of_essFiniteType`, the second is
+Mathlib's `Ideal.ramificationIdx_eq_one_of_isUnramifiedAt`, and the last two
+use `ConjugateRamificationRealization` and
+`inertiaIndexAtBaseSheet_eq_one_iff_saturated`.  The assembled theorem is
+`NormalizationInertia.Diagram.baseClass_inertiaSaturated_of_different_not_le`
+in `Boundary/Normalization/ExtensionBridge.lean`.
+
+Therefore:
+
+- retain `ConjugateRamificationRealization` as an explicit input; the sibling
+  project also assumes it;
+- do not require the stronger `HeightOneInertiaRealization` merely to prove
+  the extension-existence direction;
+- retain `HeightOneInertiaRealization` for any claimed *if and only if* until
+  the reverse local implication is proved under precise hypotheses.
+
+## Scope boundary
+
+The repository now has fixed-model and indexed-family schemas expressing the
+cycle-class target, plus a proved class/graph-projector equivalence under
+explicit block construction and detection maps.  It also names, but does not
+instantiate, the compatibility identifying `(p,p)` classes with graph
+operators that are Hodge morphisms.  There is no concrete model for a smooth
+projective complex variety.
+
+The marked Galois sheet calculation now resolves the former linear
+operator-shape question: selector multiplication is block diagonal in CRT
+coordinates and graph-shaped in constant-unit coordinates.  The conditional
+endpoint detects the lower-left class from an explicit comparison square and,
+under surjectivity, derives the exact graph action.  Its source and ambient
+algebras are correctly separated.  It does not resolve the geometric
+realization question: no theorem constructs the extension package, residual
+map, action square, or detection map; no class-dependent coverage or strong
+replacement instance is present; and the witness does not yet contain a
+genuine cover or normal closure.  Such a generation theorem may be stronger
+than Hodge itself.  Accordingly, the finite-Galois endpoint does not yet prove
+a case of the Hodge conjecture.
