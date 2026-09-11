@@ -13,14 +13,20 @@ class `q - 1` to its generated cohomology class, and the induced product map
 intertwines multiplication by `q` with the corresponding class graph
 projector.
 
-`MarkedSelectorActionComparison` records the substantive comparison square
-for an idempotent in a possibly noncommutative compactified correspondence
-algebra.  The square is equivalently exposed as a morphism of representations
-of the universal one-idempotent algebra `ℚ × ℚ`.  Evaluating it at the
+`MarkedProjectorActionComparison` records the substantive comparison square
+for an element of a possibly noncommutative correspondence algebra, without
+requiring a restriction map to the marked commutative source.  When that
+element is idempotent, the square is equivalently exposed as a morphism of
+representations of the universal one-idempotent algebra `ℚ × ℚ`.  Evaluating it at the
 marked unit recovers the generated class without a surjectivity assumption.
 Surjectivity is used only to identify the entire cohomological action with
 the graph projector, at which point the target is also stated as an equality
 of algebra-homomorphism composites.
+
+`MarkedSelectorActionComparison` retains the extension-based interface as a
+lossless specialization of this core comparison.  A geometric construction
+can therefore use a full correspondence algebra even when it admits no
+algebra homomorphism to the pointwise sheet algebra.
 
 No residual realization, compactified extension, or comparison square is
 constructed here.
@@ -132,76 +138,82 @@ variable {rho : RationalCorrespondenceAction Gamma (ℚ × H)}
 variable
   {E : AlgebraProjectorExtension A Gamma M.selector}
 variable {x : E.Extension}
+variable {projector : Gamma}
 
 /--
-The realization square for a compactified extension of the selector in an
-abstract marked augmented algebra.
+The realization square for a correspondence element and the selector in an
+abstract marked augmented algebra.  There is no map between their ambient
+algebras among these data; the square compares their actions on modules.
 
 The generated target class is deliberately an output of
 `residualRealization`; no external class or equality with a prescribed class
-is included in this structure.
+is included in this structure.  Idempotence is needed only for the projector
+lift and universal representation consequences, not for lower-left detection
+or surjective cancellation.
 -/
-structure MarkedSelectorActionComparison
+structure MarkedProjectorActionComparison
     (M : MarkedAugmentedAlgebra ℚ A)
     (rho : RationalCorrespondenceAction Gamma (ℚ × H))
-    (E : AlgebraProjectorExtension A Gamma M.selector)
-    (x : E.Extension) where
+    (projector : Gamma) where
   residualRealization : M.Residual →ₗ[ℚ] H
   action_intertwines :
-    (rho.action (E.projector x)).comp
+    (rho.action projector).comp
         (M.productRealization residualRealization) =
       (M.productRealization residualRealization).comp
         (M.decomposition.conj M.multiplication)
 
-namespace MarkedSelectorActionComparison
+namespace MarkedProjectorActionComparison
 
-/-- The compactified projector remains idempotent after applying the
-cohomological correspondence action. -/
-theorem compactifiedAction_isIdempotent
-    (_B : MarkedSelectorActionComparison M rho E x) :
-    IsIdempotentElem (rho.action (E.projector x)) :=
-  (E.projector_isIdempotent x).map rho.action
+/-- An idempotent correspondence remains idempotent under its action. -/
+theorem action_isIdempotent
+    (_B : MarkedProjectorActionComparison M rho projector)
+    (hProjector : IsIdempotentElem projector) :
+    IsIdempotentElem (rho.action projector) :=
+  hProjector.map rho.action
 
 /-- The comparison square as an honest morphism of representations of the
 universal one-idempotent algebra.  This is equivalent to the stored selector
 square, rather than an additional hypothesis. -/
 noncomputable def toIdempotentRepresentationMorphism
-    (B : MarkedSelectorActionComparison M rho E x) :
+    (B : MarkedProjectorActionComparison M rho projector)
+    (hProjector : IsIdempotentElem projector) :
     UniversalIdempotentAlgebra.RepresentationMorphism
       (M.decomposition.conj M.multiplication)
       M.decomposedSelector_isIdempotent
-      (rho.action (E.projector x))
-      B.compactifiedAction_isIdempotent :=
+      (rho.action projector)
+      (B.action_isIdempotent hProjector) :=
   UniversalIdempotentAlgebra.RepresentationMorphism.ofSelectorIntertwines
     (M.productRealization B.residualRealization)
     B.action_intertwines
 
 @[simp]
 theorem toIdempotentRepresentationMorphism_map
-    (B : MarkedSelectorActionComparison M rho E x) :
-    B.toIdempotentRepresentationMorphism.map =
+    (B : MarkedProjectorActionComparison M rho projector)
+    (hProjector : IsIdempotentElem projector) :
+    (B.toIdempotentRepresentationMorphism hProjector).map =
       M.productRealization B.residualRealization :=
   rfl
 
 /-- The full universal-algebra intertwining law represented by the one
 selector square in the comparison package. -/
 theorem universal_intertwines
-    (B : MarkedSelectorActionComparison M rho E x)
+    (B : MarkedProjectorActionComparison M rho projector)
+    (hProjector : IsIdempotentElem projector)
     (z : UniversalIdempotentAlgebra ℚ) :
     (UniversalIdempotentAlgebra.endomorphismRepresentation
-        (rho.action (E.projector x))
-        B.compactifiedAction_isIdempotent z).comp
+        (rho.action projector)
+        (B.action_isIdempotent hProjector) z).comp
         (M.productRealization B.residualRealization) =
       (M.productRealization B.residualRealization).comp
         (M.selectorRepresentation z) :=
-  B.toIdempotentRepresentationMorphism.intertwines z
+  (B.toIdempotentRepresentationMorphism hProjector).intertwines z
 
 /-- Evaluating the comparison square at the marked unit detects the generated
 lower-left class.  No surjectivity is required. -/
 theorem lowerLeftClass_action_eq_generatedClass
-    (B : MarkedSelectorActionComparison M rho E x) :
+    (B : MarkedProjectorActionComparison M rho projector) :
     ClassGraphProjector.lowerLeftClass
-        (rho.action (E.projector x)) =
+        (rho.action projector) =
       M.generatedClass B.residualRealization := by
   have hSquare :=
     LinearMap.congr_fun B.action_intertwines
@@ -214,9 +226,9 @@ theorem lowerLeftClass_action_eq_generatedClass
 /-- Surjective cancellation identifies the whole compactified selector action
 with the graph projector of the generated class. -/
 theorem realizes
-    (B : MarkedSelectorActionComparison M rho E x)
+    (B : MarkedProjectorActionComparison M rho projector)
     (hSurjective : Function.Surjective B.residualRealization) :
-    rho.action (E.projector x) =
+    rho.action projector =
       ClassGraphProjector.operator
         (M.generatedClass B.residualRealization) := by
   apply LinearMap.ext
@@ -224,7 +236,7 @@ theorem realizes
   obtain ⟨z, rfl⟩ :=
     M.productRealization_surjective hSurjective y
   calc
-    rho.action (E.projector x)
+    rho.action projector
           (M.productRealization B.residualRealization z) =
         M.productRealization B.residualRealization
           ((M.decomposition.conj M.multiplication) z) :=
@@ -240,19 +252,114 @@ theorem realizes
 /-- Under surjectivity, a compactified selector is an algebraic lift of the
 graph projector of its generated class. -/
 def toAlgebraicProjectorLift
+    (B : MarkedProjectorActionComparison M rho projector)
+    (hProjector : IsIdempotentElem projector)
+    (hSurjective : Function.Surjective B.residualRealization) :
+    AlgebraicProjectorLift rho
+      (ClassGraphProjector.operator
+        (M.generatedClass B.residualRealization)) where
+  projector := projector
+  projector_isIdempotent := hProjector
+  realizes := B.realizes hSurjective
+
+/-- Palomar-style Hodge target: after surjective cancellation, the
+cohomological action composed with the compactified one-idempotent map equals
+the canonical one-idempotent presentation of the generated class graph. -/
+theorem action_comp_idempotentMap_eq_classGraph
+    (B : MarkedProjectorActionComparison M rho projector)
+    (hProjector : IsIdempotentElem projector)
+    (hSurjective : Function.Surjective B.residualRealization) :
+    rho.action.comp
+        (UniversalIdempotentAlgebra.mapOfIdempotent projector hProjector) =
+      UniversalIdempotentAlgebra.mapOfIdempotent
+        (ClassGraphProjector.operator
+          (M.generatedClass B.residualRealization))
+        (ClassGraphProjector.operator_isIdempotent
+          (M.generatedClass B.residualRealization)) := by
+  rw [UniversalIdempotentAlgebra.comp_mapOfIdempotent]
+  simp only [B.realizes hSurjective]
+
+end MarkedProjectorActionComparison
+
+/-- Extension-based specialization of the canonical action comparison.
+The extra parameters record a particular geometric source of the projector;
+the stored comparison data are exactly those of the core interface. -/
+structure MarkedSelectorActionComparison
+    (M : MarkedAugmentedAlgebra ℚ A)
+    (rho : RationalCorrespondenceAction Gamma (ℚ × H))
+    (E : AlgebraProjectorExtension A Gamma M.selector)
+    (x : E.Extension) extends
+      MarkedProjectorActionComparison M rho (E.projector x)
+
+namespace MarkedSelectorActionComparison
+
+/-- The compactified projector remains idempotent after applying the
+cohomological correspondence action. -/
+theorem compactifiedAction_isIdempotent
+    (B : MarkedSelectorActionComparison M rho E x) :
+    IsIdempotentElem (rho.action (E.projector x)) :=
+  B.toMarkedProjectorActionComparison.action_isIdempotent
+    (E.projector_isIdempotent x)
+
+/-- The extension-based square as a universal-idempotent representation morphism. -/
+noncomputable def toIdempotentRepresentationMorphism
+    (B : MarkedSelectorActionComparison M rho E x) :
+    UniversalIdempotentAlgebra.RepresentationMorphism
+      (M.decomposition.conj M.multiplication)
+      M.decomposedSelector_isIdempotent
+      (rho.action (E.projector x))
+      B.compactifiedAction_isIdempotent :=
+  B.toMarkedProjectorActionComparison.toIdempotentRepresentationMorphism
+    (E.projector_isIdempotent x)
+
+@[simp]
+theorem toIdempotentRepresentationMorphism_map
+    (B : MarkedSelectorActionComparison M rho E x) :
+    B.toIdempotentRepresentationMorphism.map =
+      M.productRealization B.residualRealization :=
+  rfl
+
+/-- The full universal-algebra intertwining law for an extension comparison. -/
+theorem universal_intertwines
+    (B : MarkedSelectorActionComparison M rho E x)
+    (z : UniversalIdempotentAlgebra ℚ) :
+    (UniversalIdempotentAlgebra.endomorphismRepresentation
+        (rho.action (E.projector x))
+        B.compactifiedAction_isIdempotent z).comp
+        (M.productRealization B.residualRealization) =
+      (M.productRealization B.residualRealization).comp
+        (M.selectorRepresentation z) :=
+  B.toMarkedProjectorActionComparison.universal_intertwines
+    (E.projector_isIdempotent x) z
+
+/-- Lower-left detection for an extension comparison, without surjectivity. -/
+theorem lowerLeftClass_action_eq_generatedClass
+    (B : MarkedSelectorActionComparison M rho E x) :
+    ClassGraphProjector.lowerLeftClass
+        (rho.action (E.projector x)) =
+      M.generatedClass B.residualRealization :=
+  B.toMarkedProjectorActionComparison.lowerLeftClass_action_eq_generatedClass
+
+/-- Surjective cancellation for an extension comparison. -/
+theorem realizes
+    (B : MarkedSelectorActionComparison M rho E x)
+    (hSurjective : Function.Surjective B.residualRealization) :
+    rho.action (E.projector x) =
+      ClassGraphProjector.operator
+        (M.generatedClass B.residualRealization) :=
+  B.toMarkedProjectorActionComparison.realizes hSurjective
+
+/-- The extension projector lifts the graph of the generated class. -/
+def toAlgebraicProjectorLift
     (B : MarkedSelectorActionComparison M rho E x)
     (hSurjective : Function.Surjective B.residualRealization) :
     AlgebraicProjectorLift rho
       (ClassGraphProjector.operator
         (M.generatedClass B.residualRealization)) :=
-  E.projectorLiftOfRealizes x rho
-    (ClassGraphProjector.operator
-      (M.generatedClass B.residualRealization))
-    (B.realizes hSurjective)
+  B.toMarkedProjectorActionComparison.toAlgebraicProjectorLift
+    (E.projector_isIdempotent x) hSurjective
 
-/-- Palomar-style Hodge target: after surjective cancellation, the
-cohomological action composed with the compactified one-idempotent map equals
-the canonical one-idempotent presentation of the generated class graph. -/
+/-- The Palomar target square for an extension comparison. -/
 theorem action_comp_compactifiedIdempotentMap_eq_classGraph
     (B : MarkedSelectorActionComparison M rho E x)
     (hSurjective : Function.Surjective B.residualRealization) :
@@ -261,10 +368,9 @@ theorem action_comp_compactifiedIdempotentMap_eq_classGraph
         (ClassGraphProjector.operator
           (M.generatedClass B.residualRealization))
         (ClassGraphProjector.operator_isIdempotent
-          (M.generatedClass B.residualRealization)) := by
-  unfold AlgebraProjectorExtension.compactifiedIdempotentMap
-  rw [UniversalIdempotentAlgebra.comp_mapOfIdempotent]
-  simp only [B.realizes hSurjective]
+          (M.generatedClass B.residualRealization)) :=
+  B.toMarkedProjectorActionComparison.action_comp_idempotentMap_eq_classGraph
+    (E.projector_isIdempotent x) hSurjective
 
 end MarkedSelectorActionComparison
 
@@ -370,13 +476,8 @@ structure PresentedMarkedSelectorActionComparison
     (P : MarkedSelectorAlgebraPresentation M B)
     (rho : RationalCorrespondenceAction Gamma (ℚ × H))
     (F : AlgebraProjectorExtension B Gamma P.genericProjector)
-    (y : F.Extension) where
-  residualRealization : M.Residual →ₗ[ℚ] H
-  action_intertwines :
-    (rho.action (F.projector y)).comp
-        (M.productRealization residualRealization) =
-      (M.productRealization residualRealization).comp
-        (M.decomposition.conj M.multiplication)
+    (y : F.Extension) extends
+      MarkedProjectorActionComparison M rho (F.projector y)
 
 namespace MarkedSelectorActionComparison
 
@@ -413,14 +514,8 @@ theorem lowerLeftClass_action_eq_generatedClass
     (C : PresentedMarkedSelectorActionComparison M P rho F y) :
     ClassGraphProjector.lowerLeftClass
         (rho.action (F.projector y)) =
-      M.generatedClass C.residualRealization := by
-  have hSquare :=
-    LinearMap.congr_fun C.action_intertwines
-      ((1, 0) : ℚ × M.Residual)
-  rw [M.decomposition_conj_multiplication] at hSquare
-  have hSecond := congrArg Prod.snd hSquare
-  simpa [ClassGraphProjector.lowerLeftClass,
-    LinearMap.comp_apply, MarkedAugmentedAlgebra.generatedClass] using hSecond
+      M.generatedClass C.residualRealization :=
+  C.toMarkedProjectorActionComparison.lowerLeftClass_action_eq_generatedClass
 
 /-- Surjectivity of the residual realization upgrades lower-left detection
 to equality with the entire canonical graph projector. -/
@@ -429,24 +524,8 @@ theorem realizes
     (hSurjective : Function.Surjective C.residualRealization) :
     rho.action (F.projector y) =
       ClassGraphProjector.operator
-        (M.generatedClass C.residualRealization) := by
-  apply LinearMap.ext
-  intro h
-  obtain ⟨a, rfl⟩ :=
-    M.productRealization_surjective hSurjective h
-  calc
-    rho.action (F.projector y)
-          (M.productRealization C.residualRealization a) =
-        M.productRealization C.residualRealization
-          ((M.decomposition.conj M.multiplication) a) :=
-      LinearMap.congr_fun C.action_intertwines a
-    _ =
-        ClassGraphProjector.operator
-            (M.generatedClass C.residualRealization)
-          (M.productRealization C.residualRealization a) :=
-      LinearMap.congr_fun
-        (M.productRealization_intertwines_selectorMultiplication
-          C.residualRealization) a
+        (M.generatedClass C.residualRealization) :=
+  C.toMarkedProjectorActionComparison.realizes hSurjective
 
 /-- The presented compactified selector is an algebraic lift of the generated
 graph projector whenever the residual realization is surjective. -/
@@ -456,10 +535,8 @@ def toAlgebraicProjectorLift
     AlgebraicProjectorLift rho
       (ClassGraphProjector.operator
         (M.generatedClass C.residualRealization)) :=
-  F.projectorLiftOfRealizes y rho
-    (ClassGraphProjector.operator
-      (M.generatedClass C.residualRealization))
-    (C.realizes hSurjective)
+  C.toMarkedProjectorActionComparison.toAlgebraicProjectorLift
+    (F.projector_isIdempotent y) hSurjective
 
 end PresentedMarkedSelectorActionComparison
 

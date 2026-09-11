@@ -59,6 +59,17 @@ the bridge to the project's interface:
 | General cycle extraction, support control, and refined-convolution compatibility | Remaining parts of `RationalChowCorrespondenceModel` in `Realization/Chow/Model.lean` | No single source-to-interface proof yet | The raw localization and smooth-projective graph results above do not cover arbitrary proper-support convolution or prove that a chosen compactified lift remains idempotent. | OPEN |
 | Identification with a separately prescribed Hodge projector | `PrescribedChowProjectorLift.realizes` in `Realization/Chow/GaloisProjector.lean` | No source/proof yet | This is application-specific and contains the core algebraicity burden | OPEN |
 
+## Split-point checkpoint
+
+| Input or background result | Lean location | Exact source | Hypothesis match | Status |
+| --- | --- | --- | --- | --- |
+| Rational zero-cycles on a finite split scheme have the point basis | Coefficient module in `Realization/Chow/Examples/SplitPoints.lean`; scheme in `Correspondence/Examples/SplitPoints.lean` | [Stacks, Definition 42.19.1, Tag 02RW](https://stacks.math.columbia.edu/tag/02RW) | Over a field with ordinary dimension, specialize the definition to zero-cycles on a finite split scheme. There are no integral one-dimensional closed subschemes, hence no nonzero rational-equivalence generators. This is an elementary deduction from the definition, not a quoted matrix theorem. The scheme-to-Chow identification is not formalized. | FORMAL ALGEBRA / GEOMETRIC INSTANTIATION OPEN |
+| Point-pair cycles compose as matrices | `SplitPointCorrespondence.pointRealization_convolution` proves the matrix coefficient law | [Stacks, Lemma 45.3.1, Tag 0FG0](https://stacks.math.columbia.edu/tag/0FG0) | Finite split schemes are smooth projective over the field. Specialize pullback, intersection, and pushforward to their rational point bases, with rows indexing outputs and columns inputs. The additive map from actual spans and its agreement with this Chow calculation still need formalization. The free span algebra is not identified with matrices. | FORMAL ALGEBRA / GEOMETRIC INSTANTIATION OPEN |
+
+The actual split-scheme span idempotence and the obstruction to unital maps
+`M₂(ℚ) → C` for nontrivial commutative `C` are proved directly in Lean; no
+external theorem or source axiom is used for either.
+
 ## Citation acceptance test
 
 For each proposed source, record:

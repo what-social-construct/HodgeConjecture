@@ -39,3 +39,7 @@ Active research and proof-maintenance queue:
   with one dependency-ordered manuscript, putting the Hodge target, projector
   constructions, boundary theorem, and realization gap in the main line and
   relegating fixed-ring/source material to appendices.
+- `0007-split-point-realization.md` records the first actual split-point scheme
+  projector, its separate matrix coefficient calculation, the obstruction to
+  restricting a full matrix algebra to sheets, and the still-missing additive
+  cycle realization between these two formal layers.

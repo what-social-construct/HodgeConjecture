@@ -55,6 +55,29 @@ The former Paper I/Paper II sources and PDFs are preserved in
 
 ## Canonical semantic object and TeX registry
 
+### Split-point checkpoint (SP17--SP18)
+
+| ID | Object or overlap | Disposition | Required action | Status |
+| --- | --- | --- | --- | --- |
+| SP17 | Action comparison unnecessarily requires ambient restriction to commutative sheets | CANONICALIZE | Extract `MarkedProjectorActionComparison`; retain extension-based comparisons as lossless specializations; prove the full-matrix obstruction and instantiate the new core. | DONE; FULL BUILD AND VERIFICATION PASS |
+| SP18 | Geometric point span, free span class, matrix coefficient, and Chow class | KEEP DISTINCT | Assign distinct notation and expose the missing additive cycle realization; do not identify the free algebra with matrices or Chow. | REGISTRY DONE; CONNECTING REALIZATION OPEN |
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `SplitPointGeometry.scheme` | finite split scheme | $Z_I=\operatorname{Spec}(k^I)$ |
+| `SplitPointGeometry.pointInclusion` | selected component inclusion | $s_i:\operatorname{Spec}k\to Z_I$ |
+| `SplitPointGeometry.pointSpan` | actual point-supported diagonal span | $Z_I\xleftarrow{s_i}\operatorname{Spec}k\xrightarrow{s_i}Z_I$ |
+| `SplitPointGeometry.pointProjector` | its free finite-étale span basis class | $\pi_i$ |
+| `SplitPointCorrespondence.ZeroCycles` | finite rational coefficient module, not yet identified with scheme Chow | $\mathbf Q^I$, $I=\{0,1\}$ |
+| `SplitPointCorrespondence.Correspondence` | finite coefficient convolution algebra | $\Gamma_I=M_2(\mathbf Q)$ |
+| `SplitPointCorrespondence.firstPointProjector` | point matrix unit | $\Pi=E_{00}$ |
+| `SplitPointCorrespondence.markedSource` | marked two-component source | $A=\mathbf Q\times\mathbf Q$, $\epsilon(a,b)=a$, $q=(1,0)$ |
+| `SplitPointCorrespondence.residualEvaluation` | second-coordinate map on the residual ideal | $\theta(0,b)=b$ |
+| `SplitPointCorrespondence.constantCoordinates` | constant-unit coordinates | $T(a,b)=(a,b-a)$ |
+| `SplitPointCorrespondence.pointRealization` / `realization` | ordinary / conjugated matrix action | $C\mapsto C(-)$ / $\rho(C)=TCT^{-1}$ |
+| `SplitPointCorrespondence.markedComparison` / `projectorLift` | explicit instances of the canonical comparison / lift | specialization only; no independent symbol |
+| `MatrixRestrictionObstruction.no_ringHom_to_commutative` | exclusion of unital maps from full matrices to a nontrivial commutative ring | prose only |
+
 ### Fields, normalizations, and boundary geometry
 
 | Lean object | Mathematical role | Canonical TeX notation |
@@ -140,7 +163,9 @@ The former Paper I/Paper II sources and PDFs are preserved in
 | generic graph operator | graph projector attached to $\alpha$ | $P_\alpha(t,x)=(t,t\alpha)$ |
 | generic diagonal operator | projector onto the marked rational line | $P_0(t,x)=(t,0)$ |
 | generic shear | change from diagonal to graph splitting | $U_\alpha(t,x)=(t,x+t\alpha)$ |
-| `MarkedGaloisSelectorComparison` | residual realization plus universal representation-morphism comparison | $\mathscr R_{\alpha,x}$ |
+| `MarkedProjectorActionComparison` | canonical residual map and action square for a chosen projector, without ambient restriction | $\mathscr R_{\Pi}$ |
+| `MarkedSelectorActionComparison` | extension-based specialization of the canonical comparison | $\mathscr R_{\Pi_x}$; no independent comparison fields |
+| `MarkedGaloisSelectorComparison` | sheet specialization with prescribed generated class | $\mathscr R_{\alpha,x}$; retains the extension premise |
 | residual realization | rational linear map from the underlying module of the augmentation ideal | $\theta:E_H\to V$ |
 | `MarkedAugmentedAlgebra.productRealization` | Tate-augmented residual map | $\Theta=\operatorname{id}_{\mathbf Q}\oplus\theta$ |
 | `MarkedGaloisSelectorComparison.palomarTargetSquare` | realized projector equality as algebra-homomorphism composites | $\rho\circ\varphi_\Pi=\varphi_{P_\alpha}$ |

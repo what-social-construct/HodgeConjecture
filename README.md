@@ -160,11 +160,14 @@ The next conditional arrow is also formalized.  An
 possibly noncommutative compactified correspondence algebra.  It canonically
 produces maps \(U\to\Gamma_\eta\) and \(U\to\overline\Gamma\), and Lean proves
 that restriction composed with the compactified map equals the generic map.
+The canonical `MarkedProjectorActionComparison` needs only the chosen
+projector and the residual action square, not an ambient restriction map.
+The extension-based comparison remains its stronger specialization.
 The realization comparison is an honest morphism between the corresponding
 \(U\)-representations.  Under surjectivity, `palomarTargetSquare` states that
 the cohomological action composed with the compactified map from \(U\) equals
 the canonical map from \(U\) presenting the class-graph projector.  No
-geometric residual realization or comparison square is constructed.
+general geometric residual realization or comparison square is constructed.
 This is essential: Lean proves that two class-graph projectors commute exactly
 when their classes agree, so one fixed commutative action could not cover a
 nonzero Hodge-class space.
@@ -178,6 +181,20 @@ cancellation gives the exact graph-projector action and an algebraic
 projector lift.  Class-dependent coverage by such surjective witnesses
 implies the modeled `RationalHodgeConjectureAt`; the reverse direction
 additionally requires a separately named strong replacement hypothesis.
+
+The first concrete check is now implemented in
+[`Correspondence/Examples/SplitPoints.lean`](HodgeConjecture/Correspondence/Examples/SplitPoints.lean)
+and [`Realization/Chow/Examples/SplitPoints.lean`](HodgeConjecture/Realization/Chow/Examples/SplitPoints.lean):
+the actual finite-étale point span on `Spec(k^I)` is idempotent, and a separate
+two-point matrix calculation proves `ρ(E₀₀)=P₋₁` and its Palomar square.
+Connecting the span to that coefficient matrix through an additive cycle
+realization, and identifying genuine Chow/cohomology objects, remains open.
+The free span algebra is not already a matrix algebra. The test also proves
+that `M₂(ℚ)` has no unital map to a nontrivial commutative ring; consequently
+the old full-algebra restriction to sheets is not an admissible general
+requirement. The existing Galois coverage interface retains it as an extra
+specialized condition. See the
+[split-point working note](research/working/0007-split-point-realization.md).
 
 The missing step is geometric: construct a Chow-motivic residual map carrying
 \(q-1\) to a desired Hodge class and prove compatibility with compactification

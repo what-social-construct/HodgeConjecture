@@ -231,8 +231,10 @@ This section is the correct location for the boundary-defect discussion.
 
 ### 7. Conditional realization and the exact gap
 
-Use the canonical maps from `U` attached to the generic selector and its
-compactified extension.  Prove the restriction composite square, then use a
+Use the canonical maps from `U` attached to the marked selector and a chosen
+idempotent correspondence. No map between their full ambient algebras is
+required by `MarkedProjectorActionComparison`. If actual extension data are
+also supplied, state the independent restriction composite square. Use a
 linear residual map `theta:E_H -> V` and the representation-morphism action
 square to identify the lower-left class.  Surjectivity of `theta` upgrades
 that equality to the whole graph operator and to `palomarTargetSquare`, an
@@ -240,6 +242,14 @@ equality of algebra-homomorphism composites.  Class-dependent coverage
 implies the modeled Hodge target; the reverse direction uses a separately
 named strong replacement hypothesis.  Treat a full sheet-algebra
 presentation as an optional stronger variant, not a prerequisite.
+
+Include the split-point checkpoint: actual finite-étale scheme spans and
+their idempotence, the separately computed two-point matrix action
+`ρ(E₀₀)=P₋₁`, and the obstruction to any unital map from `M₂(Q)` to a
+nontrivial commutative ring. Keep the additive cycle realization between the
+two formal layers explicitly open. The existing Galois coverage interface
+retains its ambient restriction to sheets and is a stronger specialization,
+not the general comparison used in the example.
 
 Conclude with the actual missing morphism package:
 

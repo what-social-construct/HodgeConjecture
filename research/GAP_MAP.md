@@ -37,6 +37,40 @@ branch rather than the main narrative.
 
 ## Classical target and formal model schema
 
+### First concrete checkpoint: split points
+
+The first concrete test now has two proved parts:
+
+- `Correspondence/Examples/SplitPoints.lean` constructs `Spec(k^I)` for finite
+  `I`, proves its structure map finite, étale, and proper, and proves that
+  each point-supported diagonal span is convolution-idempotent by its actual
+  self-pullback isomorphism.
+- `Realization/Chow/Examples/SplitPoints.lean` computes the two-point matrix
+  coefficient action. With `q=(1,0)`, residual map `θ(0,b)=b`, and constant-unit
+  coordinates `T(a,b)=(a,b-a)`, it proves `ρ(E₀₀)=P₋₁`, instantiates
+  `MarkedProjectorActionComparison`, and derives the Palomar target square.
+
+**The connecting arrow is still open:** the free span algebra is not the
+matrix algebra. It has neither disjoint-union additivity nor empty-span
+vanishing built into its relations. Construct an additive cycle realization
+sending the point span to `E₀₀`, then identify that coefficient model with
+genuine Chow classes and cohomology. These tests do not yet instantiate a
+geometric Hodge cycle-class model or class-dependent coverage.
+
+The test also exposed and repaired an interface obstruction:
+`LinearAlgebra/MatrixRestrictionObstruction.lean` proves that no unital ring
+map exists from `M₂(ℚ)` to a nontrivial commutative ring. Therefore the full
+two-point correspondence algebra cannot satisfy the old ambient restriction
+`Γ →ₐ[ℚ] A_H` to sheets. The canonical `MarkedProjectorActionComparison`
+now takes the chosen projector directly and requires only the residual map
+and its action square. The extension-based selector comparison is a lossless
+specialization; the existing Galois coverage interface still retains that
+extra restriction and is not the general target.
+
+See `working/0007-split-point-realization.md` for the next bounded step.
+
+### Geometric model still to be instantiated
+
 For a fixed smooth projective complex variety `X` and a codimension `p`, the
 classical rational Hodge target is
 
@@ -244,8 +278,11 @@ module.  `Realization/Chow/SheetLinearization.lean` remains available only by
 direct import as an auxiliary linear construction; it is not an algebra map
 `A_H → ℚ[G]` and is not part of this proof spine.
 
-`Realization/Chow/GaloisMarkedRealization.lean` now isolates the next exact
-conditional arrow.  An `AlgebraProjectorExtension` separates the generic
+`MarkedProjectorActionComparison` is the canonical restriction-free action
+comparison for a chosen projector. Its lower-left conclusion does not need
+surjectivity; its full graph-action conclusion does. The following existing
+`Realization/Chow/GaloisMarkedRealization.lean` route is the stronger
+extension-based specialization. An `AlgebraProjectorExtension` separates the generic
 algebra from a possibly noncommutative compactified correspondence algebra
 `Γ`; its chosen compactified idempotent restricts to `q` in the sheet
 specialization.  From the generic and compactified idempotents it constructs

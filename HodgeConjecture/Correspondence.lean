@@ -6,6 +6,7 @@ import HodgeConjecture.Correspondence.Graph
 import HodgeConjecture.Correspondence.TransposeAlgebra
 import HodgeConjecture.Correspondence.ProjectorDefect
 import HodgeConjecture.Correspondence.ProjectorLift
+import HodgeConjecture.Correspondence.Examples.SplitPoints
 import HodgeConjecture.Correspondence.FiniteGroupProjector
 import HodgeConjecture.Correspondence.GroupAlgebraProjector
 import HodgeConjecture.Correspondence.HeckeProjector
@@ -33,6 +34,7 @@ Chow/cohomological realization:
 13. explicit Galois collision decompositions as finite coproducts of graphs;
 14. normalized collision classes as convolution projectors;
 15. algebraic lifts of cohomological projectors and diagonal decompositions.
+16. actual split-point scheme spans and their convolution idempotence.
 
 The free span algebra is not identified with a Chow ring.  Proper cycle
 extraction, rational equivalence, and compatibility with refined
