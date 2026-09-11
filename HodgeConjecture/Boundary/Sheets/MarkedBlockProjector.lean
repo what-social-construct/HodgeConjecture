@@ -1,8 +1,8 @@
 import HodgeConjecture.Boundary.Sheets.GenericProjector
+import HodgeConjecture.LinearAlgebra.BlockGraphProjector
 import Mathlib.Algebra.Algebra.Bilinear
 import Mathlib.Algebra.Algebra.Rat
 import Mathlib.LinearAlgebra.Pi
-import Mathlib.LinearAlgebra.Prod
 import Mathlib.Tactic.Ring
 
 /-!
@@ -216,12 +216,8 @@ theorem multiplication_apply
   rfl
 
 /-- The graph operator associated with the canonical residual class. -/
-def graphOperator : Module.End ℚ (ℚ × Residual H) where
-  toFun tx := (tx.1, tx.1 • residualClass H)
-  map_add' x y := by
-    ext <;> simp [add_smul]
-  map_smul' t x := by
-    ext <;> simp [mul_smul]
+abbrev graphOperator : Module.End ℚ (ℚ × Residual H) :=
+  BlockGraphProjector.operator (R := ℚ) (residualClass H)
 
 @[simp]
 theorem graphOperator_apply (t : ℚ) (x : Residual H) :
@@ -229,10 +225,8 @@ theorem graphOperator_apply (t : ℚ) (x : Residual H) :
   rfl
 
 /-- The diagonal projector onto the marked scalar coordinate. -/
-def diagonalOperator : Module.End ℚ (ℚ × Residual H) where
-  toFun tx := (tx.1, 0)
-  map_add' x y := by ext <;> simp
-  map_smul' t x := by ext <;> simp
+abbrev diagonalOperator : Module.End ℚ (ℚ × Residual H) :=
+  BlockGraphProjector.diagonalOperator (R := ℚ) (M := Residual H)
 
 @[simp]
 theorem diagonalOperator_apply (t : ℚ) (x : Residual H) :
@@ -243,24 +237,8 @@ theorem diagonalOperator_apply (t : ℚ) (x : Residual H) :
 The lower-triangular shear from selector/CRT coordinates to constant-marked
 coordinates.  Its off-diagonal entry is the canonical residual class.
 -/
-def shear : (ℚ × Residual H) ≃ₗ[ℚ] (ℚ × Residual H) where
-  toFun tx := (tx.1, tx.2 + tx.1 • residualClass H)
-  invFun tx := (tx.1, tx.2 - tx.1 • residualClass H)
-  left_inv tx := by
-    rcases tx with ⟨t, x⟩
-    ext <;> simp
-  right_inv tx := by
-    rcases tx with ⟨t, x⟩
-    ext <;> simp
-  map_add' x y := by
-    apply Prod.ext
-    · simp
-    · apply Subtype.ext
-      ext s
-      simp [add_smul]
-      ring
-  map_smul' t x := by
-    ext <;> simp [mul_smul]
+abbrev shear : (ℚ × Residual H) ≃ₗ[ℚ] (ℚ × Residual H) :=
+  BlockGraphProjector.shear (R := ℚ) (residualClass H)
 
 @[simp]
 theorem shear_apply (t : ℚ) (x : Residual H) :
@@ -340,11 +318,9 @@ theorem selectorToMarked_eq_shear :
 
 /-- Conjugating the diagonal CRT projector by the marked shear gives the graph projector. -/
 theorem shear_conj_diagonalOperator :
-    (shear H).conj (diagonalOperator H) = graphOperator H := by
-  apply LinearMap.ext
-  intro tx
-  rcases tx with ⟨t, x⟩
-  simp [LinearEquiv.conj_apply]
+    (shear H).conj (diagonalOperator H) = graphOperator H :=
+  BlockGraphProjector.shear_conj_diagonalOperator
+    (R := ℚ) (residualClass H)
 
 /-- Multiplication by the base-sheet selector is idempotent. -/
 theorem multiplication_isIdempotent :
@@ -362,12 +338,8 @@ theorem multiplication_isIdempotent :
 
 /-- The transported graph operator is idempotent. -/
 theorem graphOperator_isIdempotent :
-    IsIdempotentElem (graphOperator H) := by
-  change graphOperator H * graphOperator H = graphOperator H
-  apply LinearMap.ext
-  intro tx
-  rcases tx with ⟨t, x⟩
-  simp [Module.End.mul_apply]
+    IsIdempotentElem (graphOperator H) :=
+  BlockGraphProjector.operator_isIdempotent (R := ℚ) (residualClass H)
 
 end MarkedSheetProjector
 

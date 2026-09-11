@@ -1,4 +1,3 @@
-import HodgeConjecture.Boundary.Normalization.InvariantIntermediate
 import Mathlib.NumberTheory.RamificationInertia.Unramified
 import Mathlib.RingTheory.Invariant.Basic
 import Mathlib.RingTheory.Localization.LocalizationLocalization

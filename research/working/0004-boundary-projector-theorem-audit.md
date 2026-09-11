@@ -168,7 +168,7 @@ Chow.
    `ConjugateBoundarySeparation` condition.  The formal endpoint already
    turns these data and visible formal unramifiedness into
    `NoCodimensionOneRamification`.
-7. Use Paper I's prime-inertia and localization results with their exact
+7. Use the technical appendix's prime-inertia and localization results with their exact
    hypotheses.  The fixed-prime-inertia unramifiedness theorem corresponding
    to Stacks Tag `0BST` remains an explicit source input in the Lean path.
 8. Prove the needed all-boundary extension or purity theorem.  Existing
@@ -176,9 +176,6 @@ Chow.
    `BoundarySubgroupProjectorExtension`, and
    `CompactifiedSubgroupProjectorExtension` package this conclusion as a
    field; they do not establish it for a compactification.
-   Stacks Tag `0BMB` is not a dependency for this step: its pointwise
-   regularity, dimension, quasi-finiteness, and specialization hypotheses do
-   not directly match the present packaged global interface.
 9. Prove that the resulting global class remains idempotent.  Extending a
    finite-etale cover or taking the closure of a cycle does not by itself
    kill a boundary-supported convolution defect.
@@ -260,7 +257,7 @@ map, or coverage witness.
 > marked normal closure supplies the formal sheet selector and its exact
 > diagonal/graph block descriptions.
 
-This is appropriate for Paper II.
+This is appropriate for the unified manuscript's conditional endpoint.
 
 ### Conditional Chow theorem
 

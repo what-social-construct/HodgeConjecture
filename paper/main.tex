@@ -1,0 +1,1027 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,amscd,mathtools}
+\usepackage{mathrsfs}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{xurl}
+
+\titleformat{\section}
+  {\normalfont\LARGE\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\Large\bfseries}{\thesubsection}{1em}{}
+
+\hypersetup{
+  pdftitle={A Formal Projector Spine for the Rational Hodge Target},
+  pdfauthor={Chloe van der Vlugt},
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  citecolor=green!40!black,
+  urlcolor=blue!60!black
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Frac}{Frac}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\Corr}{Corr}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\ev}{ev}
+\DeclareMathOperator{\CH}{CH}
+\DeclareMathOperator{\Ram}{Ram}
+\DeclareMathOperator{\Sat}{Sat}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\Lift}{Lift}
+\DeclareMathOperator{\Def}{Def}
+
+\newcommand{\Q}{\mathbf Q}
+\newcommand{\one}{\mathbf 1}
+\newcommand{\fe}{\mathrm{f\acute et}}
+\newcommand{\Geta}{\Gamma_{\eta}}
+\newcommand{\Gbar}{\overline{\Gamma}}
+\newcommand{\formal}{\textnormal{\textsc{Formal}}}
+\newcommand{\conditional}{\textnormal{\textsc{Conditional}}}
+\newcommand{\openstatus}{\textnormal{\textsc{Open}}}
+\newcommand{\sourceinput}{\textnormal{\textsc{Source Input}}}
+\newcommand{\leanpath}[1]{\texttt{\nolinkurl{#1}}}
+\newcommand{\corrsrc}[1]{%
+  \leanpath{HodgeConjecture/Correspondence/#1}}
+\newcommand{\collsrc}[1]{%
+  \leanpath{HodgeConjecture/Collision/#1}}
+\newcommand{\sheetsrc}[1]{%
+  \leanpath{HodgeConjecture/Boundary/Sheets/#1}}
+\newcommand{\normsrc}[1]{%
+  \leanpath{HodgeConjecture/Boundary/Normalization/#1}}
+\newcommand{\boundarysrc}[1]{%
+  \leanpath{HodgeConjecture/Boundary/#1}}
+\newcommand{\chowsrc}[1]{%
+  \leanpath{HodgeConjecture/Realization/Chow/#1}}
+
+\newenvironment{leanfiles}
+  {\par\medskip\begingroup\footnotesize\raggedright\noindent
+   \textit{Lean correspondence.}\ }
+  {\par\endgroup\medskip}
+
+\newenvironment{statusnote}[1]
+  {\par\medskip\noindent #1.\ \begingroup}
+  {\par\endgroup\medskip}
+
+\setlength{\emergencystretch}{1.5em}
+
+\title{A Formal Projector Spine for the Rational Hodge Target:\\
+  Collisions, Marked Galois Sheets, and Boundary Interfaces}
+\author{Chloe van der Vlugt}
+\date{Draft of September 11, 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We describe a Lean~4 development organized around the exact abstract target
+of the rational Hodge conjecture.  For a supplied cycle-class model
+\(\mathscr H=(A,V,V_{\mathrm{Hdg}},\operatorname{cl})\), the modeled target
+\(\mathrm{HC}_{\Q}(\mathscr H)\) says that every class in the independently
+specified Hodge subspace lies in the image of the cycle-class map.  The
+development proves that, after supplying explicit Chow-level construction
+and lower-left detection maps, this target is equivalent to lifting every
+canonical graph projector \(P_\alpha(t,x)=(t,t\alpha)\).
+
+The dependency-ordered components leading toward such lifts consist of a collision algebra
+and its separability decomposition, a free finite-\'etale span algebra,
+transport of group and Hecke idempotents, a marked \(G/H\)-sheet calculation
+putting a selector into graph-block normal form, normal-closure deck actions,
+and a conjugate-boundary separation theorem excluding ramification in
+codimension one.  For compactification we distinguish a raw closure, whose
+idempotence defect merely restricts to zero, from a supplied compactified
+deck-graph square, which is a sufficient route to a genuinely idempotent
+compactified image.
+
+These statements are machine checked from their displayed hypotheses
+(\formal).  The geometric comparison, compactified realization, and
+class-dependent marked-sheet coverage packages remain supplied inputs
+(\conditional), and constructing them for genuine Chow groups and Betti
+cohomology remains \openstatus.  In particular, this manuscript proves no
+new case, partial case, or unconditional instance of the Hodge conjecture.
+\end{abstract}
+
+\begin{center}
+  \small Canonical manuscript candidate for author review.  No novelty,
+  priority, authorship-finality, or license claim is made in this draft.
+\end{center}
+
+\begingroup
+\small
+\tableofcontents
+\endgroup
+
+\section{Target, status convention, and proof spine}
+\label{sec:target}
+
+The manuscript uses three theorem-status labels.  \formal\ means that a Lean theorem
+checks from the hypotheses printed in its type.  \conditional\ means that
+one or more mathematically substantive geometric objects or comparison
+statements are supplied rather than constructed by the repository.
+\openstatus\ marks the absence of the construction needed to instantiate an
+interface in the intended Hodge-theoretic setting.  A result may therefore be
+both \formal\ and \conditional: its implication is machine checked, while a
+key premise is still an input.  A fourth annotation, \sourceinput, marks a
+published theorem cited in place of repeating its proof; until it is encoded
+in the dependency library, the Lean endpoint retains its consequence as a
+named premise.
+
+Fix rational vector spaces \(A\) and \(V\), a subspace
+\(V_{\mathrm{Hdg}}\leq V\), and a linear cycle-class map
+
+\[
+  \operatorname{cl}:A\longrightarrow V,
+  \qquad
+  \operatorname{im}(\operatorname{cl})\leq V_{\mathrm{Hdg}}.
+\]
+
+The datum
+\(\mathscr H=(A,V,V_{\mathrm{Hdg}},\operatorname{cl})\) is a
+\emph{rational Hodge cycle-class model}.  Its Hodge subspace is independent
+of the range of \(\operatorname{cl}\); thus the conjecture is not built into
+the model.  Define
+
+\begin{align*}
+  \operatorname{Hdg}_{\Q}(\alpha)&:\Longleftrightarrow
+    \alpha\in V_{\mathrm{Hdg}},\\
+  \operatorname{Alg}_{\Q}(\alpha)&:\Longleftrightarrow
+    \alpha\in\operatorname{im}(\operatorname{cl}),\\
+  \mathrm{HC}_{\Q}(\mathscr H)&:\Longleftrightarrow
+    V_{\mathrm{Hdg}}\leq\operatorname{im}(\operatorname{cl}).
+\end{align*}
+
+For a genuine smooth projective complex variety \(X\) and codimension \(p\),
+the intended specialization is
+
+\[
+  A=\CH^p(X)_{\Q},\qquad
+  V=H^{2p}(X,\Q),\qquad
+  V_{\mathrm{Hdg}}=H^{2p}(X,\Q)\cap H^{p,p}(X),
+\]
+
+with \(\operatorname{cl}\) the rational cycle-class map.  The repository
+does not yet construct these objects.  The family-level Lean statement
+recovers the classical universal quantification only if its index type is
+actually populated by all smooth projective complex varieties and its models
+are the genuine geometric models.
+
+Let \(\Gamma\) be a rational algebra acting on \(\Q\oplus V\) through
+\(\rho:\Gamma\to\End_{\Q}(\Q\oplus V)\).  For \(\alpha\in V\), define
+
+\[
+  P_\alpha(t,x)=(t,t\alpha).
+\]
+
+Then \(P_\alpha^2=P_\alpha\), and the lower-left evaluation
+
+\[
+  d_{\mathrm{ll}}(T)
+  =\operatorname{pr}_V\bigl(T(1,0)\bigr)
+\]
+
+recovers \(d_{\mathrm{ll}}(P_\alpha)=\alpha\).  Supply two independent
+interfaces:
+
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.6em]
+  \item a construction \(C:A\to\Gamma\) such that \(C(z)\) is idempotent
+        and \(\rho(C(z))=P_{\operatorname{cl}(z)}\);
+  \item a linear detection map \(D:\Gamma\to A\) such that
+        \(\operatorname{cl}(D(\gamma))=d_{\mathrm{ll}}(\rho(\gamma))\).
+\end{enumerate}
+
+Write \(\Lift_{\mathrm{CH}}(P_\alpha)\) for the type of idempotents
+\(\Pi\in\Gamma\) whose action is \(P_\alpha\).
+
+\begin{theorem}[Graph-projector equivalence --- \formal]
+\label{thm:hodge-graph-equivalence}
+With construction and detection as above,
+\[
+  \mathrm{HC}_{\Q}(\mathscr H)
+  \quad\Longleftrightarrow\quad
+  \forall\alpha\in V_{\mathrm{Hdg}},\quad
+    \Lift_{\mathrm{CH}}(P_\alpha)\neq\varnothing.
+\]
+The equivalence is also formalized degreewise for one model and for an
+indexed family of models.  If a separate predicate of Hodge morphisms is
+supplied together with
+\(P_\alpha\text{ Hodge}\Longleftrightarrow
+\alpha\in V_{\mathrm{Hdg}}\), the right side can equivalently quantify over
+Hodge graph projectors.
+\end{theorem}
+
+\begin{proof}
+If \(\alpha=\operatorname{cl}(z)\), the idempotent \(C(z)\) acts as
+\(P_\alpha\).  Conversely, if \(\Pi\) acts as \(P_\alpha\), then
+\(\operatorname{cl}(D(\Pi))=d_{\mathrm{ll}}(P_\alpha)=\alpha\).
+The quantified statement is obtained pointwise.
+\end{proof}
+
+\begin{leanfiles}
+The model and target are \leanpath{RationalHodgeCycleClassModel} and
+\leanpath{RationalHodgeConjectureAt} in
+\leanpath{HodgeConjecture/Realization/HodgeClasses.lean}.  The graph
+operator, construction and detection interfaces, and
+Theorem~\ref{thm:hodge-graph-equivalence} are in
+\chowsrc{TateGraphProjector.lean}, principally
+\leanpath{ClassGraphProjector.operator},
+\leanpath{ClassGraphProjectorConstruction},
+\leanpath{ClassGraphProjectorDetection}, and
+\leanpath{rationalHodgeConjectureAt_iff_everyHodgeClassHasGraphProjectorLift}.
+The degreewise and family forms are named analogously.
+\end{leanfiles}
+
+\begin{statusnote}{\conditional/\openstatus}
+Theorem~\ref{thm:hodge-graph-equivalence} is an exact logical reduction, not
+an instance of the conjecture.  Construction, detection, genuine Chow and
+cohomology objects, and the Hodge-morphism comparison remain to be built in
+the intended geometry.
+\end{statusnote}
+
+The remaining sections present the active dependency-ordered components
+toward the right side of Theorem~\ref{thm:hodge-graph-equivalence}.  They
+include parallel compactification branches and do not constitute a proved
+composite arrow from boundary separation to Hodge coverage.  In particular,
+they do not replace the theorem's explicit construction and detection
+hypotheses.
+
+\section{Collision algebra, separability, and finite-\'etale spans}
+\label{sec:collision}
+
+For a commutative algebra \(B\to R\), its self-collision algebra and diagonal
+map are
+
+\[
+  \mathcal A_{R/B}=R\otimes_B R,
+  \qquad
+  \mu:\mathcal A_{R/B}\longrightarrow R,
+  \qquad x\otimes y\longmapsto xy.
+\]
+
+The diagonal obstruction is \(J_\Delta=\ker\mu\), equivalently the ideal
+generated by the differences \(1\otimes r-r\otimes1\), and the residual
+off-diagonal ideal is
+
+\[
+  J_{\mathrm{off}}=\operatorname{Ann}(J_\Delta).
+\]
+
+The map \(\mu\) is surjective by the section \(r\mapsto1\otimes r\), hence
+\(\mathcal A_{R/B}/J_\Delta\simeq R\).  When \(B\to R\) is essentially of
+finite type and formally unramified, the contact and overlap defects vanish;
+on affine spectra this gives a decomposition of the actual self-fiber
+product into the diagonal and residual off-diagonal pieces.
+
+\begin{proposition}[Affine collision decomposition --- \formal]
+\label{prop:collision-decomposition}
+Under essential finite type and formal unramifiedness,
+\[
+  \Spec R\times_{\Spec B}\Spec R
+  \simeq
+  \Spec R\ \amalg\
+  \Spec\bigl(\mathcal A_{R/B}/J_{\mathrm{off}}\bigr),
+\]
+and the first coproduct inclusion is the relative diagonal.
+\end{proposition}
+
+\begin{leanfiles}
+The algebra, diagonal map, ideals, and surjectivity are in
+\collsrc{Algebra.lean}.  The scheme comparison and formal-unramified
+decomposition are in \collsrc{AffineGeometry.lean}, under
+\leanpath{collisionDiagonalQuotientEquiv},
+\leanpath{affineCollisionDefects_vanish_of_formallyUnramified}, and
+\leanpath{affineSelfCollisionDecompositionOfFormallyUnramified}.
+\end{leanfiles}
+
+For a morphism \(p_X:X\to T\), an endocorrespondence is a span
+\(X\xleftarrow{\ell}Z\xrightarrow{r}X\) over \(T\).  Fiber-product
+composition is associative and unital up to canonical isomorphism; quotienting
+by carrier isomorphism makes these laws strict.  Requiring both legs to be
+finite \'etale is stable under identity, transpose, base change, and
+composition.  Thus the admissible classes form a monoid, and its rational
+monoid algebra is
+
+\[
+  \mathcal C^{\mathrm{free}}_{\fe}(X/T)
+  =\Q[\Corr_{\fe}(X/T)].
+\]
+
+\begin{theorem}[Free finite-\'etale convolution algebra --- \formal]
+\label{thm:free-correspondence}
+The algebra \(\mathcal C^{\mathrm{free}}_{\fe}(X/T)\) is unital and is not
+assumed commutative.  Transpose is an involution satisfying
+\((ab)^{\mathsf t}=b^{\mathsf t}a^{\mathsf t}\).  A separately supplied
+\leanpath{FiniteEtaleAlgebraModel} can impose finite additivity and map this
+free algebra to another rational algebra.
+\end{theorem}
+
+\begin{leanfiles}
+Raw spans, classes, admissibility, and transpose occur in
+\corrsrc{Scheme.lean}, \corrsrc{Classes.lean},
+\corrsrc{EtaleClasses.lean}, and \corrsrc{TransposeAlgebra.lean}.
+The additive realization interface is in \corrsrc{FiniteEtaleModel.lean}.
+\end{leanfiles}
+
+\begin{statusnote}{\formal/\conditional}
+The collision and free-span constructions are machine checked.  The free
+span algebra is not a Chow correspondence algebra: it imposes neither
+rational equivalence nor a relation identifying a finite coproduct with a
+sum.  Such additivity is intentionally a separate model field.
+\end{statusnote}
+
+\section{Group, collision, and Hecke projectors}
+\label{sec:group}
+
+An action of a group \(G\) on \(X\) over \(T\) sends \(g\) to its graph.
+Graph composition gives an algebra homomorphism
+
+\[
+  \gamma:\Q[G]\longrightarrow
+  \mathcal C^{\mathrm{free}}_{\fe}(X/T),
+  \qquad [g]\longmapsto[\Gamma_g].
+\]
+
+\begin{theorem}[Transport of group projectors --- \formal]
+\label{thm:group-transport}
+Every idempotent \(e\in\Q[G]\) maps to a convolution idempotent.  Finite
+ordered orthogonal decompositions of \(1\) map to decompositions of the
+diagonal.  If \(G\) is finite, the average
+\[
+  e_G=\frac1{|G|}\sum_{g\in G}[g]
+\]
+and \(1-e_G\) map to complementary projectors.
+\end{theorem}
+
+For a finite subgroup \(H\leq G\), put
+
+\[
+  e_H=\frac1{|H|}\sum_{h\in H}[h],
+  \qquad
+  \mathcal H(G,H)=e_H\Q[G]e_H.
+\]
+
+The corner has unit \(e_H\), and the normalized sandwiched element
+\(T_g=e_H[g]e_H\) depends only on \(HgH\).
+
+\begin{theorem}[Hecke-corner transport --- \formal]
+\label{thm:hecke-transport}
+The graph algebra map restricts to a unital ring homomorphism from
+\(\mathcal H(G,H)\) to the corresponding corner of the finite-\'etale
+correspondence algebra.  Hence every supplied Hecke-corner idempotent gives a
+formal convolution projector.
+\end{theorem}
+
+If a finite-\'etale cover is supplied with a \(G\)-torsor collision
+decomposition
+
+\[
+  X\times_YX\simeq\coprod_{g\in G}X
+\]
+
+compatible with the graph on each summand, then any supplied finite-additive
+model \(\chi\) satisfies
+
+\[
+  \chi([X\times_YX])=\sum_{g\in G}\chi([\Gamma_g]).
+\]
+
+Thus \(|G|^{-1}\chi([X\times_YX])\) is the image of \(e_G\) and is
+idempotent.
+
+\begin{statusnote}{\formal/\conditional}
+The transport theorems are formal.  The Galois collision formula is formal
+from a supplied torsor decomposition and finite-additive realization; those
+data are not inferred merely from the label ``finite \'etale.''
+\end{statusnote}
+
+\begin{leanfiles}
+The graph map and group-idempotent transport are in
+\corrsrc{Graph.lean}, \corrsrc{FiniteGroupProjector.lean}, and
+\corrsrc{GroupAlgebraProjector.lean}.  The Hecke construction is in
+\corrsrc{HeckeProjector.lean}, particularly
+\leanpath{SubgroupHeckeAlgebra}, \leanpath{heckeElement_eq_of_rel}, and
+\leanpath{heckeCorrespondence_isIdempotent}.  The conditional collision
+comparison is in \corrsrc{GaloisCollision.lean}.
+\end{leanfiles}
+
+\section{Marked sheets and the block graph normal form}
+\label{sec:block}
+
+Let \(G\) be a group and \(H\leq G\).  Keep the pointwise sheet algebra
+
+\[
+  F_k(H)=k^{G/H}
+\]
+
+distinct from \(\Q[G]\) and from any compactified correspondence algebra.
+Let \(q_H\) be the characteristic function of the base coset, and set
+
+\[
+  E_H=\ker(\ev_H:F_{\Q}(H)\to\Q),
+  \qquad a_H=q_H-\one\in E_H.
+\]
+
+There are two splittings of base-sheet evaluation.  The selector splitting
+uses \(q_H\), while the constant-unit splitting uses \(\one\).  In formulas,
+
+\begin{align*}
+  \Phi_{q_H}(f)&=(f(H),f-f(H)q_H),\\
+  \Phi_1(f)&=(f(H),f-f(H)\one).
+\end{align*}
+
+Let \(m_{q_H}\) denote pointwise multiplication by \(q_H\), and define
+
+\[
+  P_0(t,x)=(t,0),\qquad
+  P_{a_H}(t,x)=(t,ta_H),\qquad
+  U_{a_H}(t,x)=(t,x+ta_H).
+\]
+
+\begin{theorem}[Marked-sheet block normal form --- \formal]
+\label{thm:block}
+The following identities hold without a finiteness assumption on \(G/H\):
+\begin{align*}
+  \Phi_{q_H}m_{q_H}\Phi_{q_H}^{-1}&=P_0,\\
+  \Phi_1m_{q_H}\Phi_1^{-1}&=P_{a_H},\\
+  \Phi_1\Phi_{q_H}^{-1}&=U_{a_H},\\
+  P_{a_H}&=U_{a_H}P_0U_{a_H}^{-1}.
+\end{align*}
+In particular, selector multiplication becomes the same abstract graph
+operator used in Theorem~\ref{thm:hodge-graph-equivalence}.
+\end{theorem}
+
+For any linear map \(\theta:E_H\to V\), put
+\(\Theta=\operatorname{id}_{\Q}\oplus\theta\) and
+\(\alpha=\theta(a_H)\).  Naturality gives
+
+\[
+  \Theta P_{a_H}=P_\alpha\Theta.
+\]
+
+This identity creates the precise linear bridge from a marked selector to a
+class graph.  It does not construct \(\theta\), make it motivic, or show that
+\(\alpha\) is algebraic.
+
+\begin{leanfiles}
+The ring-generic graph operator, diagonal operator, shear, and conjugacy
+identity are shared through
+\leanpath{HodgeConjecture/LinearAlgebra/BlockGraphProjector.lean}.  The sheet
+algebra and selector are in \sheetsrc{GenericProjector.lean}.  The two
+specialized splittings and selector-multiplication identities are in
+\sheetsrc{MarkedBlockProjector.lean}.  Their identification with the Tate
+graph operator and naturality under \(\theta\) are in
+\chowsrc{GaloisMarkedBlock.lean}, under
+\leanpath{graphOperator_eq_classGraphProjector} and
+\leanpath{productRealization_intertwines_selectorMultiplication}.
+\end{leanfiles}
+
+\section{Normal closure, conjugate boundaries, and codimension one}
+\label{sec:boundary}
+
+Let \(B\) be a domain with \(K=\Frac(B)\), let \(L/K\) be finite, and
+supply a normal closure \(N/K\) with a marked embedding \(\iota:L\hookrightarrow
+N\).  Write
+
+\[
+  G=\Gal(N/K),\qquad H=\Gal(N/\iota(L)),
+\]
+
+and use the canonical normalization notation
+
+\[
+  \widetilde B_L=\operatorname{IntCl}_B(L),\quad
+  \widetilde B_N=\operatorname{IntCl}_B(N),\qquad
+  Y_L=\Spec(\widetilde B_L),\quad
+  Y_N=\Spec(\widetilde B_N).
+\]
+
+The group \(G\) acts on \(\widetilde B_N\) and hence on \(Y_N\) over
+\(\Spec B\).  The fixed normalization is canonically
+
+\[
+  \operatorname{IntCl}_B(N^J)
+  \simeq_B(\widetilde B_N)^J
+\]
+
+for every subgroup \(J\leq G\); under the marked perfect-field hypotheses,
+\(\widetilde B_L\simeq_B(\widetilde B_N)^H\).
+
+Each \(g\in G\) gives a conjugate embedding \(\iota_g:L\hookrightarrow N\)
+and a canonical leg \(c_g:Y_N\to Y_L\), depending only on \(gH\).  For a
+marked normalized cover
+\(\mathcal C=(U\hookrightarrow Y_L,\mathcal N)\), let
+
+\[
+  \partial U=Y_L\setminus U,\qquad
+  \partial_g=c_g^{-1}(\partial U),\qquad
+  J_g=I(\partial_g).
+\]
+
+For \(I\leq G\), define
+
+\begin{align*}
+  J_{\mathrm{fix}}(I)
+    &=(\sigma(t)-t)_{\sigma\in I,\,t\in\widetilde B_N},\\
+  J_{\mathrm{mov}}(I)
+    &=\sum_{I\nleq gHg^{-1}}J_g,\\
+  J_{\mathrm{fm}}(I)
+    &=J_{\mathrm{fix}}(I)+J_{\mathrm{mov}}(I).
+\end{align*}
+
+Conjugate-boundary separation is the condition
+
+\[
+  \operatorname{Sep}_{\partial}(\mathcal C):
+  \quad \forall I\leq G,\ \forall Q\in\Spec(\widetilde B_N),\quad
+  I\neq1,\ \operatorname{ht}(Q)=1
+  \Longrightarrow J_{\mathrm{fm}}(I)\nsubseteq Q.
+\]
+
+Let \(\mathscr D\) be the normalization/inertia diagram, let
+\(\operatorname{Ctr}(\mathscr D)\) identify its centers with the canonical
+legs \(c_g\), and let \(\operatorname{RamCmp}(\mathscr D)\) identify its
+relative inertia indices with the geometric ramification indices.  These are
+independent comparisons, bundled as \(\mathscr B_{\mathscr D}\).
+
+\begin{theorem}[Conjugate-boundary endpoint --- \formal; \conditional]
+\label{thm:boundary-endpoint}
+Assume that \(B\) is Noetherian, that
+\(\mathscr B_{\mathscr D}\) is supplied, that the marked visible morphism
+\(U\to\Spec B\) is formally unramified, and that
+\(\operatorname{Sep}_{\partial}(\mathcal C)\) holds.  Then
+\[
+  \operatorname{Ram}^{(1)}(Y_N/B)=\varnothing;
+\]
+equivalently, every height-one point of \(Y_N\) is unramified over \(B\).
+\end{theorem}
+
+\begin{proof}
+A ramified height-one point has nontrivial valuation inertia \(I\).
+Residue-field triviality puts \(J_{\mathrm{fix}}(I)\) in its prime.  For
+every sheet moved by \(I\), the center and ramification comparisons plus
+formal unramifiedness put the corresponding \(J_g\) in the same prime.
+Thus \(J_{\mathrm{fm}}(I)\) is contained in that height-one prime, contrary
+to separation.
+\end{proof}
+
+\begin{leanfiles}
+The marked normal closure is in \normsrc{NormalClosure.lean}; its action and
+fixed-ring comparison are in \normsrc{DeckAction.lean} and
+\normsrc{InvariantIntermediate.lean}.  The conjugate maps are in
+\normsrc{ConjugateNormalization.lean}.  The ideals, separation predicate,
+and endpoint are in \normsrc{ConjugateBoundary.lean}, chiefly
+\leanpath{ConjugateBoundarySeparation} and
+\leanpath{noCodimensionOneRamification_of_conjugateBoundarySeparation}.
+The empty-locus and proposition presentations are connected by explicit
+conversion theorems rather than treated as separate geometric conclusions.
+\end{leanfiles}
+
+\begin{statusnote}{\openstatus}
+The repository does not prove the separation hypothesis in the intended
+compactification, and the codimension-one conclusion is not itself a theorem
+that a cover, selector, or Chow correspondence extends globally.  Any such
+purity or gluing arrow remains an explicit additional input.
+\end{statusnote}
+
+\begin{statusnote}{\sourceinput/\openstatus}
+A precise standard cover-extension theorem is available without repeating
+its proof.  If \(X\) is locally Noetherian, \(U\subset X\) is dense open,
+\(Y\to U\) is finite \'etale and unramified over \(X\) in codimension one,
+and every local ring of \(X\setminus U\) is regular, Stacks Project
+Lemma~58.31.2 produces a finite \'etale extension over \(X\)
+\cite{StacksFiniteEtaleCodimOneExtension}.  Applying it here still requires
+an exact identification of \(X,U,Y\) and proofs of its regularity and
+codimension-one hypotheses.  If, in addition, the underlying topological
+space of \(X\) is Noetherian and, for every \(x\in X\setminus U\), the
+punctured spectrum of the strict henselization of \(\mathcal O_{X,x}\) is
+connected, restriction of finite \'etale covers to the dense open is fully
+faithful \cite{StacksFiniteEtaleFullFaithful}; hence
+deck automorphisms of a chosen extension extend uniquely.  Neither citation
+constructs the compactified Chow correspondence or its realization square.
+\end{statusnote}
+
+The generic normal-closure evaluation is nevertheless formal.  The cosets
+\(G/H\) index the marked embeddings and give
+
+\[
+  \epsilon:L\otimes_KL\longrightarrow (G/H\to N),
+  \qquad
+  \epsilon(x\otimes y)(gH)=\iota(x)g(\iota(y)).
+\]
+
+For a formally unramified, essentially finite-type extension, the chosen
+diagonal element maps to the base selector \(q_H\).  Under the stated
+perfectness and rank hypotheses, the normal-closure base change is an
+equivalence \(N\otimes_KL\simeq (G/H\to N)\).  This is a generic statement, not
+a compactified extension.
+
+\begin{leanfiles}
+These comparisons are in \normsrc{SelectorComparison.lean}, especially
+\leanpath{NormalClosureData.collisionToGenericSheets_elem_eq_baseSheetSelector}
+and \leanpath{NormalClosureData.normalClosureTensorGenericSheetsEquiv}.
+\end{leanfiles}
+
+\section{Compactification: raw defect and a sufficient graph route}
+\label{sec:compactification}
+
+Let \(\Geta\) and \(\Gbar\) be generic and compactified rational
+correspondence algebras, and let \(r:\Gbar\to\Geta\) be an algebra map.  For
+an idempotent \(e_\eta\in\Geta\), a raw closure package has a witness type
+\(\Cl_r(e_\eta)\) and assigns to each \(x\in\Cl_r(e_\eta)\) a class
+\(\Pi_x\in\Gbar\) satisfying \(r(\Pi_x)=e_\eta\).  Its defect is
+
+\[
+  \Def(\Pi_x)=\Pi_x^2-\Pi_x.
+\]
+
+\begin{proposition}[Raw closure defect --- \formal; \conditional]
+\label{prop:raw-defect}
+Every raw closure satisfies
+\[
+  r(\Def(\Pi_x))=0.
+\]
+Moreover \(\Def(\Pi_x)=0\) if and only if \(\Pi_x\) is idempotent.  The
+zero-defect subtype \(\Cl_r^0(e_\eta)\) therefore gives an actual extension
+package \(\Ext_r(e_\eta)\).
+\end{proposition}
+
+Kernel membership is the entire unconditional conclusion.  No current
+theorem identifies \(\ker r\) with boundary-supported Chow classes or kills
+the particular defect.
+
+\begin{statusnote}{\sourceinput/\openstatus}
+In the dimension-theoretic setup of the cited result, let \(X\) be locally
+of finite type over the base \(S\), and let \(j:U\hookrightarrow X\) be an
+open immersion with reduced complement \(i:Z\hookrightarrow X\).  Then the
+Chow localization sequence
+\[
+  \CH_k(Z)\xrightarrow{i_*}\CH_k(X)
+    \xrightarrow{j^*}\CH_k(U)\longrightarrow0
+\]
+is exact \cite{StacksChowLocalization}.  This supplies the standard
+existence of a raw Chow-class lift and identifies the ambiguity between lifts
+as boundary-supported.  It does not say that the nonlinear class
+\(\Def(\Pi_x)\) vanishes or that a chosen lift respects correspondence
+composition.
+\end{statusnote}
+
+A stronger supplied datum gives a different route.  Suppose generic and
+compactified spaces carry actions of the same group and that their free graph
+algebras map to \(\Geta\) and \(\Gbar\).  A compactified deck-graph
+comparison is the square
+
+\[
+\begin{CD}
+  \Q[G] @>{\gamma_{\mathrm{cpt}}}>> \Gbar\\
+  @V{\gamma_\eta}VV @VV{r}V\\
+  \Geta @= \Geta,
+\end{CD}
+\]
+
+where the two arrows out of \(\Q[G]\) are the supplied graph-cycle maps.  We
+denote the comparison datum by \(\mathscr G_r\); its compatibility equation is
+\(r\gamma_{\mathrm{cpt}}=\gamma_\eta\).
+
+\begin{proposition}[Compactified graph image --- \formal; \conditional]
+\label{prop:graph-route}
+Given \(\mathscr G_r\), every idempotent \(e\in\Q[G]\) has a compactified
+image
+\(\Pi=\gamma_{\mathrm{cpt}}(e)\) satisfying
+\[
+  \Pi^2=\Pi,
+  \qquad r(\Pi)=\gamma_\eta(e),
+  \qquad \Def(\Pi)=0.
+\]
+The subgroup average \(e_H\) yields the corresponding singleton-witness
+extension package.
+\end{proposition}
+
+For smooth projective schemes over a fixed field \(k\), composition of rational Chow
+correspondences is associative and bilinear
+\cite{StacksChowCorrespondenceComposition}, while graph classes compose
+contravariantly \cite{StacksChowGraphFunctor}.  Once an actual compactified
+deck action and its restriction comparison have been constructed, these
+standard results supply the Chow-theoretic multiplication laws used by the
+graph route, after matching that variance convention to the project's graph
+algebra map.  They do not construct the action, compactification, comparison,
+or convention match.
+
+\begin{leanfiles}
+Raw closures and Proposition~\ref{prop:raw-defect} are in
+\boundarysrc{ProjectorClosureDefect.lean}, under
+\leanpath{AlgebraProjectorClosure}, \leanpath{convolutionDefect}, and
+\leanpath{toAlgebraProjectorExtension}.  The supplied graph square and
+Proposition~\ref{prop:graph-route} are in
+\boundarysrc{CompactifiedGraphProjector.lean}, under
+\leanpath{CompactifiedDeckGraphComparison} and
+\leanpath{groupAlgebraProjectorExtension}.
+\end{leanfiles}
+
+\begin{statusnote}{\openstatus}
+Neither a compactification carrying the required deck action nor a concrete
+Chow-valued graph square \(\mathscr G_r\) is constructed.  The sufficient
+route explains exactly why global deck graphs would bypass a separate
+boundary-defect vanishing proof; it does not assert that such graphs exist.
+\end{statusnote}
+
+\section{Residual realization, coverage, and the exact gap}
+\label{sec:coverage}
+
+Fix the action \(\rho:\Gbar\to\End_{\Q}(\Q\oplus V)\).  Supply an extension
+package for \(q_H\), choose its compactified projector \(\Pi\), and supply a
+linear residual realization \(\theta:E_H\to V\).  Put
+\(\Theta=\operatorname{id}_{\Q}\oplus\theta\) and
+\(\alpha=\theta(a_H)\).  The comparison square required by the active route
+is
+
+\begin{equation}
+\label{eq:action-square}
+  \rho(\Pi)\Theta=\Theta P_{a_H}.
+\end{equation}
+
+\begin{proposition}[Marked-selector realization --- \formal; \conditional]
+\label{prop:realization}
+From Equation~\eqref{eq:action-square},
+\[
+  d_{\mathrm{ll}}(\rho(\Pi))=\alpha.
+\]
+If \(\theta\) is surjective, then \(\rho(\Pi)=P_\alpha\).  If the ambient
+action also has the Chow lower-left detection map of
+Section~\ref{sec:target}, then \(\alpha\) lies in the cycle-class image.
+\end{proposition}
+
+For a fixed cycle-class model and ambient action, define
+\(\operatorname{Cov}_{\mathrm{Gal}}(\mathscr H,\rho)\) to mean that every
+rational Hodge class \(\alpha\) has some class-dependent marked-selector
+witness.  Its finite group \(G\), subgroup \(H\), extension package,
+compactified projector, residual map, and comparison may all depend on
+\(\alpha\), but \(\Gbar\) and \(\rho\) remain fixed.
+
+\begin{theorem}[Coverage implications --- \formal; \conditional]
+\label{thm:coverage}
+A detection map and
+\(\operatorname{Cov}_{\mathrm{Gal}}(\mathscr H,\rho)\) imply
+\(\mathrm{HC}_{\Q}(\mathscr H)\).  Conversely, construction and detection
+give the graph-projector equivalence of
+Theorem~\ref{thm:hodge-graph-equivalence}; to replace an arbitrary graph lift
+by marked Galois data and obtain
+\[
+  \mathrm{HC}_{\Q}(\mathscr H)
+  \Longleftrightarrow
+  \operatorname{Cov}_{\mathrm{Gal}}(\mathscr H,\rho),
+\]
+one must additionally assume the explicitly named strong replacement
+hypothesis.
+\end{theorem}
+
+\begin{leanfiles}
+The comparison record and its realization consequences are in
+\chowsrc{GaloisMarkedRealization.lean}, under
+\leanpath{MarkedGaloisSelectorComparison},
+\leanpath{lowerLeftClass_action_eq}, and
+\leanpath{isAlgebraicHodgeClass_of_comparison}.  Class-dependent coverage,
+the one-way Hodge implication, the strong replacement premise, and the
+conditional equivalence are respectively
+\leanpath{ClassDependentMarkedGaloisSelectorCoverage},
+\leanpath{rationalHodgeConjectureAt_of_classDependentMarkedGaloisSelectorCoverage},
+\leanpath{StrongGraphProjectorLiftReplacementByClassDependentMarkedGaloisSelector},
+and \leanpath{rationalHodgeConjectureAt_iff_classDependentMarkedGaloisSelectorCoverage}.
+\end{leanfiles}
+
+\subsection*{Exact remaining gap --- \openstatus}
+
+To obtain an actual Hodge-theoretic result by this route, the following
+constructions must be supplied for genuine geometry, with their displayed
+compatibilities proved rather than postulated:
+
+\begin{enumerate}[leftmargin=2.2em]
+  \item genuine Chow groups, Betti cohomology, Hodge subspaces, and the
+        rational cycle-class map, together with the Tate-block construction,
+        lower-left Chow detection, and Hodge-morphism comparison;
+  \item for every targeted Hodge class, marked normal-closure data and a
+        geometric residual realization \(\theta:E_H\to V\) carrying
+        \(a_H\) to that class;
+  \item either a compactified deck-graph square \(\mathscr G_r\), or a raw
+        closure plus a proof that its specific defect vanishes;
+  \item the action-intertwining identity
+        \(\rho(\Pi)\Theta=\Theta P_{a_H}\), and enough surjectivity when the
+        entire graph operator rather than only its lower-left class is needed;
+  \item a proof of the class-dependent coverage assertion.  For a literal
+        equivalence with coverage, one also needs the strong replacement of
+        arbitrary graph lifts by marked Galois witnesses.
+\end{enumerate}
+
+The codimension-one theorem of Section~\ref{sec:boundary} can feed such a
+construction only after a genuine global purity or gluing theorem is supplied.
+It does not close items (2)--(5) by itself.
+
+\section{Lean theorem and module map}
+\label{sec:lean-map}
+
+\renewcommand{\arraystretch}{1.2}
+\begingroup
+\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.25\textwidth}
+                >{\raggedright\arraybackslash}p{0.70\textwidth}@{}}
+\textbf{Mathematical layer} & \textbf{Principal declaration and Lean module}\\ \hline
+\endfirsthead
+\textbf{Mathematical layer} & \textbf{Principal declaration and Lean module}\\ \hline
+\endhead
+Rational Hodge target (\formal) &
+\leanpath{RationalHodgeConjectureAt}\newline
+\leanpath{Realization/HodgeClasses.lean}\\
+Graph-projector equivalence (\formal; \conditional) &
+\leanpath{rationalHodgeConjectureAt_iff_everyHodgeClassHasGraphProjectorLift}\newline
+\leanpath{Realization/Chow/TateGraphProjector.lean}\\
+Collision decomposition (\formal) &
+\leanpath{affineSelfCollisionDecompositionOfFormallyUnramified}\newline
+\leanpath{Collision/AffineGeometry.lean}\\
+Free finite-\'etale algebra (\formal) &
+\leanpath{FiniteEtaleFreeAlgebra}\newline
+\leanpath{Correspondence/EtaleClasses.lean}\\
+Group projector transport (\formal) &
+\leanpath{groupAlgebraCorrespondence_isIdempotent}\newline
+\leanpath{Correspondence/GroupAlgebraProjector.lean}\\
+Hecke projector transport (\formal) &
+\leanpath{heckeCorrespondence_isIdempotent}\newline
+\leanpath{Correspondence/HeckeProjector.lean}\\
+Marked block normal form (\formal) &
+\leanpath{decomposition_conj_multiplication}\newline
+\leanpath{Boundary/Sheets/MarkedBlockProjector.lean}\\
+Shared block core (\formal) &
+\leanpath{operator_eq_shear_diagonal_shear_symm}\newline
+\leanpath{LinearAlgebra/BlockGraphProjector.lean}\\
+Conjugate-boundary endpoint (\formal; \conditional) &
+\leanpath{noCodimensionOneRamification_of_conjugateBoundarySeparation}\newline
+\leanpath{Boundary/Normalization/ConjugateBoundary.lean}\\
+Subgroup extension (\formal; \conditional) &
+\leanpath{CompactifiedSubgroupProjectorExtension}\newline
+\leanpath{Boundary/GaloisProjectorExtension.lean}\\
+Raw closure defect (\formal; \conditional) &
+\leanpath{restriction_convolutionDefect}\newline
+\leanpath{Boundary/ProjectorClosureDefect.lean}\\
+Compactified graph route (\formal; \conditional) &
+\leanpath{groupAlgebraProjectorExtension}\newline
+\leanpath{Boundary/CompactifiedGraphProjector.lean}\\
+Marked residual comparison (\formal; \conditional) &
+\leanpath{MarkedGaloisSelectorComparison}\newline
+\leanpath{Realization/Chow/GaloisMarkedRealization.lean}\\
+Coverage equivalence (\formal; \conditional) &
+\leanpath{rationalHodgeConjectureAt_iff_classDependentMarkedGaloisSelectorCoverage}\newline
+\leanpath{Realization/Chow/GaloisMarkedRealization.lean}\\
+\end{longtable}
+\endgroup
+
+All displayed paths in the table are relative to the
+\leanpath{HodgeConjecture/} directory.  Umbrella modules collect these
+declarations but do not add mathematical hypotheses.
+
+\appendix
+
+\section{Technical appendix: localization, fixed rings, and inertia}
+\label{app:localization}
+
+This appendix records the local commutative-algebra bridge used when a
+normalization diagram is expressed with valuation inertia.  It is not the
+main projector construction.
+
+Let a finite group \(G\) act on a domain \(S\), let \(I\leq H\leq G\), and
+fix a height-one prime \(Q\subset S\).  With
+\(q_J=Q\cap S^J\), contraction gives
+
+\[
+  (S^G)_{q_G}\longrightarrow(S^H)_{q_H}
+    \longrightarrow(S^I)_{q_I}.
+\]
+
+Finite invariant extensions are integral; the formalization proves the
+required prime transitivity and going-down consequences, preservation of
+height one, the DVR property after localizing a Noetherian normal fixed ring,
+and the canonical local injection from the \(H\)-fixed to the \(I\)-fixed
+local ring.  Formal unramifiedness descends along this selected tower under
+the explicit source premise.
+
+For \(S=\operatorname{IntCl}_B(N)\), let \(I_Q^{\mathrm{pr}}\) be the kernel
+of the stabilizer action on the residue ring at \(Q\).  If a centered
+discrete valuation ring \(V\subset N\) is identified with \(S_Q\), then its
+valuation inertia \(I_V\) equals \(I_Q^{\mathrm{pr}}\).  The equality uses
+the localization comparison; the two inertia groups are not definitionally
+the same object.
+
+\begin{statusnote}{\sourceinput/\conditional}
+In the standard finite-group invariant setting, the Stacks Project
+fixed-prime-inertia lemma states that the map from the full invariant ring to
+the inertia-fixed ring is \'etale at the selected prime
+\cite{StacksPrimeInertiaEtale}; the DVR specialization is recorded separately
+in \cite{StacksDVRInertiaEtale}.  The Lean endpoint takes the corresponding
+localized formal-unramifiedness statement as an explicit premise because the
+external theorem is not in the pinned Mathlib API.  We use the cited theorem
+as a source input and do not reproduce its proof here.
+\end{statusnote}
+
+\begin{leanfiles}
+The local fixed-ring descent is in \normsrc{FixedRingLocalization.lean},
+\normsrc{FixedRingUnramified.lean}, and
+\normsrc{PrimeInertiaDescent.lean}.  Prime inertia is in
+\normsrc{PrimeInertia.lean}.  The valuation localization and equality of
+inertia groups are in \normsrc{LocalizationBridge.lean}, principally
+\leanpath{primeInertiaComparisonAt_of_isNoetherianRing} and
+\leanpath{valuationInertia_eq_normalizationPrimeInertiaGroup_of_isNoetherianRing}.
+\end{leanfiles}
+
+\section{Source inputs and notation audit}
+\label{app:sources}
+
+The machine-checked development uses Lean~4 and Mathlib
+\cite{Lean4,Mathlib}.  Standard commutative-algebra background used by the
+local appendix includes integral-closure normality
+\cite{StacksIntegralClosureNormal}, localization of Noetherian and normal
+rings \cite{StacksNoetherianLocalization,StacksNormalLocalization}, and the
+one-dimensional local criterion for a DVR \cite{StacksDVRCriterion}.  The
+fixed-field/integral-closure comparison may be compared with the normal
+Galois integral-closure statement \cite{StacksGaloisIntegralClosure}; that
+citation is context and does not itself prove the project-specific algebra
+equivalence.  These citations supply standard mathematical context; the
+corresponding algebraic lemmas used in the principal spine are proved in Lean
+or obtained from Mathlib.
+
+\begin{statusnote}{\formal}
+For a finite-type ring map, the cited Stacks Project result detects the
+non-unramified locus by containment of the Noether different
+\cite{StacksNoetherDifferent}.  Lean proves the collision-presentation
+statement under the localization-friendly, essentially finite-type
+hypothesis as
+\leanpath{collisionDifferentDetectsRamificationAt_of_essFiniteType}; its
+proof is not repeated in this report.  The citation verifies the ordinary
+finite-type subcase and is not an unencoded premise of the Lean theorem.
+This detection theorem does not
+construct inertia comparisons, a compactification, a purity map, a Chow
+class, or a prescribed cohomological action.
+\end{statusnote}
+
+The following non-identifications govern all notation in this manuscript:
+
+\[
+\begin{array}{rcl}
+  q_H\in F_{\Q}(H) &\neq& e_H\in\Q[G],\\
+  e_H\in\Q[G] &\neq& \Pi\in\Gbar,\\
+  \partial U\subset Y_L &\neq& \partial_g\subset Y_N,\\
+  I_V &\neq& I_Q^{\mathrm{pr}}\quad\text{definitionally},\\
+  \Cl_r(e_\eta) &\neq& \Ext_r(e_\eta),\\
+  \operatorname{Ram}^{(1)}(Y_N/B)=\varnothing
+    &\neq& \text{global selector-gluing purity}.
+\end{array}
+\]
+
+Each equality or implication between two rows requires the comparison map or
+hypothesis displayed in the relevant theorem.
+
+\section{Conclusion}
+
+The formal development now has an explicit endpoint and an auditable gap.
+The rational Hodge target is exactly equivalent to canonical graph-projector
+lifting once construction and lower-left detection are supplied.  Collision
+algebra, finite-\'etale convolution, group and Hecke idempotents, the marked
+sheet block calculation, and the conjugate-boundary codimension-one theorem
+provide compatible algebraic and geometric layers toward such lifts.  Raw
+compactified closure is deliberately weaker than projector extension; a
+supplied compactified deck-graph square is a clean sufficient alternative.
+
+What remains is geometric rather than terminological: instantiate the
+genuine Chow/Hodge model, construct class-dependent residual realizations and
+compactified projectors, prove the action square and detection compatibility,
+and establish coverage.  Until those inputs are constructed, the repository
+is a conditional formalization architecture and does not prove a Hodge case.
+
+\paragraph{Acknowledgment.}
+OpenAI Codex assisted with the Lean formalization and manuscript draft.  The
+manuscript remains subject to author review; responsibility for its final
+statements, proofs, citations, and release terms belongs to the author.
+
+\begingroup
+\small
+\bibliographystyle{alpha}
+\bibliography{references}
+\endgroup
+
+\end{document}

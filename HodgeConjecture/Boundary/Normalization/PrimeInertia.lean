@@ -1,4 +1,5 @@
 import HodgeConjecture.Boundary.Normalization.FixedRingUnramified
+import HodgeConjecture.Boundary.Normalization.InvariantIntermediate
 import Mathlib.RingTheory.Ideal.Pointwise
 
 /-!

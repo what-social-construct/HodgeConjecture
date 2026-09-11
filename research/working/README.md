@@ -7,10 +7,11 @@ checklist passes.
 
 Active research and proof-maintenance queue:
 
-- `0001-finite-etale-projectors.md` is the Paper II scope note.  Its
+- `0001-finite-etale-projectors.md` is the historical Paper II scope note. Its
   unconditional center is A1--A7 and A9--A11b; A8 is a separately labeled
   conditional torsor/realization corollary, A12/A14/A15 are cited to the
-  height-one fixed-ring Paper I, and C5b appears only as conditional outlook.
+  height-one fixed-ring draft, and C5b appears only as conditional outlook.
+  It is retained for provenance; `0006` controls the canonical manuscript.
 
 - `0002-fixed-ring-pruning-parity.md` audits the fixed-ring manuscript against
   the Lean dependency spine and stages the self-contained prime-inertia
@@ -27,3 +28,12 @@ Active research and proof-maintenance queue:
   separates the pointwise sheet algebra, group/Hecke convolution, and Chow
   convolution, audits the finite-etale base case, and lists the precise
   Chow, purity, realization, Hodge, and coverage inputs still required.
+- `0005-semantic-parity-cleanup.md` records the completed automated
+  declaration-pruning and notation pass.  It assigns one TeX symbol to each
+  retained semantic object, identifies exact implementation duplicates,
+  quarantines superseded interfaces, and keeps the human release gates open.
+- `0006-lean-spine-manuscript-outline.md` is implemented by
+  `../../paper/main.tex`.  It replaces the historical two-paper narrative
+  with one dependency-ordered manuscript, putting the Hodge target, projector
+  constructions, boundary theorem, and realization gap in the main line and
+  relegating fixed-ring/source material to appendices.

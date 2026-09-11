@@ -1,12 +1,39 @@
 # Current gap map
 
-Last audited: 2026-09-10.
+Last audited: 2026-09-11.
 
 This note follows the semantic discipline of the sibling
 `jacobian-collision-geometry` project: source and target propositions are
 named exactly, proved arrows are separated from parameterized arrows, and a
 geometric interface is not treated as a theorem merely because later record
 assembly is formal.
+
+## Active spine at a glance
+
+The canonical manuscript and root umbrellas now use the same dependency
+order:
+
+```text
+modeled Hodge target <-> canonical graph-projector lifting
+                                  ^
+                 conditional residual realization / coverage
+                                  ^
+                  marked G/H selector in graph coordinates
+                                  ^
+ collision algebra -> finite-etale spans -> group/Hecke projectors
+                                  ^
+     normal closure -> conjugate boundary -> codimension-one endpoint
+
+ compactification then forks:
+   raw closure -> Def(Pi) in ker(restriction)       [vanishing OPEN]
+   supplied compactified deck-graph square -> Pi^2=Pi [CONDITIONAL]
+```
+
+This is a dependency-ordered collection of components, not a proved composite
+arrow: the boundary endpoint does not construct either compactification
+branch, and neither branch constructs the residual Chow/Hodge comparison.
+The fixed-ring localization and prime-inertia descent form a supporting local
+branch rather than the main narrative.
 
 ## Classical target and formal model schema
 
@@ -360,33 +387,10 @@ from inertia saturation to this target is a field of
 `CompactifiedSubgroupProjectorExtension`; it packages the still-unproved
 cycle-extraction, support, refined-convolution, and purity/gluing comparison.
 
-## Why Tag 0BMB is not a dependency
+## Active codimension-one boundary endpoint
 
-The sibling collision repository already cites Stacks Tag `0BMB`.  Pointwise,
-under its locally Noetherian, normal-source, regular-target,
-quasi-finite/equal-positive-dimension hypotheses, it gives the implication
-
-```text
-unramified at every dimension-one specialization
-  -> étale at the selected point.
-```
-
-This does not by itself prove the global abstract `NormalizationPurity`
-interface or construct a correspondence on a compactification.  In
-particular, the present interface does not expose the regular-target,
-local-dimension, or specialization hypotheses needed for an exact match.
-Tag `0BMB` is therefore retained only as audited background and is not a
-dependency or a project axiom.  The archived sibling manuscript also
-explicitly warns that generic collision components can meet in an integral
-model and therefore does not assert extension of their generic idempotents.
-The sibling Lean declaration `branchPurityA2` is itself an explicit axiom,
-and its final idempotent-vanishing theorem concerns a commutative collision
-quotient ring rather than a Chow-convolution algebra.  Consequently that
-endgame can guide the normalization and boundary-separation architecture but
-cannot be copied as a proof of Chow boundary-defect vanishing.
-
-What *has* been duplicated and adapted is the self-contained conjugate
-boundary-separation layer.  Canonical conjugate normalization legs pull the
+The self-contained conjugate boundary-separation layer constructs canonical
+conjugate normalization legs and pulls the
 marked visible boundary back to the common normal-closure normalization.
 For a nontrivial subgroup, `fixedMovingBoundaryIdeal` adds its fixed-locus
 ideal to all boundary ideals of sheets it moves.
@@ -397,10 +401,9 @@ unramifiedness of the marked visible morphism, Lean proves
 or promote that local conclusion to global étaleness.  Separate wrappers now
 feed the resulting empty ramified-point family into the existing selector and
 subgroup-projector extension criteria; those wrappers still take the actual
-purity/gluing packages as inputs.  Analogous normalization wrappers combine
-the same local theorem with separately supplied normalization-purity and
-finite-étale-rigidity inputs to trivialize the normal closure and marked
-intermediate extension.
+purity/gluing packages as inputs.  The active proof spine stops at this
+codimension-one statement and does not include the broader historical
+normalization-triviality prototype.
 
 There is nevertheless a more precise source chain for a *one-way*, concrete
 compactification theorem under additional hypotheses:

@@ -215,86 +215,6 @@ structure BoundarySubgroupProjectorExtension
     Nonempty Extension ↔
       InertiaSaturated I H {baseSheet H}
 
-namespace BoundarySubgroupProjectorExtension
-
-variable {pX : X ⟶ T}
-variable {α : FiniteDeckAction pX G}
-variable {I H : Subgroup G} [Fintype H]
-variable {genericAlgebra : Type q}
-variable [Ring genericAlgebra]
-variable [Algebra ℚ genericAlgebra]
-variable
-  {genericRealization :
-    FiniteEtaleFreeAlgebra pX →ₐ[ℚ]
-      genericAlgebra}
-variable {compactifiedAlgebra : Type w}
-variable [Ring compactifiedAlgebra]
-variable [Algebra ℚ compactifiedAlgebra]
-
-/-- Boundary extension of `e_H` is equivalent to the containment `I ≤ H`. -/
-theorem extension_nonempty_iff_inertia_le
-    (E :
-      BoundarySubgroupProjectorExtension
-        pX α I H genericAlgebra
-          genericRealization compactifiedAlgebra) :
-    Nonempty E.Extension ↔ I ≤ H := by
-  rw [E.extension_nonempty_iff_inertiaSaturated,
-    inertiaSaturated_singleton_baseSheet_iff]
-
-section HeightOne
-
-variable (R A : Type r)
-variable [CommRing R] [CommRing A] [Algebra R A]
-variable (P : Ideal A) [P.IsPrime]
-
-/--
-Height-one boundary bridge: the subgroup projector extends exactly when the
-collision different avoids the chosen boundary prime.
--/
-theorem extension_nonempty_iff_different_not_le
-    (E :
-      BoundarySubgroupProjectorExtension
-        pX α I H genericAlgebra
-          genericRealization compactifiedAlgebra)
-    (hDifferent :
-      CollisionDifferentDetectsRamificationAt R A P)
-    (hInertia :
-      HeightOneInertiaRealization R A G I H P) :
-    Nonempty E.Extension ↔
-      ¬ collisionNoetherDifferentIdeal R A ≤ P := by
-  rw [E.extension_nonempty_iff_inertiaSaturated]
-  exact
-    baseSheet_projector_extends_iff_different_not_le
-      R A G I H P hDifferent hInertia
-
-/--
-Height-one cohomological form: a compactified algebraic lift of the subgroup
-projector exists exactly away from the collision different.
--/
-theorem liftWitness_nonempty_iff_different_not_le
-    (E :
-      BoundarySubgroupProjectorExtension
-        pX α I H genericAlgebra
-          genericRealization compactifiedAlgebra)
-    (hDifferent :
-      CollisionDifferentDetectsRamificationAt R A P)
-    (hInertia :
-      HeightOneInertiaRealization R A G I H P)
-    {V : Type z} [AddCommGroup V] [Module ℚ V]
-    (ρ :
-      RationalCorrespondenceAction
-        compactifiedAlgebra V) :
-    Nonempty (E.toAlgebraProjectorExtension.LiftWitness ρ) ↔
-      ¬ collisionNoetherDifferentIdeal R A ≤ P := by
-  rw [
-    E.toAlgebraProjectorExtension.liftWitness_nonempty_iff,
-    E.extension_nonempty_iff_different_not_le
-      R A P hDifferent hInertia]
-
-end HeightOne
-
-end BoundarySubgroupProjectorExtension
-
 /--
 Global compactification data for a subgroup averaging projector.
 
@@ -433,6 +353,237 @@ theorem liftWitness_nonempty_iff_forall_different_not_le
       R A P hDifferent hInertia]
 
 end GlobalCriterion
+
+end CompactifiedSubgroupProjectorExtension
+
+/-!
+## Compatibility with the one-boundary presentation
+
+The family extension package is canonical. A one-boundary package carries
+the same data as its specialization to the constant family indexed by
+`PUnit`; these adapters retain the earlier local API without adding or
+removing a boundary condition.
+-/
+
+namespace BoundarySubgroupProjectorExtension
+
+variable {pX : X ⟶ T}
+variable {α : FiniteDeckAction pX G}
+variable {I H : Subgroup G} [Fintype H]
+variable {genericAlgebra : Type q}
+variable [Ring genericAlgebra]
+variable [Algebra ℚ genericAlgebra]
+variable
+  {genericRealization :
+    FiniteEtaleFreeAlgebra pX →ₐ[ℚ]
+      genericAlgebra}
+variable {compactifiedAlgebra : Type w}
+variable [Ring compactifiedAlgebra]
+variable [Algebra ℚ compactifiedAlgebra]
+
+/-- Regard a one-boundary extension package as a singleton family. -/
+def toCompactifiedPUnit
+    (E :
+      BoundarySubgroupProjectorExtension
+        pX α I H genericAlgebra
+          genericRealization compactifiedAlgebra) :
+    CompactifiedSubgroupProjectorExtension
+      pX α PUnit.{1} (fun _ ↦ I) H genericAlgebra
+        genericRealization compactifiedAlgebra where
+  toAlgebraProjectorExtension :=
+    E.toAlgebraProjectorExtension
+  extension_nonempty_iff_forall_inertiaSaturated := by
+    constructor
+    · intro h _
+      exact E.extension_nonempty_iff_inertiaSaturated.mp h
+    · intro h
+      exact
+        E.extension_nonempty_iff_inertiaSaturated.mpr
+          (h PUnit.unit)
+
+@[simp]
+theorem toCompactifiedPUnit_toAlgebraProjectorExtension
+    (E :
+      BoundarySubgroupProjectorExtension
+        pX α I H genericAlgebra
+          genericRealization compactifiedAlgebra) :
+    E.toCompactifiedPUnit.toAlgebraProjectorExtension =
+      E.toAlgebraProjectorExtension :=
+  rfl
+
+/-- Boundary extension of `e_H` is equivalent to the containment `I ≤ H`. -/
+theorem extension_nonempty_iff_inertia_le
+    (E :
+      BoundarySubgroupProjectorExtension
+        pX α I H genericAlgebra
+          genericRealization compactifiedAlgebra) :
+    Nonempty E.Extension ↔ I ≤ H := by
+  have h :=
+    E.toCompactifiedPUnit.extension_nonempty_iff_forall_inertia_le
+  exact h.trans ⟨fun hI ↦ hI PUnit.unit, fun hI _ ↦ hI⟩
+
+section HeightOne
+
+variable (R A : Type r)
+variable [CommRing R] [CommRing A] [Algebra R A]
+variable (P : Ideal A) [P.IsPrime]
+
+/--
+Height-one boundary bridge, retained as the singleton-family compatibility
+form of the global criterion.
+-/
+theorem extension_nonempty_iff_different_not_le
+    (E :
+      BoundarySubgroupProjectorExtension
+        pX α I H genericAlgebra
+          genericRealization compactifiedAlgebra)
+    (hDifferent :
+      CollisionDifferentDetectsRamificationAt R A P)
+    (hInertia :
+      HeightOneInertiaRealization R A G I H P) :
+    Nonempty E.Extension ↔
+      ¬ collisionNoetherDifferentIdeal R A ≤ P := by
+  let boundaryPrime : PUnit.{1} → Ideal A := fun _ ↦ P
+  letI : ∀ i, (boundaryPrime i).IsPrime := fun _ ↦ inferInstance
+  have h :=
+    E.toCompactifiedPUnit.extension_nonempty_iff_forall_different_not_le
+      R A boundaryPrime (fun _ ↦ hDifferent) (fun _ ↦ hInertia)
+  exact h.trans ⟨fun hP ↦ hP PUnit.unit, fun hP _ ↦ hP⟩
+
+/--
+Height-one cohomological form, retained as the singleton-family compatibility
+form of the global lift criterion.
+-/
+theorem liftWitness_nonempty_iff_different_not_le
+    (E :
+      BoundarySubgroupProjectorExtension
+        pX α I H genericAlgebra
+          genericRealization compactifiedAlgebra)
+    (hDifferent :
+      CollisionDifferentDetectsRamificationAt R A P)
+    (hInertia :
+      HeightOneInertiaRealization R A G I H P)
+    {V : Type z} [AddCommGroup V] [Module ℚ V]
+    (ρ :
+      RationalCorrespondenceAction
+        compactifiedAlgebra V) :
+    Nonempty (E.toAlgebraProjectorExtension.LiftWitness ρ) ↔
+      ¬ collisionNoetherDifferentIdeal R A ≤ P := by
+  rw [
+    E.toAlgebraProjectorExtension.liftWitness_nonempty_iff,
+    E.extension_nonempty_iff_different_not_le
+      R A P hDifferent hInertia]
+
+end HeightOne
+
+end BoundarySubgroupProjectorExtension
+
+namespace CompactifiedSubgroupProjectorExtension
+
+variable {pX : X ⟶ T}
+variable {α : FiniteDeckAction pX G}
+variable {I H : Subgroup G} [Fintype H]
+variable {genericAlgebra : Type q}
+variable [Ring genericAlgebra]
+variable [Algebra ℚ genericAlgebra]
+variable
+  {genericRealization :
+    FiniteEtaleFreeAlgebra pX →ₐ[ℚ]
+      genericAlgebra}
+variable {compactifiedAlgebra : Type w}
+variable [Ring compactifiedAlgebra]
+variable [Algebra ℚ compactifiedAlgebra]
+
+/-- Recover the one-boundary compatibility package from a singleton family. -/
+def toBoundary
+    (E :
+      CompactifiedSubgroupProjectorExtension
+        pX α PUnit.{1} (fun _ ↦ I) H genericAlgebra
+          genericRealization compactifiedAlgebra) :
+    BoundarySubgroupProjectorExtension
+      pX α I H genericAlgebra
+        genericRealization compactifiedAlgebra where
+  toAlgebraProjectorExtension :=
+    E.toAlgebraProjectorExtension
+  extension_nonempty_iff_inertiaSaturated := by
+    constructor
+    · intro h
+      exact
+        E.extension_nonempty_iff_forall_inertiaSaturated.mp h
+          PUnit.unit
+    · intro h
+      apply
+        E.extension_nonempty_iff_forall_inertiaSaturated.mpr
+      intro _
+      exact h
+
+@[simp]
+theorem toBoundary_toAlgebraProjectorExtension
+    (E :
+      CompactifiedSubgroupProjectorExtension
+        pX α PUnit.{1} (fun _ ↦ I) H genericAlgebra
+          genericRealization compactifiedAlgebra) :
+    E.toBoundary.toAlgebraProjectorExtension =
+      E.toAlgebraProjectorExtension :=
+  rfl
+
+end CompactifiedSubgroupProjectorExtension
+
+namespace BoundarySubgroupProjectorExtension
+
+variable {pX : X ⟶ T}
+variable {α : FiniteDeckAction pX G}
+variable {I H : Subgroup G} [Fintype H]
+variable {genericAlgebra : Type q}
+variable [Ring genericAlgebra]
+variable [Algebra ℚ genericAlgebra]
+variable
+  {genericRealization :
+    FiniteEtaleFreeAlgebra pX →ₐ[ℚ]
+      genericAlgebra}
+variable {compactifiedAlgebra : Type w}
+variable [Ring compactifiedAlgebra]
+variable [Algebra ℚ compactifiedAlgebra]
+
+/-- The two singleton-family adapters lose no one-boundary package data. -/
+@[simp]
+theorem toCompactifiedPUnit_toBoundary
+    (E :
+      BoundarySubgroupProjectorExtension
+        pX α I H genericAlgebra
+          genericRealization compactifiedAlgebra) :
+    E.toCompactifiedPUnit.toBoundary = E := by
+  cases E
+  rfl
+
+end BoundarySubgroupProjectorExtension
+
+namespace CompactifiedSubgroupProjectorExtension
+
+variable {pX : X ⟶ T}
+variable {α : FiniteDeckAction pX G}
+variable {I H : Subgroup G} [Fintype H]
+variable {genericAlgebra : Type q}
+variable [Ring genericAlgebra]
+variable [Algebra ℚ genericAlgebra]
+variable
+  {genericRealization :
+    FiniteEtaleFreeAlgebra pX →ₐ[ℚ]
+      genericAlgebra}
+variable {compactifiedAlgebra : Type w}
+variable [Ring compactifiedAlgebra]
+variable [Algebra ℚ compactifiedAlgebra]
+
+/-- The two one-boundary adapters lose no singleton-family package data. -/
+@[simp]
+theorem toBoundary_toCompactifiedPUnit
+    (E :
+      CompactifiedSubgroupProjectorExtension
+        pX α PUnit.{1} (fun _ ↦ I) H genericAlgebra
+          genericRealization compactifiedAlgebra) :
+    E.toBoundary.toCompactifiedPUnit = E := by
+  cases E
+  rfl
 
 end CompactifiedSubgroupProjectorExtension
 

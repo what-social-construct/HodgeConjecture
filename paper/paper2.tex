@@ -39,10 +39,13 @@
 \DeclareMathOperator{\ev}{ev}
 \DeclareMathOperator{\Gal}{Gal}
 \DeclareMathOperator{\CH}{CH}
+\DeclareMathOperator{\Def}{Def}
 
 \newcommand{\Q}{\mathbf Q}
 \newcommand{\one}{\mathbf 1}
 \newcommand{\fe}{\mathrm{f\acute et}}
+\newcommand{\Geta}{\Gamma_{\eta}}
+\newcommand{\Gbar}{\overline{\Gamma}}
 \newcommand{\leanpath}[1]{\texttt{\nolinkurl{#1}}}
 \newcommand{\corrsrc}[1]{%
   \leanpath{HodgeConjecture/Correspondence/#1}}
@@ -93,7 +96,7 @@ codimension-one ramification.
 
 For a marked quotient \(G/H\), we prove that multiplication by the base-sheet
 selector in \(\Q^{G/H}\) is \(\operatorname{diag}(1,0)\) in selector
-coordinates and the graph projector of \(q-1\) in constant-unit coordinates.
+coordinates and the graph projector of \(a_H=q_H-1\) in constant-unit coordinates.
 The two forms are related by an explicit shear, and the comparison is natural
 under rational maps of the residual factor.  We finally isolate a conditional
 realization criterion: a supplied extension package and chosen compactified
@@ -193,6 +196,64 @@ draft is positioned only as a formalization and infrastructure report.  A
 systematic comparison with prior formalizations and the mathematical
 literature has not yet been completed, so no novelty or priority claim is
 made here.
+
+\subsection*{Semantic notation}
+
+We reserve one symbol for each mathematical role.  In particular, symbols
+are not shared merely because two Lean structures have similarly named
+fields.  The base, marked extension, and normal closure are
+
+\[
+  B\subset K=\operatorname{Frac}(B),\qquad
+  L/K,\qquad N/K,\qquad
+  G=\Gal(N/K),\qquad H=\Gal(N/\iota(L)).
+\]
+
+Their normalization rings and schemes are
+
+\[
+  \widetilde B_L=\operatorname{IntCl}_B(L),\quad
+  \widetilde B_N=\operatorname{IntCl}_B(N),\qquad
+  Y_L=\operatorname{Spec}(\widetilde B_L),\quad
+  Y_N=\operatorname{Spec}(\widetilde B_N).
+\]
+
+The conjugate embedding and normalization leg are \(\iota_g\) and
+\(c_g:Y_N\to Y_L\).  Their pulled-back boundary ideal is \(J_g\); for
+\(I\leq G\), the fixed, moving, and combined ideals are respectively
+\(J_{\mathrm{fix}}(I)\), \(J_{\mathrm{mov}}(I)\), and
+\(J_{\mathrm{fm}}(I)\).  We write
+\(\operatorname{Ram}^{(1)}(Y_N/B)\) for the ramified height-one locus and
+\(\operatorname{Sep}_{\partial}(\mathcal C)\) for conjugate-boundary
+separation.
+
+For a marked sheet set \(\Sigma_H=G/H\), the pointwise algebra is
+\(F_k(H)=k^{G/H}\), a selected-set characteristic function is \(q_A\), and
+the base-sheet selector is \(q_H=\one_{\{H\}}\).  By contrast,
+
+\[
+  e_H=|H|^{-1}\sum_{h\in H}[h]\in\Q[G]
+\]
+
+always denotes the group-algebra convolution idempotent, while
+\(\pi_H^\eta=\gamma_\eta(e_H)\) denotes its generic graph-correspondence
+image.  We use \(\Geta\) and \(\Gbar\)
+for the generic and compactified correspondence algebras and
+\(r:\Gbar\to\Geta\) for restriction.  A proposed compactified projector is
+\(\Pi\), and its unique idempotence-defect notation is
+
+\[
+  \Def(\Pi)=\Pi^2-\Pi.
+\]
+
+Finally, \(E_H=\ker(\ev_H)\) is the marked residual sheet module,
+\(a_H=q_H-1\), \(P_\alpha(t,x)=(t,t\alpha)\) is the graph projector, and
+\(U_\alpha(t,x)=(t,x+t\alpha)\) is its shear.  The compactified action is
+\(\rho:\Gbar\to\End_{\Q}(\Q\oplus V)\), while \(\mathsf{Ch}\) and
+\(\operatorname{cl}:\mathsf{Ch}\to V\) denote the independently supplied
+cycle module and cycle-class map.  Thus \(q_A\), \(e_H\), and \(\Pi\) live
+in three different algebras and are never identified without an explicit
+comparison map.
 
 \section{Scheme correspondences and the free convolution algebra}
 \label{sec:correspondences}
@@ -432,36 +493,36 @@ The group-algebra calculation also separates a useful sufficient condition
 for compactified idempotence.  Let
 \(p_\eta:X_\eta\to S_\eta\) and
 \(\bar p:\bar X\to\bar S\) carry actions \(a_\eta\) and \(\bar a\) of the
-same group \(G\).  Supply rational algebras \(A_\eta\) and \(\bar A\),
+same group \(G\).  Supply rational algebras \(\Geta\) and \(\Gbar\),
 algebra maps
 
 \[
   c_\eta:\mathcal C_{\fe}^{\mathrm{free}}(X_\eta/S_\eta)
-    \longrightarrow A_\eta,
+    \longrightarrow \Geta,
   \qquad
   \bar c:\mathcal C_{\fe}^{\mathrm{free}}(\bar X/\bar S)
-    \longrightarrow\bar A,
+    \longrightarrow\Gbar,
 \]
 
-and a restriction map \(r:\bar A\to A_\eta\).  The comparison datum is the
+and a restriction map \(r:\Gbar\to\Geta\).  The comparison datum is the
 commutative square on the rational group algebra
 
 \begin{equation}
 \label{eq:compactified-graph-square}
   r\,\bar c\,\gamma_{\bar a}
-  =c_\eta\,\gamma_{a_\eta}:\Q[G]\longrightarrow A_\eta.
+  =c_\eta\,\gamma_{a_\eta}:\Q[G]\longrightarrow\Geta.
 \end{equation}
 
 The word ``compactified'' names the intended application.  The formal datum
 does not itself relate the two schemes, construct either cycle map, or
-identify \(\bar A\) with a Chow ring.
+identify \(\Gbar\) with a Chow ring.
 
 \begin{proposition}[Projectors through a supplied compactified graph square]
 \label{prop:compactified-graph-projector}
 If \(e\in\Q[G]\) satisfies \(e^2=e\), put
 
 \[
-  \Pi_e=\bar c\bigl(\gamma_{\bar a}(e)\bigr)\in\bar A.
+  \Pi_e=\bar c\bigl(\gamma_{\bar a}(e)\bigr)\in\Gbar.
 \]
 
 Then
@@ -487,24 +548,24 @@ identity is the idempotence equation rewritten by subtraction.
 \end{proof}
 
 There is a weaker construction for a closure not known to arise from a
-global graph map.  Let \(e_\eta\in A_\eta\) be idempotent and let a raw closure
-class \(\Pi\in\bar A\) satisfy \(r(\Pi)=e_\eta\).  Define its convolution
+global graph map.  Let \(e_\eta\in\Geta\) be idempotent and let a raw closure
+class \(\Pi\in\Gbar\) satisfy \(r(\Pi)=e_\eta\).  Define its convolution
 defect by
 
 \[
-  \delta(\Pi)=\Pi^2-\Pi.
+  \Def(\Pi)=\Pi^2-\Pi.
 \]
 
 Then algebra-map compatibility gives only
 
 \begin{equation}
 \label{eq:defect-restricts-zero}
-  r\bigl(\delta(\Pi)\bigr)
+  r\bigl(\Def(\Pi)\bigr)
   =e_\eta^2-e_\eta=0.
 \end{equation}
 
 Thus the defect belongs to the kernel of generic restriction.  The subtype
-of closure witnesses satisfying \(\delta(\Pi)=0\) canonically forms an
+of closure witnesses satisfying \(\Def(\Pi)=0\) canonically forms an
 \leanpath{AlgebraProjectorExtension}.
 
 \begin{leanfiles}
@@ -816,13 +877,12 @@ Under the hypotheses of Proposition
 sheets satisfies all packaged height-one inertia-saturation conditions.
 Consequently, a supplied selector-purity/gluing equivalence produces a
 global selector extension.  A supplied subgroup-projector extension package
-likewise produces a compactified correspondence projector and, under any
-supplied rational action, an algebraic-projector lift.
+likewise produces a compactified correspondence projector.
 \end{corollary}
 
 \begin{proof}
 The proposition makes the type of ramified height-one points empty, so every
-local saturation condition follows by elimination.  The three conclusions
+local saturation condition follows by elimination.  The two conclusions
 are then the forward directions of the supplied extension interfaces.
 \end{proof}
 
@@ -844,14 +904,9 @@ All four modules are native to this repository and import no sibling project.
 \begin{remark}[The remaining purity arrow]
 The proposition proves only the codimension-one conclusion.  It neither
 proves the displayed separation hypothesis nor promotes that conclusion to
-global \'etaleness.  In particular, Stacks Project Tag \texttt{0BMB} is not
-installed as an axiom here: its pointwise statement has regularity,
-quasi-finiteness, local-dimension, and specialization hypotheses not exposed
-by the present global interface.  Normalization purity remains a separately
-supplied input.  If that input and the separate finite-\'etale rigidity input
-are supplied, \normsrc{GlobalExtension.lean} composes them with Proposition
-~\ref{prop:conjugate-boundary-separation} to trivialize the normal closure and
-the marked intermediate extension.
+global \'etaleness.  The active formal development therefore stops at the
+codimension-one conclusion and keeps the actual cover-extension and
+correspondence-gluing statements as separately supplied inputs.
 \end{remark}
 
 The cosets \(G/H\) index the \(K\)-embeddings of \(L\) into \(N\).  Chosen
@@ -871,7 +926,7 @@ Assume \(L/K\) is formally unramified and essentially of finite type.  Its
 chosen diagonal element
 
 \[
-  \delta_{L/K}\in L\otimes_KL
+  \Delta_{L/K}\in L\otimes_KL
 \]
 
 has multiplication image \(1\) and is killed by the usual differences
@@ -882,11 +937,11 @@ has multiplication image \(1\) and is killed by the usual differences
 Under the hypotheses above,
 
 \[
-  \epsilon(\delta_{L/K})=q,
+  \epsilon(\Delta_{L/K})=q_H,
 \]
 
-where \(q\in (G/H\to N)\) is the characteristic function of the base coset
-\(H\).  In particular, \(\delta_{L/K}\) is idempotent.  If \(K\) is perfect,
+where \(q_H\in (G/H\to N)\) is the characteristic function of the base coset
+\(H\).  In particular, \(\Delta_{L/K}\) is idempotent.  If \(K\) is perfect,
 normal-closure base change gives an \(N\)-algebra equivalence
 
 \[
@@ -898,8 +953,8 @@ normal-closure base change gives an \(N\)-algebra equivalence
 At the base coset, evaluation is multiplication followed by the distinguished
 embedding, so the value is \(1\).  At a nonbase coset, the associated
 embedding differs from \(\iota\) on some \(x\in L\).  Applying the relation
-\((1\otimes x-x\otimes1)\delta_{L/K}=0\) and using that \(N\) is a field
-forces the value to vanish.  Thus the image is \(q\).  Idempotence follows
+\((1\otimes x-x\otimes1)\Delta_{L/K}=0\) and using that \(N\) is a field
+forces the value to vanish.  Thus the image is \(q_H\).  Idempotence follows
 from the same defining relations for the diagonal element.  Over a perfect
 base, separability and the finite-dimensional rank comparison upgrade the
 normal-closure evaluation map to the stated equivalence.
@@ -929,32 +984,33 @@ pointwise selector multiplication with graph convolution.
 Let \(G\) be a group, \(H\leq G\), and
 
 \[
-  F=\Q^{G/H}.
+  \Sigma_H=G/H,
+  \qquad F=F_{\Q}(H)=\Q^{G/H}.
 \]
 
 Finiteness of \(G/H\) is unnecessary for the linear identities in this
-section.  Let \(s_0=H\) be the base sheet, let \(q\in F\) be its
+section.  Let \(s_0=H\) be the base sheet, let \(q_H\in F\) be its
 characteristic function, and put
 
 \[
-  E=\ker(\ev_{s_0}:F\to\Q),
+  E_H=\ker(\ev_{s_0}:F\to\Q),
   \qquad
-  r=q-\one\in E.
+  a_H=q_H-\one\in E_H.
 \]
 
 There are two natural splittings of evaluation.  The selector splitting is
 
 \[
-  \Phi_q:F\xrightarrow{\sim}\Q\oplus E,
+  \Phi_{q_H}:F\xrightarrow{\sim}\Q\oplus E_H,
   \qquad
-  \Phi_q(f)=
-    \bigl(f(s_0),f-f(s_0)q\bigr),
+  \Phi_{q_H}(f)=
+    \bigl(f(s_0),f-f(s_0)q_H\bigr),
 \]
 
-with inverse \((t,x)\mapsto tq+x\).  The constant-unit splitting is
+with inverse \((t,x)\mapsto tq_H+x\).  The constant-unit splitting is
 
 \[
-  \Phi_1:F\xrightarrow{\sim}\Q\oplus E,
+  \Phi_1:F\xrightarrow{\sim}\Q\oplus E_H,
   \qquad
   \Phi_1(f)=
     \bigl(f(s_0),f-f(s_0)\one\bigr),
@@ -962,14 +1018,14 @@ with inverse \((t,x)\mapsto tq+x\).  The constant-unit splitting is
 
 with inverse \((t,x)\mapsto t\one+x\).
 
-Let \(m_q:F\to F\) denote pointwise multiplication by \(q\), and define
+Let \(m_{q_H}:F\to F\) denote pointwise multiplication by \(q_H\), and define
 
 \[
   P_0(t,x)=(t,0),
   \qquad
-  e_r(t,x)=(t,tr),
+  P_{a_H}(t,x)=(t,ta_H),
   \qquad
-  U_r(t,x)=(t,x+tr).
+  U_{a_H}(t,x)=(t,x+ta_H).
 \]
 
 \begin{theorem}[Marked-sheet block normal form]
@@ -977,42 +1033,42 @@ Let \(m_q:F\to F\) denote pointwise multiplication by \(q\), and define
 The marked selector satisfies
 
 \begin{align}
-  \Phi_qm_q\Phi_q^{-1}&=P_0,\label{eq:selector-diagonal}\\
-  \Phi_1m_q\Phi_1^{-1}&=e_r,\label{eq:selector-graph}\\
-  \Phi_1\Phi_q^{-1}&=U_r,\label{eq:selector-shear}\\
-  e_r&=U_rP_0U_r^{-1}.\label{eq:shear-conjugacy}
+  \Phi_{q_H}m_{q_H}\Phi_{q_H}^{-1}&=P_0,\label{eq:selector-diagonal}\\
+  \Phi_1m_{q_H}\Phi_1^{-1}&=P_{a_H},\label{eq:selector-graph}\\
+  \Phi_1\Phi_{q_H}^{-1}&=U_{a_H},\label{eq:selector-shear}\\
+  P_{a_H}&=U_{a_H}P_0U_{a_H}^{-1}.\label{eq:shear-conjugacy}
 \end{align}
 
-In particular, \(m_q\), \(P_0\), and \(e_r\) are idempotent.
+In particular, \(m_{q_H}\), \(P_0\), and \(P_{a_H}\) are idempotent.
 \end{theorem}
 
 \begin{proof}
-Take \((t,x)\in\Q\oplus E\).  Since \(x(s_0)=0\), pointwise multiplication
-by \(q\) kills \(x\).  Therefore
+Take \((t,x)\in\Q\oplus E_H\).  Since \(x(s_0)=0\), pointwise multiplication
+by \(q_H\) kills \(x\).  Therefore
 
 \[
-  m_q(tq+x)=tq,
+  m_{q_H}(tq_H+x)=tq_H,
 \]
 
 which proves \eqref{eq:selector-diagonal}.  In the constant-unit splitting,
 
 \[
-  m_q(t\one+x)=tq
-  =t\one+t(q-\one),
+  m_{q_H}(t\one+x)=tq_H
+  =t\one+t(q_H-\one),
 \]
 
 which proves \eqref{eq:selector-graph}.  Comparing the two inverse splittings
 gives
 
 \[
-  \Phi_1\Phi_q^{-1}(t,x)
-  =\Phi_1(tq+x)=(t,x+tr),
+  \Phi_1\Phi_{q_H}^{-1}(t,x)
+  =\Phi_1(tq_H+x)=(t,x+ta_H),
 \]
 
 and hence \eqref{eq:selector-shear}.  Conjugating
 \eqref{eq:selector-diagonal} by this transition gives
 \eqref{eq:shear-conjugacy}.  Idempotence also follows directly from
-\(q^2=q\).
+\(q_H^2=q_H\).
 \end{proof}
 
 \begin{leanfiles}
@@ -1028,34 +1084,34 @@ The same graph operator occurs in the Tate-block encoding of a rational
 class.  If \(V\) is a rational vector space and \(\alpha\in V\), put
 
 \[
-  e_\alpha:\Q\oplus V\longrightarrow\Q\oplus V,
+  P_\alpha:\Q\oplus V\longrightarrow\Q\oplus V,
   \qquad
-  e_\alpha(t,v)=(t,t\alpha).
+  P_\alpha(t,v)=(t,t\alpha).
 \]
 
-Evaluation of \(e_\alpha\) at \((1,0)\), followed by projection to \(V\),
-recovers \(\alpha\).  Thus \(\alpha\mapsto e_\alpha\) is injective.
+Evaluation of \(P_\alpha\) at \((1,0)\), followed by projection to \(V\),
+recovers \(\alpha\).  Thus \(\alpha\mapsto P_\alpha\) is injective.
 
 \begin{proposition}[Naturality of the marked graph]
 \label{prop:marked-naturality}
-For every rational linear map \(\theta:E\to V\), let
+For every rational linear map \(\theta:E_H\to V\), let
 
 \[
   \Theta=\operatorname{id}_{\Q}\oplus\theta,
   \qquad
-  \alpha=\theta(r).
+  \alpha=\theta(a_H).
 \]
 
 Then
 
 \begin{equation}
 \label{eq:graph-naturality}
-  \Theta e_r=e_\alpha\Theta.
+  \Theta P_{a_H}=P_\alpha\Theta.
 \end{equation}
 \end{proposition}
 
 \begin{proof}
-Both sides send \((t,x)\) to \((t,t\theta(r))\).
+Both sides send \((t,x)\) to \((t,t\theta(a_H))\).
 \end{proof}
 
 \begin{leanfiles}
@@ -1071,40 +1127,40 @@ Equation~\eqref{eq:graph-naturality} are in
 \begin{remark}[Naturality is not realization]
 Proposition~\ref{prop:marked-naturality} applies to every rational linear map
 \(\theta\).  It does not construct \(\theta\) from geometry, show that it is
-motivic, or prove that \(\theta(r)\) is the class of an algebraic cycle.
+motivic, or prove that \(\theta(a_H)\) is the class of an algebraic cycle.
 \end{remark}
 
 \section{A conditional realization criterion}
 \label{sec:conditional-realization}
 
 The exact remaining comparison can be stated without identifying the
-pointwise sheet algebra with a correspondence algebra.  Let \(\Gamma\) be a
+pointwise sheet algebra with a correspondence algebra.  Let \(\Gbar\) be a
 possibly noncommutative rational algebra.  Supply an
 \leanpath{AlgebraProjectorExtension} \(\mathcal E\) with generic algebra
-\(F\), compactified algebra \(\Gamma\), and generic projector \(q\).
+\(F\), compactified algebra \(\Gbar\), and generic projector \(q_H\).
 Thus \(\mathcal E\) includes an algebra homomorphism
 
 \[
-  \operatorname{res}:\Gamma\longrightarrow F,
+  r:\Gbar\longrightarrow F,
 \]
 
 a type of extension witnesses, and for each witness \(x\) an idempotent
-\(\mathcal E.\operatorname{projector}(x)\in\Gamma\) whose restriction is
-exactly \(q\).  Choose such an \(x\), put
-\(\Pi=\mathcal E.\operatorname{projector}(x)\), and let \(\Gamma\) act on
+\(\mathcal E.\operatorname{projector}(x)\in\Gbar\) whose restriction is
+exactly \(q_H\).  Choose such an \(x\), put
+\(\Pi=\mathcal E.\operatorname{projector}(x)\), and let \(\Gbar\) act on
 \(\Q\oplus V\):
 
 \[
-  \rho:\Gamma\longrightarrow
+  \rho:\Gbar\longrightarrow
   \End_{\Q}(\Q\oplus V).
 \]
 
-Let \(\theta:E\to V\) be linear, put
+Let \(\theta:E_H\to V\) be linear, put
 \(\Theta=\operatorname{id}_{\Q}\oplus\theta\), and assume
 
 \begin{equation}
 \label{eq:action-square}
-  \rho(\Pi)\Theta=\Theta e_r.
+  \rho(\Pi)\Theta=\Theta P_{a_H}.
 \end{equation}
 
 This equation is substantive input: it compares the action of a compactified
@@ -1113,7 +1169,7 @@ correspondence with generic selector multiplication.
 \begin{proposition}[Marked-selector realization criterion]
 \label{prop:conditional-realization}
 Assume Equation~\eqref{eq:action-square} and
-\(\theta(r)=\alpha\in V\).  Then the lower-left class of \(\rho(\Pi)\) is
+\(\theta(a_H)=\alpha\in V\).  Then the lower-left class of \(\rho(\Pi)\) is
 \(\alpha\):
 
 \[
@@ -1123,29 +1179,29 @@ Assume Equation~\eqref{eq:action-square} and
 If \(\theta\) is surjective, then the whole operator is the graph projector,
 
 \[
-  \rho(\Pi)=e_\alpha.
+  \rho(\Pi)=P_\alpha.
 \]
 \end{proposition}
 
 \begin{proof}
 Evaluate \eqref{eq:action-square} at \((1,0)\).  Its right side is
-\(\Theta(1,r)=(1,\alpha)\), which proves the first assertion.  If \(\theta\)
+\(\Theta(1,a_H)=(1,\alpha)\), which proves the first assertion.  If \(\theta\)
 is surjective, then \(\Theta\) is surjective.  Proposition
 ~\ref{prop:marked-naturality} and \eqref{eq:action-square} give
 
 \[
-  \rho(\Pi)\Theta=\Theta e_r=e_\alpha\Theta.
+  \rho(\Pi)\Theta=\Theta P_{a_H}=P_\alpha\Theta.
 \]
 
-Surjective cancellation proves \(\rho(\Pi)=e_\alpha\).
+Surjective cancellation proves \(\rho(\Pi)=P_\alpha\).
 \end{proof}
 
 Now let \(M\) be a supplied rational cycle-class model, consisting of a
-rational module \(A\), a rational vector space \(V\), an independently
+rational module \(\mathsf{Ch}\), a rational vector space \(V\), an independently
 distinguished Hodge-class subspace of \(V\), and a cycle-class map
 
 \[
-  \operatorname{cl}:A\longrightarrow V.
+  \operatorname{cl}:\mathsf{Ch}\longrightarrow V.
 \]
 
 The model also requires
@@ -1155,7 +1211,7 @@ subspace; it does not define the Hodge subspace to be the cycle-class image.
 A lower-left detection map is a supplied linear map
 
 \[
-  d:\Gamma\longrightarrow A
+  d:\Gbar\longrightarrow\mathsf{Ch}
 \]
 
 compatible with the action in the sense that
@@ -1163,7 +1219,7 @@ compatible with the action in the sense that
 \[
   \operatorname{cl}(d(z))
   =\operatorname{pr}_V\bigl(\rho(z)(1,0)\bigr)
-  \qquad(z\in\Gamma).
+  \qquad(z\in\Gbar).
 \]
 
 \begin{corollary}[Conditional cycle-class detection]
@@ -1193,22 +1249,22 @@ the definition of its cycle-class range are in
 The graph projectors satisfy
 
 \[
-  e_\alpha e_\beta=e_\alpha,
+  P_\alpha P_\beta=P_\alpha,
   \qquad
-  e_\beta e_\alpha=e_\beta.
+  P_\beta P_\alpha=P_\beta.
 \]
 
 They commute exactly when \(\alpha=\beta\).  Therefore one fixed commutative
 correspondence algebra acting through an algebra homomorphism cannot realize
 distinct graph projectors.  The conditional interface deliberately keeps
-the generic sheet algebra commutative while permitting \(\Gamma\) to be
+the generic sheet algebra commutative while permitting \(\Gbar\) to be
 noncommutative.
 \end{remark}
 
 \begin{remark}[No Hodge consequence in the present draft]
 Corollary~\ref{cor:conditional-detection} is a theorem about supplied abstract
 data.  The repository does not construct, for a smooth projective complex
-variety, the Chow module \(A\), Betti cohomology \(V\), the Hodge-class
+variety, the Chow module \(\mathsf{Ch}\), Betti cohomology \(V\), the Hodge-class
 subspace, the Tate-augmented correspondence algebra, the compactified
 extension package \(\mathcal E\), its restriction map or idempotent \(\Pi\),
 the residual map \(\theta\), Equation
@@ -1222,13 +1278,13 @@ Hodge conjecture.
 
 The formal development also records the following forward-only endpoint.
 Let \(R\to A\) be an essentially finite-type map of commutative rings, let
-\((P_\lambda)_{\lambda\in\Lambda}\) be a chosen family of prime ideals of
-\(A\), and let \((J_\lambda)_{\lambda\in\Lambda}\) be a chosen family of
-subgroups of a deck-transformation group \(G\).  Fix a finite subgroup
-\(D\leq G\), and write \(a_D\) for the generic subgroup-average
+\((\mathfrak p_\lambda)_{\lambda\in\Lambda}\) be a chosen family of prime ideals of
+\(A\), and let \((I_\lambda)_{\lambda\in\Lambda}\) be a chosen family of
+inertia subgroups of a deck-transformation group \(G\).  Fix a finite subgroup
+\(H\leq G\), and write \(\pi_H^\eta\) for the generic subgroup-average
 correspondence.  Supply generic and compactified rational algebras
-\(\Gamma_{\mathrm{gen}}\) and
-\(\Gamma_{\mathrm{cpt}}\), a rational Chow-correspondence model \(\chi\),
+\(\Geta\) and
+\(\Gbar\), a rational Chow-correspondence model \(\chi\),
 and a prescribed rational cohomological projector with underlying operator
 \(T\).  Write \(\operatorname{cl}_{\chi,\mathrm{gen}}\),
 \(\operatorname{res}_{\chi}\), and \(\rho_{\chi}\) for the model's generic
@@ -1240,22 +1296,22 @@ Suppose the following data and implications are supplied separately:
 
 \begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.6em]
   \item a type \(\mathcal X\) of proposed extensions and a compactified-class
-        extraction map \(c:\mathcal X\to\Gamma_{\mathrm{cpt}}\);
+        extraction map \(c:\mathcal X\to\Gbar\);
   \item compactified idempotence, \(c(x)^2=c(x)\) for every
         \(x\in\mathcal X\);
   \item the restriction identity
         \[
           \operatorname{res}_{\chi}(c(x))
-          =\operatorname{cl}_{\chi,\mathrm{gen}}(a_D)
+          =\operatorname{cl}_{\chi,\mathrm{gen}}(\pi_H^\eta)
           \qquad(x\in\mathcal X);
         \]
   \item the one-way purity implication that simultaneous inertia saturation
-        of the base sheet under every \(J_\lambda\) yields a witness in
+        of the base sheet under every \(I_\lambda\) yields a witness in
         \(\mathcal X\);
-  \item for every chosen prime \(P_\lambda\), a supplied
+  \item for every chosen prime \(\mathfrak p_\lambda\), a supplied
         \leanpath{HeightOneInertiaRealization} comparing the relevant
-        algebraic ramification data with \(J_\lambda\), \(D\), and
-        \(P_\lambda\);
+        algebraic ramification data with \(I_\lambda\), \(H\), and
+        \(\mathfrak p_\lambda\);
   \item the prescribed-action identity
         \[
           \rho_{\chi}(c(x))=T
@@ -1263,18 +1319,18 @@ Suppose the following data and implications are supplied separately:
         \]
   \item avoidance of the collision Noether different at every chosen prime:
         \[
-          \mathfrak D_{A/R}^{\mathrm{coll}}\not\subseteq P_\lambda
+          \mathfrak D_{A/R}^{\mathrm{coll}}\not\subseteq \mathfrak p_\lambda
           \qquad(\lambda\in\Lambda).
         \]
 \end{enumerate}
 
-Then there exists \(\Pi\in\Gamma_{\mathrm{cpt}}\) such that
+Then there exists \(\Pi\in\Gbar\) such that
 
 \[
   \Pi^2=\Pi,
   \qquad
   \operatorname{res}_{\chi}(\Pi)
-    =\operatorname{cl}_{\chi,\mathrm{gen}}(a_D),
+    =\operatorname{cl}_{\chi,\mathrm{gen}}(\pi_H^\eta),
   \qquad
   \rho_{\chi}(\Pi)=T.
 \]
@@ -1282,9 +1338,9 @@ Then there exists \(\Pi\in\Gamma_{\mathrm{cpt}}\) such that
 
 \begin{proof}
 Essential finite type supplies collision-different detection at every
-\(P_\lambda\).  For each \(\lambda\), combine that detection, the supplied
+\(\mathfrak p_\lambda\).  For each \(\lambda\), combine that detection, the supplied
 \leanpath{HeightOneInertiaRealization}, and different avoidance with the
-base-sheet extension criterion to obtain \(J_\lambda\)-saturation of the
+base-sheet extension criterion to obtain \(I_\lambda\)-saturation of the
 base sheet.  The one-way purity implication then gives some
 \(x\in\mathcal X\).
 Taking \(\Pi=c(x)\), the separately supplied idempotence, restriction, and
@@ -1296,7 +1352,7 @@ non-unramified locus by the collision Noether different, in the sense of
 Stacks Project, Lemma~49.6.8, Tag~\texttt{0BVU}
 \cite{StacksNoetherDifferent}.  It does not supply the inertia realization,
 purity implication, compactified class, restriction comparison, or
-prescribed-action equality.  The primes \(P_\lambda\) are merely the chosen prime
+prescribed-action equality.  The primes \(\mathfrak p_\lambda\) are merely the chosen prime
 ideals in the Lean statement; they are not encoded there as an exhaustive
 boundary family or as height-one primes.  The name of the supplied inertia
 interface records its intended height-one application.
@@ -1401,7 +1457,7 @@ Hecke corner.
 
 The marked-sheet calculation supplies a separate and exact bridge at the
 linear level.  A base-sheet selector is diagonal in selector coordinates but
-becomes the canonical graph projector of \(q-1\) in constant-unit coordinates.
+becomes the canonical graph projector of \(a_H=q_H-1\) in constant-unit coordinates.
 This is a change of splitting, not an identification of pointwise and
 convolution products.  Naturality under a residual linear map remains pure
 linear algebra.

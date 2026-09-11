@@ -238,23 +238,26 @@ identify `S^G` with an arbitrary affine base `B`.  The Tag `0BST`
 fixed-inertia unramifiedness remains an explicit premise in the current Lean
 endpoint; mathematically, Tag `0BST` supplies it.
 
-### Manuscript drafts
+### Canonical manuscript
 
-Two author-review manuscripts are staged in [`paper/`](paper/):
+[*A Formal Projector Spine for the Rational Hodge Target: Collisions, Marked
+Galois Sheets, and Boundary Interfaces*](paper/main.pdf) is the canonical
+author-review candidate.  Its section order follows the dependency-ordered
+components reflected by the active Lean modules: target equivalence,
+collision and finite-etale convolution, group and
+Hecke projectors, the marked-sheet block form, the codimension-one boundary
+endpoint, the compactification fork, and the exact conditional realization
+gap.  Fixed-ring localization and source inputs are supporting appendices.
 
-- [*Height-One Fixed-Ring Descent: Localization and Formal
-  Unramifiedness*](paper/paper1.pdf) presents the local commutative-algebra
-  bridge and its exact Lean correspondence.
-- [*Finite-Étale Span Projectors and Marked Galois-Sheet Blocks in
-  Lean*](paper/paper2.pdf) presents the free finite-étale convolution algebra,
-  deck-action and Hecke projector transport, the marked-sheet block normal
-  form, and a visibly conditional realization criterion.
-
-Neither draft has been placed in the publication queue. Paper I retains Tag
-`0BST` as an explicit Lean input. Paper II does not identify the free span
-algebra with Chow correspondences and does not claim a boundary extension or
-a new Hodge case. Licensing, literature/novelty review, and final author review
-remain release blockers.
+The earlier [`paper1.pdf`](paper/paper1.pdf) and
+[`paper2.pdf`](paper/paper2.pdf) remain provenance drafts rather than a
+two-paper publication plan.  No manuscript has been placed in the publication
+queue.  The canonical draft does not identify the free span algebra with Chow
+correspondences, does not claim an unconditional boundary extension, and does
+not prove a new Hodge case.  Licensing, literature/novelty review, and final
+author review remain release blockers.  The exact section/module plan is
+recorded in
+[`research/working/0006-lean-spine-manuscript-outline.md`](research/working/0006-lean-spine-manuscript-outline.md).
 
 ### Palomar packaging status
 
@@ -277,8 +280,8 @@ or any case of the Hodge conjecture.
 - [`Correspondence`](HodgeConjecture/Correspondence) contains scheme
   correspondences \(X\leftarrow Z\to Y\) over a base, the diagonal identity,
   transpose, fiber-product composition, canonical unit and associativity
-  isomorphisms, coproduct, isomorphism classes, and the free rational
-  noncommutative span algebra.  It also gives:
+  isomorphisms, coproduct, isomorphism classes, and the free rational span
+  algebra, with no commutativity assumption.  It also gives:
   - finite étale correspondences, their closure under identity, transpose,
     and fiber-product composition, and their convolution submonoid and free
     rational algebra;
@@ -314,6 +317,9 @@ or any case of the Hodge conjecture.
   \(G/H\)-sheets, relative inertia indices, characteristic-function
   selectors, the inertia-orbit criterion, and the marked selector/CRT versus
   graph-coordinate decomposition.
+- [`LinearAlgebra/BlockGraphProjector.lean`](HodgeConjecture/LinearAlgebra/BlockGraphProjector.lean)
+  is the shared graph/diagonal/shear core used by both the marked-sheet and
+  Tate-block realizations.
 - [`Boundary/AveragingAction.lean`](HodgeConjecture/Boundary/AveragingAction.lean)
   relates the convolution idempotent averaging over a boundary inertia
   subgroup to its contragredient action on the pointwise generic-sheet
@@ -323,7 +329,7 @@ or any case of the Hodge conjecture.
   the explicit purity/gluing and selection-dependent ramification inputs.
 - [`Boundary/GaloisProjectorExtension.lean`](HodgeConjecture/Boundary/GaloisProjectorExtension.lean)
   connects finite subgroup graph averages to generic and compactified
-  correspondence algebras and constructs algebraic projector lifts.
+  correspondence algebras through explicit extension packages.
 - [`Boundary/Normalization`](HodgeConjecture/Boundary/Normalization)
   contains marked normal closures, valuation inertia, affine normalization
   models, invariant-ring descriptions of intermediate normalizations, exact
@@ -332,8 +338,8 @@ or any case of the Hodge conjecture.
   fixed--moving boundary ideals and their conditional separation endpoint,
   the collision-to-sheet-selector comparison, visible-unramifiedness lemmas,
   and the normalization–inertia diagram.
-  Literature inputs such as the local fixed-inertia theorem, purity, and
-  finite-étale rigidity remain explicit assumptions.
+  The local fixed-inertia theorem and every global cover-extension or gluing
+  input remain explicit assumptions.
 - [`Boundary`](HodgeConjecture/Boundary) contains the collision different,
   height-one comparison, and selector-extension criteria.
 - [`Realization`](HodgeConjecture/Realization) packages conditional
@@ -346,11 +352,13 @@ or any case of the Hodge conjecture.
   [`Realization/Chow`](HodgeConjecture/Realization/Chow) sublayer is organized
   by mathematical role:
   - [`Model.lean`](HodgeConjecture/Realization/Chow/Model.lean) records the
-    generic and compactified noncommutative rational correspondence algebras,
+    generic and compactified rational correspondence algebras, with no
+    commutativity assumption,
     their cycle-class/restriction maps, and cohomological action;
   - [`Presentation.lean`](HodgeConjecture/Realization/Chow/Presentation.lean)
-    constructs honest noncommutative quotients of supplied raw correspondence
-    algebras by two-sided relation ideals and descends restriction and action;
+    constructs quotients of supplied, not-necessarily-commutative raw
+    correspondence algebras by two-sided relation ideals and descends
+    restriction and action;
   - [`GaloisProjector.lean`](HodgeConjecture/Realization/Chow/GaloisProjector.lean)
     identifies the boundary-extended subgroup projector with a prescribed
     cohomological target;
@@ -369,18 +377,22 @@ or any case of the Hodge conjecture.
   - [`GaloisHodgeTarget.lean`](HodgeConjecture/Realization/Chow/GaloisHodgeTarget.lean)
     records the one-way implication from class-indexed prescribed
     finite-cover lifts to the modeled Hodge target;
-  - [`SelectorRealization.lean`](HodgeConjecture/Realization/Chow/SelectorRealization.lean)
-    retains the separate commutative selector-generated special case;
   - [`TransferProjector.lean`](HodgeConjecture/Realization/Chow/TransferProjector.lean)
     proves the normalized pull--push projector identity from an explicit
     rational degree formula, while leaving construction of Chow pullback and
     pushforward to the geometric model.
 
-  The presentation layer does not claim that ordinary raw cycles already
+  The historical commutative selector realization remains directly
+  importable for provenance but is absent from the active root umbrella. The
+  presentation layer does not claim that ordinary raw cycles already
   possess an everywhere-defined refined-convolution product, nor that its
   quotient is a Chow algebra without the required geometric identification.
 
-The root library imports all five stages.
+The root library imports the active proof stages.  The specifically excluded
+historical selector-realization modules and broad normalization-triviality
+prototype are directly importable but are not re-exported by the active
+umbrellas; compatibility declarations retained inside active modules remain
+available.
 
 ## Correspondence layer: what is formalized
 
@@ -396,8 +408,8 @@ For schemes over a fixed base \(S\), the project proves:
   \((Q\circ P)^{\mathsf t}\simeq
   P^{\mathsf t}\circ Q^{\mathsf t}\), and fixes the diagonal up to the
   canonical isomorphism;
-- isomorphism classes of endocorrespondences form a generally
-  noncommutative monoid;
+- isomorphism classes of endocorrespondences form a monoid, with no
+  commutativity assumption;
 - the monoid algebra over \(\mathbf Q\) is a free rational span algebra;
 - the older unrestricted `AdditiveClassMap`/`AlgebraModel` records formal
   laws on all spans and is retained only as an exploratory interface; it is
@@ -555,7 +567,7 @@ The project also formalizes:
   hence its induced algebraic projector lift—exists exactly when the
   collision different avoids the relevant primes, subject to the stated
   comparison inputs;
-- after supplying a noncommutative rational Chow model, equality of its
+- after supplying a not-necessarily-commutative rational Chow model, equality of its
   restriction map with the boundary restriction, and identification of the
   extended class with a prescribed cohomological projector, the prescribed
   Chow lift—and hence its complementary two-term diagonal decomposition—exists

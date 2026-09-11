@@ -1,4 +1,4 @@
-import HodgeConjecture.Boundary.Normalization.FixedRingUnramified
+import HodgeConjecture.Boundary.Normalization.NormalClosure
 import HodgeConjecture.Boundary.Sheets.GenericProjector
 import Mathlib.FieldTheory.PrimitiveElement
 import Mathlib.LinearAlgebra.Dimension.Constructions

@@ -1,6 +1,6 @@
 import HodgeConjecture.Realization.Chow.Model
 import HodgeConjecture.Realization.HodgeClasses
-import Mathlib.LinearAlgebra.Prod
+import HodgeConjecture.LinearAlgebra.BlockGraphProjector
 
 /-!
 # Tate-block graph projectors and the Hodge target
@@ -64,16 +64,15 @@ namespace ClassGraphProjector
 variable {H : Type v} [AddCommGroup H] [Module ℚ H]
 
 /-- The linear map from the Tate line sending `t` to `t • α`. -/
-def lineMap (α : H) : ℚ →ₗ[ℚ] H :=
-  LinearMap.id.smulRight α
+abbrev lineMap (α : H) : ℚ →ₗ[ℚ] H :=
+  BlockGraphProjector.lineMap (R := ℚ) α
 
 /--
 The graph projector of `α` on `ℚ × H`, representing the underlying rational
 module of the Tate-block object `ℚ(-p) ⊕ H^(2p)(X, ℚ)`.
 -/
-def operator (α : H) : Module.End ℚ (ℚ × H) :=
-  (LinearMap.fst ℚ ℚ H).prod
-    ((lineMap α).comp (LinearMap.fst ℚ ℚ H))
+abbrev operator (α : H) : Module.End ℚ (ℚ × H) :=
+  BlockGraphProjector.operator (R := ℚ) α
 
 @[simp]
 theorem operator_apply (α : H) (t : ℚ) (x : H) :
@@ -82,14 +81,13 @@ theorem operator_apply (α : H) (t : ℚ) (x : H) :
 
 /-- Every class graph defines an idempotent endomorphism. -/
 theorem operator_isIdempotent (α : H) :
-    IsIdempotentElem (operator α) := by
-  change operator α * operator α = operator α
-  ext x <;> simp [operator, Module.End.mul_apply]
+    IsIdempotentElem (operator α) :=
+  BlockGraphProjector.operator_isIdempotent (R := ℚ) α
 
 /-- The standard projector onto the Tate factor in the fixed product
 coordinates. -/
-def diagonalOperator : Module.End ℚ (ℚ × H) :=
-  (LinearMap.fst ℚ ℚ H).prod 0
+abbrev diagonalOperator : Module.End ℚ (ℚ × H) :=
+  BlockGraphProjector.diagonalOperator (R := ℚ) (M := H)
 
 @[simp]
 theorem diagonalOperator_apply (t : ℚ) (x : H) :
@@ -98,20 +96,8 @@ theorem diagonalOperator_apply (t : ℚ) (x : H) :
 
 /-- The change of splitting which carries the standard Tate line to the
 graph of `α`.  Its inverse is the same shear with `-α`. -/
-def shear (α : H) : (ℚ × H) ≃ₗ[ℚ] (ℚ × H) where
-  toFun z := (z.1, z.2 + z.1 • α)
-  invFun z := (z.1, z.2 - z.1 • α)
-  left_inv z := by
-    ext <;> simp
-  right_inv z := by
-    ext <;> simp
-  map_add' x y := by
-    ext
-    · rfl
-    · simp only [Prod.fst_add, Prod.snd_add, add_smul]
-      abel
-  map_smul' c x := by
-    ext <;> simp [mul_smul]
+abbrev shear (α : H) : (ℚ × H) ≃ₗ[ℚ] (ℚ × H) :=
+  BlockGraphProjector.shear (R := ℚ) α
 
 @[simp]
 theorem shear_apply (α : H) (t : ℚ) (x : H) :
@@ -128,10 +114,8 @@ the standard block-diagonal projector. -/
 theorem operator_eq_shear_diagonal_shear_symm (α : H) :
     operator α =
       (shear α).toLinearMap * diagonalOperator (H := H) *
-        (shear α).symm.toLinearMap := by
-  apply LinearMap.ext
-  rintro ⟨t, x⟩
-  simp [Module.End.mul_apply]
+        (shear α).symm.toLinearMap :=
+  BlockGraphProjector.operator_eq_shear_diagonal_shear_symm (R := ℚ) α
 
 /-- The reflection across the graph line of `α` along the second factor. -/
 def reflection (α : H) : Module.End ℚ (ℚ × H) :=
@@ -143,7 +127,7 @@ theorem reflection_apply (α : H) (t : ℚ) (x : H) :
   apply Prod.ext
   · simp [reflection, operator]
     ring
-  · simp [reflection, operator, lineMap, mul_smul]
+  · simp [reflection, operator, mul_smul]
 
 /-- The graph reflection is an involution. -/
 theorem reflection_isInvolution (α : H) :

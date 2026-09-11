@@ -4,6 +4,7 @@ import HodgeConjecture.Correspondence.FiniteCoproduct
 import HodgeConjecture.Correspondence.FiniteEtaleModel
 import HodgeConjecture.Correspondence.Graph
 import HodgeConjecture.Correspondence.TransposeAlgebra
+import HodgeConjecture.Correspondence.ProjectorDefect
 import HodgeConjecture.Correspondence.ProjectorLift
 import HodgeConjecture.Correspondence.FiniteGroupProjector
 import HodgeConjecture.Correspondence.GroupAlgebraProjector

@@ -82,6 +82,19 @@ def conjugateNormalizationRingMap
   CollisionFoundations.normalizationMap N
     (conjugateNormalClosureEmbeddingOverBase (B := B) D g)
 
+/-- The conjugate normalization ring map depends only on the right coset
+modulo the subgroup fixing the marked intermediate field. -/
+theorem conjugateNormalizationRingMap_right_mul
+    (D : CollisionFoundations.NormalClosureData K L N)
+    (g : D.galoisGroup)
+    (h : D.intermediateFixingSubgroup) :
+    conjugateNormalizationRingMap (B := B) D
+        (g * (h : D.galoisGroup)) =
+      conjugateNormalizationRingMap (B := B) D g := by
+  unfold conjugateNormalizationRingMap
+  rw [conjugateNormalClosureEmbeddingOverBase_right_mul
+    (B := B) D g h]
+
 /-- The canonical conjugate leg from the normal-closure normalization to
 the marked intermediate normalization. -/
 def conjugateNormalClosureToIntermediateNormalization
@@ -89,8 +102,9 @@ def conjugateNormalClosureToIntermediateNormalization
     (g : D.galoisGroup) :
     normalClosureNormalization (B := B) (N := N) ⟶
       intermediateNormalization (B := B) (L := L) :=
-  CollisionFoundations.normalizationDomination N
-    (conjugateNormalClosureEmbeddingOverBase (B := B) D g)
+  Spec.map
+    (CommRingCat.ofHom
+      (conjugateNormalizationRingMap (B := B) D g).toRingHom)
 
 /-- The conjugate normalization leg depends only on the right coset modulo
 the subgroup fixing the marked intermediate field. -/
@@ -102,8 +116,7 @@ theorem conjugateNormalClosureToIntermediateNormalization_right_mul
         (g * (h : D.galoisGroup)) =
       conjugateNormalClosureToIntermediateNormalization (B := B) D g := by
   unfold conjugateNormalClosureToIntermediateNormalization
-  rw [conjugateNormalClosureEmbeddingOverBase_right_mul
-    (B := B) D g h]
+  rw [conjugateNormalizationRingMap_right_mul (B := B) D g h]
 
 /-- The identity conjugate leg is the marked normalization leg already
 present in the normalization triangle. -/
@@ -113,7 +126,9 @@ theorem conjugateNormalClosureToIntermediateNormalization_one
       normalClosureToIntermediateNormalization (B := B) D := by
   unfold conjugateNormalClosureToIntermediateNormalization
     normalClosureToIntermediateNormalization
+    conjugateNormalizationRingMap
     conjugateNormalClosureEmbeddingOverBase
+    CollisionFoundations.normalizationDomination
   rfl
 
 /-- Every conjugate normalization leg lies over the same affine base. -/

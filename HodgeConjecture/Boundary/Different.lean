@@ -93,14 +93,6 @@ section Collision
 variable (B : Type u) (A : Type v)
 variable [CommRing B] [CommRing A] [Algebra B A]
 
-/-- Tensor multiplication is surjective, with section `a ↦ 1 ⊗ a`. -/
-theorem collisionMultiplication_surjective :
-    Function.Surjective
-      (collisionMultiplication B A).toRingHom := by
-  intro a
-  refine ⟨(1 : A) ⊗ₜ[B] a, ?_⟩
-  simp [collisionMultiplication]
-
 /-- The Noether different obtained from the abstract collision algebra. -/
 def collisionNoetherDifferentIdeal : Ideal A :=
   noetherDifferentIdeal

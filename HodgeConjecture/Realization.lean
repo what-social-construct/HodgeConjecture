@@ -1,15 +1,12 @@
-import HodgeConjecture.Realization.BoundaryProjector
 import HodgeConjecture.Realization.Chow
-import HodgeConjecture.Realization.CohomologicalProjector
-import HodgeConjecture.Realization.CompactificationProjector
 import HodgeConjecture.Realization.HodgeTarget
 
 /-!
 # Realization stage
 
-This umbrella module collects the correspondence, compactification, Chow,
-and cohomological interfaces that turn an extended scheme-theoretic
-idempotent into a realized projector.  The Galois-Chow endpoint uses a
+This umbrella module collects the active noncommutative correspondence,
+Chow, and cohomological interfaces that turn a compactified idempotent into a
+realized projector.  The Galois-Chow endpoint uses a
 generally noncommutative convolution algebra and requires equality with a
 prescribed cohomological projector, rather than defining the target from the
 constructed action.  Raw correspondence algebras may be presented by
@@ -28,4 +25,11 @@ exact target action by surjective cancellation.  No Chow-motivic residual
 realization or such square is constructed.  The finite-cover branch has not
 been identified with the full target; only implications from explicit
 class-indexed witness packages are formalized.
+
+The earlier commutative selector-realization chain remains directly
+importable from `Realization.BoundaryProjector`,
+`Realization.CohomologicalProjector`, and
+`Realization.CompactificationProjector`, but it is not part of this active
+umbrella: it identifies a historical interface, not the noncommutative
+correspondence spine used by the current target.
 -/

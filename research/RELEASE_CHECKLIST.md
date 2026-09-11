@@ -1,13 +1,16 @@
 # Release checklist
 
 Record a date, commit hash, and reviewer beside each completed item.
+The boxes below are release sign-offs, so successful working-tree checks
+recorded at the end of this file do not mark them complete before clean-clone
+and human review.
 
 ## Formal integrity
 
 - [ ] `lake build` succeeds from a clean clone at the pinned Mathlib revision.
 - [ ] `rg -n '\b(sorry|admit|axiom)\b' HodgeConjecture --glob '*.lean'`
       returns no project proof gaps.
-- [ ] The exact theorem names in the manuscript still resolve.
+- [ ] The exact theorem names in the canonical manuscript still resolve.
 - [ ] `lake env lean research/Verification.lean` succeeds.
 - [ ] Every headline theorem is tested through the root import.
 - [ ] The release commit contains all currently untracked source modules.
@@ -25,8 +28,7 @@ Record a date, commit hash, and reviewer beside each completed item.
 - [ ] `CompactifiedDeckGraphComparison` is described as supplied comparison
       data, not as a constructed compactification or Chow realization.
 - [ ] `ConjugateBoundarySeparation`, its center/ramification realizations, and
-      every global purity/gluing package remain visible hypotheses; Tag
-      `0BMB` is not cited as discharging the packaged global implication.
+      every global purity/gluing package remain visible hypotheses.
 - [ ] The prescribed-target realization equality is never presented as a
       consequence of the construction.
 - [ ] Fixed-codimension, one-model/all-codimension, and all-varieties Hodge
@@ -69,15 +71,15 @@ the full default `lake build` completed successfully after the localized
 fixed-ring descent, exact prime-inertia endpoint, Palomar wrappers, abstract
 Hodge target/equivalence, marked Galois block and conditional realization,
 compactified graph comparison, raw closure-defect calculus, and self-contained
-conjugate-boundary separation modules were added (2798 jobs).  The separation
+conjugate-boundary separation modules were added (2795 jobs).  The separation
 wrappers discharge the local side of the existing selector and subgroup-
-projector extension criteria while leaving actual purity/gluing explicit.
-Tag `0BMB` is recorded as background rather than installed as an axiom.  The
+projector extension criteria while leaving actual purity/gluing explicit. The
 only build warnings are the two deliberate statement holes in
 `Challenge.lean`; there are no `sorry`, `admit`, or project-level `axiom`
 tokens under `HodgeConjecture/`.  `research/Verification.lean`, JSON parsing of
-`comparator.json`, and `git diff --check` also succeed.  Both manuscript PDFs
-build with `latexmk`; their logs contain no warning, undefined-reference,
+`comparator.json`, and `git diff --check` also succeed.  The canonical
+manuscript and both provenance manuscripts build with `latexmk`; their logs
+contain no warning, undefined-reference,
 undefined-citation, overfull, or underfull diagnostics.  This is not yet a
 clean-clone or Comparator/NanoDa check, and the current Lean 4.24 toolchain is
 below Palomar's current 4.28 minimum.

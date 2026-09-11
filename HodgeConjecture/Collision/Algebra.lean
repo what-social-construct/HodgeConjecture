@@ -37,6 +37,14 @@ abbrev collisionMultiplication :
     CollisionAlgebra B A →ₐ[B] A :=
   CollisionFoundations.diagonalMultiplication
 
+/-- Tensor multiplication is surjective, with section `a ↦ 1 ⊗ a`. -/
+theorem collisionMultiplication_surjective :
+    Function.Surjective
+      (collisionMultiplication B A).toRingHom := by
+  intro a
+  refine ⟨(1 : A) ⊗ₜ[B] a, ?_⟩
+  simp [collisionMultiplication]
+
 /--
 The ideal `I_{Δ/R_f}` of the relative diagonal in the collision algebra.
 

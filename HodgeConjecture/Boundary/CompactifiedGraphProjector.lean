@@ -1,5 +1,6 @@
 import HodgeConjecture.Boundary.GaloisProjectorExtension
 import HodgeConjecture.Correspondence.GroupAlgebraProjector
+import HodgeConjecture.Correspondence.ProjectorDefect
 
 /-!
 # Supplied compactified graph projectors
@@ -124,28 +125,6 @@ theorem compactifiedGroupAlgebraProjector_isIdempotent
       pCompactified compactifiedAction q hq).map
     C.compactifiedCycleClass
 
-/-- The elementary multiplicative defect of a proposed projector. -/
-def projectorIdempotenceDefect
-    {A : Type*} [Ring A] (q : A) : A :=
-  q * q - q
-
-/-- Algebra homomorphisms preserve the projector idempotence defect. -/
-@[simp]
-theorem map_projectorIdempotenceDefect
-    {A B : Type*} [Ring A] [Ring B]
-    [Algebra ℚ A] [Algebra ℚ B]
-    (f : A →ₐ[ℚ] B) (q : A) :
-    f (projectorIdempotenceDefect q) =
-      projectorIdempotenceDefect (f q) := by
-  simp [projectorIdempotenceDefect]
-
-/-- Idempotence is exactly enough to kill the elementary defect. -/
-theorem projectorIdempotenceDefect_eq_zero
-    {A : Type*} [Ring A] {q : A}
-    (hq : IsIdempotentElem q) :
-    projectorIdempotenceDefect q = 0 :=
-  sub_eq_zero.mpr hq
-
 /-- Restriction carries the compactified defect to the corresponding generic defect. -/
 theorem compactifiedGroupAlgebraProjector_defect_restricts
     (C :
@@ -158,8 +137,19 @@ theorem compactifiedGroupAlgebraProjector_defect_restricts
           (C.compactifiedGroupAlgebraProjector q)) =
       projectorIdempotenceDefect
         (C.genericGroupAlgebraProjector q) := by
-  rw [map_projectorIdempotenceDefect,
-    C.compactifiedGroupAlgebraProjector_restricts]
+  calc
+    C.restriction
+          (projectorIdempotenceDefect
+            (C.compactifiedGroupAlgebraProjector q)) =
+        projectorIdempotenceDefect
+          (C.restriction
+            (C.compactifiedGroupAlgebraProjector q)) := by
+      exact
+        map_projectorIdempotenceDefect C.restriction.toRingHom
+          (C.compactifiedGroupAlgebraProjector q)
+    _ = projectorIdempotenceDefect
+          (C.genericGroupAlgebraProjector q) := by
+      rw [C.compactifiedGroupAlgebraProjector_restricts]
 
 /-- A transported group-algebra idempotent has zero compactified defect. -/
 theorem compactifiedGroupAlgebraProjector_defect_eq_zero

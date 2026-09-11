@@ -1,3 +1,9 @@
+/-!
+Archived exploratory source.  Its prime-inertia and invariant-ring
+constructions were promoted to the active normalization modules; this file is
+retained only as provenance and is not a build target.
+-/
+
 import HodgeConjecture.Boundary.Normalization.FixedRingUnramified
 import Mathlib.RingTheory.Invariant.Basic
 

@@ -473,13 +473,10 @@ theorem noCodimensionOneRamification_of_conjugateBoundarySeparation
       AlgebraicGeometry.FormallyUnramified
         (j ≫ intermediateNormalizationToBase (B := B) (L := L)))
     (hSeparation : ConjugateBoundarySeparation C) :
-    NoCodimensionOneRamification (B := B) (N := N) := by
-  intro p hp
-  by_contra hRamified
-  exact
+    NoCodimensionOneRamification (B := B) (N := N) :=
+  noCodimensionOneRamification_of_ramifiedCodimensionOnePoint_isEmpty
     (D.ramifiedCodimensionOnePoint_isEmpty_of_conjugateBoundarySeparation
-      R hFormal hSeparation).false
-      ⟨p, hp, hRamified⟩
+      R hFormal hSeparation)
 
 end Diagram
 

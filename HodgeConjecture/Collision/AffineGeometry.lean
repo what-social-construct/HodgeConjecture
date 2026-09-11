@@ -67,14 +67,6 @@ theorem affineCollisionDiagonal_eq :
         (affineSelfCollisionSpecIso B A).inv := by
   exact diagonal_Spec_map B A
 
-/-- Tensor multiplication is surjective, with section `a ↦ 1 ⊗ a`. -/
-theorem affineCollisionMultiplication_surjective :
-    Function.Surjective
-      (collisionMultiplication B A).toRingHom := by
-  intro a
-  refine ⟨(1 : A) ⊗ₜ[B] a, ?_⟩
-  simp [collisionMultiplication]
-
 /--
 The quotient of the collision algebra by the diagonal obstruction ideal is
 canonically the diagonal algebra `A`.
@@ -82,7 +74,7 @@ canonically the diagonal algebra `A`.
 noncomputable def collisionDiagonalQuotientEquiv :
     (CollisionAlgebra B A ⧸ collisionObstructionIdeal B A) ≃+* A :=
   (collisionMultiplication B A).toRingHom.quotientKerEquivOfSurjective
-    (affineCollisionMultiplication_surjective B A)
+    (collisionMultiplication_surjective B A)
 
 @[simp]
 theorem collisionDiagonalQuotientEquiv_mk
@@ -92,7 +84,7 @@ theorem collisionDiagonalQuotientEquiv_mk
       collisionMultiplication B A x := by
   exact
     RingHom.quotientKerEquivOfSurjective_apply_mk
-      (affineCollisionMultiplication_surjective B A) x
+      (collisionMultiplication_surjective B A) x
 
 /--
 For an essentially finite-type formally unramified algebra, both collision

@@ -1,4 +1,5 @@
 import HodgeConjecture.Boundary.Normalization.FixedRingUnramified
+import HodgeConjecture.Boundary.Normalization.InvariantIntermediate
 import Mathlib.RingTheory.DedekindDomain.Dvr
 import Mathlib.RingTheory.Ideal.GoingDown
 import Mathlib.RingTheory.Ideal.Height

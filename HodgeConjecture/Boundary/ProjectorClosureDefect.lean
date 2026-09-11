@@ -1,4 +1,5 @@
 import HodgeConjecture.Boundary.GaloisProjectorExtension
+import HodgeConjecture.Correspondence.ProjectorDefect
 
 /-!
 # Closure classes and their idempotence defect
@@ -62,7 +63,7 @@ def convolutionDefect
       AlgebraProjectorClosure
         genericAlgebra compactifiedAlgebra genericProjector)
     (x : C.Closure) : compactifiedAlgebra :=
-  C.closureClass x * C.closureClass x - C.closureClass x
+  projectorIdempotenceDefect (C.closureClass x)
 
 /-- Restriction to the generic algebra kills every closure defect. -/
 @[simp]
@@ -72,9 +73,22 @@ theorem restriction_convolutionDefect
         genericAlgebra compactifiedAlgebra genericProjector)
     (x : C.Closure) :
     C.restriction (C.convolutionDefect x) = 0 := by
-  rw [convolutionDefect, map_sub, map_mul,
-    C.closureClass_restricts, C.genericProjector_isIdempotent,
-    sub_self]
+  change
+    C.restriction
+        (projectorIdempotenceDefect (C.closureClass x)) = 0
+  calc
+    C.restriction
+          (projectorIdempotenceDefect (C.closureClass x)) =
+        projectorIdempotenceDefect
+          (C.restriction (C.closureClass x)) := by
+      exact
+        map_projectorIdempotenceDefect
+          C.restriction.toRingHom (C.closureClass x)
+    _ = projectorIdempotenceDefect genericProjector := by
+      rw [C.closureClass_restricts]
+    _ = 0 :=
+      projectorIdempotenceDefect_eq_zero
+        C.genericProjector_isIdempotent
 
 /-- Vanishing of the convolution defect is exactly idempotence of the class. -/
 theorem convolutionDefect_eq_zero_iff
@@ -84,8 +98,9 @@ theorem convolutionDefect_eq_zero_iff
     (x : C.Closure) :
     C.convolutionDefect x = 0 ↔
       IsIdempotentElem (C.closureClass x) := by
-  rw [convolutionDefect, sub_eq_zero]
-  rfl
+  exact
+    projectorIdempotenceDefect_eq_zero_iff
+      (C.closureClass x)
 
 /-- Raw closure witnesses whose compactified convolution defect vanishes. -/
 def ZeroDefectWitness

@@ -162,6 +162,32 @@ def RamifiedCodimensionOnePoint :=
       q.asIdeal.primeHeight = 1 ∧
         ¬ Algebra.IsUnramifiedAt B q.asIdeal }
 
+/-- Universal codimension-one unramifiedness rules out ramified height-one
+points. -/
+theorem ramifiedCodimensionOnePoint_isEmpty_of_noCodimensionOneRamification
+    (h : NoCodimensionOneRamification (B := B) (N := N)) :
+    IsEmpty (RamifiedCodimensionOnePoint (B := B) (N := N)) := by
+  constructor
+  rintro ⟨q, hq, hRamified⟩
+  exact hRamified (h q hq)
+
+/-- If there are no ramified height-one points, then the normalization is
+unramified at every height-one point. -/
+theorem noCodimensionOneRamification_of_ramifiedCodimensionOnePoint_isEmpty
+    (h : IsEmpty (RamifiedCodimensionOnePoint (B := B) (N := N))) :
+    NoCodimensionOneRamification (B := B) (N := N) := by
+  intro q hq
+  by_contra hRamified
+  exact h.false ⟨q, hq, hRamified⟩
+
+/-- Absence of codimension-one ramification is equivalently emptiness of the
+type of ramified height-one points. -/
+theorem noCodimensionOneRamification_iff_isEmpty :
+    NoCodimensionOneRamification (B := B) (N := N) ↔
+      IsEmpty (RamifiedCodimensionOnePoint (B := B) (N := N)) :=
+  ⟨ramifiedCodimensionOnePoint_isEmpty_of_noCodimensionOneRamification,
+    noCodimensionOneRamification_of_ramifiedCodimensionOnePoint_isEmpty⟩
+
 /--
 A discrete valuation tower is centered at a point of the normal-closure
 normalization when its valuation ring contains the normalization ring and
@@ -238,30 +264,6 @@ variable
     {C : NormalizedCover
       (B := B) (K := K) (L := L) (N := N) U j}
     (D : Diagram C)
-
-/-- The normal-closure leg of the packaged normalization triangle. -/
-def toIntermediate
-    (_D : Diagram C) :
-    normalClosureNormalization (B := B) (N := N) ⟶
-      intermediateNormalization (B := B) (L := L) :=
-  normalClosureToIntermediateNormalization
-    (B := B) C.normalClosure
-
-/-- The normal-closure normalization mapped to the affine base. -/
-def toBase
-    (_D : Diagram C) :
-    normalClosureNormalization (B := B) (N := N) ⟶
-      Spec (.of B) :=
-  normalClosureNormalizationToBase (B := B) (N := N)
-
-omit [IsFractionRing B K] in
-/-- The packaged normalization triangle commutes. -/
-theorem triangle :
-    D.toIntermediate ≫
-        intermediateNormalizationToBase (B := B) (L := L) =
-      D.toBase :=
-  normalClosureToIntermediateNormalization_comp_toBase
-    (B := B) C.normalClosure
 
 /-- The double-coset classes indexing conjugate centers over one point. -/
 abbrev sheetClasses
@@ -357,7 +359,8 @@ theorem centerAtBaseClass
             (D.valuationAt E).valuationRing)
           C.normalClosure.intermediateFixingSubgroup
           1) =
-      D.toIntermediate.base E.1 :=
+      (normalClosureToIntermediateNormalization
+        (B := B) C.normalClosure).base E.1 :=
   D.baseClass_center E
 
 omit [IsFractionRing B K] in
@@ -367,7 +370,8 @@ theorem conjugateCenter_mapsToBase
     (q : D.sheetClasses E) :
     (intermediateNormalizationToBase (B := B) (L := L)).base
         (D.centerAtClass E q) =
-      D.toBase.base E.1 :=
+      (normalClosureNormalizationToBase
+        (B := B) (N := N)).base E.1 :=
   D.centerAtClass_mapsToBase E q
 
 omit [IsFractionRing B K] in
@@ -416,14 +420,9 @@ theorem noCodimensionOneRamification
     [PerfectField K]
     (hBoundary : D.RamifiedConjugateCentersInBoundary)
     (hNoHidden : D.NoHiddenInertia) :
-    NoCodimensionOneRamification (B := B) (N := N) := by
-  intro q hq
-  by_contra hRamified
-  let E : RamifiedCodimensionOnePoint (B := B) (N := N) :=
-    ⟨q, hq, hRamified⟩
-  exact
-    (D.ramifiedCodimensionOnePoint_isEmpty
-      hBoundary hNoHidden).false E
+    NoCodimensionOneRamification (B := B) (N := N) :=
+  noCodimensionOneRamification_of_ramifiedCodimensionOnePoint_isEmpty
+    (D.ramifiedCodimensionOnePoint_isEmpty hBoundary hNoHidden)
 
 /-- The prime of the intermediate normalization represented by a sheet center. -/
 def centerPrime

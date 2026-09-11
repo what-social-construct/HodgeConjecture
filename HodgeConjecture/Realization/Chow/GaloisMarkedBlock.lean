@@ -34,9 +34,7 @@ variable (D : Subgroup G)
 definitionally the canonical class graph projector of its residual class. -/
 theorem graphOperator_eq_classGraphProjector :
     graphOperator D =
-      ClassGraphProjector.operator (residualClass D) := by
-  apply LinearMap.ext
-  rintro ⟨t, x⟩
+      ClassGraphProjector.operator (residualClass D) :=
   rfl
 
 variable {H : Type v} [AddCommGroup H] [Module ℚ H]
