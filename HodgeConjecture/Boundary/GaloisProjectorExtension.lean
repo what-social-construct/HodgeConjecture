@@ -1,6 +1,7 @@
 import HodgeConjecture.Boundary.ExtensionCriterion
 import HodgeConjecture.Boundary.SheetProjectorExtension
 import HodgeConjecture.Correspondence.GaloisCollision
+import HodgeConjecture.LinearAlgebra.UniversalIdempotentAlgebra
 
 /-!
 # Boundary extension of Galois subgroup projectors
@@ -81,6 +82,62 @@ variable
   [Ring genericAlgebra] [Algebra ℚ genericAlgebra]
   [Ring compactifiedAlgebra] [Algebra ℚ compactifiedAlgebra]
   {genericProjector : genericAlgebra}
+
+/-- The canonical map from the universal one-idempotent algebra to the
+generic algebra, carrying `(1, 0)` to the generic projector. -/
+noncomputable def genericIdempotentMap
+    (E :
+      AlgebraProjectorExtension
+        genericAlgebra compactifiedAlgebra genericProjector) :
+    UniversalIdempotentAlgebra ℚ →ₐ[ℚ] genericAlgebra :=
+  UniversalIdempotentAlgebra.mapOfIdempotent
+    genericProjector E.genericProjector_isIdempotent
+
+/-- The canonical map from the universal one-idempotent algebra to the
+compactified algebra, carrying `(1, 0)` to the chosen extension projector. -/
+noncomputable def compactifiedIdempotentMap
+    (E :
+      AlgebraProjectorExtension
+        genericAlgebra compactifiedAlgebra genericProjector)
+    (e : E.Extension) :
+    UniversalIdempotentAlgebra ℚ →ₐ[ℚ] compactifiedAlgebra :=
+  UniversalIdempotentAlgebra.mapOfIdempotent
+    (E.projector e) (E.projector_isIdempotent e)
+
+@[simp]
+theorem genericIdempotentMap_selector
+    (E :
+      AlgebraProjectorExtension
+        genericAlgebra compactifiedAlgebra genericProjector) :
+    E.genericIdempotentMap
+        (UniversalIdempotentAlgebra.selector (R := ℚ)) =
+      genericProjector :=
+  UniversalIdempotentAlgebra.mapOfIdempotent_selector _ _
+
+@[simp]
+theorem compactifiedIdempotentMap_selector
+    (E :
+      AlgebraProjectorExtension
+        genericAlgebra compactifiedAlgebra genericProjector)
+    (e : E.Extension) :
+    E.compactifiedIdempotentMap e
+        (UniversalIdempotentAlgebra.selector (R := ℚ)) =
+      E.projector e :=
+  UniversalIdempotentAlgebra.mapOfIdempotent_selector _ _
+
+/-- Restriction commutes with the canonical one-idempotent presentations.
+This is the compactification square at the smallest algebra that records the
+projector and its complement. -/
+theorem restriction_comp_compactifiedIdempotentMap
+    (E :
+      AlgebraProjectorExtension
+        genericAlgebra compactifiedAlgebra genericProjector)
+    (e : E.Extension) :
+    E.restriction.comp (E.compactifiedIdempotentMap e) =
+      E.genericIdempotentMap := by
+  unfold compactifiedIdempotentMap genericIdempotentMap
+  rw [UniversalIdempotentAlgebra.comp_mapOfIdempotent]
+  simp only [E.projector_restricts e]
 
 /--
 The complementary compactified projector extends the complementary generic

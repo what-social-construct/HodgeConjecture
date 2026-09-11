@@ -74,6 +74,20 @@ theorem finiteGaloisGroup
   letI : FiniteDimensional K N := D.finiteNormal
   infer_instance
 
+/-- Over a perfect base field, the supplied finite normal closure is already
+a finite Galois extension.  Downstream sheet and realization layers should
+reuse this theorem rather than ask for a second normality or Galois
+hypothesis. -/
+theorem isGalois
+    [PerfectField K]
+    (D : NormalClosureData K L N) :
+    IsGalois K N := by
+  letI : FiniteDimensional K N := D.finiteNormal
+  letI : Normal K N := D.normal
+  letI : Algebra.IsSeparable K N :=
+    Algebra.IsAlgebraic.isSeparable_of_perfectField
+  exact IsGalois.mk
+
 /-- The fixed field of the distinguished fixing subgroup is the marked copy of `L`. -/
 theorem fixedField_intermediateFixingSubgroup
     [PerfectField K]
@@ -82,10 +96,7 @@ theorem fixedField_intermediateFixingSubgroup
         D.intermediateFixingSubgroup =
       D.intermediateField := by
   letI : FiniteDimensional K N := D.finiteNormal
-  letI : Normal K N := D.normal
-  letI : Algebra.IsSeparable K N :=
-    Algebra.IsAlgebraic.isSeparable_of_perfectField
-  letI : IsGalois K N := IsGalois.mk
+  letI : IsGalois K N := D.isGalois
   exact IsGalois.fixedField_fixingSubgroup D.intermediateField
 
 /--

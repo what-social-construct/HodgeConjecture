@@ -1,4 +1,5 @@
 import HodgeConjecture.Correspondence.Algebra
+import HodgeConjecture.LinearAlgebra.UniversalIdempotentAlgebra
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.LinearAlgebra.Projection
 
@@ -81,6 +82,89 @@ theorem cohomological_isIdempotent
     IsIdempotentElem e := by
   rw [← L.realizes]
   exact L.projector_isIdempotent.map ρ.action
+
+/-- The algebraic projector presented as the image of the distinguished
+idempotent in the universal one-idempotent algebra. -/
+noncomputable def algebraIdempotentMap
+    (L : AlgebraicProjectorLift ρ e) :
+    UniversalIdempotentAlgebra ℚ →ₐ[ℚ] Γ :=
+  UniversalIdempotentAlgebra.mapOfIdempotent
+    L.projector L.projector_isIdempotent
+
+/-- The prescribed cohomological projector, with the same universal
+one-idempotent presentation. -/
+noncomputable def cohomologicalIdempotentMap
+    (L : AlgebraicProjectorLift ρ e) :
+    UniversalIdempotentAlgebra ℚ →ₐ[ℚ] Module.End ℚ H :=
+  UniversalIdempotentAlgebra.mapOfIdempotent
+    e L.cohomological_isIdempotent
+
+@[simp]
+theorem algebraIdempotentMap_selector
+    (L : AlgebraicProjectorLift ρ e) :
+    L.algebraIdempotentMap
+        (UniversalIdempotentAlgebra.selector (R := ℚ)) =
+      L.projector :=
+  UniversalIdempotentAlgebra.mapOfIdempotent_selector _ _
+
+@[simp]
+theorem cohomologicalIdempotentMap_selector
+    (L : AlgebraicProjectorLift ρ e) :
+    L.cohomologicalIdempotentMap
+        (UniversalIdempotentAlgebra.selector (R := ℚ)) =
+      e :=
+  UniversalIdempotentAlgebra.mapOfIdempotent_selector _ _
+
+/-- Palomar-style realization square: the action composed with the
+algebraic one-idempotent presentation is the prescribed cohomological
+presentation.  Evaluating this equality at `(1, 0)` recovers `L.realizes`. -/
+theorem realization_idempotentMap_square
+    (L : AlgebraicProjectorLift ρ e) :
+    ρ.action.comp L.algebraIdempotentMap =
+      L.cohomologicalIdempotentMap := by
+  unfold algebraIdempotentMap cohomologicalIdempotentMap
+  rw [UniversalIdempotentAlgebra.comp_mapOfIdempotent]
+  simp only [L.realizes]
+
+/-- Construct a prescribed projector lift from the Palomar-style equality of
+the two universal one-idempotent presentations. -/
+noncomputable def ofIdempotentMapSquare
+    (projector : Γ)
+    (hProjector : IsIdempotentElem projector)
+    (hTarget : IsIdempotentElem e)
+    (hSquare :
+      ρ.action.comp
+          (UniversalIdempotentAlgebra.mapOfIdempotent
+            projector hProjector) =
+        UniversalIdempotentAlgebra.mapOfIdempotent e hTarget) :
+    AlgebraicProjectorLift ρ e where
+  projector := projector
+  projector_isIdempotent := hProjector
+  realizes := by
+    have hSelector := AlgHom.congr_fun hSquare
+      (UniversalIdempotentAlgebra.selector (R := ℚ))
+    simpa only [AlgHom.comp_apply,
+      UniversalIdempotentAlgebra.mapOfIdempotent_selector] using hSelector
+
+/-- Existence of a prescribed algebraic projector lift is equivalent to the
+Palomar-style existence of an idempotent whose universal presentation
+commutes with realization. -/
+theorem nonempty_iff_exists_idempotentMap_square
+    (hTarget : IsIdempotentElem e) :
+    Nonempty (AlgebraicProjectorLift ρ e) ↔
+      ∃ projector : Γ,
+        ∃ hProjector : IsIdempotentElem projector,
+          ρ.action.comp
+              (UniversalIdempotentAlgebra.mapOfIdempotent
+                projector hProjector) =
+            UniversalIdempotentAlgebra.mapOfIdempotent e hTarget := by
+  constructor
+  · rintro ⟨L⟩
+    refine ⟨L.projector, L.projector_isIdempotent, ?_⟩
+    simpa only [algebraIdempotentMap, cohomologicalIdempotentMap] using
+      L.realization_idempotentMap_square
+  · rintro ⟨projector, hProjector, hSquare⟩
+    exact ⟨ofIdempotentMapSquare projector hProjector hTarget hSquare⟩
 
 /-- The complementary correspondence lifts the complementary projector. -/
 def complement

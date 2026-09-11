@@ -1,5 +1,5 @@
 import HodgeConjecture.Boundary.Sheets.MarkedBlockProjector
-import HodgeConjecture.Realization.Chow.TateGraphProjector
+import HodgeConjecture.Realization.Chow.MarkedAugmentedRealization
 
 /-!
 # The marked Galois sheet block as a Tate graph projector
@@ -35,7 +35,7 @@ definitionally the canonical class graph projector of its residual class. -/
 theorem graphOperator_eq_classGraphProjector :
     graphOperator D =
       ClassGraphProjector.operator (residualClass D) :=
-  rfl
+  (markedAugmentedAlgebra D).graphOperator_eq_classGraphProjector
 
 variable {H : Type v} [AddCommGroup H] [Module ℚ H]
 
@@ -43,21 +43,21 @@ variable {H : Type v} [AddCommGroup H] [Module ℚ H]
 residual Galois-sheet module. -/
 def generatedClass
     (θ : Residual D →ₗ[ℚ] H) : H :=
-  θ (residualClass D)
+  (markedAugmentedAlgebra D).generatedClass θ
 
 /-- Apply a residual realization to the second factor while preserving the
 marked rational line. -/
 def productRealization
     (θ : Residual D →ₗ[ℚ] H) :
     ℚ × Residual D →ₗ[ℚ] ℚ × H :=
-  (LinearMap.id : ℚ →ₗ[ℚ] ℚ).prodMap θ
+  (markedAugmentedAlgebra D).productRealization θ
 
 @[simp]
 theorem productRealization_apply
     (θ : Residual D →ₗ[ℚ] H)
     (t : ℚ) (x : Residual D) :
     productRealization D θ (t, x) = (t, θ x) :=
-  rfl
+  (markedAugmentedAlgebra D).productRealization_apply θ t x
 
 /-- A surjective residual realization remains surjective after adjoining the
 marked rational line. -/
@@ -65,9 +65,7 @@ theorem productRealization_surjective
     {θ : Residual D →ₗ[ℚ] H}
     (hθ : Function.Surjective θ) :
     Function.Surjective (productRealization D θ) := by
-  rintro ⟨t, y⟩
-  obtain ⟨x, rfl⟩ := hθ y
-  exact ⟨(t, x), rfl⟩
+  exact (markedAugmentedAlgebra D).productRealization_surjective hθ
 
 /-- Graph projectors are natural under a map of residual factors.  The target
 class is an output of the supplied residual realization, rather than an
@@ -77,9 +75,8 @@ theorem productRealization_intertwines_graphOperator
     (productRealization D θ).comp (graphOperator D) =
       (ClassGraphProjector.operator (generatedClass D θ)).comp
         (productRealization D θ) := by
-  apply LinearMap.ext
-  rintro ⟨t, x⟩
-  simp [generatedClass]
+  exact
+    (markedAugmentedAlgebra D).productRealization_intertwines_graphOperator θ
 
 /-- Combined with the marked-sheet decomposition, multiplication by the
 Galois selector maps to the Tate graph projector of the generated class. -/
@@ -89,8 +86,9 @@ theorem productRealization_intertwines_selectorMultiplication
         ((decomposition D).conj (multiplication D)) =
       (ClassGraphProjector.operator (generatedClass D θ)).comp
         (productRealization D θ) := by
-  rw [decomposition_conj_multiplication]
-  exact productRealization_intertwines_graphOperator D θ
+  exact
+    (markedAugmentedAlgebra D).productRealization_intertwines_selectorMultiplication
+      θ
 
 end MarkedSheetProjector
 

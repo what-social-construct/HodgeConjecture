@@ -31,7 +31,9 @@ the codimension-one and global criteria for extending generic selectors and
 Galois subgroup correspondence projectors across the boundary.  It also
 contains the marked selector decomposition in which one and the same
 base-sheet multiplication operator is diagonal in selector/CRT coordinates
-and graph-shaped in constant-unit coordinates.
+and graph-shaped in constant-unit coordinates.  Its normal-closure comparison
+also records the algebra equivalence with split sheet functions together with
+the commuting augmentation/tensor-diagonal square.
 
 The broad normalization-purity/global-triviality prototype remains available
 by directly importing `Boundary.Normalization.GlobalExtension`, but it is not

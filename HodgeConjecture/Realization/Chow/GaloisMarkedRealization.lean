@@ -15,10 +15,15 @@ chosen compactified projectors are idempotents in `Γ`.
 A `MarkedGaloisSelectorComparison` supplies a rational realization `θ` of the
 residual sheet module, identifies `θ(q - 1)` with the class `alpha`, and
 records the square comparing the compactified projector action with generic
-selector multiplication.  Evaluating that square on `(1, 0)` already
-identifies the lower-left class and therefore suffices for Chow detection.
-If `θ` is additionally surjective, cancellation identifies the entire action
-with the canonical Tate graph projector and gives an algebraic projector lift.
+selector multiplication.  This square is equivalently a morphism of
+representations of the universal one-idempotent algebra `ℚ × ℚ`; no algebra
+map from the whole pointwise sheet algebra to the group/convolution algebra
+is asserted.  Evaluating the square on `(1, 0)` already identifies the
+lower-left class and therefore suffices for Chow detection.  If `θ` is
+additionally surjective, cancellation identifies the entire action with the
+canonical Tate graph projector, gives an algebraic projector lift, and proves
+the Palomar-facing equality of the two universal algebra-homomorphism
+composites.
 
 The class-dependent coverage predicate below fixes only the ambient algebra
 `Γ` and its action.  For each Hodge class its witness may choose a new finite group,
@@ -94,6 +99,38 @@ structure MarkedGaloisSelectorComparison
 
 namespace MarkedGaloisSelectorComparison
 
+/-- Forgetting the prescribed target class turns a Galois-sheet comparison
+into the alpha-free comparison for its marked augmented source algebra.  The
+equation with `alpha` remains separate as `residualClass_eq`. -/
+def toMarkedSelectorActionComparison
+    (B : MarkedGaloisSelectorComparison rho E x alpha) :
+    MarkedSelectorActionComparison
+      (MarkedSheetProjector.markedAugmentedAlgebra D) rho E x where
+  residualRealization := B.residualRealization
+  action_intertwines := by
+    simpa only [
+      MarkedSheetProjector.markedAugmentedAlgebra_decomposition,
+      MarkedSheetProjector.markedAugmentedAlgebra_multiplication] using
+        B.action_intertwines
+
+@[simp]
+theorem toMarkedSelectorActionComparison_residualRealization
+    (B : MarkedGaloisSelectorComparison rho E x alpha) :
+    B.toMarkedSelectorActionComparison.residualRealization =
+      B.residualRealization :=
+  rfl
+
+/-- The alpha-free comparison generates the prescribed class from the marked
+residual element. -/
+theorem generatedClass_eq
+    (B : MarkedGaloisSelectorComparison rho E x alpha) :
+    (MarkedSheetProjector.markedAugmentedAlgebra D).generatedClass
+        B.residualRealization =
+      alpha := by
+  rw [MarkedAugmentedAlgebra.generatedClass,
+    MarkedSheetProjector.markedAugmentedAlgebra_residualClass]
+  exact B.residualClass_eq
+
 /--
 Evaluating the comparison square at the marked unit detects the lower-left
 class of the compactified selector action.  No surjectivity is required.
@@ -103,13 +140,13 @@ theorem lowerLeftClass_action_eq
     ClassGraphProjector.lowerLeftClass
         (rho.action (E.projector x)) =
       alpha := by
-  have hSquare :=
-    LinearMap.congr_fun B.action_intertwines
-      ((1, 0) : ℚ × MarkedSheetProjector.Residual D)
-  rw [MarkedSheetProjector.decomposition_conj_multiplication] at hSquare
-  have hSecond := congrArg Prod.snd hSquare
-  simpa [ClassGraphProjector.lowerLeftClass,
-    LinearMap.comp_apply, B.residualClass_eq] using hSecond
+  calc
+    ClassGraphProjector.lowerLeftClass
+          (rho.action (E.projector x)) =
+      (MarkedSheetProjector.markedAugmentedAlgebra D).generatedClass
+          B.residualRealization :=
+      B.toMarkedSelectorActionComparison.lowerLeftClass_action_eq_generatedClass
+    _ = alpha := B.generatedClass_eq
 
 /--
 Surjective cancellation against the residual product realization identifies
@@ -120,35 +157,9 @@ theorem realizes
     (hSurjective : Function.Surjective B.residualRealization) :
     rho.action (E.projector x) =
       ClassGraphProjector.operator alpha := by
-  apply LinearMap.ext
-  intro y
-  obtain ⟨z, rfl⟩ :=
-    MarkedSheetProjector.productRealization_surjective
-      D hSurjective y
-  calc
-    rho.action (E.projector x)
-          (MarkedSheetProjector.productRealization
-            D B.residualRealization z) =
-        MarkedSheetProjector.productRealization
-          D B.residualRealization
-          (((MarkedSheetProjector.decomposition D).conj
-            (MarkedSheetProjector.multiplication D)) z) :=
-      LinearMap.congr_fun B.action_intertwines z
-    _ =
-        ClassGraphProjector.operator
-            (MarkedSheetProjector.generatedClass
-              D B.residualRealization)
-          (MarkedSheetProjector.productRealization
-            D B.residualRealization z) :=
-      LinearMap.congr_fun
-        (MarkedSheetProjector.productRealization_intertwines_selectorMultiplication
-          D B.residualRealization) z
-    _ =
-        ClassGraphProjector.operator alpha
-          (MarkedSheetProjector.productRealization
-            D B.residualRealization z) := by
-      rw [MarkedSheetProjector.generatedClass,
-        B.residualClass_eq]
+  simpa only [toMarkedSelectorActionComparison_residualRealization,
+    B.generatedClass_eq] using
+    B.toMarkedSelectorActionComparison.realizes hSurjective
 
 /--
 Under surjectivity, the chosen compactified selector is an algebraic lift of
@@ -158,10 +169,33 @@ def toAlgebraicProjectorLift
     (B : MarkedGaloisSelectorComparison rho E x alpha)
     (hSurjective : Function.Surjective B.residualRealization) :
     AlgebraicProjectorLift rho
-      (ClassGraphProjector.operator alpha) :=
-  E.projectorLiftOfRealizes x rho
-    (ClassGraphProjector.operator alpha)
-    (B.realizes hSurjective)
+      (ClassGraphProjector.operator alpha) := by
+  rw [← B.generatedClass_eq]
+  exact
+    B.toMarkedSelectorActionComparison.toAlgebraicProjectorLift
+      hSurjective
+
+/-- The comparison as a morphism of representations of the universal
+one-idempotent algebra.  The full law is equivalent to the stored selector
+square and therefore adds no hypothesis. -/
+noncomputable def toIdempotentRepresentationMorphism
+    (B : MarkedGaloisSelectorComparison rho E x alpha) :=
+  B.toMarkedSelectorActionComparison.toIdempotentRepresentationMorphism
+
+/-- Palomar-facing target square.  Under surjectivity, the correspondence
+action after the compactified one-idempotent presentation is exactly the
+canonical presentation of the class graph projector `P_alpha`. -/
+theorem palomarTargetSquare
+    (B : MarkedGaloisSelectorComparison rho E x alpha)
+    (hSurjective : Function.Surjective B.residualRealization) :
+    rho.action.comp (E.compactifiedIdempotentMap x) =
+      UniversalIdempotentAlgebra.mapOfIdempotent
+        (ClassGraphProjector.operator alpha)
+        (ClassGraphProjector.operator_isIdempotent alpha) := by
+  simpa only [toMarkedSelectorActionComparison_residualRealization,
+    B.generatedClass_eq] using
+    MarkedSelectorActionComparison.action_comp_compactifiedIdempotentMap_eq_classGraph
+        B.toMarkedSelectorActionComparison hSurjective
 
 /--
 Ambient lower-left Chow-block detection turns a marked-selector comparison

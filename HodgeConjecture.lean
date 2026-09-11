@@ -25,9 +25,11 @@ treated as a convolution projector.  The marked-sheet calculation identifies
 selector multiplication with a graph operator only after an explicit change
 of linear coordinates.  A conditional endpoint keeps the generic sheet
 algebra separate from a noncommutative compactified correspondence algebra;
-it detects the target class from an action-intertwining square and derives the
-whole target operator when the residual realization is surjective.  It does
-not construct those data geometrically.  Likewise, the fifth stage does not
+it presents the selector comparison as a morphism of representations of the
+universal one-idempotent algebra, detects the target class from its selector
+square, and derives the Palomar-style equality of algebra-homomorphism
+composites when the residual realization is surjective.  It does not construct
+those data geometrically.  Likewise, the fifth stage does not
 claim that the current finite-cover family supplies every Hodge-class graph
 projector or instantiate the abstract target for a concrete variety.
 

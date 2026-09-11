@@ -19,10 +19,12 @@ detection maps.  The Hodge-morphism reading has its own compatibility
 interface.  A marked Galois-sheet calculation identifies selector
 multiplication with a Tate graph operator after a rational change of
 coordinates.  A conditional realization theorem separates the generic sheet
-algebra from the noncommutative compactified correspondence algebra, detects
-the lower-left class from an explicit comparison square, and obtains the
-exact target action by surjective cancellation.  No Chow-motivic residual
-realization or such square is constructed.  The finite-cover branch has not
+algebra from the noncommutative compactified correspondence algebra and
+exposes the comparison as a morphism of representations of the universal
+one-idempotent algebra.  It detects the lower-left class from the selector
+square and, by surjective cancellation, proves the exact target equality of
+algebra-homomorphism composites.  No Chow-motivic residual realization or
+such square is constructed.  The finite-cover branch has not
 been identified with the full target; only implications from explicit
 class-indexed witness packages are formalized.
 

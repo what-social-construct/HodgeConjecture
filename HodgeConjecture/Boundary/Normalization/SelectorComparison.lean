@@ -1,5 +1,6 @@
 import HodgeConjecture.Boundary.Normalization.NormalClosure
-import HodgeConjecture.Boundary.Sheets.GenericProjector
+import HodgeConjecture.Boundary.Sheets.MarkedBlockProjector
+import HodgeConjecture.LinearAlgebra.MarkedAugmentedAlgebra
 import Mathlib.FieldTheory.PrimitiveElement
 import Mathlib.LinearAlgebra.Dimension.Constructions
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
@@ -38,6 +39,17 @@ universe uK uL uN
 variable {K : Type uK} {L : Type uL} {N : Type uN}
 variable [Field K] [Field L] [Field N]
 variable [Algebra K L] [Algebra K N]
+
+/-- The canonical rational marked-sheet algebra indexed by a supplied normal
+closure.  Its group and distinguished fixing subgroup come directly from
+`D`; no additional normality or Galois datum is requested. -/
+noncomputable abbrev NormalClosureData.rationalMarkedSheetAlgebra
+    (D : NormalClosureData K L N) :
+    HodgeConjecture.MarkedAugmentedAlgebra ℚ
+      (HodgeConjecture.GenericSheetAlgebra ℚ
+        D.intermediateFixingSubgroup) :=
+  HodgeConjecture.MarkedSheetProjector.markedAugmentedAlgebra
+    D.intermediateFixingSubgroup
 
 /-- The embedding of the marked field represented by a Galois sheet. -/
 def NormalClosureData.sheetEmbedding
@@ -264,6 +276,64 @@ theorem NormalClosureData.normalClosureTensorToGenericSheets_tmul_apply
       x * D.sheetEmbedding s y := by
   rfl
 
+/-!
+## The multiplicative base-sheet square
+
+The distinguished sheet is evaluated by an algebra homomorphism, not merely
+by a linear functional.  On the tensor side the corresponding map is the
+diagonal multiplication morphism obtained from the identity of `N` and the
+marked embedding `L → N`.  The next theorem says that normal-closure sheet
+evaluation intertwines these two augmentations.
+-/
+
+/-- Evaluation at the distinguished base sheet as an `N`-algebra
+homomorphism. -/
+def NormalClosureData.normalClosureBaseSheetAugmentation
+    (D : NormalClosureData K L N) :
+    HodgeConjecture.GenericSheetAlgebra N
+        D.intermediateFixingSubgroup →ₐ[N] N :=
+  Pi.evalAlgHom N
+    (fun _ : GaloisSheets D.intermediateFixingSubgroup => N)
+    (HodgeConjecture.baseSheet D.intermediateFixingSubgroup)
+
+@[simp]
+theorem NormalClosureData.normalClosureBaseSheetAugmentation_apply
+    (D : NormalClosureData K L N)
+    (q : HodgeConjecture.GenericSheetAlgebra N
+      D.intermediateFixingSubgroup) :
+    D.normalClosureBaseSheetAugmentation q =
+      q (HodgeConjecture.baseSheet D.intermediateFixingSubgroup) :=
+  rfl
+
+/-- The diagonal multiplication map on the normal-closure base change.  On a
+pure tensor it sends `x ⊗ y` to `x * D.embedding y`. -/
+def NormalClosureData.normalClosureTensorDiagonal
+    (D : NormalClosureData K L N) :
+    N ⊗[K] L →ₐ[N] N :=
+  Algebra.TensorProduct.lift
+    (AlgHom.id N N) D.embedding
+    (fun _ _ => mul_comm _ _)
+
+@[simp]
+theorem NormalClosureData.normalClosureTensorDiagonal_tmul
+    (D : NormalClosureData K L N)
+    (x : N) (y : L) :
+    D.normalClosureTensorDiagonal (x ⊗ₜ[K] y) =
+      x * D.embedding y :=
+  rfl
+
+/-- The normal-closure sheet map commutes with the two multiplicative
+augmentations: evaluating its output at the base sheet is diagonal
+multiplication on `N ⊗[K] L`. -/
+theorem NormalClosureData.normalClosureBaseSheetAugmentation_comp_tensorToGenericSheets
+    (D : NormalClosureData K L N) :
+    D.normalClosureBaseSheetAugmentation.comp
+        D.normalClosureTensorToGenericSheets =
+      D.normalClosureTensorDiagonal := by
+  apply Algebra.TensorProduct.ext'
+  intro x y
+  simp [NormalClosureData.sheetEmbedding_baseSheet]
+
 section
 
 variable [Algebra.FormallyUnramified K L]
@@ -415,6 +485,18 @@ noncomputable def NormalClosureData.normalClosureTensorGenericSheetsEquiv
   AlgEquiv.ofBijective D.normalClosureTensorToGenericSheets
     D.normalClosureTensorToGenericSheets_bijective
 
+/-- Through the Galois-sheet algebra equivalence, base-sheet augmentation is
+exactly the tensor diagonal morphism.  This is the equivalence form of the
+multiplicative base-sheet square above. -/
+theorem NormalClosureData.normalClosureBaseSheetAugmentation_comp_tensorGenericSheetsEquiv
+    [PerfectField K]
+    (D : NormalClosureData K L N) :
+    D.normalClosureBaseSheetAugmentation.comp
+        D.normalClosureTensorGenericSheetsEquiv.toAlgHom =
+      D.normalClosureTensorDiagonal := by
+  simpa only [NormalClosureData.normalClosureTensorGenericSheetsEquiv] using
+    D.normalClosureBaseSheetAugmentation_comp_tensorToGenericSheets
+
 universe uR uS
 
 variable {R : Type uR} {S : Type uS}
@@ -422,47 +504,59 @@ variable [CommRing R] [CommRing S] [Algebra R S]
 variable [Algebra.FormallyUnramified R S]
 variable [Algebra.EssFiniteType R S]
 
+/-- Multiplication by the diagonal element supplied by formal
+unramifiedness factors through tensor multiplication.  This is the rank-one
+law needed to regard the tensor square as a marked augmented algebra. -/
+theorem formallyUnramifiedElem_mul (z : S ⊗[R] S) :
+    Algebra.FormallyUnramified.elem R S * z =
+      Algebra.TensorProduct.lmul'' R z •
+        Algebra.FormallyUnramified.elem R S := by
+  rw [Algebra.smul_def]
+  change
+    Algebra.FormallyUnramified.elem R S * z =
+      ((Algebra.TensorProduct.lmul' R z) ⊗ₜ[R] (1 : S)) *
+        Algebra.FormallyUnramified.elem R S
+  rw [mul_comm]
+  induction z using TensorProduct.induction_on with
+  | zero => simp
+  | add x y hx hy =>
+      rw [add_mul, hx, hy, map_add,
+        TensorProduct.add_tmul, add_mul]
+  | tmul x y =>
+      calc
+        (x ⊗ₜ[R] y) *
+            Algebra.FormallyUnramified.elem R S =
+          (x ⊗ₜ[R] (1 : S)) * ((1 : S) ⊗ₜ[R] y) *
+            Algebra.FormallyUnramified.elem R S := by simp
+        _ = (x ⊗ₜ[R] (1 : S)) *
+              (((1 : S) ⊗ₜ[R] y) *
+                Algebra.FormallyUnramified.elem R S) := by
+              rw [mul_assoc]
+        _ = (x ⊗ₜ[R] (1 : S)) *
+              ((y ⊗ₜ[R] (1 : S)) *
+                Algebra.FormallyUnramified.elem R S) := by
+              rw [Algebra.FormallyUnramified.one_tmul_mul_elem]
+        _ = ((x * y) ⊗ₜ[R] (1 : S)) *
+              Algebra.FormallyUnramified.elem R S := by
+              simp [← mul_assoc]
+
+/-- The tensor-square augmentation and the formally-unramified diagonal
+element form a marked augmented algebra over `S`. -/
+noncomputable def formallyUnramifiedMarkedAugmentedAlgebra :
+    HodgeConjecture.MarkedAugmentedAlgebra S (S ⊗[R] S) where
+  augmentation := Algebra.TensorProduct.lmul'' R
+  selector := Algebra.FormallyUnramified.elem R S
+  augmentation_selector :=
+    Algebra.FormallyUnramified.lmul_elem
+  selector_mul := formallyUnramifiedElem_mul
+
 /-- The chosen diagonal element supplied by formal unramifiedness is an
 idempotent in the tensor-square algebra. -/
 theorem formallyUnramifiedElem_isIdempotent :
     IsIdempotentElem
-      (Algebra.FormallyUnramified.elem R S) := by
-  have h (z : S ⊗[R] S) :
-      z * Algebra.FormallyUnramified.elem R S =
-        ((Algebra.TensorProduct.lmul' R z) ⊗ₜ[R] (1 : S)) *
-          Algebra.FormallyUnramified.elem R S := by
-    induction z using TensorProduct.induction_on with
-    | zero => simp
-    | add x y hx hy =>
-        rw [add_mul, hx, hy, map_add,
-          TensorProduct.add_tmul, add_mul]
-    | tmul x y =>
-        calc
-          (x ⊗ₜ[R] y) *
-              Algebra.FormallyUnramified.elem R S =
-            (x ⊗ₜ[R] (1 : S)) * ((1 : S) ⊗ₜ[R] y) *
-              Algebra.FormallyUnramified.elem R S := by simp
-          _ = (x ⊗ₜ[R] (1 : S)) *
-                (((1 : S) ⊗ₜ[R] y) *
-                  Algebra.FormallyUnramified.elem R S) := by
-                rw [mul_assoc]
-          _ = (x ⊗ₜ[R] (1 : S)) *
-                ((y ⊗ₜ[R] (1 : S)) *
-                  Algebra.FormallyUnramified.elem R S) := by
-                rw [Algebra.FormallyUnramified.one_tmul_mul_elem]
-          _ = ((x * y) ⊗ₜ[R] (1 : S)) *
-                Algebra.FormallyUnramified.elem R S := by
-                simp [← mul_assoc]
-  rw [IsIdempotentElem]
-  calc
-    Algebra.FormallyUnramified.elem R S *
-        Algebra.FormallyUnramified.elem R S =
-      ((Algebra.TensorProduct.lmul' R
-          (Algebra.FormallyUnramified.elem R S)) ⊗ₜ[R] (1 : S)) *
-        Algebra.FormallyUnramified.elem R S := h _
-    _ = Algebra.FormallyUnramified.elem R S := by
-      rw [Algebra.FormallyUnramified.lmul_elem,
-        ← Algebra.TensorProduct.one_def, one_mul]
+      (Algebra.FormallyUnramified.elem R S) :=
+  (formallyUnramifiedMarkedAugmentedAlgebra
+    (R := R) (S := S)).selector_isIdempotent
 
 end
 

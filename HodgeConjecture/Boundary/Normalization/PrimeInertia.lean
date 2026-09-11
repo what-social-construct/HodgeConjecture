@@ -217,10 +217,7 @@ def baseEquivFullInvariantNormalizationRing
     B ≃ₐ[B]
       FullInvariantNormalizationRing (B := B) (K := K) (N := N) := by
   letI : FiniteDimensional K N := D.finiteNormal
-  letI : Normal K N := D.normal
-  letI : Algebra.IsSeparable K N :=
-    Algebra.IsAlgebraic.isSeparable_of_perfectField
-  letI : IsGalois K N := IsGalois.mk
+  letI : IsGalois K N := D.isGalois
   let eFixed :
       IntermediateField.fixedField
           (⊤ : Subgroup D.galoisGroup) ≃ₐ[K] K :=

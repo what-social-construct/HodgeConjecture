@@ -107,12 +107,21 @@ canonical graph projector \(P_\alpha(t,x)=(t,t\alpha)\).
 The dependency-ordered components leading toward such lifts consist of a collision algebra
 and its separability decomposition, a free finite-\'etale span algebra,
 transport of group and Hecke idempotents, a marked \(G/H\)-sheet calculation
-putting a selector into graph-block normal form, normal-closure deck actions,
+in which the residual term is the augmentation ideal
+\(E_H=\ker(\ev_H)=(1-q_H)\), its unital residual corner gives a genuine
+product-algebra decomposition, and the source action is multiplicative, a
+distinct graph-block normal form on the underlying module, normal-closure deck actions,
 and a conjugate-boundary separation theorem excluding ramification in
-codimension one.  For compactification we distinguish a raw closure, whose
-idempotence defect merely restricts to zero, from a supplied compactified
-deck-graph square, which is a sufficient route to a genuinely idempotent
-compactified image.
+codimension one.  The normal-closure splitting is accompanied by the exact
+augmentation/diagonal square.  The residual realization into cohomology
+remains linear, but its selector square is equivalently a morphism of
+representations of the universal one-idempotent algebra
+\(\mathcal U=\Q\times\Q\).  Under surjectivity, realization is expressed by
+the Palomar-style equality
+\(\rho\circ\varphi_\Pi=\varphi_{P_\alpha}\) of algebra homomorphisms.
+For compactification we distinguish a raw closure, whose idempotence defect
+merely restricts to zero, from a supplied compactified deck-graph square,
+which is a sufficient route to a genuinely idempotent compactified image.
 
 These statements are machine checked from their displayed hypotheses
 (\formal).  The geometric comparison, compactified realization, and
@@ -212,6 +221,25 @@ interfaces:
 
 Write \(\Lift_{\mathrm{CH}}(P_\alpha)\) for the type of idempotents
 \(\Pi\in\Gamma\) whose action is \(P_\alpha\).
+For an idempotent \(e\) in any rational algebra, let
+
+\[
+  \mathcal U=\Q\times\Q,\qquad u=(1,0),\qquad
+  \varphi_e(r,s)=re+s(1-e).
+\]
+
+Thus \(\varphi_e:\mathcal U\to C\) is an algebra homomorphism with
+\(\varphi_e(u)=e\).  An element of
+\(\Lift_{\mathrm{CH}}(P_\alpha)\) is equivalently an idempotent
+\(\Pi\in\Gamma\) for which the following equality of algebra-homomorphism
+composites holds:
+
+\begin{equation}
+\label{eq:abstract-palomar-target}
+  \rho\circ\varphi_\Pi
+    =\varphi_{P_\alpha}:
+      \mathcal U\longrightarrow\End_{\Q}(\Q\oplus V).
+\end{equation}
 
 \begin{theorem}[Graph-projector equivalence --- \formal]
 \label{thm:hodge-graph-equivalence}
@@ -228,13 +256,20 @@ supplied together with
 \(P_\alpha\text{ Hodge}\Longleftrightarrow
 \alpha\in V_{\mathrm{Hdg}}\), the right side can equivalently quantify over
 Hodge graph projectors.
+Equivalently, the right side may quantify over idempotents \(\Pi\) satisfying
+Equation~\eqref{eq:abstract-palomar-target}.  This is the Palomar-style
+statement surface used below: the target operator is visible as an equality
+of typed algebra-homomorphism composites.
 \end{theorem}
 
 \begin{proof}
 If \(\alpha=\operatorname{cl}(z)\), the idempotent \(C(z)\) acts as
 \(P_\alpha\).  Conversely, if \(\Pi\) acts as \(P_\alpha\), then
 \(\operatorname{cl}(D(\Pi))=d_{\mathrm{ll}}(P_\alpha)=\alpha\).
-The quantified statement is obtained pointwise.
+The quantified statement is obtained pointwise.  Finally,
+\(\rho(\Pi)=P_\alpha\) implies Equation
+\eqref{eq:abstract-palomar-target} by functoriality of \(\varphi\), while
+evaluating that equation at \(u=(1,0)\) gives the converse.
 \end{proof}
 
 \begin{leanfiles}
@@ -248,7 +283,10 @@ Theorem~\ref{thm:hodge-graph-equivalence} are in
 \leanpath{ClassGraphProjectorConstruction},
 \leanpath{ClassGraphProjectorDetection}, and
 \leanpath{rationalHodgeConjectureAt_iff_everyHodgeClassHasGraphProjectorLift}.
-The degreewise and family forms are named analogously.
+The equation-of-composites formulation is
+\leanpath{EveryHodgeClassHasPalomarTargetSquare}, with equivalence theorem
+\leanpath{rationalHodgeConjectureAt_iff_everyHodgeClassHasPalomarTargetSquare}.
+The graph-lift degreewise and family forms are named analogously.
 \end{leanfiles}
 
 \begin{statusnote}{\conditional/\openstatus}
@@ -427,22 +465,41 @@ comparison is in \corrsrc{GaloisCollision.lean}.
 \section{Marked sheets and the block graph normal form}
 \label{sec:block}
 
-Let \(G\) be a group and \(H\leq G\).  Keep the pointwise sheet algebra
+Let \(G\) be a group and \(H\leq G\).  Write \(A_H=F_{\Q}(H)\), where the
+pointwise sheet algebra is
 
 \[
   F_k(H)=k^{G/H}
 \]
 
 distinct from \(\Q[G]\) and from any compactified correspondence algebra.
-Let \(q_H\) be the characteristic function of the base coset, and set
+Base-sheet evaluation is an augmentation algebra map
+\(\ev_H:F_{\Q}(H)\to\Q\).  Let \(q_H\) be the characteristic function of
+the base coset.  Its residual object is the augmentation ideal
 
 \[
-  E_H=\ker(\ev_H:F_{\Q}(H)\to\Q),
+  E_H=\ker(\ev_H)=(1-q_H)\triangleleft F_{\Q}(H),
   \qquad a_H=q_H-\one\in E_H.
 \]
 
-There are two splittings of base-sheet evaluation.  The selector splitting
-uses \(q_H\), while the constant-unit splitting uses \(\one\).  In formulas,
+Thus \(E_H\) retains its inherited nonunital commutative multiplication; it
+is not merely notation for a vector-space kernel.  Let
+\(E_H^{\mathrm{corner}}\) be the same underlying ideal endowed with the
+internal unit \(1-q_H\).  Selector coordinates give the genuine algebra
+equivalence
+
+\[
+  \Psi_H:A_H\overset{\sim}{\longrightarrow}
+  \Q\times E_H^{\mathrm{corner}}
+  \quad\text{in }\Q\text{-algebras},
+  \qquad q_H\longmapsto(1,0),\quad
+  1-q_H\longmapsto(0,1).
+\]
+
+This is the multiplicative CRT decomposition.  After forgetting the corner
+wrapper, its underlying linear selector coordinates are \(\Phi_{q_H}\)
+below.  The constant-unit coordinates \(\Phi_1\) are a second, only linear,
+splitting of the underlying rational vector space.  In formulas,
 
 \begin{align*}
   \Phi_{q_H}(f)&=(f(H),f-f(H)q_H),\\
@@ -470,6 +527,31 @@ In particular, selector multiplication becomes the same abstract graph
 operator used in Theorem~\ref{thm:hodge-graph-equivalence}.
 \end{theorem}
 
+More intrinsically, the regular action
+\[
+  \lambda_H:F_{\Q}(H)\longrightarrow
+  \End_{\Q}(F_{\Q}(H)),\qquad f\longmapsto m_f,
+\]
+is an algebra homomorphism.  Any presentation
+\(\iota_H:F_{\Q}(H)\to\Gamma_\eta\) supplied by a geometric component
+algebra must be multiplicative.  Such a full presentation is useful extra
+structure, not a premise of the active Galois-projector route.  In
+particular, that route does not posit a natural algebra homomorphism
+\(F_{\Q}(H)\to\Q[G]\): the evident coset formula
+\(gH\mapsto[g]e_H\) is only linear because pointwise sheet multiplication
+and group-algebra convolution are different products.
+
+For the projector comparison, use the universal maps \(\varphi_e\) from
+Section~\ref{sec:target}; no commutativity of their target algebra is needed.
+For idempotent endomorphisms
+\(e_V,e_W\) and a linear map \(T:V\to W\), the selector square
+\(e_WT=Te_V\) is equivalent to the full representation-morphism identity
+
+\[
+  \varphi_{e_W}(z)T=T\varphi_{e_V}(z)
+  \qquad(z\in\mathcal U).
+\]
+
 For any linear map \(\theta:E_H\to V\), put
 \(\Theta=\operatorname{id}_{\Q}\oplus\theta\) and
 \(\alpha=\theta(a_H)\).  Naturality gives
@@ -480,16 +562,26 @@ For any linear map \(\theta:E_H\to V\), put
 
 This identity creates the precise linear bridge from a marked selector to a
 class graph.  It does not construct \(\theta\), make it motivic, or show that
-\(\alpha\) is algebraic.
+\(\alpha\) is algebraic.  Equivalently, it makes \(\Theta\) a morphism
+between the \(\mathcal U\)-representations defined by \(P_{a_H}\) and
+\(P_\alpha\).  This puts the homomorphism on the theorem surface without
+identifying the sheet and convolution algebras.
 
 \begin{leanfiles}
-The ring-generic graph operator, diagonal operator, shear, and conjugacy
-identity are shared through
-\leanpath{HodgeConjecture/LinearAlgebra/BlockGraphProjector.lean}.  The sheet
-algebra and selector are in \sheetsrc{GenericProjector.lean}.  The two
-specialized splittings and selector-multiplication identities are in
-\sheetsrc{MarkedBlockProjector.lean}.  Their identification with the Tate
-graph operator and naturality under \(\theta\) are in
+The augmentation ideal, its principal-ideal description, the regular algebra
+action, and the generic block identities are in
+\leanpath{HodgeConjecture/LinearAlgebra/MarkedAugmentedAlgebra.lean}.  The
+corner unit and genuine product-algebra equivalence are in
+\leanpath{HodgeConjecture/LinearAlgebra/MarkedAugmentedAlgebraDecomposition.lean},
+under \leanpath{ResidualCorner} and
+\leanpath{selectorAlgebraDecomposition}.  The
+sheet algebra and selector are in \sheetsrc{GenericProjector.lean}, and the
+specialization is in \sheetsrc{MarkedBlockProjector.lean}.  The generic
+universal idempotent algebra is in
+\leanpath{HodgeConjecture/LinearAlgebra/UniversalIdempotentAlgebra.lean},
+and its representation-morphism interface is in
+\chowsrc{IdempotentRepresentation.lean}.  Linear realization naturality is
+in \chowsrc{MarkedAugmentedRealization.lean}; the sheet specialization is in
 \chowsrc{GaloisMarkedBlock.lean}, under
 \leanpath{graphOperator_eq_classGraphProjector} and
 \leanpath{productRealization_intertwines_selectorMultiplication}.
@@ -498,9 +590,13 @@ graph operator and naturality under \(\theta\) are in
 \section{Normal closure, conjugate boundaries, and codimension one}
 \label{sec:boundary}
 
-Let \(B\) be a domain with \(K=\Frac(B)\), let \(L/K\) be finite, and
-supply a normal closure \(N/K\) with a marked embedding \(\iota:L\hookrightarrow
-N\).  Write
+Let \(B\) be a domain with \(K=\Frac(B)\), and supply a marked
+normal-closure datum \(\mathcal N=(K,L,N,\iota)\).  This datum already
+contains the normal-closure witness and the finiteness of \(L/K\) and
+\(N/K\).  Over a perfect base field---in particular in characteristic
+zero---it therefore gives \(N/K\) as a finite Galois extension; no second
+normality or Galois hypothesis is imposed.  Write the derived group and
+fixing subgroup as
 
 \[
   G=\Gal(N/K),\qquad H=\Gal(N/\iota(L)),
@@ -515,8 +611,60 @@ and use the canonical normalization notation
   Y_N=\Spec(\widetilde B_N).
 \]
 
-The group \(G\) acts on \(\widetilde B_N\) and hence on \(Y_N\) over
-\(\Spec B\).  The fixed normalization is canonically
+The group \(G=\mathcal N.\mathit{galoisGroup}\), the subgroup
+\(H=\mathcal N.\mathit{intermediateFixingSubgroup}\), and the canonical deck
+action on \(Y_N\) are all constructed from the same datum.  In particular,
+the deck action is not a further input to the generic sheet layer.  Normality
+keeps the conjugate embeddings inside the same field \(N\), so that one
+Galois group controls them; it does not imply that \(G\) is abelian.  Each
+deck automorphism commutes with \(Y_N\to\Spec B\) because it fixes \(K\), and
+hence the \(B\)-scalars through the scalar tower, not because group elements
+commute.  Likewise, the pointwise sheet algebra \(F_{\Q}(H)\) is commutative
+for an independent reason, while \(\Q[G]\) and the full Chow-correspondence
+algebra may be noncommutative.
+
+The same normal-closure datum also supplies the multiplicative source square.
+Write
+
+\[
+  \sigma_{\mathcal N}:N\otimes_KL\longrightarrow N^{G/H},
+  \qquad
+  \sigma_{\mathcal N}(x\otimes y)(gH)=x\,g(\iota(y)),
+\]
+
+let \(\epsilon_H^N:N^{G/H}\to N\) be evaluation at the base sheet, and let
+\(\delta_\iota:N\otimes_KL\to N\) be the diagonal map
+\(x\otimes y\mapsto x\iota(y)\).  All three arrows are algebra
+homomorphisms.
+
+\begin{theorem}[Normal-closure augmentation square --- \formal]
+\label{thm:normal-closure-augmentation}
+The diagram
+\[
+\begin{CD}
+N\otimes_KL @>{\sigma_{\mathcal N}}>> N^{G/H}\\
+@V{\delta_\iota}VV @VV{\epsilon_H^N}V\\
+N @= N
+\end{CD}
+\]
+commutes:
+\[
+  \epsilon_H^N\circ\sigma_{\mathcal N}=\delta_\iota.
+\]
+If \(K\) is perfect, then \(\sigma_{\mathcal N}\) is an equivalence of
+\(N\)-algebras.  Thus the first projection of the split Galois-sheet algebra
+is exactly the marked tensor-diagonal morphism.
+\end{theorem}
+
+This is the source-side analogue of the marked-root product theorem: it
+records an algebra equivalence together with equality of a projection
+composite, rather than only an isomorphism of underlying modules.  Normality
+is what places every conjugate embedding in the common field \(N\); the
+commutativity of the displayed square is then the fact that the base-sheet
+embedding equals the marked embedding, independently of the chosen coset
+representative; it is not a claim that \(G\) is abelian.
+
+The fixed normalization is canonically
 
 \[
   \operatorname{IntCl}_B(N^J)
@@ -585,13 +733,18 @@ to separation.
 \end{proof}
 
 \begin{leanfiles}
-The marked normal closure is in \normsrc{NormalClosure.lean}; its action and
-fixed-ring comparison are in \normsrc{DeckAction.lean} and
+The marked normal closure, including
+\leanpath{NormalClosureData.isGalois}, is in
+\normsrc{NormalClosure.lean}; its canonical action and fixed-ring comparison
+are in \normsrc{DeckAction.lean} and
 \normsrc{InvariantIntermediate.lean}.  The conjugate maps are in
 \normsrc{ConjugateNormalization.lean}.  The ideals, separation predicate,
 and endpoint are in \normsrc{ConjugateBoundary.lean}, chiefly
 \leanpath{ConjugateBoundarySeparation} and
 \leanpath{noCodimensionOneRamification_of_conjugateBoundarySeparation}.
+The base-compatibility calculation is
+\leanpath{normalClosureNormalizationSchemeIso_hom_comp_toBase}; it uses the
+fixed-base scalar tower, not commutativity of the Galois group.
 The empty-locus and proposition presentations are connected by explicit
 conversion theorems rather than treated as separate geometric conclusions.
 \end{leanfiles}
@@ -638,7 +791,13 @@ a compactified extension.
 \begin{leanfiles}
 These comparisons are in \normsrc{SelectorComparison.lean}, especially
 \leanpath{NormalClosureData.collisionToGenericSheets_elem_eq_baseSheetSelector}
-and \leanpath{NormalClosureData.normalClosureTensorGenericSheetsEquiv}.
+and \leanpath{NormalClosureData.normalClosureTensorGenericSheetsEquiv}.  The
+multiplicative square of Theorem~\ref{thm:normal-closure-augmentation} is
+\leanpath{NormalClosureData.normalClosureBaseSheetAugmentation_comp_tensorToGenericSheets};
+its perfect-field restatement through the algebra equivalence is
+\leanpath{NormalClosureData.normalClosureBaseSheetAugmentation_comp_tensorGenericSheetsEquiv};
+its lower horizontal map is
+\leanpath{NormalClosureData.normalClosureTensorDiagonal}.
 \end{leanfiles}
 
 \section{Compactification: raw defect and a sufficient graph route}
@@ -747,17 +906,46 @@ boundary-defect vanishing proof; it does not assert that such graphs exist.
 \section{Residual realization, coverage, and the exact gap}
 \label{sec:coverage}
 
-Fix the action \(\rho:\Gbar\to\End_{\Q}(\Q\oplus V)\).  Supply an extension
-package for \(q_H\), choose its compactified projector \(\Pi\), and supply a
-linear residual realization \(\theta:E_H\to V\).  Put
+Fix the action \(\rho:\Gbar\to\End_{\Q}(\Q\oplus V)\).  For the marked-sheet
+comparison, supply an extension package with generic projector
+\(q_H\in A_H\), choose its compactified projector \(\Pi\), and separately
+supply a linear residual realization \(\theta:E_H\to V\).  Put
 \(\Theta=\operatorname{id}_{\Q}\oplus\theta\) and
-\(\alpha=\theta(a_H)\).  The comparison square required by the active route
-is
+\(\alpha=\theta(a_H)\).  The extension package and the universal maps give
+an equality of algebra-homomorphism composites
+
+\begin{equation}
+\label{eq:restriction-u-square}
+  r\circ\varphi_\Pi=\varphi_{q_H}:\mathcal U\longrightarrow A_H.
+\end{equation}
+
+The realization input can now be stated as the assertion that \(\Theta\) is
+a morphism of \(\mathcal U\)-representations:
+
+\begin{equation}
+\label{eq:universal-action-square}
+  \varphi_{\rho(\Pi)}(z)\Theta
+    =\Theta\varphi_{P_{a_H}}(z)
+  \qquad(z\in\mathcal U).
+\end{equation}
+
+Since \(u\) and the unit generate \(\mathcal U\), Equation
+\eqref{eq:universal-action-square} is equivalent to the single selector
+square
 
 \begin{equation}
 \label{eq:action-square}
   \rho(\Pi)\Theta=\Theta P_{a_H}.
 \end{equation}
+
+This cospan through \(\mathcal U\) is canonical for the two selected
+idempotents and does not require an algebra map from all of \(A_H\) to a
+convolution algebra.  In the actual deck-graph branch, the independent
+multiplicative square instead begins with \(\Q[G]\): the generic and
+compactified graph maps commute with restriction as in
+\(\mathscr G_r\).  Relating that compactified projector to the residual
+realization is precisely the geometric content of Equation
+\eqref{eq:universal-action-square}.
 
 \begin{proposition}[Marked-selector realization --- \formal; \conditional]
 \label{prop:realization}
@@ -765,8 +953,18 @@ From Equation~\eqref{eq:action-square},
 \[
   d_{\mathrm{ll}}(\rho(\Pi))=\alpha.
 \]
-If \(\theta\) is surjective, then \(\rho(\Pi)=P_\alpha\).  If the ambient
-action also has the Chow lower-left detection map of
+If \(\theta\) is surjective, then \(\rho(\Pi)=P_\alpha\), equivalently the
+Palomar-facing target is the equality of algebra homomorphisms
+
+\begin{equation}
+\label{eq:palomar-target-square}
+  \rho\circ\varphi_\Pi
+    =\varphi_{P_\alpha}:
+      \mathcal U\longrightarrow
+      \End_{\Q}(\Q\oplus V).
+\end{equation}
+
+If the ambient action also has the Chow lower-left detection map of
 Section~\ref{sec:target}, then \(\alpha\) lies in the cycle-class image.
 \end{proposition}
 
@@ -796,9 +994,15 @@ hypothesis.
 
 \begin{leanfiles}
 The comparison record and its realization consequences are in
+\chowsrc{MarkedAugmentedRealization.lean}, under
+\leanpath{toIdempotentRepresentationMorphism} and
+\leanpath{action_comp_compactifiedIdempotentMap_eq_classGraph}.  The
+restriction square is
+\leanpath{AlgebraProjectorExtension.restriction_comp_compactifiedIdempotentMap}.
+The sheet specialization is in
 \chowsrc{GaloisMarkedRealization.lean}, under
 \leanpath{MarkedGaloisSelectorComparison},
-\leanpath{lowerLeftClass_action_eq}, and
+\leanpath{palomarTargetSquare}, \leanpath{lowerLeftClass_action_eq}, and
 \leanpath{isAlgebraicHodgeClass_of_comparison}.  Class-dependent coverage,
 the one-way Hodge implication, the strong replacement premise, and the
 conditional equivalence are respectively
@@ -820,12 +1024,16 @@ compatibilities proved rather than postulated:
         lower-left Chow detection, and Hodge-morphism comparison;
   \item for every targeted Hodge class, marked normal-closure data and a
         geometric residual realization \(\theta:E_H\to V\) carrying
-        \(a_H\) to that class;
+        \(a_H\) to that class; no full map
+        \(A_H\to\Q[G]\) is required or claimed;
   \item either a compactified deck-graph square \(\mathscr G_r\), or a raw
         closure plus a proof that its specific defect vanishes;
-  \item the action-intertwining identity
-        \(\rho(\Pi)\Theta=\Theta P_{a_H}\), and enough surjectivity when the
-        entire graph operator rather than only its lower-left class is needed;
+  \item the representation-morphism identity
+        \(\varphi_{\rho(\Pi)}(z)\Theta
+          =\Theta\varphi_{P_{a_H}}(z)\), equivalently its selector square,
+        and enough surjectivity when the full target equality
+        \(\rho\circ\varphi_\Pi=\varphi_{P_\alpha}\) rather than only the
+        lower-left class is needed;
   \item a proof of the class-dependent coverage assertion.  For a literal
         equivalence with coverage, one also needs the strong replacement of
         arbitrary graph lifts by marked Galois witnesses.
@@ -853,6 +1061,9 @@ Rational Hodge target (\formal) &
 Graph-projector equivalence (\formal; \conditional) &
 \leanpath{rationalHodgeConjectureAt_iff_everyHodgeClassHasGraphProjectorLift}\newline
 \leanpath{Realization/Chow/TateGraphProjector.lean}\\
+Palomar-form Hodge equivalence (\formal; \conditional) &
+\leanpath{rationalHodgeConjectureAt_iff_everyHodgeClassHasPalomarTargetSquare}\newline
+\leanpath{Realization/Chow/TateGraphProjector.lean}\\
 Collision decomposition (\formal) &
 \leanpath{affineSelfCollisionDecompositionOfFormallyUnramified}\newline
 \leanpath{Collision/AffineGeometry.lean}\\
@@ -865,6 +1076,12 @@ Group projector transport (\formal) &
 Hecke projector transport (\formal) &
 \leanpath{heckeCorrespondence_isIdempotent}\newline
 \leanpath{Correspondence/HeckeProjector.lean}\\
+Marked source algebra split (\formal) &
+\leanpath{selectorAlgebraDecomposition}\newline
+\leanpath{LinearAlgebra/MarkedAugmentedAlgebraDecomposition.lean}\\
+Normal-closure augmentation square (\formal) &
+\leanpath{normalClosureBaseSheetAugmentation_comp_tensorGenericSheetsEquiv}\newline
+\leanpath{Boundary/Normalization/SelectorComparison.lean}\\
 Marked block normal form (\formal) &
 \leanpath{decomposition_conj_multiplication}\newline
 \leanpath{Boundary/Sheets/MarkedBlockProjector.lean}\\
@@ -884,7 +1101,10 @@ Compactified graph route (\formal; \conditional) &
 \leanpath{groupAlgebraProjectorExtension}\newline
 \leanpath{Boundary/CompactifiedGraphProjector.lean}\\
 Marked residual comparison (\formal; \conditional) &
-\leanpath{MarkedGaloisSelectorComparison}\newline
+\leanpath{toIdempotentRepresentationMorphism}\newline
+\leanpath{Realization/Chow/MarkedAugmentedRealization.lean}\\
+Palomar realization target (\formal; \conditional) &
+\leanpath{MarkedGaloisSelectorComparison.palomarTargetSquare}\newline
 \leanpath{Realization/Chow/GaloisMarkedRealization.lean}\\
 Coverage equivalence (\formal; \conditional) &
 \leanpath{rationalHodgeConjectureAt_iff_classDependentMarkedGaloisSelectorCoverage}\newline
@@ -1002,8 +1222,11 @@ The formal development now has an explicit endpoint and an auditable gap.
 The rational Hodge target is exactly equivalent to canonical graph-projector
 lifting once construction and lower-left detection are supplied.  Collision
 algebra, finite-\'etale convolution, group and Hecke idempotents, the marked
-sheet block calculation, and the conjugate-boundary codimension-one theorem
-provide compatible algebraic and geometric layers toward such lifts.  Raw
+sheet block calculation, the normal-closure augmentation square, and the
+conjugate-boundary codimension-one theorem provide compatible algebraic and
+geometric layers toward such lifts.  Every completed lift displays its target
+as the commuting algebra-homomorphism square
+\(\rho\circ\varphi_\Pi=\varphi_{P_\alpha}\).  Raw
 compactified closure is deliberately weaker than projector extension; a
 supplied compactified deck-graph square is a clean sufficient alternative.
 

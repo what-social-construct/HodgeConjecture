@@ -36,11 +36,11 @@ abstract rational Hodge target
               | lower-left detection / exact graph action
               |
 conditional marked realization ------------------------------- OPEN
-  GaloisMarkedBlock + GaloisMarkedRealization                  theta,
+  MarkedAugmentedRealization + GaloisMarkedRealization         theta,
               ^                                                action square,
               |                                                Chow model,
 marked sheet graph normal form                                 coverage
-  GenericProjector + BlockGraphProjector + MarkedBlockProjector
+  GenericProjector + MarkedAugmentedAlgebraDecomposition + MarkedBlockProjector
               ^
               |
 generic selector / group projector extension
@@ -70,6 +70,14 @@ compactification has two distinct branches:
 
 The arrows are not all implications in one linear theorem.  In particular:
 
+- `NormalClosureData` already supplies normality and finiteness; over a
+  perfect/characteristic-zero base its Galois structure, group, fixing
+  subgroup, and canonical normalization deck action are derived, not repeated
+  hypotheses;
+- normality keeps conjugate embeddings in one `N` but does not make `G`
+  abelian; deck maps lie over the base because they fix `K` and the induced
+  `B`-scalars, while commutativity of the pointwise sheet algebra is an
+  independent fact and does not extend to group/Chow convolution;
 - collision component idempotents use pointwise ring multiplication;
 - group and Hecke projectors use convolution;
 - compactified projectors live in a supplied target algebra;
@@ -160,13 +168,31 @@ pointwise sheet selector.
 
 ### 4. Marked sheets and the block normal form
 
-Introduce `F_Q(H)=Q^(G/H)`, the base selector `q_H`, the residual module
-`E_H`, and `a_H=q_H-1`.  Prove that multiplication by `q_H` is diagonal in
-selector coordinates and is `P_(a_H)` in the constant-unit splitting, with
-the explicit shear relating them.
+Introduce the commutative pointwise algebra `A_H:=F_Q(H)=Q^(G/H)`, its
+multiplicative augmentation `ev_H`, the base selector `q_H`, the augmentation
+ideal `E_H=ker(ev_H)=(1-q_H)`, and `a_H=q_H-1`.  Record the regular source
+action as an algebra homomorphism.  Give the residual corner the internal unit
+`1-q_H` and prove the genuine algebra equivalence
+`A_H ≃ₐ[Q] Q × E_H^corner`, with `q_H ↦ (1,0)` and
+`1-q_H ↦ (0,1)`.  Separately prove that multiplication by `q_H` is
+diagonal after forgetting to the underlying selector coordinates and is
+`P_(a_H)` in the constant-unit linear splitting, with the explicit linear
+shear relating them.
 
-End at the shared `LinearAlgebra.BlockGraphProjector` lemmas and their marked
-sheet specializations.
+Use `U=Q×Q`, the universal algebra of one idempotent, as the active common
+multiplicative source.  The marked selector, compactified correspondence, and
+target graph projector each induce an honest algebra homomorphism out of `U`.
+State restriction and realization compatibility as equalities of composites,
+and package the action square as a morphism of `U`-representations.  Keep the
+residual realization `theta:E_H -> V` visibly rational linear.  A
+multiplicative map from the whole `F_Q(H)` into a generic correspondence
+algebra is an optional stronger interface.  Do not place a map
+`A_H -> Q[G]` in the active spine; `SheetLinearization.lean` is auxiliary and
+direct-import-only.
+
+End at `LinearAlgebra.MarkedAugmentedAlgebraDecomposition` for the algebra
+equivalence and the shared `LinearAlgebra.BlockGraphProjector` lemmas for the
+linear shear calculation, followed by their marked-sheet specializations.
 
 ### 5. Normalization and codimension-one separation
 
@@ -182,6 +208,14 @@ Ram^(1)(Y_N/B) = empty.
 Stop there.  The section must not infer global etaleness, triviality of the
 normal closure, or vanishing of a Chow-convolution defect.
 
+Before the boundary argument, display the multiplicative normal-closure
+augmentation square.  Its top arrow is
+`normalClosureTensorToGenericSheets : N ⊗[K] L →ₐ[N] N^(G/H)`;
+base-sheet evaluation after this arrow equals
+`normalClosureTensorDiagonal`.  Under perfectness the top arrow is an algebra
+equivalence.  This is the honest field-to-sheet bridge and introduces no
+sheet-to-group-algebra map.
+
 ### 6. The compactification fork
 
 Present both honest formal endpoints.
@@ -196,10 +230,15 @@ This section is the correct location for the boundary-defect discussion.
 
 ### 7. Conditional realization and the exact gap
 
-Use a residual map `theta:E_H -> V` and the action square to identify the
-lower-left class.  Surjectivity of `theta` upgrades that equality to the whole
-graph operator.  Class-dependent coverage implies the modeled Hodge target;
-the reverse direction uses a separately named strong replacement hypothesis.
+Use the canonical maps from `U` attached to the generic selector and its
+compactified extension.  Prove the restriction composite square, then use a
+linear residual map `theta:E_H -> V` and the representation-morphism action
+square to identify the lower-left class.  Surjectivity of `theta` upgrades
+that equality to the whole graph operator and to `palomarTargetSquare`, an
+equality of algebra-homomorphism composites.  Class-dependent coverage
+implies the modeled Hodge target; the reverse direction uses a separately
+named strong replacement hypothesis.  Treat a full sheet-algebra
+presentation as an optional stronger variant, not a prerequisite.
 
 Conclude with the actual missing morphism package:
 

@@ -1,6 +1,7 @@
 import HodgeConjecture.Realization.Chow.Model
 import HodgeConjecture.Realization.HodgeClasses
 import HodgeConjecture.LinearAlgebra.BlockGraphProjector
+import HodgeConjecture.LinearAlgebra.UniversalIdempotentAlgebra
 
 /-!
 # Tate-block graph projectors and the Hodge target
@@ -314,6 +315,42 @@ def EveryHodgeClassHasGraphProjectorLift
       (AlgebraicProjectorLift ρ
         (ClassGraphProjector.operator α))
 
+/-- Every rational Hodge-class graph projector has an idempotent
+correspondence whose universal one-idempotent presentation commutes with
+realization.  This is the Palomar-style equation-of-composites form of
+`EveryHodgeClassHasGraphProjectorLift`. -/
+def EveryHodgeClassHasPalomarTargetSquare
+    (M : RationalHodgeCycleClassModel Chow H)
+    (ρ : RationalCorrespondenceAction Γ (ℚ × H)) : Prop :=
+  ∀ α : H, IsRationalHodgeClass M α →
+    ∃ projector : Γ,
+      ∃ hProjector : IsIdempotentElem projector,
+        ρ.action.comp
+            (UniversalIdempotentAlgebra.mapOfIdempotent
+              projector hProjector) =
+          UniversalIdempotentAlgebra.mapOfIdempotent
+            (ClassGraphProjector.operator α)
+            (ClassGraphProjector.operator_isIdempotent α)
+
+/-- The structure-valued lift target and the equality-of-algebra-homomorphism
+target are pointwise equivalent. -/
+theorem everyHodgeClassHasGraphProjectorLift_iff_palomarTargetSquare
+    {M : RationalHodgeCycleClassModel Chow H}
+    {ρ : RationalCorrespondenceAction Γ (ℚ × H)} :
+    EveryHodgeClassHasGraphProjectorLift M ρ ↔
+      EveryHodgeClassHasPalomarTargetSquare M ρ := by
+  constructor
+  · intro h α hα
+    exact
+      (AlgebraicProjectorLift.nonempty_iff_exists_idempotentMap_square
+        (ClassGraphProjector.operator_isIdempotent α)).mp
+        (h α hα)
+  · intro h α hα
+    exact
+      (AlgebraicProjectorLift.nonempty_iff_exists_idempotentMap_square
+        (ClassGraphProjector.operator_isIdempotent α)).mpr
+        (h α hα)
+
 /--
 Every canonical class graph that is a Hodge morphism has an algebraic lift.
 Unlike `EveryHodgeClassHasGraphProjectorLift`, this formulation exposes the
@@ -381,6 +418,20 @@ theorem rationalHodgeConjectureAt_iff_everyHodgeClassHasGraphProjectorLift
       EveryHodgeClassHasGraphProjectorLift M ρ :=
   ⟨everyHodgeClassHasGraphProjectorLift_of_rationalHodgeConjectureAt C,
     rationalHodgeConjectureAt_of_everyHodgeClassHasGraphProjectorLift D⟩
+
+/-- Palomar-style target theorem: the modeled rational Hodge conjecture is
+equivalent to producing, for every Hodge class, an idempotent correspondence
+whose universal one-idempotent map commutes with cohomological realization. -/
+theorem rationalHodgeConjectureAt_iff_everyHodgeClassHasPalomarTargetSquare
+    {M : RationalHodgeCycleClassModel Chow H}
+    {ρ : RationalCorrespondenceAction Γ (ℚ × H)}
+    (C : ClassGraphProjectorConstruction M ρ)
+    (D : ClassGraphProjectorDetection M ρ) :
+    RationalHodgeConjectureAt M ↔
+      EveryHodgeClassHasPalomarTargetSquare M ρ :=
+  (rationalHodgeConjectureAt_iff_everyHodgeClassHasGraphProjectorLift
+    C D).trans
+      everyHodgeClassHasGraphProjectorLift_iff_palomarTargetSquare
 
 /--
 Hodge-theoretic form of the graph-projector equivalence.  The extra

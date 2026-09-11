@@ -90,21 +90,45 @@ proves the conditional equivalence between
 `RationalHodgeConjectureAt` and class-indexed prescribed coverage.  The
 factorization itself remains open.
 
-The marked-sheet construction gives a more precise route.  If `q` is the
-base-sheet selector in `ℚ^(G/H)` and `E = ker(ev_base)`, multiplication by
-`q` is `diag(1,0)` in selector/CRT coordinates and becomes
+The marked-sheet construction gives a more precise route.  Write
+`A_H = ℚ^(G/H)`.  If `q` is its base-sheet selector, then base-sheet evaluation is an algebra
+augmentation and `E = ker(ev_base) = (1-q)` is its augmentation ideal.
+Giving this ideal the internal unit `1-q` defines `E^corner`, and Lean proves
+the genuine algebra equivalence
+`A_H ≃ₐ[ℚ] ℚ × E^corner`, sending `q` to `(1,0)` and `1-q` to
+`(0,1)`.  The regular source action is a multiplicative algebra map.
+Multiplication by `q` is `diag(1,0)` in these selector/CRT coordinates and
+becomes
 
 ```text
 (t, x) ↦ (t, t · (q - 1))
 ```
 
-in constant-unit coordinates.  Lean proves both forms, their lower-shear
+in constant-unit linear coordinates.  Lean proves both forms, their lower-shear
 transition, and identification of the second operator with the canonical
 Tate graph projector.  A residual linear map `θ : E → H^(2p)(X, ℚ)` sends
 this to the graph projector of `θ(q - 1)`.
 
-This last naturality is only rational linear algebra.  The substantive arrow
-is to construct `θ` from the cover at the Chow-motivic level and prove that
+For supplied `NormalClosureData K L N`, this sheet source is connected to
+the field-theoretic construction by an honest augmentation square.  The top
+map `N ⊗[K] L →ₐ[N] N^(G/H)` is
+`normalClosureTensorToGenericSheets`, the right map is base-sheet
+augmentation, and their composite equals the tensor-diagonal algebra map
+`normalClosureTensorDiagonal`.  Under perfectness the top map is an algebra
+equivalence.  This square does not pass through `ℚ[G]`.
+
+This last naturality is only rational linear algebra.  The active
+multiplicative comparison uses instead the universal one-idempotent algebra
+`U = ℚ × ℚ`.  The generic selector, compactified projector, and target graph
+projector each determine an honest algebra map out of `U`; restriction and
+realization are stated as equalities of composites.  Thus no map
+`A_H → ℚ[G]` is required.  The direct-only `SheetLinearization.lean`
+construction is auxiliary and not part of this route.  A homomorphism from
+the entire sheet algebra to a generic correspondence algebra remains an
+optional stronger interface.
+
+The substantive arrow is to construct `θ` from the cover at the
+Chow-motivic level and prove that
 its cohomological realization sends `q - 1` to the desired class.  Choosing
 an arbitrary linear `θ`, or constructing it from an already known Chow
 representative, would not advance the conjecture.
@@ -113,13 +137,18 @@ The conditional endpoint is now explicit in
 `Realization/Chow/GaloisMarkedRealization.lean`.  It uses
 `AlgebraProjectorExtension` to keep the commutative generic sheet algebra
 separate from the possibly noncommutative compactified correspondence algebra
-`Γ`.  Its comparison structure requires a compactified idempotent restricting
-to `q`, a residual realization `θ`, `θ(q - 1) = α`, and a square intertwining
-the compactified action with generic selector multiplication.  Evaluating
+`Γ`.  The extension package gives canonical generic and compactified maps
+from `U` and proves that restriction commutes with them.  Its comparison
+structure requires a compactified idempotent restricting to `q`, a residual
+realization `θ`, `θ(q - 1) = α`, and a square intertwining the compactified
+action with generic selector multiplication.  This is equivalently a
+morphism of `U`-representations.  Evaluating
 that square at `(1, 0)` identifies the lower-left class and lets detection
 extract a Chow representative without surjectivity.  If `θ` is surjective,
 cancellation and marked-block naturality derive the entire equality with
-`e_α`, hence an algebraic graph-projector lift.
+`e_α`, hence an algebraic graph-projector lift.  At the homomorphism level,
+`palomarTargetSquare` states the resulting equality of algebra-map
+composites.
 
 The class-dependent coverage schema fixes only `Γ` and its action.  For each
 class it may choose a different finite group, subgroup, abstract extension
@@ -174,16 +203,24 @@ case but does not express this dependent witness package.
 - [x] **H7. Rational marked-block algebra.** Prove that the Tate graph
   projector is a shear-conjugate of `diag(1,0)` and a normalized `C₂`
   reflection average.  For the Galois sheet algebra, construct the
-  selector/CRT and constant-unit decompositions, prove diagonal and graph
-  forms of selector multiplication, identify their shear transition, and
-  prove naturality under a residual rational linear map.
+  multiplicative augmentation and its ideal `E=ker(ev)=(1-q)`, give the
+  residual corner its internal unit `1-q`, prove the product-algebra
+  equivalence `A_H ≃ₐ[ℚ] ℚ × E^corner`, and construct the regular
+  algebra action.  Separately construct the constant-unit linear splitting,
+  prove diagonal and graph forms of selector multiplication, identify their
+  shear transition, and prove naturality under a residual rational linear map.
+  Construct `U = ℚ × ℚ` as the universal algebra of one idempotent and its
+  canonical maps into arbitrary associative algebras.
 - [x] **H7b. Conditional marked-selector endpoint.** Separate the commutative
   generic sheet algebra from the noncommutative compactified correspondence
   algebra.  Package a compactified selector extension, residual realization,
-  target-class equality, and action square.  Detect the lower-left class
-  without surjectivity; under surjectivity derive the exact graph action and
-  algebraic projector lift.  Do not count the package as a constructed
-  geometric instance.
+  target-class equality, and action square.  Expose the square as a morphism
+  of `U`-representations and, under surjectivity, expose
+  `palomarTargetSquare` as an equality of algebra-homomorphism composites.
+  Detect the lower-left class without surjectivity; under surjectivity derive
+  the exact graph action and algebraic projector lift.  Do not count the
+  package as a constructed geometric instance.  A full sheet-algebra map is
+  an optional stronger interface, not an active hypothesis.
 - [ ] **H8. Geometric residual realization.** For a named variety/family or
   Hodge subspace, construct a Chow-motivic map from the marked Galois residual
   block `Eα(-p)` to `h(X)` whose realization sends `qα - 1` to `α` and

@@ -18,7 +18,7 @@ modeled Hodge target <-> canonical graph-projector lifting
                                   ^
                  conditional residual realization / coverage
                                   ^
-                  marked G/H selector in graph coordinates
+           marked G/H multiplicative CRT and graph coordinates
                                   ^
  collision algebra -> finite-etale spans -> group/Hecke projectors
                                   ^
@@ -198,10 +198,32 @@ It also proves that `r_α = 2e_α - 1` is an involution and
 an algebraic shear or deck involution.
 
 The Galois-sheet algebra supplies a non-circular source for the same block
-shape.  Let `q` be the characteristic function of the marked base sheet in
-`F = ℚ^(G/H)` and let `E = ker(ev_base)`.  Multiplication by `q` is
-`diag(1,0)` in the selector/CRT decomposition `F ≃ ℚq ⊕ E`.  In the
-constant-unit marked decomposition `F ≃ ℚ1 ⊕ E`, the same multiplication map
+shape.  Let `A_H = ℚ^(G/H)` and let `q` be the characteristic function of
+the marked base sheet.  Base-sheet evaluation is an augmentation algebra map
+and
+
+```text
+E = ker(ev_base) = (1 - q)
+```
+
+as an ideal of the commutative algebra `A_H`.  Give the same underlying ideal
+the internal unit `1-q` and call the resulting unital algebra
+`E_H^corner`.  Lean proves the actual algebra equivalence
+
+```text
+A_H ≃ₐ[ℚ] ℚ × E_H^corner,
+q ↦ (1, 0),       1-q ↦ (0, 1).
+```
+
+This is the multiplicative selector/CRT split, and the regular source action
+`A_H →ₐ[ℚ] Endℚ(A_H)` is multiplicative.  The active comparison uses the
+smaller universal one-idempotent algebra `U = ℚ × ℚ`: every chosen
+idempotent gives a canonical algebra map out of `U`.  This exposes honest
+homomorphisms without requiring a map between the whole pointwise sheet
+algebra and a convolution algebra.  A full algebra map from `A_H` into a
+generic correspondence algebra is an optional stronger presentation.
+Multiplication by `q` is `diag(1,0)` in the multiplicative coordinates.  In
+the separate constant-unit linear decomposition `A_H ≃ₗ ℚ1 ⊕ E`, the same multiplication map
 is
 
 ```text
@@ -209,20 +231,31 @@ is
 ```
 
 The two decompositions differ by the lower shear with residual class `q - 1`.
-This is formalized in `Boundary/Sheets/MarkedBlockProjector.lean`; the
-identification with `ClassGraphProjector.operator (q - 1)` and its naturality
-under a residual linear map are in
-`Realization/Chow/GaloisMarkedBlock.lean`.  It precisely mirrors the sibling
-marked-root/CRT construction, where product decomposition and compatibility
-with first projection are proved separately.
+The augmentation ideal, regular algebra action, block formulas, and shear are
+formalized through `LinearAlgebra/MarkedAugmentedAlgebra.lean`; the genuine
+algebra split and its corner unit are in
+`LinearAlgebra/MarkedAugmentedAlgebraDecomposition.lean`; these are specialized
+in `Boundary/Sheets/MarkedBlockProjector.lean`.  The identification with
+`ClassGraphProjector.operator (q - 1)` and its naturality under a residual
+linear map are in `Realization/Chow/MarkedAugmentedRealization.lean` and
+`Realization/Chow/GaloisMarkedBlock.lean`.  The residual realization
+`θ : E →ₗ V` remains linear because the cohomological target is only a
+module.  `Realization/Chow/SheetLinearization.lean` remains available only by
+direct import as an auxiliary linear construction; it is not an algebra map
+`A_H → ℚ[G]` and is not part of this proof spine.
 
 `Realization/Chow/GaloisMarkedRealization.lean` now isolates the next exact
-conditional arrow.  An `AlgebraProjectorExtension` separates the commutative
-generic sheet algebra from a possibly noncommutative compactified
-correspondence algebra `Γ`; its chosen compactified idempotent restricts to
-`q`.  A `MarkedGaloisSelectorComparison` consists of a residual realization
+conditional arrow.  An `AlgebraProjectorExtension` separates the generic
+algebra from a possibly noncommutative compactified correspondence algebra
+`Γ`; its chosen compactified idempotent restricts to `q` in the sheet
+specialization.  From the generic and compactified idempotents it constructs
+canonical algebra maps out of `U`, and
+`restriction_comp_compactifiedIdempotentMap` proves equality of the two
+restriction composites.  A
+`MarkedGaloisSelectorComparison` consists of a residual realization
 `θ`, the equality `θ(q - 1) = α`, and the square intertwining the compactified
-idempotent's action with multiplication by `q`.  Evaluating the square at the
+idempotent's action with multiplication by `q`.  Equivalently, it is a
+morphism between the two `U`-representations.  Evaluating the square at the
 marked unit proves that the lower-left class is `α`, so Chow-block detection
 already yields an algebraic representative without surjectivity.  If `θ` is
 surjective, naturality and cancellation additionally prove—rather than
@@ -231,6 +264,13 @@ assume—the whole target equality
 ```text
 ρ(e) = e_α.
 ```
+
+At the homomorphism level the same conclusion is
+`palomarTargetSquare`: the cohomological action composed with the
+compactified map `U → Γ` equals the canonical map `U → Endℚ(ℚ × V)`
+determined by `e_α`.  This is the Palomar-facing equality of composites.
+The older full `A_H` presentation remains an optional stronger interface and
+is not consumed by this active specialization.
 
 This algebra separation is necessary, not cosmetic.  If one fixed
 commutative selector algebra were also used as the correspondence algebra for
@@ -503,6 +543,42 @@ The Hodge files `Normalization/Model.lean`, `NormalClosure.lean`,
 presentation-independent version of this architecture.  Copying the planar
 cover record again would therefore add no theorem.
 
+In particular, `NormalClosureData` itself packages `IsNormalClosure K L N`,
+`FiniteDimensional K L`, and `FiniteDimensional K N`.  It derives normality
+from the normal-closure witness and finiteness of its Galois group from the
+finite-dimensional field data; `NormalClosureData.isGalois` derives
+`IsGalois K N` over a perfect base field (hence in characteristic zero).
+No second normality or Galois hypothesis belongs in the sheet spine.  The
+derived `galoisGroup` and `intermediateFixingSubgroup` index `G/H`, while
+`normalClosureFiniteDeckAction` supplies the canonical deck action on the
+affine normal-closure normalization.
+
+The normal-closure-to-sheet comparison is multiplicative as well.  Lean
+constructs algebra maps
+
+```text
+N ⊗[K] L  --normalClosureTensorToGenericSheets-->  N^(G/H)
+    | normalClosureTensorDiagonal                         | ev_base
+    v                                                     v
+    N  -------------------------------------------------> N
+```
+
+and proves
+`normalClosureBaseSheetAugmentation_comp_tensorToGenericSheets`, i.e. that
+the two composites are equal.  Under perfectness the top arrow is upgraded
+to an algebra equivalence, with the same augmentation square.  This is the
+honest multiplicative normal-closure bridge; it does not create a map from
+the pointwise sheet algebra to `ℚ[G]`.
+
+The roles must not be conflated.  Normality says that the conjugate embeddings
+extend inside the same `N`, so one Galois group controls all sheets; it says
+nothing about that group being abelian.  The identity
+`normalClosureNormalizationSchemeIso_hom_comp_toBase` holds because every
+Galois automorphism fixes `K` and hence the `B`-scalars along the scalar tower,
+not because two group elements commute.  The function algebra on `G/H` is
+commutative by its pointwise product.  The group/convolution algebra and the
+ambient Chow-correspondence algebra remain potentially noncommutative.
+
 One construction had not been exposed on the Hodge side.  The Jacobian
 boundary code observes that a Galois automorphism of `N / K` restricts to an
 automorphism of the integral closure of `B` in `N`.  This has now been
@@ -534,7 +610,7 @@ convolution/group algebra of deck maps    (normalized graph average)
 compactified Chow correspondences         (the desired geometric projector).
 ```
 
-Two commutative-algebra arrows between the normalization and selector levels
+The commutative-algebra maps between the normalization and selector levels
 are now formal.  First,
 
 ```lean
@@ -555,7 +631,12 @@ is defined using chosen quotient representatives and sends
 base-sheet selector.  This proves the projector comparison without assuming
 tensor splitting.  Separately, under `PerfectField K`, Lean proves that the
 base-changed evaluation map `N ⊗[K] L → (G / H → N)` is bijective and packages
-it as `normalClosureTensorGenericSheetsEquiv`.
+it as `normalClosureTensorGenericSheetsEquiv`.  Base-sheet evaluation is an
+algebra homomorphism, and
+`normalClosureBaseSheetAugmentation_comp_tensorToGenericSheets` states that
+its composite with the base-changed evaluation map is exactly the
+tensor-diagonal algebra map.  This last equality is the multiplicative
+augmentation square; none of these declarations factors through `ℚ[G]`.
 
 At a selected prime `Q` of the normal-closure normalization, the exact
 ring-theoretic subgroup used by Stacks is now formalized as
@@ -765,9 +846,21 @@ instantiate, the compatibility identifying `(p,p)` classes with graph
 operators that are Hodge morphisms.  There is no concrete model for a smooth
 projective complex variety.
 
-The marked Galois sheet calculation now resolves the former linear
-operator-shape question: selector multiplication is block diagonal in CRT
-coordinates and graph-shaped in constant-unit coordinates.  The conditional
+The marked Galois sheet calculation now resolves the former source-algebra and
+operator-shape questions: the residual object is the augmentation ideal
+`ker(ev_base) = (1 - q)`, the regular source action is multiplicative, and the
+normal-closure augmentation bridge is an equality of algebra-map composites.
+The residual corner
+with unit `1-q` gives the genuine product-algebra split
+`A_H ≃ₐ[ℚ] ℚ × E_H^corner`; selector multiplication is block diagonal
+there and graph-shaped in the distinct constant-unit linear coordinates.  The
+residual realization remains linear.  The universal algebra `U = ℚ × ℚ`
+canonically presents the chosen generic, compactified, and cohomological
+idempotents, while `palomarTargetSquare` gives the final equality of
+algebra-homomorphism composites.  A full map from `A_H` to a generic
+correspondence algebra is optional and stronger; the auxiliary direct-only
+sheet linearization is not part of this route.
+The conditional
 endpoint detects the lower-left class from an explicit comparison square and,
 under surjectivity, derives the exact graph action.  Its source and ambient
 algebras are correctly separated.  It does not resolve the geometric

@@ -120,19 +120,51 @@ data and a fixed finite subgroup.  At this abstract layer `pX` is not itself
 assumed finite or étale, and the condition remains only sufficient.
 
 The marked Galois-sheet calculation now explains the relevant block form.
-For the base-sheet selector \(q\) in \(\mathbf Q^{G/H}\), multiplication by
-\(q\) is \(\operatorname{diag}(1,0)\) in selector/CRT coordinates.  In the
-constant-unit splitting
-\(\mathbf Q^{G/H}\simeq\mathbf Q\oplus\ker(\operatorname{ev}_H)\), the same
-operator is the graph projector of the residual class \(q-1\).  Lean proves
-the two formulas and their shear transition.  It also proves that any
-rational residual map carries this operator to the canonical Tate graph of
-the resulting class.  This removes the apparent linear-algebra conflict
-between block-diagonal and graph-shaped projectors.
+Write \(A_H=\mathbf Q^{G/H}\) and let \(q\) be its base-sheet selector.  The
+residual object is not merely a vector-space kernel: it is the augmentation
+ideal
+\[
+E_H=\ker(\operatorname{ev}_H)=(1-q)\triangleleft A_H.
+\]
+Giving its underlying ideal the internal unit \(1-q\) produces the residual
+corner \(E_H^{\mathrm{corner}}\), and Lean proves the genuine algebra
+equivalence
+\[
+  A_H\simeq_{\mathbf Q\text{-alg}}\mathbf Q\times E_H^{\mathrm{corner}}.
+\]
+It sends \(q\) to \((1,0)\) and \(1-q\) to \((0,1)\); multiplication by
+\(q\) is therefore \(\operatorname{diag}(1,0)\) in these multiplicative
+selector/CRT coordinates.
+The regular source action
+\(A_H\to\operatorname{End}_{\mathbf Q}(A_H)\) is a
+multiplicative algebra map.  For the active comparison, however, the common
+multiplicative source is only the universal one-idempotent algebra
+\(U=\mathbf Q\times\mathbf Q\).  Every chosen idempotent determines an honest
+algebra map from \(U\), so the generic restriction, compactified projector,
+and cohomological action are compared by equalities of algebra-homomorphism
+composites without postulating a map between the larger sheet and convolution
+algebras.  A map from the entire commutative sheet algebra into a generic
+correspondence algebra is retained only as an optional stronger interface.
+In the separate
+constant-unit linear splitting
+\(A_H\simeq_{\mathbf Q}\mathbf Q\oplus E_H\), multiplication by \(q\) is the
+graph projector of the residual class \(q-1\).  Lean proves the ideal
+identification, both block formulas, and their shear transition.  A residual
+realization \(\theta:E_H\to V\) is only rational linear.  The direct-only
+`SheetLinearization.lean` experiment also defines an auxiliary linear
+coset construction, but it is not part of the active route and supplies no
+map of algebras from \(A_H\) to \(\mathbf Q[G]\).
 
 The next conditional arrow is also formalized.  An
-`AlgebraProjectorExtension` keeps the commutative generic sheet algebra
-separate from a possibly noncommutative compactified correspondence algebra.
+`AlgebraProjectorExtension` keeps the generic algebra separate from a
+possibly noncommutative compactified correspondence algebra.  It canonically
+produces maps \(U\to\Gamma_\eta\) and \(U\to\overline\Gamma\), and Lean proves
+that restriction composed with the compactified map equals the generic map.
+The realization comparison is an honest morphism between the corresponding
+\(U\)-representations.  Under surjectivity, `palomarTargetSquare` states that
+the cohomological action composed with the compactified map from \(U\) equals
+the canonical map from \(U\) presenting the class-graph projector.  No
+geometric residual realization or comparison square is constructed.
 This is essential: Lean proves that two class-graph projectors commute exactly
 when their classes agree, so one fixed commutative action could not cover a
 nonzero Hodge-class space.
@@ -207,11 +239,28 @@ boundary.  It controls whether the **scheme component** extends; a separate
 convolution calculation is still required to obtain a correspondence
 projector.
 
-For a marked normal closure, the intermediate normalization is now
-identified formally with the subgroup-fixed normalization ring.  Using
+`NormalClosureData` already packages the normal-closure witness and the
+finiteness of both `L/K` and `N/K`; downstream normality and finite-group
+instances are therefore derived from this datum rather than imposed as new
+mathematical hypotheses.  Over a perfect base field (in particular in the
+characteristic-zero setting), `NormalClosureData.isGalois` derives
+`IsGalois K N`.  The resulting `galoisGroup`,
+`intermediateFixingSubgroup`, and canonical normalization deck action feed
+the marked-sheet layer directly.  Normality is used to keep all conjugate
+embeddings inside the same field `N`, hence under one Galois group; it does
+not make that group abelian.  The deck automorphisms commute with the map to
+the affine base because they fix `K` and therefore the `B`-scalars through
+the scalar tower, not because the group commutes.  The pointwise sheet
+algebra is separately commutative, while the group algebra and the full Chow
+correspondence algebra may be noncommutative.  For this marked normal closure, the
+intermediate normalization is identified formally with the subgroup-fixed
+normalization ring.  Using
 chosen quotient representatives, the collision tensor algebra also has an
 evaluation map to functions on `G/H`, and its separability element is proved
-to map to the marked singleton-sheet selector.  Over a perfect base field,
+to map to the marked singleton-sheet selector.  The multiplicative diagram is
+also explicit: base-sheet augmentation composed with
+`normalClosureTensorToGenericSheets` equals the tensor-diagonal algebra map
+`normalClosureTensorDiagonal`.  Over a perfect base field,
 the normal-closure base change `N ⊗[K] L` is further proved equivalent to the
 full sheet-function algebra.  At a boundary prime, the Stacks fixed-inertia
 unramified theorem remains one explicit source input.  Lean now constructs
@@ -320,6 +369,14 @@ or any case of the Hodge conjecture.
 - [`LinearAlgebra/BlockGraphProjector.lean`](HodgeConjecture/LinearAlgebra/BlockGraphProjector.lean)
   is the shared graph/diagonal/shear core used by both the marked-sheet and
   Tate-block realizations.
+- [`LinearAlgebra/MarkedAugmentedAlgebraDecomposition.lean`](HodgeConjecture/LinearAlgebra/MarkedAugmentedAlgebraDecomposition.lean)
+  gives the augmentation ideal its internal corner unit and proves the genuine
+  product-algebra decomposition, separately from the constant-unit linear
+  shear coordinates.
+- [`LinearAlgebra/UniversalIdempotentAlgebra.lean`](HodgeConjecture/LinearAlgebra/UniversalIdempotentAlgebra.lean)
+  gives the common algebra `ℚ × ℚ` for presenting one idempotent and its
+  complement in any associative rational algebra; it is the active
+  multiplicative source for the compactification and Palomar target squares.
 - [`Boundary/AveragingAction.lean`](HodgeConjecture/Boundary/AveragingAction.lean)
   relates the convolution idempotent averaging over a boundary inertia
   subgroup to its contragredient action on the pointwise generic-sheet
@@ -338,6 +395,9 @@ or any case of the Hodge conjecture.
   fixed--moving boundary ideals and their conditional separation endpoint,
   the collision-to-sheet-selector comparison, visible-unramifiedness lemmas,
   and the normalization–inertia diagram.
+  The marked normal-closure record itself supplies normality and finiteness;
+  over a perfect/characteristic-zero base its derived Galois structure,
+  fixing subgroup, and canonical deck action are reused by these layers.
   The local fixed-inertia theorem and every global cover-extension or gluing
   input remain explicit assumptions.
 - [`Boundary`](HodgeConjecture/Boundary) contains the collision different,
@@ -366,13 +426,26 @@ or any case of the Hodge conjecture.
     proves the abstract class/graph-projector equivalence through independent
     construction, detection, and Hodge-compatibility interfaces, together
     with the shear and rational `C₂`-reflection forms of the graph operator;
+  - [`IdempotentRepresentation.lean`](HodgeConjecture/Realization/Chow/IdempotentRepresentation.lean)
+    packages linear intertwiners as morphisms of representations of the
+    universal one-idempotent algebra `ℚ × ℚ`;
+  - [`MarkedAugmentedRealization.lean`](HodgeConjecture/Realization/Chow/MarkedAugmentedRealization.lean)
+    carries the augmentation-ideal source model into the Tate block, packages
+    the comparison as a morphism of representations of the universal
+    one-idempotent algebra, and keeps the residual realization linear; its
+    full sheet-algebra presentation is an optional stronger interface;
+  - [`SheetLinearization.lean`](HodgeConjecture/Realization/Chow/SheetLinearization.lean)
+    is a direct-import-only auxiliary linear coset construction, not an
+    algebra map and not part of the active Chow umbrella;
   - [`GaloisMarkedBlock.lean`](HodgeConjecture/Realization/Chow/GaloisMarkedBlock.lean)
     identifies the marked sheet selector action with the canonical Tate graph
     operator and proves rational naturality under a residual realization map;
   - [`GaloisMarkedRealization.lean`](HodgeConjecture/Realization/Chow/GaloisMarkedRealization.lean)
     separates the generic selector from the noncommutative compactified
-    correspondence algebra, detects the lower-left class from an explicit
-    action square, derives the exact graph action under surjectivity, and
+    correspondence algebra, exposes `palomarTargetSquare` as an equality of
+    algebra-homomorphism composites, detects the lower-left class from an
+    explicit representation square, derives the exact graph action under
+    surjectivity, and
     records class-dependent conditional coverage and replacement endpoints;
   - [`GaloisHodgeTarget.lean`](HodgeConjecture/Realization/Chow/GaloisHodgeTarget.lean)
     records the one-way implication from class-indexed prescribed
@@ -615,8 +688,10 @@ are:
    convolution algebras, and prove that the two-sided relation quotients in
    `Realization.Chow.Presentation` identify with the intended Chow or
    bivariant correspondence algebras;
-6. instantiate the restriction, cohomological action, and
-   selector-to-correspondence purity comparison in that presentation;
+6. instantiate the restriction and cohomological action, and prove the
+   universal one-idempotent restriction square and representation-morphism
+   comparison; a full sheet-algebra presentation is needed only for the
+   optional stronger interface;
 7. construct the compactified deck action and graph-cycle comparison square,
    or instead identify the restriction kernel with boundary-supported cycle
    classes and prove that the raw closure defect vanishes or admits a
