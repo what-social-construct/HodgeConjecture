@@ -264,3 +264,29 @@ It is intentionally outside the library's default import tree.
 #print axioms HodgeConjecture.SplitSpanRealization.realization
 #print axioms HodgeConjecture.SplitSpanRealization.realization_surjective
 #print axioms HodgeConjecture.GeometricSplitPoints.palomarTargetSquare
+
+-- Exact finite-additivity quotient, with actual scheme point decomposition.
+#check HodgeConjecture.SplitPointGeometry.span_pointDecomposition_iso
+#check HodgeConjecture.SplitPointGeometry.pointDecomposition_hasFiniteEtaleLegs
+#check HodgeConjecture.SplitSpanRealization.decompositionDefect_mem
+#check HodgeConjecture.SplitSpanRealization.additiveRelations_eq_ker
+#check HodgeConjecture.SplitSpanRealization.quotientRealization_bijective
+#check HodgeConjecture.SplitSpanRealization.quotientRealizationEquiv
+#check HodgeConjecture.SplitSpanRealization.realization_not_injective
+#check HodgeConjecture.SplitSpanRealization.additiveRelations_ne_bot
+#check HodgeConjecture.GeometricSplitPoints.additiveCoefficientRealization_comp_classMap
+#check HodgeConjecture.GeometricSplitPoints.additivePalomarTargetSquare
+
+#print axioms HodgeConjecture.SplitPointGeometry.span_pointDecomposition_iso
+#print axioms HodgeConjecture.SplitSpanRealization.additiveRelations_eq_ker
+#print axioms HodgeConjecture.SplitSpanRealization.quotientRealizationEquiv
+#print axioms HodgeConjecture.SplitSpanRealization.realization_not_injective
+#print axioms HodgeConjecture.GeometricSplitPoints.additivePalomarTargetSquare
+
+-- Degenerate endpoint: the empty identity span becomes zero, as it should.
+example (K : Type) [Field K] :
+    (1 : HodgeConjecture.SplitSpanRealization.AdditiveQuotient K (Fin 0)) = 0 := by
+  apply (HodgeConjecture.SplitSpanRealization.quotientRealizationEquiv K (Fin 0)).injective
+  simp only [map_one, map_zero]
+  ext i
+  exact Fin.elim0 i

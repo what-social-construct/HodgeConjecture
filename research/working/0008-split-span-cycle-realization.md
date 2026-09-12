@@ -1,5 +1,11 @@
 # Additive cycle-coefficient realization of actual split scheme spans
 
+Checkpoint update: the exact finite point-decomposition kernel and additive
+quotient identified as open below are now proved in
+[0009-split-span-additive-quotient.md](0009-split-span-additive-quotient.md).
+The historical construction and verification record below is preserved;
+genuine Chow and Betti identifications remain separate open steps.
+
 Status: SPLIT GEOMETRIC SOURCE-TO-MATRIX BRIDGE IMPLEMENTED; GENUINE
 CHOW/BETTI IDENTIFICATION AND GENERAL HODGE COVERAGE REMAIN OPEN.
 

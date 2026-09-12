@@ -1,4 +1,4 @@
-import HodgeConjecture.Realization.Chow.Examples.SplitSpanRealization
+import HodgeConjecture.Realization.Chow.Examples.SplitSpanQuotient
 import HodgeConjecture.Realization.Chow.Examples.SplitPoints
 
 /-!
@@ -10,9 +10,10 @@ algebra is the previously constructed geometric point projector. The intrinsic
 cycle-coefficient realization sends it to the first matrix unit, so the earlier
 constant-coordinate calculation supplies its graph-projector action.
 
-The source is a free span algebra, and the realization kills coproduct
-relations; neither this file nor its imports identify the resulting coefficient
-model with scheme-theoretic Chow groups or singular cohomology.
+The initial source is a free span algebra. The action and its universal
+idempotent square also descend to the explicit finite-additivity quotient;
+neither source is identified here with scheme-theoretic Chow groups or
+singular cohomology.
 -/
 
 set_option autoImplicit false
@@ -122,6 +123,37 @@ theorem palomarTargetSquare :
   simpa only [markedComparison_generatedClass] using
     (markedComparison K).action_comp_idempotentMap_eq_classGraph
       (projector_isIdempotent K) SplitPointCorrespondence.residualEvaluation_surjective
+
+/-- The same coefficient action after imposing the geometric finite-point
+decomposition relations. This is not a new marked-comparison assumption. -/
+def additiveCoefficientRealization :
+    SplitSpanRealization.AdditiveQuotient K (Fin 2) →ₐ[ℚ] Module.End ℚ (ℚ × ℚ) :=
+  SplitPointCorrespondence.realization.comp
+    (SplitSpanRealization.quotientRealization K (Fin 2))
+
+/-- The descended action agrees with the constructed raw geometric action. -/
+theorem additiveCoefficientRealization_comp_classMap :
+    (additiveCoefficientRealization K).comp
+        (SplitSpanRealization.additivePresentation K (Fin 2)).classMap =
+      coefficientRealization K := by
+  apply AlgHom.ext
+  intro x
+  rfl
+
+/-- The Palomar target square survives passage to the additive quotient,
+by naturality of the universal idempotent map. No new realization data enter. -/
+theorem additivePalomarTargetSquare :
+    (additiveCoefficientRealization K).comp
+        (UniversalIdempotentAlgebra.mapOfIdempotent
+          ((SplitSpanRealization.additivePresentation K (Fin 2)).classMap (projector K))
+          ((projector_isIdempotent K).map
+            (SplitSpanRealization.additivePresentation K (Fin 2)).classMap)) =
+      UniversalIdempotentAlgebra.mapOfIdempotent
+        (ClassGraphProjector.operator (-1 : ℚ))
+        (ClassGraphProjector.operator_isIdempotent (-1 : ℚ)) := by
+  rw [← UniversalIdempotentAlgebra.comp_mapOfIdempotent,
+    ← AlgHom.comp_assoc, additiveCoefficientRealization_comp_classMap]
+  exact palomarTargetSquare K
 
 end
 

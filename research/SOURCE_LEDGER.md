@@ -65,6 +65,7 @@ the bridge to the project's interface:
 | --- | --- | --- | --- | --- |
 | Rational zero-cycles on a finite split scheme have the point basis | Coefficient module in `Realization/Chow/Examples/SplitPoints.lean`; scheme in `Correspondence/Examples/SplitPoints.lean` | [Stacks, Definition 42.19.1, Tag 02RW](https://stacks.math.columbia.edu/tag/02RW) | Over a field with ordinary dimension, specialize the definition to zero-cycles on a finite split scheme. There are no integral one-dimensional closed subschemes, hence no nonzero rational-equivalence generators. This is an elementary deduction from the definition, not a quoted matrix theorem. The scheme-to-Chow identification is not formalized. | FORMAL ALGEBRA / GEOMETRIC INSTANTIATION OPEN |
 | Point-pair cycles compose as matrices | `SplitPointCorrespondence.pointRealization_convolution` proves the matrix coefficient law | [Stacks, Lemma 45.3.1, Tag 0FG0](https://stacks.math.columbia.edu/tag/0FG0) | Finite split schemes are smooth projective over the field. Specialize pullback, intersection, and pushforward to their rational point bases, with rows indexing outputs and columns inputs. The additive map from actual split-presentable spans is now constructed in `SplitSpanRealization.lean`, using actual scheme pullbacks and coproducts. Agreement with the cited genuine Chow calculation remains unformalized. The free source is not identified with matrices. | FORMAL ALGEBRA / GEOMETRIC INSTANTIATION OPEN |
+| Exact additive presentation of split scheme-span coefficients | `SplitPointGeometry.span_pointDecomposition_iso`; `SplitSpanRealization.additiveRelations_eq_ker` and `.quotientRealizationEquiv` | Project-specific proof from actual scheme coproducts and matrix normal form; no external source axiom | For an arbitrary field and finite label set, use actual split-presentable span classes. The generators are all finite point-decomposition differences. Their generated two-sided ideal is exactly the realization kernel, so the additive quotient is the matrix algebra. This does not identify the quotient with the genuine Chow objects in the preceding rows. | FORMAL / DIRECT PROOF |
 
 The actual split-scheme span idempotence and the obstruction to unital maps
 `M₂(ℚ) → C` for nontrivial commutative `C` are proved directly in Lean; no
@@ -75,8 +76,13 @@ scheme points give isomorphism invariance; disjoint open point charts prove
 the actual fiber-product comparison; the actual scheme coproduct comparison
 proves geometric additivity. Counting matching pairs then supplies the
 matrix algebra homomorphism. No Stacks citation is being used as an axiom for
-this bridge. Identifying its coefficients with the Chow groups in the two
-rows above remains a separate source-to-formalization task.
+this bridge. The exact additive quotient is also proved directly: the
+actual finite indexed scheme-coproduct comparison gives the geometric
+decomposition, and point-pair normal form with matrix-unit independence
+identifies the generated ideal with the full kernel. Identifying this
+quotient with the Chow groups in the first two rows above remains a separate
+source-to-formalization task; the Stacks definitions do not discharge that
+comparison merely by being cited.
 
 ## Citation acceptance test
 
