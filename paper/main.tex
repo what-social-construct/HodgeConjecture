@@ -136,8 +136,13 @@ degree and local multiplicity one, construct proper pushforward, flat
 pullback, and intersection.  Their Chow correspondence composition is
 matrix multiplication in the point-pair basis, identifying the actual Chow
 endomorphism algebra with the additive span quotient.  The geometric
-action on zero-cycle Chow groups is matrix action.  A geometric-source
-two-point projector square follows.
+action on zero-cycle Chow groups is matrix action.  Over \(\mathbf C\),
+the actual algebra-valued point space has the regular-function evaluation
+topology, proved discrete.  Its singular degree-zero cocycles give a
+Betti cycle-class isomorphism carrying each point class to its component
+characteristic cocycle, compatible with pullback, finite transfer,
+intersection, and correspondence action.  A geometric-source two-point
+projector square follows.
 These statements are machine checked from their displayed hypotheses
 (\formal).  For the general Hodge application, the Chow/Hodge comparison, compactified realization, and
 class-dependent marked-sheet coverage packages remain supplied inputs
@@ -205,7 +210,8 @@ the intended specialization is
 \]
 
 with \(\operatorname{cl}\) the rational cycle-class map.  The repository
-does not yet construct these objects.  The family-level Lean statement
+does not yet construct this combined model in general; the finite split
+Chow/Betti comparison is constructed below.  The family-level Lean statement
 recovers the classical universal quantification only if its index type is
 actually populated by all smooth projective complex varieties and its models
 are the genuine geometric models.
@@ -1314,6 +1320,102 @@ gives the displayed cycle, whose matrix is the same incidence matrix as
 the span realization.  Injectivity of \(\kappa_{II}\) proves the formula.
 \end{proof}
 
+We now take \(k=\mathbf C\).  The complex-point space is defined from the
+coordinate ring, independently of the cycle coordinates:
+\[
+ X_I=Z_I(\mathbf C)
+   =\operatorname{Hom}_{\mathbf C\text{-alg}}(\mathbf C^I,\mathbf C).
+\]
+Give it the topology induced by all regular-function evaluations
+\(p\mapsto p(a)\), with the ordinary topology on \(\mathbf C\).
+The map \(i\mapsto\ev_i\) is a bijection by the prime-kernel
+classification.  Evaluation embeds \(X_I\) into the Hausdorff space
+\(\mathbf C^{\mathbf C^I}\); thus the finite point space is discrete.
+Each point gives its actual morphism \(\Spec\mathbf C\to Z_I\)
+over \(\mathbf C\), and the induced maps of point spaces and their
+products agree with the constructed scheme maps.
+
+For a topological space \(X\), use actual singular simplices
+\(S_n(X)=C(\Delta^n,X)\).  Degree-zero singular cohomology is
+\[
+ H^0_{\mathrm B}(X;\Q)
+ =\ker\bigl(\delta^0:\Q^{S_0(X)}\longrightarrow\Q^{S_1(X)}\bigr),
+ \qquad
+ (\delta^0u)(\sigma)=u(\sigma|_{[v_1]})-u(\sigma|_{[v_0]}).
+\]
+There are no degree-zero coboundaries.  This is the ordinary singular
+definition, whose cocycles are the functions constant on path components
+\cite[\S3.1, p.~198]{HatcherAlgebraicTopology}.  In the present discrete
+space all singular simplices are constant, so evaluation on its actual
+points gives \(H^0_{\mathrm B}(X_I;\Q)\cong\Q^I\).
+
+\begin{theorem}[Split Betti cycle classes and action --- \formal]
+\label{thm:split-betti-cycle-class}
+For finite sets \(I,J,S\), there is a rational linear isomorphism
+\[
+ \operatorname{cl}_I:\mathrm{CH}_0(Z_I;\Q)
+   \xrightarrow{\sim} H^0_{\mathrm B}(X_I;\Q),
+ \qquad \operatorname{cl}_I([s_i])=\delta_i,
+\]
+where \(\delta_i\) is the singular cocycle equal to one on the point
+\(\ev_i\) and zero on the other components.
+For \(f:S\to I\), cohomological pullback is precomposition by the actual
+continuous point map, and finite transfer sums over its actual point
+fibers.  Cup product in degree zero is pointwise product.  With these
+operations,
+\[
+ \begin{aligned}
+ \operatorname{cl}_I(f_*z)&=f_*\operatorname{cl}_S(z),\\
+ \operatorname{cl}_S(f^*w)&=f^*\operatorname{cl}_I(w),\\
+ \operatorname{cl}_I(z\cdot w)
+   &=\operatorname{cl}_I(z)\smile\operatorname{cl}_I(w).
+ \end{aligned}
+\]
+For \(c\in\operatorname{Corr}^0(Z_I,Z_J)\), define its cohomological
+action by
+\[
+ c_{\mathrm B,*}u=(p_2)_*
+   \bigl(\operatorname{cl}_{I\times J}(c)\smile p_1^*u\bigr).
+\]
+It intertwines the geometric Chow action:
+\[
+ \operatorname{cl}_J(c_*z)
+    =c_{\mathrm B,*}\operatorname{cl}_I(z),
+ \qquad
+ (c_{\mathrm B,*}u)_j=\sum_i c_{(i,j)}u_i.
+\]
+Consequently it respects correspondence composition and the diagonal unit.
+For endomorphisms this constructs the algebra homomorphism
+\[
+ \rho_{\mathrm B,I}:\Gamma_I^{\mathrm{CH}}
+   \longrightarrow\End_{\Q}\bigl(H^0_{\mathrm B}(X_I;\Q)\bigr),
+ \qquad \rho_{\mathrm B,I}(c)(u)=c_{\mathrm B,*}u.
+\]
+\end{theorem}
+
+\begin{proof}
+The two face restrictions of an actual singular one-simplex agree in a
+discrete space.  Its degree-zero coboundary therefore vanishes, and
+evaluation on constant zero-simplices is a linear equivalence to point
+functions.  The actual Chow point basis gives the displayed isomorphism.
+The normalization agrees with the usual cycle class: a complex point is
+positively oriented, and zero-dimensional Poincar\'e duality sends its
+fundamental class to the characteristic class of that component
+\cite[\S1]{DeligneHodgeConjecture}.
+
+The degree-zero specialization of the singular cup formula is pointwise
+multiplication \cite[\S3.2, p.~206]{HatcherAlgebraicTopology}.
+For transfer, the lifts of a constant simplex are the constant simplices
+at its inverse-image points.  The finite-cover transfer definition
+\cite[\S3.G, p.~321]{HatcherAlgebraicTopology} therefore gives the stated
+fiber sum, component by component; the number of sheets may vary between
+components, and an empty fiber contributes zero.  These operations have
+the same point formulas as Theorem~\ref{thm:split-chow-composition}.
+Their compatibility follows on the point generators and hence by
+linearity.  Applying the pull--cup--transfer formula gives the displayed
+action sum, its intertwining equality, and the composition and unit laws.
+\end{proof}
+
 For \(I=\{0,1\}\), the resulting finite rational coefficient
 model \(\Gamma_I=M_2(\Q)\) acts on \(\Q^I\) by matrix multiplication,
 with rows indexing outputs and columns indexing inputs.  Take
@@ -1372,8 +1474,11 @@ geometric pull--push composition on actual products.  The matrix law is
 proved with the same input/output convention as the span realization.
 Corollary~\ref{cor:split-span-chow-algebra} identifies the geometric Chow
 endomorphism algebra with the additive span quotient.  Its action on the
-zero-cycle Chow group is the constructed pull--push action.  The next
-comparison is with genuine Betti cohomology and its cycle-class map.
+zero-cycle Chow group is the constructed pull--push action.
+Theorem~\ref{thm:split-betti-cycle-class} constructs its degree-zero
+Betti cycle classes on the actual complex-point space and identifies the
+cohomological action.  The next comparison is the finite Tate-augmented
+block and its independently specified Hodge structure.
 \end{statusnote}
 
 \begin{leanfiles}
@@ -1436,6 +1541,22 @@ The algebra equivalences \leanpath{matrixAlgEquiv} and
 \leanpath{ofSplitSpan} and \leanpath{spanQuotientEquiv_ofSchemeSpan};
 the geometric action and its
 coordinate formula are in \chowsrc{Examples/SplitChowAction.lean}.
+The actual complex-point topology and product comparison are in
+\leanpath{HodgeConjecture/Realization/Betti/Examples/SplitComplexPoints.lean}.
+The singular cochains, their face comparison, and \leanpath{H0} are in
+\leanpath{HodgeConjecture/Realization/Betti/SingularDegreeZero.lean};
+finite transfer is in
+\leanpath{HodgeConjecture/Realization/Betti/FiniteTransfer.lean}, with its
+actual simplex-lift formula \leanpath{transfer_simplex_eq_sum_lifts} in
+\leanpath{HodgeConjecture/Realization/Betti/ZeroSimplexTransfer.lean}.
+The map \leanpath{SplitBetti.cycleClass}, its point normalization, and
+operation compatibilities are in
+\leanpath{HodgeConjecture/Realization/Betti/Examples/SplitCycleClass.lean}.
+The action, \leanpath{cycleClass_action}, \leanpath{realization}, and
+\leanpath{realization_cycleClass} are in
+\leanpath{HodgeConjecture/Realization/Betti/Examples/SplitCorrespondenceAction.lean};
+\leanpath{correspondenceAction} instantiates the existing rational
+correspondence-action interface with these constructed objects.
 \end{leanfiles}
 
 \subsection{Class-dependent coverage}
@@ -1608,6 +1729,17 @@ Geometric Chow correspondence composition (\formal) &
 Split-span quotient and actual Chow algebra (\formal) &
 \leanpath{SplitChowCorrespondence.spanQuotientEquiv}\newline
 \leanpath{Realization/Chow/Examples/SplitChowAlgebra.lean}\\
+Actual complex points and singular degree zero (\formal) &
+\leanpath{SplitComplexPoints.pointDiscreteTopology};
+\leanpath{SingularDegreeZero.equivFunctions}\newline
+\leanpath{Realization/Betti/Examples/SplitComplexPoints.lean};
+\leanpath{Realization/Betti/SingularDegreeZero.lean}\\
+Split Betti cycle-class equivalence (\formal) &
+\leanpath{SplitBetti.cycleClass}; \leanpath{cycleClass_pointCycle}\newline
+\leanpath{Realization/Betti/Examples/SplitCycleClass.lean}\\
+Actual cohomological action algebra map (\formal) &
+\leanpath{SplitBetti.realization}; \leanpath{realization_cycleClass}\newline
+\leanpath{Realization/Betti/Examples/SplitCorrespondenceAction.lean}\\
 Geometric-source coefficient square (\formal) &
 \leanpath{GeometricSplitPoints.palomarTargetSquare}\newline
 \leanpath{Realization/Chow/Examples/GeometricSplitPoints.lean}\\

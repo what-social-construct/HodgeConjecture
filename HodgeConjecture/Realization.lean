@@ -1,4 +1,5 @@
 import HodgeConjecture.Realization.Chow
+import HodgeConjecture.Realization.Betti
 import HodgeConjecture.Realization.HodgeTarget
 
 /-!
@@ -27,6 +28,12 @@ algebra-homomorphism composites.  No Chow-motivic residual realization or
 such square is constructed.  The finite-cover branch has not
 been identified with the full target; only implications from explicit
 class-indexed witness packages are formalized.
+
+`Realization.Betti` constructs the finite split complex degree-zero case:
+actual complex points, singular cohomology, the normalized cycle-class
+isomorphism, and the cohomological action of the actual Chow algebra.
+Its compatibility with geometric Chow action is proved. Higher-dimensional
+Betti/Hodge realization and the general residual comparison remain separate.
 
 The earlier commutative selector-realization chain remains directly
 importable from `Realization.BoundaryProjector`,

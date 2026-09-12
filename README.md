@@ -193,8 +193,8 @@ actual split-presentable span classes. It respects geometric fiber products
 and disjoint unions and takes empty spans to zero. The
 [geometric-source endpoint](HodgeConjecture/Realization/Chow/Examples/GeometricSplitPoints.lean)
 therefore recovers the same projector action and Palomar square from the
-original point span. The Chow-correspondence composition is constructed
-below, and Betti comparison follows it. Extension from split-presentable
+original point span. The Chow-correspondence composition and its degree-zero
+Betti comparison are constructed below. Extension from split-presentable
 to arbitrary finite-étale carriers is a separate step. The
 free source algebra is not itself identified with matrices. Its
 [additive quotient](HodgeConjecture/Realization/Chow/Examples/SplitSpanQuotient.lean)
@@ -235,7 +235,21 @@ For every finite split span, this equivalence maps its quotient class to
 the proper pushforward of its carrier's fundamental cycle along the pair map.
 The [geometric Chow action](HodgeConjecture/Realization/Chow/Examples/SplitChowAction.lean)
 `p2_* (c · p1^* z)` is proved to be matrix action on point coordinates.
-The next comparison is with genuine Betti cohomology and its cycle-class map.
+Over `ℂ`, the actual point space is `Hom_ℂ-alg(ℂ^I, ℂ)`, with topology
+induced by regular-function evaluation in the ordinary complex topology.
+Classification by evaluation points proves this space finite and discrete,
+and its maps agree with the actual scheme morphisms. Singular degree-zero
+cohomology is constructed as the kernel of the face coboundary on actual
+continuous simplices. Its cycle-class isomorphism
+`CH_0(Z_I;ℚ) ≃ₗ[ℚ] H_B^0(Z_I(ℂ);ℚ)` sends each actual point cycle to
+its characteristic cocycle. It respects proper pushforward/finite transfer,
+flat pullback, and intersection/cup product. The cohomological action
+`p2_* (cl(c) ∪ p1^* u)` is proved to intertwine the geometric Chow action.
+It gives a rational algebra homomorphism from the actual Chow endomorphism
+algebra to endomorphisms of singular degree-zero cohomology, instantiating
+the existing `RationalCorrespondenceAction` interface.
+The next comparison is the finite Tate-augmented block and its independent
+Hodge structure.
 The test also proves
 that `M₂(ℚ)` has no unital map to a nontrivial commutative ring; consequently
 the old full-algebra restriction to sheets is not an admissible general
@@ -245,7 +259,8 @@ specialized condition. See the
 and its [exact additive quotient](research/working/0009-split-span-additive-quotient.md),
 followed by the [integral-subscheme checkpoint](research/working/0010-split-integral-subschemes.md)
 and the [zero-cycle and rational-equivalence construction](research/working/0011-split-zero-cycles.md),
-then [geometric Chow composition](research/working/0012-split-chow-composition.md).
+then [geometric Chow composition](research/working/0012-split-chow-composition.md)
+and [actual degree-zero Betti cycle classes](research/working/0013-split-betti-cycle-class.md).
 
 The missing step is geometric: construct a Chow-motivic residual map carrying
 \(q-1\) to a desired Hodge class and prove compatibility with compactification
@@ -612,7 +627,7 @@ For schemes over a fixed base \(S\), the project proves:
 - consequently the normalized full collision class is conditionally
   idempotent in the supplied realization and has a formal projector lift
   under every supplied correspondence action; no concrete nontrivial Chow
-  realization is constructed here;
+  realization for this general Galois interface is constructed here;
 - the off-diagonal class is
   \(\sum_g[\Gamma_g]-1\), and is deliberately not asserted to be
   convolution-idempotent;

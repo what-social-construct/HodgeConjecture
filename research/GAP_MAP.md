@@ -115,10 +115,27 @@ carrier's fundamental cycle, by `spanQuotientEquiv_ofSchemeSpan`. The actual
 action `p2_* (c · p1^* z)` has the matrix-vector coefficient formula and
 respects composition.
 
-**The next gap is the Betti cycle-class comparison.** Construct genuine
-Betti cohomology and compare its cycle-class and correspondence action with
-the geometric Chow action just proved. The
-span realization construction
+**The degree-zero Betti cycle-class comparison is constructed.** Over `ℂ`,
+the actual point space `Hom_ℂ-alg(ℂ^I,ℂ)` carries the topology induced by
+regular-function evaluations. Prime-kernel classification gives its
+evaluation-point bijection; Hausdorffness and finiteness prove discreteness.
+The associated actual `Spec` morphisms commute with the complex base and
+the scheme maps, and the product homeomorphism respects both projections.
+Singular degree-zero cohomology is the kernel of the two-face coboundary
+on actual continuous simplices. Its point evaluation equivalence constructs
+`CH_0(Z_I;ℚ) ≃ₗ[ℚ] H_B^0(Z_I(ℂ);ℚ)` with the characteristic-cocycle
+normalization. The map respects pushforward/finite transfer,
+pullback, and intersection/cup product. The geometric cohomological action
+`p2_* (cl(c) ∪ p1^*u)` intertwines the Chow action and has its matrix law.
+The constructed `SplitBetti.realization` is an algebra homomorphism from
+the actual Chow endomorphism algebra to `Module.End` of this singular
+cohomology. `correspondenceAction` packages it in the existing interface.
+
+**The next gap is the finite Tate-block and Hodge comparison.** Supply an
+independent geometric degree-zero Hodge description and compare the actual
+cycle-class action with the existing Tate-augmented graph construction and
+lower-left Chow detection. No Hodge subspace is defined by the cycle-class
+image in this step. The span realization construction
 applies to split-presentable spans, not yet to all finite-étale carriers.
 These results do not instantiate a geometric Hodge cycle-class model or
 class-dependent coverage.
@@ -133,8 +150,10 @@ and its action square. The extension-based selector comparison is a lossless
 specialization; the existing Galois coverage interface still retains that
 extra restriction and is not the general target.
 
-See `working/0012-split-chow-composition.md` for the geometric operations
-and composition; `0011` records the cycle quotient, `0010` its actual
+See `working/0013-split-betti-cycle-class.md` for the actual point topology,
+singular cocycles, cycle class, and cohomological action;
+`0012` records the geometric operations and composition;
+`0011` records the cycle quotient, `0010` its actual
 generators, and `0009` the exact additive span quotient.
 
 ### Geometric model still to be instantiated
@@ -172,9 +191,10 @@ complex varieties and `M` supplies their genuine geometric data.  Lean proves
 that the pointwise statement is equivalent both to the explicit `∀ α, ∃ z`
 formulation and to equality of the cycle-class image with the Hodge-class
 submodule.  The repository does not yet construct these data for a concrete
-`X`, let alone the universal family. The finite split Chow construction
-above supplies a concrete zero-dimensional cycle theory; Betti cohomology
-and pure Hodge structures are the next realization objects.
+`X`, let alone the universal family. The finite split construction above
+supplies actual zero-dimensional Chow groups, degree-zero Betti cohomology,
+and their cycle-class/action comparison. The independent Hodge structure
+and Tate-block comparison are the next realization objects.
 
 There is now a non-circular projector reformulation in
 `Realization/Chow/TateGraphProjector.lean`.  A class `α` is encoded by the
@@ -949,8 +969,9 @@ The repository now has fixed-model and indexed-family schemas expressing the
 cycle-class target, plus a proved class/graph-projector equivalence under
 explicit block construction and detection maps.  It also names, but does not
 instantiate, the compatibility identifying `(p,p)` classes with graph
-operators that are Hodge morphisms.  There is no concrete model for a smooth
-projective complex variety.
+operators that are Hodge morphisms. There is no concrete combined
+Chow/Betti/Hodge model for a smooth projective complex variety. The finite
+split Chow/Betti construction above supplies the first two layers.
 
 The marked Galois sheet calculation now resolves the former source-algebra and
 operator-shape questions: the residual object is the augmentation ideal

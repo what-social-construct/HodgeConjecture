@@ -46,7 +46,8 @@ Active research and proof-maintenance queue:
 - `0008-split-span-cycle-realization.md` records the actual scheme-span
   coefficient map, its well-definedness on geometric classes, its
   multiplicativity and coproduct laws, and the point projector's
-  geometric-source target square. Genuine Chow/Betti identification remains open.
+  geometric-source target square. Its genuine Chow/Betti identifications
+  are advanced in `0011`--`0013`.
 - `0009-split-span-additive-quotient.md` proves the exact finite
   point-decomposition kernel and the quotient-to-matrix algebra equivalence.
 - `0010-split-integral-subschemes.md` classifies actual integral closed
@@ -59,3 +60,8 @@ Active research and proof-maintenance queue:
   geometric correspondence composition and action have their matrix laws.
   Its actual Chow endomorphism algebra is identified with the existing
   additive split-span quotient, preserving point generators.
+- `0013-split-betti-cycle-class.md` constructs the actual complex-point
+  topology, singular degree-zero cocycles, and the point-normalized
+  cycle-class isomorphism. Pullback, cup product, and finite transfer give
+  the cohomological correspondence action and its Chow intertwining.
+  The next step is the independent Hodge and Tate-block comparison.

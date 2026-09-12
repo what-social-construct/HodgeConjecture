@@ -7,6 +7,11 @@ Date: 2026-09-11. This advances
 [0011-split-zero-cycles.md](0011-split-zero-cycles.md).
 Canonical manuscript: `paper/main.tex`, producing the single `paper/main.pdf`.
 
+Advancement: the actual complex-point topology and degree-zero singular
+cycle-class/action comparison are constructed in
+[0013-split-betti-cycle-class.md](0013-split-betti-cycle-class.md).
+The verification record below remains the record of this Chow checkpoint.
+
 ## Checkpoint
 
 For a field `k` and finite label sets, the existing cycle groups are freely
@@ -183,8 +188,9 @@ symbols are assigned to implementation adapters or multiplicity proofs.
 
 ## Next construction
 
-Construct the genuine Betti cohomology and cycle-class map, then prove
-that the geometric Chow action corresponds to its cohomological action.
+The next construction at this checkpoint was the genuine degree-zero
+Betti cohomology and cycle-class map, with equality of geometric Chow
+and cohomological actions. It is carried out in `0013`.
 
 The original free span source remains distinct: its coefficient map kills
 exactly the finite point-decomposition ideal. Passing to the additive

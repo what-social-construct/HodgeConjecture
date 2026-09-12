@@ -437,3 +437,99 @@ example (K : Type) [Field K] :
       HodgeConjecture.SplitChowCorrespondence.pointCorrespondence K (1 : Fin 2) (1 : Fin 2) := by
   apply (HodgeConjecture.SplitChowCorrespondence.matrixCoordinates K (Fin 2) (Fin 2)).injective
   simp [HodgeConjecture.SplitChowCorrespondence.matrixCoordinates_comp]
+
+-- Actual complex points, their topology, and the actual singular zero-kernel.
+#check HodgeConjecture.SplitComplexPoints.existsUnique_eq_evalPoint
+#check HodgeConjecture.SplitComplexPoints.isEmbedding_evaluation
+#check HodgeConjecture.SplitComplexPoints.pointDiscreteTopology
+#check HodgeConjecture.SplitComplexPoints.schemeMorphism_toBase
+#check HodgeConjecture.SplitComplexPoints.schemeMorphism_map
+#check HodgeConjecture.SplitComplexPoints.productHomeomorph_fst
+#check HodgeConjecture.SingularDegreeZero.simplexEquivSingularSet_face
+#check HodgeConjecture.SingularDegreeZero.cocycles_toSubmodule
+#check HodgeConjecture.SingularDegreeZero.equivFunctions
+#check HodgeConjecture.SingularDegreeZero.pullback_comp
+#check HodgeConjecture.SingularDegreeZero.transfer_projectionFormula
+#check HodgeConjecture.SingularDegreeZero.zeroSimplexLiftEquiv
+#check HodgeConjecture.SingularDegreeZero.transfer_simplex_eq_sum_lifts
+
+-- The cycle-class map and the geometric cohomological algebra action.
+#check HodgeConjecture.SplitBetti.cycleClass
+#check HodgeConjecture.SplitBetti.cycleClass_pointCycle
+#check HodgeConjecture.SplitBetti.cycleClass_pullback
+#check HodgeConjecture.SplitBetti.cycleClass_pushforward
+#check HodgeConjecture.SplitBetti.cycleClass_intersection
+#check HodgeConjecture.SplitBetti.cycleClass_action
+#check HodgeConjecture.SplitBetti.coordinates_action
+#check HodgeConjecture.SplitBetti.action_comp
+#check HodgeConjecture.SplitBetti.realization
+#check HodgeConjecture.SplitBetti.realization_cycleClass
+#check HodgeConjecture.SplitBetti.correspondenceAction
+
+#print axioms HodgeConjecture.SplitComplexPoints.existsUnique_eq_evalPoint
+#print axioms HodgeConjecture.SplitComplexPoints.pointDiscreteTopology
+#print axioms HodgeConjecture.SingularDegreeZero.simplexEquivSingularSet_face
+#print axioms HodgeConjecture.SingularDegreeZero.equivFunctions
+#print axioms HodgeConjecture.SingularDegreeZero.transfer_simplex_eq_sum_lifts
+#print axioms HodgeConjecture.SplitBetti.cycleClass
+#print axioms HodgeConjecture.SplitBetti.cycleClass_action
+#print axioms HodgeConjecture.SplitBetti.realization
+#print axioms HodgeConjecture.SplitBetti.realization_cycleClass
+
+-- The empty affine scheme has no actual complex-algebra points.
+example : IsEmpty (HodgeConjecture.SplitComplexPoints.Point (Fin 0)) :=
+  ⟨fun p ↦ Fin.elim0 ((HodgeConjecture.SplitComplexPoints.labelEquiv (Fin 0)).symm p)⟩
+
+-- Its unreduced degree-zero singular cohomology is zero.
+example (h : HodgeConjecture.SplitBetti.Cohomology (Fin 0)) : h = 0 := by
+  apply (HodgeConjecture.SplitBetti.coordinates (Fin 0)).injective
+  ext i
+  exact Fin.elim0 i
+
+-- Every constructed point class satisfies the actual singular cocycle equation.
+example (I : Type) [Finite I] (i : I) :
+    HodgeConjecture.SingularDegreeZero.coboundary
+      (HodgeConjecture.SplitComplexPoints.Point I)
+      (HodgeConjecture.SplitBetti.cycleClass I
+        (HodgeConjecture.SplitZeroCycles.classMap ℂ I ℚ
+          (HodgeConjecture.SplitZeroCycles.pointCycle ℂ I ℚ i))).val = 0 :=
+  (HodgeConjecture.SplitBetti.cycleClass I
+    (HodgeConjecture.SplitZeroCycles.classMap ℂ I ℚ
+      (HodgeConjecture.SplitZeroCycles.pointCycle ℂ I ℚ i))).property
+
+-- Empty fibers contribute zero to the actual cohomological transfer.
+example :
+    HodgeConjecture.SplitBetti.coordinates (Fin 2)
+      (HodgeConjecture.SplitBetti.pushforward (fun _ : Fin 1 ↦ (0 : Fin 2))
+        (1 : HodgeConjecture.SplitBetti.Cohomology (Fin 1))) 1 = 0 := by
+  rw [HodgeConjecture.SplitBetti.coordinates_pushforward]
+  simp
+
+-- Fiber sizes may vary: the fiber over 1 here has exactly two points.
+example :
+    HodgeConjecture.SplitBetti.coordinates (Fin 2)
+      (HodgeConjecture.SplitBetti.pushforward
+        (fun i : Fin 3 ↦ if i = 0 then (0 : Fin 2) else 1)
+        (1 : HodgeConjecture.SplitBetti.Cohomology (Fin 3))) 1 = 2 := by
+  rw [HodgeConjecture.SplitBetti.coordinates_pushforward]
+  have h20 : (2 : Fin 3) ≠ 0 := by decide
+  norm_num [Fin.sum_univ_three, HodgeConjecture.SplitBetti.coordinates_apply, h20]
+
+-- The point-pair correspondence 1 → 0 carries the class of point 1 to point 0.
+example :
+    HodgeConjecture.SplitBetti.action
+      (HodgeConjecture.SplitChowCorrespondence.pointCorrespondence ℂ (1 : Fin 2) (0 : Fin 2))
+      (HodgeConjecture.SplitBetti.cycleClass (Fin 2)
+        (HodgeConjecture.SplitZeroCycles.classMap ℂ (Fin 2) ℚ
+          (HodgeConjecture.SplitZeroCycles.pointCycle ℂ (Fin 2) ℚ 1))) =
+      HodgeConjecture.SplitBetti.cycleClass (Fin 2)
+        (HodgeConjecture.SplitZeroCycles.classMap ℂ (Fin 2) ℚ
+          (HodgeConjecture.SplitZeroCycles.pointCycle ℂ (Fin 2) ℚ 0)) := by
+  apply (HodgeConjecture.SplitBetti.coordinates (Fin 2)).injective
+  rw [HodgeConjecture.SplitBetti.coordinates_action,
+    HodgeConjecture.SplitBetti.coordinates_cycleClass,
+    HodgeConjecture.SplitBetti.coordinates_cycleClass,
+    HodgeConjecture.SplitChowCorrespondence.matrixCoordinates_pointCorrespondence]
+  ext j
+  simp [-HodgeConjecture.SplitZeroCycles.coordinates_apply, Matrix.mulVec,
+    dotProduct, Matrix.single, Pi.single_apply, eq_comm]

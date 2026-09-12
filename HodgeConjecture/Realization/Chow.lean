@@ -56,7 +56,8 @@ Pull--intersection--push gives matrix multiplication, with the diagonal as
 unit. The resulting Chow convolution algebra is isomorphic to the additive
 span quotient, sending each span to its carrier's proper cycle pushforward.
 Its actual Chow action is matrix-vector multiplication in point coordinates.
-Cohomological realization and the Betti cycle-class comparison are next.
+`Realization.Betti` constructs the singular degree-zero cycle-class
+comparison and cohomological action for these schemes over the complex field.
 No realization on all nonsplit finite-étale classes is claimed. The matrix restriction obstruction
 explains why the full ambient algebra cannot in general map back to sheets.
 
