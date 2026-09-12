@@ -94,10 +94,30 @@ The scalar-extension equivalences for both cycles and Chow groups are
 constructed; on Chow groups the map sends `q ⊗ [s_i]` to `q • [s_i]` and
 identifies the rational group with `ℚ ⊗[ℤ] CH_0(Z_I;ℤ)`.
 
-**The next gap is the correspondence-algebra comparison.** Identify the
-actual product with its point-pair generators and construct geometric
-pull--push composition, then prove that its coefficients are matrix
-multiplication. Betti comparison follows that step. The
+**Geometric Chow composition is now constructed.** Actual product and
+point-fiber isomorphisms identify the relevant integral subschemes. The
+scheme-theoretic image map restricts to an isomorphism on each point,
+giving residue-field degree one. Actual fiber inclusions have module
+length one over the ambient stalk. These computations construct proper
+pushforward, flat pullback, external product, and diagonal-pullback
+intersection on cycles and Chow classes. `SplitChowCorrespondence.comp`
+uses `p13_* (p12^* a · p23^* b)`, and `matrixCoordinates_comp` proves the
+matrix law with outputs in rows. The diagonal is the identity and
+composition is associative.
+
+**The actual Chow algebra is identified with the additive span quotient.**
+`EndAlgebra` keeps Chow addition and scalars, uses the constructed
+composition as multiplication, and uses the diagonal as its unit.
+`matrixAlgEquiv` and `spanQuotientEquiv` are rational algebra equivalences;
+the point-span class maps to its actual Chow point-pair class. The actual
+class of any finite split span maps to the pair-map pushforward of its
+carrier's fundamental cycle, by `spanQuotientEquiv_ofSchemeSpan`. The actual
+action `p2_* (c · p1^* z)` has the matrix-vector coefficient formula and
+respects composition.
+
+**The next gap is the Betti cycle-class comparison.** Construct genuine
+Betti cohomology and compare its cycle-class and correspondence action with
+the geometric Chow action just proved. The
 span realization construction
 applies to split-presentable spans, not yet to all finite-étale carriers.
 These results do not instantiate a geometric Hodge cycle-class model or
@@ -113,9 +133,9 @@ and its action square. The extension-based selector comparison is a lossless
 specialization; the existing Galois coverage interface still retains that
 extra restriction and is not the general target.
 
-See `working/0011-split-zero-cycles.md` for the cycle quotient and next
-construction; `0010` records its actual generators and `0009` the exact
-additive span quotient.
+See `working/0012-split-chow-composition.md` for the geometric operations
+and composition; `0011` records the cycle quotient, `0010` its actual
+generators, and `0009` the exact additive span quotient.
 
 ### Geometric model still to be instantiated
 
@@ -152,8 +172,9 @@ complex varieties and `M` supplies their genuine geometric data.  Lean proves
 that the pointwise statement is equivalent both to the explicit `∀ α, ∃ z`
 formulation and to equality of the cycle-class image with the Hodge-class
 submodule.  The repository does not yet construct these data for a concrete
-`X`, let alone the universal family; in particular it has no concrete Chow
-group, Betti cohomology, or pure Hodge structure implementation.
+`X`, let alone the universal family. The finite split Chow construction
+above supplies a concrete zero-dimensional cycle theory; Betti cohomology
+and pure Hodge structures are the next realization objects.
 
 There is now a non-circular projector reformulation in
 `Realization/Chow/TateGraphProjector.lean`.  A class `α` is encoded by the

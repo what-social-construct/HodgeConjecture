@@ -12,6 +12,8 @@ import HodgeConjecture.Realization.Chow.Examples.SplitPoints
 import HodgeConjecture.Realization.Chow.Examples.SplitSpanRealization
 import HodgeConjecture.Realization.Chow.Examples.SplitSpanQuotient
 import HodgeConjecture.Realization.Chow.Examples.SplitRationalEquivalence
+import HodgeConjecture.Realization.Chow.Examples.SplitCycleMultiplicity
+import HodgeConjecture.Realization.Chow.Examples.SplitChowAction
 import HodgeConjecture.Realization.Chow.Examples.GeometricSplitPoints
 import HodgeConjecture.LinearAlgebra.MatrixRestrictionObstruction
 
@@ -48,8 +50,13 @@ the action and target square descend to this quotient. Separately, cycles on
 actual integral closed subschemes and the geometric no-curves theorem compute
 the finite split Chow group as point coordinates, over both integers and
 rationals; the rational group is canonically the scalar extension of the
-integral one. The correspondence-algebra comparison still requires the
-product-scheme and pull-push calculation, followed by cohomological realization.
+integral one. Actual product and fiber comparisons, image residue degrees,
+and fiber stalk lengths now construct the geometric cycle operations.
+Pull--intersection--push gives matrix multiplication, with the diagonal as
+unit. The resulting Chow convolution algebra is isomorphic to the additive
+span quotient, sending each span to its carrier's proper cycle pushforward.
+Its actual Chow action is matrix-vector multiplication in point coordinates.
+Cohomological realization and the Betti cycle-class comparison are next.
 No realization on all nonsplit finite-étale classes is claimed. The matrix restriction obstruction
 explains why the full ambient algebra cannot in general map back to sheets.
 

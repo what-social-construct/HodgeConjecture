@@ -54,3 +54,8 @@ Active research and proof-maintenance queue:
 - `0011-split-zero-cycles.md` constructs zero-cycles on those actual
   subschemes, evaluates rational equivalence using the empty curve type,
   and identifies the resulting additive Chow groups by point coordinates.
+- `0012-split-chow-composition.md` computes actual image and fiber
+  multiplicities, constructs the cycle/Chow operations, and proves that
+  geometric correspondence composition and action have their matrix laws.
+  Its actual Chow endomorphism algebra is identified with the existing
+  additive split-span quotient, preserving point generators.

@@ -9,6 +9,9 @@ import HodgeConjecture.Correspondence.ProjectorLift
 import HodgeConjecture.Correspondence.Examples.SplitPoints
 import HodgeConjecture.Correspondence.Examples.SplitPointMaps
 import HodgeConjecture.Correspondence.Examples.SplitIntegralSubschemes
+import HodgeConjecture.Correspondence.Examples.SplitCycleGeometry
+import HodgeConjecture.Correspondence.Examples.SplitProductGeometry
+import HodgeConjecture.Correspondence.Examples.SplitPointMultiplicity
 import HodgeConjecture.Correspondence.Examples.SplitSpanGeometry
 import HodgeConjecture.Correspondence.Examples.SplitSpanCoproduct
 import HodgeConjecture.Correspondence.FiniteGroupProjector
@@ -42,6 +45,8 @@ Chow/cohomological realization:
 17. finite split-span morphisms, intrinsic points, and actual pullback/coproduct comparisons.
 18. integral closed subschemes of finite split schemes, classified as reduced rational points,
     and dimension-zero/no-curve theorems for actual closed immersions.
+19. actual split products, point fibers, ideal-sheaf images and inverse images,
+    and degree/length-one comparisons through actual residue and stalk maps.
 
 The free span algebra is not identified with a Chow ring.  Proper cycle
 extraction, rational equivalence, and compatibility with refined

@@ -131,7 +131,13 @@ matrix algebra.  The split scheme's integral closed subschemes are classified as
 reduced rational points, and the absence of integral closed curves is
 proved.  The zero-cycle group on these actual subschemes has trivial
 rational equivalence, giving integral and rational Chow groups with the
-point basis.  A geometric-source two-point projector square follows.
+point basis.  Actual image and fiber identifications, with residue-field
+degree and local multiplicity one, construct proper pushforward, flat
+pullback, and intersection.  Their Chow correspondence composition is
+matrix multiplication in the point-pair basis, identifying the actual Chow
+endomorphism algebra with the additive span quotient.  The geometric
+action on zero-cycle Chow groups is matrix action.  A geometric-source
+two-point projector square follows.
 These statements are machine checked from their displayed hypotheses
 (\formal).  For the general Hodge application, the Chow/Hodge comparison, compactified realization, and
 class-dependent marked-sheet coverage packages remain supplied inputs
@@ -1176,6 +1182,138 @@ extension \(\Q\otimes_{\mathbf Z}Z_0(Z_I;\mathbf Z)
 the coefficient extension of \(z\).
 The induced integral-to-rational Chow map is also injective.
 
+We next construct the operations on these groups.  The proper pushforward
+of an integral cycle uses the degree of its map to the scheme-theoretic
+image \cite{StacksProperCyclePushforward}; flat pullback uses the
+fundamental cycle of the actual inverse-image subscheme
+\cite{StacksFlatCyclePullback}.  The multiplicity in that fundamental
+cycle is the length of its local ring as a module over the ambient local
+ring \cite{StacksFundamentalCycle}.  These definitions determine the
+operations here from the following geometric calculations.
+
+\begin{theorem}[Split-cycle operations and correspondence composition --- \formal]
+\label{thm:split-chow-composition}
+Let \(I,J,L,S\) be finite sets and \(f:S\to I\).  There are scheme
+isomorphisms, respecting their displayed projection or inclusion maps,
+\[
+ Z_{I\times J}\xrightarrow{\sim}Z_I\times_k Z_J,
+ \qquad
+ Z_{\{s\in S:f(s)=i\}}\xrightarrow{\sim}
+ Z_S\times_{Z_I}s_i.
+\]
+The image of \(s_s\) under the induced scheme map is the actual reduced
+point \(s_{f(s)}\), and the map from \(s_s\) to that image is an
+isomorphism.  Its residue-field degree is one.  Every point of the
+displayed inverse image has local multiplicity one, including when
+measured over the ambient stalk.
+
+Consequently proper pushforward, flat pullback, external product, and
+intersection descend to the Chow quotients and have coefficient formulas
+\[
+ \begin{aligned}
+ (f_*z)_i&=\sum_{f(s)=i}z_s,
+ & (f^*w)_s&=w_{f(s)},\\
+ (z\times w)_{(i,j)}&=z_iw_j,
+ & (z\cdot w)_i&=z_iw_i.
+ \end{aligned}
+\]
+Writing
+\[
+ \operatorname{Corr}^0(Z_I,Z_J)
+   =\mathrm{CH}_0(Z_I\times_k Z_J;\Q),
+ \qquad \kappa_{JI}(c)_{ji}=c_{(i,j)},
+\]
+the point-coordinate map \(\kappa_{JI}\) is a linear isomorphism to
+\(M_{J\times I}(\Q)\).  The geometric composition
+\[
+ b\circ a=(p_{13})_*
+   \bigl(p_{12}^*a\cdot p_{23}^*b\bigr)
+\]
+satisfies
+\[
+ \kappa_{LI}(b\circ a)=\kappa_{LJ}(b)\kappa_{JI}(a).
+\]
+The diagonal cycle is an identity for composition, and composition is
+associative.  The action on zero-cycle Chow groups,
+\[
+ c_*z=(p_2)_*\bigl(c\cdot p_1^*z\bigr),
+\]
+has point coefficients \((c_*z)_j=\sum_i c_{(i,j)}z_i\), respects
+composition, and sends the diagonal to the identity action.
+\end{theorem}
+
+\begin{proof}
+The split-product and point-fiber isomorphisms are constructed from the
+actual scheme pullbacks.  The image ideal sheaf is that of the labelled
+image point, and the restricted map is an isomorphism.  Its induced
+residue-field map is therefore an isomorphism, giving degree one.  An
+open point component identifies the ambient stalk with \(k\); the stalk
+map of the inverse-image inclusion is likewise an isomorphism.  Its
+module length is one.  Thus the defining pushforward and pullback
+formulas have precisely the displayed coefficients.
+
+The external product takes two point generators to their actual product
+point with its fundamental-cycle multiplicity, as in
+\cite{StacksExteriorProduct}.  Intersection is its pullback along the
+diagonal.  The diagonal
+is an open immersion in this finite \'etale setting, so its Gysin map
+agrees with flat pullback \cite{StacksFlatGysinComparison}; this is the
+intersection construction of \cite{StacksIntersectionProduct}.
+Since rational equivalence is equality, all operations pass through the
+proved cycle-to-Chow isomorphism.
+Finally, the correspondence formula of
+\cite{StacksChowCorrespondenceDefinition} gives
+\[
+ (b\circ a)_{(i,\ell)}
+    =\sum_{j\in J}a_{(i,j)}b_{(j,\ell)},
+\]
+which is matrix multiplication with outputs indexing rows.  The diagonal
+has the identity matrix, and injectivity of point coordinates transports
+the identity and associativity laws.
+The same coefficient calculation applied to \(p_2\) and \(p_1\)
+gives the action formula and its composition law.
+\end{proof}
+
+\begin{corollary}[The split-span quotient is the Chow algebra --- \formal]
+\label{cor:split-span-chow-algebra}
+Equip
+\(\Gamma_I^{\mathrm{CH}}=\operatorname{Corr}^0(Z_I,Z_I)\)
+with the geometric composition above and diagonal unit.  There are
+rational algebra isomorphisms
+\[
+ \begin{gathered}
+ \mathcal C_{\mathrm{sp}}^{\mathrm{add}}(Z_I/k)
+   \xrightarrow[\ \Psi_{\mathrm{sp}}\ ]{\sim}
+ \Gamma_I^{\mathrm{CH}}
+   \xrightarrow[\ \kappa_{II}\ ]{\sim} M_I(\Q),\\
+ \kappa_{II}\circ\Psi_{\mathrm{sp}}
+     =\overline\chi_{\mathrm{sp}}.
+ \end{gathered}
+\]
+The quotient class of the point span
+\(Z_I\xleftarrow{s_i}\Spec k\xrightarrow{s_j}Z_I\)
+maps to the actual Chow point-pair class \([(i,j)]\).
+More generally, for every finite split span
+\(I\xleftarrow{\ell}S\xrightarrow{r}I\),
+\[
+ \Psi_{\mathrm{sp}}\bigl(\overline{[S,\ell,r]}\bigr)
+   =(\ell,r)_*[Z_S]_0
+   =\sum_{s\in S}[(\ell(s),r(s))].
+\]
+\end{corollary}
+
+\begin{proof}
+The Chow multiplication is the constructed geometric composition, and its
+unit is the diagonal.  Theorem~\ref{thm:split-chow-composition} upgrades
+the coordinate equivalence to an algebra equivalence.  Compose its inverse
+with Theorem~\ref{thm:split-span-additive-quotient}.  The point-span and
+point-pair images both have matrix \(E_{ji}\), proving the generator
+formula and the commuting equality.
+For a general split carrier, pushforward of its fundamental point sum
+gives the displayed cycle, whose matrix is the same incidence matrix as
+the span realization.  Injectivity of \(\kappa_{II}\) proves the formula.
+\end{proof}
+
 For \(I=\{0,1\}\), the resulting finite rational coefficient
 model \(\Gamma_I=M_2(\Q)\) acts on \(\Q^I\) by matrix multiplication,
 with rows indexing outputs and columns indexing inputs.  Take
@@ -1228,12 +1366,14 @@ additive quotient, which is identified with \(M_I(\Q)\).
 The displayed generating family consists of finite indexed decompositions.
 This is not yet a realization on all finite-\'etale spans: over a general
 field, finite \'etale carriers need not split.
-Theorem~\ref{thm:split-zero-cycles} constructs the additive Chow group on
-the actual integral subschemes.  Next, identify point-pair cycles on the
-actual product \(Z_I\times_k Z_I\) and prove that geometric pull--push
-composition agrees with the matrix multiplication convention, matching
-\cite{StacksChowCorrespondenceComposition}.  The cohomology and cycle-class
-comparison follows that correspondence-algebra construction.
+Theorems~\ref{thm:split-zero-cycles} and~\ref{thm:split-chow-composition}
+construct the Chow groups on actual integral subschemes and their
+geometric pull--push composition on actual products.  The matrix law is
+proved with the same input/output convention as the span realization.
+Corollary~\ref{cor:split-span-chow-algebra} identifies the geometric Chow
+endomorphism algebra with the additive span quotient.  Its action on the
+zero-cycle Chow group is the constructed pull--push action.  The next
+comparison is with genuine Betti cohomology and its cycle-class map.
 \end{statusnote}
 
 \begin{leanfiles}
@@ -1276,6 +1416,26 @@ The actual cycle module, point cycles, and coordinates are in
 The cycle scalar-extension equivalence \leanpath{rationalizationEquiv} is
 in \chowsrc{Examples/SplitZeroCycleBaseChange.lean}; its Chow specialization
 is \leanpath{chowRationalizationEquiv} in the rational-equivalence module.
+Image subschemes and their actual restriction isomorphisms are in
+\corrsrc{Examples/SplitCycleGeometry.lean}; the product, point-fiber,
+and inverse-image ideal comparisons are in
+\corrsrc{Examples/SplitProductGeometry.lean}.  Actual stalk lengths and
+residue-field degrees are proved in
+\corrsrc{Examples/SplitPointMultiplicity.lean}.
+The cycle and Chow operations are in
+\chowsrc{Examples/SplitCycleOperations.lean}.
+Their equality with the degree-weighted image and length-weighted actual
+fiber cycles is proved in \chowsrc{Examples/SplitCycleMultiplicity.lean}.
+The correspondence formula and its matrix law are
+\leanpath{SplitChowCorrespondence.comp} and
+\leanpath{matrixCoordinates_comp} in
+\chowsrc{Examples/SplitChowComposition.lean}.
+The algebra equivalences \leanpath{matrixAlgEquiv} and
+\leanpath{spanQuotientEquiv} are in
+\chowsrc{Examples/SplitChowAlgebra.lean}, together with
+\leanpath{ofSplitSpan} and \leanpath{spanQuotientEquiv_ofSchemeSpan};
+the geometric action and its
+coordinate formula are in \chowsrc{Examples/SplitChowAction.lean}.
 \end{leanfiles}
 
 \subsection{Class-dependent coverage}
@@ -1442,6 +1602,12 @@ Actual integral closed subschemes (\formal) &
 Zero-cycles and rational equivalence (\formal) &
 \leanpath{SplitZeroCycles.chowCoordinates}\newline
 \leanpath{Realization/Chow/Examples/SplitRationalEquivalence.lean}\\
+Geometric Chow correspondence composition (\formal) &
+\leanpath{SplitChowCorrespondence.matrixCoordinates_comp}\newline
+\leanpath{Realization/Chow/Examples/SplitChowComposition.lean}\\
+Split-span quotient and actual Chow algebra (\formal) &
+\leanpath{SplitChowCorrespondence.spanQuotientEquiv}\newline
+\leanpath{Realization/Chow/Examples/SplitChowAlgebra.lean}\\
 Geometric-source coefficient square (\formal) &
 \leanpath{GeometricSplitPoints.palomarTargetSquare}\newline
 \leanpath{Realization/Chow/Examples/GeometricSplitPoints.lean}\\

@@ -1,5 +1,6 @@
 import HodgeConjecture
 import HodgeConjecture.CommutativeAlgebra.SplitFieldQuotient
+import Mathlib.AlgebraicGeometry.Morphisms.Flat
 
 /-!
 # Release-candidate declaration checks
@@ -362,3 +363,77 @@ example (K : Type) [Field K] (I : Type) [Finite I] (i : I) :
   intro h
   have hi := congrArg (fun z ↦ HodgeConjecture.SplitZeroCycles.chowCoordinates K I ℤ z i) h
   simp [HodgeConjecture.SplitZeroCycles.pointCycle] at hi
+
+-- Actual products, scheme-theoretic images/fibers, and conventional multiplicities.
+#check HodgeConjecture.SplitPointGeometry.productIso
+#check HodgeConjecture.SplitPointGeometry.pointInclusion_productIso
+#check HodgeConjecture.SplitPointGeometry.diagonal_productIso
+#check HodgeConjecture.SplitPointGeometry.diagonalMap_isOpenImmersion
+#check HodgeConjecture.SplitPointGeometry.diagonalMap_isClosedImmersion
+#check HodgeConjecture.SplitPointGeometry.pointFiberIso
+#check HodgeConjecture.SplitPointGeometry.pointIdealSheaf_comap_mapOfFunction
+#check HodgeConjecture.SplitPointGeometry.imageIntegralSubschemeIso
+#check HodgeConjecture.SplitPointGeometry.stalkMap_length_of_isOpenImmersion
+#check HodgeConjecture.SplitPointGeometry.residueFieldMap_finrank_of_isIso
+#check HodgeConjecture.SplitZeroCycles.pullback_pointCycle_eq_fiberCycle
+#check HodgeConjecture.SplitZeroCycles.pushforward_single_eq_imageDegree
+#check HodgeConjecture.SplitZeroCycles.externalProduct_pointCycle
+#check HodgeConjecture.SplitZeroCycles.coordinates_intersection
+
+-- Geometric convolution, its exact additive-span presentation, and Chow action.
+#check HodgeConjecture.SplitChowCorrespondence.matrixCoordinates_comp
+#check HodgeConjecture.SplitChowCorrespondence.matrixCoordinates_diagonal
+#check HodgeConjecture.SplitChowCorrespondence.comp_assoc
+#check HodgeConjecture.SplitChowCorrespondence.matrixAlgEquiv
+#check HodgeConjecture.SplitChowCorrespondence.mul_eq_comp
+#check HodgeConjecture.SplitChowCorrespondence.spanQuotientEquiv
+#check HodgeConjecture.SplitChowCorrespondence.spanQuotientEquiv_pointSpanClass
+#check HodgeConjecture.SplitChowCorrespondence.spanQuotientEquiv_ofSchemeSpan
+#check HodgeConjecture.SplitChowCorrespondence.chowCoordinates_action
+#check HodgeConjecture.SplitChowCorrespondence.action_comp
+#check HodgeConjecture.SplitChowCorrespondence.diagonal_action
+
+#print axioms HodgeConjecture.SplitPointGeometry.productIso
+#print axioms HodgeConjecture.SplitPointGeometry.pointIdealSheaf_comap_mapOfFunction
+#print axioms HodgeConjecture.SplitZeroCycles.pullback_pointCycle_eq_fiberCycle
+#print axioms HodgeConjecture.SplitZeroCycles.pushforward_single_eq_imageDegree
+#print axioms HodgeConjecture.SplitChowCorrespondence.matrixCoordinates_comp
+#print axioms HodgeConjecture.SplitChowCorrespondence.matrixAlgEquiv
+#print axioms HodgeConjecture.SplitChowCorrespondence.spanQuotientEquiv_ofSchemeSpan
+#print axioms HodgeConjecture.SplitChowCorrespondence.chowCoordinates_action
+
+-- The diagonal really is flat, and the composition pushforward really proper.
+example (K : Type) [Field K] (I : Type) [Finite I] :
+    AlgebraicGeometry.Flat
+      (HodgeConjecture.SplitPointGeometry.mapOfFunction K (fun i : I ↦ (i, i))) :=
+  inferInstance
+
+example (K : Type) [Field K] (I J L : Type) [Finite I] [Finite J] [Finite L] :
+    AlgebraicGeometry.IsProper
+      (HodgeConjecture.SplitPointGeometry.mapOfFunction K
+        (fun t : I × J × L ↦ (t.1, t.2.2))) := inferInstance
+
+-- Proper cycle degree is evaluated at the generic point of the actual subscheme.
+example (K : Type) [Field K] (S I : Type) [Finite S] [Finite I] (f : S → I)
+    (W : HodgeConjecture.SplitPointGeometry.IntegralClosedSubscheme K S) :
+    letI := W.property
+    HodgeConjecture.SplitZeroCycles.imageDegree K f W (genericPoint W.val.subscheme) = 1 := by
+  letI := W.property
+  exact HodgeConjecture.SplitZeroCycles.imageDegree_eq_one K f W _
+
+-- The empty scheme's convolution algebra has zero diagonal identity.
+example (K : Type) [Field K] :
+    (1 : HodgeConjecture.SplitChowCorrespondence.EndAlgebra K (Fin 0)) = 0 := by
+  apply (HodgeConjecture.SplitChowCorrespondence.matrixAlgEquiv K (Fin 0)).injective
+  simp only [map_one, map_zero]
+  ext i
+  exact Fin.elim0 i
+
+-- Matrix-unit orientation: (0 → 1) after (1 → 0) is the point at 1.
+example (K : Type) [Field K] :
+    HodgeConjecture.SplitChowCorrespondence.comp K
+      (HodgeConjecture.SplitChowCorrespondence.pointCorrespondence K (0 : Fin 2) (1 : Fin 2))
+      (HodgeConjecture.SplitChowCorrespondence.pointCorrespondence K (1 : Fin 2) (0 : Fin 2)) =
+      HodgeConjecture.SplitChowCorrespondence.pointCorrespondence K (1 : Fin 2) (1 : Fin 2) := by
+  apply (HodgeConjecture.SplitChowCorrespondence.matrixCoordinates K (Fin 2) (Fin 2)).injective
+  simp [HodgeConjecture.SplitChowCorrespondence.matrixCoordinates_comp]

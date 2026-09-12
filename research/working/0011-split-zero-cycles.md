@@ -7,6 +7,10 @@ Date: 2026-09-11. This advances
 [0010-split-integral-subschemes.md](0010-split-integral-subschemes.md).
 Canonical manuscript: `paper/main.tex`, producing the single `paper/main.pdf`.
 
+Progress: the product, multiplicity, and geometric composition step below
+is implemented in [0012-split-chow-composition.md](0012-split-chow-composition.md).
+The original checkpoint and its verification record are retained here.
+
 ## Objects and theorem
 
 Fix a field `k`, a finite label type `I`, and `Z_I = Spec(k^I)`. The

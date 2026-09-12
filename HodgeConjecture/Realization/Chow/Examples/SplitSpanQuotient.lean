@@ -10,9 +10,9 @@ span into its singleton spans. It is not defined to be the kernel of the
 matrix realization. The theorem below identifies that kernel and proves
 the resulting noncommutative quotient is the matrix algebra.
 
-This is the additive span presentation. Identifying it with a scheme's
-Chow correspondence algebra or with a Betti cycle-class map is a separate
-geometric comparison, not a definition made here.
+This is the additive span presentation. `SplitChowAlgebra` constructs the
+geometric cycle operations and identifies this quotient with the finite split
+Chow correspondence algebra. The Betti cycle-class comparison is separate.
 -/
 
 set_option autoImplicit false

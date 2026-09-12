@@ -11,9 +11,10 @@ cycle-coefficient realization sends it to the first matrix unit, so the earlier
 constant-coordinate calculation supplies its graph-projector action.
 
 The initial source is a free span algebra. The action and its universal
-idempotent square also descend to the explicit finite-additivity quotient;
-neither source is identified here with scheme-theoretic Chow groups or
-singular cohomology.
+idempotent square also descend to the explicit finite-additivity quotient.
+`SplitChowAlgebra` identifies that quotient with the actual finite split
+Chow correspondence algebra, and `SplitChowAction` computes its Chow action.
+The singular-cohomology comparison is separate.
 -/
 
 set_option autoImplicit false
