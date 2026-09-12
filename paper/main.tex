@@ -88,7 +88,7 @@
 \title{A Formal Projector Spine for the Rational Hodge Target:\\
   Collisions, Marked Galois Sheets, and Boundary Interfaces}
 \author{Chloe van der Vlugt}
-\date{Draft of September 11, 2026}
+\date{Draft of September 12, 2026}
 
 \begin{document}
 
@@ -141,8 +141,13 @@ the actual algebra-valued point space has the regular-function evaluation
 topology, proved discrete.  Its singular degree-zero cocycles give a
 Betti cycle-class isomorphism carrying each point class to its component
 characteristic cocycle, compatible with pullback, finite transfer,
-intersection, and correspondence action.  A geometric-source two-point
-projector square follows.
+intersection, and correspondence action.  Its tensor complexification
+carries the effective degree-zero Hodge structure.  On the actual disjoint
+union with one point, geometric Chow pushforward constructs the graph
+projector, and flat pullback extracts its lower-left Chow block.  These
+constructions instantiate the finite degree-zero Hodge, graph-lifting,
+and Palomar target equivalences.  A geometric-source two-point projector
+square also follows.
 These statements are machine checked from their displayed hypotheses
 (\formal).  For the general Hodge application, the Chow/Hodge comparison, compactified realization, and
 class-dependent marked-sheet coverage packages remain supplied inputs
@@ -211,7 +216,7 @@ the intended specialization is
 
 with \(\operatorname{cl}\) the rational cycle-class map.  The repository
 does not yet construct this combined model in general; the finite split
-Chow/Betti comparison is constructed below.  The family-level Lean statement
+degree-zero model is constructed below.  The family-level Lean statement
 recovers the classical universal quantification only if its index type is
 actually populated by all smooth projective complex varieties and its models
 are the genuine geometric models.
@@ -311,10 +316,11 @@ The graph-lift degreewise and family forms are named analogously.
 \end{leanfiles}
 
 \begin{statusnote}{\conditional/\openstatus}
-Theorem~\ref{thm:hodge-graph-equivalence} is an exact logical reduction, not
-an instance of the conjecture.  Construction, detection, genuine Chow and
-cohomology objects, and the Hodge-morphism comparison remain to be built in
-the intended geometry.
+Theorem~\ref{thm:hodge-graph-equivalence} is an exact logical reduction.
+Its construction, detection, and Hodge-morphism interfaces are instantiated
+for finite split degree-zero geometry in
+Theorem~\ref{thm:split-hodge-tate-block}; the general case retains those
+displayed geometric inputs.
 \end{statusnote}
 
 The remaining sections present the active dependency-ordered components
@@ -1416,6 +1422,110 @@ linearity.  Applying the pull--cup--transfer formula gives the displayed
 action sum, its intertwining equality, and the composition and unit laws.
 \end{proof}
 
+Write \(H_I=H^0_{\mathrm B}(X_I;\Q)\).  We next use the effective
+degree-zero Hodge structure, independently of cycle classes.  In geometric
+degree zero the nonnegative form bidegrees satisfy \(p+q=0\), so only
+\((0,0)\) occurs \cite[\S1]{DeligneHodgeConjecture}.
+The pure-Hodge, rational-morphism, and Tate conventions are those of
+\cite[\S\S2.1.5--2.1.13]{DeligneHodgeII}.
+
+\begin{theorem}[Finite Hodge model and geometric Tate block --- \formal]
+\label{thm:split-hodge-tate-block}
+Let \(I\) be finite.  The actual tensor complexification has coordinates
+\[
+ H_{I,\mathbf C}=\mathbf C\otimes_{\Q}H_I\xrightarrow{\sim}\mathbf C^I,
+ \qquad c\otimes u\longmapsto(cu_i)_{i\in I}.
+\]
+The rational map \(\iota_I(u)=1\otimes u\) is injective, and canonical
+conjugation is \(\overline{c\otimes u}=\bar c\otimes u\).
+The pieces
+\[
+ H_I^{p,q}=
+ \begin{cases}H_{I,\mathbf C},&(p,q)=(0,0),\\0,&\text{otherwise}\end{cases}
+\]
+form an exhaustive direct decomposition, are effective of weight zero,
+and satisfy \(\overline{H_I^{p,q}}=H_I^{q,p}\).
+The rational Hodge subspace, defined before using the cycle-class map, is
+\[
+ H_{I,\mathrm{Hdg}}=\iota_I^{-1}(H_I^{0,0})=H_I.
+\]
+Together with \(\operatorname{cl}_I\), this constructs the degree-zero
+model \(\mathscr H_I^0\).
+
+Put \(I^+=\{*\}\amalg I\).  There is an actual scheme isomorphism
+\(Z_{I^+}\cong\Spec\mathbf C\amalg Z_I\).  Restriction to its two
+components gives
+\[
+ \tau_I:H^0_{\mathrm B}(X_{I^+};\Q)
+       \xrightarrow{\sim}\Q(0)\oplus H_I.
+\]
+Let \(j:Z_I\to Z_{I^+\times I^+}\) be the actual column inclusion
+\(i\mapsto(*,i)\).  In the Chow algebra
+\(\Gamma_{I^+}^{\mathrm{CH}}\), set
+\[
+ \operatorname{enc}_I(z)=[(*,*)]+j_*z,
+ \qquad \operatorname{dec}_I(c)=j^*c,
+ \qquad
+ \rho_I^+(c)=\tau_I\rho_{\mathrm B,I^+}(c)\tau_I^{-1}.
+\]
+Then
+\[
+ \begin{aligned}
+ \operatorname{enc}_I(z)^2&=\operatorname{enc}_I(z),
+ &\operatorname{dec}_I(\operatorname{enc}_I(z))&=z,\\
+ \rho_I^+(\operatorname{enc}_I(z))&=P_{\operatorname{cl}_I(z)},
+ &\operatorname{cl}_I(\operatorname{dec}_I(c))
+   &=d_{\mathrm{ll}}(\rho_I^+(c)).
+ \end{aligned}
+\]
+The last equality holds for every correspondence \(c\).
+An operator on \(\Q(0)\oplus H_I\) is a Hodge morphism when its
+scalar extension, transported through \(\tau_I\), preserves every
+displayed Hodge piece.  For this structure,
+\[
+ P_\alpha\text{ is a Hodge morphism}
+   \quad\Longleftrightarrow\quad \alpha\in H_{I,\mathrm{Hdg}}.
+\]
+Thus the construction, detection, and Hodge-compatibility interfaces of
+Theorem~\ref{thm:hodge-graph-equivalence} are instantiated.
+The model satisfies \(\mathrm{HC}_{\Q}(\mathscr H_I^0)\), equivalently
+every \(P_\alpha\) has an actual Chow lift, equivalently every such
+class has a Palomar target square
+\[
+ \rho_I^+\circ\varphi_{\Pi_\alpha}
+    =\varphi_{P_\alpha}.
+\]
+The same lifting equivalence holds when the quantifier is stated using
+Hodge-morphism graph operators.
+\end{theorem}
+
+\begin{proof}
+Scalar extension of the proved Betti point-coordinate equivalence gives
+the tensor-coordinate map and injective rational embedding.  Coordinate
+conjugation has the displayed pure-tensor formula.  The single nonzero
+bigrading piece is independent and exhaustive; its rational inverse
+image is all of \(H_I\).  Scalar extension of any rational linear map
+preserves these pieces, proving the stated Hodge-morphism criterion.
+
+The actual scheme coproduct identifies the distinguished point with the
+degree-zero Tate summand.  This is the unit and direct-sum convention for
+Chow motives \cite{StacksChowMotiveUnit,StacksChowMotiveDirectSum}.
+The encoding is geometric proper pushforward plus the distinguished
+point-pair class; decoding is geometric flat pullback.  Their computed
+point matrices are respectively
+\[
+ \begin{pmatrix}1&0\\z&0\end{pmatrix}
+ \quad\text{and the column }(c_{(*,i)})_{i\in I}.
+\]
+The matrix law for the existing Chow multiplication proves idempotence
+and the decoding identity.  The Betti cycle-class action comparison
+proves the two realization equalities.  This verifies construction and
+detection for the actual Chow algebra, with the fixed block coordinates
+\(\tau_I\).  Finally the cycle-class isomorphism provides a representative
+of each \(\alpha\); applying the constructed encoding and the general
+target theorem gives the graph and Palomar statements.
+\end{proof}
+
 For \(I=\{0,1\}\), the resulting finite rational coefficient
 model \(\Gamma_I=M_2(\Q)\) acts on \(\Q^I\) by matrix multiplication,
 with rows indexing outputs and columns indexing inputs.  Take
@@ -1477,8 +1587,10 @@ endomorphism algebra with the additive span quotient.  Its action on the
 zero-cycle Chow group is the constructed pull--push action.
 Theorem~\ref{thm:split-betti-cycle-class} constructs its degree-zero
 Betti cycle classes on the actual complex-point space and identifies the
-cohomological action.  The next comparison is the finite Tate-augmented
-block and its independently specified Hodge structure.
+cohomological action.  Theorem~\ref{thm:split-hodge-tate-block} supplies
+the independent degree-zero Hodge structure and the geometric block
+construction and detection.  The marked Galois residual realization and
+class-dependent cover comparison are still separate constructions.
 \end{statusnote}
 
 \begin{leanfiles}
@@ -1557,6 +1669,24 @@ The action, \leanpath{cycleClass_action}, \leanpath{realization}, and
 \leanpath{HodgeConjecture/Realization/Betti/Examples/SplitCorrespondenceAction.lean};
 \leanpath{correspondenceAction} instantiates the existing rational
 correspondence-action interface with these constructed objects.
+The tensor complexification, canonical conjugation, independent bigrading,
+and rational Hodge subspace are in
+\leanpath{HodgeConjecture/Realization/Betti/Examples/SplitHodgeStructure.lean},
+under \leanpath{SplitHodgeStructure.complexCoordinates},
+\leanpath{conjugation_tmul}, \leanpath{bigrading_direct},
+\leanpath{bigrading_exhaustive}, and \leanpath{rationalHodgeClasses_eq_top}.
+The actual Chow encoding, pullback decoder, and scheme coproduct are
+\leanpath{SplitChowTateBlock.encode}, \leanpath{decode}, and
+\leanpath{optionSchemeIso} in \chowsrc{Examples/SplitTateBlock.lean}.
+The fixed Betti block decomposition, \leanpath{realization_encode},
+\leanpath{cycleClass_decode}, \leanpath{hodgeModel},
+\leanpath{construction}, \leanpath{detection}, and
+\leanpath{hodgeCompatibility} are in
+\leanpath{HodgeConjecture/Realization/Betti/Examples/SplitTateBlock.lean}.
+The same module contains \leanpath{hodgeConjectureAt},
+\leanpath{hodgeConjectureAt_iff_palomarTargetSquare},
+\leanpath{everyHodgeClassHasPalomarTargetSquare}, and
+\leanpath{hodgeConjectureAt_iff_hodgeMorphismLift}.
 \end{leanfiles}
 
 \subsection{Class-dependent coverage}
@@ -1613,12 +1743,16 @@ and \leanpath{rationalHodgeConjectureAt_iff_classDependentMarkedGaloisSelectorCo
 
 \subsection*{Exact remaining gap --- \openstatus}
 
-To obtain an actual Hodge-theoretic result by this route, the following
-constructions must be supplied for genuine geometry, with their displayed
-compatibilities proved rather than postulated:
+The finite split degree-zero model and its block comparison are now
+constructed.  Their Hodge structure is the explicit effective type-\((0,0)\)
+specialization on the tensor complexification of actual singular
+cohomology; the cited source identifies this with geometric degree zero.
+For the general Hodge target, the following constructions remain, with
+their displayed compatibilities to be proved:
 
 \begin{enumerate}[leftmargin=2.2em]
-  \item genuine Chow groups, Betti cohomology, Hodge subspaces, and the
+  \item beyond the finite split degree-zero case, genuine Chow groups,
+        Betti cohomology, Hodge subspaces, and the
         rational cycle-class map, together with the Tate-block construction,
         lower-left Chow detection, and Hodge-morphism comparison;
   \item for every targeted Hodge class, marked normal-closure data and a
@@ -1740,6 +1874,18 @@ Split Betti cycle-class equivalence (\formal) &
 Actual cohomological action algebra map (\formal) &
 \leanpath{SplitBetti.realization}; \leanpath{realization_cycleClass}\newline
 \leanpath{Realization/Betti/Examples/SplitCorrespondenceAction.lean}\\
+Independent degree-zero Hodge structure (\formal) &
+\leanpath{SplitHodgeStructure.rationalHodgeClasses};
+\leanpath{bigrading_direct}; \leanpath{conjugation_tmul}\newline
+\leanpath{Realization/Betti/Examples/SplitHodgeStructure.lean}\\
+Actual Chow graph encoding and detection (\formal) &
+\leanpath{SplitChowTateBlock.encode}; \leanpath{decode}\newline
+\leanpath{Realization/Chow/Examples/SplitTateBlock.lean}\\
+Finite Hodge/Tate-block target (\formal) &
+\leanpath{SplitBettiTateBlock.hodgeModel};
+\leanpath{construction}; \leanpath{detection};
+\leanpath{hodgeConjectureAt_iff_palomarTargetSquare}\newline
+\leanpath{Realization/Betti/Examples/SplitTateBlock.lean}\\
 Geometric-source coefficient square (\formal) &
 \leanpath{GeometricSplitPoints.palomarTargetSquare}\newline
 \leanpath{Realization/Chow/Examples/GeometricSplitPoints.lean}\\
@@ -1871,10 +2017,11 @@ compactified closure is deliberately weaker than projector extension; a
 supplied compactified deck-graph square is a clean sufficient alternative.
 
 What remains is geometric rather than terminological: instantiate the
-genuine Chow/Hodge model, construct class-dependent residual realizations and
+general Chow/Hodge model, construct class-dependent residual realizations and
 compactified projectors, prove the action square and detection compatibility,
 and establish coverage.  Until those inputs are constructed, the repository
-is a conditional formalization architecture and does not prove a Hodge case.
+remains conditional in the general Hodge setting and establishes no new
+case of the conjecture.
 
 \paragraph{Acknowledgment.}
 OpenAI Codex assisted with the Lean formalization and manuscript draft.  The

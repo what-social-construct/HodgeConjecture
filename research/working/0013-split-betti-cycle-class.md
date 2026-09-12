@@ -7,6 +7,11 @@ Date: 2026-09-11. This advances
 [0012-split-chow-composition.md](0012-split-chow-composition.md).
 Canonical manuscript: `paper/main.tex`, producing the single `paper/main.pdf`.
 
+Advancement: the independent finite Hodge data and actual geometric
+Tate-block construction/detection are implemented in
+[0014-split-hodge-tate-block.md](0014-split-hodge-tate-block.md).
+The verification record below remains the record of this Betti checkpoint.
+
 ## Checkpoint
 
 The existing Chow groups are quotients of cycles on actual integral closed
@@ -180,12 +185,13 @@ Implementation coordinate adapters do not receive new realization symbols.
 
 ## Next construction and information retained
 
-The next step is the independently justified finite degree-zero Hodge
+The next step at this checkpoint was the independently justified finite degree-zero Hodge
 description, followed by the Tate-augmented block construction, actual
 Chow lower-left detection, and their cycle-class comparison. Deligne's
 decomposition in degree zero has only bidegree `(0,0)`, but this checkpoint
 does not define the repository's Hodge subspace or instantiate its combined
-Hodge model.
+Hodge model. Those objects and the geometric block comparisons are now
+constructed in `0014`.
 
 The cycle-class comparison here is an isomorphism: it loses no information
 in the finite split degree-zero case. This does not reverse the earlier

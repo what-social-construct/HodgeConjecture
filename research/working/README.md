@@ -64,4 +64,9 @@ Active research and proof-maintenance queue:
   topology, singular degree-zero cocycles, and the point-normalized
   cycle-class isomorphism. Pullback, cup product, and finite transfer give
   the cohomological correspondence action and its Chow intertwining.
-  The next step is the independent Hodge and Tate-block comparison.
+  Its independent Hodge and Tate-block comparison is advanced in `0014`.
+- `0014-split-hodge-tate-block.md` supplies the actual tensor
+  complexification and independent effective degree-zero Hodge structure.
+  On the actual scheme coproduct with one point, geometric Chow encoding
+  and lower-left pullback detection instantiate the graph/Hodge/Palomar
+  target interfaces, with the actual Betti action comparison proved.

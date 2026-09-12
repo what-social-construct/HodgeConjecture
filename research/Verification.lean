@@ -533,3 +533,97 @@ example :
   ext j
   simp [-HodgeConjecture.SplitZeroCycles.coordinates_apply, Matrix.mulVec,
     dotProduct, Matrix.single, Pi.single_apply, eq_comm]
+
+-- Actual Chow graph blocks and the independent tensor Hodge structure.
+#check HodgeConjecture.SplitChowTateBlock.optionSchemeIso
+#check HodgeConjecture.SplitChowTateBlock.pointInclusion_optionSchemeIso
+#check HodgeConjecture.SplitChowTateBlock.mapSome_optionSchemeIso
+#check HodgeConjecture.SplitChowTateBlock.matrix_encode
+#check HodgeConjecture.SplitChowTateBlock.decode_encode
+#check HodgeConjecture.SplitChowTateBlock.encode_isIdempotent
+#check HodgeConjecture.SplitHodgeStructure.complexCoordinates_tmul
+#check HodgeConjecture.SplitHodgeStructure.rationalEmbedding_injective
+#check HodgeConjecture.SplitHodgeStructure.conjugation_tmul
+#check HodgeConjecture.SplitHodgeStructure.bigrading_direct
+#check HodgeConjecture.SplitHodgeStructure.conjugation_bigrading
+#check HodgeConjecture.SplitHodgeStructure.mem_rationalHodgeClasses
+#check HodgeConjecture.SplitHodgeStructure.all_isHodgeMorphism
+
+-- All three generic interfaces now have actual finite split inputs.
+#check HodgeConjecture.SplitBettiTateBlock.blockCoordinates_snd
+#check HodgeConjecture.SplitBettiTateBlock.realization_encode
+#check HodgeConjecture.SplitBettiTateBlock.cycleClass_decode
+#check HodgeConjecture.SplitBettiTateBlock.hodgeModel
+#check HodgeConjecture.SplitBettiTateBlock.construction
+#check HodgeConjecture.SplitBettiTateBlock.detection
+#check HodgeConjecture.SplitBettiTateBlock.hodgeCompatibility
+#check HodgeConjecture.SplitBettiTateBlock.graphProjectorLift
+#check HodgeConjecture.SplitBettiTateBlock.hodgeConjectureAt_iff_hodgeMorphismLift
+#check HodgeConjecture.SplitBettiTateBlock.hodgeConjectureAt_iff_palomarTargetSquare
+#check HodgeConjecture.SplitBettiTateBlock.everyHodgeClassHasPalomarTargetSquare
+
+#print axioms HodgeConjecture.SplitChowTateBlock.optionSchemeIso
+#print axioms HodgeConjecture.SplitChowTateBlock.matrix_encode
+#print axioms HodgeConjecture.SplitChowTateBlock.decode_encode
+#print axioms HodgeConjecture.SplitChowTateBlock.encode_isIdempotent
+#print axioms HodgeConjecture.SplitHodgeStructure.complexCoordinates_tmul
+#print axioms HodgeConjecture.SplitHodgeStructure.conjugation_tmul
+#print axioms HodgeConjecture.SplitHodgeStructure.bigrading_direct
+#print axioms HodgeConjecture.SplitHodgeStructure.all_isHodgeMorphism
+#print axioms HodgeConjecture.SplitBettiTateBlock.realization_encode
+#print axioms HodgeConjecture.SplitBettiTateBlock.cycleClass_decode
+#print axioms HodgeConjecture.SplitBettiTateBlock.hodgeCompatibility
+#print axioms HodgeConjecture.SplitBettiTateBlock.graphProjectorLift
+#print axioms HodgeConjecture.SplitBettiTateBlock.hodgeConjectureAt_iff_hodgeMorphismLift
+#print axioms HodgeConjecture.SplitBettiTateBlock.everyHodgeClassHasPalomarTargetSquare
+
+section SplitTateBlockRegressions
+
+open HodgeConjecture
+
+-- Empty complement: the graph of its zero class is the Tate identity.
+example :
+    SplitChowTateBlock.encode (Fin 0) 0 =
+      (1 : SplitChowCorrespondence.EndAlgebra ℂ (Option (Fin 0))) := by
+  apply (SplitChowCorrespondence.matrixAlgEquiv ℂ (Option (Fin 0))).injective
+  rw [SplitChowTateBlock.matrix_encode, map_one]
+  ext output input
+  cases output with
+  | none =>
+    cases input with
+    | none => simp
+    | some i => exact Fin.elim0 i
+  | some i => exact Fin.elim0 i
+
+-- The source-first point pair (none, some i) is the lower-left Chow block.
+example (I : Type) [Fintype I] [DecidableEq I] (i : I) :
+    SplitChowTateBlock.decode I
+      (SplitChowCorrespondence.pointCorrespondence ℂ (none : Option I) (some i)) =
+        SplitZeroCycles.classMap ℂ I ℚ (SplitZeroCycles.pointCycle ℂ I ℚ i) := by
+  apply (SplitZeroCycles.chowCoordinates ℂ I ℚ).injective
+  ext j
+  rw [SplitChowTateBlock.coordinates_decode,
+    SplitChowCorrespondence.matrixAlgEquiv_apply,
+    SplitChowCorrespondence.matrixCoordinates_pointCorrespondence]
+  simp [-SplitZeroCycles.coordinates_apply, Matrix.single, Pi.single_apply, eq_comm]
+
+-- Its transpose is upper-right, and must not decode to the original class.
+example (I : Type) [Fintype I] [DecidableEq I] (i : I) :
+    SplitChowTateBlock.decode I
+      (SplitChowCorrespondence.pointCorrespondence ℂ (some i) (none : Option I)) = 0 := by
+  apply (SplitZeroCycles.chowCoordinates ℂ I ℚ).injective
+  ext j
+  rw [SplitChowTateBlock.coordinates_decode,
+    SplitChowCorrespondence.matrixAlgEquiv_apply,
+    SplitChowCorrespondence.matrixCoordinates_pointCorrespondence]
+  simp [Matrix.single]
+
+-- The explicit actual Chow lift satisfies the universal algebra-hom square.
+set_option synthInstance.maxHeartbeats 60000 in
+example (I : Type) [Fintype I] [DecidableEq I] (α : SplitBetti.Cohomology I) :
+    (SplitBettiTateBlock.correspondenceAction I).action.comp
+      (SplitBettiTateBlock.graphProjectorLift I α).algebraIdempotentMap =
+        (SplitBettiTateBlock.graphProjectorLift I α).cohomologicalIdempotentMap :=
+  (SplitBettiTateBlock.graphProjectorLift I α).realization_idempotentMap_square
+
+end SplitTateBlockRegressions

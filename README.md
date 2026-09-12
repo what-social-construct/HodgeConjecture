@@ -53,9 +53,11 @@ subspace independent of the cycle-class map, `RationalHodgeConjectureAt` says
 every Hodge class lies in its image,
 `RationalHodgeConjectureForModel` quantifies over every codimension of one
 modeled variety, and `RationalHodgeConjectureForFamily` also quantifies over a
-supplied indexing family.  The concrete Chow, Betti-cohomology, Hodge-
-structure, and all-varieties indexing data needed to instantiate the
-classical conjecture are not yet available in the repository.
+supplied indexing family. The finite split degree-zero model is now
+constructed from actual Chow and singular cohomology, with an independent
+effective Hodge structure and its geometric Tate-block comparison. The
+general variety-level and all-varieties indexing data needed to instantiate
+the classical conjecture remain separate.
 
 For a smooth projective \(d\)-fold, the correspondence language is
 
@@ -111,8 +113,9 @@ The generic one-way connection is now formal: a prescribed deck-action/
 extension lift of a canonical graph projector, together with lower-left
 Chow-block detection, produces an algebraic representative of that class;
 supplying such lifts for every rational Hodge class proves
-`RationalHodgeConjectureAt`.  No concrete instance of those hypotheses is
-asserted.
+`RationalHodgeConjectureAt`. No concrete class-dependent deck-action or
+cover-extension instance of those hypotheses is asserted; the finite
+degree-zero Chow block construction and detection are instantiated below.
 
 The cover-intended deck-action hypothesis now has an explicitly class-indexed
 form: each Hodge class may choose its own extension package over fixed deck
@@ -248,8 +251,24 @@ flat pullback, and intersection/cup product. The cohomological action
 It gives a rational algebra homomorphism from the actual Chow endomorphism
 algebra to endomorphisms of singular degree-zero cohomology, instantiating
 the existing `RationalCorrespondenceAction` interface.
-The next comparison is the finite Tate-augmented block and its independent
-Hodge structure.
+The [independent finite Hodge structure](HodgeConjecture/Realization/Betti/Examples/SplitHodgeStructure.lean)
+uses the actual complexification `ℂ ⊗[ℚ] H_B^0`, computed as complex
+point functions, with canonical tensor conjugation and the effective
+type-`(0,0)` bigrading. Rational Hodge classes are the inverse image of
+its complex `(0,0)` piece, and are then proved to be the whole rational
+space, without using the cycle-class map.
+On the actual disjoint union `Spec ℂ ⨿ Z_I`, the
+[Chow Tate block](HodgeConjecture/Realization/Chow/Examples/SplitTateBlock.lean)
+constructs `enc(z) = [(*,*)] + j_*z`, with `j(i)=(*,i)`, and decodes by
+the actual flat pullback `j^*`. Encoding is idempotent and decoding it
+recovers `z`. The
+[Betti block comparison](HodgeConjecture/Realization/Betti/Examples/SplitTateBlock.lean)
+proves that its action is `P_cl(z)` and that decoding any correspondence
+has the cycle class of its lower-left action block. This instantiates the
+finite degree-zero Hodge model, graph construction, detection, Hodge-morphism
+compatibility, and the graph/Palomar target equivalences.
+The next bridge is to genuine marked Galois residual and cover data with
+their compactified action comparison.
 The test also proves
 that `M₂(ℚ)` has no unital map to a nontrivial commutative ring; consequently
 the old full-algebra restriction to sheets is not an admissible general
@@ -260,7 +279,8 @@ and its [exact additive quotient](research/working/0009-split-span-additive-quot
 followed by the [integral-subscheme checkpoint](research/working/0010-split-integral-subschemes.md)
 and the [zero-cycle and rational-equivalence construction](research/working/0011-split-zero-cycles.md),
 then [geometric Chow composition](research/working/0012-split-chow-composition.md)
-and [actual degree-zero Betti cycle classes](research/working/0013-split-betti-cycle-class.md).
+and [actual degree-zero Betti cycle classes](research/working/0013-split-betti-cycle-class.md),
+then the [finite Hodge/Tate-block comparison](research/working/0014-split-hodge-tate-block.md).
 
 The missing step is geometric: construct a Chow-motivic residual map carrying
 \(q-1\) to a desired Hodge class and prove compatibility with compactification
@@ -400,8 +420,8 @@ This is a packaging draft, not a submitted or registered result.  The exact
 remaining release work—including the Lean-toolchain migration, root licence,
 human authorship/maintainer fields, and Comparator/NanoDa run—is recorded in
 [`research/working/PALOMAR_FIXED_RING_HANDOFF.md`](research/working/PALOMAR_FIXED_RING_HANDOFF.md).
-The advertised statements expressly do not prove Tag `0BST`, global étaleness,
-or any case of the Hodge conjecture.
+Those advertised fixed-ring statements do not prove Tag `0BST` or global
+étaleness, and are separate from the finite degree-zero Hodge model above.
 
 ## Module organization
 

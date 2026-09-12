@@ -1,4 +1,4 @@
-import HodgeConjecture.Realization.Betti.Examples.SplitCorrespondenceAction
+import HodgeConjecture.Realization.Betti.Examples.SplitTateBlock
 import HodgeConjecture.Realization.Betti.ZeroSimplexTransfer
 
 /-!
@@ -14,4 +14,11 @@ the cohomological action. The transfer formula is also identified with the
 sum over actual lifts of each zero-simplex. Cycle classes intertwine this
 action with geometric Chow pull--intersection--push, yielding an algebra
 homomorphism into the actual cohomology endomorphism algebra.
+
+The finite degree-zero Hodge structure is specified on the genuine tensor
+complexification, independently of cycle classes, with directness and
+conjugation compatibility proved. Adding a distinguished scheme point
+constructs the Tate block. Actual Chow pushforward and lower-left pullback
+instantiate the graph construction, detection, and Hodge compatibility,
+and prove the corresponding finite degree-zero Palomar target.
 -/

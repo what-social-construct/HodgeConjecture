@@ -21,12 +21,13 @@ quantifies that statement over every codimension of one modeled variety, and
 `RationalHodgeConjectureForFamily M` also quantifies over an indexing type of
 modeled varieties.
 
-Mathlib does not yet supply the concrete Chow groups, Betti cohomology, pure
-Hodge structures, or their cycle-class map needed to build this model for an
-actual `X`.  Nor does this file define the indexing type of all smooth
-projective complex varieties.  Those geometric objects therefore remain
-explicit data.  Surjectivity is not a field of the model, so constructing the
-data does not assume the conjecture.
+For a general `X`, the concrete Chow groups, Betti cohomology, Hodge
+structure, and cycle-class map remain explicit geometric data. This file
+does not define the indexing type of all smooth projective complex
+varieties. The repository's `Betti.Examples.SplitTateBlock` instantiates
+the fixed-codimension model for finite split complex schemes in degree zero.
+Surjectivity is not a field of the model, so constructing its data does not
+assume the conjecture.
 -/
 
 set_option autoImplicit false
