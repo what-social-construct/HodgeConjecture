@@ -81,10 +81,23 @@ topological Krull dimension at most zero, exactly zero when nonempty.
 The coordinate-ring companion `CommutativeAlgebra/SplitFieldQuotient.lean`
 classifies all primes as unique evaluation kernels with quotient `k`.
 
-**The next gap is the genuine zero-cycle/rational-equivalence construction,
-then its correspondence comparison.** Form cycles on these actual integral
-subschemes and use the no-curves theorem to evaluate the rational-equivalence
-generators. Betti comparison remains the subsequent separate step. The
+**The additive Chow group is now constructed.**
+`Examples/SplitZeroCycles.lean` defines cycles as finitely supported
+coefficients on the actual integral closed subschemes. In
+`Examples/SplitRationalEquivalence.lean`, principal-divisor data consist of
+an actual integral closed curve and a unit in its scheme function field.
+The no-curves theorem makes that domain empty, so the generated
+rational-equivalence relation submodule is zero. The quotient and its
+point-coordinate equivalence give `CH_0(Z_I;R) ≃ₗ[R] (I → R)` for
+`R = ℤ` and `R = ℚ`.
+The scalar-extension equivalences for both cycles and Chow groups are
+constructed; on Chow groups the map sends `q ⊗ [s_i]` to `q • [s_i]` and
+identifies the rational group with `ℚ ⊗[ℤ] CH_0(Z_I;ℤ)`.
+
+**The next gap is the correspondence-algebra comparison.** Identify the
+actual product with its point-pair generators and construct geometric
+pull--push composition, then prove that its coefficients are matrix
+multiplication. Betti comparison follows that step. The
 span realization construction
 applies to split-presentable spans, not yet to all finite-étale carriers.
 These results do not instantiate a geometric Hodge cycle-class model or
@@ -100,8 +113,9 @@ and its action square. The extension-based selector comparison is a lossless
 specialization; the existing Galois coverage interface still retains that
 extra restriction and is not the general target.
 
-See `working/0010-split-integral-subschemes.md` for the actual generators
-and next construction; `0009` records the exact additive quotient.
+See `working/0011-split-zero-cycles.md` for the cycle quotient and next
+construction; `0010` records its actual generators and `0009` the exact
+additive span quotient.
 
 ### Geometric model still to be instantiated
 

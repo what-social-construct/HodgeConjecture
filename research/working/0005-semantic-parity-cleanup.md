@@ -55,14 +55,15 @@ The former Paper I/Paper II sources and PDFs are preserved in
 
 ## Canonical semantic object and TeX registry
 
-### Split-point checkpoint (SP17--SP20)
+### Split-point checkpoint (SP17--SP21)
 
 | ID | Object or overlap | Disposition | Required action | Status |
 | --- | --- | --- | --- | --- |
 | SP17 | Action comparison unnecessarily requires ambient restriction to commutative sheets | CANONICALIZE | Extract `MarkedProjectorActionComparison`; retain extension-based comparisons as lossless specializations; prove the full-matrix obstruction and instantiate the new core. | DONE; FULL BUILD AND VERIFICATION PASS |
-| SP18 | Geometric point span, free span class, matrix coefficient, and Chow class | CONNECT / KEEP DISTINCT | Construct the split-span coefficient realization on actual geometric classes; retain the free source, its matrix image, and genuine Chow as distinct objects. | COEFFICIENT BRIDGE PROVED; CHOW/BETTI OPEN |
-| SP19 | Vanishing relations versus the full kernel; free source versus additive quotient | IDENTIFY / KEEP DISTINCT | Generate a two-sided ideal by finite point decompositions, prove it is the full realization kernel, and construct the quotient-to-matrix algebra equivalence. Keep actual Chow and Betti comparison separate. | EXACT ADDITIVE QUOTIENT PROVED; CHOW/BETTI OPEN |
+| SP18 | Geometric point span, free span class, matrix coefficient, and Chow class | CONNECT / KEEP DISTINCT | Construct the split-span coefficient realization on actual geometric classes; retain the free source, its matrix image, and genuine Chow as distinct objects. | COEFFICIENT BRIDGE PROVED; CORRESPONDENCE/BETTI COMPARISON NEXT |
+| SP19 | Vanishing relations versus the full kernel; free source versus additive quotient | IDENTIFY / KEEP DISTINCT | Generate a two-sided ideal by finite point decompositions, prove it is the full realization kernel, and construct the quotient-to-matrix algebra equivalence. Keep actual Chow-correspondence and Betti comparison separate. | EXACT ADDITIVE QUOTIENT PROVED; CORRESPONDENCE/BETTI COMPARISON NEXT |
 | SP20 | Point labels versus actual integral closed subschemes and their dimension | IDENTIFY | Classify actual integral closed immersions and ideal-sheaf subschemes as reduced rational points; prove every closed subscheme has dimension at most zero. Use these actual generators in the subsequent cycle construction. | CLASSIFICATION AND NO-CURVES THEOREM PROVED |
+| SP21 | Actual zero-cycles, rational equivalence, and additive Chow groups | CONSTRUCT / IDENTIFY | Form cycles on the actual integral subschemes; index principal-divisor data by actual integral curves and function-field units; prove the indexing type empty and the generated relations zero; identify the resulting Chow group with point coefficients and prove the integral-to-rational scalar-extension comparison. Keep the correspondence-algebra comparison as the next construction. | CYCLE AND CHOW GROUPS PROVED; FULL BUILD AND VERIFICATION PASS |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -77,6 +78,8 @@ SP20 construction and next cycle-group step are recorded in
 SP20 validation: full build, direct algebra-companion build, declaration/axiom
 checks, empty-ambient and no-curves tests, independent review, and single-PDF
 build all passed.
+SP21 construction and the next product/pull--push comparison are recorded in
+`0011-split-zero-cycles.md`. Its verification record is maintained there.
 
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
@@ -85,6 +88,19 @@ build all passed.
 | `SplitPointGeometry.IntegralClosedSubscheme` | actual ideal-sheaf data whose associated closed subscheme is integral | $\operatorname{IntSub}(Z_I)$ |
 | `SplitPointGeometry.pointIdealSheaf` / `pointIntegralSubscheme` | ideal sheaf of the reduced point component, and its canonical integral subscheme | $\mathcal I(s_i)$ / $[s_i]\in\operatorname{IntSub}(Z_I)$ |
 | `SplitPointGeometry.labelEquivIntegralClosedSubscheme` | exact identification of labels with integral closed subschemes | $I\xrightarrow{\sim}\operatorname{IntSub}(Z_I)$ |
+| `SplitZeroCycles.Cycles` | finitely supported coefficients on actual integral closed subschemes | $Z_0(Z_I;R)=\bigoplus_{W\in\operatorname{IntSub}(Z_I)}R[W]$ |
+| `SplitZeroCycles.pointCycle` | fundamental cycle of the actual reduced point subscheme | $[s_i]\in Z_0(Z_I;R)$ |
+| `SplitZeroCycles.coordinates` | coefficients indexed by the classified point subschemes | $Z_0(Z_I;R)\xrightarrow{\sim}R^I$ |
+| `SplitZeroCycles.IntegralCurve` / `PrincipalDivisorData` | actual dimension-one integral closed subschemes, paired with units in their actual scheme function fields; proved empty | $(W,f)$ with $\dim W=1$ and $f\in k(W)^\times$ |
+| `SplitZeroCycles.principalDivisor` | the unique ambient principal-divisor cycle assignment on the empty geometric indexing type | $(W,f)\mapsto(\iota_W)_*\operatorname{div}_W(f)$ |
+| `SplitZeroCycles.relations` | submodule generated by principal-divisor cycles, proved zero | $\operatorname{Rat}_0(Z_I;R)$ |
+| `SplitZeroCycles.RationallyEquivalent` | difference lies in the relation submodule; proved equivalent to equality | $z\sim_{\mathrm{rat}}w$ |
+| `SplitZeroCycles.Chow` / `classMap` | quotient of the actual cycle module by rational equivalence, and its class map | $\mathrm{CH}_0(Z_I;R)=Z_0/\operatorname{Rat}_0$, $z\mapsto\overline z$ |
+| `SplitZeroCycles.chowEquivCycles` / `chowCoordinates` | quotient-by-zero and point-coordinate linear equivalences | $\mathrm{CH}_0(Z_I;R)\xrightarrow{\sim}Z_0(Z_I;R)\xrightarrow{\sim}R^I$ |
+| `SplitZeroCycles.rationalize` | integral-to-rational coefficient extension on actual cycles | $Z_0(Z_I;\mathbf Z)\hookrightarrow Z_0(Z_I;\mathbf Q)$ |
+| `SplitZeroCycles.rationalizationEquiv` | rational cycle coefficients are scalar extension of the integral module | $\mathbf Q\otimes_{\mathbf Z}Z_0(Z_I;\mathbf Z)\xrightarrow{\sim}Z_0(Z_I;\mathbf Q)$ |
+| `SplitZeroCycles.chowRationalize` | coefficient extension induced on the Chow quotient, proved injective | $\mathrm{CH}_0(Z_I;\mathbf Z)\hookrightarrow\mathrm{CH}_0(Z_I;\mathbf Q)$ |
+| `SplitZeroCycles.chowRationalizationEquiv` | canonical rational scalar extension of the integral Chow group, preserving point generators | $\mathbf Q\otimes_{\mathbf Z}\mathrm{CH}_0(Z_I;\mathbf Z)\xrightarrow{\sim}\mathrm{CH}_0(Z_I;\mathbf Q)$ |
 | `SplitPointGeometry.existsUnique_pointIso_of_isIntegral` | unique point label and scheme isomorphism respecting an integral closed immersion | $e:X\xrightarrow{\sim}\operatorname{Spec}k$, $s_i\circ e=f$ |
 | `SplitPointGeometry.topologicalKrullDim_le_zero_of_isClosedImmersion` / `topologicalKrullDim_eq_zero_of_isClosedImmersion` | dimension bound for actual closed subschemes, equality if nonempty | $\dim X\leq 0$ / $\dim X=0$ |
 | `SplitFieldQuotient.evalQuotientEquiv` | quotient by a coordinate prime is the base field | $\mathfrak m_i=\ker(\operatorname{ev}_i)$, $k^I/\mathfrak m_i\cong_k k$ |

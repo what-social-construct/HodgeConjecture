@@ -1,5 +1,11 @@
 # Actual integral closed subschemes of finite split schemes
 
+Checkpoint update: the cycle module on these actual integral subschemes and
+its rational-equivalence quotient are now constructed in
+[0011-split-zero-cycles.md](0011-split-zero-cycles.md). The no-curves theorem
+proves that the principal-divisor indexing type is empty. The historical
+proof and verification record below is preserved.
+
 Status: ACTUAL INTEGRAL CLOSED SUBSCHEMES CLASSIFIED; DIMENSION-ZERO
 AND NO-CURVES THEOREMS PROVED.
 

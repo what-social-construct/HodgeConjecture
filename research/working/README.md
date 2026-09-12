@@ -47,3 +47,10 @@ Active research and proof-maintenance queue:
   coefficient map, its well-definedness on geometric classes, its
   multiplicativity and coproduct laws, and the point projector's
   geometric-source target square. Genuine Chow/Betti identification remains open.
+- `0009-split-span-additive-quotient.md` proves the exact finite
+  point-decomposition kernel and the quotient-to-matrix algebra equivalence.
+- `0010-split-integral-subschemes.md` classifies actual integral closed
+  subschemes of finite split schemes and proves the absence of curves.
+- `0011-split-zero-cycles.md` constructs zero-cycles on those actual
+  subschemes, evaluates rational equivalence using the empty curve type,
+  and identifies the resulting additive Chow groups by point coordinates.

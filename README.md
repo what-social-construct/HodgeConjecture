@@ -193,7 +193,8 @@ actual split-presentable span classes. It respects geometric fiber products
 and disjoint unions and takes empty spans to zero. The
 [geometric-source endpoint](HodgeConjecture/Realization/Chow/Examples/GeometricSplitPoints.lean)
 therefore recovers the same projector action and Palomar square from the
-original point span. Genuine Chow/Betti identification remains open, as does
+original point span. Chow-correspondence composition and Betti comparison are
+the next geometric identifications, together with
 extension from split-presentable to arbitrary finite-étale carriers. The
 free source algebra is not itself identified with matrices. Its
 [additive quotient](HodgeConjecture/Realization/Chow/Examples/SplitSpanQuotient.lean)
@@ -205,15 +206,26 @@ The [actual integral-subscheme classification](HodgeConjecture/Correspondence/Ex
 now identifies every integral closed subscheme of `Spec(k^I)` with a unique
 reduced rational point, by an isomorphism commuting with its closed
 immersion. Closed subschemes have dimension at most zero, so there are no
-integral closed curves. The next step is to form the cycle group on these
-actual generators and its rational-equivalence quotient. The test also proves
+integral closed curves. The [zero-cycle construction](HodgeConjecture/Realization/Chow/Examples/SplitZeroCycles.lean)
+forms the cycle module on these actual integral subschemes. The
+[rational-equivalence quotient](HodgeConjecture/Realization/Chow/Examples/SplitRationalEquivalence.lean)
+uses integral curves and units in their actual scheme function fields as
+principal-divisor data. That indexing type is empty, so its generated
+relation submodule is zero. Thus `CH_0(Z_I;R) ≃ₗ[R] (I → R)` for
+`R = ℤ` and `R = ℚ`, taking fundamental point cycles to unit vectors.
+The canonical scalar-extension comparison
+`ℚ ⊗[ℤ] CH_0(Z_I;ℤ) ≃ₗ[ℚ] CH_0(Z_I;ℚ)` is also proved, including its
+formula on point generators.
+Next comes the actual product and pull--push comparison with the
+correspondence matrix algebra. The test also proves
 that `M₂(ℚ)` has no unital map to a nontrivial commutative ring; consequently
 the old full-algebra restriction to sheets is not an admissible general
 requirement. The existing Galois coverage interface retains it as an extra
 specialized condition. See the
 [split-span working note](research/working/0008-split-span-cycle-realization.md)
 and its [exact additive quotient](research/working/0009-split-span-additive-quotient.md),
-followed by the [integral-subscheme checkpoint](research/working/0010-split-integral-subschemes.md).
+followed by the [integral-subscheme checkpoint](research/working/0010-split-integral-subschemes.md)
+and the [zero-cycle and rational-equivalence construction](research/working/0011-split-zero-cycles.md).
 
 The missing step is geometric: construct a Chow-motivic residual map carrying
 \(q-1\) to a desired Hodge class and prove compatibility with compactification

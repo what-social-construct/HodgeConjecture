@@ -321,3 +321,44 @@ example (K : Type) [Field K] (I : Type) [Finite I] :
   have h := J.property
   rw [HodgeConjecture.SplitPointGeometry.integralClosedSubscheme_dimension] at h
   exact zero_ne_one h
+
+-- Actual zero-cycles, principal-divisor relations, and the Chow quotient.
+#check HodgeConjecture.SplitZeroCycles.coordinates
+#check HodgeConjecture.SplitZeroCycles.coordinates_pointCycle
+#check HodgeConjecture.SplitZeroCycles.rationalize_injective
+#check HodgeConjecture.SplitZeroCycles.rationalizationEquiv_tmul
+#check HodgeConjecture.SplitZeroCycles.integralCurve_isEmpty
+#check HodgeConjecture.SplitZeroCycles.PrincipalDivisorData
+#check HodgeConjecture.SplitZeroCycles.principalDivisor_unique
+#check HodgeConjecture.SplitZeroCycles.relations_eq_bot
+#check HodgeConjecture.SplitZeroCycles.rationallyEquivalent_iff_eq
+#check HodgeConjecture.SplitZeroCycles.classMap_bijective
+#check HodgeConjecture.SplitZeroCycles.chowCoordinates
+#check HodgeConjecture.SplitZeroCycles.chowCoordinates_pointCycle
+#check HodgeConjecture.SplitZeroCycles.chowRationalize_injective
+#check HodgeConjecture.SplitZeroCycles.chowRationalizationEquiv
+#check HodgeConjecture.SplitZeroCycles.chowRationalizationEquiv_tmul_pointCycle
+
+#print axioms HodgeConjecture.SplitZeroCycles.coordinates
+#print axioms HodgeConjecture.SplitZeroCycles.principalDivisor_unique
+#print axioms HodgeConjecture.SplitZeroCycles.relations_eq_bot
+#print axioms HodgeConjecture.SplitZeroCycles.chowCoordinates
+#print axioms HodgeConjecture.SplitZeroCycles.chowRationalizationEquiv
+#print axioms HodgeConjecture.SplitZeroCycles.chowRationalizationEquiv_tmul_pointCycle
+
+-- The empty split scheme has zero Chow group, including over the integers.
+example (K : Type) [Field K] (R : Type) [CommRing R]
+    (z : HodgeConjecture.SplitZeroCycles.Chow K (Fin 0) R) : z = 0 := by
+  apply (HodgeConjecture.SplitZeroCycles.chowCoordinates K (Fin 0) R).injective
+  ext i
+  exact Fin.elim0 i
+
+-- An actual reduced point remains a nonzero class; rational equivalence has
+-- not collapsed it in the passage from cycles to the Chow quotient.
+example (K : Type) [Field K] (I : Type) [Finite I] (i : I) :
+    HodgeConjecture.SplitZeroCycles.classMap K I ℤ
+      (HodgeConjecture.SplitZeroCycles.pointCycle K I ℤ i) ≠ 0 := by
+  classical
+  intro h
+  have hi := congrArg (fun z ↦ HodgeConjecture.SplitZeroCycles.chowCoordinates K I ℤ z i) h
+  simp [HodgeConjecture.SplitZeroCycles.pointCycle] at hi
