@@ -1,8 +1,18 @@
 # First concrete realization checkpoint: split points
 
-Status: SCHEME SPAN AND COEFFICIENT SQUARE FORMAL; CONNECTING REALIZATION OPEN.
+Status: HISTORICAL FIRST CHECKPOINT; CONNECTING SPLIT-SPAN REALIZATION NOW
+IMPLEMENTED IN `0008-split-span-cycle-realization.md`.
 
 Date: 2026-09-11. Canonical manuscript: `paper/main.tex`, Section 7.
+
+Checkpoint update, 2026-09-11: the additive and multiplicative arrow proposed
+below is now constructed on actual finite split-presentable scheme-span
+classes. It sends the earlier geometric point projector to its matrix unit,
+and hence to the coefficient graph-projector action; see
+[0008-split-span-cycle-realization.md](0008-split-span-cycle-realization.md).
+The older gap statements and verification results below are retained as the
+dated record of the preceding checkpoint, not the current realization status.
+The genuine scheme-theoretic Chow/Betti comparison remains open.
 
 ## What was constructed
 

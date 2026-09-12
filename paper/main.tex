@@ -123,8 +123,11 @@ For compactification we distinguish a raw closure, whose idempotence defect
 merely restricts to zero, from a supplied compactified deck-graph square,
 which is a sufficient route to a genuinely idempotent compactified image.
 
+The finite split case has a constructed coefficient realization from actual
+scheme-span classes to rational matrices, compatible with scheme pullbacks
+and coproducts, and a geometric-source two-point projector square.
 These statements are machine checked from their displayed hypotheses
-(\formal).  The geometric comparison, compactified realization, and
+(\formal).  For the general Hodge application, the Chow/Hodge comparison, compactified realization, and
 class-dependent marked-sheet coverage packages remain supplied inputs
 (\conditional), and constructing them for genuine Chow groups and Betti
 cohomology remains \openstatus.  In particular, this manuscript proves no
@@ -987,8 +990,47 @@ is \(\Spec k\).  Consequently its basis element \(\pi_i\) in
 \(\mathcal C^{\mathrm{free}}_{\fe}(Z_I/k)\) satisfies
 \(\pi_i^2=\pi_i\).  All these scheme and span assertions are \formal.
 
-For \(I=\{0,1\}\), consider separately the finite rational coefficient
-model \(\Gamma_I=M_2(\Q)\) acting on \(\Q^I\) by matrix multiplication,
+Let \(\mathcal C_{\mathrm{sp}}(Z_I/k)\) be the free rational algebra on
+those actual finite-\'etale span-isomorphism classes admitting a finite split
+presentation.  It embeds into the existing free span algebra by
+\(j_{\mathrm{sp}}:\mathcal C_{\mathrm{sp}}\hookrightarrow
+\mathcal C^{\mathrm{free}}_{\fe}\).
+
+\begin{theorem}[Split-span cycle coefficients --- \formal]
+\label{thm:split-span-realization}
+There is a surjective algebra homomorphism
+\[
+  \chi_{\mathrm{sp}}:\mathcal C_{\mathrm{sp}}(Z_I/k)
+      \longrightarrow M_I(\Q)
+\]
+which sends a split span \(I\xleftarrow{\ell}S\xrightarrow{r}I\) to
+\[
+  \chi_{\mathrm{sp}}([S,\ell,r])_{ji}
+    =\#\{s\in S:r(s)=j,\ \ell(s)=i\}.
+\]
+It takes the empty span to zero and geometric disjoint unions to sums.
+For the split-source point class \(\pi_i^{\mathrm{sp}}\),
+\[
+  j_{\mathrm{sp}}(\pi_i^{\mathrm{sp}})=\pi_i,
+  \qquad \chi_{\mathrm{sp}}(\pi_i^{\mathrm{sp}})=E_{ii}.
+\]
+\end{theorem}
+
+\begin{proof}
+The points of \(\Spec(k^S)\) are canonically indexed by \(S\).  An actual
+scheme-span isomorphism therefore induces a bijection of labels respecting
+both legs, so the counts descend to the geometric isomorphism quotient.
+The split scheme on
+\(\{(s,t):r(s)=\ell'(t)\}\) is the actual scheme fiber product: its
+matching-point charts are open immersions, pairwise disjoint, and cover the
+pullback.  Counting these pairs gives matrix multiplication.  Diagonal spans
+give the identity; extending rationally gives the algebra homomorphism.
+The scheme coproduct comparison proves geometric additivity, and the
+point-pair spans supply every matrix unit, proving surjectivity.
+\end{proof}
+
+For \(I=\{0,1\}\), the resulting finite rational coefficient
+model \(\Gamma_I=M_2(\Q)\) acts on \(\Q^I\) by matrix multiplication,
 with rows indexing outputs and columns indexing inputs.  Take
 \[
   A=\Q\times\Q,\quad \epsilon(a,b)=a,\quad q=(1,0),\quad
@@ -1005,6 +1047,14 @@ coordinates are the explicit linear equivalence
 This computes the selector action square and
 \(\rho\circ\varphi_\Pi=\varphi_{P_{-1}}\), rather than assuming either
 as a field of an interface.  It instantiates the restriction-free comparison.
+Composing with \(\chi_{\mathrm{sp}}\) now gives the same square from the
+actual geometric-source projector:
+\[
+  (\rho\circ\chi_{\mathrm{sp}})\circ\varphi_{\pi_0^{\mathrm{sp}}}
+    =\varphi_{P_{-1}}.
+\]
+Its source idempotence follows from the injective map
+\(j_{\mathrm{sp}}\) and the original point-span pullback theorem.
 
 \begin{proposition}[Ambient restriction obstruction --- \formal]
 There is no unital ring homomorphism from \(M_2(\Q)\) to any nonzero
@@ -1020,11 +1070,11 @@ then force both images to vanish, contradicting \(E_{00}+E_{11}=1\).
 \end{proof}
 
 \begin{statusnote}{\formal/\openstatus}
-The scheme-span theorem and coefficient calculation are both checked, but
-the Lean development does not yet connect them by an additive cycle
-realization.  In particular, the free span algebra does not impose
-disjoint-union additivity or identify the empty span with zero.  It must not
-be identified with \(M_2(\Q)\).  Geometrically, zero-cycles on a finite split
+The additive cycle-coefficient bridge is now checked for split-presentable
+spans.  It kills coproduct and empty-span relations; the free source algebra
+does not itself impose them and is not identified with \(M_I(\Q)\).
+This is not yet a realization on all finite-\'etale spans: over a general
+field, finite \'etale carriers need not split.  Geometrically, zero-cycles on a finite split
 scheme have no rational-equivalence relations from curves, since there are
 no one-dimensional integral closed subschemes; this is the elementary
 zero-dimensional specialization of \cite{StacksRationalEquivalence}.
@@ -1041,7 +1091,14 @@ The scheme construction is in \corrsrc{Examples/SplitPoints.lean}, under
 \leanpath{pointProjector_isIdempotent}.  The coefficient realization is in
 \chowsrc{Examples/SplitPoints.lean}, under
 \leanpath{SplitPointCorrespondence.realization_firstPointProjector} and
-\leanpath{palomarTargetSquare}.  The obstruction is
+\leanpath{palomarTargetSquare}.  The actual pullback and coproduct
+comparisons are in \corrsrc{Examples/SplitSpanGeometry.lean} and
+\corrsrc{Examples/SplitSpanCoproduct.lean}; invariance uses
+\corrsrc{Examples/SplitPointMaps.lean}.  The constructed map is
+\leanpath{SplitSpanRealization.realization} in
+\chowsrc{Examples/SplitSpanRealization.lean}, and its geometric-source target
+square is \leanpath{GeometricSplitPoints.palomarTargetSquare} in
+\chowsrc{Examples/GeometricSplitPoints.lean}.  The obstruction is
 \leanpath{MatrixRestrictionObstruction.no_ringHom_to_commutative} in
 \leanpath{HodgeConjecture/LinearAlgebra/MatrixRestrictionObstruction.lean}.
 \end{leanfiles}
@@ -1195,6 +1252,13 @@ Split-point geometry and coefficient test (\formal) &
 \leanpath{realization_firstPointProjector}\newline
 \leanpath{Correspondence/Examples/SplitPoints.lean};
 \leanpath{Realization/Chow/Examples/SplitPoints.lean}\\
+Actual split-span matrix realization (\formal) &
+\leanpath{SplitSpanRealization.realization};
+\leanpath{realization_surjective}\newline
+\leanpath{Realization/Chow/Examples/SplitSpanRealization.lean}\\
+Geometric-source coefficient square (\formal) &
+\leanpath{GeometricSplitPoints.palomarTargetSquare}\newline
+\leanpath{Realization/Chow/Examples/GeometricSplitPoints.lean}\\
 Palomar realization target (\formal; \conditional) &
 \leanpath{MarkedGaloisSelectorComparison.palomarTargetSquare}\newline
 \leanpath{Realization/Chow/GaloisMarkedRealization.lean}\\

@@ -187,14 +187,20 @@ The first concrete check is now implemented in
 and [`Realization/Chow/Examples/SplitPoints.lean`](HodgeConjecture/Realization/Chow/Examples/SplitPoints.lean):
 the actual finite-étale point span on `Spec(k^I)` is idempotent, and a separate
 two-point matrix calculation proves `ρ(E₀₀)=P₋₁` and its Palomar square.
-Connecting the span to that coefficient matrix through an additive cycle
-realization, and identifying genuine Chow/cohomology objects, remains open.
-The free span algebra is not already a matrix algebra. The test also proves
+The [split-span cycle-coefficient realization](HodgeConjecture/Realization/Chow/Examples/SplitSpanRealization.lean)
+now connects these layers by a proved surjective algebra homomorphism on
+actual split-presentable span classes. It respects geometric fiber products
+and disjoint unions and takes empty spans to zero. The
+[geometric-source endpoint](HodgeConjecture/Realization/Chow/Examples/GeometricSplitPoints.lean)
+therefore recovers the same projector action and Palomar square from the
+original point span. Genuine Chow/Betti identification remains open, as does
+extension from split-presentable to arbitrary finite-étale carriers. The
+free source algebra is not itself identified with matrices. The test also proves
 that `M₂(ℚ)` has no unital map to a nontrivial commutative ring; consequently
 the old full-algebra restriction to sheets is not an admissible general
 requirement. The existing Galois coverage interface retains it as an extra
 specialized condition. See the
-[split-point working note](research/working/0007-split-point-realization.md).
+[split-span working note](research/working/0008-split-span-cycle-realization.md).
 
 The missing step is geometric: construct a Chow-motivic residual map carrying
 \(q-1\) to a desired Hodge class and prove compatibility with compactification
@@ -231,8 +237,8 @@ Finite covers give an abstract, noncircular branch:
 \]
 
 After a concrete Chow/Hodge realization is separately supplied, this branch
-can produce finite-monodromy or cover-generated projectors.  No such
-nontrivial realization instance is constructed here, and it is not asserted
+can produce finite-monodromy or cover-generated projectors. No such
+general Chow/Hodge realization instance is constructed here, and it is not asserted
 that every Hodge class arises from a finite Galois cover.  The formal
 group/Hecke step transports supplied idempotents; it neither asserts that
 every normalized double-coset operator is idempotent nor infers algebraicity

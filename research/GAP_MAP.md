@@ -39,7 +39,7 @@ branch rather than the main narrative.
 
 ### First concrete checkpoint: split points
 
-The first concrete test now has two proved parts:
+The first concrete test now has connected geometric and coefficient parts:
 
 - `Correspondence/Examples/SplitPoints.lean` constructs `Spec(k^I)` for finite
   `I`, proves its structure map finite, étale, and proper, and proves that
@@ -50,12 +50,22 @@ The first concrete test now has two proved parts:
   coordinates `T(a,b)=(a,b-a)`, it proves `ρ(E₀₀)=P₋₁`, instantiates
   `MarkedProjectorActionComparison`, and derives the Palomar target square.
 
-**The connecting arrow is still open:** the free span algebra is not the
-matrix algebra. It has neither disjoint-union additivity nor empty-span
-vanishing built into its relations. Construct an additive cycle realization
-sending the point span to `E₀₀`, then identify that coefficient model with
-genuine Chow classes and cohomology. These tests do not yet instantiate a
-geometric Hodge cycle-class model or class-dependent coverage.
+**The split-span-to-matrix arrow is now proved.**
+`Realization/Chow/Examples/SplitSpanRealization.lean` constructs a surjective
+rational algebra homomorphism on the free algebra of split-presentable
+actual finite-étale span classes. It embeds this source into the existing
+finite-étale free algebra. Actual scheme isomorphisms give presentation
+independence, and an actual scheme fiber-product isomorphism proves the
+multiplication law. Geometric coproducts map to sums and empty spans to zero.
+`Examples/GeometricSplitPoints.lean` sends the original point projector to
+`E₀₀` and derives its coefficient Palomar square from this geometric source.
+
+**The next gap is the genuine Chow/Betti identification.** The source is
+still a free algebra, not the matrix algebra: the realization kills the
+additivity relations instead of assuming them in the source. It applies to
+split-presentable spans, not yet to all finite-étale carriers. These results
+do not instantiate a geometric Hodge cycle-class model or class-dependent
+coverage.
 
 The test also exposed and repaired an interface obstruction:
 `LinearAlgebra/MatrixRestrictionObstruction.lean` proves that no unital ring
@@ -67,7 +77,8 @@ and its action square. The extension-based selector comparison is a lossless
 specialization; the existing Galois coverage interface still retains that
 extra restriction and is not the general target.
 
-See `working/0007-split-point-realization.md` for the next bounded step.
+See `working/0008-split-span-cycle-realization.md` for the proved bridge and
+its remaining scope; `0007` preserves the preceding checkpoint.
 
 ### Geometric model still to be instantiated
 
@@ -900,9 +911,11 @@ sheet linearization is not part of this route.
 The conditional
 endpoint detects the lower-left class from an explicit comparison square and,
 under surjectivity, derives the exact graph action.  Its source and ambient
-algebras are correctly separated.  It does not resolve the geometric
-realization question: no theorem constructs the extension package, residual
-map, action square, or detection map; no class-dependent coverage or strong
+algebras are correctly separated. The split-span coefficient construction
+above now supplies an actual-source comparison square for the two-point
+test. It does not resolve the general Chow/Hodge realization question:
+no theorem constructs the required Chow extension, Chow-motivic residual
+map, Hodge realization square, or Chow detection map; no class-dependent coverage or strong
 replacement instance is present; and the witness does not yet contain a
 genuine cover or normal closure.  Such a generation theorem may be stronger
 than Hodge itself.  Accordingly, the finite-Galois endpoint does not yet prove

@@ -9,6 +9,8 @@ import HodgeConjecture.Realization.Chow.Presentation
 import HodgeConjecture.Realization.Chow.TateGraphProjector
 import HodgeConjecture.Realization.Chow.TransferProjector
 import HodgeConjecture.Realization.Chow.Examples.SplitPoints
+import HodgeConjecture.Realization.Chow.Examples.SplitSpanRealization
+import HodgeConjecture.Realization.Chow.Examples.GeometricSplitPoints
 import HodgeConjecture.LinearAlgebra.MatrixRestrictionObstruction
 
 /-!
@@ -35,9 +37,12 @@ available by directly importing `Realization.Chow.SheetLinearization`, but is
 not part of this active umbrella because pointwise and convolution products
 differ.
 
-The split-point example constructs a coefficient-level comparison and target
-square by an explicit matrix computation, but does not yet identify its
-coefficients with scheme Chow/cohomology. The matrix restriction obstruction
+The split-span realization now connects actual split-presentable geometric
+classes to rational matrices by a surjective algebra map, killing geometric
+coproduct and empty-span relations. The two-point comparison and target square
+therefore have an actual scheme-span source. The coefficient model is not yet
+identified with genuine Chow/cohomology, and no realization on all nonsplit
+finite-étale classes is claimed. The matrix restriction obstruction
 explains why the full ambient algebra cannot in general map back to sheets.
 
 The superseded commutative selector-generated specialization remains

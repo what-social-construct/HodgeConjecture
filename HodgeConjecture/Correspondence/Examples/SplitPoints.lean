@@ -13,8 +13,9 @@ span whose convolution square is isomorphic to itself.
 The resulting idempotent lies in the free finite-étale span algebra. No
 identification with a Chow group or a Betti cycle-class map is asserted.
 For `I = Fin 2` and `i = 0`, this is the geometric span underlying the
-two-point matrix unit `e₀₀`; proving a cycle realization between this
-construction and the matrix model remains a separate task. In particular,
+two-point matrix unit `e₀₀`. The connecting cycle-coefficient realization is
+proved in `Realization.Chow.Examples.SplitSpanRealization` and specialized in
+`Realization.Chow.Examples.GeometricSplitPoints`. In particular,
 the free span algebra does not impose disjoint-union additivity or identify
 the empty span with its additive zero.
 -/

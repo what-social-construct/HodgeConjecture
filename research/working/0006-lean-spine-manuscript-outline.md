@@ -246,8 +246,11 @@ presentation as an optional stronger variant, not a prerequisite.
 Include the split-point checkpoint: actual finite-étale scheme spans and
 their idempotence, the separately computed two-point matrix action
 `ρ(E₀₀)=P₋₁`, and the obstruction to any unital map from `M₂(Q)` to a
-nontrivial commutative ring. Keep the additive cycle realization between the
-two formal layers explicitly open. The existing Galois coverage interface
+nontrivial commutative ring. The additive cycle-coefficient realization is
+now proved on the split-presentable submonoid of actual geometric classes:
+include its presentation independence, actual pullback/coproduct comparisons,
+surjectivity, and geometric-source target square. Keep the genuine Chow/Betti
+identification and extension to all finite-étale classes open. The existing Galois coverage interface
 retains its ambient restriction to sheets and is a stronger specialization,
 not the general comparison used in the example.
 

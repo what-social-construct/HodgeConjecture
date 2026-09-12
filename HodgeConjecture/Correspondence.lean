@@ -7,6 +7,9 @@ import HodgeConjecture.Correspondence.TransposeAlgebra
 import HodgeConjecture.Correspondence.ProjectorDefect
 import HodgeConjecture.Correspondence.ProjectorLift
 import HodgeConjecture.Correspondence.Examples.SplitPoints
+import HodgeConjecture.Correspondence.Examples.SplitPointMaps
+import HodgeConjecture.Correspondence.Examples.SplitSpanGeometry
+import HodgeConjecture.Correspondence.Examples.SplitSpanCoproduct
 import HodgeConjecture.Correspondence.FiniteGroupProjector
 import HodgeConjecture.Correspondence.GroupAlgebraProjector
 import HodgeConjecture.Correspondence.HeckeProjector
@@ -35,6 +38,7 @@ Chow/cohomological realization:
 14. normalized collision classes as convolution projectors;
 15. algebraic lifts of cohomological projectors and diagonal decompositions.
 16. actual split-point scheme spans and their convolution idempotence.
+17. finite split-span morphisms, intrinsic points, and actual pullback/coproduct comparisons.
 
 The free span algebra is not identified with a Chow ring.  Proper cycle
 extraction, rational equivalence, and compatibility with refined

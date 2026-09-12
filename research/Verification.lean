@@ -237,3 +237,30 @@ It is intentionally outside the library's default import tree.
 #print axioms HodgeConjecture.SplitPointGeometry.pointProjector_isIdempotent
 #print axioms HodgeConjecture.SplitPointCorrespondence.palomarTargetSquare
 #print axioms HodgeConjecture.MatrixRestrictionObstruction.no_ringHom_to_commutative
+
+-- Actual finite split-span coefficient realization.
+#check HodgeConjecture.FiniteSpanMatrix.matrix_pullback
+#check HodgeConjecture.FiniteSpanMatrix.matrix_sigma
+#check HodgeConjecture.SplitPointGeometry.labelEquivOfIso_respects_map
+#check HodgeConjecture.SplitPointGeometry.fiberIso
+#check HodgeConjecture.SplitPointGeometry.span_comp_iso
+#check HodgeConjecture.SplitPointGeometry.span_sum_iso
+#check HodgeConjecture.SplitSpanRealization.matrix_eq_of_isom
+#check HodgeConjecture.SplitSpanRealization.classSubmonoid
+#check HodgeConjecture.SplitSpanRealization.realization
+#check HodgeConjecture.SplitSpanRealization.realization_surjective
+#check HodgeConjecture.SplitSpanRealization.realization_empty
+#check HodgeConjecture.SplitSpanRealization.realization_sum
+#check HodgeConjecture.SplitSpanRealization.toFiniteEtaleFreeAlgebra_sum
+#check HodgeConjecture.SplitSpanRealization.toFiniteEtaleFreeAlgebra_injective
+#check HodgeConjecture.GeometricSplitPoints.projector_toFiniteEtaleFreeAlgebra
+#check HodgeConjecture.GeometricSplitPoints.matrixRealization_projector
+#check HodgeConjecture.GeometricSplitPoints.coefficientRealization_projector
+#check HodgeConjecture.GeometricSplitPoints.markedComparison
+#check HodgeConjecture.GeometricSplitPoints.projectorLift
+#check HodgeConjecture.GeometricSplitPoints.palomarTargetSquare
+
+#print axioms HodgeConjecture.SplitPointGeometry.span_comp_iso
+#print axioms HodgeConjecture.SplitSpanRealization.realization
+#print axioms HodgeConjecture.SplitSpanRealization.realization_surjective
+#print axioms HodgeConjecture.GeometricSplitPoints.palomarTargetSquare

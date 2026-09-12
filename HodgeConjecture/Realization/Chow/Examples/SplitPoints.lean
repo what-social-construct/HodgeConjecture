@@ -18,6 +18,8 @@ realizes the graph projector of the specific residual class `-1`.
 This file does not identify these finite models with scheme-theoretic Chow
 groups or singular cohomology. It does not construct a cover or establish
 coverage of prescribed Hodge classes.
+`Examples.GeometricSplitPoints` connects this coefficient calculation to an
+actual scheme-span source through the proved split-span matrix realization.
 -/
 
 set_option autoImplicit false

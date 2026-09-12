@@ -41,5 +41,9 @@ Active research and proof-maintenance queue:
   relegating fixed-ring/source material to appendices.
 - `0007-split-point-realization.md` records the first actual split-point scheme
   projector, its separate matrix coefficient calculation, the obstruction to
-  restricting a full matrix algebra to sheets, and the still-missing additive
-  cycle realization between these two formal layers.
+  restricting a full matrix algebra to sheets, and the formerly missing
+  additive cycle realization, now proved in `0008`.
+- `0008-split-span-cycle-realization.md` records the actual scheme-span
+  coefficient map, its well-definedness on geometric classes, its
+  multiplicativity and coproduct laws, and the point projector's
+  geometric-source target square. Genuine Chow/Betti identification remains open.
