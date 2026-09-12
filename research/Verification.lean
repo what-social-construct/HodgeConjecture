@@ -1,4 +1,5 @@
 import HodgeConjecture
+import HodgeConjecture.CommutativeAlgebra.SplitFieldQuotient
 
 /-!
 # Release-candidate declaration checks
@@ -290,3 +291,33 @@ example (K : Type) [Field K] :
   simp only [map_one, map_zero]
   ext i
   exact Fin.elim0 i
+
+-- Actual integral closed-subscheme classification and the no-curves input.
+#check HodgeConjecture.SplitPointGeometry.existsUnique_pointIso_of_isIntegral
+#check HodgeConjecture.SplitPointGeometry.labelEquivIntegralClosedSubscheme
+#check HodgeConjecture.SplitPointGeometry.integralClosedSubscheme_dimension
+#check HodgeConjecture.SplitPointGeometry.topologicalKrullDim_eq_zero_of_isClosedImmersion
+#check HodgeConjecture.SplitPointGeometry.not_one_le_topologicalKrullDim_of_isClosedImmersion
+#check HodgeConjecture.SplitFieldQuotient.existsUnique_prime_eq_ker_eval
+#check HodgeConjecture.SplitFieldQuotient.evalQuotientEquiv
+#check HodgeConjecture.SplitFieldQuotient.exists_prime_quotient_equiv
+
+#print axioms HodgeConjecture.SplitPointGeometry.existsUnique_pointIso_of_isIntegral
+#print axioms HodgeConjecture.SplitPointGeometry.labelEquivIntegralClosedSubscheme
+#print axioms HodgeConjecture.SplitPointGeometry.not_one_le_topologicalKrullDim_of_isClosedImmersion
+#print axioms HodgeConjecture.SplitFieldQuotient.exists_prime_quotient_equiv
+
+-- No integral closed subscheme exists when the ambient label set is empty.
+example (K : Type) [Field K] :
+    IsEmpty (HodgeConjecture.SplitPointGeometry.IntegralClosedSubscheme K (Fin 0)) :=
+  ⟨fun J ↦ Fin.elim0
+    ((HodgeConjecture.SplitPointGeometry.labelEquivIntegralClosedSubscheme K (Fin 0)).symm J)⟩
+
+-- In particular the actual integral-curve indexing type is empty.
+example (K : Type) [Field K] (I : Type) [Finite I] :
+    IsEmpty {J : HodgeConjecture.SplitPointGeometry.IntegralClosedSubscheme K I //
+      topologicalKrullDim J.val.subscheme = 1} := by
+  refine ⟨fun J ↦ ?_⟩
+  have h := J.property
+  rw [HodgeConjecture.SplitPointGeometry.integralClosedSubscheme_dimension] at h
+  exact zero_ne_one h

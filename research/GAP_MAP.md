@@ -71,9 +71,21 @@ belong to this ideal; the generating family is finite indexed, not asserted
 to be binary-only. The free source, additive quotient, and matrix target
 retain distinct definitions.
 
-**The next gap is genuine Chow identification, followed separately by
-Betti comparison.** The additive quotient is not yet identified with a
-scheme Chow group or its correspondence composition. The construction
+**The actual integral generators and no-curves theorem are now proved.**
+`Correspondence/Examples/SplitIntegralSubschemes.lean` classifies every
+integral closed immersion into `Spec(k^I)` as the inclusion of a unique
+reduced rational point, with a commuting scheme isomorphism. The canonical
+ideal-sheaf subschemes are equivalent to the labels `I`.
+`Examples/SplitPointDimension.lean` proves every closed subscheme has
+topological Krull dimension at most zero, exactly zero when nonempty.
+The coordinate-ring companion `CommutativeAlgebra/SplitFieldQuotient.lean`
+classifies all primes as unique evaluation kernels with quotient `k`.
+
+**The next gap is the genuine zero-cycle/rational-equivalence construction,
+then its correspondence comparison.** Form cycles on these actual integral
+subschemes and use the no-curves theorem to evaluate the rational-equivalence
+generators. Betti comparison remains the subsequent separate step. The
+span realization construction
 applies to split-presentable spans, not yet to all finite-étale carriers.
 These results do not instantiate a geometric Hodge cycle-class model or
 class-dependent coverage.
@@ -88,8 +100,8 @@ and its action square. The extension-based selector comparison is a lossless
 specialization; the existing Galois coverage interface still retains that
 extra restriction and is not the general target.
 
-See `working/0009-split-span-additive-quotient.md` for the exact quotient and
-remaining scope; `0008` and `0007` preserve the preceding checkpoints.
+See `working/0010-split-integral-subschemes.md` for the actual generators
+and next construction; `0009` records the exact additive quotient.
 
 ### Geometric model still to be instantiated
 

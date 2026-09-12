@@ -1,5 +1,11 @@
 # Exact additive quotient of finite split scheme spans
 
+Checkpoint update: the actual integral closed-subscheme classification and
+absence of curves listed as the next geometric inputs below are now proved
+in [0010-split-integral-subschemes.md](0010-split-integral-subschemes.md).
+The cycle-group and rational-equivalence construction is the next step.
+The historical construction and verification record below is preserved.
+
 Status: EXACT FINITE POINT-DECOMPOSITION KERNEL AND QUOTIENT PROVED;
 GENUINE CHOW IDENTIFICATION AND BETTI COMPARISON REMAIN OPEN.
 

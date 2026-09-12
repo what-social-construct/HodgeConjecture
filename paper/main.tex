@@ -127,7 +127,9 @@ The finite split case has a constructed coefficient realization from actual
 scheme-span classes to rational matrices, compatible with scheme pullbacks
 and coproducts.  Its kernel is exactly the two-sided ideal of finite
 point-decomposition relations, so the resulting additive quotient is the
-matrix algebra.  A geometric-source two-point projector square follows.
+matrix algebra.  The split scheme's integral closed subschemes are classified as the
+reduced rational points, and the absence of integral closed curves is
+proved.  A geometric-source two-point projector square follows.
 These statements are machine checked from their displayed hypotheses
 (\formal).  For the general Hodge application, the Chow/Hodge comparison, compactified realization, and
 class-dependent marked-sheet coverage packages remain supplied inputs
@@ -1075,6 +1077,42 @@ The empty-span basis vector is nonzero in the free algebra and maps to
 zero, proving the final assertion.
 \end{proof}
 
+The cycle generators can now be identified as actual closed subschemes.
+Write \(\operatorname{IntSub}(Z_I)\) for the ideal-sheaf data on \(Z_I\)
+whose associated closed subschemes are integral.
+
+\begin{theorem}[Integral closed subschemes of split points --- \formal]
+\label{thm:split-integral-subschemes}
+For every closed immersion \(f:X\hookrightarrow Z_I\) with \(X\)
+integral, there is a unique \(i\in I\) for which an isomorphism
+\(e:X\xrightarrow{\sim}\Spec k\) satisfies \(s_i\circ e=f\).
+Taking the ideal sheaf of \(s_i\) therefore gives a bijection
+\[
+  I\xrightarrow{\ \sim\ }\operatorname{IntSub}(Z_I).
+\]
+Every closed subscheme of \(Z_I\) has topological Krull dimension at
+most zero, and a nonempty one has dimension zero.  In particular, there
+are no integral closed curves.
+\end{theorem}
+
+\begin{proof}
+The topology of \(Z_I\) is discrete, so the image of the irreducible
+scheme \(X\) is a unique point \(i\).  Lift \(f\) through the open
+component \(s_i\).  The resulting map \(X\to\Spec k\) is a
+surjective closed immersion into a reduced scheme, hence an isomorphism.
+Kernels identify the original ideal sheaf with that of \(s_i\), and
+distinct supports distinguish the labels.  Finally, irreducible closed
+subsets of a discrete space are singletons; a closed embedding cannot
+increase topological Krull dimension.
+\end{proof}
+
+The supporting commutative-algebra calculation identifies every prime
+\(\mathfrak p\subset k^I\) uniquely as
+\(\mathfrak m_i=\ker(\ev_i)\), with
+\(k^I/\mathfrak m_i\cong_k k\).  These results supply the actual
+integral generators and the absence of curves needed for the
+zero-cycle rational-equivalence construction.
+
 For \(I=\{0,1\}\), the resulting finite rational coefficient
 model \(\Gamma_I=M_2(\Q)\) acts on \(\Q^I\) by matrix multiplication,
 with rows indexing outputs and columns indexing inputs.  Take
@@ -1126,10 +1164,11 @@ The free source \(\mathcal C_{\mathrm{sp}}\) remains distinct from its
 additive quotient, which is identified with \(M_I(\Q)\).
 The displayed generating family consists of finite indexed decompositions.
 This is not yet a realization on all finite-\'etale spans: over a general
-field, finite \'etale carriers need not split.  Geometrically, zero-cycles on a finite split
-scheme have no rational-equivalence relations from curves, since there are
-no one-dimensional integral closed subschemes; this is the elementary
-zero-dimensional specialization of \cite{StacksRationalEquivalence}.
+field, finite \'etale carriers need not split.
+Theorem~\ref{thm:split-integral-subschemes} now identifies the actual
+integral closed subschemes and proves there are no integral closed curves.
+The next construction is the zero-cycle group and its rational-equivalence
+quotient, specializing \cite{StacksRationalEquivalence} to these generators.
 With the correspondence composition convention fixed, the point cycles on
 \(Z_I\times Z_I\) give the matrix interpretation by
 \cite{StacksChowCorrespondenceComposition}.  Formalizing these identifications
@@ -1160,6 +1199,13 @@ square is \leanpath{GeometricSplitPoints.palomarTargetSquare} in
 \leanpath{additivePalomarTargetSquare}.  The obstruction is
 \leanpath{MatrixRestrictionObstruction.no_ringHom_to_commutative} in
 \leanpath{HodgeConjecture/LinearAlgebra/MatrixRestrictionObstruction.lean}.
+The actual integral-subscheme classification is
+\leanpath{existsUnique_pointIso_of_isIntegral} and
+\leanpath{labelEquivIntegralClosedSubscheme} in
+\corrsrc{Examples/SplitIntegralSubschemes.lean}; dimension bounds are in
+\corrsrc{Examples/SplitPointDimension.lean}.  The coordinate-ring quotient
+calculation is in
+\leanpath{HodgeConjecture/CommutativeAlgebra/SplitFieldQuotient.lean}.
 \end{leanfiles}
 
 \subsection{Class-dependent coverage}
@@ -1319,6 +1365,10 @@ Exact finite point-decomposition quotient (\formal) &
 \leanpath{additiveRelations_eq_ker};
 \leanpath{quotientRealizationEquiv}\newline
 \leanpath{Realization/Chow/Examples/SplitSpanQuotient.lean}\\
+Actual integral closed subschemes (\formal) &
+\leanpath{existsUnique_pointIso_of_isIntegral};
+\leanpath{labelEquivIntegralClosedSubscheme}\newline
+\leanpath{Correspondence/Examples/SplitIntegralSubschemes.lean}\\
 Geometric-source coefficient square (\formal) &
 \leanpath{GeometricSplitPoints.palomarTargetSquare}\newline
 \leanpath{Realization/Chow/Examples/GeometricSplitPoints.lean}\\
