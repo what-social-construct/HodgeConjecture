@@ -55,7 +55,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 
 ## Canonical semantic object and TeX registry
 
-### Split-point checkpoint (SP17--SP24)
+### Split-point checkpoint (SP17--SP25)
 
 | ID | Object or overlap | Disposition | Required action | Status |
 | --- | --- | --- | --- | --- |
@@ -67,6 +67,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 | SP22 | Actual products, multiplicities, Chow composition/algebra/action, and the span quotient | CONSTRUCT / IDENTIFY | Identify actual image and inverse-image subschemes and their degree/length multiplicities; construct the cycle/Chow operations; prove the geometric composition and action matrix laws; retain geometric multiplication when packaging the Chow algebra and identify it with the existing additive span quotient. | PROVED; FULL BUILD, VERIFICATION, AND SINGLE-PDF CHECKS PASS |
 | SP23 | Actual complex points, singular degree-zero cohomology, cycle classes, and cohomological action | CONSTRUCT / COMPARE | Give actual complex-algebra points their evaluation-induced topology and prove discreteness; form genuine singular cocycles using actual face maps; construct the point-normalized cycle-class equivalence and its operation/action compatibilities. Keep actual Chow, singular cohomology, and their coordinate modules distinct; record the independent Hodge/Tate-block comparison in SP24. | PROVED; FULL BUILD, VERIFICATION, AND SINGLE-PDF CHECKS PASS |
 | SP24 | Independent finite Hodge data, actual point-plus-scheme block, graph encoding, and lower-left detection | CONSTRUCT / INSTANTIATE | Form the actual tensor complexification and canonical conjugation; specify and verify the effective degree-zero bigrading, then define rational Hodge classes by inverse image. On the actual scheme coproduct, encode by point-pair addition plus column pushforward and decode by column pullback. Prove their actual Betti realization laws and instantiate the Hodge/graph/Palomar targets. | PROVED; FULL BUILD, VERIFICATION, AND SINGLE-PDF CHECKS PASS |
+| SP25 | Actual split torsor, multiplicative residual Chow map, diagonal source embedding, and marked action comparison | CONSTRUCT / COMPARE | Realize the marked ideal by actual point cycles, then cycle class; build the regular torsor and homogeneous intermediate cover. Implement the constant-marked coordinate change by an invertible actual Chow shear inside the fixed target action. Keep the raw point projector, its conjugate, and the canonical negative fundamental class distinct; formalize the multiplicative obstruction to arbitrary class coverage. | PROVED; FULL BUILD, VERIFICATION, AND SINGLE-PDF CHECKS PASS |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -100,6 +101,11 @@ in `0014-split-hodge-tate-block.md`. Full build, integrated verification,
 declaration/axiom checks, empty-label/orientation/universal-square regressions,
 independent mathematical/parity review, and the single-PDF build and visual
 check all passed.
+SP25 construction, source convention, and verification status are recorded
+in `0015-split-galois-marked-comparison.md`. Direct and full builds,
+integrated verification, 24 standard-only axiom reports, nonnormal-subgroup
+and empty-complement regressions, sign/orientation/full-action/Palomar checks,
+source/parity review, and the single-PDF build and visual review all pass.
 
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
@@ -166,6 +172,28 @@ check all passed.
 | `SplitBettiTateBlock.construction` / `detection` / `hodgeCompatibility` | instances of the existing graph interfaces using the actual geometric block and Hodge structure | use $\operatorname{enc}_I$, $\operatorname{dec}_I$, and the existing graph criterion; no duplicate objects |
 | `SplitBettiTateBlock.IsBlockHodgeMorphism` | Hodge-morphism predicate transported through the fixed actual Betti block decomposition | prose predicate on $\mathbf Q(0)\oplus H_I$ |
 | `SplitBettiTateBlock.graphProjectorLift` | encoded Chow representative of the independently specified graph operator | $\Pi_\alpha=\operatorname{enc}_I(\operatorname{cl}_I^{-1}\alpha)$, $\rho_I^+(\Pi_\alpha)=P_\alpha$ |
+| `SplitGaloisSheets.regularAction` / `regularCollisionDecomposition` | actual regular split torsor action and graph-sheet collision identity | $G\curvearrowright Z_G$, $\coprod_{a\in G}Z_G\cong Z_G\times_{\operatorname{Spec}\mathbf C}Z_G$ |
+| `SplitGaloisSheets.quotientMap` | actual finite étale homogeneous intermediate cover, with no normality hypothesis | $Z_G\to Z_S$, $S=G/D$, $g\mapsto gD$ |
+| `SplitGaloisResidual.Complement` / `sheetEquiv` | complementary marked sheets and their point-plus-complement labeling | $I=S\setminus\{s_0\}$, $I^+\cong S$ |
+| `SplitGaloisResidual.residualCoordinates` | restriction with zero-extension inverse; auxiliary coordinates of the existing ideal | $E_D\xrightarrow{\sim}\mathbf Q^I$; no new residual object |
+| `SplitGaloisResidual.residualCycles` / `residualChow` / `residualChowEquiv` | actual weighted point-cycle construction and its class, upgraded by its proved inverse | $\lambda_D(x)=\sum_{i\in I}x(i)[i]$ for the Chow map; distinguish its cycle representative in prose |
+| `SplitGaloisResidual.fundamentalClass` | actual fundamental point-sum of the complement | $[Z_I]=\sum_{i\in I}[i]$ |
+| `SplitGaloisMarkedComparison.residualRealization` | cycle class after the geometric residual Chow equivalence | $\theta_D=\operatorname{cl}_I\lambda_D$ |
+| `SplitGaloisMarkedComparison.generatedChowClass` / `generatedClass` | independently generated Chow and Betti target classes | $z_D=\lambda_D(a_D)=-[Z_I]$, $\alpha_D=\theta_D(a_D)=-\operatorname{cl}_I[Z_I]$ |
+| `SplitChowDiagonal.diagonalAlgHom` | actual diagonal pushforward embedding of point functions into correspondence convolution | $\delta_I:\mathbf Q^I\hookrightarrow\Gamma_I^{\mathrm{CH}}$ |
+| `SplitChowTateBlock.column` | shared actual column pushforward used by both affine encoding and shear | $N_z=j_*z$; no second graph encoding |
+| `SplitChowShear.pointProjector` | raw marked-point Chow projector in the fixed block | $e_*=[(*,*)]$ |
+| `SplitChowShear.shear` / `shearUnit` | diagonal plus actual column, with its constructed two-sided inverse | $\mathcal U_z=1+N_z$, $\mathcal U_z^{-1}=\mathcal U_{-z}$ |
+| `SplitBettiTateBlock.realization_shear` | existing actual Chow action sends the geometric unit to the linear shear | $\rho_I^+(\mathcal U_z)=U_{\operatorname{cl}_I(z)}$; distinguish Chow $\mathcal U_z$ from linear $U_\alpha$ |
+| `SplitGaloisMarkedComparison.sheetSchemeIso` / `sheetReindex` | actual scheme reindexing and its algebra map on rational sheet functions | $Z_{I^+}\cong Z_S$ and reindexing; no new geometric cover |
+| `SplitGaloisMarkedComparison.sheetCohomology` / `sourceToBlock` | actual cycle class of a weighted sheet cycle / its realized constant-unit coordinates | sheet-cycle class in prose; $\Theta_DT_D$ for the block map, not a new realization action |
+| `SplitGaloisMarkedComparison.sourceToBlock_eq_realization_shear` | the marked source coordinates are the action of the actual Chow shear on the full sheet class | $\Theta_DT_D(f)=\rho_I^+(\mathcal U_{z_D})\tau_I(\operatorname{cl}(\sum_s f(s)[s]))$ |
+| `SplitGaloisMarkedComparison.markedEmbedding` | injective actual sheet-to-Chow algebra map, diagonal pushforward followed by fixed geometric conjugation | $\delta_D^{\mathrm{mk}}=\operatorname{Ad}(\mathcal U_{z_D})\circ\delta_{I^+}\circ\operatorname{reindex}$ |
+| `SplitGaloisMarkedComparison.markedEmbedding_action` | full sheet multiplication acts through the actual marked Chow embedding | $\rho_I^+(\delta_D^{\mathrm{mk}}(f))\Theta_DT_D(g)=\Theta_DT_D(fg)$; the selector square is its marked specialization |
+| `SplitGaloisMarkedComparison.markedProjector` | actual image of the selector and Chow conjugate of the raw marked point | $\Pi_D=\delta_D^{\mathrm{mk}}(q_D)=\mathcal U_{z_D}e_*\mathcal U_{-z_D}=\operatorname{enc}_I(z_D)$ |
+| `SplitGaloisMarkedComparison.comparison` | instantiated restriction-free comparison under the unchanged fixed Tate-block action | $\mathscr R_{\Pi_D}$, using $\Theta_D=\operatorname{id}_{\mathbf Q}\oplus\theta_D$ and existing $\rho_I^+$ |
+| `SplitGaloisMarkedComparison.projectorLift` / `palomarTargetSquare` | the chosen idempotent and its independently specified graph target | $\rho_I^+\circ\varphi_{\Pi_D}=\varphi_{P_{\alpha_D}}$; no new target object |
+| `MarkedAugmentedAlgebra.generatedClass_eq_neg_one_of_surjective` | exact rigidity of a surjective multiplicative residual realization | $\alpha=-1$ in the target algebra; a theorem, not a coverage hypothesis |
 | `SplitPointGeometry.existsUnique_pointIso_of_isIntegral` | unique point label and scheme isomorphism respecting an integral closed immersion | $e:X\xrightarrow{\sim}\operatorname{Spec}k$, $s_i\circ e=f$ |
 | `SplitPointGeometry.topologicalKrullDim_le_zero_of_isClosedImmersion` / `topologicalKrullDim_eq_zero_of_isClosedImmersion` | dimension bound for actual closed subschemes, equality if nonempty | $\dim X\leq 0$ / $\dim X=0$ |
 | `SplitFieldQuotient.evalQuotientEquiv` | quotient by a coordinate prime is the base field | $\mathfrak m_i=\ker(\operatorname{ev}_i)$, $k^I/\mathfrak m_i\cong_k k$ |

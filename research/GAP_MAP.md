@@ -1,6 +1,6 @@
 # Current gap map
 
-Last audited: 2026-09-12.
+Last audited: 2026-09-13.
 
 This note follows the semantic discipline of the sibling
 `jacobian-collision-geometry` project: source and target propositions are
@@ -149,13 +149,33 @@ cycle class of its decoded block is the lower-left class of its action.
 The finite model therefore instantiates graph construction, detection,
 Hodge compatibility, and the graph/Palomar target equivalences.
 
-**The next bridge is to actual marked Galois residual and cover data.**
-Connect the constructed block action and detection to geometric marked
-residual maps, compactified projectors, and their action square, then prove
-the intended class-dependent coverage. The span realization construction
-applies to split-presentable spans, not yet to all finite-étale carriers.
-The combined Hodge model is now instantiated in finite split degree zero;
-class-dependent marked Galois coverage remains separate.
+**The split marked-sheet residual and action comparison is constructed.**
+For a finite group `G` and any subgroup `D`, the actual regular split
+torsor has its graph-sheet collision decomposition and an actual finite
+étale quotient-label map to `Z_(G/D)`. On the complement `I` of the marked
+sheet, the residual ideal maps bijectively to actual Chow by the point-cycle
+sum. Its multiplication is geometric intersection and its marked value
+is `−[Z_I]`. Composition with cycle class gives the residual Betti map.
+
+The fixed Tate-block action remains unchanged. Instead, the actual Chow
+unit `U_z=1+j_*z`, with inverse `U_(-z)`, conjugates the marked point
+projector to its graph encoding. For `z=−[Z_I]`, this realizes the
+constant-marked sheet coordinates and proves the restriction-free
+selector-action and Palomar squares for `−cl[Z_I]`.
+The actual diagonal-then-shear embedding also intertwines full sheet
+multiplication with the constructed Betti action.
+
+**The next gap is class-dependent geometric coverage beyond that class.**
+The split torsor has disconnected source when `G` is nontrivial and supplies
+no field normal-closure datum. Its already proper geometry supplies no
+nontrivial boundary extension.
+Multiplicative residual rigidity is exact: the generated class satisfies
+`α²=−α`, and a surjective multiplicative residual map forces `α=−1`.
+Varying such maps alone cannot provide arbitrary target classes. The general
+linear residual interface, class-dependent cover data, and non-split or
+positive-dimensional realization/compactification comparisons remain
+separate. The span realization still applies to split-presentable spans,
+not to all finite-étale carriers over arbitrary fields.
 
 The test also exposed and repaired an interface obstruction:
 `LinearAlgebra/MatrixRestrictionObstruction.lean` proves that no unital ring
@@ -167,7 +187,9 @@ and its action square. The extension-based selector comparison is a lossless
 specialization; the existing Galois coverage interface still retains that
 extra restriction and is not the general target.
 
-See `working/0014-split-hodge-tate-block.md` for the independent Hodge data
+See `working/0015-split-galois-marked-comparison.md` for the split torsor,
+multiplicative residual map, actual Chow shear, and marked action square;
+`working/0014-split-hodge-tate-block.md` for the independent Hodge data
 and geometric graph construction/detection;
 `0013` records the actual point topology,
 singular cocycles, cycle class, and cohomological action;
@@ -988,9 +1010,9 @@ Therefore:
 
 The repository now has fixed-model and indexed-family schemas expressing the
 cycle-class target, plus a proved class/graph-projector equivalence under
-explicit block construction and detection maps.  It also names, but does not
-instantiate, the compatibility identifying `(p,p)` classes with graph
-operators that are Hodge morphisms. The concrete finite split degree-zero
+explicit block construction and detection maps. The compatibility identifying
+`(p,p)` classes with graph operators that are Hodge morphisms is instantiated
+in finite degree zero; the general interface remains separate. The concrete finite split degree-zero
 Chow/Betti/Hodge model and both geometric block maps are now constructed.
 Their Hodge description is the explicitly verified effective type-`(0,0)`
 structure on actual Betti complexification, identified geometrically by
@@ -1005,7 +1027,9 @@ The residual corner
 with unit `1-q` gives the genuine product-algebra split
 `A_H ≃ₐ[ℚ] ℚ × E_H^corner`; selector multiplication is block diagonal
 there and graph-shaped in the distinct constant-unit linear coordinates.  The
-residual realization remains linear.  The universal algebra `U = ℚ × ℚ`
+general residual realization remains linear; its constructed finite split
+instance also preserves multiplication as Chow intersection and Betti cup
+product. The universal algebra `U = ℚ × ℚ`
 canonically presents the chosen generic, compactified, and cohomological
 idempotents, while `palomarTargetSquare` gives the final equality of
 algebra-homomorphism composites.  A full map from `A_H` to a generic
@@ -1016,10 +1040,12 @@ endpoint detects the lower-left class from an explicit comparison square and,
 under surjectivity, derives the exact graph action.  Its source and ambient
 algebras are correctly separated. The split-span coefficient construction
 above now supplies an actual-source comparison square for the two-point
-test. It does not resolve the general Chow/Hodge realization question:
-no theorem constructs the required Chow extension, Chow-motivic residual
-map, Hodge realization square, or Chow detection map; no class-dependent coverage or strong
-replacement instance is present; and the witness does not yet contain a
-genuine cover or normal closure.  Such a generation theorem may be stronger
-than Hodge itself.  Accordingly, the finite-Galois endpoint does not yet prove
-a case of the Hodge conjecture.
+test. The split marked-sheet checkpoint now adds the actual torsor geometry,
+Chow-motivic residual map, geometric shear, and Hodge realization square
+for the canonical negative fundamental class; the earlier block already
+supplies actual Chow detection. These are not general Chow/Hodge realization
+or class-dependent coverage results. No strong replacement instance is
+present, and the existing class-dependent witness type still does not bundle
+a genuine cover or normal closure. Such a generation theorem may be stronger
+than Hodge itself. The finite split degree-zero case supplies a verified
+known model, not a new case of the general conjecture.

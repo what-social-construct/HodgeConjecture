@@ -1,4 +1,4 @@
-import HodgeConjecture.Realization.Betti.Examples.SplitTateBlock
+import HodgeConjecture.Realization.Betti.Examples.SplitGaloisAction
 import HodgeConjecture.Realization.Betti.ZeroSimplexTransfer
 
 /-!
@@ -21,4 +21,11 @@ conjugation compatibility proved. Adding a distinguished scheme point
 constructs the Tate block. Actual Chow pushforward and lower-left pullback
 instantiate the graph construction, detection, and Hodge compatibility,
 and prove the corresponding finite degree-zero Palomar target.
+
+For homogeneous sheets of a constructed split finite-group torsor, the
+residual map is an actual point-cycle construction followed by cycle class.
+An invertible Chow shear realizes the constant-marked coordinate change,
+and the full sheet-algebra action comparison is proved. The marked
+selector's universal target square follows for the resulting negative
+fundamental class.
 -/

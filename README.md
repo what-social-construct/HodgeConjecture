@@ -267,8 +267,24 @@ proves that its action is `P_cl(z)` and that decoding any correspondence
 has the cycle class of its lower-left action block. This instantiates the
 finite degree-zero Hodge model, graph construction, detection, Hodge-morphism
 compatibility, and the graph/Palomar target equivalences.
-The next bridge is to genuine marked Galois residual and cover data with
-their compactified action comparison.
+The [split marked-sheet geometry](HodgeConjecture/Correspondence/Examples/SplitGaloisSheets.lean)
+constructs the actual regular split `G`-torsor and the finite étale
+homogeneous intermediate cover on `S=G/D`, for any subgroup `D`.
+On `I=S∖{D}`, the
+[residual Chow map](HodgeConjecture/Realization/Chow/Examples/SplitGaloisResidual.lean)
+sends `x∈ker(ev_D)` to the sum of actual point classes `∑ x(i)[i]`.
+It is bijective and carries multiplication to geometric intersection;
+in particular, `q−1` maps to `−[Z_I]`. Composing with the constructed
+cycle class gives the residual Betti realization.
+The [actual Chow shear](HodgeConjecture/Realization/Chow/Examples/SplitChowShear.lean)
+`U_z=1+j_*z` is invertible with inverse `U_(-z)` and conjugates the
+marked point projector to `enc(z)`. Thus the marked-coordinate change is
+implemented by a Chow correspondence inside the existing Tate block.
+The actual diagonal-then-shear algebra embedding intertwines full sheet
+multiplication with the constructed Betti action.
+For the canonical generated class `−cl[Z_I]`, this gives the actual
+selector-action comparison and Palomar square. It requires no algebra
+restriction from the full Chow algebra to the commutative sheet algebra.
 The test also proves
 that `M₂(ℚ)` has no unital map to a nontrivial commutative ring; consequently
 the old full-algebra restriction to sheets is not an admissible general
@@ -280,9 +296,11 @@ followed by the [integral-subscheme checkpoint](research/working/0010-split-inte
 and the [zero-cycle and rational-equivalence construction](research/working/0011-split-zero-cycles.md),
 then [geometric Chow composition](research/working/0012-split-chow-composition.md)
 and [actual degree-zero Betti cycle classes](research/working/0013-split-betti-cycle-class.md),
-then the [finite Hodge/Tate-block comparison](research/working/0014-split-hodge-tate-block.md).
+then the [finite Hodge/Tate-block comparison](research/working/0014-split-hodge-tate-block.md)
+and [split marked-sheet residual/action comparison](research/working/0015-split-galois-marked-comparison.md).
 
-The missing step is geometric: construct a Chow-motivic residual map carrying
+Beyond the canonical split example, the missing step is geometric:
+construct a Chow-motivic residual map carrying
 \(q-1\) to a desired Hodge class and prove compatibility with compactification
 and realization—precisely the map, compactified extension package, and square
 assumed by the conditional endpoint.  An arbitrary rational linear map is
@@ -295,6 +313,13 @@ subgroup, compactified extension, and residual comparison may vary with the
 class.  It does not yet bundle an actual finite cover or normal closure.
 Conversely, the Hodge conjecture only supplies an arbitrary Chow lift and
 does not force it to be replaceable by such a selected finite-Galois witness.
+The new finite cover is a split torsor, disconnected when `G` is nontrivial;
+it supplies no field normal-closure datum. Moreover, a multiplicative residual map satisfies
+`θ(q−1)^2=−θ(q−1)`; if it is surjective onto a rational algebra, its
+generated class is necessarily `−1`. Arbitrary class coverage therefore
+cannot follow merely by varying these surjective multiplicative maps.
+The general linear residual interface and any nontrivial boundary
+extension still require their own geometric constructions.
 
 `GraphProjectorLiftFactorizationThroughFixedDeckData` names that missing
 factorization for a supplied target predicate, here the rational Hodge
@@ -775,8 +800,9 @@ The project also formalizes:
 
 ## Next geometric layer
 
-For a concrete smooth projective compactification, the main remaining tasks
-are:
+Beyond the constructed finite split degree-zero model and its regular
+torsor comparison, a concrete smooth projective compactification still
+requires:
 
 1. refine the finite étale admissible algebra, or another chosen
    proper/equidimensional class, to the concrete geometric application;

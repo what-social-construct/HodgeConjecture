@@ -25,11 +25,26 @@ open scoped BigOperators
 
 variable (I : Type) [Fintype I] [DecidableEq I]
 
+/-- The actual proper pushforward along the distinguished source column. -/
+def column : Chow ℂ I ℚ →ₗ[ℚ] EndAlgebra ℂ (Option I) :=
+  chowPushforward ℂ ℚ (fun i : I ↦ (none, some i))
+
+/-- Point coordinates of the geometric column pushforward. -/
+theorem matrix_column (z : Chow ℂ I ℚ) :
+    matrixAlgEquiv ℂ (Option I) (column I z) =
+      fun output input ↦
+        if input = none then output.elim 0 (chowCoordinates ℂ I ℚ z) else 0 := by
+  ext output input
+  change chowCoordinates ℂ (Option I × Option I) ℚ
+    (chowPushforward ℂ ℚ (fun i : I ↦ (none, some i)) z) (input, output) = _
+  rw [chowCoordinates_pushforward]
+  cases output <;> cases input <;> simp [Prod.mk.injEq]
+
 /-- The actual affine Chow graph block: the distinguished point-pair class
 plus the proper pushforward along its lower-left column. -/
 def encode (z : Chow ℂ I ℚ) : EndAlgebra ℂ (Option I) :=
-  (pointCorrespondence ℂ (none : Option I) none : EndAlgebra ℂ (Option I)) +
-    chowPushforward ℂ ℚ (fun i : I ↦ (none, some i)) z
+  let p : EndAlgebra ℂ (Option I) := pointCorrespondence ℂ none none
+  p + column I z
 
 /-- Lower-left decoding is flat pullback along the actual column inclusion. -/
 def decode : EndAlgebra ℂ (Option I) →ₗ[ℚ] Chow ℂ I ℚ :=
@@ -41,11 +56,11 @@ theorem matrix_encode (z : Chow ℂ I ℚ) :
     matrixAlgEquiv ℂ (Option I) (encode I z) =
       fun output input ↦
         if input = none then output.elim 1 (chowCoordinates ℂ I ℚ z) else 0 := by
+  unfold encode
+  rw [map_add, matrix_column]
+  simp only [matrixAlgEquiv_apply, matrixCoordinates_pointCorrespondence]
   ext output input
-  cases output <;> cases input <;>
-    simp [encode, matrixAlgEquiv_apply, matrixCoordinates_apply,
-      chowCoordinates_pushforward, pointCorrespondence,
-      -coordinates_apply, Prod.mk.injEq]
+  cases output <;> cases input <;> simp [Matrix.single]
 
 /-- The geometric decoder extracts the actual lower-left Chow coefficient. -/
 @[simp]

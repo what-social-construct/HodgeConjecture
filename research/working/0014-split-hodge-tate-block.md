@@ -6,6 +6,11 @@ Date: 2026-09-12. This advances
 [0013-split-betti-cycle-class.md](0013-split-betti-cycle-class.md).
 Canonical manuscript: `paper/main.tex`, producing the single `paper/main.pdf`.
 
+Advancement: [0015-split-galois-marked-comparison.md](0015-split-galois-marked-comparison.md)
+connects this fixed Tate-block action to an actual split torsor's marked
+residual ideal by a geometric Chow map and invertible Chow shear. The
+verification record below remains the completed September 12 checkpoint.
+
 ## Checkpoint
 
 For `Z_I = Spec(ℂ^I)` with finite `I`, the preceding checkpoint constructed
@@ -161,13 +166,18 @@ registry distinguishes the actual Hodge complexification, rational
 subspace, geometric encoding/decoding, and fixed block decomposition.
 No implementation wrapper is treated as an additional mathematical object.
 
-## Next bridge
+## Next bridge at this checkpoint
 
 Connect this concrete block action and detection to actual marked Galois
 residual and cover data, with compactified projectors and their action
 square, and establish the intended class-dependent coverage. Extending
 the geometric Hodge/block construction beyond finite split degree zero
 remains a separate task.
+
+The canonical finite split residual/action construction is now advanced in
+0015. It realizes the negative fundamental class through an actual Chow
+shear; class-dependent coverage remains separate, with its multiplicative
+rigidity constraint made explicit there.
 
 The actual Betti cycle class and the encoding are injective here. The
 earlier loss from the free span source to its additive quotient remains

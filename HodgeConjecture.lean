@@ -28,10 +28,13 @@ algebra separate from a noncommutative compactified correspondence algebra;
 it presents the selector comparison as a morphism of representations of the
 universal one-idempotent algebra, detects the target class from its selector
 square, and derives the Palomar-style equality of algebra-homomorphism
-composites when the residual realization is surjective.  It does not construct
-those data geometrically.  Likewise, the fifth stage does not
-claim that the current finite-cover family supplies every Hodge-class graph
-projector or instantiate the abstract target for a concrete variety.
+composites when the residual realization is surjective. Those data are now
+constructed for homogeneous sheets of a split finite-group torsor: the
+residual map is an actual point-cycle construction and the coordinate shear
+is an invertible Chow correspondence. The finite split degree-zero Hodge
+target is also instantiated using actual singular cohomology. These concrete
+checkpoints do not assert that the finite-cover family supplies every
+Hodge-class graph projector for general varieties.
 
 Height-one fixed-ring localization and the valuation/prime-inertia comparison
 form a supporting branch inside `Boundary.Normalization`; they do not replace

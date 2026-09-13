@@ -2,6 +2,7 @@ import HodgeConjecture.Realization.Chow.GaloisProjector
 import HodgeConjecture.Realization.Chow.GaloisHodgeTarget
 import HodgeConjecture.Realization.Chow.IdempotentRepresentation
 import HodgeConjecture.Realization.Chow.MarkedAugmentedRealization
+import HodgeConjecture.Realization.Chow.MultiplicativeResidualRigidity
 import HodgeConjecture.Realization.Chow.GaloisMarkedBlock
 import HodgeConjecture.Realization.Chow.GaloisMarkedRealization
 import HodgeConjecture.Realization.Chow.Model
@@ -15,6 +16,9 @@ import HodgeConjecture.Realization.Chow.Examples.SplitRationalEquivalence
 import HodgeConjecture.Realization.Chow.Examples.SplitCycleMultiplicity
 import HodgeConjecture.Realization.Chow.Examples.SplitChowAction
 import HodgeConjecture.Realization.Chow.Examples.GeometricSplitPoints
+import HodgeConjecture.Realization.Chow.Examples.SplitGaloisResidual
+import HodgeConjecture.Realization.Chow.Examples.SplitChowDiagonal
+import HodgeConjecture.Realization.Chow.Examples.SplitChowShear
 import HodgeConjecture.LinearAlgebra.MatrixRestrictionObstruction
 
 /-!
@@ -36,7 +40,13 @@ exposes the projector homomorphisms without requiring a map from the whole
 pointwise sheet algebra to the convolution algebra, or a restriction in the
 reverse direction. It still requires an
 explicit geometric residual realization and action square; it constructs
-neither geometrically.  The auxiliary linear coset-average comparison remains
+neither for a general variety. For split homogeneous sheets, the actual
+residual ideal now maps bijectively to point-sum Chow classes and preserves
+intersection. Diagonal pushforward and an invertible Chow shear construct
+the sheet-to-correspondence algebra map; `Realization.Betti` proves its
+marked action comparison. Multiplicative residual rigidity forces the
+generated class to be minus the unit when the residual map is surjective.
+The auxiliary linear coset-average comparison remains
 available by directly importing `Realization.Chow.SheetLinearization`, but is
 not part of this active umbrella because pointwise and convolution products
 differ.

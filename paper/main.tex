@@ -88,7 +88,7 @@
 \title{A Formal Projector Spine for the Rational Hodge Target:\\
   Collisions, Marked Galois Sheets, and Boundary Interfaces}
 \author{Chloe van der Vlugt}
-\date{Draft of September 12, 2026}
+\date{Draft of September 13, 2026}
 
 \begin{document}
 
@@ -146,8 +146,13 @@ carries the effective degree-zero Hodge structure.  On the actual disjoint
 union with one point, geometric Chow pushforward constructs the graph
 projector, and flat pullback extracts its lower-left Chow block.  These
 constructions instantiate the finite degree-zero Hodge, graph-lifting,
-and Palomar target equivalences.  A geometric-source two-point projector
-square also follows.
+and Palomar target equivalences.  For a split finite-group torsor and its
+homogeneous sheet cover, the marked residual ideal is realized by actual
+Chow point cycles, multiplicatively for intersection.  An invertible
+Chow correspondence implements the constant-marked coordinate change and
+gives the selector-action and Palomar squares for the negative fundamental
+class.  Multiplicative residual rigidity identifies the exact class
+constraint of this construction.
 These statements are machine checked from their displayed hypotheses
 (\formal).  For the general Hodge application, the Chow/Hodge comparison, compactified realization, and
 class-dependent marked-sheet coverage packages remain supplied inputs
@@ -1526,7 +1531,125 @@ of each \(\alpha\); applying the constructed encoding and the general
 target theorem gives the graph and Palomar statements.
 \end{proof}
 
-For \(I=\{0,1\}\), the resulting finite rational coefficient
+The finite-group sheet construction now has an actual geometric instance.
+Finite \'etale schemes over an algebraically closed point are finite sets
+of reduced points \cite{StacksFiniteEtaleAlgebraicallyClosed}; the
+following statement retains the actual schemes, Chow groups, and Betti
+spaces constructed above.
+
+\begin{theorem}[Split marked-sheet realization and Chow shear --- \formal]
+\label{thm:split-galois-marked-comparison}
+Let \(G\) be a finite group, \(D\leq G\), \(S=G/D\),
+\(s_0=D\), and \(I=S\setminus\{s_0\}\).
+The regular action on \(Z_G\to\Spec\mathbf C\) has the actual torsor
+collision isomorphism, with its two projection identities, and the map
+\(g\mapsto gD\) gives a finite \'etale intermediate cover
+\(Z_G\to Z_S\to\Spec\mathbf C\).
+Write \(q_D=\one_{\{s_0\}}\), \(E_D=\ker(\ev_{s_0})\), and
+\(a_D=q_D-1\).  The map defined by actual point cycles,
+\[
+ \lambda_D:E_D\longrightarrow\CH_0(Z_I)_{\Q},
+ \qquad x\longmapsto\sum_{i\in I}x(i)[i],
+\]
+is a rational linear equivalence satisfying
+\[
+ \lambda_D(xy)=\lambda_D(x)\cdot\lambda_D(y),
+ \qquad z_D:=\lambda_D(a_D)=-[Z_I].
+\]
+Here the product on Chow classes is geometric intersection.
+Set \(\theta_D=\operatorname{cl}_I\lambda_D\) and
+\(\alpha_D=\theta_D(a_D)=-\operatorname{cl}_I[Z_I]\).
+Then \(\theta_D\) is bijective.
+
+Use the actual marked-point identification
+\(Z_S\cong Z_{I^+}\), where \(I^+=\{*\}\amalg I\).
+Let \(e_*=[(*,*)]\) be the point projector and, for any Chow class \(z\),
+put
+\[
+ N_z=j_*z,\qquad \mathcal U_z=1+N_z
+       \quad\text{in }\Gamma_{I^+}^{\mathrm{CH}}.
+\]
+Geometric correspondence multiplication satisfies
+\[
+ N_zN_w=0,\qquad
+ \mathcal U_z^{-1}=\mathcal U_{-z},\qquad
+ \mathcal U_z e_*\mathcal U_{-z}=\operatorname{enc}_I(z).
+\]
+Actual diagonal pushforward gives an injective algebra map
+\(\delta_{I^+}:\Q^{I^+}\hookrightarrow\Gamma_{I^+}^{\mathrm{CH}}\).
+It sends a point characteristic function to its point projector.
+After relabeling \(S\cong I^+\) and conjugating by
+\(\mathcal U_{z_D}\), this is the geometric marked sheet-algebra
+embedding
+\[
+ \delta_D^{\mathrm{mk}}
+  =\operatorname{Ad}(\mathcal U_{z_D})\circ
+    \delta_{I^+}\circ\operatorname{reindex}
+   :A_D\hookrightarrow\Gamma_{I^+}^{\mathrm{CH}}.
+\]
+Consequently the actual Chow correspondence
+\(\Pi_D=\delta_D^{\mathrm{mk}}(q_D)
+       =\mathcal U_{z_D}e_*\mathcal U_{-z_D}\) is idempotent.
+Its realization uses the fixed action \(\rho_I^+\) of
+Theorem~\ref{thm:split-hodge-tate-block}, and satisfies
+\[
+ \rho_I^+(\mathcal U_z)=U_{\operatorname{cl}_I(z)},\qquad
+ \rho_I^+(\Pi_D)=P_{\alpha_D},\qquad
+ \operatorname{dec}_I(\Pi_D)=z_D.
+\]
+
+More precisely, with \(T_D\) the constant-unit marked decomposition
+and \(\Theta_D=\operatorname{id}_{\Q}\oplus\theta_D\), the actual
+sheet-cohomology comparison has coordinates
+\[
+ \Theta_DT_D(f)=
+ \left(f(s_0),\operatorname{cl}_I
+       \left(\sum_{i\in I}(f(i)-f(s_0))[i]\right)\right).
+\]
+It identifies the constant-marked action with the actual Chow shear and
+intertwines the full sheet-algebra action:
+\[
+ \rho_I^+(\delta_D^{\mathrm{mk}}(f))\,\Theta_DT_D(g)
+      =\Theta_DT_D(fg)\qquad(f,g\in A_D).
+\]
+In particular it proves the selector square
+\[
+ \rho_I^+(\Pi_D)\Theta_D
+   =\Theta_D\bigl(T_Dm_{q_D}T_D^{-1}\bigr).
+\]
+Thus the restriction-free marked-projector comparison is instantiated,
+and its Palomar target is the equality of algebra homomorphisms
+\[
+ \rho_I^+\circ\varphi_{\Pi_D}=\varphi_{P_{\alpha_D}}.
+\]
+\end{theorem}
+
+\begin{proof}
+The regular-action collision map is a label bijection, hence induces an
+actual split-scheme isomorphism; both projection equations hold on every
+component.  This is the trivial constant-group torsor construction
+\cite{StacksPseudoTorsor,StacksTorsorDefinition}.
+The quotient label map gives the intermediate scheme map.  Restriction
+to \(I\), with inverse zero extension at \(s_0\), gives the inverse of
+\(\lambda_D\).  The point-intersection law proves multiplicativity, and
+\(a_D(i)=-1\) proves its displayed value.  Composing with the previously
+constructed cycle-class equivalence gives \(\theta_D\).
+
+Every column correspondence has source \(*\) and target in \(I\), so
+the product of two such columns vanishes.  The geometric composition law
+then gives the two-sided inverse of \(\mathcal U_z\) and its conjugation
+formula.  The actual Betti action of its column is
+\((t,h)\mapsto(0,t\operatorname{cl}_I(z))\), which proves the shear
+realization.  In component coordinates the marked point acts as
+\(P_0\); subtracting the constant marked value is precisely the shear
+with class \(\alpha_D\).  This proves the stated sheet-cohomology
+formula.  Actual diagonal pushforward acts by multiplication by the sheet
+function; conjugating this identity gives the full action comparison and
+its selector square.  The constructed Chow decoder gives \(z_D\),
+and the universal one-idempotent algebra gives the final equality.
+\end{proof}
+
+For \(I=\{0,1\}\), the earlier finite rational coefficient
 model \(\Gamma_I=M_2(\Q)\) acts on \(\Q^I\) by matrix multiplication,
 with rows indexing outputs and columns indexing inputs.  Take
 \[
@@ -1589,8 +1712,10 @@ Theorem~\ref{thm:split-betti-cycle-class} constructs its degree-zero
 Betti cycle classes on the actual complex-point space and identifies the
 cohomological action.  Theorem~\ref{thm:split-hodge-tate-block} supplies
 the independent degree-zero Hodge structure and the geometric block
-construction and detection.  The marked Galois residual realization and
-class-dependent cover comparison are still separate constructions.
+construction and detection.  Theorem~\ref{thm:split-galois-marked-comparison}
+adds the actual split torsor, multiplicative residual Chow map, and marked
+action comparison for its canonical generated class.  Class-dependent
+cover coverage remains separate.
 \end{statusnote}
 
 \begin{leanfiles}
@@ -1687,6 +1812,36 @@ The same module contains \leanpath{hodgeConjectureAt},
 \leanpath{hodgeConjectureAt_iff_palomarTargetSquare},
 \leanpath{everyHodgeClassHasPalomarTargetSquare}, and
 \leanpath{hodgeConjectureAt_iff_hodgeMorphismLift}.
+The actual split torsor and intermediate cover are in
+\corrsrc{Examples/SplitGaloisSheets.lean}, under
+\leanpath{SplitGaloisSheets.regularCollisionDecomposition},
+\leanpath{regularTorsorIso}, and \leanpath{quotientMap}.
+The actual residual Chow map and its multiplicativity are
+\leanpath{SplitGaloisResidual.residualChowEquiv},
+\leanpath{residualChow_mul}, and \leanpath{residualChow_residualClass} in
+\chowsrc{Examples/SplitGaloisResidual.lean}.
+The actual diagonal embedding is
+\leanpath{SplitChowDiagonal.diagonalAlgHom} in
+\chowsrc{Examples/SplitChowDiagonal.lean}.
+The invertible Chow shear and conjugation identity are
+\leanpath{SplitChowShear.shearUnit} and \leanpath{shear_point_shear_neg}
+in \chowsrc{Examples/SplitChowShear.lean}; their actual Betti comparison is
+\leanpath{SplitBettiTateBlock.realization_shear} in
+\leanpath{HodgeConjecture/Realization/Betti/Examples/SplitChowShear.lean}.
+The residual realization, marked comparison, and target square are
+\leanpath{SplitGaloisMarkedComparison.residualRealization},
+\leanpath{sheetSchemeIso}, \leanpath{markedEmbedding},
+\leanpath{markedEmbedding_injective},
+\leanpath{sourceToBlock_eq_realization_shear}, \leanpath{comparison}, and
+\leanpath{palomarTargetSquare} in
+\leanpath{HodgeConjecture/Realization/Betti/Examples/SplitGaloisMarkedComparison.lean}.
+The full sheet-algebra action identity is
+\leanpath{SplitGaloisMarkedComparison.markedEmbedding_action} in
+\leanpath{HodgeConjecture/Realization/Betti/Examples/SplitGaloisAction.lean}.
+Multiplicative rigidity is
+\leanpath{MarkedAugmentedAlgebra.generatedClass_sq_eq_neg} and
+\leanpath{generatedClass_eq_neg_one_of_surjective} in
+\chowsrc{MultiplicativeResidualRigidity.lean}.
 \end{leanfiles}
 
 \subsection{Class-dependent coverage}
@@ -1743,10 +1898,31 @@ and \leanpath{rationalHodgeConjectureAt_iff_classDependentMarkedGaloisSelectorCo
 
 \subsection*{Exact remaining gap --- \openstatus}
 
-The finite split degree-zero model and its block comparison are now
-constructed.  Their Hodge structure is the explicit effective type-\((0,0)\)
+The finite split degree-zero model, its block comparison, and the marked
+residual realization of Theorem~\ref{thm:split-galois-marked-comparison}
+are now constructed.  Their Hodge structure is the explicit effective type-\((0,0)\)
 specialization on the tensor complexification of actual singular
 cohomology; the cited source identifies this with geometric degree zero.
+The new cover is a split constant-group torsor.  For nontrivial \(G\)
+its source is disconnected, whereas connectedness is part of the
+Galois-cover terminology \cite{StacksConnectedGaloisCover}.
+The construction supplies no field normal-closure datum.
+No normality of \(D\) is needed for the homogeneous set \(G/D\);
+the distinction from a Galois intermediate field is the normal-subgroup
+condition in \cite{StacksGaloisSubgroups}.
+The change of coordinates is an invertible Chow correspondence, not a
+scheme automorphism.  These finite schemes are already proper, so this
+example does not require a nontrivial boundary-extension input.
+
+There is also an exact multiplicative constraint.  For any marked
+augmented source, \(a=q-1\) satisfies \(a^2=-a\).  A multiplicative
+residual map into a rational algebra therefore gives
+\(\alpha^2=-\alpha\); if the map is surjective, \(-a=1-q\) acts as
+the residual unit, forcing \(\alpha=-1\).  Thus arbitrary class coverage
+cannot be obtained simply by varying surjective multiplicative residual
+maps.  The general residual interface is linear and asks for separately
+proved geometric comparison and coverage.
+
 For the general Hodge target, the following constructions remain, with
 their displayed compatibilities to be proved:
 
@@ -1886,6 +2062,30 @@ Finite Hodge/Tate-block target (\formal) &
 \leanpath{construction}; \leanpath{detection};
 \leanpath{hodgeConjectureAt_iff_palomarTargetSquare}\newline
 \leanpath{Realization/Betti/Examples/SplitTateBlock.lean}\\
+Split torsor and homogeneous cover (\formal) &
+\leanpath{SplitGaloisSheets.regularCollisionDecomposition};
+\leanpath{quotientMap}\newline
+\leanpath{Correspondence/Examples/SplitGaloisSheets.lean}\\
+Multiplicative residual Chow realization (\formal) &
+\leanpath{SplitGaloisResidual.residualChowEquiv};
+\leanpath{residualChow_mul}\newline
+\leanpath{Realization/Chow/Examples/SplitGaloisResidual.lean}\\
+Actual diagonal embedding and Chow shear (\formal) &
+\leanpath{SplitChowDiagonal.diagonalAlgHom};
+\leanpath{SplitChowShear.shear_point_shear_neg}\newline
+\leanpath{Realization/Chow/Examples/SplitChowDiagonal.lean};
+\leanpath{Realization/Chow/Examples/SplitChowShear.lean}\\
+Marked split Betti action comparison (\formal) &
+\leanpath{SplitGaloisMarkedComparison.comparison};
+\leanpath{markedEmbedding}; \leanpath{palomarTargetSquare}\newline
+\leanpath{Realization/Betti/Examples/SplitGaloisMarkedComparison.lean}\\
+Full marked sheet-algebra action (\formal) &
+\leanpath{SplitGaloisMarkedComparison.markedEmbedding_action}\newline
+\leanpath{Realization/Betti/Examples/SplitGaloisAction.lean}\\
+Multiplicative residual rigidity (\formal) &
+\leanpath{generatedClass_sq_eq_neg};
+\leanpath{generatedClass_eq_neg_one_of_surjective}\newline
+\leanpath{Realization/Chow/MultiplicativeResidualRigidity.lean}\\
 Geometric-source coefficient square (\formal) &
 \leanpath{GeometricSplitPoints.palomarTargetSquare}\newline
 \leanpath{Realization/Chow/Examples/GeometricSplitPoints.lean}\\
@@ -2030,7 +2230,7 @@ statements, proofs, citations, and release terms belongs to the author.
 
 \begingroup
 \small
-\bibliographystyle{alpha}
+\bibliographystyle{hodgealpha}
 \bibliography{references}
 \endgroup
 

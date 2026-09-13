@@ -24,7 +24,13 @@ Build from this directory with:
 latexmk -pdf main.tex
 ```
 
-The current bibliography is [`references.bib`](references.bib). The
-manuscript contains no license assertion; authorship, citations, mathematical
+The current bibliography is [`references.bib`](references.bib).
+[`hodgealpha.bst`](hodgealpha.bst) retains the standard `alpha` style,
+with its permitted local rename and a single functional change: same-label
+disambiguation continues `a,…,z,aa,ab,…` rather than overflowing into
+punctuation after 26 entries. This accommodates the Stacks references
+without changing corporate authorship or publication dates. The original
+style's copyright and redistribution notice are retained in the file.
+The manuscript contains no license assertion; authorship, citations, mathematical
 content, novelty positioning, and release terms require final author review
 before publication.

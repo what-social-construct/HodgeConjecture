@@ -14,6 +14,7 @@ import HodgeConjecture.Correspondence.Examples.SplitProductGeometry
 import HodgeConjecture.Correspondence.Examples.SplitPointMultiplicity
 import HodgeConjecture.Correspondence.Examples.SplitSpanGeometry
 import HodgeConjecture.Correspondence.Examples.SplitSpanCoproduct
+import HodgeConjecture.Correspondence.Examples.SplitGaloisSheets
 import HodgeConjecture.Correspondence.FiniteGroupProjector
 import HodgeConjecture.Correspondence.GroupAlgebraProjector
 import HodgeConjecture.Correspondence.HeckeProjector
@@ -47,6 +48,8 @@ Chow/cohomological realization:
     and dimension-zero/no-curve theorems for actual closed immersions.
 19. actual split products, point fibers, ideal-sheaf images and inverse images,
     and degree/length-one comparisons through actual residue and stalk maps.
+20. actual split finite-group torsors, homogeneous sheet maps, and the regular
+    torsor's collision decomposition into deck graphs.
 
 The free span algebra is not identified with a Chow ring.  Proper cycle
 extraction, rational equivalence, and compatibility with refined

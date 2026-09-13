@@ -627,3 +627,209 @@ example (I : Type) [Fintype I] [DecidableEq I] (α : SplitBetti.Cohomology I) :
   (SplitBettiTateBlock.graphProjectorLift I α).realization_idempotentMap_square
 
 end SplitTateBlockRegressions
+
+-- Genuine split G-torsor geometry and its homogeneous quotient, without normality.
+#check HodgeConjecture.SplitGaloisSheets.regularAction
+#check HodgeConjecture.SplitGaloisSheets.sheetAction
+#check HodgeConjecture.SplitGaloisSheets.quotientMap_equivariant
+#check HodgeConjecture.SplitGaloisSheets.quotientMap_isFinite
+#check HodgeConjecture.SplitGaloisSheets.quotientMap_isEtale
+#check HodgeConjecture.SplitGaloisSheets.quotientMap_isProper
+#check HodgeConjecture.SplitGaloisSheets.quotientMap_surjective
+#check HodgeConjecture.SplitGaloisSheets.regularToBase_surjective
+#check HodgeConjecture.SplitGaloisSheets.regularAction_existsUnique
+#check HodgeConjecture.SplitGaloisSheets.regularTorsorIso_hom_fst
+#check HodgeConjecture.SplitGaloisSheets.regularTorsorIso_hom_snd
+#check HodgeConjecture.SplitGaloisSheets.regularCollisionDecomposition
+
+-- The source ideal is realized by actual point cycles and geometric intersection.
+#check HodgeConjecture.SplitGaloisResidual.sheetEquiv
+#check HodgeConjecture.SplitGaloisResidual.residualCoordinates_mul
+#check HodgeConjecture.SplitGaloisResidual.residualChowEquiv
+#check HodgeConjecture.SplitGaloisResidual.residualChow_residualClass
+#check HodgeConjecture.SplitGaloisResidual.residualChow_mul
+#check HodgeConjecture.SplitChowDiagonal.matrix_diagonalAlgHom
+#check HodgeConjecture.SplitChowDiagonal.diagonalAlgHom_injective
+#check HodgeConjecture.SplitChowDiagonal.diagonalAlgHom_single
+
+-- Action comparisons need no reverse ambient-algebra restriction homomorphism.
+#check HodgeConjecture.MarkedProjectorActionComparison
+#check HodgeConjecture.MarkedProjectorActionComparison.lowerLeftClass_action_eq_generatedClass
+#check HodgeConjecture.MarkedProjectorActionComparison.realizes
+#check HodgeConjecture.MarkedProjectorActionComparison.action_comp_idempotentMap_eq_classGraph
+
+-- Multiplicativity rigidifies q - 1 without a unit-preservation hypothesis.
+#check HodgeConjecture.MarkedAugmentedAlgebra.residualClass_mul_eq_neg
+#check HodgeConjecture.MarkedAugmentedAlgebra.generatedClass_mul_image
+#check HodgeConjecture.MarkedAugmentedAlgebra.generatedClass_sq_eq_neg
+#check HodgeConjecture.MarkedAugmentedAlgebra.generatedClass_eq_neg_one_of_one_mem_range
+#check HodgeConjecture.MarkedAugmentedAlgebra.generatedClass_eq_neg_one_of_surjective
+
+#print axioms HodgeConjecture.SplitGaloisSheets.quotientMap_equivariant
+#print axioms HodgeConjecture.SplitGaloisSheets.regularAction_existsUnique
+#print axioms HodgeConjecture.SplitGaloisSheets.regularCollisionDecomposition
+#print axioms HodgeConjecture.SplitGaloisResidual.residualChowEquiv
+#print axioms HodgeConjecture.SplitGaloisResidual.residualChow_residualClass
+#print axioms HodgeConjecture.SplitGaloisResidual.residualChow_mul
+#print axioms HodgeConjecture.SplitChowDiagonal.diagonalAlgHom
+#print axioms HodgeConjecture.SplitChowDiagonal.diagonalAlgHom_single
+#print axioms HodgeConjecture.MarkedProjectorActionComparison.lowerLeftClass_action_eq_generatedClass
+#print axioms HodgeConjecture.MarkedProjectorActionComparison.action_comp_idempotentMap_eq_classGraph
+#print axioms HodgeConjecture.MarkedAugmentedAlgebra.generatedClass_sq_eq_neg
+#print axioms HodgeConjecture.MarkedAugmentedAlgebra.generatedClass_eq_neg_one_of_surjective
+
+noncomputable section SplitGaloisRegressions
+
+open HodgeConjecture
+
+-- The regular torsor genuinely accepts a noncommutative finite group.
+example :
+    Equiv.swap (0 : Fin 3) 1 * Equiv.swap 1 2 ≠
+      Equiv.swap 1 2 * Equiv.swap (0 : Fin 3) 1 := by decide
+
+example :
+    GaloisCollisionDecomposition (Equiv.Perm (Fin 3))
+      (SplitPointGeometry.toBase ℂ (Equiv.Perm (Fin 3))) :=
+  SplitGaloisSheets.regularCollisionDecomposition (Equiv.Perm (Fin 3))
+
+-- A concrete nonnormal point stabilizer still gives a finite étale quotient cover.
+example :
+    let D := MulAction.stabilizer (Equiv.Perm (Fin 3)) (0 : Fin 3)
+    ¬D.Normal ∧
+      AlgebraicGeometry.IsEtale (SplitGaloisSheets.quotientMap (Equiv.Perm (Fin 3)) D) ∧
+      AlgebraicGeometry.Surjective
+        (SplitGaloisSheets.quotientMap (Equiv.Perm (Fin 3)) D) := by
+  dsimp only
+  refine ⟨?_, inferInstance, inferInstance⟩
+  intro h
+  have hc := h.conj_mem (Equiv.swap (1 : Fin 3) 2) (by decide)
+    (Equiv.swap (0 : Fin 3) 1)
+  exact (by decide :
+    Equiv.swap (0 : Fin 3) 1 * Equiv.swap 1 2 * (Equiv.swap (0 : Fin 3) 1)⁻¹ ∉
+      MulAction.stabilizer (Equiv.Perm (Fin 3)) (0 : Fin 3)) hc
+
+-- The maximal subgroup leaves exactly the marked sheet and no complement.
+example (G : Type) [Group G] :
+    IsEmpty (SplitGaloisResidual.Complement (⊤ : Subgroup G)) := by
+  letI : Subsingleton (G ⧸ (⊤ : Subgroup G)) := QuotientGroup.subsingleton_quotient_top
+  exact ⟨fun s ↦ s.property (Subsingleton.elim _ _)⟩
+
+example (G : Type) [Group G] [Finite G] :
+    SplitGaloisResidual.fundamentalClass (⊤ : Subgroup G) = 0 := by
+  letI : Subsingleton (G ⧸ (⊤ : Subgroup G)) := QuotientGroup.subsingleton_quotient_top
+  apply (SplitZeroCycles.chowCoordinates ℂ
+    (SplitGaloisResidual.Complement (⊤ : Subgroup G)) ℚ).injective
+  ext s
+  exact (s.property (Subsingleton.elim _ _)).elim
+
+-- The geometric residual class has the negative, not positive, fundamental sign.
+example (G : Type) [Group G] [Finite G] (D : Subgroup G) :
+    SplitGaloisResidual.residualChow D (MarkedSheetProjector.residualClass D) +
+      SplitGaloisResidual.fundamentalClass D = 0 := by
+  rw [SplitGaloisResidual.residualChow_residualClass]
+  exact neg_add_cancel _
+
+-- A singleton point function lands on its actual diagonal point pair.
+example :
+    SplitChowDiagonal.diagonalAlgHom ℂ (Fin 2) (Pi.single 1 1) =
+      SplitChowCorrespondence.pointCorrespondence ℂ (1 : Fin 2) 1 :=
+  SplitChowDiagonal.diagonalAlgHom_single ℂ (Fin 2) 1
+
+-- Surjective multiplicative linear maps force the sign, with no map_one assumption.
+example {A B : Type} [CommRing A] [Algebra ℚ A] [Ring B] [Algebra ℚ B]
+    (M : MarkedAugmentedAlgebra ℚ A) (θ : M.Residual →ₗ[ℚ] B)
+    (hMul : ∀ x y, θ (x * y) = θ x * θ y) (hSurj : Function.Surjective θ) :
+    M.generatedClass θ + 1 = 0 := by
+  rw [M.generatedClass_eq_neg_one_of_surjective θ hMul hSurj]
+  exact neg_add_cancel _
+
+end SplitGaloisRegressions
+
+-- The change of splitting is an invertible actual Chow correspondence.
+#check HodgeConjecture.SplitChowShear.column_mul_column
+#check HodgeConjecture.SplitChowShear.shear_mul_shear_neg
+#check HodgeConjecture.SplitChowShear.conjugation_pointProjector
+#check HodgeConjecture.SplitBettiTateBlock.realization_shear
+
+-- Actual marked-sheet data supply the alpha-free comparison and its target square.
+#check HodgeConjecture.SplitGaloisMarkedComparison.sheetSchemeIso
+#check HodgeConjecture.SplitGaloisMarkedComparison.residualRealization_mul
+#check HodgeConjecture.SplitGaloisMarkedComparison.residualRealization_surjective
+#check HodgeConjecture.SplitGaloisMarkedComparison.generatedChowClass_eq_neg_fundamental
+#check HodgeConjecture.SplitGaloisMarkedComparison.generatedClass_eq_neg_one
+#check HodgeConjecture.SplitGaloisMarkedComparison.sourceToBlock_eq_realization_shear
+#check HodgeConjecture.SplitGaloisMarkedComparison.markedEmbedding_injective
+#check HodgeConjecture.SplitGaloisMarkedComparison.markedEmbedding_action
+#check HodgeConjecture.SplitGaloisMarkedComparison.markedProjector_eq_encode
+#check HodgeConjecture.SplitGaloisMarkedComparison.markedProjector_isIdempotent
+#check HodgeConjecture.SplitGaloisMarkedComparison.markedProjector_realizes
+#check HodgeConjecture.SplitGaloisMarkedComparison.comparison
+#check HodgeConjecture.SplitGaloisMarkedComparison.detectedClass
+#check HodgeConjecture.SplitGaloisMarkedComparison.projectorLift
+#check HodgeConjecture.SplitGaloisMarkedComparison.palomarTargetSquare
+
+#print axioms HodgeConjecture.SplitChowShear.shear_mul_shear_neg
+#print axioms HodgeConjecture.SplitChowShear.conjugation_pointProjector
+#print axioms HodgeConjecture.SplitBettiTateBlock.realization_shear
+#print axioms HodgeConjecture.SplitGaloisMarkedComparison.residualRealization_mul
+#print axioms HodgeConjecture.SplitGaloisMarkedComparison.generatedClass_eq_neg_one
+#print axioms HodgeConjecture.SplitGaloisMarkedComparison.sourceToBlock_eq_realization_shear
+#print axioms HodgeConjecture.SplitGaloisMarkedComparison.markedEmbedding_injective
+#print axioms HodgeConjecture.SplitGaloisMarkedComparison.markedEmbedding_action
+#print axioms HodgeConjecture.SplitGaloisMarkedComparison.markedProjector_realizes
+#print axioms HodgeConjecture.SplitGaloisMarkedComparison.comparison
+#print axioms HodgeConjecture.SplitGaloisMarkedComparison.detectedClass
+#print axioms HodgeConjecture.SplitGaloisMarkedComparison.palomarTargetSquare
+
+noncomputable section SplitGaloisMarkedRegressions
+
+open HodgeConjecture Classical
+open HodgeConjecture.SplitGaloisMarkedComparison HodgeConjecture.SplitGaloisResidual
+
+variable {G : Type} [Group G] [Finite G] (D : Subgroup G)
+
+local instance : Fintype (SplitGaloisResidual.Complement D) :=
+  Fintype.ofFinite (SplitGaloisResidual.Complement D)
+
+-- Constant-marked coordinates mark the constant unit, not the selector.
+example : sourceToBlock D 1 = (1, 0) := by
+  apply Prod.ext
+  · simp
+  · apply (SplitBetti.coordinates (SplitGaloisResidual.Complement D)).injective
+    ext s
+    rw [coordinates_sourceToBlock_snd]
+    simp
+
+-- Decode the geometrically constructed projector, retaining the fundamental sign.
+example :
+    SplitChowTateBlock.decode (SplitGaloisResidual.Complement D) (markedProjector D) =
+      -fundamentalClass D := by
+  rw [detectedClass, generatedChowClass_eq_neg_fundamental]
+
+-- The full action works beyond the marked selector: a complementary point
+-- function multiplying the constant two gives twice that point function.
+set_option synthInstance.maxHeartbeats 60000 in
+example (s : SplitGaloisResidual.Complement D) :
+    SplitBettiTateBlock.realization (SplitGaloisResidual.Complement D)
+      (markedEmbedding D (Pi.single s.val 1)) (sourceToBlock D 2) =
+        sourceToBlock D (Pi.single s.val 2) := by
+  rw [markedEmbedding_action]
+  congr 1
+  funext t
+  by_cases h : t = s.val
+  · subst t
+    simp
+  · simp [h]
+
+-- The constructed marked projector satisfies the full universal algebra-hom square.
+set_option synthInstance.maxHeartbeats 60000 in
+example :
+    (SplitBettiTateBlock.correspondenceAction (SplitGaloisResidual.Complement D)).action.comp
+      (UniversalIdempotentAlgebra.mapOfIdempotent
+        (markedProjector D) (markedProjector_isIdempotent D)) =
+      UniversalIdempotentAlgebra.mapOfIdempotent
+        (ClassGraphProjector.operator (generatedClass D))
+        (ClassGraphProjector.operator_isIdempotent (generatedClass D)) :=
+  palomarTargetSquare D
+
+end SplitGaloisMarkedRegressions

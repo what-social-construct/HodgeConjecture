@@ -7,6 +7,12 @@ checklist passes.
 
 Active research and proof-maintenance queue:
 
+- `0015-split-galois-marked-comparison.md` records the actual split torsor
+  and homogeneous sheet cover, the multiplicative residual Chow equivalence,
+  actual diagonal embedding and Chow shear, and their marked Betti/Palomar
+  comparison for the negative fundamental class. It separates that fixed
+  class from class-dependent coverage using multiplicative residual rigidity.
+
 - `0001-finite-etale-projectors.md` is the historical Paper II scope note. Its
   unconditional center is A1--A7 and A9--A11b; A8 is a separately labeled
   conditional torsor/realization corollary, A12/A14/A15 are cited to the
@@ -70,3 +76,4 @@ Active research and proof-maintenance queue:
   On the actual scheme coproduct with one point, geometric Chow encoding
   and lower-left pullback detection instantiate the graph/Hodge/Palomar
   target interfaces, with the actual Betti action comparison proved.
+  Its canonical marked-sheet residual/action bridge is advanced in `0015`.
