@@ -1,6 +1,6 @@
 # Current gap map
 
-Last audited: 2026-09-13.
+Last audited: 2026-09-14.
 
 This note follows the semantic discipline of the sibling
 `jacobian-collision-geometry` project: source and target propositions are
@@ -196,6 +196,26 @@ singular cocycles, cycle class, and cohomological action;
 `0012` records the geometric operations and composition;
 `0011` records the cycle quotient, `0010` its actual
 generators, and `0009` the exact additive span quotient.
+
+### Selected literature inputs now have explicit packages
+
+`HodgeConjecture/Inputs/` separates three source-known ingredients from their
+still-open geometric applications. `FixedInertia.lean` owns the unchanged
+canonical unramifiedness record. `FiniteEtaleExtension.lean` records an actual
+extension and pullback isomorphism, assumes its existence separately, and
+lifts deck actions only from bijectivity of the actual automorphism
+restriction map. `ChowLocalization.lean` assumes selected rational-linear
+exactness and surjectivity; it proves raw-lift existence and, with a separately
+supplied algebra restriction, that every raw idempotence defect belongs to
+the boundary image.
+
+These are conditional consumers of selected source conclusions, not Lean
+proofs of the full cited geometric theorems. Each instance still needs its
+exact source-hypothesis and map identification. No source class is installed
+globally, and the existing Palomar statements retain their Mathlib-only
+explicit premises. See `working/0016-source-input-packages.md` (A11n / SP26).
+The application-specific graph square, defect correction or vanishing,
+prescribed action, and class-dependent coverage remain separate tasks.
 
 ### Geometric model still to be instantiated
 
@@ -569,10 +589,13 @@ only `restriction Π = γ`.  Its convolution defect
 Π * Π - Π
 ```
 
-is proved to restrict to zero.  This places the defect in the kernel of the
-supplied restriction map, but it does not identify that kernel with
-boundary-supported Chow classes and does not prove the defect itself is
-zero.  The zero-defect witnesses form exactly the subtype from which an
+is proved to restrict to zero. This places the defect in the kernel of the
+supplied restriction map. With the separately supplied
+`ChowLocalizationHypotheses i restriction.toLinearMap`, the new
+`ChowLocalization.convolutionDefect_mem_range` identifies it with an element
+of the supplied boundary image. Instantiating these maps as the geometric
+Chow localization sequence remains open, and no defect-vanishing theorem
+follows from exactness. The zero-defect witnesses form exactly the subtype from which an
 `AlgebraProjectorExtension` can be constructed.
 
 Second, `CompactifiedDeckGraphComparison` treats the stronger situation in
@@ -650,6 +673,12 @@ and the global cover theorem requires unramifiedness at every relevant
 boundary point.  A condition at one selected sheet cannot be substituted
 without proving the conjugacy/intermediate-cover comparison.
 
+The first two selected conclusions now have explicit interfaces in
+`Inputs/FiniteEtaleExtension.lean`: an actual extension witness with separate
+existence, and bijectivity of its actual automorphism restriction map with
+conditional deck-action transport. The source hypotheses above are production
+obligations, not hidden assumptions discharged by those definitions.
+
 At the level of cycles, Stacks Tags `02RA` and `02RX` give only a raw lift:
 
 ```text
@@ -657,10 +686,13 @@ generic Chow class lifts to the compactification
   -> its idempotence defect is supported on the boundary.
 ```
 
-The assertion that the idempotence defect is boundary-supported additionally
-uses compatibility of restriction with correspondence composition; Tags
-`02RA` and `02RX` do not supply that comparison.  They do not show that the
-boundary defect is zero.  Thus the compactification gap should be tracked as
+The conditional boundary-image implication is now formal in
+`Inputs/ChowLocalization.lean`. It takes rational-linear exactness and
+surjectivity explicitly, and uses a separately supplied algebra restriction
+to obtain compatibility with correspondence composition. Applying the
+integral source sequence requires its geometric hypotheses, rationalization,
+and map identification; Tags `02RA` and `02RX` do not supply the multiplicative
+comparison or show that the boundary defect is zero. Thus the compactification gap should be tracked as
 three separate tasks:
 
 1. extend the finite étale cover and its deck action;

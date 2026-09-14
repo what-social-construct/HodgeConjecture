@@ -6,6 +6,11 @@ Date: 2026-09-13. This advances
 [0014-split-hodge-tate-block.md](0014-split-hodge-tate-block.md).
 Canonical manuscript: `paper/main.tex`, producing the single `paper/main.pdf`.
 
+The subsequent input-packaging checkpoint is
+[0016-source-input-packages.md](0016-source-input-packages.md). It separates
+known compactification source inputs from the geometric graph/action and
+coverage constructions still needed beyond this finite split case.
+
 ## Checkpoint
 
 The finite split Chow/Betti/Hodge model already has geometric graph encoding,

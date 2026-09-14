@@ -7,6 +7,11 @@ checklist passes.
 
 Active research and proof-maintenance queue:
 
+- `0016-source-input-packages.md` separates the fixed-inertia premise,
+  actual finite étale extension and automorphism restriction inputs, and
+  rational-linear Chow exactness. It records their explicit conditional
+  consumers, boundary-image defect theorem, and unchanged Palomar wrappers.
+
 - `0015-split-galois-marked-comparison.md` records the actual split torsor
   and homogeneous sheet cover, the multiplicative residual Chow equivalence,
   actual diagonal embedding and Chow shear, and their marked Betti/Palomar

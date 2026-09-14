@@ -88,7 +88,7 @@
 \title{A Formal Projector Spine for the Rational Hodge Target:\\
   Collisions, Marked Galois Sheets, and Boundary Interfaces}
 \author{Chloe van der Vlugt}
-\date{Draft of September 13, 2026}
+\date{Draft of September 14, 2026}
 
 \begin{document}
 
@@ -182,9 +182,10 @@ statements are supplied rather than constructed by the repository.
 interface in the intended Hodge-theoretic setting.  A result may therefore be
 both \formal\ and \conditional: its implication is machine checked, while a
 key premise is still an input.  A fourth annotation, \sourceinput, marks a
-published theorem cited in place of repeating its proof; until it is encoded
-in the dependency library, the Lean endpoint retains its consequence as a
-named premise.
+published theorem cited in place of repeating its proof. Selected conclusions
+not proved in the dependency library remain explicit premises; their input
+packages do not formalize the complete source theorem or establish its
+geometric application.
 
 Fix rational vector spaces \(A\) and \(V\), a subspace
 \(V_{\mathrm{Hdg}}\leq V\), and a linear cycle-class map
@@ -856,9 +857,9 @@ zero-defect subtype \(\Cl_r^0(e_\eta)\) therefore gives an actual extension
 package \(\Ext_r(e_\eta)\).
 \end{proposition}
 
-Kernel membership is the entire unconditional conclusion.  No current
-theorem identifies \(\ker r\) with boundary-supported Chow classes or kills
-the particular defect.
+Kernel membership is the conclusion before any localization input. The
+separate exactness premise below gives boundary-image membership; vanishing
+of the particular defect requires a further argument.
 
 \begin{statusnote}{\sourceinput/\openstatus}
 In the dimension-theoretic setup of the cited result, let \(X\) be locally
@@ -875,6 +876,23 @@ as boundary-supported.  It does not say that the nonlinear class
 \(\Def(\Pi_x)\) vanishes or that a chosen lift respects correspondence
 composition.
 \end{statusnote}
+
+The selected rational-linear consequence is now \formal\ and
+\conditional. Given a rational vector space \(B_\partial\), a linear map
+\(i_*:B_\partial\to\Gbar\), and the explicit premises
+\[
+  \operatorname{im}i_*=\ker r,
+  \qquad r\text{ is surjective},
+\]
+the literal fiber \(\Cl_r(e_\eta)=\{\Pi:r(\Pi)=e_\eta\}\) is nonempty,
+and every raw closure has a boundary preimage
+\[
+  \exists b\in B_\partial,\qquad i_*(b)=\Pi^2-\Pi.
+\]
+Here \(r\) is separately supplied as an algebra map. The additive input
+does not provide this multiplicativity, a multiplicative section, or an
+idempotent lift. Applying the integral source sequence requires its geometric
+hypotheses, rationalization, and identification of these maps.
 
 A stronger supplied datum gives a different route.  Suppose generic and
 compactified spaces carry actions of the same group and that their free graph
@@ -921,7 +939,11 @@ or convention match.
 Raw closures and Proposition~\ref{prop:raw-defect} are in
 \boundarysrc{ProjectorClosureDefect.lean}, under
 \leanpath{AlgebraProjectorClosure}, \leanpath{convolutionDefect}, and
-\leanpath{toAlgebraProjectorExtension}.  The supplied graph square and
+\leanpath{toAlgebraProjectorExtension}. The selected exactness input and its
+conditional consequences are in \leanpath{Inputs/ChowLocalization.lean}, under
+\leanpath{ChowLocalizationHypotheses},
+\leanpath{ChowLocalization.projectorClosure_nonempty}, and
+\leanpath{exists_boundary_of_convolutionDefect}. The supplied graph square and
 Proposition~\ref{prop:graph-route} are in
 \boundarysrc{CompactifiedGraphProjector.lean}, under
 \leanpath{CompactifiedDeckGraphComparison} and
@@ -1951,7 +1973,10 @@ their displayed compatibilities to be proved:
 
 The codimension-one theorem of Section~\ref{sec:boundary} can feed such a
 construction only after a genuine global purity or gluing theorem is supplied.
-It does not close items (2)--(5) by itself.
+The selected literature-input packages of Appendix~\ref{app:input-packages}
+make their conditional consumers explicit; producing geometric instances of
+those inputs is separate from the graph/action comparison and coverage.
+The codimension-one theorem does not close items (2)--(5) by itself.
 
 \section{Lean theorem and module map}
 \label{sec:lean-map}
@@ -2095,6 +2120,18 @@ Palomar realization target (\formal; \conditional) &
 Coverage equivalence (\formal; \conditional) &
 \leanpath{rationalHodgeConjectureAt_iff_classDependentMarkedGaloisSelectorCoverage}\newline
 \leanpath{Realization/Chow/GaloisMarkedRealization.lean}\\
+Fixed-inertia input (\conditional) &
+\leanpath{InertiaFixedRingUnramifiedAt};
+\leanpath{inertiaFixedRingUnramifiedAt_iff}\newline
+\leanpath{Inputs/FixedInertia.lean}\\
+Selected cover and deck extension (\formal; \conditional) &
+\leanpath{FiniteEtaleExtension}; \leanpath{FiniteEtaleExtensionHypothesis};
+\leanpath{DeckExtensionHypothesis}; \leanpath{liftDeckAction}\newline
+\leanpath{Inputs/FiniteEtaleExtension.lean}\\
+Selected Chow localization (\formal; \conditional) &
+\leanpath{ChowLocalizationHypotheses};
+\leanpath{exists_boundary_of_convolutionDefect}\newline
+\leanpath{Inputs/ChowLocalization.lean}\\
 \end{longtable}
 \endgroup
 
@@ -2146,6 +2183,9 @@ as a source input and do not reproduce its proof here.
 \end{statusnote}
 
 \begin{leanfiles}
+The canonical input \leanpath{InertiaFixedRingUnramifiedAt} is in
+\leanpath{Inputs/FixedInertia.lean}; its equivalence with the explicit
+Mathlib premise is \leanpath{inertiaFixedRingUnramifiedAt_iff}.
 The local fixed-ring descent is in \normsrc{FixedRingLocalization.lean},
 \normsrc{FixedRingUnramified.lean}, and
 \normsrc{PrimeInertiaDescent.lean}.  Prime inertia is in
@@ -2184,6 +2224,59 @@ This detection theorem does not
 construct inertia comparisons, a compactification, a purity map, a Chow
 class, or a prescribed cohomological action.
 \end{statusnote}
+
+\subsection{Selected literature-input packages}
+\label{app:input-packages}
+
+The three source blocks above have separate local interfaces. Each assumes
+only a selected conclusion; no global instance asserts it and no common
+literature bundle is imposed on unrelated theorems.
+
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.2}
+\noindent
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.20\textwidth}
+                  >{\raggedright\arraybackslash}p{0.43\textwidth}
+                  >{\raggedright\arraybackslash}p{0.30\textwidth}@{}}
+\textbf{Input} & \textbf{Selected datum} & \textbf{Source}\\ \hline
+Fixed inertia &
+\(h_I:\operatorname{Unram}_{q_I}(A\to S^I)\), the unchanged local premise &
+Fixed-prime inertia \cite{StacksPrimeInertiaEtale}\\
+Cover and deck extension &
+\(E\in\mathscr E_j(p)\): an actual finite \'etale extension and pullback
+isomorphism; separately, bijectivity of its automorphism restriction &
+Extension and full faithfulness
+\cite{StacksFiniteEtaleCodimOneExtension,StacksFiniteEtaleFullFaithful}\\
+Chow localization &
+\(\operatorname{im}i_*=\ker r\) and surjectivity of the rational-linear
+restriction &
+Additive localization \cite{StacksChowLocalization}\\
+\end{tabular}
+\endgroup
+
+For \(j:U\to X\) and \(p:Y\to U\), the extension type
+\(\mathscr E_j(p)\) stores a finite \'etale map \(\bar Y\to X\) and
+an isomorphism \(Y\simeq U\times_X\bar Y\) over \(U\). Its existence
+is a separate proposition. Pullback and this isomorphism define the actual
+homomorphism
+\[
+  \operatorname{res}_E:
+  \operatorname{Aut}_X(\bar Y)\longrightarrow\operatorname{Aut}_U(Y).
+\]
+Given its bijectivity, inverse restriction lifts a deck action, with
+restriction compatibility and uniqueness proved in Lean. This is the
+selected automorphism consequence, not a formalization of full faithfulness
+of the entire finite \'etale category. The geometric hypotheses in the
+source blocks still have to be checked to produce these inputs.
+
+The fixed-inertia record is moved, not duplicated. The two existing Palomar
+comparison statements retain their Mathlib-only explicit premises; no source
+package is introduced through a challenge dependency. The source ledger and
+semantic-parity queue record the selected maps and their remaining
+instantiation obligations.
+
+\subsection{Notation audit}
 
 The following non-identifications govern all notation in this manuscript:
 

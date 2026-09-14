@@ -14,6 +14,30 @@ not identify `I` as the actual inertia group, does not prove the fixed-inertia
 theorem of Stacks Project Tag `0BST`, controls only one selected prime, and
 does not state the Hodge conjecture.
 
+## Explicit input packaging (2026-09-14)
+
+`Inputs/FixedInertia.lean` now owns the single existing
+`InertiaFixedRingUnramifiedAt` record. Its lossless unbundling theorem
+identifies it with the printed Mathlib premise. `Challenge.lean`,
+`Solution.lean`, and `comparator.json` retain the same two statements and
+signatures. The selected extension/deck and Chow-localization packages in
+[0016](0016-source-input-packages.md) are not additional submission claims.
+
+For a future conditional wrapper, state Mathlib maps and the exact premises
+in `Challenge.lean`. If a small local bundle is needed, fully state and
+document its fields there; compare relevant definitions as well as theorem
+types when necessary. Do not import project-specific definitions into the
+Challenge, even transitively. The Solution may import the implementation,
+but its proof must use only the permitted logical axioms, with the selected
+literature conclusions remaining visible hypotheses. This follows the
+[official statement/dependency policy](https://github.com/PalomarRegistry/PalomarPolicy/blob/main/CONTRIBUTING.md),
+rechecked on 2026-09-14. A package name or citation is not a substitute for
+its proposition in the compared statement.
+
+No license, metadata, toolchain, or publication-scope decision is made by this
+refactor. The migration values below are the historical policy snapshot
+listed at the end, and must be rechecked before submission.
+
 ## Blocking choices and migrations
 
 - **Human identity:** `formalization.yaml` requires nonempty human-only

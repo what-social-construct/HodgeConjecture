@@ -2,6 +2,7 @@ import HodgeConjecture.Collision
 import HodgeConjecture.Correspondence
 import HodgeConjecture.Boundary
 import HodgeConjecture.Realization
+import HodgeConjecture.Inputs
 
 /-!
 # Collision decompositions and correspondence projector lifting
@@ -41,4 +42,9 @@ form a supporting branch inside `Boundary.Normalization`; they do not replace
 the compactification, Chow, or residual-realization inputs.  Historical
 commutative selector and broad normalization-triviality prototypes remain
 directly importable but are not re-exported by the active umbrellas.
+
+`Inputs` collects the selected literature conclusions as explicit local
+hypotheses. Their conditional consumers construct finite-étale extension
+data and lifted deck actions, or raw Chow lifts and boundary-image defects,
+without assuming geometric realization or class-dependent coverage.
 -/

@@ -1,5 +1,4 @@
-import Mathlib.NumberTheory.RamificationInertia.Unramified
-import Mathlib.RingTheory.Invariant.Basic
+import HodgeConjecture.Inputs.FixedInertia
 import Mathlib.RingTheory.Localization.LocalizationLocalization
 
 /-!
@@ -12,7 +11,8 @@ For a prime `Q` of a ring with a finite-group action, Stacks Project Tag
 `0BST` identifies the inertia fixed ring as an étale neighbourhood at the
 selected prime; Tag `09EH` is the discrete-valuation formulation.  Mathlib
 currently defines inertia subgroups but does not yet contain that theorem,
-so `InertiaFixedRingUnramifiedAt` records only its needed conclusion.  A
+so `InertiaFixedRingUnramifiedAt`, defined in `Inputs.FixedInertia`, records
+only its needed conclusion. A
 geometric instantiation must still identify the base with the full invariant
 ring, the subgroup with the actual inertia group, and the source hypotheses.
 
@@ -32,18 +32,6 @@ namespace HodgeConjecture
 noncomputable section
 
 namespace NormalizationInertia
-
-/-- A source-conclusion interface for the local fixed-inertia input: the
-selected prime of the proposed inertia fixed ring is unramified over the
-base.  This record does not itself identify `I` as an inertia subgroup. -/
-structure InertiaFixedRingUnramifiedAt
-    {A S G : Type*} [CommRing A] [CommRing S] [Algebra A S]
-    [IsDomain S] [Group G] [MulSemiringAction G S]
-    [SMulCommClass G A S]
-    (I : Subgroup G) (Q : Ideal S) [Q.IsPrime] : Prop where
-  isUnramifiedAt :
-    Algebra.IsUnramifiedAt A
-      (Q.under (FixedPoints.subalgebra A S I))
 
 private theorem localRingHom_injective_of_injective
     {R S : Type*} [CommRing R] [CommRing S] [IsDomain S]

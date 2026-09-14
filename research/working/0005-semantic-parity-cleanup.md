@@ -55,7 +55,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 
 ## Canonical semantic object and TeX registry
 
-### Split-point checkpoint (SP17--SP25)
+### Construction and input checkpoints (SP17--SP26)
 
 | ID | Object or overlap | Disposition | Required action | Status |
 | --- | --- | --- | --- | --- |
@@ -68,6 +68,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 | SP23 | Actual complex points, singular degree-zero cohomology, cycle classes, and cohomological action | CONSTRUCT / COMPARE | Give actual complex-algebra points their evaluation-induced topology and prove discreteness; form genuine singular cocycles using actual face maps; construct the point-normalized cycle-class equivalence and its operation/action compatibilities. Keep actual Chow, singular cohomology, and their coordinate modules distinct; record the independent Hodge/Tate-block comparison in SP24. | PROVED; FULL BUILD, VERIFICATION, AND SINGLE-PDF CHECKS PASS |
 | SP24 | Independent finite Hodge data, actual point-plus-scheme block, graph encoding, and lower-left detection | CONSTRUCT / INSTANTIATE | Form the actual tensor complexification and canonical conjugation; specify and verify the effective degree-zero bigrading, then define rational Hodge classes by inverse image. On the actual scheme coproduct, encode by point-pair addition plus column pushforward and decode by column pullback. Prove their actual Betti realization laws and instantiate the Hodge/graph/Palomar targets. | PROVED; FULL BUILD, VERIFICATION, AND SINGLE-PDF CHECKS PASS |
 | SP25 | Actual split torsor, multiplicative residual Chow map, diagonal source embedding, and marked action comparison | CONSTRUCT / COMPARE | Realize the marked ideal by actual point cycles, then cycle class; build the regular torsor and homogeneous intermediate cover. Implement the constant-marked coordinate change by an invertible actual Chow shear inside the fixed target action. Keep the raw point projector, its conjugate, and the canonical negative fundamental class distinct; formalize the multiplicative obstruction to arbitrary class coverage. | PROVED; FULL BUILD, VERIFICATION, AND SINGLE-PDF CHECKS PASS |
+| SP26 | Selected literature conclusions versus their full source theorems and geometric applications | CANONICALIZE / SEPARATE | Move the fixed-inertia record without duplicating it; expose actual finite étale extension data and separate automorphism-restriction bijectivity; package rational-linear Chow exactness and prove conditional raw-lift/boundary-defect consequences. Keep source instantiation, multiplication compatibility, defect vanishing, graph/action comparison, and coverage distinct. Preserve the Mathlib-only submission statements. | CONDITIONAL CONSEQUENCES PROVED; FULL BUILD, VERIFICATION, AND SINGLE-PDF CHECKS PASS |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -106,6 +107,15 @@ in `0015-split-galois-marked-comparison.md`. Direct and full builds,
 integrated verification, 24 standard-only axiom reports, nonnormal-subgroup
 and empty-complement regressions, sign/orientation/full-action/Palomar checks,
 source/parity review, and the single-PDF build and visual review all pass.
+
+SP26 design, exact source obligations, and completed verification are recorded
+in `0016-source-input-packages.md`. The new Prop classes are selected local
+premises, not a blanket literature assumption or proofs of complete Stacks
+theorems. Existing consumers retain their own explicit hypotheses.
+Full build (3028 jobs), integrated verification without warnings, the
+99-report standard-axiom allowlist audit (22 new reports), no-automatic-instance
+and nonzero-boundary-defect regressions, unchanged submission-wrapper checks,
+source/parity review, and the single-PDF build and visual review pass.
 
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
@@ -294,6 +304,28 @@ source/parity review, and the single-PDF build and visual review all pass.
 | `restriction_comp_compactifiedIdempotentMap` | universal compactification square | $r\circ\varphi_\Pi=\varphi_{e_\eta}$ |
 | `CompactifiedSubgroupProjectorExtension` | all-boundary extensions of $e_H$ | $\operatorname{Ext}_{\partial,r}(e_H)$ |
 | `CompactifiedDeckGraphComparison` | generic/compactified graph square | $\mathscr G_r$ |
+
+### Selected literature inputs
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `NormalizationInertia.InertiaFixedRingUnramifiedAt` in `Inputs/FixedInertia.lean` | canonical selected-prime unramifiedness premise, unchanged after its move | $h_I:\operatorname{Unram}_{q_I}(A\to S^I)$ |
+| `inertiaFixedRingUnramifiedAt_iff` | lossless unbundling into the existing Mathlib premise | prose only; no second input |
+| `LiteratureInputs.FiniteEtaleExtension j p` | actual finite étale extension with its pullback identification | $\mathscr E_j(p)\ni E=(\bar p:\bar Y\to X,\;Y\simeq U\times_X\bar Y)$ |
+| `FiniteEtaleExtensionHypothesis j p` | selected existence proposition | $\mathscr E_j(p)\ne\varnothing$ |
+| `FiniteEtaleExtension.restriction` | actual pullback and conjugation map on automorphisms | $\operatorname{res}_E:\operatorname{Aut}_X(\bar Y)\to\operatorname{Aut}_U(Y)$ |
+| `DeckExtensionHypothesis E` | bijectivity of that selected restriction map | $\operatorname{Bijective}(\operatorname{res}_E)$ |
+| `FiniteEtaleExtension.deckEquiv` / `liftDeckAction` | restriction as a multiplicative equivalence, and action transport by its inverse | $\operatorname{res}_E:\operatorname{Aut}_X(\bar Y)\simeq\operatorname{Aut}_U(Y)$ / $\bar\rho_G=\operatorname{res}_E^{-1}\circ\rho_G$ |
+| `ChowLocalizationHypotheses i r` | selected additive exactness and surjectivity | $\operatorname{im}i=\ker r,\quad r\text{ surjective}$ |
+| `ChowLocalization.projectorClosure` | literal raw-lift fiber, reusing the canonical closure interface | $\operatorname{Cl}_r(e_\eta)=\{\Pi:r(\Pi)=e_\eta\}$ |
+| `ChowLocalization.convolutionDefect_mem_range` / `exists_boundary_of_convolutionDefect` | conditional boundary preimage of the existing defect, with a separate algebra restriction | $\operatorname{Def}(\Pi)\in\operatorname{im}i$, equivalently $i(b)=\Pi^2-\Pi$ |
+
+The extension witness and its existence proposition are different objects;
+neither implies the deck-restriction proposition. Additive exactness does not
+assert that restriction is an algebra map. The boundary element `b` need not
+be unique or zero. No new symbol is assigned to the input umbrella or to
+routine adapters, and the old fixed-ring module imports the sole canonical
+record rather than copying it.
 
 ### Marked block, realization, and Hodge target
 

@@ -5,8 +5,9 @@ algebraic correspondences, with boundary inertia measuring whether a generic
 sheet decomposition extends over a compactification.
 
 **Scope.** This work formalizes collision and finite-group correspondence
-mechanisms. It does not establish a new case of the Hodge conjecture or
-construct the required Chow/Hodge realization.
+mechanisms. It constructs a finite split degree-zero Chow/Betti/Hodge model,
+but does not establish a new case of the Hodge conjecture or construct the
+required general realization.
 
 The central distinction is now explicit:
 
@@ -298,6 +299,27 @@ then [geometric Chow composition](research/working/0012-split-chow-composition.m
 and [actual degree-zero Betti cycle classes](research/working/0013-split-betti-cycle-class.md),
 then the [finite Hodge/Tate-block comparison](research/working/0014-split-hodge-tate-block.md)
 and [split marked-sheet residual/action comparison](research/working/0015-split-galois-marked-comparison.md).
+
+## Explicit literature inputs
+
+The [input modules](HodgeConjecture/Inputs.lean) separate selected standard
+conclusions from their applications. The canonical fixed-inertia
+unramifiedness record now lives in `Inputs/FixedInertia.lean`, unchanged;
+existing descent theorems still take it explicitly. Actual finite étale
+extension data, selected existence, and bijectivity of the actual deck
+restriction map are separate inputs. Conditional deck-action lifting uses
+only the corresponding premise.
+
+Rational-linear Chow localization is also an explicit selected hypothesis.
+It gives raw lifts and differences in the boundary image. With a separately
+supplied algebra restriction, every raw convolution defect has a boundary
+preimage; its vanishing is not a consequence of exactness. These packages
+do not formalize the complete cited Stacks theorems or establish their
+geometric hypotheses in the intended compactification. No global literature
+instance is added. The two existing Mathlib-only Palomar statements and
+their explicit premises remain unchanged. See the
+[input checkpoint](research/working/0016-source-input-packages.md) and
+[submission handoff](research/working/PALOMAR_FIXED_RING_HANDOFF.md).
 
 Beyond the canonical split example, the missing step is geometric:
 construct a Chow-motivic residual map carrying
@@ -822,10 +844,10 @@ requires:
    universal one-idempotent restriction square and representation-morphism
    comparison; a full sheet-algebra presentation is needed only for the
    optional stronger interface;
-7. construct the compactified deck action and graph-cycle comparison square,
-   or instead identify the restriction kernel with boundary-supported cycle
-   classes and prove that the raw closure defect vanishes or admits a
-   correction;
+7. instantiate the selected finite étale/deck-extension inputs and construct
+   the graph-cycle comparison square, or instantiate the rational Chow
+   localization input and prove that the resulting boundary-valued raw
+   closure defect vanishes or admits a correction;
 8. prove the explicit target equality identifying the resulting extended
    subgroup average, or a supplied idempotent from its Hecke corner, with the
    prescribed motivic or Hodge summand;

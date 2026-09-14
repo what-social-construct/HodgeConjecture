@@ -1,4 +1,5 @@
 import HodgeConjecture
+import Solution
 import HodgeConjecture.CommutativeAlgebra.SplitFieldQuotient
 import Mathlib.AlgebraicGeometry.Morphisms.Flat
 
@@ -833,3 +834,109 @@ example :
   palomarTargetSquare D
 
 end SplitGaloisMarkedRegressions
+
+-- Selected literature conclusions are explicit hypotheses, not project axioms.
+#check HodgeConjecture.NormalizationInertia.inertiaFixedRingUnramifiedAt_iff
+#check HodgeConjecture.LiteratureInputs.FiniteEtaleExtensionHypothesis
+#check HodgeConjecture.LiteratureInputs.DeckExtensionHypothesis
+#check HodgeConjecture.LiteratureInputs.chosenExtension
+#check HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.original_isFinite
+#check HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.original_isEtale
+#check HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.inclusion_toBase
+#check HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.restriction_inclusion
+#check HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.liftDeckAction
+#check HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.liftDeckAction_unique
+#check HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.liftDeckAction_inclusion
+#check HodgeConjecture.ChowLocalizationHypotheses
+#check HodgeConjecture.ChowLocalization.exists_lift
+#check HodgeConjecture.ChowLocalization.two_lifts_differ_by_boundary
+#check HodgeConjecture.ChowLocalization.projectorClosure_nonempty
+#check HodgeConjecture.ChowLocalization.convolutionDefect_mem_range
+#check HodgeConjecture.ChowLocalization.exists_boundary_of_convolutionDefect
+
+#print axioms HodgeConjecture.NormalizationInertia.inertiaFixedRingUnramifiedAt_iff
+#print axioms HodgeConjecture.LiteratureInputs.chosenExtension
+#print axioms HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.original_isFinite
+#print axioms HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.original_isEtale
+#print axioms HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.inclusion_toBase
+#print axioms HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.inclusion_isOpenImmersion
+#print axioms HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.toBase_isProper
+#print axioms HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.restriction_inclusion
+#print axioms HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.deckEquiv
+#print axioms HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.liftDeckAction
+#print axioms HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.restriction_comp_liftDeckAction
+#print axioms HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.liftDeckAction_unique
+#print axioms HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.liftDeckAction_inclusion
+#print axioms HodgeConjecture.ChowLocalization.exists_lift
+#print axioms HodgeConjecture.ChowLocalization.two_lifts_differ_by_boundary
+#print axioms HodgeConjecture.ChowLocalization.projectorClosure
+#print axioms HodgeConjecture.ChowLocalization.projectorClosure_nonempty
+#print axioms HodgeConjecture.ChowLocalization.convolutionDefect_mem_range
+#print axioms HodgeConjecture.ChowLocalization.exists_boundary_of_convolutionDefect
+#print axioms HodgeConjecture.Palomar.fixedPoints_heightOne_contraction
+#print axioms HodgeConjecture.Palomar.heightOne_fixedRing_unramified_descent
+
+noncomputable section SourceInputRegressions
+
+open HodgeConjecture HodgeConjecture.LiteratureInputs
+open AlgebraicGeometry CategoryTheory HodgeConjecture.SchemeCorrespondence
+
+-- Importing the input surface installs no selected geometric hypotheses.
+example {X U Y : Scheme} (_j : U ⟶ X) (_p : Y ⟶ U) : True := by
+  fail_if_success
+    have : FiniteEtaleExtensionHypothesis _j _p := inferInstance
+  trivial
+
+example {X U Y : Scheme} {j : U ⟶ X} {p : Y ⟶ U}
+    (_E : FiniteEtaleExtension j p) : True := by
+  fail_if_success
+    have : DeckExtensionHypothesis _E := inferInstance
+  trivial
+
+-- An explicitly supplied deck-extension input lifts the whole actual action.
+example {X U Y : Scheme} {j : U ⟶ X} {p : Y ⟶ U}
+    (E : FiniteEtaleExtension j p) [DeckExtensionHypothesis E]
+    {G : Type} [Group G] (α : FiniteDeckAction p G) :
+    ∃! β : FiniteDeckAction E.toBase G, E.restriction.comp β = α := by
+  exact ⟨E.liftDeckAction α, E.restriction_comp_liftDeckAction α,
+    fun β hβ ↦ E.liftDeckAction_unique α β hβ⟩
+
+-- Even a true exact sequence is not silently registered as a literature input.
+example : True := by
+  fail_if_success
+    have : ChowLocalizationHypotheses (LinearMap.inr ℚ ℚ ℚ)
+        (AlgHom.fst ℚ ℚ ℚ).toLinearMap := inferInstance
+  trivial
+
+-- This concrete exact sequence supplies its own proved local package.
+example : ∃ c : ℚ × ℚ, (AlgHom.fst ℚ ℚ ℚ) c = 1 := by
+  letI : ChowLocalizationHypotheses (LinearMap.inr ℚ ℚ ℚ)
+      (AlgHom.fst ℚ ℚ ℚ).toLinearMap :=
+    ⟨LinearMap.range_inr ℚ ℚ ℚ, fun a ↦ ⟨(a, 0), rfl⟩⟩
+  exact ChowLocalization.exists_lift (LinearMap.inr ℚ ℚ ℚ)
+    (AlgHom.fst ℚ ℚ ℚ).toLinearMap 1
+
+-- Boundary support does not imply zero defect: the raw lift (1,2) of 1
+-- under the first projection has defect (0,2), in the second-factor image.
+theorem sourceInput_boundary_defect_can_be_nonzero :
+    let P := ChowLocalization.projectorClosure (AlgHom.fst ℚ ℚ ℚ)
+      (1 : ℚ) (by simp [IsIdempotentElem])
+    ∃ x : P.Closure,
+      P.convolutionDefect x ∈ LinearMap.range (LinearMap.inr ℚ ℚ ℚ) ∧
+      P.convolutionDefect x ≠ 0 := by
+  let hLoc : ChowLocalizationHypotheses (LinearMap.inr ℚ ℚ ℚ)
+      (AlgHom.fst ℚ ℚ ℚ).toLinearMap :=
+    ⟨LinearMap.range_inr ℚ ℚ ℚ, fun a ↦ ⟨(a, 0), rfl⟩⟩
+  let P := ChowLocalization.projectorClosure (AlgHom.fst ℚ ℚ ℚ)
+    (1 : ℚ) (by simp [IsIdempotentElem])
+  letI : ChowLocalizationHypotheses (LinearMap.inr ℚ ℚ ℚ)
+      P.restriction.toLinearMap := hLoc
+  let x : P.Closure := ⟨(1, 2), rfl⟩
+  refine ⟨x, ChowLocalization.convolutionDefect_mem_range
+    (LinearMap.inr ℚ ℚ ℚ) P x, ?_⟩
+  change ((1, 2) : ℚ × ℚ) * (1, 2) - (1, 2) ≠ 0
+  norm_num [Prod.mk_mul_mk, Prod.mk_sub_mk, Prod.ext_iff]
+
+#print axioms sourceInput_boundary_defect_can_be_nonzero
+
+end SourceInputRegressions
