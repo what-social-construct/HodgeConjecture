@@ -574,12 +574,25 @@ be developed alongside that infrastructure.
    point-dependent scalar action is retained throughout; no global
    dimension-function object is introduced by these value theorems.
 
-   **Next bounded obligation:** put specialization pairs in a common
-   actual affine chart, transfer the order and cover relation there,
-   and prove the global strictness and unit-step laws using SP51's
-   value comparison. These laws must construct the global grading.
-   No general constructor or open-gluing package is supplied as an input.
-   Then identify dimension
+   **Global dimension-function checkpoint (A11ak / SP52):**
+   `FieldDimensionFunction.lean` constructs the actual structural
+   residue-degree function on every locally finite-type \(k\)-scheme.
+   An affine neighbourhood of the specialized point contains the
+   generizing point. Specialization reflection through the actual open
+   embedding transfers strict order and the cover relation into that
+   chart. SP51's value comparison and the existing affine laws
+   prove global strictness and the immediate-specialization unit step.
+   The function is nonnegative, equals the existing affine construction
+   as a whole object, and has compatible values under arbitrary open
+   immersions over the field. No affine, quasi-compact or integral
+   ambient premise or supplied gluing package is used.
+
+   **Next bounded obligation:** identify these global values with actual
+   point height and then existing closure/carrier dimension. Strictness
+   and nonnegative finite values give the upper height bound; one actual
+   affine chart, its finite point height and the affine normalization
+   give the lower bound. The two defining laws alone do not fix an
+   additive normalization. After this comparison, identify dimension
    grading with target codimension grading in the intended integral or
    pure-dimensional setting; a uniform \(d-p\) shift is not asserted
    on mixed-dimensional schemes. Construct rational coefficient extension of this

@@ -57,7 +57,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 
 ## Canonical semantic object and TeX registry
 
-### Construction and input checkpoints (SP17--SP51)
+### Construction and input checkpoints (SP17--SP52)
 
 | ID | Object or overlap | Disposition | Required action | Status |
 | --- | --- | --- | --- | --- |
@@ -96,6 +96,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 | SP49 | Structural base actions and actual affine residue-field algebra comparison | CONSTRUCT / COMPARE | Define the action independently by structural pullback and evaluation. Prove actual residue-map base compatibility, open-immersion algebra equivalence and the stalk-induced affine comparison on constants. Identify full residue-degree cardinals and the existing literal-spectrum dimension value. | PROVED; FULL BUILD, 480 AXIOM REPORTS, NINETEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP50 | Structural residue-degree values on arbitrary affine schemes | IDENTIFY / COMPARE | Extract the actual finite-type sections algebra and retain its structural-map equality. Use the canonical affine isomorphism and SP49's base-compatible residue map to prove finiteness and identify the existing dimension value, then compare values under affine open immersions. Reuse the exposed point-height isomorphism theorem. | PROVED; FULL BUILD, 484 AXIOM REPORTS, THIRTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP51 | Pointwise residue degrees and affine-chart value agreement | PROVE / COMPARE | Use one actual affine-cover preimage to prove finite structural residue degree on a general locally finite-type scheme. Compare each existing affine-chart value with its ambient residue degree, and compare two chart values at equal actual ambient images. | PROVED; FULL BUILD, 487 AXIOM REPORTS, TEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP52 | Global structural residue-degree dimension function | CONSTRUCT / COMPARE | Put specialization pairs in a common actual affine open, transfer strictness and the cover law, and construct the global function. Prove nonnegativity, equality with the existing affine object and value compatibility under arbitrary open immersions. Keep global height/carrier dimension and target codimension comparison separate. | PROVED; FULL BUILD, 493 AXIOM REPORTS, FOURTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -735,6 +736,50 @@ bounded checkpoint transfers specialization and cover relations into a
 common actual affine chart and uses the proved value comparison to
 construct the global dimension function. Target codimension conversion
 and further realization remain separate obligations.
+
+SP52 validation (2026-09-15): the new leaf module and the full 3130-job
+Lean build pass, with only the two existing `Challenge` warnings.
+The six primary proof-dependency assertions and two supporting reports
+pass. An independent leaf-only replay checks all six public endpoints
+and eight regressions without diagnostics; all six axiom reports contain
+exactly `propext`, `Classical.choice` and `Quot.sound`. The replay includes
+the actual open-scheme order comparison and the common-chart cover
+reflection, both dimension-function laws, whole-object affine equality
+and nonaffine open-value compatibility. Separate checked scratch lemmas
+support the next checkpoint's upper height bound and actual chart-to-
+ambient height monotonicity; the global height equality itself is not
+part of SP52. Independent mathematical and cross-document parity reviews
+pass. The single PDF builds to 56 pages with a clean final log;
+Proposition 6.25 and its proof on page 27, the module/status pages 30--31
+and the theorem-map row on page 49 were visually inspected. The existing
+02I9 and 0A21 sources are rechecked and reused without source axioms.
+Submission wrappers, dependency pins and bibliography are unchanged;
+diff checks pass. The exact-original-four-import replay passes all six
+public endpoint checks and fourteen new regressions without diagnostics;
+its six axiom reports contain exactly the standard three. These cover
+the absence of affine, compact, Noetherian, integral and preinstalled-
+algebra premises; literal structural evaluation; both dimension laws and
+geometric specialization orientation; nonnegativity; whole-object affine
+and literal-spectrum parity; arbitrary open immersions and actual open
+subsets; integration with existing support degree and prime-divisor
+degree drop; the empty scheme; and the actual countable coproduct of
+copies of `Spec k`, with its structural morphism locally of finite type
+and its noncompactness and nonaffineness proved.
+The final integrated `research/Verification.lean` run passes all 601
+declaration checks and 369 examples without warnings or errors. All 493
+axiom reports were captured and matched against the exact declaration
+inventory: no missing, unexpected or duplicate reports and no unpermitted
+axioms. The existing `polynomialDimensionBound` remains axiom-free;
+`genericFiber_isScalarTower_base` uses only `propext` and `Quot.sound`;
+the other 491 reports use only the standard three. The original four
+imports and all earlier verification content are preserved.
+No new global algebra instance, input package, point order, residue
+carrier, cycle module, Chow quotient or projector is introduced. The
+new global value of the existing `DimensionFunction` structure is proved
+equal to the existing affine construction when the scheme is affine.
+The next bounded checkpoint is global point-height and carrier-dimension
+identification; target codimension conversion and further realization
+remain separate.
 
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
@@ -1547,8 +1592,9 @@ structural action on the separate `Scheme.residueField` and proves the
 affine algebra comparison and open-immersion residue-degree invariance.
 SP50 below proves the arbitrary structural affine value comparison and
 affine-open value agreement. SP51 adds pointwise finiteness and affine-chart
-value agreement in a general ambient scheme. Common-chart order and cover
-laws and the global dimension function remain separate.
+value agreement in a general ambient scheme. SP52 below transfers the
+common-chart order and cover laws and constructs the global function.
+Its global height/carrier dimension identification remains separate.
 
 ### Structural and affine residue-field comparison (SP49)
 
@@ -1588,9 +1634,10 @@ is unchanged, and no new cycle module, Chow quotient or projector is added.
 SP50 below identifies `ofAffineLocallyOfFiniteType` on an arbitrary affine
 structural \(X\) with its actual structural residue degree and proves
 affine-open value agreement. SP51 adds pointwise finiteness and affine-chart
-value agreement in a general ambient scheme. Common-chart order and cover
-laws and global assembly remain separate, as do target codimension
-conversion and further realization.
+value agreement in a general ambient scheme. SP52 below constructs the
+global function using the common-chart order and cover laws. Global
+height/carrier dimension, target codimension conversion and further
+realization remain separate comparisons.
 
 ### Structural residue-degree values on actual affine schemes (SP50)
 
@@ -1623,9 +1670,10 @@ source instance follows by composition with the actual open immersion.
 
 SP51 below proves pointwise structural residue-degree finiteness and
 affine-chart value agreement in a general locally finite-type ambient
-scheme. Common-chart order and cover-law transfer, the global
-dimension-function constructor, target codimension conversion and
-further realization remain open.
+scheme. SP52 transfers the common-chart order and cover laws to construct
+the global dimension function. Its global height/carrier dimension
+comparison, target codimension conversion and further realization remain
+open.
 
 ### Pointwise residue degrees and affine-chart values (SP51)
 
@@ -1654,13 +1702,52 @@ point, residue field and scalar action together, so equality of actual
 images compares the values without a replacement carrier or a supplied
 gluing hypothesis. No affine intersection is assumed or constructed.
 
-The next bounded checkpoint is common-chart specialization and cover-law
-transfer: an affine neighbourhood of the specialized point contains the
-generizing point, and the actual open map must transfer the appropriate
-order and cover relation. The existing affine laws and SP51's value
-comparison can then construct the global dimension function. No global
-constructor, unrestricted open-height invariance, target codimension
-conversion or additional realization is asserted by SP51.
+SP52 below supplies common-chart specialization and cover-law transfer
+and constructs the global dimension function from these value theorems.
+No global constructor, unrestricted open-height invariance, target
+codimension conversion or additional realization is asserted by SP51
+itself.
+
+### Global structural residue-degree dimension function (SP52)
+
+Extend the existing notation \(\delta_{X/k}\) to every scheme locally
+of finite type over the structural field. This is the same affine
+dimension-function object when \(X\) is affine; no independent grading
+symbol is introduced. Continue to use \(\kappa_X(x)\) with the locally
+installed structural action.
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `exists_isAffineOpen_mem_of_le` | a common actual affine open for a specialization pair, on any scheme | $x\leq y\Rightarrow\exists U\text{ affine open},\ x,y\in U$ |
+| `DimensionFunction.ofLocallyOfFiniteType` | the global structural residue-degree dimension function, with both laws proved | $\delta_{X/k}:X\to\mathbb Z$, $x<y\Rightarrow\delta(x)<\delta(y)$, $x\lessdot y\Rightarrow\delta(y)=\delta(x)+1$ |
+| `DimensionFunction.ofLocallyOfFiniteType_apply` | evaluation using the actual structural residue field | $\delta_{X/k}(x)=\operatorname{trdeg}_k\kappa_X(x)$ |
+| `DimensionFunction.ofLocallyOfFiniteType_nonneg` | the field normalization is nonnegative | $0\leq\delta_{X/k}(x)$ |
+| `DimensionFunction.ofLocallyOfFiniteType_eq_ofAffineLocallyOfFiniteType` | equality of the whole global and existing affine dimension-function objects | $\delta_{X/k}^{\mathrm{global}}=\delta_{X/k}^{\mathrm{affine}}$ for affine $X$; superscripts only for this comparison |
+| `DimensionFunction.ofLocallyOfFiniteType_apply_of_isOpenImmersion` | arbitrary actual open immersions preserve the global values over the field | $\delta_{X/k}(x)=\delta_{Y/k}(f(x))$, with source structural map $p\circ f$ |
+
+All six endpoints are in `Cycles/FieldDimensionFunction.lean`. The
+common-chart helper is valid for any scheme. The constructor takes an
+actual locally finite-type structural morphism to \(\operatorname{Spec}k\)
+and uses SP51's finite residue degrees. An affine neighbourhood of the
+specialized point contains its generizations. The actual open embedding
+reflects specialization, transferring strict order and the ambient cover
+relation into the chart with its actual scheme specialization order.
+The affine strictness and unit-step laws then transfer through the
+structural residue-degree comparison. Neither affineness of the ambient
+scheme, quasi-compactness, integrality nor a global dimension bound is
+needed. No supplied dimension-function or gluing hypothesis, new point
+order, global algebra instance, residue carrier, cycle module, Chow
+quotient or projector is introduced.
+
+The next bounded checkpoint is to identify the constructed global values
+with actual point height and the existing closure/carrier dimension.
+Strictness and the nonnegative finite normalization provide an upper
+height bound. An actual affine chart, its finite point height and the
+affine normalization provide the lower bound via the chart point map.
+The two defining laws alone allow additive shifts, so this comparison
+is not inferred from those laws alone. Target codimension conversion in
+the intended pure-dimensional geometry and further realization remain
+separate obligations.
 
 ## Objects deliberately assigned no independent notation
 

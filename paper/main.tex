@@ -2181,6 +2181,46 @@ pointwise affine reduction underlying
 \cite{StacksAlgebraicSchemeDimension}.
 \end{proof}
 
+\begin{proposition}[Constructed dimension function over a field --- \formal]
+\label{prop:global-field-dimension-function}
+Let \(k\) be a field and let \(p:X\to\Spec k\) be locally of
+finite type. The actual structural residue degree defines a nonnegative
+integer-valued dimension function
+\[
+  \delta_{X/k}(x)=\operatorname{trdeg}_k\kappa_X(x)\in\mathbf Z.
+\]
+Both defining conditions of \cite{StacksDimensionFunction} are proved:
+for a proper specialization \(x\leadsto y\),
+\(\delta_{X/k}(x)>\delta_{X/k}(y)\); for an immediate specialization,
+\[
+  \delta_{X/k}(x)=\delta_{X/k}(y)+1.
+\]
+These are the residue-degree laws of \cite{StacksAlgebraicSchemeDimension}.
+When \(X\) is affine, this equals the existing dimension function
+\(\delta_{X/k}\) of Proposition~\ref{prop:affine-dimension-function}.
+For any open immersion \(i:U\to X\), use \(p\circ i\) on \(U\);
+the constructed functions satisfy
+\[
+  \delta_{U/k}(u)=\delta_{X/k}(i(u)).
+\]
+No affineness, quasi-compactness, integrality, reducedness or global
+dimension bound is required.
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:chart-residue-degree} proves finiteness at every
+point before the conversion to an integer. Choose an actual affine
+chart containing the specialization point; its open image also contains
+the generalization. The chart inclusion reflects the point order and
+transfers the cover relation. The already proved affine strictness and
+unit-step laws therefore apply, and the actual chart-value comparison
+identifies their values with the displayed residue degrees.
+These proofs supply the two fields of the existing dimension-function
+structure. The affine agreement follows from
+Proposition~\ref{prop:structural-affine-value}; open compatibility
+follows from the structural residue-field algebra equivalence.
+\end{proof}
+
 For smooth projective schemes over a fixed field \(k\), composition of rational Chow
 correspondences is associative and bilinear
 \cite{StacksChowCorrespondenceComposition}, while graph classes compose
@@ -2503,6 +2543,15 @@ Proposition~\ref{prop:chart-residue-degree} is
 \leanpath{affineChart_dimension_eq_schemeResidueField_trdeg}, and
 \leanpath{affineChart_dimension_eq_of_eq_image} in
 \leanpath{Cycles/ChartResidueDegree.lean}.
+Proposition~\ref{prop:global-field-dimension-function} uses
+\leanpath{exists_isAffineOpen_mem_of_le} and constructs
+\leanpath{DimensionFunction.ofLocallyOfFiniteType} in
+\leanpath{Cycles/FieldDimensionFunction.lean}.
+Its evaluation and comparison theorems are
+\leanpath{DimensionFunction.ofLocallyOfFiniteType_apply},
+\leanpath{DimensionFunction.ofLocallyOfFiniteType_nonneg},
+\leanpath{DimensionFunction.ofLocallyOfFiniteType_eq_ofAffineLocallyOfFiniteType}, and
+\leanpath{DimensionFunction.ofLocallyOfFiniteType_apply_of_isOpenImmersion}.
 \end{leanfiles}
 
 \begin{statusnote}{\openstatus}
@@ -2582,13 +2631,16 @@ immersions between affine schemes.
 Proposition~\ref{prop:chart-residue-degree} proves pointwise
 residue-degree finiteness and agreement of affine-chart values at the
 same ambient point, without affineness or quasi-compactness of that
-ambient scheme. The remaining common-chart order and
-immediate-specialization laws must assemble the general grading
-\(\delta_k(x)=\operatorname{trdeg}_k\kappa(x)
-  =\dim\overline{\{x\}}\)
-on the intended scheme \cite{StacksAlgebraicSchemeDimension}.
-No such general constructor, regular-local or uniform-chain theorem,
-or reducible version of the global prime formula is claimed here.
+ambient scheme. Proposition~\ref{prop:global-field-dimension-function}
+proves the common-chart strictness and immediate-specialization laws
+and constructs the global \(\delta_{X/k}\). Its affine specialization
+is the existing dimension-function object, and its values are compatible
+with all open immersions over the structural field.
+The next comparison identifies this global grading with actual
+point-closure and integral-carrier dimensions
+\cite{StacksAlgebraicSchemeDimension}. No such global dimension
+identification, regular-local or uniform-chain theorem, or reducible
+version of the global prime formula is claimed here.
 The unit drop in residue degrees does not assert that ambient stalk
 dimensions rise by one on arbitrary reducible schemes.
 The comparison between codimension \(p\) and
@@ -3917,6 +3969,12 @@ Pointwise residue degrees and affine-chart agreement (\formal) &
 Affine-chart value comparison
 (Proposition~\ref{prop:chart-residue-degree})\newline
 \leanpath{Cycles/ChartResidueDegree.lean}\\
+Constructed global dimension function over a field (\formal) &
+\leanpath{exists_isAffineOpen_mem_of_le}\newline
+\leanpath{DimensionFunction.ofLocallyOfFiniteType}\newline
+Affine equality and open-value invariance
+(Proposition~\ref{prop:global-field-dimension-function})\newline
+\leanpath{Cycles/FieldDimensionFunction.lean}\\
 Compactified graph route (\formal; \conditional) &
 \leanpath{groupAlgebraProjectorExtension}\newline
 \leanpath{Boundary/CompactifiedGraphProjector.lean}\\

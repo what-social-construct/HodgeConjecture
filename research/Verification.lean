@@ -4610,3 +4610,169 @@ example (k : Type) [Field k] :
   norm_num at hv
 
 end ChartResidueDegreeRegressions
+
+-- SP52: the constructed global field-induced dimension function and its actual specialization laws.
+#check HodgeConjecture.SchemeCycles.exists_isAffineOpen_mem_of_le
+#check HodgeConjecture.SchemeCycles.DimensionFunction.ofLocallyOfFiniteType
+#check HodgeConjecture.SchemeCycles.DimensionFunction.ofLocallyOfFiniteType_apply
+#check HodgeConjecture.SchemeCycles.DimensionFunction.ofLocallyOfFiniteType_nonneg
+#check HodgeConjecture.SchemeCycles.DimensionFunction.ofLocallyOfFiniteType_eq_ofAffineLocallyOfFiniteType
+#check HodgeConjecture.SchemeCycles.DimensionFunction.ofLocallyOfFiniteType_apply_of_isOpenImmersion
+
+#print axioms HodgeConjecture.SchemeCycles.exists_isAffineOpen_mem_of_le
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.ofLocallyOfFiniteType
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.ofLocallyOfFiniteType_apply
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.ofLocallyOfFiniteType_nonneg
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.ofLocallyOfFiniteType_eq_ofAffineLocallyOfFiniteType
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.ofLocallyOfFiniteType_apply_of_isOpenImmersion
+
+noncomputable section FieldDimensionFunctionRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+open HodgeConjecture.SchemeCycles
+
+-- Finding a common affine neighbourhood uses no field or finiteness assumption.
+example (X : Scheme) (x y : X) (hxy : x ≤ y) :
+    ∃ U : X.Opens, IsAffineOpen U ∧ x ∈ U ∧ y ∈ U :=
+  exists_isAffineOpen_mem_of_le X hxy
+
+-- Evaluation retains the independently defined structural scalar action.
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] (x : X) :
+    letI := residueFieldBaseAlgebra k p x
+    DimensionFunction.ofLocallyOfFiniteType k X p x =
+      ((Algebra.trdeg k (X.residueField x)).toNat : ℤ) := by
+  fail_if_success
+    have : IsAffine X := inferInstance
+  fail_if_success
+    have : CompactSpace X := inferInstance
+  fail_if_success
+    have : IsNoetherian X := inferInstance
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  fail_if_success
+    have : Algebra k (X.residueField x) := inferInstance
+  rfl
+
+-- Both defining laws are proved for the global constructor.
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (x y : X) (hxy : x < y) :
+    DimensionFunction.ofLocallyOfFiniteType k X p x <
+      DimensionFunction.ofLocallyOfFiniteType k X p y :=
+  (DimensionFunction.ofLocallyOfFiniteType k X p).strictMono hxy
+
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (x y : X) (hxy : x ⋖ y) :
+    DimensionFunction.ofLocallyOfFiniteType k X p y =
+      DimensionFunction.ofLocallyOfFiniteType k X p x + 1 :=
+  (DimensionFunction.ofLocallyOfFiniteType k X p).map_covBy hxy
+
+-- Geometric proper specialization decreases the value, with the correct order orientation.
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (x y : X) (hxy : x ⤳ y) (hne : x ≠ y) :
+    DimensionFunction.ofLocallyOfFiniteType k X p y <
+      DimensionFunction.ofLocallyOfFiniteType k X p x := by
+  apply (DimensionFunction.ofLocallyOfFiniteType k X p).strictMono
+  apply lt_of_le_not_ge (Scheme.le_iff_specializes.mpr hxy)
+  intro hyx
+  exact hne (hxy.antisymm (Scheme.le_iff_specializes.mp hyx)).eq
+
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] (x : X) :
+    0 ≤ DimensionFunction.ofLocallyOfFiniteType k X p x :=
+  DimensionFunction.ofLocallyOfFiniteType_nonneg k X p x
+
+-- Affine parity is equality of the entire existing dimension-function objects.
+example (k : Type) [Field k] (X : Scheme) [IsAffine X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] :
+    DimensionFunction.ofLocallyOfFiniteType k X p =
+      DimensionFunction.ofAffineLocallyOfFiniteType k X p :=
+  DimensionFunction.ofLocallyOfFiniteType_eq_ofAffineLocallyOfFiniteType k X p
+
+-- The literal-spectrum presentation is unchanged as well.
+example (k A : Type) [Field k] [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
+    (x : Spec (CommRingCat.of A)) :
+    let p := Spec.map (CommRingCat.ofHom (algebraMap k A))
+    letI : LocallyOfFiniteType p :=
+      (HasRingHomProperty.Spec_iff (P := @LocallyOfFiniteType)).mpr
+        (RingHom.finiteType_algebraMap.mpr inferInstance)
+    DimensionFunction.ofLocallyOfFiniteType k (Spec (CommRingCat.of A)) p x =
+      DimensionFunction.ofSpecFiniteType k A x := by
+  dsimp only
+  rw [DimensionFunction.ofLocallyOfFiniteType_eq_ofAffineLocallyOfFiniteType,
+    DimensionFunction.ofAffineLocallyOfFiniteType_apply,
+    DimensionFunction.ofSpecFiniteType_eq_pointHeight]
+
+-- Open value compatibility has no affine-source or affine-target premise.
+example (k : Type) [Field k] (X Y : Scheme)
+    (p : Y ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (f : X ⟶ Y) [IsOpenImmersion f] (x : X) :
+    DimensionFunction.ofLocallyOfFiniteType k X (f ≫ p) x =
+      DimensionFunction.ofLocallyOfFiniteType k Y p (f.base x) := by
+  fail_if_success
+    have : IsAffine X := inferInstance
+  fail_if_success
+    have : IsAffine Y := inferInstance
+  exact DimensionFunction.ofLocallyOfFiniteType_apply_of_isOpenImmersion k p f x
+
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (U : X.Opens) (x : U) :
+    DimensionFunction.ofLocallyOfFiniteType k U (U.ι ≫ p) x =
+      DimensionFunction.ofLocallyOfFiniteType k X p x.val :=
+  DimensionFunction.ofLocallyOfFiniteType_apply_of_isOpenImmersion k p U.ι x
+
+-- Existing integral-support degree is literal structural residue degree, not a new cycle type.
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (W : IntegralClosedSubscheme X) :
+    letI := residueFieldBaseAlgebra k p (ambientGenericPoint W)
+    supportDegree (DimensionFunction.ofLocallyOfFiniteType k X p) W =
+      ((Algebra.trdeg k (X.residueField (ambientGenericPoint W))).toNat : ℤ) := rfl
+
+-- The old prime-divisor degree-drop theorem now consumes the constructed global function.
+example (k : Type) [Field k] (X : Scheme) [IsIntegral X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] (Z : PrimeDivisor X) :
+    supportDegree (DimensionFunction.ofLocallyOfFiniteType k X p) Z.val =
+      DimensionFunction.ofLocallyOfFiniteType k X p (genericPoint X) - 1 :=
+  supportDegree_primeDivisor (DimensionFunction.ofLocallyOfFiniteType k X p) Z
+
+-- No point is selected on the empty scheme.
+example (k : Type) [Field k] :
+    IsEmpty (Spec (CommRingCat.of (PUnit : Type)) : Scheme) ∧
+      Nonempty (DimensionFunction (Spec (CommRingCat.of (PUnit : Type)))) :=
+  ⟨inferInstance, ⟨DimensionFunction.ofLocallyOfFiniteType k
+    (Spec (CommRingCat.of (PUnit : Type)))
+    (Spec.map (CommRingCat.ofHom (algebraMap k (PUnit : Type))))⟩⟩
+
+-- The actual countable coproduct of points is noncompact and nonaffine, but has the constructed function.
+example (k : Type) [Field k] :
+    ∃ (X : Scheme) (p : X ⟶ Spec (CommRingCat.of k)),
+      LocallyOfFiniteType p ∧ ¬ CompactSpace X ∧ ¬ IsAffine X ∧
+        Nonempty (DimensionFunction X) := by
+  let components : ℕ → Scheme := fun _ ↦ Spec (CommRingCat.of k)
+  let X : Scheme := ∐ components
+  let p : X ⟶ Spec (CommRingCat.of k) := Sigma.desc fun _ ↦ 𝟙 _
+  haveI : LocallyOfFiniteType p :=
+    IsZariskiLocalAtSource.sigmaDesc (P := @LocallyOfFiniteType)
+      (fun _ ↦ inferInstanceAs (LocallyOfFiniteType (𝟙 (Spec (CommRingCat.of k)))))
+  have hnc : ¬ CompactSpace X := by
+    intro h
+    letI : CompactSpace X := h
+    let e := AlgebraicGeometry.sigmaMk components
+    letI : CompactSpace (Σ n : ℕ, components n) := e.symm.compactSpace
+    letI : Finite (Σ n : ℕ, components n) := finite_of_compact_of_discrete
+    have hn : Finite ℕ := Finite.of_surjective
+      (fun z : Σ n : ℕ, components n ↦ z.1) (fun n ↦ ⟨⟨n, default⟩, rfl⟩)
+    exact hn.false
+  have hna : ¬ IsAffine X := by
+    intro h
+    letI : IsAffine X := h
+    exact hnc inferInstance
+  exact ⟨X, p, inferInstance, hnc, hna,
+    ⟨DimensionFunction.ofLocallyOfFiniteType k X p⟩⟩
+
+end FieldDimensionFunctionRegressions

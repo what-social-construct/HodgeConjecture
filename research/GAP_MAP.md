@@ -883,23 +883,40 @@ residue field and structural scalar action in one local proof expression;
 it does not identify dependent field carriers by fiat or introduce a new
 global dimension-function object.
 
-**The next bounded goal is common-chart specialization and cover-law
-transfer.** Put a specialization pair in an actual affine neighbourhood
-of its specialized point, prove that the actual chart point map reflects
-the relevant order and cover relation, and apply the existing affine
-strictness and unit-step laws. Combine these with the now-proved value
-comparison to construct the global field-induced dimension function.
-No global finite-dimensionality premise alone supplies these laws.
+### The global structural dimension function
+
+A11ak / SP52 constructs `DimensionFunction.ofLocallyOfFiniteType` in
+`Cycles/FieldDimensionFunction.lean` with the literal value
+\[
+ \delta_{X/k}(x)=\operatorname{trdeg}_k\kappa_X(x)\in\mathbb Z.
+\]
+SP51 supplies pointwise finiteness before conversion to an integer.
+Both defining laws are proved by placing a specialization pair in an
+actual affine neighbourhood of its specialized point and transferring
+the existing affine laws through the structural residue-degree comparison.
 In the repository's closure-inclusion order, choose the neighbourhood of
 \(x\) when \(x\leq y\): `Scheme.le_iff_specializes` and
 `Specializes.mem_open` then place \(y\) in the same open. The existing
-`exists_isAffineOpen_mem_and_subset` supplies an actual affine open, and
-`OrderEmbedding.subtype` with `CovBy.of_image` provides the reusable
-order-theoretic route into that chart. No second point-order object is
-needed for this planned transport.
-Do not replace these steps by a supplied dimension-function or gluing
-package, or by an unrestricted claim that open immersions preserve
-absolute point height. The general constructor remains open.
+`exists_isAffineOpen_mem_and_subset` supplies an actual affine open.
+Its actual open embedding reflects specialization, transferring strict
+order and the cover relation between the scheme and chart. No second
+point-order object or supplied gluing package is added.
+The resulting function is nonnegative, equals the existing affine
+dimension-function object on affine schemes, and preserves its values
+under arbitrary actual open immersions over the field. No ambient
+affineness, quasi-compactness, integrality or global dimension bound is
+assumed.
+
+**The next bounded goal is the global point-height and carrier-dimension
+comparison.** The two dimension-function laws alone allow additive shifts
+and do not identify absolute height. Use the constructed function's
+nonnegative finite values and strictness for the upper height bound.
+For the lower bound, choose one actual affine chart through the point,
+use its finite point height and the proved affine normalization, and
+transport height monotonically through the actual chart point map.
+Then reuse the existing point-closure and integral-carrier height
+identifications. This is a planned proof, not a new hypothesis or a
+claim of unrestricted open-immersion invariance of absolute point height.
 Matching dimension grading with codimension \(p\) via
 \(d-p\) also needs the intended integral or pure-dimensional geometric
 setting; it is not asserted uniformly on schemes with components of
