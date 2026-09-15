@@ -30,7 +30,8 @@ noncomputable section
 
 universe u v
 
-private theorem point_height_iso {X Y : Scheme.{u}} (e : X ≅ Y) (x : X) :
+/-- An actual scheme isomorphism preserves point height. -/
+theorem point_height_iso {X Y : Scheme.{u}} (e : X ≅ Y) (x : X) :
     Order.height (e.hom.base x) = Order.height x := by
   apply WithBot.coe_injective
   rw [point_height_eq_supportDim, point_height_eq_supportDim,

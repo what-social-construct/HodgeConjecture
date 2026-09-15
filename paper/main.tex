@@ -2106,6 +2106,44 @@ integer, and Proposition~\ref{prop:affine-dimension-function} supplies
 the stated value without redefining its dimension function.
 \end{proof}
 
+\begin{proposition}[Structural affine values and residue degrees --- \formal]
+\label{prop:structural-affine-value}
+Let \(k\) be a field, let \(X\) be an actual affine scheme, and let
+\(p:X\to\Spec k\) be locally of finite type. Equip each actual
+\(\kappa_X(x)\) with the structural action of
+Proposition~\ref{prop:structural-residue-field}. Its transcendence
+degree over \(k\) is finite, and the existing dimension function satisfies
+\[
+  \delta_{X/k}(x)=h_X(x)
+    =\operatorname{trdeg}_k\kappa_X(x)\in\mathbf Z.
+\]
+This identifies the height-defined affine function with the residue-degree
+value of \cite{StacksAlgebraicSchemeDimension}. The structural morphism
+supplies the sections algebra; no independently supplied algebra structure
+or scalar-compatibility premise is required.
+
+If \(u:X\to Y\) is an open immersion between affine schemes and
+\(p:Y\to\Spec k\) is locally of finite type, use \(p\circ u\)
+on \(X\). The existing affine dimension functions then agree:
+\[
+  \delta_{X/k}(x)=\delta_{Y/k}(u(x)).
+\]
+\end{proposition}
+
+\begin{proof}
+Set \(A=\Gamma(X,\mathcal O_X)\) and use the canonical affine
+isomorphism \(X\simeq\Spec A\). The transported structural morphism
+determines the actual finite-type \(k\)-algebra on \(A\).
+Retaining this equality of structural maps allows the residue-field
+comparison of Proposition~\ref{prop:structural-residue-field} to be used
+over \(k\). The literal-spectrum finiteness and value formula then apply.
+The existing comparison of actual point-closure dimensions under the
+affine isomorphism identifies this value with \(h_X(x)\), hence with
+the existing \(\delta_{X/k}\).
+For the open-immersion formula, apply the value identity on both affine
+schemes and the already proved structural residue-degree invariance.
+\end{proof}
+
 For smooth projective schemes over a fixed field \(k\), composition of rational Chow
 correspondences is associative and bilinear
 \cite{StacksChowCorrespondenceComposition}, while graph classes compose
@@ -2416,6 +2454,13 @@ The consumers \leanpath{spec_schemeResidueField_trdeg_eq},
 \leanpath{DimensionFunction.ofSpecFiniteType_eq_schemeResidueField_trdeg}, and
 \leanpath{residueFieldBase_trdeg_eq_of_isOpenImmersion} are in
 \leanpath{Cycles/AffineResidueFieldDimension.lean}.
+Proposition~\ref{prop:structural-affine-value} reuses the newly public
+\leanpath{point_height_iso} in
+\leanpath{Cycles/AffineSchemeDimensionFunction.lean}.
+Its value comparisons are \leanpath{affine_schemeResidueField_trdeg_lt_aleph0},
+\leanpath{DimensionFunction.ofAffineLocallyOfFiniteType_eq_schemeResidueField_trdeg},
+and \leanpath{DimensionFunction.ofAffineLocallyOfFiniteType_apply_of_isOpenImmersion}
+in \leanpath{Cycles/AffineSchemeResidueDegree.lean}.
 \end{leanfiles}
 
 \begin{statusnote}{\openstatus}
@@ -2488,11 +2533,13 @@ action on each actual scheme residue field and proves the affine and
 open-immersion algebra comparisons. It identifies the existing
 literal-spectrum grading with the actual scheme-residue degree and
 proves open-immersion invariance of that degree as a cardinal.
-The next step identifies the height-defined \(\delta_{X/k}\) for an
-arbitrary structural affine \(X\) with its actual scheme-residue degree,
-retaining the induced sections algebra and structural action through
-\(X\simeq\Spec\Gamma(X,\mathcal O_X)\).
-Agreement on overlaps and the common-chart specialization laws must
+Proposition~\ref{prop:structural-affine-value} identifies the
+height-defined \(\delta_{X/k}\) on an arbitrary structural affine
+scheme with that residue degree and proves value agreement under open
+immersions between affine schemes.
+The next step compares affine charts at a common point of an arbitrary
+nonaffine ambient scheme and proves pointwise residue-degree finiteness
+there. The common-chart order and immediate-specialization laws must
 then assemble the general grading
 \(\delta_k(x)=\operatorname{trdeg}_k\kappa(x)
   =\dim\overline{\{x\}}\)
@@ -3814,6 +3861,13 @@ Structural and affine residue-field comparisons (\formal) &
 \leanpath{Cycles/StructuralResidueField.lean}\newline
 \leanpath{Cycles/AffineResidueField.lean}\newline
 \leanpath{Cycles/AffineResidueFieldDimension.lean}\\
+Structural affine values and affine-open agreement (\formal) &
+\leanpath{point_height_iso}\newline
+\leanpath{affine_schemeResidueField_trdeg_lt_aleph0}\newline
+Dimension-function value and open-immersion comparison
+(Proposition~\ref{prop:structural-affine-value})\newline
+\leanpath{Cycles/AffineSchemeDimensionFunction.lean}\newline
+\leanpath{Cycles/AffineSchemeResidueDegree.lean}\\
 Compactified graph route (\formal; \conditional) &
 \leanpath{groupAlgebraProjectorExtension}\newline
 \leanpath{Boundary/CompactifiedGraphProjector.lean}\\

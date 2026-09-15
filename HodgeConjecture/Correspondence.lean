@@ -69,6 +69,7 @@ import HodgeConjecture.Cycles.AffineSchemeDimensionFunction
 import HodgeConjecture.Cycles.StructuralResidueField
 import HodgeConjecture.Cycles.AffineResidueField
 import HodgeConjecture.Cycles.AffineResidueFieldDimension
+import HodgeConjecture.Cycles.AffineSchemeResidueDegree
 import HodgeConjecture.Correspondence.TransposeAlgebra
 import HodgeConjecture.Correspondence.ProjectorDefect
 import HodgeConjecture.Correspondence.ProjectorLift
@@ -177,6 +178,10 @@ Chow/cohomological realization:
     fields, natural residue algebra maps and open-immersion equivalences,
     and the affine stalk-induced algebra comparison identifying the existing
     spectrum dimension function with its actual scheme residue-field degree.
+41. structural residue-degree finiteness and the existing dimension-value
+    comparison on arbitrary affine schemes locally of finite type over a
+    field, with base-compatible transport through the canonical affine
+    isomorphism and agreement under affine open immersions.
 
 The free span algebra is not identified with a Chow ring. General proper
 cycle extraction, flat/Gysin operations and their rational-equivalence
@@ -186,7 +191,9 @@ admissible system). The constructed closed-pushforward quotient is additive;
 it does not supply Chow convolution or its target realization.
 The affine dimension-function construction is now proved in all dimensions.
 Structural residue-field compatibility and open-immersion degree invariance
-are also proved. Comparing arbitrary affine structural presentations with
-these values, assembling the global field-induced dimension function and
-identifying the target codimension grading remain separate steps.
+are also proved, as are the structural residue-degree values on arbitrary
+affine schemes and their agreement under affine open immersions. Comparing
+charts in a general ambient scheme, assembling the global field-induced
+dimension function and identifying the target codimension grading remain
+separate steps.
 -/

@@ -57,7 +57,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 
 ## Canonical semantic object and TeX registry
 
-### Construction and input checkpoints (SP17--SP49)
+### Construction and input checkpoints (SP17--SP50)
 
 | ID | Object or overlap | Disposition | Required action | Status |
 | --- | --- | --- | --- | --- |
@@ -94,6 +94,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 | SP47 | Consecutive-prime quotient and residue-field unit drop | PROVE / CONNECT | Transport the actual prime interval into B/p, prove height one of the image of q, and apply SP46 with the actual double-quotient algebra equivalence. Keep the ambient algebra arbitrary and the cover relation in the prime spectrum. | PROVED; FULL BUILD, 452 AXIOM REPORTS, ELEVEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP48 | Actual affine dimension functions and geometric support degrees | CONSTRUCT / IDENTIFY | Reuse the prime/scheme order reversal and SP47 to prove both dimension-function laws on literal Spec A. Extract the finite-type sections algebra from an actual affine structural morphism and transport through X.isoSpec. Identify support degrees and fundamental-cycle membership with carrier dimension. | PROVED; FULL BUILD, 464 AXIOM REPORTS, NINETEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP49 | Structural base actions and actual affine residue-field algebra comparison | CONSTRUCT / COMPARE | Define the action independently by structural pullback and evaluation. Prove actual residue-map base compatibility, open-immersion algebra equivalence and the stalk-induced affine comparison on constants. Identify full residue-degree cardinals and the existing literal-spectrum dimension value. | PROVED; FULL BUILD, 480 AXIOM REPORTS, NINETEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP50 | Structural residue-degree values on arbitrary affine schemes | IDENTIFY / COMPARE | Extract the actual finite-type sections algebra and retain its structural-map equality. Use the canonical affine isomorphism and SP49's base-compatible residue map to prove finiteness and identify the existing dimension value, then compare values under affine open immersions. Reuse the exposed point-height isomorphism theorem. | PROVED; FULL BUILD, 484 AXIOM REPORTS, THIRTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -655,6 +656,44 @@ the existing dimension function on an arbitrary affine structural scheme
 with its actual residue-field degree. Overlapping-chart comparisons,
 global dimension-function assembly, target codimension grading and
 realization remain subsequent obligations.
+
+SP50 validation (2026-09-15): both affected leaf modules and the full
+3128-job Lean build pass, with only the two existing `Challenge` warnings.
+The final integrated `research/Verification.lean` run passes with 592
+declaration checks and all 345 examples, without warnings or errors.
+All 484 selected axiom reports were captured in the original integrated
+context and compared with the exact declaration inventory: no missing,
+unexpected or duplicate reports and no unpermitted axioms. The existing
+`polynomialDimensionBound` is axiom-free; the existing
+`genericFiber_isScalarTower_base` uses only `propext` and `Quot.sound`;
+the other 482 reports use only `propext`, `Classical.choice` and
+`Quot.sound`. The independent focused replay retains exactly the original
+four verification imports and checks the three new public endpoints and
+the reused, newly public `point_height_iso`. All thirteen new regressions
+pass: arbitrary scheme-isomorphism height, absence of preinstalled sections
+and residue algebras or integrality/reducedness/characteristic-zero inputs,
+the affine-X degree formula, agreement with the literal-spectrum function,
+actual `isoSpec` compatibility on constants, affine open maps and actual
+open-subscheme inclusions and composition, the empty spectrum, a product
+algebra and the dual-number quotient, the existing support-degree criterion
+and low-dimensional grading parity. A separate four-report, six-regression
+audit also passes; it checks exact cardinal recovery from `toNat` using
+the proved finiteness and confirms that neither finite type nor module
+finiteness of the residue field is supplied. The six primary
+proof-dependency assertions and two supporting reports pass. Independent
+mathematical, structural-action and cross-document parity reviews pass.
+The single PDF builds to 55 pages with a clean final log; Proposition 6.23
+and its proof, the updated module/status pages and the theorem-map row
+were visually inspected. Existing 0A21 and 01HV sources are rechecked and
+reused without source axioms. Submission wrappers, dependency pins and
+bibliography are unchanged; diff checks pass. The existing dimension
+function, structural algebra and point-height isomorphism theorem are
+reused; no global algebra instance, input package, duplicate order or
+residue carrier, cycle module, Chow quotient or projector is introduced.
+The next bounded checkpoint is pointwise residue-degree finiteness and
+affine-chart value comparison in a general locally finite-type ambient
+scheme. Common-chart order and cover-law transfer, global grading,
+target codimension conversion and realization remain subsequent obligations.
 
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
@@ -1465,8 +1504,9 @@ The spectrum constructor uses `Ideal.ResidueField`; the structural-affine
 constructor uses literal point height. SP49 below explicitly constructs the
 structural action on the separate `Scheme.residueField` and proves the
 affine algebra comparison and open-immersion residue-degree invariance.
-The arbitrary structural affine value comparison, overlaps and the global
-dimension function remain separate from these proved residue-field facts.
+SP50 below proves the arbitrary structural affine value comparison and
+affine-open value agreement. Chart comparison in a general ambient scheme
+and the global dimension function remain separate.
 
 ### Structural and affine residue-field comparison (SP49)
 
@@ -1503,14 +1543,47 @@ finite residue degree before numeric conversion; it does not assert that
 the residue field is a finite-type algebra. The existing dimension function
 is unchanged, and no new cycle module, Chow quotient or projector is added.
 
-The next bounded checkpoint identifies `ofAffineLocallyOfFiniteType` on
-an arbitrary affine structural \(X\) with its actual structural residue
-degree through `X.isoSpec` and the induced sections algebra. The literal
-spectrum formula alone has not supplied that adapter. The proved
-open-immersion degree invariance then supports overlap comparison and
-global assembly on actual charts. Target codimension conversion and further
-realization remain separate; no unrestricted open-height invariance or
-general dimension-function constructor is assumed.
+SP50 below identifies `ofAffineLocallyOfFiniteType` on an arbitrary affine
+structural \(X\) with its actual structural residue degree and proves
+affine-open value agreement. Comparison of charts in a general ambient
+scheme and global assembly remain separate, as do target codimension
+conversion and further realization.
+
+### Structural residue-degree values on actual affine schemes (SP50)
+
+The notation \(\delta_{X/k}\), \(h_X(x)\) and \(\kappa_X(x)\)
+continues to denote the existing affine dimension function, actual scheme
+point height and actual scheme-stalk residue field. No new object or
+independent symbol is introduced.
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `point_height_iso` in `AffineSchemeDimensionFunction.lean` | expose the existing actual-isomorphism height theorem, proof unchanged | $h_Y(e(x))=h_X(x)$ for $e:X\simeq Y$; theorem only |
+| `affine_schemeResidueField_trdeg_lt_aleph0` | actual structural residue degree is finite for affine locally finite-type X | $\operatorname{trdeg}_k\kappa_X(x)<\aleph_0$ |
+| `DimensionFunction.ofAffineLocallyOfFiniteType_eq_schemeResidueField_trdeg` | identify the existing height-defined affine function with actual structural residue degree | $\delta_{X/k}(x)=h_X(x)=\operatorname{trdeg}_k\kappa_X(x)$ |
+| `DimensionFunction.ofAffineLocallyOfFiniteType_apply_of_isOpenImmersion` | compare existing dimension values under an affine open immersion over k | $\delta_{X/k}(x)=\delta_{Y/k}(f(x))$ for open $f:X\to Y$, with source structural map $p\circ f$ |
+
+The new leaf `Cycles/AffineSchemeResidueDegree.lean` takes the actual
+structural morphism \(p:X\to\operatorname{Spec}k\) and locally installs
+its independently defined residue-field algebra. Its proof extracts the
+finite-type sections algebra from `X.isoSpec.inv ≫ p` and retains the
+equality of its spectrum map with that morphism. The actual isomorphism
+identities prove that composition with `X.isoSpec.hom` is \(p\), so the
+SP49 residue-degree equality uses precisely the original structural action.
+Finite transcendence degree is proved before conversion to a natural
+number or integer; finite type of the residue field is not asserted.
+No preinstalled sections algebra, affine presentation, integrality,
+reducedness or nonemptiness is an input. The existing point-height theorem
+is reused, not duplicated. The open comparison assumes both schemes
+affine and the target structural morphism locally of finite type; the
+source instance follows by composition with the actual open immersion.
+
+The next bounded checkpoint proves pointwise structural residue-degree
+finiteness and comparison of affine chart values in a general locally
+finite-type ambient scheme. Common-chart order and cover-law transfer,
+the global dimension-function constructor, target codimension conversion
+and further realization remain open. No unrestricted open-height
+invariance or global grading package is assumed.
 
 ## Objects deliberately assigned no independent notation
 

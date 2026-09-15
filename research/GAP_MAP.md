@@ -833,18 +833,44 @@ of that degree, not finite type of the residue field. The existing
 actual scheme residue field. Actual open immersions preserve the full
 structural residue degree without affine or finite-type hypotheses.
 
-**The next bounded goal is the arbitrary-affine structural value comparison.**
-For an actual affine \(X\) with locally finite-type structural morphism
-\(p\), identify `DimensionFunction.ofAffineLocallyOfFiniteType k X p`
-with transcendence degree of \(\kappa_X(x)\) under SP49's structural
-action. Extract the actual sections algebra through `X.isoSpec`, retain
-the equality between its spectrum morphism and the transported \(p\),
-and use the new residue-field algebra maps and literal-spectrum formula.
-This must compare the actual actions, not merely isomorphic field carriers.
-Then use the proved open-immersion degree invariance to compare affine
-values on overlaps and prove the global strictness and unit-step laws on
-a common affine chart. Pointwise finiteness comes from an actual affine
-chart; no global finite-dimensionality premise alone supplies these laws.
+### Structural residue-degree values on arbitrary affine schemes
+
+A11ai / SP50 proves the arbitrary-affine value comparison in
+`Cycles/AffineSchemeResidueDegree.lean`. For an actual affine \(X\) and
+locally finite-type structural morphism \(p:X\to\operatorname{Spec}k\),
+the actual structural residue degree is finite and
+\[
+ \delta_{X/k}(x)=h_X(x)=\operatorname{trdeg}_k\kappa_X(x).
+\]
+The proof extracts the finite-type sections algebra from the actual
+morphism `X.isoSpec.inv ≫ p`,
+retains its actual spectrum-morphism equality and checks that pulling
+back along `X.isoSpec.hom` recovers \(p\). SP49's base-compatible residue
+map then transfers the full-cardinal degree before numeric conversion.
+The existing `point_height_iso` is exposed with its proof unchanged;
+no second order isomorphism, scalar action or dimension function is added.
+No independently supplied sections algebra, ambient integrality,
+reducedness or nonemptiness is required.
+
+For an open immersion \(f:X\to Y\) between affine schemes and locally
+finite-type \(p:Y\to\operatorname{Spec}k\), the same comparison proves
+\(\delta_{X/k}(x)=\delta_{Y/k}(f(x))\), with the source structural
+morphism \(p\circ f\). This is a value theorem for the existing affine
+functions, not unrestricted open-immersion invariance of point height.
+
+**The next bounded goal is the actual chartwise construction.** Use an
+actual affine chart to prove pointwise structural residue-degree finiteness
+on a general locally finite-type \(k\)-scheme and compare affine chart
+values at the same ambient point. Then prove the global strictness and
+unit-step laws on a common affine chart. No global finite-dimensionality
+premise alone supplies these laws.
+For pointwise finiteness, use `Scheme.affineCover` and `Cover.exists_eq`
+to represent the ambient point by an actual affine-chart point before
+installing its point-dependent scalar action. Apply SP50 on the chart
+and SP49 to its open map. For two charts, compare each existing affine
+value with the ambient structural residue-degree expression, then use
+equality of their ambient images. No finite subcover or new global
+dimension-function object is needed for these three preliminary results.
 Do not replace these steps by a supplied dimension-function or gluing
 package, or by an unrestricted claim that open immersions preserve
 absolute point height. The general constructor remains open.

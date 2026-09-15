@@ -4303,3 +4303,170 @@ example (k : Type) [Field k] :
   simp only [MvPolynomial.trdeg_of_isDomain, Cardinal.mk_nat, Cardinal.lift_aleph0]
 
 end StructuralResidueFieldRegressions
+
+-- SP50: actual structural residue degrees on arbitrary affine schemes and affine-open compatibility.
+#check HodgeConjecture.SchemeCycles.point_height_iso
+#check HodgeConjecture.SchemeCycles.affine_schemeResidueField_trdeg_lt_aleph0
+#check HodgeConjecture.SchemeCycles.DimensionFunction.ofAffineLocallyOfFiniteType_eq_schemeResidueField_trdeg
+#check HodgeConjecture.SchemeCycles.DimensionFunction.ofAffineLocallyOfFiniteType_apply_of_isOpenImmersion
+
+#print axioms HodgeConjecture.SchemeCycles.point_height_iso
+#print axioms HodgeConjecture.SchemeCycles.affine_schemeResidueField_trdeg_lt_aleph0
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.ofAffineLocallyOfFiniteType_eq_schemeResidueField_trdeg
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.ofAffineLocallyOfFiniteType_apply_of_isOpenImmersion
+
+noncomputable section AffineSchemeResidueDegreeRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory TopologicalSpace
+open HodgeConjecture.SchemeCycles
+
+-- The exposed existing height comparison applies to arbitrary scheme isomorphisms.
+example (X Y : Scheme) (e : X ≅ Y) (x : X) :
+    Order.height (e.hom.base x) = Order.height x := by
+  fail_if_success
+    have : IsAffine X := inferInstance
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  exact point_height_iso e x
+
+-- Neither a sections algebra nor a residue-field algebra is an input.
+example (k : Type) [Field k] (X : Scheme) [IsAffine X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] (x : X) :
+    letI := residueFieldBaseAlgebra k p x
+    Algebra.trdeg k (X.residueField x) < Cardinal.aleph0 := by
+  fail_if_success
+    have : Algebra k Γ(X, ⊤) := inferInstance
+  fail_if_success
+    have : Algebra k (X.residueField x) := inferInstance
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  fail_if_success
+    have : AlgebraicGeometry.IsReduced X := inferInstance
+  fail_if_success
+    have : CharZero k := inferInstance
+  exact affine_schemeResidueField_trdeg_lt_aleph0 k X p x
+
+example (k : Type) [Field k] (X : Scheme) [IsAffine X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] (x : X) :
+    letI := residueFieldBaseAlgebra k p x
+    DimensionFunction.ofAffineLocallyOfFiniteType k X p x =
+      ((Algebra.trdeg k (X.residueField x)).toNat : ℤ) :=
+  DimensionFunction.ofAffineLocallyOfFiniteType_eq_schemeResidueField_trdeg k X p x
+
+-- The structural affine-X and literal-spectrum functions agree via the same actual residue action.
+example (k A : Type) [Field k] [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
+    (x : Spec (CommRingCat.of A)) :
+    let p := Spec.map (CommRingCat.ofHom (algebraMap k A))
+    letI : LocallyOfFiniteType p :=
+      (HasRingHomProperty.Spec_iff (P := @LocallyOfFiniteType)).mpr
+        (RingHom.finiteType_algebraMap.mpr inferInstance)
+    DimensionFunction.ofAffineLocallyOfFiniteType k (Spec (CommRingCat.of A)) p x =
+      DimensionFunction.ofSpecFiniteType k A x := by
+  dsimp only
+  rw [DimensionFunction.ofAffineLocallyOfFiniteType_eq_schemeResidueField_trdeg,
+    DimensionFunction.ofSpecFiniteType_eq_schemeResidueField_trdeg]
+
+-- The canonical affine isomorphism respects constants under the actual transported structural map.
+example (k : Type) [Field k] (X : Scheme) [IsAffine X]
+    (p : X ⟶ Spec (CommRingCat.of k)) (x : X) (a : k) :
+    X.isoSpec.hom.residueFieldMap x
+      (residueFieldBaseMap k (X.isoSpec.inv ≫ p) (X.isoSpec.hom.base x) a) =
+        residueFieldBaseMap k p x a := by
+  calc
+    _ = residueFieldBaseMap k (X.isoSpec.hom ≫ (X.isoSpec.inv ≫ p)) x a :=
+      DFunLike.congr_fun
+        (residueFieldBaseMap_comp k (X.isoSpec.inv ≫ p) X.isoSpec.hom x) a
+    _ = _ := by simp only [Iso.hom_inv_id_assoc]
+
+-- Open-immersion compatibility derives the source finite-type condition from the actual maps.
+example (k : Type) [Field k] (X Y : Scheme) [IsAffine X] [IsAffine Y]
+    (p : Y ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (f : X ⟶ Y) [IsOpenImmersion f] (x : X) :
+    DimensionFunction.ofAffineLocallyOfFiniteType k X (f ≫ p) x =
+      DimensionFunction.ofAffineLocallyOfFiniteType k Y p (f.base x) :=
+  DimensionFunction.ofAffineLocallyOfFiniteType_apply_of_isOpenImmersion k p f x
+
+-- This specializes to the actual inclusion of an affine open subset.
+example (k : Type) [Field k] (X : Scheme) [IsAffine X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (U : X.Opens) [IsAffine (U : Scheme)] (x : U) :
+    DimensionFunction.ofAffineLocallyOfFiniteType k U (U.ι ≫ p) x =
+      DimensionFunction.ofAffineLocallyOfFiniteType k X p x.val :=
+  DimensionFunction.ofAffineLocallyOfFiniteType_apply_of_isOpenImmersion k p U.ι x
+
+example (k : Type) [Field k] (X Y Z : Scheme) [IsAffine X] [IsAffine Y] [IsAffine Z]
+    (p : Z ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (f : X ⟶ Y) [IsOpenImmersion f] (g : Y ⟶ Z) [IsOpenImmersion g] (x : X) :
+    DimensionFunction.ofAffineLocallyOfFiniteType k X ((f ≫ g) ≫ p) x =
+      DimensionFunction.ofAffineLocallyOfFiniteType k Z p (g.base (f.base x)) :=
+  DimensionFunction.ofAffineLocallyOfFiniteType_apply_of_isOpenImmersion k p (f ≫ g) x
+
+-- The empty affine scheme is permitted, without choosing a residue point.
+example (k : Type) [Field k] :
+    IsEmpty (Spec (CommRingCat.of (PUnit : Type)) : Scheme) ∧
+      ∀ x : Spec (CommRingCat.of (PUnit : Type)),
+        let p := Spec.map (CommRingCat.ofHom (algebraMap k (PUnit : Type)))
+        letI := residueFieldBaseAlgebra k p x
+        Algebra.trdeg k ((Spec (CommRingCat.of (PUnit : Type))).residueField x) <
+          Cardinal.aleph0 :=
+  ⟨inferInstance, fun x ↦ affine_schemeResidueField_trdeg_lt_aleph0 k
+    (Spec (CommRingCat.of (PUnit : Type))) _ x⟩
+
+-- A concrete reducible ambient algebra needs no domain hypothesis.
+example (k : Type) [Field k] (x : Spec (CommRingCat.of (k × k))) :
+    let p := Spec.map (CommRingCat.ofHom (algebraMap k (k × k)))
+    letI : LocallyOfFiniteType p :=
+      (HasRingHomProperty.Spec_iff (P := @LocallyOfFiniteType)).mpr
+        (RingHom.finiteType_algebraMap.mpr inferInstance)
+    letI := residueFieldBaseAlgebra k p x
+    DimensionFunction.ofAffineLocallyOfFiniteType k (Spec (CommRingCat.of (k × k))) p x =
+      ((Algebra.trdeg k ((Spec (CommRingCat.of (k × k))).residueField x)).toNat : ℤ) := by
+  fail_if_success
+    have : IsDomain (k × k) := inferInstance
+  letI : LocallyOfFiniteType (Spec.map (CommRingCat.ofHom (algebraMap k (k × k)))) :=
+    (HasRingHomProperty.Spec_iff (P := @LocallyOfFiniteType)).mpr
+      (RingHom.finiteType_algebraMap.mpr inferInstance)
+  exact DimensionFunction.ofAffineLocallyOfFiniteType_eq_schemeResidueField_trdeg k
+    (Spec (CommRingCat.of (k × k))) _ x
+
+-- The existing support grading now has the same actual structural residue-degree criterion.
+example (k : Type) [Field k] (X : Scheme) [IsAffine X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (W : IntegralClosedSubscheme X) (n : ℕ) :
+    letI := residueFieldBaseAlgebra k p (ambientGenericPoint W)
+    ((Algebra.trdeg k (X.residueField (ambientGenericPoint W))).toNat : ℤ) = (n : ℤ) ↔
+      topologicalKrullDim W.val.subscheme = (n : WithBot ℕ∞) := by
+  letI := residueFieldBaseAlgebra k p (ambientGenericPoint W)
+  rw [← DimensionFunction.ofAffineLocallyOfFiniteType_eq_schemeResidueField_trdeg k X p]
+  exact supportDegree_ofAffineLocallyOfFiniteType_eq_iff k X p W n
+
+example (k : Type) [Field k] (X : Scheme) [IsAffine X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (hdim : topologicalKrullDim X ≤ 1) (x : X) :
+    letI := residueFieldBaseAlgebra k p x
+    DimensionFunction.ofKrullDimLEOne X hdim x =
+      ((Algebra.trdeg k (X.residueField x)).toNat : ℤ) := by
+  letI := residueFieldBaseAlgebra k p x
+  simpa only [DimensionFunction.ofKrullDimLEOne_apply,
+    DimensionFunction.ofAffineLocallyOfFiniteType_apply] using
+    DimensionFunction.ofAffineLocallyOfFiniteType_eq_schemeResidueField_trdeg k X p x
+
+-- The actual nonreduced dual-number quotient is another valid finite-type source.
+example (k : Type) [Field k]
+    (x : Spec (CommRingCat.of
+      (Polynomial k ⧸ Ideal.span ({Polynomial.X ^ 2} : Set (Polynomial k))))) :
+    let A := Polynomial k ⧸ Ideal.span ({Polynomial.X ^ 2} : Set (Polynomial k))
+    let p := Spec.map (CommRingCat.ofHom (algebraMap k A))
+    letI : LocallyOfFiniteType p :=
+      (HasRingHomProperty.Spec_iff (P := @LocallyOfFiniteType)).mpr
+        (RingHom.finiteType_algebraMap.mpr inferInstance)
+    letI := residueFieldBaseAlgebra k p x
+    DimensionFunction.ofAffineLocallyOfFiniteType k (Spec (CommRingCat.of A)) p x =
+      ((Algebra.trdeg k ((Spec (CommRingCat.of A)).residueField x)).toNat : ℤ) := by
+  let A := Polynomial k ⧸ Ideal.span ({Polynomial.X ^ 2} : Set (Polynomial k))
+  letI : LocallyOfFiniteType (Spec.map (CommRingCat.ofHom (algebraMap k A))) :=
+    (HasRingHomProperty.Spec_iff (P := @LocallyOfFiniteType)).mpr
+      (RingHom.finiteType_algebraMap.mpr inferInstance)
+  exact DimensionFunction.ofAffineLocallyOfFiniteType_eq_schemeResidueField_trdeg k _ _ x
+
+end AffineSchemeResidueDegreeRegressions

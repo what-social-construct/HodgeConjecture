@@ -550,12 +550,22 @@ be developed alongside that infrastructure.
    residue degree. It also proves full-cardinal invariance under arbitrary
    open immersions. No finite-type hypothesis on residue fields is asserted.
 
-   **Next bounded obligation:** extend the literal-spectrum value formula
-   to `ofAffineLocallyOfFiniteType` on an arbitrary actual affine \(X\)
-   with structural morphism \(p\). Use `X.isoSpec` and the actual
-   induced sections algebra, retaining compatibility of structural actions.
-   Then compare affine values on overlaps via the proved open-immersion
-   residue-degree invariance and prove the global laws on a common chart.
+   **Structural affine-value checkpoint (A11ai / SP50):**
+   `AffineSchemeResidueDegree.lean` proves finite structural residue degree
+   on every actual affine \(X\) with locally finite-type \(p\) and
+   identifies it with the existing `ofAffineLocallyOfFiniteType` value.
+   The proof extracts the actual finite-type sections algebra, retains
+   the spectrum-morphism equality and checks the composite with
+   `X.isoSpec.hom` is the original \(p\). Thus SP49 transports the
+   actual structural action, not just the field carrier. The existing
+   `point_height_iso` is exposed unchanged and reused. No second dimension
+   function or preinstalled sections algebra is introduced. The affine
+   values agree under every open immersion between affine schemes over
+   this field, using the pulled-back source structural map.
+
+   **Next bounded obligation:** prove pointwise finiteness and compare
+   affine chart values in a general locally finite-type ambient scheme,
+   then prove the global strictness and unit-step laws on a common chart.
    No general constructor or open-gluing package is supplied as an input.
    Then identify dimension
    grading with target codimension grading in the intended integral or
