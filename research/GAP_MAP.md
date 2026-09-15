@@ -739,29 +739,62 @@ is required. The ambient-domain hypothesis is retained; the corresponding
 local topological formula on arbitrary reducible algebras is not asserted
 by replacing local dimension with global dimension.
 
-**The next bounded goal is the higher-dimensional immediate-specialization
-dimension formula.** The next algebraic subcheckpoint takes consecutive
-primes \(p\subsetneq q\) in a finite-type algebra \(B\), passes to
-the actual domain \(B/p\), and transports the prime interval to prove
-\(\operatorname{ht}_{B/p}(q/p)=1\). Apply SP46 there and identify the
-iterated quotient with \(B/q\), obtaining the unit drop in quotient
-and actual residue-field transcendence degrees. The ambient \(B\)
-need not be a domain for that intended application. No catenarity input
-package is needed for this route. The cover relation must be in
-`PrimeSpectrum B`, not in the full ideal lattice. The pinned APIs are
-`Ideal.primeSpectrumQuotientOrderIsoZeroLocus`, `OrderEmbedding.covBy_of_apply`
-and `OrderIso.map_covBy` for the actual quotient interval;
-`Order.height_add_one_le`, `Order.height_le_coe_iff`, `Order.height_bot`
-and `CovBy.eq_or_eq` for its height-one endpoint; and
-`DoubleQuot.quotQuotEquivQuotOfLEₐ` with `AlgEquiv.trdeg_eq` for the
-actual iterated quotient. Reuse `primeQuotient_trdeg_eq_residueField`
-for the residue-field statement. Actual scheme-chart and residue-field
-transport then remains before the general dimension-function constructor.
-Finiteness, strict monotonicity and global/maximal-local equality alone did
-not supply that law; the full affine prime formula is now proved.
-The general canonical
-field dimension function is therefore still open, not hidden in a new
-input package. Matching dimension grading with codimension \(p\) via
+### Consecutive-prime unit drop
+
+A11af / SP47 proves the algebraic unit-step law.
+`CommutativeAlgebra/PrimeQuotientCover.lean` takes a cover
+\(p\lessdot q\) in the actual `PrimeSpectrum B`, restricts it to
+the primes containing \(p\), and transports it through the existing
+quotient-spectrum order isomorphism. The lower prime maps to zero and
+the upper prime maps to its actual quotient ideal
+\(\bar q=q(B/p)\). Thus \(0\lessdot\bar q\) in
+\(\operatorname{Spec}(B/p)\), and \(\operatorname{ht}(\bar q)=1\).
+These conclusions require only a commutative ambient ring, not a field,
+domain, Noetherianity or catenarity assumption. The cover is among prime
+ideals, not in the full ideal lattice.
+
+`Cycles/ConsecutivePrimeDimension.lean` applies SP46 to the actual domain
+\(B/p\) and this height-one prime. The actual \(k\)-algebra equivalence
+`DoubleQuot.quotQuotEquivQuotOfLEₐ` identifies its further quotient with
+\(B/q\). For any finite-type algebra over a field, it therefore proves
+\[
+ \operatorname{trdeg}_k(B/q)+1=\operatorname{trdeg}_k(B/p),\qquad
+ \operatorname{trdeg}_k\kappa(q)+1=\operatorname{trdeg}_k\kappa(p),
+\]
+and \(\dim(B/q)+1=\dim(B/p)\). The residue-field version reuses
+`primeQuotient_trdeg_eq_residueField` for the existing actual prime-localization
+residue fields. Finite type supplies finite transcendence degrees; no
+unjustified inference from a numeric projection at infinity is used.
+The ambient algebra may be reducible or nonreduced. This is a unit drop
+in quotient dimensions, not a claim that ambient local-ring dimensions
+increase by one on every mixed-dimensional algebra.
+
+**The next bounded goal is the actual scheme-level dimension function.**
+First construct the affine instance of the existing `DimensionFunction`
+using the proved strict anti-monotonicity and unit drop on prime spectra,
+with the order reversed for scheme points. Expose and reuse the existing
+`specPointOrderIso` in `AffineSupportDimension.lean`, rather than adding
+a second order comparison. Match its values to the already proved
+actual point-closure dimension and prime-residue-field formulas.
+For a general affine source with an explicit structural morphism, follow
+the existing `affine_topologicalKrullDim_lt_top_of_locallyOfFiniteType`
+construction: extract the actual finite-type algebra through `X.isoSpec`
+and transport the affine dimension function through that isomorphism.
+Then derive the field algebra on each actual scheme residue field from
+the structural morphism to \(\operatorname{Spec}k\), transport through
+actual affine isomorphisms and open immersions, and prove the global
+strict-monotonicity and cover conditions on a common affine chart.
+The open-immersion residue-field map is an actual isomorphism; its
+compatibility with the structural field map must also be retained.
+The affine `Ideal.ResidueField` and the scheme's stalk residue field are
+not definitionally the same model: use `StructureSheaf.stalkIso` and
+`IsLocalRing.ResidueField.mapEquiv` with their field-action compatibility.
+The structural action can use `p.appTop` and `Γevaluation`; the naturality
+square and `residueFieldMap_comp` control transport along chart maps.
+Do not replace these steps by a supplied dimension-function or gluing
+package, or by an unrestricted claim that open immersions preserve
+absolute point height. The general constructor remains open.
+Matching dimension grading with codimension \(p\) via
 \(d-p\) also needs the intended integral or pure-dimensional geometric
 setting; it is not asserted uniformly on schemes with components of
 different dimensions. Rational coefficient extension of this general

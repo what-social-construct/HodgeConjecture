@@ -57,7 +57,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 
 ## Canonical semantic object and TeX registry
 
-### Construction and input checkpoints (SP17--SP46)
+### Construction and input checkpoints (SP17--SP47)
 
 | ID | Object or overlap | Disposition | Required action | Status |
 | --- | --- | --- | --- | --- |
@@ -91,6 +91,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 | SP44 | Normal-base going down and finite-type-domain maximal-local dimensions | PROVE / CONNECT | Construct ideal-controlled annihilators, prove the monic coefficient comparison and normal-base cancellation, and construct primes below the selected terminal prime. Reuse the existing height bound to compare normalization heights and actual maximal-local/stalk dimensions. Keep saturated-chain uniformity and the higher-dimensional unit-step grading separate. | PROVED; FULL BUILD, 413 AXIOM REPORTS, NINETEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP45 | Actual residue-normalization localization and its maximal extended prime | CONSTRUCT / CONNECT | Lift the actual quotient normalization, localize at its nonzero polynomial denominators, and construct the compatible finite-type fraction-field algebra. Prove maximality, exact contraction and preserved height, then reuse SP44 for the domain generic-fiber transcendence-degree endpoint. | PROVED; FULL BUILD, 437 AXIOM REPORTS, NINETEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP46 | Original-field prime dimension formula for finite-type domains | PROVE / CONNECT | Prove actual localization preserves full cardinal transcendence degree, use the compatible polynomial fraction-field tower, and combine SP45 with quotient normalization. Retain the domain condition and actual quotient, residue-field and prime-localization carriers. | PROVED; FULL BUILD, 446 AXIOM REPORTS, FOURTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP47 | Consecutive-prime quotient and residue-field unit drop | PROVE / CONNECT | Transport the actual prime interval into B/p, prove height one of the image of q, and apply SP46 with the actual double-quotient algebra equivalence. Keep the ambient algebra arbitrary and the cover relation in the prime spectrum. | PROVED; FULL BUILD, 452 AXIOM REPORTS, ELEVEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -547,6 +548,38 @@ checkpoint uses the actual quotient spectrum of \(B/p\) to prove the
 consecutive-prime unit drop, with the cover relation in `PrimeSpectrum B`,
 not the full ideal lattice. Scheme-chart transport and general target
 grading remain subsequent proof obligations.
+
+SP47 validation (2026-09-15): both new leaf modules and the full 3122-job
+Lean build pass, with only the two existing `Challenge` warnings.
+Integrated `research/Verification.lean` passes with 560 declaration checks
+and all 294 examples, without warnings or errors. All 452 selected axiom
+reports were captured in the original integrated context and compared with
+the exact declaration inventory: no missing, unexpected or duplicate
+reports and no unpermitted axioms. The existing `polynomialDimensionBound`
+is axiom-free; the existing `genericFiber_isScalarTower_base` uses only
+`propext` and `Quot.sound`; the other 450 reports use only `propext`,
+`Classical.choice` and `Quot.sound`. The independent SP47 replay checks
+all six new public declarations and eleven regressions. These cover actual
+quotient primality and contraction without ambient domain or Noetherian
+assumptions, transport of a prime-spectrum cover, prime and ordinary height
+one, all three unit-drop interfaces and their strict direction. A concrete
+cover in the reducible algebra \(k[T]\times k\) satisfies the unit law;
+the actual intermediate ideal \((T^2)\) separately confirms that the
+prime cover \((0)\subsetneq(T)\) need not be a cover in the full ideal
+lattice. The six primary proof-dependency assertions and two supporting
+reports pass. Independent mathematical, source and manuscript/parity
+reviews pass. The single PDF builds to 52 pages with a clean final log;
+Proposition 6.20 and its proof, the updated module/status pages and the
+theorem-map row were visually inspected. The existing 0A21 citation is
+reused for its affine unit-drop statement, without source axioms or an
+ambient stalk-dimension increment claim on arbitrary reducible algebras.
+Submission wrappers, dependency pins and bibliography are unchanged; diff
+checks pass. No replacement carrier, global algebra instance, input package,
+cycle space, Chow quotient or projector is introduced. The next bounded
+checkpoint packages the proved laws as an actual affine `DimensionFunction`
+using the existing prime/scheme order reversal. General scheme-chart and
+residue-field transport, target codimension grading and realization remain
+subsequent proof obligations.
 
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
@@ -1282,13 +1315,46 @@ The actual residue-field adapter reuses
 `primeQuotient_trdeg_eq_residueField`; no new residue-field model, source
 input package, scalar-linear proxy or global algebra instance is introduced.
 
-The next bounded algebraic checkpoint passes a consecutive prime pair
-\(p\subsetneq q\) to the actual quotient domain \(B/p\), proves
-\(q/p\) has height one, applies the new formula and identifies the
-iterated quotient with \(B/q\). This supplies the intended unit drop
-without a catenarity hypothesis, including a reducible ambient algebra.
+The subsequent consecutive-prime unit drop is recorded in SP47 below.
 Actual scheme-chart transport, the general dimension-function constructor,
-target codimension grading and the remaining realization are separate.
+target codimension grading and realization remain separate.
+
+### Consecutive-prime unit drop (SP47)
+
+Here \(p\lessdot q\) means a cover in \(\operatorname{Spec}B\),
+ordered by prime-ideal inclusion. Put \(\bar q=q(B/p)\), the actual
+image under the quotient map. This notation does not denote a cover in
+the full ideal lattice. For scheme points the order is reversed.
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `primeQuotient_map_isPrime` | primality under the actual quotient map, for a comparable prime pair | $p\subseteq q\implies\bar q=q(B/p)\text{ prime}$ |
+| `primeQuotient_bot_covBy_map` | actual quotient-spectrum correspondence on a prime cover | $p\lessdot q\implies0\lessdot\bar q\text{ in }\operatorname{Spec}(B/p)$ |
+| `primeQuotient_primeHeight_eq_one_of_covBy` | full prime height of the actual image ideal | $\operatorname{ht}_{B/p}(\bar q)=1$ |
+| `primeQuotient_trdeg_toNat_add_one_of_covBy` | finite transcendence-degree unit drop between actual prime quotients | $\operatorname{trdeg}_k(B/q)+1=\operatorname{trdeg}_k(B/p)$ |
+| `prime_residueField_trdeg_toNat_add_one_of_covBy` | same unit drop in the existing actual prime-localization residue fields | $\operatorname{trdeg}_k\kappa(q)+1=\operatorname{trdeg}_k\kappa(p)$ |
+| `primeQuotient_dimension_add_one_of_covBy` | actual quotient-ring dimension step | $\dim(B/q)+1=\dim(B/p)$ |
+
+The quotient-prime lemmas require only a commutative ring. The three
+dimension consequences require a finite-type algebra over a field, but
+no domain, reducedness, normality or equidimensionality of \(B\).
+Only its actual quotient \(B/p\) is used as a domain. The double-quotient
+comparison is an actual \(k\)-algebra equivalence, retaining the field
+action needed for transcendence degree. The existing residue-field
+comparison is reused; no replacement quotient, residue-field model,
+catenarity input, dimension-function premise, global instance, cycle space,
+Chow quotient or projector is introduced. Quotient-dimension drop is not
+identified with an ambient local-ring dimension increment on arbitrary
+reducible algebras.
+
+The next bounded checkpoint first combines the existing strict degree
+drop, SP47's unit law and the existing prime/scheme order reversal into an
+actual affine `DimensionFunction`. Its extension to general schemes must
+derive the field action from the structural morphism and retain it through
+actual affine and open-immersion residue-field comparisons. The constructor,
+global chart transport, target codimension grading and further realization
+remain separate; no unrestricted preservation of absolute point height
+under open immersion is assumed.
 
 ## Objects deliberately assigned no independent notation
 

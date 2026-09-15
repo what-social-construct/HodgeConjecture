@@ -508,19 +508,27 @@ be developed alongside that infrastructure.
    No normality, rationality, characteristic-zero or maximality premise
    is added. The domain condition on this global formula is explicit.
 
-   **Next bounded obligation:** prove the higher-dimensional
-   immediate-specialization dimension formula for finite-type schemes
-   over a field. The finite integer closure-height function is already
-   strictly monotone and its affine residue-field comparison is proved;
-   its one-step law is not yet proved. For consecutive primes
-   \(p\subsetneq q\) of a finite-type algebra, use the actual prime
-   correspondence for \(B/p\) to show \(q/p\) has height one. Apply
-   SP46 to this domain and compare the iterated quotient with \(B/q\),
-   giving the unit drop in quotient and residue-field degrees. This route
-   allows a reducible ambient \(B\) because \(B/p\) is a domain.
-   Actual chart/residue-field transport to schemes remains after that
-   algebraic unit step; no general dimension function is inferred merely
-   from the global or maximal-local equality.
+   **Consecutive-prime checkpoint (A11af / SP47):**
+   `PrimeQuotientCover.lean` transports a prime-spectrum cover
+   \(p\lessdot q\) through the actual quotient correspondence,
+   proving \(0\lessdot q/p\) and \(\operatorname{ht}_{B/p}(q/p)=1\)
+   over any commutative ring. No domain or Noetherianity of \(B\)
+   is assumed, and the cover is not taken in the full ideal lattice.
+   `ConsecutivePrimeDimension.lean` applies SP46 to \(B/p\) and the
+   actual double-quotient \(k\)-algebra equivalence, giving
+   \(\operatorname{trdeg}_k(B/q)+1=\operatorname{trdeg}_k(B/p)\).
+   The actual prime-residue-field and quotient-dimension versions are
+   also proved. This works for reducible or nonreduced finite-type
+   algebras, without asserting an ambient stalk-dimension increment.
+
+   **Next bounded obligation:** construct the existing dimension-function
+   structure on actual affine schemes using SP47 and the existing
+   prime/scheme order reversal, then perform the actual scheme-chart
+   transport. Reuse the point-closure and residue-field value comparisons.
+   Derive the algebra on each actual residue field from the structural
+   morphism, retain compatibility through open-immersion residue-field
+   isomorphisms, and prove the global laws on a common affine chart.
+   No general constructor or open-gluing package is supplied as an input.
    Then identify dimension
    grading with target codimension grading in the intended integral or
    pure-dimensional setting; a uniform \(d-p\) shift is not asserted

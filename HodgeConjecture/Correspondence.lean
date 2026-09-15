@@ -62,6 +62,8 @@ import HodgeConjecture.Cycles.ResidueNormalizationLift
 import HodgeConjecture.Cycles.ResidueNormalizationLocalization
 import HodgeConjecture.Cycles.LocalizationTranscendenceDegree
 import HodgeConjecture.Cycles.AffinePrimeDimension
+import HodgeConjecture.CommutativeAlgebra.PrimeQuotientCover
+import HodgeConjecture.Cycles.ConsecutivePrimeDimension
 import HodgeConjecture.Correspondence.TransposeAlgebra
 import HodgeConjecture.Correspondence.ProjectorDefect
 import HodgeConjecture.Correspondence.ProjectorLift
@@ -158,6 +160,10 @@ Chow/cohomological realization:
     localization, and the original-field prime dimension formula for
     finite-type domains through the compatible polynomial fraction-field
     tower, with actual quotient, residue-field and prime-localization forms.
+38. actual quotient-spectrum transport of consecutive prime pairs,
+    proving height one of the upper prime modulo the lower prime and the
+    exact unit drop in quotient and residue-field transcendence degrees
+    and quotient dimensions, including reducible finite-type algebras.
 
 The free span algebra is not identified with a Chow ring. General proper
 cycle extraction, flat/Gysin operations and their rational-equivalence
@@ -165,10 +171,8 @@ descent, and compatibility with refined intersection remain geometric
 inputs to a `FiniteEtaleAlgebraModel` (or to another explicitly chosen
 admissible system). The constructed closed-pushforward quotient is additive;
 it does not supply Chow convolution or its target realization.
-The higher-dimensional finite-type dimension-function construction still
-needs the immediate-specialization dimension formula; finite-dimensionality,
-strict monotonicity and the global/maximal-local dimension equalities alone
-do not supply that law. The full affine prime dimension formula is now
-proved; its consecutive-prime quotient comparison and the actual
-scheme-chart transport remain to construct the general dimension function.
+The full affine prime dimension formula and its consecutive-prime unit
+drop are now proved. The higher-dimensional finite-type dimension-function
+construction still needs transport of this law through the actual
+scheme-point order, affine charts and residue-field comparisons.
 -/

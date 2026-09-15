@@ -3737,3 +3737,160 @@ example (k : Type) [Field k] (q : Ideal (MvPolynomial (Fin 0) k)) [q.IsPrime] :
   rfl
 
 end AffinePrimeDimensionRegressions
+
+-- SP47: consecutive prime-spectrum covers and the exact quotient dimension drop.
+#check HodgeConjecture.CommutativeAlgebra.primeQuotient_map_isPrime
+#check HodgeConjecture.CommutativeAlgebra.primeQuotient_bot_covBy_map
+#check HodgeConjecture.CommutativeAlgebra.primeQuotient_primeHeight_eq_one_of_covBy
+#check HodgeConjecture.SchemeCycles.primeQuotient_trdeg_toNat_add_one_of_covBy
+#check HodgeConjecture.SchemeCycles.prime_residueField_trdeg_toNat_add_one_of_covBy
+#check HodgeConjecture.SchemeCycles.primeQuotient_dimension_add_one_of_covBy
+
+#print axioms HodgeConjecture.CommutativeAlgebra.primeQuotient_map_isPrime
+#print axioms HodgeConjecture.CommutativeAlgebra.primeQuotient_bot_covBy_map
+#print axioms HodgeConjecture.CommutativeAlgebra.primeQuotient_primeHeight_eq_one_of_covBy
+#print axioms HodgeConjecture.SchemeCycles.primeQuotient_trdeg_toNat_add_one_of_covBy
+#print axioms HodgeConjecture.SchemeCycles.prime_residueField_trdeg_toNat_add_one_of_covBy
+#print axioms HodgeConjecture.SchemeCycles.primeQuotient_dimension_add_one_of_covBy
+
+noncomputable section ConsecutivePrimeDimensionRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory
+open HodgeConjecture.CommutativeAlgebra HodgeConjecture.SchemeCycles
+
+-- Actual quotient primality does not require a domain or Noetherian ambient ring.
+example (B : Type) [CommRing B] (p q : PrimeSpectrum B) (hpq : p ≤ q) :
+    (q.asIdeal.map (Ideal.Quotient.mk p.asIdeal)).IsPrime := by
+  fail_if_success
+    have : IsDomain B := inferInstance
+  fail_if_success
+    have : IsNoetherianRing B := inferInstance
+  exact primeQuotient_map_isPrime B p q hpq
+
+-- The actual quotient image contracts to q, with no cover assumption needed.
+example (B : Type) [CommRing B] (p q : PrimeSpectrum B) (hpq : p ≤ q) :
+    (q.asIdeal.map (Ideal.Quotient.mk p.asIdeal)).comap (Ideal.Quotient.mk p.asIdeal) =
+      q.asIdeal := by
+  exact (q.asIdeal.comap_map_of_surjective (Ideal.Quotient.mk p.asIdeal)
+    Ideal.Quotient.mk_surjective).trans (by
+      change q.asIdeal ⊔ RingHom.ker (Ideal.Quotient.mk p.asIdeal) = q.asIdeal
+      rw [Ideal.mk_ker]
+      exact sup_eq_left.mpr hpq)
+
+-- The covering relation is in PrimeSpectrum, not in the full ideal lattice.
+example (B : Type) [CommRing B] (p q : PrimeSpectrum B) (hpq : p ⋖ q) :
+    letI : p.asIdeal.IsPrime := p.isPrime
+    letI := primeQuotient_map_isPrime B p q hpq.le
+    (⊥ : PrimeSpectrum (B ⧸ p.asIdeal)) ⋖
+      (⟨q.asIdeal.map (Ideal.Quotient.mk p.asIdeal), inferInstance⟩ :
+        PrimeSpectrum (B ⧸ p.asIdeal)) := by
+  fail_if_success
+    have : p.asIdeal ⋖ q.asIdeal := hpq
+  exact primeQuotient_bot_covBy_map B p q hpq
+
+-- Height one in the quotient requires neither catenarity nor Noetherianity.
+example (B : Type) [CommRing B] (p q : PrimeSpectrum B) (hpq : p ⋖ q) :
+    letI := primeQuotient_map_isPrime B p q hpq.le
+    (q.asIdeal.map (Ideal.Quotient.mk p.asIdeal)).primeHeight = 1 := by
+  fail_if_success
+    have : IsDomain B := inferInstance
+  fail_if_success
+    have : IsNoetherianRing B := inferInstance
+  exact primeQuotient_primeHeight_eq_one_of_covBy B p q hpq
+
+-- Ordinary height agrees with the same actual quotient-prime calculation.
+example (B : Type) [CommRing B] (p q : PrimeSpectrum B) (hpq : p ⋖ q) :
+    (q.asIdeal.map (Ideal.Quotient.mk p.asIdeal)).height = 1 := by
+  letI := primeQuotient_map_isPrime B p q hpq.le
+  rw [Ideal.height_eq_primeHeight]
+  exact primeQuotient_primeHeight_eq_one_of_covBy B p q hpq
+
+-- The unit drop allows a non-domain and nonreduced ambient finite-type algebra.
+example (k B : Type) [Field k] [CommRing B] [Algebra k B] [Algebra.FiniteType k B]
+    (p q : PrimeSpectrum B) (hpq : p ⋖ q) :
+    (Algebra.trdeg k (B ⧸ q.asIdeal)).toNat + 1 =
+      (Algebra.trdeg k (B ⧸ p.asIdeal)).toNat := by
+  fail_if_success
+    have : IsDomain B := inferInstance
+  fail_if_success
+    have : IsReduced B := inferInstance
+  fail_if_success
+    have : CharZero k := inferInstance
+  exact primeQuotient_trdeg_toNat_add_one_of_covBy k B p q hpq
+
+-- The adapter uses each actual prime-localization residue field.
+example (k B : Type) [Field k] [CommRing B] [Algebra k B] [Algebra.FiniteType k B]
+    (p q : PrimeSpectrum B) (hpq : p ⋖ q) :
+    (Algebra.trdeg k q.asIdeal.ResidueField).toNat + 1 =
+      (Algebra.trdeg k p.asIdeal.ResidueField).toNat :=
+  prime_residueField_trdeg_toNat_add_one_of_covBy k B p q hpq
+
+example (k B : Type) [Field k] [CommRing B] [Algebra k B] [Algebra.FiniteType k B]
+    (p q : PrimeSpectrum B) (hpq : p ⋖ q) :
+    ringKrullDim (B ⧸ q.asIdeal) + 1 = ringKrullDim (B ⧸ p.asIdeal) :=
+  primeQuotient_dimension_add_one_of_covBy k B p q hpq
+
+-- Direction check: proper specialization lowers the residue-field value by one.
+example (k B : Type) [Field k] [CommRing B] [Algebra k B] [Algebra.FiniteType k B]
+    (p q : PrimeSpectrum B) (hpq : p ⋖ q) :
+    (Algebra.trdeg k q.asIdeal.ResidueField).toNat <
+      (Algebra.trdeg k p.asIdeal.ResidueField).toNat := by
+  have h := prime_residueField_trdeg_toNat_add_one_of_covBy k B p q hpq
+  omega
+
+-- A nonprime ideal really lies between (0) and (T) in the full ideal lattice.
+example (k : Type) [Field k] :
+    ¬ ((⊥ : Ideal (Polynomial k)) ⋖ Ideal.span {Polynomial.X}) := by
+  intro h
+  have hbot : (⊥ : Ideal (Polynomial k)) < Ideal.span {Polynomial.X ^ 2} := by
+    apply bot_lt_iff_ne_bot.mpr
+    intro heq
+    exact (pow_ne_zero 2 Polynomial.X_ne_zero) (Ideal.span_singleton_eq_bot.mp heq)
+  have hstrict : (Ideal.span {Polynomial.X ^ 2} : Ideal (Polynomial k)) <
+      Ideal.span {Polynomial.X} :=
+    Ideal.span_singleton_lt_span_singleton.mpr
+      ⟨Polynomial.X_ne_zero, Polynomial.X, Polynomial.not_isUnit_X, pow_two _⟩
+  exact h.2 hbot hstrict
+
+-- A constructed cover in the genuinely reducible algebra k[T] × k satisfies the unit law.
+example (k : Type) [Field k] :
+    ∃ p q : PrimeSpectrum (Polynomial k × k), p ⋖ q ∧
+      (Algebra.trdeg k ((Polynomial k × k) ⧸ q.asIdeal)).toNat + 1 =
+        (Algebra.trdeg k ((Polynomial k × k) ⧸ p.asIdeal)).toNat := by
+  let m := RingHom.ker (Polynomial.evalRingHom (0 : k))
+  letI : m.IsMaximal := RingHom.ker_isMaximal_of_surjective
+    (Polynomial.evalRingHom (0 : k)) (fun a ↦ ⟨Polynomial.C a, by simp⟩)
+  let p : PrimeSpectrum (Polynomial k) := ⟨⊥, Ideal.bot_prime⟩
+  let q : PrimeSpectrum (Polynomial k) := ⟨m, inferInstance⟩
+  have hm : m ≠ ⊥ := by
+    intro heq
+    have hx : Polynomial.X ∈ m := by simp [m, RingHom.mem_ker]
+    rw [heq, Ideal.mem_bot] at hx
+    exact Polynomial.X_ne_zero hx
+  have hpq : p ⋖ q := by
+    refine ⟨show (⊥ : Ideal (Polynomial k)) < m from bot_lt_iff_ne_bot.mpr hm, ?_⟩
+    intro r hpr hrq
+    have hrne : r.asIdeal ≠ ⊥ := by
+      intro heq
+      exact hpr.ne (PrimeSpectrum.ext heq.symm)
+    have hrmax := r.isPrime.isMaximal hrne
+    exact hrq.ne (PrimeSpectrum.ext (hrmax.eq_of_le (inferInstance : m.IsPrime).ne_top hrq.le))
+  let π := RingHom.fst (Polynomial k) k
+  have hπ : Function.Surjective π := fun a ↦ ⟨(a, 0), rfl⟩
+  let e : PrimeSpectrum (Polynomial k) ↪o PrimeSpectrum (Polynomial k × k) :=
+    { toFun := π.specComap
+      inj' := PrimeSpectrum.specComap_injective_of_surjective π hπ
+      map_rel_iff' := fun {x y} ↦
+        Ideal.comap_le_comap_iff_of_surjective π hπ x.asIdeal y.asIdeal }
+  have he : (Set.range e).OrdConnected := by
+    refine ⟨?_⟩
+    rintro a ⟨a₀, rfl⟩ b _ c hc
+    have hker : RingHom.ker π ≤ c.asIdeal := (Ideal.ker_le_comap π).trans hc.1
+    refine ⟨⟨c.asIdeal.map π, c.asIdeal.map_isPrime_of_surjective hπ hker⟩, ?_⟩
+    apply PrimeSpectrum.ext
+    exact (c.asIdeal.comap_map_of_surjective π hπ).trans (sup_eq_left.mpr hker)
+  have hcover := hpq.image e he
+  exact ⟨e p, e q, hcover,
+    primeQuotient_trdeg_toNat_add_one_of_covBy k (Polynomial k × k) (e p) (e q) hcover⟩
+
+end ConsecutivePrimeDimensionRegressions

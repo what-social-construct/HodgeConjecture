@@ -1943,6 +1943,47 @@ Proposition~\ref{prop:affine-dimension} applied to \(B\) and
 \(B/\mathfrak q\) give the dimension form.
 \end{proof}
 
+\begin{proposition}[Unit drop between consecutive affine primes --- \formal]
+\label{prop:consecutive-prime-dimension}
+Let \(k\) be a field and let \(B\) be a finite-type \(k\)-algebra.
+Let \(\mathfrak p\subsetneq\mathfrak q\) be prime ideals with no
+prime strictly between them. Then
+\[
+  \operatorname{trdeg}_k(B/\mathfrak q)+1
+    =\operatorname{trdeg}_k(B/\mathfrak p),
+\]
+and, for their actual prime-localization residue fields,
+\[
+  \operatorname{trdeg}_k\kappa(\mathfrak q)+1
+    =\operatorname{trdeg}_k\kappa(\mathfrak p).
+\]
+Equivalently,
+\[
+  \dim(B/\mathfrak q)+1=\dim(B/\mathfrak p).
+\]
+The algebra \(B\) may be reducible or nonreduced.
+This is the affine unit-drop statement of part~(7) of
+\cite{StacksAlgebraicSchemeDimension}.
+\end{proposition}
+
+\begin{proof}
+Set \(A=B/\mathfrak p\) and let
+\(\overline{\mathfrak q}=\mathfrak q/\mathfrak p\) be its actual
+quotient prime. The quotient prime correspondence identifies the
+interval from \(\mathfrak p\) to \(\mathfrak q\) with the interval
+from zero to \(\overline{\mathfrak q}\). The cover hypothesis therefore
+gives \(\operatorname{ht}(\overline{\mathfrak q})=1\).
+Apply Proposition~\ref{prop:affine-prime-dimension} to the finite-type
+domain \(A\) and this height-one prime. The actual double-quotient
+\(k\)-algebra isomorphism
+\[
+  (B/\mathfrak p)/(\mathfrak q/\mathfrak p)
+    \simeq B/\mathfrak q
+\]
+gives the transcendence-degree formula. The existing residue-field
+and quotient-dimension comparisons give its remaining forms.
+\end{proof}
+
 For smooth projective schemes over a fixed field \(k\), composition of rational Chow
 correspondences is associative and bilinear
 \cite{StacksChowCorrespondenceComposition}, while graph classes compose
@@ -2204,6 +2245,18 @@ The same file supplies \leanpath{primeHeight_add_quotient_trdeg_eq},
 \leanpath{primeHeight_add_residueField_trdeg_eq},
 \leanpath{height_add_quotient_dimension_eq}, and
 \leanpath{localization_dimension_add_quotient_dimension_eq}.
+Proposition~\ref{prop:consecutive-prime-dimension} uses
+\leanpath{primeQuotient_map_isPrime},
+\leanpath{primeQuotient_bot_covBy_map}, and
+\leanpath{primeQuotient_primeHeight_eq_one_of_covBy} in
+\leanpath{CommutativeAlgebra/PrimeQuotientCover.lean}.
+These actual quotient-prime results need only a commutative ambient
+ring and a cover in its prime spectrum.
+The finite-type unit-drop endpoints are
+\leanpath{primeQuotient_trdeg_toNat_add_one_of_covBy},
+\leanpath{prime_residueField_trdeg_toNat_add_one_of_covBy}, and
+\leanpath{primeQuotient_dimension_add_one_of_covBy} in
+\leanpath{Cycles/ConsecutivePrimeDimension.lean}.
 \end{leanfiles}
 
 \begin{statusnote}{\openstatus}
@@ -2264,17 +2317,20 @@ dimension formula for finite-type \emph{domains}. The field
 the variable count. Integrality of the
 quotient composite \(P\to B/\mathfrak q\) does not assert integrality
 of its lift \(P\to B\).
-The general field-based dimension-function construction
+Proposition~\ref{prop:consecutive-prime-dimension} proves the affine
+prime-spectrum unit drop by passing to the actual quotient
+\(B/\mathfrak p\); this permits a reducible or nonreduced ambient
+algebra. The next formal step is to transport this law into the actual
+affine scheme-point order and package its dimension function. Open-chart
+and residue-field transport must then construct the general field-based
+grading
 \(\delta_k(x)=\operatorname{trdeg}_k\kappa(x)
-  =\dim\overline{\{x\}}\), including its immediate-specialization
-law and passage from affine charts to the intended scheme, remains the
-grading obligation \cite{StacksAlgebraicSchemeDimension}.
-The next formal step is the unit-step consequence for consecutive
-primes, applying the affine prime formula to the actual domain quotient
-\(B/\mathfrak p\) and its covered prime. Its passage across actual
-scheme charts also remains to be constructed. No regular-local or
-uniform-chain theorem, or reducible version of the global prime formula,
-is claimed here.
+  =\dim\overline{\{x\}}\)
+on the intended scheme \cite{StacksAlgebraicSchemeDimension}.
+No such general constructor, regular-local or uniform-chain theorem,
+or reducible version of the global prime formula is claimed here.
+The unit drop in residue degrees does not assert that ambient stalk
+dimensions rise by one on arbitrary reducible schemes.
 The comparison between codimension \(p\) and
 homological degree \(d-p\) on the intended pure-dimensional target
 also remains to be proved.
@@ -3561,6 +3617,14 @@ Original-field affine prime dimension (\formal) &
 \leanpath{localization_dimension_add_quotient_dimension_eq}\newline
 \leanpath{Cycles/LocalizationTranscendenceDegree.lean}\newline
 \leanpath{Cycles/AffinePrimeDimension.lean}\\
+Consecutive affine prime unit drop (\formal) &
+\leanpath{primeQuotient_bot_covBy_map}\newline
+\leanpath{primeQuotient_primeHeight_eq_one_of_covBy}\newline
+\leanpath{primeQuotient_trdeg_toNat_add_one_of_covBy}\newline
+\leanpath{prime_residueField_trdeg_toNat_add_one_of_covBy}\newline
+\leanpath{primeQuotient_dimension_add_one_of_covBy}\newline
+\leanpath{CommutativeAlgebra/PrimeQuotientCover.lean}\newline
+\leanpath{Cycles/ConsecutivePrimeDimension.lean}\\
 Compactified graph route (\formal; \conditional) &
 \leanpath{groupAlgebraProjectorExtension}\newline
 \leanpath{Boundary/CompactifiedGraphProjector.lean}\\
