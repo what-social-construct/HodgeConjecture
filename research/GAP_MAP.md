@@ -553,12 +553,74 @@ existing Noetherian hypotheses, SP40's quotient now accepts this
 constructed grading without a supplied dimension-function input.
 This is A11z / SP41, the first substep of geometric grading instantiation.
 
+### Affine dimension and actual residue-field comparison
+
+The next algebraic subcheckpoint is A11aa / SP42.
+`Cycles/TranscendenceDegreeDrop.lean` proves strict transcendence-degree
+drop for an actual noninjective surjection between domains of finite
+transcendence degree. Lifting a quotient transcendence basis makes the
+map injective on its generated subalgebra; a nonzero kernel element
+prevents that lift from being a full basis. This proves strict decrease
+on the actual prime quotients of a finite-type algebra, even when the
+ambient algebra is reducible.
+
+`Cycles/IntegralDimension.lean` proves dimension invariance under an
+injective integral algebra map. Incomparability bounds chains in one
+direction; lying over and going up construct finite-chain lifts in the
+other. `Cycles/NormalizationDimension.lean` uses an actual Noether
+normalization to identify its variable count with transcendence degree
+and prove the dimension lower bound. The independent prime-chain upper
+bound then gives, in `Cycles/AffineDimension.lean`,
+\[
+ \dim A=\operatorname{trdeg}_k A
+       =\operatorname{trdeg}_k\operatorname{Frac}(A)
+\]
+for every finite-type domain over a field. The fraction-field comparison
+uses the actual algebra map and scalar tower. In particular the exact
+field-polynomial formula \(\dim k[T_1,\ldots,T_n]=n\) is proved without
+using the pinned library's unproved general polynomial-dimension formula.
+The older recursive finite bound remains a separately proved result.
+
+`Cycles/AffineSupportDimension.lean` connects this result to the existing
+actual reduced carrier of every point \(p\) of \(\operatorname{Spec}A\):
+\[
+ \dim\overline{\{p\}}=\dim(A/p)
+   =\operatorname{trdeg}_k\kappa(p).
+\]
+Here \(\kappa(p)\) is the actual residue field of the prime localization,
+with its proved fraction-field structure over \(A/p\). Scheme point
+height uses the closure-inclusion order, the reverse of prime inclusion;
+prime coheight therefore computes this dimension. The ambient finite-type
+algebra need not be a domain. The finite integer height equals this
+residue-field transcendence degree, which strictly decreases under proper
+specialization. These are identities for the existing carrier and its
+actual dimension, not a new cycle type or an assumed grading law.
+
 **The next bounded step is the higher-dimensional immediate-specialization
 dimension formula.** For finite-type schemes over a field, prove the
-one-step law for \(x\mapsto\dim\overline{\{x\}}\), for example by
-constructing its comparison with \(\operatorname{trdeg}_k\kappa(x)\)
-and the corresponding prime-chain dimension formula. Finiteness and
-strict monotonicity alone do not prove this law. The general canonical
+one-step law for \(x\mapsto\dim\overline{\{x\}}\). The affine
+transcendence-degree comparison is now proved, but the uniform
+maximal-chain/local dimension formula is not. Prove that stronger
+prime-chain statement, then transport the affine residue-field comparison
+through the actual scheme charts. Finiteness, strict monotonicity and the
+global affine dimension equality alone do not prove the unit-step law.
+For the next commutative-algebra substep, first target the height of every
+maximal ideal in a finite-variable polynomial ring over a field. The
+pinned library provides Jacobson contraction and prime extension for
+an induction on the variables: use
+`Polynomial.isMaximal_comap_C_of_isJacobsonRing`,
+`Ideal.isPrime_map_C_of_isPrime`, and the strict-step height bound.
+Passing from polynomial maximal heights
+to maximal-local dimensions through Noether normalization additionally
+needs normal-base going down: `Mathlib/RingTheory/Ideal/GoingDown.lean`
+still lists that general theorem as a TODO. Its flat going-down instance
+cannot be substituted without proving flatness. These are proof tasks,
+not new input packages. For the subsequent height comparison, reuse the
+already proved generic
+`NormalizationInertia.primeHeight_under_le_of_hasGoingDown` rather than
+introducing a duplicate. The uniform-chain/unit-step theorem remains the
+subsequent goal.
+The general canonical
 field dimension function is therefore still open, not hidden in a new
 input package. Matching dimension grading with codimension \(p\) via
 \(d-p\) also needs the intended integral or pure-dimensional geometric

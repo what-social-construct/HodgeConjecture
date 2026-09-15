@@ -43,6 +43,11 @@ import HodgeConjecture.Cycles.FiniteTypeDimension
 import HodgeConjecture.Cycles.FiniteTypeSchemeDimension
 import HodgeConjecture.Cycles.LowDimensionalDimensionFunction
 import HodgeConjecture.Cycles.Examples.DimensionFunction
+import HodgeConjecture.Cycles.TranscendenceDegreeDrop
+import HodgeConjecture.Cycles.IntegralDimension
+import HodgeConjecture.Cycles.NormalizationDimension
+import HodgeConjecture.Cycles.AffineDimension
+import HodgeConjecture.Cycles.AffineSupportDimension
 import HodgeConjecture.Correspondence.TransposeAlgebra
 import HodgeConjecture.Correspondence.ProjectorDefect
 import HodgeConjecture.Correspondence.ProjectorLift
@@ -119,6 +124,10 @@ Chow/cohomological realization:
 32. actual carrier dimension as point height, finite-dimensionality for
     finite-type schemes over a field, and the canonical dimension function
     in dimension at most one, with carrier grading and an affine-line example.
+33. strict transcendence-degree drop under proper domain quotients,
+    integral-extension dimension invariance and Noether normalization,
+    giving the exact finite-type domain dimension formula and the actual
+    affine point-closure/residue-field comparison.
 
 The free span algebra is not identified with a Chow ring. General proper
 cycle extraction, flat/Gysin operations and their rational-equivalence
@@ -127,6 +136,7 @@ inputs to a `FiniteEtaleAlgebraModel` (or to another explicitly chosen
 admissible system). The constructed closed-pushforward quotient is additive;
 it does not supply Chow convolution or its target realization.
 The higher-dimensional finite-type dimension-function construction still
-needs the immediate-specialization dimension formula; finite-dimensionality
-and strict monotonicity alone do not supply that law.
+needs the immediate-specialization dimension formula; finite-dimensionality,
+strict monotonicity and the global affine dimension equality alone do not
+supply that law or the uniform maximal-chain theorem.
 -/

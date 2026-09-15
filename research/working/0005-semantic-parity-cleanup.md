@@ -57,7 +57,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 
 ## Canonical semantic object and TeX registry
 
-### Construction and input checkpoints (SP17--SP41)
+### Construction and input checkpoints (SP17--SP42)
 
 | ID | Object or overlap | Disposition | Required action | Status |
 | --- | --- | --- | --- | --- |
@@ -86,6 +86,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 | SP39 | Explicit dimension functions, homogeneous cycle degrees and principal-divisor images | CONSTRUCT / GRADE | Retain both dimension-function conditions; prove prime support degree drop and actual closed-immersion restriction. Use supported submodules of the existing cycles and prove principal-divisor homogeneity, including ambient closed images. Keep geometric dimension-function instantiation and genuine relations separate. | PROVED; FULL BUILD, 281 AXIOM REPORTS, SIXTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP40 | Genuine principal relations, finite-sum source parity and closed-pushforward quotient descent | GENERATE / DESCEND | Use actual degree-\(n+1\) carriers and their actual function fields on Noetherian schemes with explicit dimension function. Prove carrier-family finite/local-finite parity and the unweighted finite-sum criterion. Transport generators through actual closed images, derive quotient pushforward and isomorphism equivalence using the existing cycle maps. | PROVED; FULL BUILD, 321 AXIOM REPORTS, TWENTY-TWO REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP41 | Actual support dimensions, finite-type dimension bounds and a canonical low-dimensional grading | IDENTIFY / INSTANTIATE | Identify actual carrier dimension with point height. Prove finite dimension for finite-type algebras and schemes over a field. Construct the canonical dimension function under dimension at most one, identify its carrier degrees, and instantiate it on the actual affine line. Keep the general finite-type one-step law and target codimension conversion open. | PROVED; FULL BUILD, 361 AXIOM REPORTS, TWENTY-TWO REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP42 | Strict transcendence-degree drop, exact affine dimension and actual carrier comparison | PROVE / IDENTIFY | Prove proper domain quotient drop and actual integral chain lifting. Combine the prime-chain upper bound with Noether normalization's lower bound to identify finite-type domain dimension with fraction-field transcendence degree. Connect prime quotients and actual residue fields to existing reduced carriers. Keep uniform chains, the immediate-specialization unit step and general scheme grading open. | PROVED; FULL BUILD, 386 AXIOM REPORTS, TWENTY-THREE REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -388,6 +389,35 @@ at most one. The higher-dimensional immediate-specialization unit-step
 law, transcendence-degree comparison, pure-dimensional codimension
 conversion, general rational coefficient extension, Chow operations and
 target realization remain separate constructions.
+
+SP42 validation (2026-09-15): all five new leaf modules and the full
+3106-job Lean build pass, with only the two existing `Challenge` warnings.
+Integrated `research/Verification.lean` passes with all 215 examples and
+no warnings or errors. All 386 selected axiom reports were captured in
+their original integrated context and compared with the exact declaration
+inventory: no missing, unexpected or duplicate reports. The existing
+`polynomialDimensionBound` definition has no axioms; the other 385 reports
+use only `propext`, `Classical.choice`, and `Quot.sound`. All twenty-five
+new public theorems, eight declaration checks and twenty-three new
+regressions pass independently as well. These include the actual evaluation
+map k[T] to k; proper prime quotients with no ambient domain assumption;
+actual length-preserving integral prime-chain lifts; finite field
+extensions; the noninjective integral map to the unit-ideal quotient;
+actual polynomial normalization and its separate hypotheses; the sharp
+finite-type domain and fraction-field dimension equalities; actual affine
+three-space of dimension three; and actual prime-localization residue
+fields and reduced carriers, including every existing integral closed
+carrier via its ambient generic point. The six primary proof-dependency
+assertions and two supporting reports pass. Independent mathematical,
+type-order and manuscript/source/parity audits pass. The single PDF builds
+to 47 pages with a clean final log; Proposition 6.15, its proof, adjacent
+module/status pages and the updated theorem-map page were visually
+inspected. Submission wrappers and dependency pins are unchanged; the diff
+check passes. No new axiom, source-input package, cycle module, Chow quotient
+or projector is introduced. The dimension equalities and strict drop are
+proved, not supplied. Uniform maximal chains, maximal-local dimension,
+the higher-dimensional immediate-specialization unit step, scheme-chart
+transport, general grading and the remaining target constructions stay open.
 
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
@@ -882,8 +912,10 @@ Finite-dimensionality gives finite, strictly monotone height, but not the
 unit step across covers. Only the dimension-at-most-one case is installed
 as a `DimensionFunction` here, without integrality or Noetherianity of the
 ambient scheme. Its use in SP40 still requires the existing Noetherian
-quotient hypotheses. In higher-dimensional finite-type geometry, the
-prime-chain/transcendence-degree comparison and one-step law remain open.
+quotient hypotheses. SP42 subsequently proves the affine
+transcendence-degree comparison. In higher-dimensional finite-type
+geometry, the uniform-chain theorem, one-step law and general scheme
+grading remain open.
 The target's codimension convention and rational coefficient comparison
 also remain separate; mixed-dimensional components do not acquire a
 silently chosen global $d-p$ conversion. There is one cycle module, one
@@ -951,6 +983,39 @@ record rather than copying it.
 | `EveryHodgeClassHasPalomarTargetSquare` | equality-of-composites presentation of graph-projector coverage | $\forall\alpha\in V_{\mathrm{Hdg}},\ \exists\Pi:\rho\circ\varphi_\Pi=\varphi_{P_\alpha}$ |
 | `ClassDependentMarkedGaloisSelectorCoverage` | classwise marked-selector coverage | $\operatorname{Cov}_{\mathrm{Gal}}(\mathscr H,\rho)$ |
 | `StrongGraphProjectorLiftReplacementByClassDependentMarkedGaloisSelector` | existential replacement for the same target class, used only for the reverse coverage implication; no equality with an original projector | named hypothesis; no new projector notation |
+
+### Exact affine dimension and actual carrier comparison (SP42)
+
+Here \(k\) is a field, \(A\) a commutative \(k\)-algebra and
+\(\kappa(p)\) the actual residue field of \(A_p\). Transcendence
+degrees in the dimension formulas are finite, so Lean's conversion from
+cardinals to natural numbers is lossless. The existing \(h_X\) notation
+denotes point-closure dimension; no general \(\delta_X\) is constructed
+in this checkpoint.
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `trdeg_lt_of_surjective_of_not_injective` | strict degree drop under an actual noninjective domain surjection with finite transcendence degree | $A\twoheadrightarrow B,\ \ker f\ne0\implies\operatorname{trdeg}_kB<\operatorname{trdeg}_kA$ |
+| `primeQuotient_trdeg_strictAnti` / `primeQuotient_trdeg_toNat_strictAnti` | strict decrease on actual prime quotients of a finite-type algebra | $p\subsetneq q\implies\operatorname{trdeg}_k(A/q)<\operatorname{trdeg}_k(A/p)$ |
+| `integral_specComap_strictMono` | actual prime contraction and incomparability for an integral map | $P\subsetneq Q\implies f^{-1}P\subsetneq f^{-1}Q$ |
+| `exists_primeSeries_lift_of_injective_integral` | actual finite-chain lift by lying over and going up, preserving length and the last contraction | $\ell(\widetilde c)=\ell(c),\ f^{-1}(\widetilde c_{\mathrm{last}})=c_{\mathrm{last}}$ |
+| `ringKrullDim_le_of_integral` / `ringKrullDim_le_of_injective_integral` / `ringKrullDim_eq_of_injective_integral` | extended dimension comparison; injectivity is required for the reverse inequality and equality | $\dim S\le\dim R;\ R\hookrightarrow S\implies\dim R=\dim S$ |
+| `trdeg_eq_normalization_size` / `normalization_size_le_ringKrullDim` | actual injective integral polynomial normalization; domain needed for the transcendence-degree identity, not the dimension lower bound | $k[T_1,\ldots,T_s]\hookrightarrow A,\ s=\operatorname{trdeg}_k A,\ s\le\dim A$ |
+| `trdeg_toNat_le_ringKrullDim_of_finiteType` / `ringKrullDim_le_trdeg_toNat_of_finiteType` | independent normalization lower bound for domains and prime-chain upper bound for all finite-type algebras | $\operatorname{trdeg}_k A\le\dim A;\ \dim A\le\operatorname{trdeg}_k A$ |
+| `trdeg_eq_of_isFractionRing` / `trdeg_eq_fractionRing` | actual fraction-field algebra and scalar-tower comparison | $\operatorname{trdeg}_kA=\operatorname{trdeg}_k\operatorname{Frac}(A)$ |
+| `ringKrullDim_eq_trdeg_toNat_of_finiteType` / `ringKrullDim_eq_fractionRing_trdeg_toNat_of_finiteType` | finite-type domain dimension equality | $\dim A=\operatorname{trdeg}_k\operatorname{Frac}(A)$ |
+| `mvPolynomial_ringKrullDim_eq_card` | proved sharp polynomial formula over a field | $\dim k[T_1,\ldots,T_n]=n$ |
+| `spec_topologicalKrullDim_eq_trdeg_toNat_of_finiteType` | topological dimension of the actual affine scheme of a finite-type domain | $\dim\operatorname{Spec}A=\operatorname{trdeg}_kA$ |
+| `prime_coheight_eq_quotientDim` / `spec_point_height_eq_prime_coheight` | opposite prime/scheme orders; actual quotient dimension | $\operatorname{coht}_{\operatorname{Spec}_{\mathrm{prime}}A}(p)=\operatorname{ht}_{X}(p)=\dim(A/p)$ |
+| `spec_pointSupport_dimension_eq_quotientDim` | existing reduced point carrier, not a new proxy type | $\dim\overline{\{p\}}_{\mathrm{red}}=\dim(A/p)$ |
+| `primeQuotient_trdeg_eq_residueField` | actual prime-localization residue field is a fraction field of the quotient | $\operatorname{trdeg}_k(A/p)=\operatorname{trdeg}_k\kappa(p)$ |
+| `spec_pointSupport_dimension_eq_residueField_trdeg` / `spec_point_height_toNat_eq_residueField_trdeg` | finite-type affine carrier dimension and the existing finite point-height value | $h_X(p)=\dim\overline{\{p\}}=\operatorname{trdeg}_k\kappa(p)$ |
+| `prime_residueField_trdeg_toNat_strictAnti` | strict decrease on proper affine specialization | $p\subsetneq q\implies\operatorname{trdeg}_k\kappa(q)<\operatorname{trdeg}_k\kappa(p)$ |
+
+No maximal-localization dimension identity, uniform maximal-chain theorem,
+immediate-specialization unit step, general scheme chart/residue-field
+transport or new dimension-function constructor is included in SP42.
+The existing cycle module, Chow quotient and chosen projector are unchanged.
 
 ## Objects deliberately assigned no independent notation
 

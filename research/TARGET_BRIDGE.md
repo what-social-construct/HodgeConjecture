@@ -422,12 +422,36 @@ be developed alongside that infrastructure.
    This supplies a genuine bounded grading instance for SP40, not the
    general finite-type dimension-function construction.
 
+   **Affine-dimension checkpoint (A11aa / SP42):**
+   `TranscendenceDegreeDrop.lean` proves strict drop under actual
+   noninjective surjections of domains with finite transcendence degree.
+   Applied to prime quotients, this gives a prime-chain upper bound.
+   `IntegralDimension.lean` proves dimension invariance using actual
+   contraction and chain lifting; `NormalizationDimension.lean` uses
+   Noether normalization and the proved polynomial lower bound for the
+   independent opposite inequality. `AffineDimension.lean` therefore
+   proves \(\dim A=\operatorname{trdeg}_k\operatorname{Frac}(A)\)
+   for finite-type domains, and the sharp field-polynomial dimension
+   formula. `AffineSupportDimension.lean` identifies the dimension of
+   the existing actual reduced carrier of a point of
+   \(\operatorname{Spec}A\) with \(\operatorname{trdeg}_k\kappa(p)\),
+   where \(\kappa(p)\) is the actual prime-localization residue field.
+   This last result allows reducible ambient algebras and also identifies
+   the integer scheme-point height. No immediate-specialization law or
+   dimension-function package is supplied as a hypothesis.
+
    **Next bounded obligation:** prove the higher-dimensional
    immediate-specialization dimension formula for finite-type schemes
    over a field. The finite integer closure-height function is already
-   strictly monotone; its one-step law is not yet proved. The standard
-   route compares it with \(\operatorname{trdeg}_k\kappa(x)\) and
-   proves the prime-chain dimension formula. Then identify dimension
+   strictly monotone and its affine residue-field comparison is proved;
+   its one-step law is not yet proved. The next algebraic step is the
+   stronger uniform maximal-chain/local dimension formula, followed by
+   actual chart/residue-field transport to schemes. The global affine
+   equality alone does not supply these. The first planned algebraic
+   substep is polynomial maximal-ideal height. A normalization-based
+   maximal-local comparison also needs a proof of normal-base going
+   down, which remains a TODO in the pinned library; the available flat
+   instance does not silently discharge it. Then identify dimension
    grading with target codimension grading in the intended integral or
    pure-dimensional setting; a uniform \(d-p\) shift is not asserted
    on mixed-dimensional schemes. Construct rational coefficient extension of this

@@ -2702,3 +2702,232 @@ example (k : Type) [Field k] :
   exact ambientPrincipalDivisor_one W
 
 end GeometricDimensionRegressions
+
+-- SP42: sharp affine dimension from actual quotients, integral chains and normalization.
+#check HodgeConjecture.SchemeCycles.trdeg_lt_of_surjective_of_not_injective
+#check HodgeConjecture.SchemeCycles.exists_primeSeries_lift_of_injective_integral
+#check HodgeConjecture.SchemeCycles.ringKrullDim_eq_of_injective_integral
+#check HodgeConjecture.SchemeCycles.trdeg_eq_normalization_size
+#check HodgeConjecture.SchemeCycles.ringKrullDim_eq_fractionRing_trdeg_toNat_of_finiteType
+#check HodgeConjecture.SchemeCycles.mvPolynomial_ringKrullDim_eq_card
+#check HodgeConjecture.SchemeCycles.spec_pointSupport_dimension_eq_residueField_trdeg
+#check HodgeConjecture.SchemeCycles.prime_residueField_trdeg_toNat_strictAnti
+
+#print axioms HodgeConjecture.SchemeCycles.trdeg_lt_of_surjective_of_not_injective
+#print axioms HodgeConjecture.SchemeCycles.primeQuotient_trdeg_strictAnti
+#print axioms HodgeConjecture.SchemeCycles.primeQuotient_trdeg_toNat_strictAnti
+#print axioms HodgeConjecture.SchemeCycles.integral_specComap_strictMono
+#print axioms HodgeConjecture.SchemeCycles.ringKrullDim_le_of_integral
+#print axioms HodgeConjecture.SchemeCycles.exists_primeSeries_lift_of_injective_integral
+#print axioms HodgeConjecture.SchemeCycles.ringKrullDim_le_of_injective_integral
+#print axioms HodgeConjecture.SchemeCycles.ringKrullDim_eq_of_injective_integral
+#print axioms HodgeConjecture.SchemeCycles.trdeg_eq_normalization_size
+#print axioms HodgeConjecture.SchemeCycles.normalization_size_le_ringKrullDim
+#print axioms HodgeConjecture.SchemeCycles.trdeg_toNat_le_ringKrullDim_of_finiteType
+#print axioms HodgeConjecture.SchemeCycles.trdeg_eq_of_isFractionRing
+#print axioms HodgeConjecture.SchemeCycles.trdeg_eq_fractionRing
+#print axioms HodgeConjecture.SchemeCycles.ringKrullDim_le_trdeg_toNat_of_finiteType
+#print axioms HodgeConjecture.SchemeCycles.ringKrullDim_eq_trdeg_toNat_of_finiteType
+#print axioms HodgeConjecture.SchemeCycles.ringKrullDim_eq_fractionRing_trdeg_toNat_of_finiteType
+#print axioms HodgeConjecture.SchemeCycles.mvPolynomial_ringKrullDim_eq_card
+#print axioms HodgeConjecture.SchemeCycles.spec_topologicalKrullDim_eq_trdeg_toNat_of_finiteType
+#print axioms HodgeConjecture.SchemeCycles.prime_coheight_eq_quotientDim
+#print axioms HodgeConjecture.SchemeCycles.spec_point_height_eq_prime_coheight
+#print axioms HodgeConjecture.SchemeCycles.spec_pointSupport_dimension_eq_quotientDim
+#print axioms HodgeConjecture.SchemeCycles.primeQuotient_trdeg_eq_residueField
+#print axioms HodgeConjecture.SchemeCycles.spec_pointSupport_dimension_eq_residueField_trdeg
+#print axioms HodgeConjecture.SchemeCycles.spec_point_height_toNat_eq_residueField_trdeg
+#print axioms HodgeConjecture.SchemeCycles.prime_residueField_trdeg_toNat_strictAnti
+
+noncomputable section AffineTranscendenceDimensionRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory
+open HodgeConjecture.SchemeCycles
+
+-- Finite transcendence degree suffices for a genuine proper domain quotient;
+-- finite generation is not an additional input to this theorem.
+example (k A B : Type) [Field k] [CommRing A] [CommRing B] [IsDomain A] [IsDomain B]
+    [Algebra k A] [Algebra k B] (f : A →ₐ[k] B)
+    (hf : Function.Surjective f) (hn : ¬ Function.Injective f)
+    (hfin : Algebra.trdeg k A < Cardinal.aleph0) :
+    Algebra.trdeg k B < Algebra.trdeg k A := by
+  fail_if_success
+    have : Algebra.FiniteType k A := inferInstance
+  exact trdeg_lt_of_surjective_of_not_injective k f hf hn hfin
+
+-- Concrete proper quotient: evaluation at zero on the actual polynomial algebra.
+example (k : Type) [Field k] :
+    Algebra.trdeg k k < Algebra.trdeg k (Polynomial k) := by
+  let f : Polynomial k →ₐ[k] k := Polynomial.aeval 0
+  apply trdeg_lt_of_surjective_of_not_injective k f
+  · intro a
+    exact ⟨Polynomial.C a, by simp [f]⟩
+  · intro h
+    apply Polynomial.X_ne_zero (R := k)
+    apply h
+    simp [f]
+  · exact trdeg_lt_aleph0 (R := k) (S := Polynomial k)
+
+-- Actual prime quotients are domains even when their ambient algebra is not.
+example (k A : Type) [Field k] [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
+    (p q : PrimeSpectrum A) (hpq : p < q) :
+    Algebra.trdeg k (A ⧸ q.asIdeal) < Algebra.trdeg k (A ⧸ p.asIdeal) ∧
+      (Algebra.trdeg k (A ⧸ q.asIdeal)).toNat < (Algebra.trdeg k (A ⧸ p.asIdeal)).toNat ∧
+      ringKrullDim A ≤ ((Algebra.trdeg k A).toNat : WithBot ℕ∞) := by
+  fail_if_success
+    have : IsDomain A := inferInstance
+  exact ⟨primeQuotient_trdeg_strictAnti k A hpq,
+    primeQuotient_trdeg_toNat_strictAnti k A hpq,
+    ringKrullDim_le_trdeg_toNat_of_finiteType k A⟩
+
+-- Incomparability needs integrality but not injectivity of the algebra map.
+example (R S : Type) [CommRing R] [CommRing S] [Algebra R S] [Algebra.IsIntegral R S]
+    (p q : PrimeSpectrum S) (hpq : p < q) :
+    (algebraMap R S).specComap p < (algebraMap R S).specComap q :=
+  integral_specComap_strictMono R S hpq
+
+-- Lying over and going up produce an actual finite prime chain of the same length.
+example (R S : Type) [CommRing R] [CommRing S] [Algebra R S] [Algebra.IsIntegral R S]
+    (hi : Function.Injective (algebraMap R S)) (s : LTSeries (PrimeSpectrum R)) :
+    ∃ t : LTSeries (PrimeSpectrum S), t.length = s.length ∧
+      (algebraMap R S).specComap t.last = s.last := by
+  fail_if_success
+    have : IsDomain R := inferInstance
+  fail_if_success
+    have : IsNoetherianRing R := inferInstance
+  exact exists_primeSeries_lift_of_injective_integral R S hi s
+
+-- The integral dimension equality does not require domains or finite dimensions.
+example (R S : Type) [CommRing R] [CommRing S] [Algebra R S] [Algebra.IsIntegral R S]
+    (hi : Function.Injective (algebraMap R S)) : ringKrullDim R = ringKrullDim S := by
+  fail_if_success
+    have : FiniteRingKrullDim R := inferInstance
+  exact ringKrullDim_eq_of_injective_integral R S hi
+
+-- A finite field extension supplies the integral instance and is genuinely dimension zero.
+example (k L : Type) [Field k] [Field L] [Algebra k L] [Module.Finite k L] :
+    ringKrullDim k = ringKrullDim L ∧ ringKrullDim L = 0 :=
+  ⟨ringKrullDim_eq_of_injective_integral k L (FaithfulSMul.algebraMap_injective k L),
+    ringKrullDim_eq_zero_of_field L⟩
+
+-- A noninjective integral map can lose dimension: the unit-ideal quotient is empty.
+example (k : Type) [Field k] :
+    ringKrullDim (k ⧸ (⊤ : Ideal k)) ≤ ringKrullDim k ∧
+      ringKrullDim (k ⧸ (⊤ : Ideal k)) < ringKrullDim k := by
+  constructor
+  · exact ringKrullDim_le_of_integral k (k ⧸ (⊤ : Ideal k))
+  · rw [ringKrullDim_eq_bot_of_subsingleton, ringKrullDim_eq_zero_of_field]
+    exact WithBot.bot_lt_coe (0 : ℕ∞)
+
+-- An actual integral polynomial normalization determines transcendence degree
+-- without a finite-generation assumption on the target.
+example (k A : Type) [Field k] [CommRing A] [IsDomain A] [Algebra k A]
+    (s : ℕ) (g : MvPolynomial (Fin s) k →ₐ[k] A)
+    (hi : Function.Injective g) (hint : g.IsIntegral) : Algebra.trdeg k A = s := by
+  fail_if_success
+    have : Algebra.FiniteType k A := inferInstance
+  exact trdeg_eq_normalization_size k A s g hi hint
+
+-- The lower dimension bound through an injective integral map does not need a target domain.
+example (k A : Type) [Field k] [CommRing A] [Algebra k A]
+    (s : ℕ) (g : MvPolynomial (Fin s) k →ₐ[k] A)
+    (hi : Function.Injective g) (hint : g.IsIntegral) :
+    (s : WithBot ℕ∞) ≤ ringKrullDim A := by
+  fail_if_success
+    have : IsDomain A := inferInstance
+  exact normalization_size_le_ringKrullDim k A s g hi hint
+
+-- The sharp equality joins the independently proved lower and upper bounds.
+example (k A : Type) [Field k] [CommRing A] [IsDomain A]
+    [Algebra k A] [Algebra.FiniteType k A] :
+    ((Algebra.trdeg k A).toNat : WithBot ℕ∞) ≤ ringKrullDim A ∧
+      ringKrullDim A = ((Algebra.trdeg k A).toNat : WithBot ℕ∞) :=
+  ⟨trdeg_toNat_le_ringKrullDim_of_finiteType k A,
+    ringKrullDim_eq_trdeg_toNat_of_finiteType k A⟩
+
+-- Fraction-field transport uses the actual scalar tower, without finite generation.
+example (k A K : Type) [Field k] [CommRing A] [IsDomain A] [Field K]
+    [Algebra k A] [Algebra A K] [Algebra k K] [IsScalarTower k A K] [IsFractionRing A K] :
+    Algebra.trdeg k A = Algebra.trdeg k K :=
+  trdeg_eq_of_isFractionRing k A K
+
+example (k A : Type) [Field k] [CommRing A] [IsDomain A]
+    [Algebra k A] [Algebra.FiniteType k A] :
+    ringKrullDim A = ((Algebra.trdeg k (FractionRing A)).toNat : WithBot ℕ∞) :=
+  ringKrullDim_eq_fractionRing_trdeg_toNat_of_finiteType k A
+
+-- This sharp formula is proved locally; no unfinished polynomial-dimension theorem is used.
+example (k : Type) [Field k] (n : ℕ) :
+    ringKrullDim (MvPolynomial (Fin n) k) = (n : WithBot ℕ∞) :=
+  mvPolynomial_ringKrullDim_eq_card k n
+
+-- Nontrivial higher-dimensional example: the actual affine three-space has dimension three.
+example (k : Type) [Field k] :
+    topologicalKrullDim (Spec (CommRingCat.of (MvPolynomial (Fin 3) k))) = 3 := by
+  change topologicalKrullDim (PrimeSpectrum (MvPolynomial (Fin 3) k)) = 3
+  rw [PrimeSpectrum.topologicalKrullDim_eq_ringKrullDim]
+  exact mvPolynomial_ringKrullDim_eq_card k 3
+
+example (k A : Type) [Field k] [CommRing A] [IsDomain A]
+    [Algebra k A] [Algebra.FiniteType k A] :
+    topologicalKrullDim (Spec (CommRingCat.of A)) =
+      ((Algebra.trdeg k A).toNat : WithBot ℕ∞) :=
+  spec_topologicalKrullDim_eq_trdeg_toNat_of_finiteType k A
+
+-- Prime coheight concerns the quotient dimension, without finite generation or ambient domain.
+example (A : Type) [CommRing A] (p : PrimeSpectrum A) :
+    (Order.coheight p : WithBot ℕ∞) = ringKrullDim (A ⧸ p.asIdeal) := by
+  fail_if_success
+    have : IsDomain A := inferInstance
+  fail_if_success
+    have : IsNoetherianRing A := inferInstance
+  exact prime_coheight_eq_quotientDim A p
+
+-- Scheme point height reverses the prime order: it is prime coheight, not prime height.
+example (A : Type) [CommRing A] (p : PrimeSpectrum A) :
+    Order.height (α := (Spec (CommRingCat.of A) : Scheme)) p = Order.coheight p :=
+  spec_point_height_eq_prime_coheight A p
+
+-- The actual reduced closed carrier remains the existing pointSupport object.
+example (A : Type) [CommRing A] (p : PrimeSpectrum A) :
+    topologicalKrullDim (pointSupport (Spec (CommRingCat.of A)) p).val.subscheme =
+      ringKrullDim (A ⧸ p.asIdeal) :=
+  spec_pointSupport_dimension_eq_quotientDim A p
+
+-- The actual prime residue field is compared through its quotient fraction-field structure.
+example (k A : Type) [Field k] [CommRing A] [Algebra k A] (p : PrimeSpectrum A) :
+    Algebra.trdeg k (A ⧸ p.asIdeal) = Algebra.trdeg k p.asIdeal.ResidueField := by
+  fail_if_success
+    have : Algebra.FiniteType k A := inferInstance
+  exact primeQuotient_trdeg_eq_residueField k A p
+
+-- Actual carrier dimension and finite integer point height both use the actual residue field.
+example (k A : Type) [Field k] [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
+    (p : PrimeSpectrum A) :
+    topologicalKrullDim (pointSupport (Spec (CommRingCat.of A)) p).val.subscheme =
+        ((Algebra.trdeg k p.asIdeal.ResidueField).toNat : WithBot ℕ∞) ∧
+      (Order.height (α := (Spec (CommRingCat.of A) : Scheme)) p).toNat =
+        (Algebra.trdeg k p.asIdeal.ResidueField).toNat := by
+  fail_if_success
+    have : IsDomain A := inferInstance
+  exact ⟨spec_pointSupport_dimension_eq_residueField_trdeg k A p,
+    spec_point_height_toNat_eq_residueField_trdeg k A p⟩
+
+-- Every existing integral closed carrier is recovered from its actual ambient generic point.
+example (k A : Type) [Field k] [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
+    (W : IntegralClosedSubscheme (Spec (CommRingCat.of A))) :
+    topologicalKrullDim W.val.subscheme =
+      ((Algebra.trdeg k (show PrimeSpectrum A from ambientGenericPoint W).asIdeal.ResidueField).toNat :
+        WithBot ℕ∞) := by
+  exact (congrArg (fun Z : IntegralClosedSubscheme (Spec (CommRingCat.of A)) ↦
+      topologicalKrullDim Z.val.subscheme) (pointSupport_ambientGenericPoint W)).symm.trans
+    (spec_pointSupport_dimension_eq_residueField_trdeg k A (ambientGenericPoint W))
+
+-- Proper specialization strictly decreases residue-field degree on reducible affine schemes too.
+example (k A : Type) [Field k] [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
+    (p q : PrimeSpectrum A) (hpq : p < q) :
+    (Algebra.trdeg k q.asIdeal.ResidueField).toNat <
+      (Algebra.trdeg k p.asIdeal.ResidueField).toNat :=
+  prime_residueField_trdeg_toNat_strictAnti k A hpq
+
+end AffineTranscendenceDimensionRegressions
