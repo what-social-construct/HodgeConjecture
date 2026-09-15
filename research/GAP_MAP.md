@@ -696,30 +696,69 @@ Neither integrality of \(P\to B\) nor a maximality or height-comparison
 premise is assumed. No replacement carrier, source axiom or target package
 is introduced.
 
+### Original-field prime dimension formula
+
+A11ae / SP46 completes the original-field comparison.
+`Cycles/LocalizationTranscendenceDegree.lean` proves full cardinal-valued
+transcendence-degree invariance for an actual localization of a domain at
+non-zero-divisors. It derives the actual localization injection, faithful
+scalar action and domain instance, then uses algebraicity of localization
+and tower additivity. No finite-type or finite-transcendence-degree hypothesis is needed;
+universe lifts are retained in the general equality. The numeric adapter
+is a consequence of cardinal invariance, not a substitute for it.
+
+`Cycles/AffinePrimeDimension.lean` installs the canonical compatible
+\(k\to P\to K\to B'\) scalar tower on the literal SP45 localization.
+For any injective polynomial map \(P=k[T_1,\ldots,T_n]\to B\) into
+a finite-type domain, it proves
+\[
+ n+\operatorname{trdeg}_K B'=\operatorname{trdeg}_k B.
+\]
+This comparison needs no integrality premise. It derives
+\(\operatorname{trdeg}_k K=n\) from the actual polynomial fraction
+field and obtains finite transcendence degree over \(K\) from the proved finite-type
+generic fiber. It does not assume that \(K\) is finite type over \(k\).
+The finite-cardinal sum is converted to natural numbers only after these
+finiteness facts have been established.
+
+Applying this to the constructed residue normalization, SP45 supplies
+\(\operatorname{ht}_B(q)=\operatorname{trdeg}_K B'\), while the
+quotient normalization gives \(\operatorname{trdeg}_k(B/q)=n\).
+Thus, for every prime of any finite-type domain over any field,
+\[
+ \operatorname{ht}_B(q)+\operatorname{trdeg}_k(B/q)
+   =\operatorname{trdeg}_k B,\qquad
+ \dim B_q+\dim(B/q)=\dim B.
+\]
+The first equality is proved in extended natural numbers, so no finite
+height of \(q\) is assumed. The actual `Ideal.ResidueField` variant
+reuses the existing quotient/fraction-field comparison. The second uses
+the actual `Localization.AtPrime` carrier, not a replacement local ring.
+No normality, rational-point, characteristic-zero or maximal-prime premise
+is required. The ambient-domain hypothesis is retained; the corresponding
+local topological formula on arbitrary reducible algebras is not asserted
+by replacing local dimension with global dimension.
+
 **The next bounded goal is the higher-dimensional immediate-specialization
-dimension formula.** For a finite-type domain \(B\), the next algebraic
-subcheckpoint compares the actual localization's transcendence degree over
-\(k\) with that of \(B\),
-and applies the compatible \(k\to P\to K\to B'\) tower.
-The residue normalization identifies \(\operatorname{trdeg}_k(B/q)=n\).
-Together with SP45 this should give the full affine prime formula
-\(\operatorname{ht}(q)+\operatorname{trdeg}_k(B/q)=\operatorname{trdeg}_k B\).
-The pinned ingredients are `IsLocalization.isAlgebraic`, `trdeg_eq_zero`,
-`trdeg_add_eq` / `lift_trdeg_add_eq`, the existing
-`trdeg_eq_fractionRing` and `trdeg_eq_normalization_size`, and
-`Cardinal.toNat_lift_add_lift`. Use the proved actual localization injection
-to obtain the faithful scalar action, and retain universe lifts in the
-cardinal comparison. The rational function field \(K=k(T_1,\ldots,T_n)\)
-is generally not finite type as a \(k\)-algebra: its finite transcendence
-degree must come from the variable count, not from a false finite-type
-instance. Finite type of \(B'\) over \(K\) is already proved.
-Applying that formula on prime quotients is the route to the unit-step
-law, followed by actual scheme-chart/residue-field transport. Finiteness,
-strict monotonicity and global dimension equality alone do not supply it.
-The normal-base going-down theorem missing from the pinned library is now
-proved locally in SP44. Maximal-local equality still does not determine the
-length of every saturated chain or the dimension difference of every
-consecutive prime pair. Those are proof tasks, not new input packages.
+dimension formula.** The next algebraic subcheckpoint takes consecutive
+primes \(p\subsetneq q\) in a finite-type algebra \(B\), passes to
+the actual domain \(B/p\), and transports the prime interval to prove
+\(\operatorname{ht}_{B/p}(q/p)=1\). Apply SP46 there and identify the
+iterated quotient with \(B/q\), obtaining the unit drop in quotient
+and actual residue-field transcendence degrees. The ambient \(B\)
+need not be a domain for that intended application. No catenarity input
+package is needed for this route. The cover relation must be in
+`PrimeSpectrum B`, not in the full ideal lattice. The pinned APIs are
+`Ideal.primeSpectrumQuotientOrderIsoZeroLocus`, `OrderEmbedding.covBy_of_apply`
+and `OrderIso.map_covBy` for the actual quotient interval;
+`Order.height_add_one_le`, `Order.height_le_coe_iff`, `Order.height_bot`
+and `CovBy.eq_or_eq` for its height-one endpoint; and
+`DoubleQuot.quotQuotEquivQuotOfLEₐ` with `AlgEquiv.trdeg_eq` for the
+actual iterated quotient. Reuse `primeQuotient_trdeg_eq_residueField`
+for the residue-field statement. Actual scheme-chart and residue-field
+transport then remains before the general dimension-function constructor.
+Finiteness, strict monotonicity and global/maximal-local equality alone did
+not supply that law; the full affine prime formula is now proved.
 The general canonical
 field dimension function is therefore still open, not hidden in a new
 input package. Matching dimension grading with codimension \(p\) via

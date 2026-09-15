@@ -3575,3 +3575,165 @@ example (k B : Type) [Field k] [CommRing B] [IsDomain B] [Algebra k B]
   exact primeHeight_eq_residueNormalization_trdeg k B q n f hinj hint
 
 end ResidueNormalizationLocalizationRegressions
+
+-- SP46: original-field affine prime dimension and actual localization invariance.
+#check HodgeConjecture.SchemeCycles.lift_trdeg_eq_of_isLocalization
+#check HodgeConjecture.SchemeCycles.trdeg_eq_of_isLocalization
+#check HodgeConjecture.SchemeCycles.trdeg_toNat_eq_of_isLocalization
+#check HodgeConjecture.SchemeCycles.polynomial_genericFiber_trdeg_toNat_add
+#check HodgeConjecture.SchemeCycles.primeHeight_add_quotient_trdeg_eq
+#check HodgeConjecture.SchemeCycles.height_add_quotient_trdeg_eq
+#check HodgeConjecture.SchemeCycles.primeHeight_add_residueField_trdeg_eq
+#check HodgeConjecture.SchemeCycles.height_add_quotient_dimension_eq
+#check HodgeConjecture.SchemeCycles.localization_dimension_add_quotient_dimension_eq
+
+#print axioms HodgeConjecture.SchemeCycles.lift_trdeg_eq_of_isLocalization
+#print axioms HodgeConjecture.SchemeCycles.trdeg_eq_of_isLocalization
+#print axioms HodgeConjecture.SchemeCycles.trdeg_toNat_eq_of_isLocalization
+#print axioms HodgeConjecture.SchemeCycles.polynomial_genericFiber_trdeg_toNat_add
+#print axioms HodgeConjecture.SchemeCycles.primeHeight_add_quotient_trdeg_eq
+#print axioms HodgeConjecture.SchemeCycles.height_add_quotient_trdeg_eq
+#print axioms HodgeConjecture.SchemeCycles.primeHeight_add_residueField_trdeg_eq
+#print axioms HodgeConjecture.SchemeCycles.height_add_quotient_dimension_eq
+#print axioms HodgeConjecture.SchemeCycles.localization_dimension_add_quotient_dimension_eq
+
+noncomputable section AffinePrimeDimensionRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory
+open HodgeConjecture.CommutativeAlgebra HodgeConjecture.SchemeCycles
+
+universe sp46u sp46v sp46w
+
+-- Cardinal invariance precedes any numeric truncation and allows independent universes.
+example (k : Type sp46u) [Field k] (B : Type sp46v) [CommRing B] [IsDomain B]
+    (B' : Type sp46w) [CommRing B'] [Algebra k B] [Algebra B B'] [Algebra k B']
+    [IsScalarTower k B B'] (M : Submonoid B) [IsLocalization M B']
+    (hM : M ≤ nonZeroDivisors B) :
+    Cardinal.lift.{sp46w} (Algebra.trdeg k B) =
+      Cardinal.lift.{sp46v} (Algebra.trdeg k B') := by
+  fail_if_success
+    have : Algebra.FiniteType k B := inferInstance
+  fail_if_success
+    have : IsDomain B' := inferInstance
+  exact lift_trdeg_eq_of_isLocalization k B B' M hM
+
+example (k : Type sp46u) [Field k] (B : Type sp46v) [CommRing B] [IsDomain B]
+    (B' : Type sp46w) [CommRing B'] [Algebra k B] [Algebra B B'] [Algebra k B']
+    [IsScalarTower k B B'] (M : Submonoid B) [IsLocalization M B']
+    (hM : M ≤ nonZeroDivisors B) :
+    (Algebra.trdeg k B).toNat = (Algebra.trdeg k B').toNat :=
+  trdeg_toNat_eq_of_isLocalization k B B' M hM
+
+-- The existing actual fraction field is one localization covered by the theorem.
+example (k B : Type) [Field k] [CommRing B] [IsDomain B] [Algebra k B] :
+    Algebra.trdeg k B = Algebra.trdeg k (FractionRing B) :=
+  trdeg_eq_of_isLocalization k B (FractionRing B) (nonZeroDivisors B) le_rfl
+
+-- A genuinely infinite degree is retained by the primary cardinal statement.
+example (k : Type) [Field k] :
+    Algebra.trdeg k (FractionRing (MvPolynomial ℕ k)) = Cardinal.aleph0 := by
+  rw [← trdeg_eq_of_isLocalization k (MvPolynomial ℕ k)
+    (FractionRing (MvPolynomial ℕ k)) (nonZeroDivisors (MvPolynomial ℕ k)) le_rfl]
+  simp only [MvPolynomial.trdeg_of_isDomain, Cardinal.mk_nat, Cardinal.lift_aleph0]
+
+-- The scalar-tower splitting needs only an injective polynomial map, not integrality.
+example (k B : Type) [Field k] [CommRing B] [IsDomain B] [Algebra k B]
+    [Algebra.FiniteType k B] (n : ℕ) (f : MvPolynomial (Fin n) k →ₐ[k] B)
+    (hinj : Function.Injective f) :
+    letI := f.toRingHom.toAlgebra
+    let B' := Localization
+      (Algebra.algebraMapSubmonoid B (nonZeroDivisors (MvPolynomial (Fin n) k)))
+    letI := genericFiberAlgebra (MvPolynomial (Fin n) k) B B'
+    n + (Algebra.trdeg (FractionRing (MvPolynomial (Fin n) k)) B').toNat =
+      (Algebra.trdeg k B).toNat := by
+  letI := f.toRingHom.toAlgebra
+  fail_if_success
+    have : Algebra.IsIntegral (MvPolynomial (Fin n) k) B := inferInstance
+  exact polynomial_genericFiber_trdeg_toNat_add k B n f hinj
+
+-- The affine formula is for every prime, with no normality or characteristic restriction.
+example (k B : Type) [Field k] [CommRing B] [IsDomain B] [Algebra k B]
+    [Algebra.FiniteType k B] (q : Ideal B) [q.IsPrime] :
+    q.primeHeight + ((Algebra.trdeg k (B ⧸ q)).toNat : ℕ∞) =
+      ((Algebra.trdeg k B).toNat : ℕ∞) := by
+  fail_if_success
+    have : q.IsMaximal := inferInstance
+  fail_if_success
+    have : IsIntegrallyClosed B := inferInstance
+  fail_if_success
+    have : CharZero k := inferInstance
+  exact primeHeight_add_quotient_trdeg_eq k B q
+
+example (k B : Type) [Field k] [CommRing B] [IsDomain B] [Algebra k B]
+    [Algebra.FiniteType k B] (q : Ideal B) [q.IsPrime] :
+    q.height + ((Algebra.trdeg k (B ⧸ q)).toNat : ℕ∞) =
+      ((Algebra.trdeg k B).toNat : ℕ∞) :=
+  height_add_quotient_trdeg_eq k B q
+
+-- The residue-field term is the actual Ideal.ResidueField of the selected prime.
+example (k B : Type) [Field k] [CommRing B] [IsDomain B] [Algebra k B]
+    [Algebra.FiniteType k B] (q : Ideal B) [q.IsPrime] :
+    q.primeHeight + ((Algebra.trdeg k q.ResidueField).toNat : ℕ∞) =
+      ((Algebra.trdeg k B).toNat : ℕ∞) :=
+  primeHeight_add_residueField_trdeg_eq k B q
+
+example (k B : Type) [Field k] [CommRing B] [IsDomain B] [Algebra k B]
+    [Algebra.FiniteType k B] (q : Ideal B) [q.IsPrime] :
+    (q.height : WithBot ℕ∞) + ringKrullDim (B ⧸ q) = ringKrullDim B :=
+  height_add_quotient_dimension_eq k B q
+
+-- The local term uses the actual localization at an arbitrary prime.
+example (k B : Type) [Field k] [CommRing B] [IsDomain B] [Algebra k B]
+    [Algebra.FiniteType k B] (q : Ideal B) [q.IsPrime] :
+    ringKrullDim (Localization.AtPrime q) + ringKrullDim (B ⧸ q) = ringKrullDim B :=
+  localization_dimension_add_quotient_dimension_eq k B q
+
+-- At the zero prime the formula recovers the full dimension of the zero quotient.
+example (k B : Type) [Field k] [CommRing B] [IsDomain B] [Algebra k B]
+    [Algebra.FiniteType k B] :
+    ringKrullDim (B ⧸ (⊥ : Ideal B)) = ringKrullDim B := by
+  letI : (⊥ : Ideal B).IsPrime := Ideal.bot_prime
+  simpa only [Ideal.height_bot, WithBot.coe_zero, zero_add] using
+    height_add_quotient_dimension_eq k B (⊥ : Ideal B)
+
+-- At maximal primes it agrees with the earlier full-height theorem.
+example (k B : Type) [Field k] [CommRing B] [IsDomain B] [Algebra k B]
+    [Algebra.FiniteType k B] (m : Ideal B) [m.IsMaximal] :
+    (Algebra.trdeg k (B ⧸ m)).toNat = 0 := by
+  have h := primeHeight_add_quotient_trdeg_eq k B m
+  rw [primeHeight_eq_trdeg_toNat_of_isMaximal k B m] at h
+  have hnat : (Algebra.trdeg k B).toNat + (Algebra.trdeg k (B ⧸ m)).toNat =
+      (Algebra.trdeg k B).toNat := by exact_mod_cast h
+  omega
+
+-- A concrete positive-height, nonmaximal prime in k[X][Y] is covered as well.
+example (k : Type) [Field k] :
+    let m := RingHom.ker (Polynomial.evalRingHom (0 : k))
+    let q := m.map (Polynomial.C : Polynomial k →+* Polynomial (Polynomial k))
+    q.IsPrime ∧ ¬ q.IsMaximal ∧ (1 : ℕ∞) ≤ q.height ∧
+      (q.height : WithBot ℕ∞) + ringKrullDim (Polynomial (Polynomial k) ⧸ q) =
+        ringKrullDim (Polynomial (Polynomial k)) := by
+  let m := RingHom.ker (Polynomial.evalRingHom (0 : k))
+  let q := m.map (Polynomial.C : Polynomial k →+* Polynomial (Polynomial k))
+  letI : m.IsMaximal := RingHom.ker_isMaximal_of_surjective
+    (Polynomial.evalRingHom (0 : k)) (fun a ↦ ⟨Polynomial.C a, by simp⟩)
+  letI : q.IsPrime := Ideal.isPrime_map_C_of_isPrime (inferInstance : m.IsPrime)
+  refine ⟨inferInstance, polynomial_map_C_not_isMaximal (Polynomial k) m, ?_,
+    height_add_quotient_dimension_eq k (Polynomial (Polynomial k)) q⟩
+  rw [Ideal.height_eq_primeHeight]
+  have hm : (1 : ℕ∞) ≤ m.primeHeight := by
+    calc
+      1 = 0 + 1 := by simp
+      _ ≤ (m.comap (Polynomial.C : k →+* Polynomial k)).primeHeight + 1 :=
+        add_le_add_right (zero_le _) 1
+      _ ≤ m.primeHeight := polynomial_primeHeight_comap_add_one_le k m
+  exact hm.trans (polynomialPrimeExtension_height_le (Polynomial k) ⟨m, inferInstance⟩)
+
+-- The actual zero-variable polynomial ring gives a zero-dimensional sum.
+example (k : Type) [Field k] (q : Ideal (MvPolynomial (Fin 0) k)) [q.IsPrime] :
+    ringKrullDim (Localization.AtPrime q) + ringKrullDim (MvPolynomial (Fin 0) k ⧸ q) = 0 := by
+  rw [localization_dimension_add_quotient_dimension_eq k (MvPolynomial (Fin 0) k) q,
+    mvPolynomial_ringKrullDim_eq_card]
+  rfl
+
+end AffinePrimeDimensionRegressions

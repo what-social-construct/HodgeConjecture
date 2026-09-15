@@ -57,7 +57,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 
 ## Canonical semantic object and TeX registry
 
-### Construction and input checkpoints (SP17--SP45)
+### Construction and input checkpoints (SP17--SP46)
 
 | ID | Object or overlap | Disposition | Required action | Status |
 | --- | --- | --- | --- | --- |
@@ -90,6 +90,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 | SP43 | Polynomial maximal height and actual closed-point local dimension | PROVE / IDENTIFY | Construct actual prime extension and its strict step below a maximal ideal. Combine Jacobson contraction with SP42's independent upper bound to prove every polynomial maximal ideal has height n and identify actual localization/stalk dimension and scheme-point coheight. Keep general finite-type-domain maximal-local comparison, uniform chains and unit-step grading separate. | PROVED; FULL BUILD, 398 AXIOM REPORTS, SIXTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP44 | Normal-base going down and finite-type-domain maximal-local dimensions | PROVE / CONNECT | Construct ideal-controlled annihilators, prove the monic coefficient comparison and normal-base cancellation, and construct primes below the selected terminal prime. Reuse the existing height bound to compare normalization heights and actual maximal-local/stalk dimensions. Keep saturated-chain uniformity and the higher-dimensional unit-step grading separate. | PROVED; FULL BUILD, 413 AXIOM REPORTS, NINETEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP45 | Actual residue-normalization localization and its maximal extended prime | CONSTRUCT / CONNECT | Lift the actual quotient normalization, localize at its nonzero polynomial denominators, and construct the compatible finite-type fraction-field algebra. Prove maximality, exact contraction and preserved height, then reuse SP44 for the domain generic-fiber transcendence-degree endpoint. | PROVED; FULL BUILD, 437 AXIOM REPORTS, NINETEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP46 | Original-field prime dimension formula for finite-type domains | PROVE / CONNECT | Prove actual localization preserves full cardinal transcendence degree, use the compatible polynomial fraction-field tower, and combine SP45 with quotient normalization. Retain the domain condition and actual quotient, residue-field and prime-localization carriers. | PROVED; FULL BUILD, 446 AXIOM REPORTS, FOURTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -515,6 +516,37 @@ projector is introduced. The next bounded algebraic checkpoint is the
 actual localization/tower transcendence-degree comparison over the original
 field for a finite-type domain, before the consecutive-prime unit step and
 scheme/target grading.
+
+SP46 validation (2026-09-15): both new leaf modules and the full 3120-job
+Lean build pass, with only the two existing `Challenge` warnings.
+Integrated `research/Verification.lean` passes with 554 declaration checks
+and all 283 examples, without warnings or errors. All 446 selected axiom
+reports were captured in the original integrated context and compared with
+the exact declaration inventory: no missing, unexpected or duplicate
+reports and no unpermitted axioms. The existing `polynomialDimensionBound`
+is axiom-free; the existing `genericFiber_isScalarTower_base` uses only
+`propext` and `Quot.sound`; the other 444 reports use only `propext`,
+`Classical.choice` and `Quot.sound`. The independent SP46 replay checks
+all nine new public declarations and fourteen regressions. These include
+actual localization invariance across independent universes without finite
+type, a genuinely infinite transcendence-degree example, the canonical
+polynomial generic-fiber sum without an integrality premise, all six
+prime/height/residue/localization interfaces, zero and maximal prime
+consistency, an actual positive-height nonmaximal prime in \(k[X][Y]\),
+and the zero-variable case. The six primary proof-dependency assertions
+and two supporting reports pass. Independent mathematical, scalar/universe,
+source and manuscript/parity reviews pass. The single PDF builds to 51
+pages with a clean final log; Proposition 6.19 and its proof, the updated
+module/status pages and theorem-map row were visually inspected. The exact
+030H tower source and the domain specialization of 00P1 are cited without
+source axioms or a claim to the source's broader reducible statement.
+Submission wrappers and dependency pins are unchanged; diff checks pass.
+No new carrier, residue-field model, global algebra instance, input package,
+cycle space, Chow quotient or projector is introduced. The next bounded
+checkpoint uses the actual quotient spectrum of \(B/p\) to prove the
+consecutive-prime unit drop, with the cover relation in `PrimeSpectrum B`,
+not the full ideal lattice. Scheme-chart transport and general target
+grading remain subsequent proof obligations.
 
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
@@ -1215,12 +1247,48 @@ Only the quotient normalization is integral: \(P\to B\) is not
 declared integral. No new axiom, input package, global algebra instance,
 cycle space, Chow quotient or projector is introduced.
 
-The next algebraic checkpoint is the actual localization/tower
-transcendence-degree comparison for a finite-type domain \(B\), giving
-the affine prime formula
-\(\operatorname{ht}_B(q)+\operatorname{trdeg}_k(B/q)=\operatorname{trdeg}_k B\).
-The consecutive-prime unit step, actual scheme-chart transport, general
-grading and the remaining target realization are subsequent obligations.
+The subsequent original-field comparison and affine prime formula are
+recorded in SP46 below. The consecutive-prime unit step, actual scheme-chart
+transport, general grading and target realization remain subsequent
+obligations.
+
+### Original-field prime dimension formula (SP46)
+
+Keep the SP45 notation \(P=k[T_1,\ldots,T_n]\),
+\(K=\operatorname{Frac}(P)\), \(M=f(P\setminus\{0\})\) and
+\(B'=M^{-1}B\). The original-field prime formula assumes that \(B\)
+is a finite-type domain; the generic localization comparison needs neither
+finite type nor finite transcendence degree.
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `lift_trdeg_eq_of_isLocalization` / `trdeg_eq_of_isLocalization` | full cardinal degree preserved by the actual localization; universe lifts in the general form | $\operatorname{trdeg}_k B=\operatorname{trdeg}_k M^{-1}B$ |
+| `trdeg_toNat_eq_of_isLocalization` | numeric consequence of cardinal invariance; not a finiteness assertion | Numeric projection of the preceding equality; no independent invariant |
+| `polynomial_genericFiber_trdeg_toNat_add` | canonical fraction-field tower for an actual injective polynomial map, with no integral premise | $n+\operatorname{trdeg}_K B'=\operatorname{trdeg}_k B$ |
+| `primeHeight_add_quotient_trdeg_eq` / `height_add_quotient_trdeg_eq` | original-field dimension formula for every prime of a finite-type domain | $\operatorname{ht}_B(q)+\operatorname{trdeg}_k(B/q)=\operatorname{trdeg}_k B$ |
+| `primeHeight_add_residueField_trdeg_eq` | reuse of the existing actual prime-localization residue field | $\operatorname{ht}_B(q)+\operatorname{trdeg}_k\kappa(q)=\operatorname{trdeg}_k B$ |
+| `height_add_quotient_dimension_eq` | actual prime quotient dimension plus ordinary ideal height | $\operatorname{ht}_B(q)+\dim(B/q)=\dim B$ |
+| `localization_dimension_add_quotient_dimension_eq` | dimension of the actual prime localization | $\dim B_q+\dim(B/q)=\dim B$ |
+
+The first comparison retains full cardinal information, including infinite
+transcendence degree. In the polynomial generic-fiber application, both cardinal summands
+are proved finite before converting the sum to natural numbers. The finite
+transcendence degree of \(K/k\) is proved from the variable count, not by assuming
+that the rational function field is a finite-type \(k\)-algebra. The
+prime-height formula is an equality in \(\mathbb N\cup\{\infty\}\),
+so prime-height finiteness is a conclusion, not an added hypothesis.
+The generic helper does not need a prime or an integral polynomial map.
+The actual residue-field adapter reuses
+`primeQuotient_trdeg_eq_residueField`; no new residue-field model, source
+input package, scalar-linear proxy or global algebra instance is introduced.
+
+The next bounded algebraic checkpoint passes a consecutive prime pair
+\(p\subsetneq q\) to the actual quotient domain \(B/p\), proves
+\(q/p\) has height one, applies the new formula and identifies the
+iterated quotient with \(B/q\). This supplies the intended unit drop
+without a catenarity hypothesis, including a reducible ambient algebra.
+Actual scheme-chart transport, the general dimension-function constructor,
+target codimension grading and the remaining realization are separate.
 
 ## Objects deliberately assigned no independent notation
 

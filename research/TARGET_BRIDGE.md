@@ -492,21 +492,35 @@ be developed alongside that infrastructure.
    SP44 further gives \(\operatorname{ht}_B(q)=\operatorname{trdeg}_K B'\).
    Integrality concerns \(P\to B/q\), not the lifted \(P\to B\).
 
+   **Original-field prime-formula checkpoint (A11ae / SP46):**
+   `LocalizationTranscendenceDegree.lean` proves full cardinal invariance
+   under actual domain localization, with universe-general and numeric
+   forms and no finite-type assumption. `AffinePrimeDimension.lean`
+   combines that comparison with the canonical polynomial fraction-field
+   tower to prove \(n+\operatorname{trdeg}_K B'=\operatorname{trdeg}_k B\).
+   The rational function field's finite transcendence degree comes from \(n\), not
+   from a false finite-type hypothesis over \(k\). SP45 and the actual
+   quotient normalization now give
+   \(\operatorname{ht}_B(q)+\operatorname{trdeg}_k(B/q)=\operatorname{trdeg}_k B\)
+   for every prime of a finite-type domain. Ordinary height, the actual
+   prime-localization residue field, quotient dimension, and the actual
+   local-ring formula \(\dim B_q+\dim(B/q)=\dim B\) are also proved.
+   No normality, rationality, characteristic-zero or maximality premise
+   is added. The domain condition on this global formula is explicit.
+
    **Next bounded obligation:** prove the higher-dimensional
    immediate-specialization dimension formula for finite-type schemes
    over a field. The finite integer closure-height function is already
    strictly monotone and its affine residue-field comparison is proved;
-   its one-step law is not yet proved. For a finite-type domain \(B\),
-   the next bounded algebraic comparison preserves transcendence degree
-   through the actual localization and
-   uses the compatible \(k\to P\to K\to B'\) tower. SP45's
-   \(\operatorname{ht}_B(q)=\operatorname{trdeg}_K B'\), together with
-   the residue normalization's \(\operatorname{trdeg}_k(B/q)=n\),
-   can then yield
-   \(\operatorname{ht}(q)+\operatorname{trdeg}_k(B/q)=\operatorname{trdeg}_k B\),
-   before the consecutive-prime unit step and actual chart/residue-field
-   transport to schemes. Normal-base going down and maximal-local equality
-   alone do not already supply that unit step.
+   its one-step law is not yet proved. For consecutive primes
+   \(p\subsetneq q\) of a finite-type algebra, use the actual prime
+   correspondence for \(B/p\) to show \(q/p\) has height one. Apply
+   SP46 to this domain and compare the iterated quotient with \(B/q\),
+   giving the unit drop in quotient and residue-field degrees. This route
+   allows a reducible ambient \(B\) because \(B/p\) is a domain.
+   Actual chart/residue-field transport to schemes remains after that
+   algebraic unit step; no general dimension function is inferred merely
+   from the global or maximal-local equality.
    Then identify dimension
    grading with target codimension grading in the intended integral or
    pure-dimensional setting; a uniform \(d-p\) shift is not asserted

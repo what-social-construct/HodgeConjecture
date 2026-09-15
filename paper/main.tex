@@ -1895,6 +1895,54 @@ Proposition~\ref{prop:normalization-local-dimension} to the resulting
 finite-type domain over \(K\) and its maximal ideal \(\mathfrak q'\).
 \end{proof}
 
+\begin{proposition}[The affine prime dimension formula --- \formal]
+\label{prop:affine-prime-dimension}
+Let \(k\) be a field and let \(B\) be a finite-type \(k\)-algebra
+that is a domain. For every prime ideal \(\mathfrak q\subset B\),
+\[
+  \operatorname{ht}(\mathfrak q)
+    +\operatorname{trdeg}_k(B/\mathfrak q)
+    =\operatorname{trdeg}_k B.
+\]
+Equivalently,
+\[
+  \dim B_{\mathfrak q}+\dim(B/\mathfrak q)=\dim B.
+\]
+This is the domain case of the local dimension formula
+\cite{StacksAffinePrimeDimension}. The same formula holds with
+\(\operatorname{trdeg}_k\kappa(\mathfrak q)\) in place of
+\(\operatorname{trdeg}_k(B/\mathfrak q)\), where
+\(\kappa(\mathfrak q)\) is the actual residue field of the prime
+localization.
+\end{proposition}
+
+\begin{proof}
+Use the actual \(P\), \(K\), \(B'\) and lifted normalization of
+Proposition~\ref{prop:residue-normalization-localization}.
+Localization at these nonzero elements preserves the original-field
+transcendence degree:
+\(\operatorname{trdeg}_k B'=\operatorname{trdeg}_k B\).
+The quotient normalization and the actual polynomial fraction field give
+\[
+  \operatorname{trdeg}_k(B/\mathfrak q)
+    =n=\operatorname{trdeg}_k K.
+\]
+The compatible scalar tower \(k\subset K\subset B'\) and
+transcendence-degree additivity \cite{StacksTranscendenceDegreeTower}
+therefore give
+\[
+  \operatorname{trdeg}_k B
+    =\operatorname{trdeg}_K B'+\operatorname{trdeg}_k K
+    =\operatorname{ht}(\mathfrak q)
+      +\operatorname{trdeg}_k(B/\mathfrak q).
+\]
+The natural-number comparisons use the finite variable count for
+\(K\) and finite type of \(B'\) over \(K\).
+The actual local-ring height formula and
+Proposition~\ref{prop:affine-dimension} applied to \(B\) and
+\(B/\mathfrak q\) give the dimension form.
+\end{proof}
+
 For smooth projective schemes over a fixed field \(k\), composition of rational Chow
 correspondences is associative and bilinear
 \cite{StacksChowCorrespondenceComposition}, while graph classes compose
@@ -2139,6 +2187,23 @@ Their finite-type assembly and domain height formula are
 \leanpath{exists_residueNormalization_localization} and
 \leanpath{primeHeight_eq_residueNormalization_trdeg} in
 \leanpath{Cycles/ResidueNormalizationLocalization.lean}.
+Proposition~\ref{prop:affine-prime-dimension} uses
+\leanpath{lift_trdeg_eq_of_isLocalization},
+\leanpath{trdeg_eq_of_isLocalization}, and
+\leanpath{trdeg_toNat_eq_of_isLocalization} in
+\leanpath{Cycles/LocalizationTranscendenceDegree.lean}.
+Their actual domain-localization comparison preserves the full cardinal,
+without a finite-type or finite-transcendence-degree hypothesis.
+The scalar-tower calculation is
+\leanpath{polynomial_genericFiber_trdeg_toNat_add} in
+\leanpath{Cycles/AffinePrimeDimension.lean}; within the finite-type
+domain setting it requires only an injective polynomial map, without
+integrality or a chosen prime quotient.
+The same file supplies \leanpath{primeHeight_add_quotient_trdeg_eq},
+\leanpath{height_add_quotient_trdeg_eq},
+\leanpath{primeHeight_add_residueField_trdeg_eq},
+\leanpath{height_add_quotient_dimension_eq}, and
+\leanpath{localization_dimension_add_quotient_dimension_eq}.
 \end{leanfiles}
 
 \begin{statusnote}{\openstatus}
@@ -2190,12 +2255,13 @@ Proposition~\ref{prop:residue-normalization-localization} makes any
 selected prime of a finite-type algebra maximal after an actual
 localization, preserving its height. For a domain, it computes that
 height over the new polynomial fraction field \(K\).
-The next algebraic comparison must relate transcendence degrees under
-this localization and the tower \(k\subset K\subset B'\), to obtain
-the arbitrary-prime dimension formula over \(k\) for finite-type
-\emph{domains}. The field \(K=k(T_1,\ldots,T_n)\) is generally not
-finite type as a \(k\)-algebra; its finite transcendence degree must
-instead be obtained from the variable count. Integrality of the
+Proposition~\ref{prop:affine-prime-dimension} completes this comparison
+over \(k\): localization preserves the full transcendence-degree
+cardinal, and the actual scalar tower proves the arbitrary-prime
+dimension formula for finite-type \emph{domains}. The field
+\(K=k(T_1,\ldots,T_n)\) is generally not finite type as a
+\(k\)-algebra; its finite transcendence degree is instead proved from
+the variable count. Integrality of the
 quotient composite \(P\to B/\mathfrak q\) does not assert integrality
 of its lift \(P\to B\).
 The general field-based dimension-function construction
@@ -2203,10 +2269,12 @@ The general field-based dimension-function construction
   =\dim\overline{\{x\}}\), including its immediate-specialization
 law and passage from affine charts to the intended scheme, remains the
 grading obligation \cite{StacksAlgebraicSchemeDimension}.
-Neither finite dimension nor the affine dimension equality alone
-proves that unit-step law. The maximal-local equality does not yet
-provide the required height comparison for every consecutive prime
-pair. No regular-local or uniform-chain theorem is claimed here.
+The next formal step is the unit-step consequence for consecutive
+primes, applying the affine prime formula to the actual domain quotient
+\(B/\mathfrak p\) and its covered prime. Its passage across actual
+scheme charts also remains to be constructed. No regular-local or
+uniform-chain theorem, or reducible version of the global prime formula,
+is claimed here.
 The comparison between codimension \(p\) and
 homological degree \(d-p\) on the intended pure-dimensional target
 also remains to be proved.
@@ -3485,6 +3553,14 @@ Lifted quotient normalization and height-preserving localization (\formal) &
 \leanpath{CommutativeAlgebra/GenericFiberAlgebra.lean}\newline
 \leanpath{CommutativeAlgebra/ResidueLocalization.lean}\newline
 \leanpath{Cycles/ResidueNormalizationLocalization.lean}\\
+Original-field affine prime dimension (\formal) &
+\leanpath{lift_trdeg_eq_of_isLocalization}\newline
+\leanpath{polynomial_genericFiber_trdeg_toNat_add}\newline
+\leanpath{primeHeight_add_quotient_trdeg_eq}\newline
+\leanpath{primeHeight_add_residueField_trdeg_eq}\newline
+\leanpath{localization_dimension_add_quotient_dimension_eq}\newline
+\leanpath{Cycles/LocalizationTranscendenceDegree.lean}\newline
+\leanpath{Cycles/AffinePrimeDimension.lean}\\
 Compactified graph route (\formal; \conditional) &
 \leanpath{groupAlgebraProjectorExtension}\newline
 \leanpath{Boundary/CompactifiedGraphProjector.lean}\\
