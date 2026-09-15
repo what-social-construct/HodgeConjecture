@@ -1754,6 +1754,46 @@ dimension of the prime quotient. The actual residue field is a
 fraction field of that quotient, so the preceding comparison applies.
 \end{proof}
 
+\begin{proposition}[Polynomial maximal heights and closed-point stalks --- \formal]
+\label{prop:polynomial-maximal-height}
+Let \(k\) be any field, let \(n\in\mathbb N\), and put
+\(A=k[T_1,\ldots,T_n]\).
+For every maximal ideal \(\mathfrak m\subset A\),
+\[
+  \operatorname{ht}(\mathfrak m)=\dim A_{\mathfrak m}=n.
+\]
+This is the local-dimension conclusion of
+\cite{StacksPolynomialDimension}. It includes zero variables and
+does not require \(A/\mathfrak m=k\).
+On the actual scheme \(X=\Spec A\), every closed point \(x\) satisfies
+\[
+  \dim\mathcal O_{X,x}=\operatorname{coht}_X(x)=n,
+\]
+where coheight is taken in the closure-inclusion order on scheme
+points. Ideal height thus corresponds to scheme-point coheight;
+\(h_X(x)\) from Proposition~\ref{prop:low-dimensional-grading}
+remains the dimension of the point's closed carrier.
+\end{proposition}
+
+\begin{proof}
+For any commutative ring \(R\), extension along \(R\to R[T]\)
+embeds its prime spectrum in the inclusion order, since contraction
+recovers each ideal. An extended ideal cannot be maximal: its quotient
+is a polynomial ring. Thus a maximal ideal \(\mathfrak m\subset R[T]\)
+satisfies
+\[
+  \operatorname{ht}(\mathfrak m\cap R)+1
+    \leq\operatorname{ht}(\mathfrak m).
+\]
+This step requires no Jacobson or Noetherian hypothesis.
+For polynomial algebras over a field, the coefficient ring is
+Jacobson, so the contraction is maximal. Induction gives the lower
+bound \(n\); Proposition~\ref{prop:affine-dimension} gives the upper
+bound. The actual prime localization and structure-sheaf stalk have
+dimension equal to the prime height. The point-coheight comparison
+then gives the scheme formula.
+\end{proof}
+
 For smooth projective schemes over a fixed field \(k\), composition of rational Chow
 correspondences is associative and bilinear
 \cite{StacksChowCorrespondenceComposition}, while graph classes compose
@@ -1950,6 +1990,19 @@ The actual carrier and residue-field formulas are
 \leanpath{spec_point_height_toNat_eq_residueField_trdeg} in
 \leanpath{Cycles/AffineSupportDimension.lean}; that file also proves
 \leanpath{prime_residueField_trdeg_toNat_strictAnti}.
+Proposition~\ref{prop:polynomial-maximal-height} uses the actual order
+embedding \leanpath{polynomialPrimeExtension},
+\leanpath{polynomial_map_comap_C_lt}, and
+\leanpath{polynomial_primeHeight_comap_add_one_le} in
+\leanpath{Cycles/PolynomialPrimeHeight.lean}.
+The maximal-height and actual localization formulas are
+\leanpath{mvPolynomial_height_eq_card_of_isMaximal} and
+\leanpath{mvPolynomial_localization_dimension_of_isMaximal} in
+\leanpath{Cycles/PolynomialMaximalHeight.lean}.
+The actual stalk and coheight endpoints are
+\leanpath{mvPolynomial_stalk_dimension_of_isClosed} and
+\leanpath{mvPolynomial_closedPoint_coheight} in
+\leanpath{Cycles/PolynomialClosedPointDimension.lean}.
 \end{leanfiles}
 
 \begin{statusnote}{\openstatus}
@@ -1991,14 +2044,20 @@ the closure-dimension grading in dimension at most one.
 Proposition~\ref{prop:affine-dimension} proves dimension equals
 transcendence degree for finite-type domains, and identifies actual
 affine point-closure dimensions with residue-field transcendence degrees.
+Proposition~\ref{prop:polynomial-maximal-height} computes the full
+height of every polynomial maximal ideal and the actual closed-point
+stalk dimension, without a rational-point assumption.
 The general field-based dimension-function construction
 \(\delta_k(x)=\operatorname{trdeg}_k\kappa(x)
   =\dim\overline{\{x\}}\), including its immediate-specialization
 law and passage from affine charts to the intended scheme, remains the
 grading obligation \cite{StacksAlgebraicSchemeDimension}.
 Neither finite dimension nor the affine dimension equality alone
-proves that unit-step law; equality with every maximal-local dimension
-is not claimed here. The comparison between codimension \(p\) and
+proves that unit-step law. Extending maximal-local dimension equality
+from polynomial algebras to arbitrary finite-type domains, including
+the required going-down height comparison for a normal base, remains
+to be done. No regular-local or uniform-chain theorem is claimed here.
+The comparison between codimension \(p\) and
 homological degree \(d-p\) on the intended pure-dimensional target
 also remains to be proved.
 General-open restriction of rational functions, divisors and relations
@@ -3246,6 +3305,16 @@ Affine dimension and residue-field values (\formal) &
 \leanpath{Cycles/NormalizationDimension.lean}\newline
 \leanpath{Cycles/AffineDimension.lean}\newline
 \leanpath{Cycles/AffineSupportDimension.lean}\\
+Polynomial maximal heights and actual closed-point stalks (\formal) &
+\leanpath{polynomialPrimeExtension}\newline
+\leanpath{polynomial_primeHeight_comap_add_one_le}\newline
+\leanpath{mvPolynomial_height_eq_card_of_isMaximal}\newline
+\leanpath{mvPolynomial_localization_dimension_of_isMaximal}\newline
+\leanpath{mvPolynomial_stalk_dimension_of_isClosed}\newline
+\leanpath{mvPolynomial_closedPoint_coheight}\newline
+\leanpath{Cycles/PolynomialPrimeHeight.lean}\newline
+\leanpath{Cycles/PolynomialMaximalHeight.lean}\newline
+\leanpath{Cycles/PolynomialClosedPointDimension.lean}\\
 Compactified graph route (\formal; \conditional) &
 \leanpath{groupAlgebraProjectorExtension}\newline
 \leanpath{Boundary/CompactifiedGraphProjector.lean}\\

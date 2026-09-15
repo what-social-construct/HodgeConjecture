@@ -2931,3 +2931,142 @@ example (k A : Type) [Field k] [CommRing A] [Algebra k A] [Algebra.FiniteType k 
   prime_residueField_trdeg_toNat_strictAnti k A hpq
 
 end AffineTranscendenceDimensionRegressions
+
+-- SP43: maximal polynomial heights from actual prime extension and contraction.
+#check HodgeConjecture.SchemeCycles.polynomialPrimeExtension
+#check HodgeConjecture.SchemeCycles.polynomial_primeHeight_comap_add_one_le
+#check HodgeConjecture.SchemeCycles.mvPolynomial_primeHeight_eq_card_of_isMaximal
+#check HodgeConjecture.SchemeCycles.mvPolynomial_localization_dimension_of_isMaximal
+#check HodgeConjecture.SchemeCycles.mvPolynomial_stalk_dimension_of_isClosed
+#check HodgeConjecture.SchemeCycles.mvPolynomial_closedPoint_coheight
+
+#print axioms HodgeConjecture.SchemeCycles.polynomial_comap_map_C
+#print axioms HodgeConjecture.SchemeCycles.polynomialPrimeExtension
+#print axioms HodgeConjecture.SchemeCycles.polynomialPrimeExtension_height_le
+#print axioms HodgeConjecture.SchemeCycles.polynomial_map_C_not_isMaximal
+#print axioms HodgeConjecture.SchemeCycles.polynomial_map_comap_C_lt
+#print axioms HodgeConjecture.SchemeCycles.polynomial_primeHeight_comap_add_one_le
+#print axioms HodgeConjecture.SchemeCycles.mvPolynomial_primeHeight_eq_card_of_isMaximal
+#print axioms HodgeConjecture.SchemeCycles.mvPolynomial_height_eq_card_of_isMaximal
+#print axioms HodgeConjecture.SchemeCycles.mvPolynomial_localization_dimension_of_isMaximal
+#print axioms HodgeConjecture.SchemeCycles.mvPolynomial_stalk_dimension_of_isMaximal
+#print axioms HodgeConjecture.SchemeCycles.mvPolynomial_stalk_dimension_of_isClosed
+#print axioms HodgeConjecture.SchemeCycles.mvPolynomial_closedPoint_coheight
+
+noncomputable section PolynomialMaximalHeightRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory
+open HodgeConjecture.SchemeCycles
+
+-- Actual ideal extension/contraction works over arbitrary commutative rings.
+example (R : Type) [CommRing R] (p : Ideal R) :
+    (p.map (Polynomial.C : R →+* Polynomial R)).comap Polynomial.C = p := by
+  fail_if_success
+    have : IsDomain R := inferInstance
+  fail_if_success
+    have : IsNoetherianRing R := inferInstance
+  exact polynomial_comap_map_C R p
+
+-- The order embedding uses the actual extension of the original prime ideal.
+example (R : Type) [CommRing R] (p : PrimeSpectrum R) :
+    (polynomialPrimeExtension R p).asIdeal = p.asIdeal.map Polynomial.C := rfl
+
+example (R : Type) [CommRing R] (p q : PrimeSpectrum R) (hpq : p < q) :
+    polynomialPrimeExtension R p < polynomialPrimeExtension R q :=
+  (polynomialPrimeExtension R).strictMono hpq
+
+example (R : Type) [CommRing R] (p : PrimeSpectrum R) :
+    Order.height p ≤ Order.height (polynomialPrimeExtension R p) :=
+  polynomialPrimeExtension_height_le R p
+
+-- Nonmaximality concerns every extended ideal, not just primes or proper ideals.
+example (R : Type) [CommRing R] (p : Ideal R) :
+    ¬ (p.map (Polynomial.C : R →+* Polynomial R)).IsMaximal :=
+  polynomial_map_C_not_isMaximal R p
+
+-- This strict extension step does not require maximality of the contraction.
+example (R : Type) [CommRing R] (m : Ideal (Polynomial R)) [m.IsMaximal] :
+    (m.comap Polynomial.C).map (Polynomial.C : R →+* Polynomial R) < m := by
+  fail_if_success
+    have : IsJacobsonRing R := inferInstance
+  exact polynomial_map_comap_C_lt R m
+
+example (R : Type) [CommRing R] (m : Ideal (Polynomial R)) [m.IsMaximal] :
+    (m.comap (Polynomial.C : R →+* Polynomial R)).primeHeight + 1 ≤ m.primeHeight := by
+  fail_if_success
+    have : IsDomain R := inferInstance
+  fail_if_success
+    have : IsJacobsonRing R := inferInstance
+  exact polynomial_primeHeight_comap_add_one_le R m
+
+-- Every maximal ideal and every field characteristic are included.
+example (k : Type) [Field k] (n : ℕ) (m : Ideal (MvPolynomial (Fin n) k))
+    [m.IsMaximal] : m.primeHeight = (n : ℕ∞) := by
+  fail_if_success
+    have : CharZero k := inferInstance
+  exact mvPolynomial_primeHeight_eq_card_of_isMaximal k n m
+
+-- The zero-variable base case concerns the actual zero-variable polynomial ring.
+example (k : Type) [Field k] (m : Ideal (MvPolynomial (Fin 0) k)) [m.IsMaximal] :
+    m.primeHeight = 0 := by
+  simpa using mvPolynomial_primeHeight_eq_card_of_isMaximal k 0 m
+
+example (k : Type) [Field k] (m : Ideal (MvPolynomial (Fin 3) k)) [m.IsMaximal] :
+    m.height = 3 := by
+  simpa using mvPolynomial_height_eq_card_of_isMaximal k 3 m
+
+-- Local dimension uses the actual localization, with no degree-one residue-field premise.
+example (k : Type) [Field k] (n : ℕ) (m : Ideal (MvPolynomial (Fin n) k))
+    [m.IsMaximal] : ringKrullDim (Localization.AtPrime m) = (n : WithBot ℕ∞) :=
+  mvPolynomial_localization_dimension_of_isMaximal k n m
+
+-- The scheme endpoint concerns its actual structure-sheaf stalk.
+example (k : Type) [Field k] (n : ℕ) (p : PrimeSpectrum (MvPolynomial (Fin n) k))
+    [p.asIdeal.IsMaximal] :
+    ringKrullDim ((Spec (CommRingCat.of (MvPolynomial (Fin n) k))).presheaf.stalk p) =
+      (n : WithBot ℕ∞) :=
+  mvPolynomial_stalk_dimension_of_isMaximal k n p
+
+-- Closedness is sufficient; a separate maximal-ideal instance is not a premise.
+example (k : Type) [Field k] (n : ℕ) (p : PrimeSpectrum (MvPolynomial (Fin n) k))
+    (hp : IsClosed ({p} : Set (PrimeSpectrum (MvPolynomial (Fin n) k)))) :
+    ringKrullDim ((Spec (CommRingCat.of (MvPolynomial (Fin n) k))).presheaf.stalk p) =
+      (n : WithBot ℕ∞) :=
+  mvPolynomial_stalk_dimension_of_isClosed k n p hp
+
+-- At a closed point, Scheme coheight is n but Scheme height is zero.
+example (k : Type) [Field k] (n : ℕ) (p : PrimeSpectrum (MvPolynomial (Fin n) k))
+    (hp : IsClosed ({p} : Set (PrimeSpectrum (MvPolynomial (Fin n) k)))) :
+    Order.coheight (α := (Spec (CommRingCat.of (MvPolynomial (Fin n) k)) : Scheme)) p =
+        (n : ℕ∞) ∧
+      Order.height (α := (Spec (CommRingCat.of (MvPolynomial (Fin n) k)) : Scheme)) p = 0 := by
+  refine ⟨mvPolynomial_closedPoint_coheight k n p hp, ?_⟩
+  rw [spec_point_height_eq_prime_coheight]
+  exact Order.coheight_eq_zero.mpr
+    (PrimeSpectrum.isMax_iff.mpr ((PrimeSpectrum.isClosed_singleton_iff_isMaximal p).mp hp))
+
+-- A concrete higher-dimensional point is the actual evaluation-at-zero kernel.
+example (k : Type) [Field k] :
+    let e : MvPolynomial (Fin 3) k →ₐ[k] k := MvPolynomial.aeval (fun _ ↦ 0)
+    let m : Ideal (MvPolynomial (Fin 3) k) := RingHom.ker e.toRingHom
+    ∃ (hm : m.IsPrime),
+      ringKrullDim ((Spec (CommRingCat.of (MvPolynomial (Fin 3) k))).presheaf.stalk
+        (⟨m, hm⟩ : PrimeSpectrum (MvPolynomial (Fin 3) k))) = 3 := by
+  dsimp only
+  let e : MvPolynomial (Fin 3) k →ₐ[k] k := MvPolynomial.aeval (fun _ ↦ 0)
+  have he : Function.Surjective e := by
+    intro a
+    exact ⟨MvPolynomial.C a, by simp [e]⟩
+  letI : (RingHom.ker e.toRingHom).IsMaximal :=
+    RingHom.ker_isMaximal_of_surjective e.toRingHom he
+  refine ⟨inferInstance, ?_⟩
+  simpa using mvPolynomial_stalk_dimension_of_isMaximal k 3
+    (⟨RingHom.ker e.toRingHom, inferInstance⟩ : PrimeSpectrum (MvPolynomial (Fin 3) k))
+
+-- The actual zero-variable localization/stalk endpoint has dimension zero.
+example (k : Type) [Field k] (p : PrimeSpectrum (MvPolynomial (Fin 0) k))
+    [p.asIdeal.IsMaximal] :
+    ringKrullDim ((Spec (CommRingCat.of (MvPolynomial (Fin 0) k))).presheaf.stalk p) = 0 := by
+  simpa using mvPolynomial_stalk_dimension_of_isMaximal k 0 p
+
+end PolynomialMaximalHeightRegressions

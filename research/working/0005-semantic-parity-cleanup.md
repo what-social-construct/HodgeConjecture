@@ -57,7 +57,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 
 ## Canonical semantic object and TeX registry
 
-### Construction and input checkpoints (SP17--SP42)
+### Construction and input checkpoints (SP17--SP43)
 
 | ID | Object or overlap | Disposition | Required action | Status |
 | --- | --- | --- | --- | --- |
@@ -87,6 +87,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 | SP40 | Genuine principal relations, finite-sum source parity and closed-pushforward quotient descent | GENERATE / DESCEND | Use actual degree-\(n+1\) carriers and their actual function fields on Noetherian schemes with explicit dimension function. Prove carrier-family finite/local-finite parity and the unweighted finite-sum criterion. Transport generators through actual closed images, derive quotient pushforward and isomorphism equivalence using the existing cycle maps. | PROVED; FULL BUILD, 321 AXIOM REPORTS, TWENTY-TWO REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP41 | Actual support dimensions, finite-type dimension bounds and a canonical low-dimensional grading | IDENTIFY / INSTANTIATE | Identify actual carrier dimension with point height. Prove finite dimension for finite-type algebras and schemes over a field. Construct the canonical dimension function under dimension at most one, identify its carrier degrees, and instantiate it on the actual affine line. Keep the general finite-type one-step law and target codimension conversion open. | PROVED; FULL BUILD, 361 AXIOM REPORTS, TWENTY-TWO REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP42 | Strict transcendence-degree drop, exact affine dimension and actual carrier comparison | PROVE / IDENTIFY | Prove proper domain quotient drop and actual integral chain lifting. Combine the prime-chain upper bound with Noether normalization's lower bound to identify finite-type domain dimension with fraction-field transcendence degree. Connect prime quotients and actual residue fields to existing reduced carriers. Keep uniform chains, the immediate-specialization unit step and general scheme grading open. | PROVED; FULL BUILD, 386 AXIOM REPORTS, TWENTY-THREE REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP43 | Polynomial maximal height and actual closed-point local dimension | PROVE / IDENTIFY | Construct actual prime extension and its strict step below a maximal ideal. Combine Jacobson contraction with SP42's independent upper bound to prove every polynomial maximal ideal has height n and identify actual localization/stalk dimension and scheme-point coheight. Keep general finite-type-domain maximal-local comparison, uniform chains and unit-step grading separate. | PROVED; FULL BUILD, 398 AXIOM REPORTS, SIXTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -418,6 +419,35 @@ or projector is introduced. The dimension equalities and strict drop are
 proved, not supplied. Uniform maximal chains, maximal-local dimension,
 the higher-dimensional immediate-specialization unit step, scheme-chart
 transport, general grading and the remaining target constructions stay open.
+
+SP43 validation (2026-09-15): all three new leaf modules and the full
+3109-job Lean build pass, with only the two existing `Challenge` warnings.
+Integrated `research/Verification.lean` passes with 506 declaration checks
+and all 231 examples, without warnings or errors. All 398 selected axiom
+reports were captured in the original integrated context and compared with
+the exact declaration inventory: no missing, unexpected or duplicate
+reports, and no unpermitted axioms. The existing `polynomialDimensionBound`
+definition is axiom-free; the other 397 reports use only `propext`,
+`Classical.choice`, and `Quot.sound`. An independent focused run checks
+all twelve new public declarations, six declaration checks and sixteen
+regressions, including arbitrary coefficient rings for prime extension,
+absence of Jacobson/domain requirements for the strict step, arbitrary
+field characteristic, zero variables, actual three-variable maximal
+ideals and the evaluation-kernel point, actual localizations and stalks,
+and scheme height zero versus coheight n at closed points. The six primary
+proof-dependency assertions and two supporting reports pass. Independent
+mathematical and source/manuscript parity audits pass; the induction's
+upper bound is independent of the new maximal-height result. The single
+PDF builds to 48 pages with a clean final log. Proposition 6.16 and its
+proof, the updated module/status pages and theorem-map row were visually
+inspected. Submission wrappers, dependency pins and bibliography are
+unchanged; diff checks pass. No new axiom, input package, cycle type,
+Chow quotient or projector is introduced. The next algebraic checkpoint
+is normal-base going down for the actual integral domain extension from
+Noether normalization, reusing the existing generic height comparison.
+Polynomial-base normality is already available. General finite-type-domain
+maximal-local equality, uniform chains, the higher-dimensional unit-step
+law and target realization remain subsequent proof obligations.
 
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
@@ -1016,6 +1046,34 @@ No maximal-localization dimension identity, uniform maximal-chain theorem,
 immediate-specialization unit step, general scheme chart/residue-field
 transport or new dimension-function constructor is included in SP42.
 The existing cycle module, Chow quotient and chosen projector are unchanged.
+
+### Polynomial maximal height and closed-point local dimension (SP43)
+
+Write \(R_n=k[T_1,\ldots,T_n]\), with \(k\) any field, and
+\(X_n=\operatorname{Spec}R_n\). In the generic helper \(R\) is any
+commutative ring and \(C:R\to R[T]\) is the actual constant-polynomial
+homomorphism. No new cycle object or dimension-function package is used.
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `polynomial_comap_map_C` | contraction is a left inverse to ideal extension | $C^{-1}(pR[T])=p$ |
+| `polynomialPrimeExtension` | actual order embedding of prime ideals | $\operatorname{Spec}_{\mathrm{prime}}R\hookrightarrow\operatorname{Spec}_{\mathrm{prime}}R[T],\ p\mapsto pR[T]$ |
+| `polynomialPrimeExtension_height_le` | extending prime chains does not decrease height | $\operatorname{ht}(p)\leq\operatorname{ht}(pR[T])$ |
+| `polynomial_map_C_not_isMaximal` | polynomial quotient obstruction for any ideal | $pR[T]\notin\operatorname{MaxSpec}R[T]$ |
+| `polynomial_map_comap_C_lt` | actual contracted-prime extension is strictly below a maximal ideal | $(m\cap R)R[T]\subsetneq m$ |
+| `polynomial_primeHeight_comap_add_one_le` | one extra height step, not an equality or catenarity assertion | $\operatorname{ht}(m\cap R)+1\leq\operatorname{ht}(m)$ |
+| `mvPolynomial_primeHeight_eq_card_of_isMaximal` / `mvPolynomial_height_eq_card_of_isMaximal` | full height for every polynomial maximal ideal | $\operatorname{ht}_{R_n}(m)=n$ |
+| `mvPolynomial_localization_dimension_of_isMaximal` | dimension of the actual prime localization | $\dim(R_n)_m=n$ |
+| `mvPolynomial_stalk_dimension_of_isMaximal` / `mvPolynomial_stalk_dimension_of_isClosed` | dimension of the actual structure-sheaf stalk | $\dim\mathcal O_{X_n,m}=n$ |
+| `mvPolynomial_closedPoint_coheight` | coheight in the scheme's closure-inclusion order | $\operatorname{coht}_{X_n}(m)=n$ |
+
+The result includes \(n=0\) and non-rational closed points. Scheme-point
+height and closed-carrier dimension are zero at these closed points;
+they are not the local dimension. The generic inequality alone does not
+give an immediate-specialization unit step. General finite-type-domain
+maximal-local comparison, normal-base going down, uniform saturated chains,
+general scheme grading and the target Chow operations remain subsequent
+proof obligations. No regularity or generator theorem is asserted here.
 
 ## Objects deliberately assigned no independent notation
 

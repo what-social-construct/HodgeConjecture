@@ -440,6 +440,21 @@ be developed alongside that infrastructure.
    the integer scheme-point height. No immediate-specialization law or
    dimension-function package is supplied as a hypothesis.
 
+   **Polynomial-local checkpoint (A11ab / SP43):**
+   `PolynomialPrimeHeight.lean` constructs prime extension along the actual
+   constant-polynomial map, proves contraction recovers the original prime,
+   and proves the extended contraction is strictly below any maximal ideal.
+   This gives \(\operatorname{ht}(m\cap R)+1\leq\operatorname{ht}(m)\)
+   for every commutative ring. `PolynomialMaximalHeight.lean` combines
+   Jacobson maximal contraction, variable induction and SP42's independent
+   upper bound to prove
+   \(\operatorname{ht}(m)=\dim k[T_1,\ldots,T_n]_m=n\) for every maximal
+   ideal over any field, including \(n=0\). No rational-point assumption is
+   needed. `PolynomialClosedPointDimension.lean` identifies the actual
+   closed-point stalk dimension and scheme-point coheight with \(n\).
+   This is not the closed carrier's dimension, which is zero, and does not
+   claim regularity, generators or uniform saturated-chain lengths.
+
    **Next bounded obligation:** prove the higher-dimensional
    immediate-specialization dimension formula for finite-type schemes
    over a field. The finite integer closure-height function is already
@@ -447,11 +462,14 @@ be developed alongside that infrastructure.
    its one-step law is not yet proved. The next algebraic step is the
    stronger uniform maximal-chain/local dimension formula, followed by
    actual chart/residue-field transport to schemes. The global affine
-   equality alone does not supply these. The first planned algebraic
-   substep is polynomial maximal-ideal height. A normalization-based
-   maximal-local comparison also needs a proof of normal-base going
+   equality and the now-proved polynomial maximal heights do not supply
+   these. A normalization-based finite-type-domain maximal-local comparison
+   next needs a proof of normal-base going
    down, which remains a TODO in the pinned library; the available flat
-   instance does not silently discharge it. Then identify dimension
+   instance does not silently discharge it. Polynomial-base normality is
+   already available; the missing construction is going down for the actual
+   integral domain extension, controlling primes beneath the selected
+   terminal prime. Then identify dimension
    grading with target codimension grading in the intended integral or
    pure-dimensional setting; a uniform \(d-p\) shift is not asserted
    on mixed-dimensional schemes. Construct rational coefficient extension of this

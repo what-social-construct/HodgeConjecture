@@ -555,7 +555,7 @@ This is A11z / SP41, the first substep of geometric grading instantiation.
 
 ### Affine dimension and actual residue-field comparison
 
-The next algebraic subcheckpoint is A11aa / SP42.
+The affine-dimension subcheckpoint is A11aa / SP42.
 `Cycles/TranscendenceDegreeDrop.lean` proves strict transcendence-degree
 drop for an actual noninjective surjection between domains of finite
 transcendence degree. Lifting a quotient transcendence basis makes the
@@ -596,7 +596,32 @@ residue-field transcendence degree, which strictly decreases under proper
 specialization. These are identities for the existing carrier and its
 actual dimension, not a new cycle type or an assumed grading law.
 
-**The next bounded step is the higher-dimensional immediate-specialization
+### Polynomial maximal height and actual closed-point local dimension
+
+A11ab / SP43 proves the next local algebraic case.
+`Cycles/PolynomialPrimeHeight.lean` constructs the actual order embedding
+of primes under extension along \(R\to R[T]\), with contraction as a left
+inverse. An extended ideal is never maximal: its quotient is a polynomial
+ring, which is not a field. Thus, for every maximal ideal \(m\subset R[T]\),
+\[
+ (m\cap R)R[T]\subsetneq m,
+ \qquad \operatorname{ht}(m\cap R)+1\leq\operatorname{ht}(m).
+\]
+This helper needs only a commutative ring. In
+`Cycles/PolynomialMaximalHeight.lean`, Jacobson maximal contraction permits
+induction on the variables over a field, while SP42 supplies the independent
+upper bound. For every maximal ideal of \(R_n=k[T_1,\ldots,T_n]\),
+\[
+ \operatorname{ht}(m)=\dim (R_n)_m=n.
+\]
+The zero-variable case and non-rational closed points are included.
+`Cycles/PolynomialClosedPointDimension.lean` computes the actual
+structure-sheaf stalk dimension as \(n\), and hence scheme-point coheight
+as \(n\). Closed-point carrier dimension and scheme-point height remain
+zero; these are distinct quantities. No regularity or generator bound is
+asserted.
+
+**The next bounded goal is the higher-dimensional immediate-specialization
 dimension formula.** For finite-type schemes over a field, prove the
 one-step law for \(x\mapsto\dim\overline{\{x\}}\). The affine
 transcendence-degree comparison is now proved, but the uniform
@@ -604,18 +629,17 @@ maximal-chain/local dimension formula is not. Prove that stronger
 prime-chain statement, then transport the affine residue-field comparison
 through the actual scheme charts. Finiteness, strict monotonicity and the
 global affine dimension equality alone do not prove the unit-step law.
-For the next commutative-algebra substep, first target the height of every
-maximal ideal in a finite-variable polynomial ring over a field. The
-pinned library provides Jacobson contraction and prime extension for
-an induction on the variables: use
-`Polynomial.isMaximal_comap_C_of_isJacobsonRing`,
-`Ideal.isPrime_map_C_of_isPrime`, and the strict-step height bound.
-Passing from polynomial maximal heights
-to maximal-local dimensions through Noether normalization additionally
+Polynomial maximal heights and their actual local dimensions are now proved.
+Passing from this polynomial case to maximal-local dimensions of arbitrary
+finite-type domains through Noether normalization additionally
 needs normal-base going down: `Mathlib/RingTheory/Ideal/GoingDown.lean`
 still lists that general theorem as a TODO. Its flat going-down instance
 cannot be substituted without proving flatness. These are proof tasks,
-not new input packages. For the subsequent height comparison, reuse the
+not new input packages. The polynomial base's normality is already available
+from the pinned unique-factorization and integrally-closed instances; it is
+the going-down theorem for the actual integral domain extension that must
+be proved. Going up alone does not lift chains beneath a preselected
+terminal prime. For the subsequent height comparison, reuse the
 already proved generic
 `NormalizationInertia.primeHeight_under_le_of_hasGoingDown` rather than
 introducing a duplicate. The uniform-chain/unit-step theorem remains the

@@ -48,6 +48,9 @@ import HodgeConjecture.Cycles.IntegralDimension
 import HodgeConjecture.Cycles.NormalizationDimension
 import HodgeConjecture.Cycles.AffineDimension
 import HodgeConjecture.Cycles.AffineSupportDimension
+import HodgeConjecture.Cycles.PolynomialPrimeHeight
+import HodgeConjecture.Cycles.PolynomialMaximalHeight
+import HodgeConjecture.Cycles.PolynomialClosedPointDimension
 import HodgeConjecture.Correspondence.TransposeAlgebra
 import HodgeConjecture.Correspondence.ProjectorDefect
 import HodgeConjecture.Correspondence.ProjectorLift
@@ -128,6 +131,9 @@ Chow/cohomological realization:
     integral-extension dimension invariance and Noether normalization,
     giving the exact finite-type domain dimension formula and the actual
     affine point-closure/residue-field comparison.
+34. actual constant-polynomial prime extension and its strict step below
+    every maximal ideal, giving full polynomial maximal height and actual
+    maximal-localization and closed-point stalk dimension over any field.
 
 The free span algebra is not identified with a Chow ring. General proper
 cycle extraction, flat/Gysin operations and their rational-equivalence
@@ -137,6 +143,6 @@ admissible system). The constructed closed-pushforward quotient is additive;
 it does not supply Chow convolution or its target realization.
 The higher-dimensional finite-type dimension-function construction still
 needs the immediate-specialization dimension formula; finite-dimensionality,
-strict monotonicity and the global affine dimension equality alone do not
-supply that law or the uniform maximal-chain theorem.
+strict monotonicity, polynomial maximal height and the global affine
+dimension equality do not supply that law or the uniform maximal-chain theorem.
 -/
