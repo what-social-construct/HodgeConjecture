@@ -3894,3 +3894,187 @@ example (k : Type) [Field k] :
     primeQuotient_trdeg_toNat_add_one_of_covBy k (Polynomial k × k) (e p) (e q) hcover⟩
 
 end ConsecutivePrimeDimensionRegressions
+
+-- SP48: actual finite-type affine dimension functions and carrier grading.
+#check HodgeConjecture.SchemeCycles.specPointOrderIso
+#check HodgeConjecture.SchemeCycles.DimensionFunction.ofSpecFiniteType
+#check HodgeConjecture.SchemeCycles.DimensionFunction.ofSpecFiniteType_apply
+#check HodgeConjecture.SchemeCycles.DimensionFunction.ofSpecFiniteType_eq_pointHeight
+#check HodgeConjecture.SchemeCycles.DimensionFunction.ofSpecFiniteType_nonneg
+#check HodgeConjecture.SchemeCycles.supportDegree_ofSpecFiniteType_eq_iff
+#check HodgeConjecture.SchemeCycles.fundamentalCycle_mem_ofSpecFiniteType_iff
+#check HodgeConjecture.SchemeCycles.DimensionFunction.ofAffineLocallyOfFiniteType
+#check HodgeConjecture.SchemeCycles.DimensionFunction.ofAffineLocallyOfFiniteType_apply
+#check HodgeConjecture.SchemeCycles.DimensionFunction.ofAffineLocallyOfFiniteType_nonneg
+#check HodgeConjecture.SchemeCycles.supportDegree_ofAffineLocallyOfFiniteType_eq_iff
+#check HodgeConjecture.SchemeCycles.fundamentalCycle_mem_ofAffineLocallyOfFiniteType_iff
+
+#print axioms HodgeConjecture.SchemeCycles.specPointOrderIso
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.ofSpecFiniteType
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.ofSpecFiniteType_apply
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.ofSpecFiniteType_eq_pointHeight
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.ofSpecFiniteType_nonneg
+#print axioms HodgeConjecture.SchemeCycles.supportDegree_ofSpecFiniteType_eq_iff
+#print axioms HodgeConjecture.SchemeCycles.fundamentalCycle_mem_ofSpecFiniteType_iff
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.ofAffineLocallyOfFiniteType
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.ofAffineLocallyOfFiniteType_apply
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.ofAffineLocallyOfFiniteType_nonneg
+#print axioms HodgeConjecture.SchemeCycles.supportDegree_ofAffineLocallyOfFiniteType_eq_iff
+#print axioms HodgeConjecture.SchemeCycles.fundamentalCycle_mem_ofAffineLocallyOfFiniteType_iff
+
+noncomputable section AffineDimensionFunctionRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory
+open HodgeConjecture.SchemeCycles
+
+-- The canonical order isomorphism preserves the actual point and reverses prime order.
+example (A : Type) [CommRing A] (x : Spec (CommRingCat.of A)) :
+    specPointOrderIso A x = OrderDual.toDual (show PrimeSpectrum A from x) := rfl
+
+example (A : Type) [CommRing A] (p q : PrimeSpectrum A) (hpq : p ≤ q) :
+    (show (Spec (CommRingCat.of A) : Scheme) from q) ≤
+      (show (Spec (CommRingCat.of A) : Scheme) from p) :=
+  (specPointOrderIso A).le_iff_le.mp hpq
+
+-- Evaluation is the actual prime-localization residue degree, not an assumed grading law.
+example (k A : Type) [Field k] [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
+    (x : Spec (CommRingCat.of A)) :
+    DimensionFunction.ofSpecFiniteType k A x =
+      ((Algebra.trdeg k x.asIdeal.ResidueField).toNat : ℤ) := by
+  fail_if_success
+    have : IsDomain A := inferInstance
+  fail_if_success
+    have : IsReduced A := inferInstance
+  fail_if_success
+    have : CharZero k := inferInstance
+  rfl
+
+-- Increasing prime ideals decrease the actual scheme dimension-function value.
+example (k A : Type) [Field k] [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
+    (p q : PrimeSpectrum A) (hpq : p < q) :
+    DimensionFunction.ofSpecFiniteType k A q < DimensionFunction.ofSpecFiniteType k A p := by
+  apply (DimensionFunction.ofSpecFiniteType k A).strictMono
+  exact (specPointOrderIso A).lt_iff_lt.mp hpq
+
+-- Prime-spectrum covers and scheme covers have the opposite orientation.
+example (k A : Type) [Field k] [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
+    (p q : PrimeSpectrum A) (hpq : p ⋖ q) :
+    DimensionFunction.ofSpecFiniteType k A p =
+      DimensionFunction.ofSpecFiniteType k A q + 1 := by
+  apply (DimensionFunction.ofSpecFiniteType k A).map_covBy
+  exact (specPointOrderIso A).map_covBy.mp hpq.toDual
+
+example (k A : Type) [Field k] [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
+    (x : Spec (CommRingCat.of A)) :
+    0 ≤ DimensionFunction.ofSpecFiniteType k A x ∧
+      DimensionFunction.ofSpecFiniteType k A x = ((Order.height x).toNat : ℤ) :=
+  ⟨DimensionFunction.ofSpecFiniteType_nonneg k A x,
+    DimensionFunction.ofSpecFiniteType_eq_pointHeight k A x⟩
+
+-- Existing integral supports retain the exact actual carrier-dimension criterion.
+example (k A : Type) [Field k] [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
+    (W : IntegralClosedSubscheme (Spec (CommRingCat.of A))) (n : ℕ) :
+    supportDegree (DimensionFunction.ofSpecFiniteType k A) W = (n : ℤ) ↔
+      topologicalKrullDim W.val.subscheme = (n : WithBot ℕ∞) :=
+  supportDegree_ofSpecFiniteType_eq_iff k A W n
+
+example (k A R : Type) [Field k] [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
+    [Semiring R] [Nontrivial R]
+    (W : IntegralClosedSubscheme (Spec (CommRingCat.of A))) (n : ℕ) :
+    fundamentalCycle R W ∈ cyclesOfDegree R (DimensionFunction.ofSpecFiniteType k A) n ↔
+      topologicalKrullDim W.val.subscheme = (n : WithBot ℕ∞) :=
+  fundamentalCycle_mem_ofSpecFiniteType_iff k A R W n
+
+-- The actual empty spectrum of the zero algebra is allowed.
+example (k : Type) [Field k] :
+    IsEmpty (Spec (CommRingCat.of PUnit) : Scheme) ∧
+      Nonempty (DimensionFunction (Spec (CommRingCat.of PUnit))) :=
+  ⟨inferInstance, ⟨DimensionFunction.ofSpecFiniteType k PUnit⟩⟩
+
+-- The actual reducible algebra k[T] × k also receives a constructed grading.
+example (k : Type) [Field k] :
+    Nonempty (DimensionFunction (Spec (CommRingCat.of (Polynomial k × k)))) := by
+  fail_if_success
+    have : IsDomain (Polynomial k × k) := inferInstance
+  exact ⟨DimensionFunction.ofSpecFiniteType k (Polynomial k × k)⟩
+
+-- In every number of variables, the generic point receives the full dimension.
+example (k : Type) [Field k] (n : ℕ) :
+    DimensionFunction.ofSpecFiniteType k (MvPolynomial (Fin n) k)
+      (genericPoint (Spec (CommRingCat.of (MvPolynomial (Fin n) k)))) = (n : ℤ) := by
+  rw [DimensionFunction.ofSpecFiniteType_eq_pointHeight]
+  have h : Order.height (genericPoint (Spec (CommRingCat.of (MvPolynomial (Fin n) k)))) =
+      (n : ℕ∞) := by
+    apply WithBot.coe_injective
+    rw [genericPoint_height_eq_topologicalKrullDim]
+    change topologicalKrullDim (PrimeSpectrum (MvPolynomial (Fin n) k)) = _
+    rw [PrimeSpectrum.topologicalKrullDim_eq_ringKrullDim,
+      mvPolynomial_ringKrullDim_eq_card]
+    rfl
+  simp only [h, ENat.toNat_coe]
+
+-- Every closed polynomial point has degree zero, not just rational points.
+example (k : Type) [Field k] (n : ℕ) (p : PrimeSpectrum (MvPolynomial (Fin n) k))
+    [p.asIdeal.IsMaximal] : DimensionFunction.ofSpecFiniteType k (MvPolynomial (Fin n) k) p = 0 := by
+  rw [DimensionFunction.ofSpecFiniteType_eq_pointHeight, spec_point_height_eq_prime_coheight]
+  simp only [Order.coheight_eq_zero.mpr (PrimeSpectrum.isMax_iff.mpr inferInstance),
+    ENat.toNat_zero, Nat.cast_zero]
+
+-- The new constructor agrees pointwise with the existing low-dimensional constructor.
+example (k A : Type) [Field k] [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
+    (hdim : topologicalKrullDim (Spec (CommRingCat.of A)) ≤ 1)
+    (x : Spec (CommRingCat.of A)) :
+    DimensionFunction.ofSpecFiniteType k A x =
+      DimensionFunction.ofKrullDimLEOne (Spec (CommRingCat.of A)) hdim x := by
+  rw [DimensionFunction.ofSpecFiniteType_eq_pointHeight,
+    DimensionFunction.ofKrullDimLEOne_apply]
+
+-- The actual affine-X input is a structural morphism, not a sections-algebra premise.
+example (k : Type) [Field k] (X : Scheme) [IsAffine X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] (x : X) :
+    DimensionFunction.ofAffineLocallyOfFiniteType k X p x = ((Order.height x).toNat : ℤ) := by
+  fail_if_success
+    have : Algebra k Γ(X, ⊤) := inferInstance
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  fail_if_success
+    have : AlgebraicGeometry.IsReduced X := inferInstance
+  rfl
+
+example (k : Type) [Field k] (X : Scheme) [IsAffine X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (x y : X) (hxy : x ⋖ y) :
+    DimensionFunction.ofAffineLocallyOfFiniteType k X p y =
+      DimensionFunction.ofAffineLocallyOfFiniteType k X p x + 1 :=
+  (DimensionFunction.ofAffineLocallyOfFiniteType k X p).map_covBy hxy
+
+example (k : Type) [Field k] (X : Scheme) [IsAffine X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] (x : X) :
+    0 ≤ DimensionFunction.ofAffineLocallyOfFiniteType k X p x :=
+  DimensionFunction.ofAffineLocallyOfFiniteType_nonneg k X p x
+
+example (k : Type) [Field k] (X : Scheme) [IsAffine X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (W : IntegralClosedSubscheme X) (n : ℕ) :
+    supportDegree (DimensionFunction.ofAffineLocallyOfFiniteType k X p) W = (n : ℤ) ↔
+      topologicalKrullDim W.val.subscheme = (n : WithBot ℕ∞) :=
+  supportDegree_ofAffineLocallyOfFiniteType_eq_iff k X p W n
+
+example (k R : Type) [Field k] [Semiring R] [Nontrivial R] (X : Scheme) [IsAffine X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (W : IntegralClosedSubscheme X) (n : ℕ) :
+    fundamentalCycle R W ∈
+        cyclesOfDegree R (DimensionFunction.ofAffineLocallyOfFiniteType k X p) n ↔
+      topologicalKrullDim W.val.subscheme = (n : WithBot ℕ∞) :=
+  fundamentalCycle_mem_ofAffineLocallyOfFiniteType_iff k X p R W n
+
+-- The spectrum and structural-morphism presentations give the same intrinsic value.
+example (k A : Type) [Field k] [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
+    (p : Spec (CommRingCat.of A) ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (x : Spec (CommRingCat.of A)) :
+    DimensionFunction.ofAffineLocallyOfFiniteType k (Spec (CommRingCat.of A)) p x =
+      DimensionFunction.ofSpecFiniteType k A x := by
+  rw [DimensionFunction.ofAffineLocallyOfFiniteType_apply,
+    DimensionFunction.ofSpecFiniteType_eq_pointHeight]
+
+end AffineDimensionFunctionRegressions

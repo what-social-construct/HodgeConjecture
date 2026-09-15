@@ -1984,6 +1984,61 @@ gives the transcendence-degree formula. The existing residue-field
 and quotient-dimension comparisons give its remaining forms.
 \end{proof}
 
+\begin{proposition}[Constructed affine dimension functions --- \formal]
+\label{prop:affine-dimension-function}
+Let \(k\) be a field and let \(A\) be a finite-type \(k\)-algebra.
+On the actual scheme \(X=\Spec A\), define
+\[
+  \delta_{A/k}(x)
+    =\operatorname{trdeg}_k\kappa(\mathfrak p_x)\in\mathbf Z,
+\]
+using the actual prime-localization residue field of the corresponding
+prime \(\mathfrak p_x\). This is a dimension function: both strict
+decrease under proper specialization and the immediate-specialization
+unit step are proved. Its values are nonnegative and satisfy
+\[
+  \delta_{A/k}(x)=h_X(x)=\dim\overline{\{x\}}.
+\]
+This realizes the affine grading specified by
+\cite{StacksDimensionFunction,StacksAlgebraicSchemeDimension}.
+
+More generally, let \(p:X\to\Spec k\) be locally of finite type,
+with \(X\) affine. The structural morphism constructs a dimension
+function \(\delta_{X/k}\) on the actual \(X\), satisfying
+\(\delta_{X/k}(x)=h_X(x)\geq0\), without an independently supplied
+algebra structure on its global sections.
+Write \(\delta\) for either constructed function. For every actual
+integral closed carrier \(W\in\operatorname{IntSub}(X)\), its degree
+is its dimension.
+In particular, for \(n\in\mathbf N\),
+\[
+  \deg_\delta(W)=n\quad\Longleftrightarrow\quad\dim W=n.
+\]
+For a nontrivial semiring \(R\), the existing coefficient-one cycle
+therefore satisfies
+\[
+  [W]\in Z^{\delta}_{\mathrm{fin},n}(X;R)
+    \quad\Longleftrightarrow\quad\dim W=n.
+\]
+Neither affine construction requires the ambient scheme to be integral,
+reduced or normal.
+\end{proposition}
+
+\begin{proof}
+Reuse the actual order reversal between scheme points of \(\Spec A\)
+and its prime ideals. The previously proved strict degree drop and
+Proposition~\ref{prop:consecutive-prime-dimension} give the two
+dimension-function axioms. The actual point-closure comparison
+identifies the residue-field degree with finite integer point height.
+For the structural affine scheme, extract the finite-type sections
+algebra from \(p\), apply the spectrum construction, and transport
+through the actual isomorphism \(X\simeq\Spec\Gamma(X,\mathcal O_X)\).
+The existing closed-immersion restriction applies to this isomorphism.
+The actual carrier isomorphisms preserve closure dimension and hence
+point height. The carrier-dimension identity and existing homogeneous-cycle
+membership criterion give the remaining statements.
+\end{proof}
+
 For smooth projective schemes over a fixed field \(k\), composition of rational Chow
 correspondences is associative and bilinear
 \cite{StacksChowCorrespondenceComposition}, while graph classes compose
@@ -2257,6 +2312,24 @@ The finite-type unit-drop endpoints are
 \leanpath{prime_residueField_trdeg_toNat_add_one_of_covBy}, and
 \leanpath{primeQuotient_dimension_add_one_of_covBy} in
 \leanpath{Cycles/ConsecutivePrimeDimension.lean}.
+Proposition~\ref{prop:affine-dimension-function} reuses the newly public
+\leanpath{specPointOrderIso} in \leanpath{Cycles/AffineSupportDimension.lean}.
+The literal-spectrum construction is
+\leanpath{DimensionFunction.ofSpecFiniteType}; its laws are
+\leanpath{DimensionFunction.ofSpecFiniteType_apply},
+\leanpath{DimensionFunction.ofSpecFiniteType_eq_pointHeight}, and
+\leanpath{DimensionFunction.ofSpecFiniteType_nonneg} in
+\leanpath{Cycles/AffineDimensionFunction.lean}.
+That file also proves \leanpath{supportDegree_ofSpecFiniteType_eq_iff}
+and \leanpath{fundamentalCycle_mem_ofSpecFiniteType_iff}.
+For an actual structural affine scheme, the constructor is
+\leanpath{DimensionFunction.ofAffineLocallyOfFiniteType}, with
+\leanpath{DimensionFunction.ofAffineLocallyOfFiniteType_apply} and
+\leanpath{DimensionFunction.ofAffineLocallyOfFiniteType_nonneg} in
+\leanpath{Cycles/AffineSchemeDimensionFunction.lean}.
+Its carrier and existing-cycle tests are
+\leanpath{supportDegree_ofAffineLocallyOfFiniteType_eq_iff} and
+\leanpath{fundamentalCycle_mem_ofAffineLocallyOfFiniteType_iff}.
 \end{leanfiles}
 
 \begin{statusnote}{\openstatus}
@@ -2320,9 +2393,14 @@ of its lift \(P\to B\).
 Proposition~\ref{prop:consecutive-prime-dimension} proves the affine
 prime-spectrum unit drop by passing to the actual quotient
 \(B/\mathfrak p\); this permits a reducible or nonreduced ambient
-algebra. The next formal step is to transport this law into the actual
-affine scheme-point order and package its dimension function. Open-chart
-and residue-field transport must then construct the general field-based
+algebra. Proposition~\ref{prop:affine-dimension-function} transports
+this law into the actual affine scheme-point order and constructs its
+dimension function on both literal spectra and actual affine schemes with their structural
+morphism. Their carrier degrees are proved to be actual dimensions.
+The remaining extension beyond affine schemes must derive the
+structural field action on each actual scheme-stalk residue field and
+retain it through affine and open-immersion comparisons. These
+open-chart and residue-field compatibilities must construct the general
 grading
 \(\delta_k(x)=\operatorname{trdeg}_k\kappa(x)
   =\dim\overline{\{x\}}\)
@@ -3625,6 +3703,15 @@ Consecutive affine prime unit drop (\formal) &
 \leanpath{primeQuotient_dimension_add_one_of_covBy}\newline
 \leanpath{CommutativeAlgebra/PrimeQuotientCover.lean}\newline
 \leanpath{Cycles/ConsecutivePrimeDimension.lean}\\
+Actual affine dimension functions and carrier grading (\formal) &
+\leanpath{specPointOrderIso}\newline
+\leanpath{DimensionFunction.ofSpecFiniteType}\newline
+\leanpath{DimensionFunction.ofSpecFiniteType_eq_pointHeight}\newline
+\leanpath{DimensionFunction.ofAffineLocallyOfFiniteType}\newline
+\leanpath{supportDegree_ofAffineLocallyOfFiniteType_eq_iff}\newline
+\leanpath{fundamentalCycle_mem_ofAffineLocallyOfFiniteType_iff}\newline
+\leanpath{Cycles/AffineDimensionFunction.lean}\newline
+\leanpath{Cycles/AffineSchemeDimensionFunction.lean}\\
 Compactified graph route (\formal; \conditional) &
 \leanpath{groupAlgebraProjectorExtension}\newline
 \leanpath{Boundary/CompactifiedGraphProjector.lean}\\

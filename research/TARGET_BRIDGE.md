@@ -521,13 +521,27 @@ be developed alongside that infrastructure.
    also proved. This works for reducible or nonreduced finite-type
    algebras, without asserting an ambient stalk-dimension increment.
 
-   **Next bounded obligation:** construct the existing dimension-function
-   structure on actual affine schemes using SP47 and the existing
-   prime/scheme order reversal, then perform the actual scheme-chart
-   transport. Reuse the point-closure and residue-field value comparisons.
-   Derive the algebra on each actual residue field from the structural
+   **Affine dimension-function checkpoint (A11ag / SP48):**
+   `AffineDimensionFunction.lean` combines strict prime-residue degree drop,
+   SP47 and the reused `specPointOrderIso` into the existing dimension-function
+   structure on literal \(\operatorname{Spec}A\). Both laws are proved,
+   and its value equals actual finite point-closure dimension.
+   `AffineSchemeDimensionFunction.lean` extracts the finite-type sections
+   algebra from an actual affine structural morphism
+   \(p:X\to\operatorname{Spec}k\) and transports through `X.isoSpec`
+   using existing closed-immersion restriction. Its function is literally
+   integer point height. No separate sections algebra or grading-law input
+   is required. The actual support-degree and fundamental-cycle membership
+   tests identify geometric dimension, also on reducible or nonreduced
+   ambient affine schemes and without a dimension-at-most-one bound.
+
+   **Next bounded obligation:** construct the structural-field
+   residue-field bridge and its affine comparison as an actual
+   \(k\)-algebra equivalence. Derive the algebra on each actual scheme
+   residue field from the structural
    morphism, retain compatibility through open-immersion residue-field
-   isomorphisms, and prove the global laws on a common affine chart.
+   isomorphisms. Then compare the affine functions on chart overlaps and
+   prove the global laws on a common affine chart.
    No general constructor or open-gluing package is supplied as an input.
    Then identify dimension
    grading with target codimension grading in the intended integral or

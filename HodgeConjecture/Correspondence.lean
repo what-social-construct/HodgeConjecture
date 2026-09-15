@@ -64,6 +64,8 @@ import HodgeConjecture.Cycles.LocalizationTranscendenceDegree
 import HodgeConjecture.Cycles.AffinePrimeDimension
 import HodgeConjecture.CommutativeAlgebra.PrimeQuotientCover
 import HodgeConjecture.Cycles.ConsecutivePrimeDimension
+import HodgeConjecture.Cycles.AffineDimensionFunction
+import HodgeConjecture.Cycles.AffineSchemeDimensionFunction
 import HodgeConjecture.Correspondence.TransposeAlgebra
 import HodgeConjecture.Correspondence.ProjectorDefect
 import HodgeConjecture.Correspondence.ProjectorLift
@@ -164,6 +166,10 @@ Chow/cohomological realization:
     proving height one of the upper prime modulo the lower prime and the
     exact unit drop in quotient and residue-field transcendence degrees
     and quotient dimensions, including reducible finite-type algebras.
+39. actual dimension functions on finite-type affine spectra and on affine
+    schemes with a locally finite-type structural morphism to a field,
+    proving both specialization laws and identifying support degrees and
+    fundamental-cycle homogeneity with actual carrier dimensions.
 
 The free span algebra is not identified with a Chow ring. General proper
 cycle extraction, flat/Gysin operations and their rational-equivalence
@@ -171,8 +177,8 @@ descent, and compatibility with refined intersection remain geometric
 inputs to a `FiniteEtaleAlgebraModel` (or to another explicitly chosen
 admissible system). The constructed closed-pushforward quotient is additive;
 it does not supply Chow convolution or its target realization.
-The full affine prime dimension formula and its consecutive-prime unit
-drop are now proved. The higher-dimensional finite-type dimension-function
-construction still needs transport of this law through the actual
-scheme-point order, affine charts and residue-field comparisons.
+The affine dimension-function construction is now proved in all dimensions.
+General scheme-chart transport and compatibility of the actual scheme
+residue fields with the structural field action remain before the global
+field-induced dimension function and target codimension grading.
 -/

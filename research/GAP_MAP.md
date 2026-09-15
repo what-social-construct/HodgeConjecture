@@ -769,18 +769,38 @@ The ambient algebra may be reducible or nonreduced. This is a unit drop
 in quotient dimensions, not a claim that ambient local-ring dimensions
 increase by one on every mixed-dimensional algebra.
 
-**The next bounded goal is the actual scheme-level dimension function.**
-First construct the affine instance of the existing `DimensionFunction`
-using the proved strict anti-monotonicity and unit drop on prime spectra,
-with the order reversed for scheme points. Expose and reuse the existing
-`specPointOrderIso` in `AffineSupportDimension.lean`, rather than adding
-a second order comparison. Match its values to the already proved
-actual point-closure dimension and prime-residue-field formulas.
-For a general affine source with an explicit structural morphism, follow
-the existing `affine_topologicalKrullDim_lt_top_of_locallyOfFiniteType`
-construction: extract the actual finite-type algebra through `X.isoSpec`
-and transport the affine dimension function through that isomorphism.
-Then derive the field algebra on each actual scheme residue field from
+### Actual affine dimension functions
+
+A11ag / SP48 constructs the existing `DimensionFunction` on actual affine
+schemes in every finite dimension. `Cycles/AffineDimensionFunction.lean`
+defines \(\delta_{A/k}(x)=\operatorname{trdeg}_k\kappa(x)\) on the
+literal \(\operatorname{Spec}A\), using the actual prime-localization
+residue field and its finite transcendence degree. It exposes and reuses
+the existing `specPointOrderIso`, whose point map is the identity and whose
+target order is dual prime inclusion. Strict degree drop and SP47 prove
+both required laws; they are not extra inputs. The values equal integer
+scheme-point height and hence actual point-closure dimension.
+
+`Cycles/AffineSchemeDimensionFunction.lean` supplies
+`DimensionFunction.ofAffineLocallyOfFiniteType` for an actual affine
+\(X\) and a structural morphism \(p:X\to\operatorname{Spec}k\)
+locally of finite type. It extracts the actual finite-type sections
+algebra through `X.isoSpec`, following the existing finite-dimensionality
+construction, and reuses closed-immersion restriction along that
+isomorphism. Its values are definitionally integer point height, so the
+result does not depend on a new residue-field model or an independently
+supplied sections algebra. Actual carrier isomorphisms prove the needed
+height comparison. Neither constructor assumes an integral, reduced,
+normal, nonempty or dimension-at-most-one ambient scheme.
+
+For either constructor, the degree of an existing integral closed support
+equals its actual finite dimension. For natural \(n\), its fundamental
+cycle over a nontrivial coefficient semiring belongs to degree \(n\)
+exactly when that carrier has dimension \(n\). These use the existing
+support and cycle objects, not a new grading module or Chow quotient.
+
+**The next bounded goal is the structural-field residue-field bridge.**
+Derive the field algebra on each actual scheme residue field from
 the structural morphism to \(\operatorname{Spec}k\), transport through
 actual affine isomorphisms and open immersions, and prove the global
 strict-monotonicity and cover conditions on a common affine chart.
@@ -791,6 +811,10 @@ not definitionally the same model: use `StructureSheaf.stalkIso` and
 `IsLocalRing.ResidueField.mapEquiv` with their field-action compatibility.
 The structural action can use `p.appTop` and `Γevaluation`; the naturality
 square and `residueFieldMap_comp` control transport along chart maps.
+First prove the affine residue-field comparison as an actual
+\(k\)-algebra equivalence, then its compatibility with open chart maps.
+This enables comparison of the constructed affine dimension functions on
+overlaps; the global construction is a subsequent assembly step.
 Do not replace these steps by a supplied dimension-function or gluing
 package, or by an unrestricted claim that open immersions preserve
 absolute point height. The general constructor remains open.

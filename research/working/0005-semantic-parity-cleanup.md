@@ -57,7 +57,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 
 ## Canonical semantic object and TeX registry
 
-### Construction and input checkpoints (SP17--SP47)
+### Construction and input checkpoints (SP17--SP48)
 
 | ID | Object or overlap | Disposition | Required action | Status |
 | --- | --- | --- | --- | --- |
@@ -92,6 +92,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 | SP45 | Actual residue-normalization localization and its maximal extended prime | CONSTRUCT / CONNECT | Lift the actual quotient normalization, localize at its nonzero polynomial denominators, and construct the compatible finite-type fraction-field algebra. Prove maximality, exact contraction and preserved height, then reuse SP44 for the domain generic-fiber transcendence-degree endpoint. | PROVED; FULL BUILD, 437 AXIOM REPORTS, NINETEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP46 | Original-field prime dimension formula for finite-type domains | PROVE / CONNECT | Prove actual localization preserves full cardinal transcendence degree, use the compatible polynomial fraction-field tower, and combine SP45 with quotient normalization. Retain the domain condition and actual quotient, residue-field and prime-localization carriers. | PROVED; FULL BUILD, 446 AXIOM REPORTS, FOURTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP47 | Consecutive-prime quotient and residue-field unit drop | PROVE / CONNECT | Transport the actual prime interval into B/p, prove height one of the image of q, and apply SP46 with the actual double-quotient algebra equivalence. Keep the ambient algebra arbitrary and the cover relation in the prime spectrum. | PROVED; FULL BUILD, 452 AXIOM REPORTS, ELEVEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP48 | Actual affine dimension functions and geometric support degrees | CONSTRUCT / IDENTIFY | Reuse the prime/scheme order reversal and SP47 to prove both dimension-function laws on literal Spec A. Extract the finite-type sections algebra from an actual affine structural morphism and transport through X.isoSpec. Identify support degrees and fundamental-cycle membership with carrier dimension. | PROVED; FULL BUILD, 464 AXIOM REPORTS, NINETEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -580,6 +581,40 @@ checkpoint packages the proved laws as an actual affine `DimensionFunction`
 using the existing prime/scheme order reversal. General scheme-chart and
 residue-field transport, target codimension grading and realization remain
 subsequent proof obligations.
+
+SP48 validation (2026-09-15): both new leaf modules and the full 3124-job
+Lean build pass, with only the two existing `Challenge` warnings.
+Integrated `research/Verification.lean` passes with 572 declaration checks
+and all 313 examples, without warnings or errors. All 464 selected axiom
+reports were captured in the original integrated context and compared with
+the exact declaration inventory: no missing, unexpected or duplicate
+reports and no unpermitted axioms. The existing `polynomialDimensionBound`
+is axiom-free; the existing `genericFiber_isScalarTower_base` uses only
+`propext` and `Quot.sound`; the other 462 reports use only `propext`,
+`Classical.choice` and `Quot.sound`. The independent SP48 replay, with
+exactly the original four verification imports, checks all eleven new
+public declarations and the reused, newly public `specPointOrderIso`.
+Its nineteen regressions cover actual order reversal, strictness and
+the unit step, literal prime-residue-field values and finite point heights,
+both carrier-degree and fundamental-cycle criteria, the empty spectrum of
+the zero algebra, a reducible product algebra, generic and arbitrary closed
+points of polynomial spectra in every dimension, and agreement with the
+existing low-dimensional construction. Structural-affine tests require no
+preinstalled sections algebra and compare the two constructors' intrinsic
+values. Separate actual-isomorphism height and affine-source audits pass.
+The six primary proof-dependency assertions and two supporting reports pass.
+Independent mathematical, source and cross-document parity reviews pass.
+The single PDF builds to 53 pages with a clean final log; Proposition 6.21
+and its proof, the updated module/status pages and the theorem-map row were
+visually inspected. The existing 02I9 and 0A21 citations are reused without
+source axioms. Submission wrappers, dependency pins and bibliography are
+unchanged; diff checks pass. The existing point-order comparison, dimension
+function, support objects and homogeneous cycle module are reused; no new
+source input package, global algebra instance, Chow quotient or projector
+is introduced. The next bounded checkpoint is the structural-field action
+on actual scheme residue fields and its compatible affine algebra
+equivalence. Open-chart compatibility, global dimension-function assembly,
+target codimension grading and realization remain subsequent obligations.
 
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
@@ -1347,14 +1382,54 @@ Chow quotient or projector is introduced. Quotient-dimension drop is not
 identified with an ambient local-ring dimension increment on arbitrary
 reducible algebras.
 
-The next bounded checkpoint first combines the existing strict degree
-drop, SP47's unit law and the existing prime/scheme order reversal into an
-actual affine `DimensionFunction`. Its extension to general schemes must
-derive the field action from the structural morphism and retain it through
-actual affine and open-immersion residue-field comparisons. The constructor,
-global chart transport, target codimension grading and further realization
+SP48 below combines the strict degree drop, unit law and existing
+prime/scheme order reversal into an actual affine `DimensionFunction`.
+General chart transport and the structural-field residue-field comparison
 remain separate; no unrestricted preservation of absolute point height
 under open immersion is assumed.
+
+### Actual affine dimension functions (SP48)
+
+For a finite-type algebra \(A\) over \(k\), write
+\(\delta_{A/k}\) for the constructed function on the actual affine
+spectrum. For an affine scheme with structural morphism
+\(p:X\to\operatorname{Spec}k\) locally of finite type, write
+\(\delta_{X/k}\) for the corresponding intrinsic point-height function.
+These are instances of the existing `DimensionFunction`, not new structures.
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `specPointOrderIso` | expose the existing identity-on-points comparison, with dual prime order | $(\operatorname{Spec}A,\leq_{\mathrm{cl}})\simeq(\operatorname{Spec}A,\subseteq)^{\mathrm{op}}$ |
+| `DimensionFunction.ofSpecFiniteType`, `ofSpecFiniteType_apply` | actual affine constructor and literal prime-residue-field evaluation | $\delta_{A/k}(x)=\operatorname{trdeg}_k\kappa(x)$ |
+| `DimensionFunction.ofSpecFiniteType_eq_pointHeight` | equality to actual finite closure height | $\delta_{A/k}(x)=h_{\operatorname{Spec}A}(x)=\dim\overline{\{x\}}$ |
+| `DimensionFunction.ofSpecFiniteType_nonneg` | nonnegative point values | $0\leq\delta_{A/k}(x)$ |
+| `supportDegree_ofSpecFiniteType_eq_iff` | exact actual-carrier dimension test for natural n | $\deg_{\delta_{A/k}}W=n\iff\dim W=n$ |
+| `fundamentalCycle_mem_ofSpecFiniteType_iff` | existing homogeneous-cycle membership detects carrier dimension | $[W]\in Z^{\delta_{A/k}}_{\mathrm{fin},n}(\operatorname{Spec}A;R)\iff\dim W=n$ |
+| `DimensionFunction.ofAffineLocallyOfFiniteType`, `ofAffineLocallyOfFiniteType_apply` | actual affine structural-morphism constructor and literal point height | $\delta_{X/k}(x)=h_X(x)$ |
+| `DimensionFunction.ofAffineLocallyOfFiniteType_nonneg` | nonnegative structural-affine values | $0\leq\delta_{X/k}(x)$ |
+| `supportDegree_ofAffineLocallyOfFiniteType_eq_iff` | geometric degree of actual integral closed carriers | $\deg_{\delta_{X/k}}W=n\iff\dim W=n$ |
+| `fundamentalCycle_mem_ofAffineLocallyOfFiniteType_iff` | the same criterion in the existing cycle module on X | $[W]\in Z^{\delta_{X/k}}_{\mathrm{fin},n}(X;R)\iff\dim W=n$ |
+
+Both strictness and the immediate-specialization unit law are proved.
+Scheme closure order reverses prime inclusion, and SP47 is applied only
+after that reversal. The affine structural constructor extracts the actual
+finite-type algebra on global sections through `X.isoSpec`; it does not
+ask for a preinstalled sections algebra. The existing closed-immersion
+restriction along the isomorphism and actual carrier isomorphisms supply
+the transport. Finite-dimensionality justifies the integer point-height
+comparison. No ambient domain, reducedness, normality, nonemptiness or
+dimension-at-most-one premise is needed. The fundamental-cycle iff uses
+nontrivial coefficient semirings; its nontriviality premise is retained.
+
+The spectrum constructor uses `Ideal.ResidueField`; the structural-affine
+constructor uses literal point height. A compatible field action on the
+separate `Scheme.residueField` has not been silently installed. The next
+bounded checkpoint constructs that action and the affine residue-field
+comparison as an actual \(k\)-algebra equivalence, then proves compatibility
+through open chart maps. Overlap comparison and the global dimension
+function, target codimension conversion and further realization follow
+separately. No cycle module, Chow quotient, projector, source input package,
+global algebra instance or unrestricted open-height invariance is added.
 
 ## Objects deliberately assigned no independent notation
 

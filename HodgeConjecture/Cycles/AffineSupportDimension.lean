@@ -22,7 +22,9 @@ noncomputable section
 
 universe u v
 
-private def specPointOrderIso (A : Type v) [CommRing A] :
+/-- The actual affine scheme-point order is the dual of prime-ideal inclusion.
+The underlying point map is the identity. -/
+def specPointOrderIso (A : Type v) [CommRing A] :
     (Spec (CommRingCat.of A) : Scheme) ≃o (PrimeSpectrum A)ᵒᵈ where
   toEquiv := Equiv.refl _
   map_rel_iff' := by
