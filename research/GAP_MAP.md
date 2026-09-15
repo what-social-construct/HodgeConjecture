@@ -663,26 +663,56 @@ The domain \(A\) need not be normal and the point need not be rational.
 The local comparison uses prime chains, not an assumption that localizing
 at one selected upstairs prime preserves integrality of the local-ring map.
 
+### Residue-normalization localization
+
+A11ad / SP45 constructs that localization. For a finite-type algebra
+\(B\) over a field and an actual prime \(q\),
+`Cycles/ResidueNormalizationLift.lean` chooses an injective integral
+normalization \(g:P=k[T_1,\ldots,T_n]\to B/q\) and lifts the variables
+to an actual algebra map \(f:P\to B\). The quotient square commutes
+exactly: \(\pi_q f=g\). Consequently \(f\) is injective and
+\(M=f(P\setminus\{0\})\) is disjoint from \(q\).
+
+`CommutativeAlgebra/GenericFiberAlgebra.lean` equips the actual localization
+\(B'=M^{-1}B\) with its canonical \(K=\operatorname{Frac}(P)\)-algebra
+map and compatible scalar tower. Finite type over \(K\) follows from
+the actual localization pushout. `CommutativeAlgebra/ResidueLocalization.lean`
+proves \(q'=qB'\) is maximal: the same-denominator localization of
+\(B/q\) is a domain integral over \(K\), hence a field, and the
+actual surjective localized quotient map has kernel \(q'\).
+Its contraction is \(q\), and localization preserves its full height.
+Contraction, primality and height need only the quotient injection, not
+integrality; the ambient ring need not be a domain for these results or
+for maximality and finite type.
+
+`Cycles/ResidueNormalizationLocalization.lean` supplies the existential
+construction without a normalization input. When \(B\) is a domain,
+the actual \(B'\) is also a domain, so SP44 gives the additional endpoint
+\[
+ \operatorname{ht}_B(q)=\operatorname{ht}_{B'}(q')
+   =\operatorname{trdeg}_K B'.
+\]
+Neither integrality of \(P\to B\) nor a maximality or height-comparison
+premise is assumed. No replacement carrier, source axiom or target package
+is introduced.
+
 **The next bounded goal is the higher-dimensional immediate-specialization
-dimension formula.** For finite-type schemes over a field, prove the
-one-step law for \(x\mapsto\dim\overline{\{x\}}\). The affine
-transcendence-degree comparison and finite-type-domain maximal-local
-dimension equality are now proved. The next algebraic subcheckpoint is
-an actual residue-normalization localization: for a finite-type domain
-\(B\) and prime \(q\), normalize \(B/q\) by a polynomial algebra
-\(P\), lift its variables to \(B\), and invert \(P\setminus\{0\}\).
-Construct \(B'\) over \(K=\operatorname{Frac}(P)\), prove the extended
-prime \(q'\) is maximal, and prove \(\operatorname{ht}(q')=\operatorname{ht}(q)\).
-Use the actual localization and quotient maps, not a supplied maximality
-or height-comparison premise. The pinned APIs include
-`IsLocalization.primeHeight_comap`,
-`IsLocalization.map_surjective_of_surjective`,
-`Algebra.FiniteType.of_restrictScalars_finiteType`,
-`RingHom.finiteType_localizationPreserves`, `isIntegral_localization`,
-and `isField_of_isIntegral_of_isField'`. Integrality is used only for
-the same-denominator localization of the actual quotient normalization.
-SP44 can then give the full affine prime formula
+dimension formula.** For a finite-type domain \(B\), the next algebraic
+subcheckpoint compares the actual localization's transcendence degree over
+\(k\) with that of \(B\),
+and applies the compatible \(k\to P\to K\to B'\) tower.
+The residue normalization identifies \(\operatorname{trdeg}_k(B/q)=n\).
+Together with SP45 this should give the full affine prime formula
 \(\operatorname{ht}(q)+\operatorname{trdeg}_k(B/q)=\operatorname{trdeg}_k B\).
+The pinned ingredients are `IsLocalization.isAlgebraic`, `trdeg_eq_zero`,
+`trdeg_add_eq` / `lift_trdeg_add_eq`, the existing
+`trdeg_eq_fractionRing` and `trdeg_eq_normalization_size`, and
+`Cardinal.toNat_lift_add_lift`. Use the proved actual localization injection
+to obtain the faithful scalar action, and retain universe lifts in the
+cardinal comparison. The rational function field \(K=k(T_1,\ldots,T_n)\)
+is generally not finite type as a \(k\)-algebra: its finite transcendence
+degree must come from the variable count, not from a false finite-type
+instance. Finite type of \(B'\) over \(K\) is already proved.
 Applying that formula on prime quotients is the route to the unit-step
 law, followed by actual scheme-chart/residue-field transport. Finiteness,
 strict monotonicity and global dimension equality alone do not supply it.

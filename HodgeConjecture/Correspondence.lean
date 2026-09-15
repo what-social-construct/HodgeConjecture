@@ -56,6 +56,10 @@ import HodgeConjecture.CommutativeAlgebra.MonicPrimeCoefficients
 import HodgeConjecture.CommutativeAlgebra.NormalGoingDown
 import HodgeConjecture.Cycles.NormalizationLocalDimension
 import HodgeConjecture.Cycles.AffineClosedPointDimension
+import HodgeConjecture.CommutativeAlgebra.GenericFiberAlgebra
+import HodgeConjecture.CommutativeAlgebra.ResidueLocalization
+import HodgeConjecture.Cycles.ResidueNormalizationLift
+import HodgeConjecture.Cycles.ResidueNormalizationLocalization
 import HodgeConjecture.Correspondence.TransposeAlgebra
 import HodgeConjecture.Correspondence.ProjectorDefect
 import HodgeConjecture.Correspondence.ProjectorLift
@@ -143,6 +147,11 @@ Chow/cohomological realization:
     actual integral injections of domains, giving prime-height comparison
     through Noether normalization and full maximal-localization and
     closed-point stalk dimension for every finite-type domain over a field.
+36. lifted normalization of an actual prime quotient and localization at
+    its nonzero polynomial denominators, constructing a finite-type algebra
+    over the polynomial fraction field and a maximal extended prime with
+    unchanged contraction and height; for a domain, the original prime
+    height equals transcendence degree over this new coefficient field.
 
 The free span algebra is not identified with a Chow ring. General proper
 cycle extraction, flat/Gysin operations and their rational-equivalence

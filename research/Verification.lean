@@ -3303,3 +3303,275 @@ example (k : Type) [Field k] :
   exact Polynomial.X_ne_zero hX
 
 end NormalGoingDownLocalDimensionRegressions
+
+-- SP45: actual lifted residue normalization and its generic-fiber localization.
+#check HodgeConjecture.SchemeCycles.quotientPolynomialLift
+#check HodgeConjecture.SchemeCycles.quotient_comp_quotientPolynomialLift
+#check HodgeConjecture.SchemeCycles.quotientPolynomialLift_injective
+#check HodgeConjecture.SchemeCycles.polynomial_notMem_of_quotient_injective
+#check HodgeConjecture.SchemeCycles.quotientPolynomialLift_notMem
+#check HodgeConjecture.SchemeCycles.polynomial_map_nonZeroDivisors_le_primeCompl
+#check HodgeConjecture.SchemeCycles.polynomial_map_nonZeroDivisors_disjoint
+#check HodgeConjecture.SchemeCycles.exists_lifted_residue_normalization
+#check HodgeConjecture.CommutativeAlgebra.genericFiberAlgebra
+#check HodgeConjecture.CommutativeAlgebra.genericFiberAlgebra_algebraMap_eq
+#check HodgeConjecture.CommutativeAlgebra.genericFiberAlgebra_isScalarTower
+#check HodgeConjecture.CommutativeAlgebra.genericFiber_finiteType
+#check HodgeConjecture.CommutativeAlgebra.genericFiber_denominators_le_nonZeroDivisors
+#check HodgeConjecture.CommutativeAlgebra.genericFiber_isDomain
+#check HodgeConjecture.CommutativeAlgebra.genericFiber_localization_injective
+#check HodgeConjecture.CommutativeAlgebra.genericFiber_baseField_injective
+#check HodgeConjecture.CommutativeAlgebra.genericFiber_isScalarTower_base
+#check HodgeConjecture.CommutativeAlgebra.residueLocalization_comap_map
+#check HodgeConjecture.CommutativeAlgebra.residueLocalization_map_isPrime
+#check HodgeConjecture.CommutativeAlgebra.residueLocalization_map_isMaximal
+#check HodgeConjecture.CommutativeAlgebra.residueLocalization_primeHeight_map
+#check HodgeConjecture.SchemeCycles.residueNormalization_localization
+#check HodgeConjecture.SchemeCycles.exists_residueNormalization_localization
+#check HodgeConjecture.SchemeCycles.primeHeight_eq_residueNormalization_trdeg
+
+#print axioms HodgeConjecture.SchemeCycles.quotientPolynomialLift
+#print axioms HodgeConjecture.SchemeCycles.quotient_comp_quotientPolynomialLift
+#print axioms HodgeConjecture.SchemeCycles.quotientPolynomialLift_injective
+#print axioms HodgeConjecture.SchemeCycles.polynomial_notMem_of_quotient_injective
+#print axioms HodgeConjecture.SchemeCycles.quotientPolynomialLift_notMem
+#print axioms HodgeConjecture.SchemeCycles.polynomial_map_nonZeroDivisors_le_primeCompl
+#print axioms HodgeConjecture.SchemeCycles.polynomial_map_nonZeroDivisors_disjoint
+#print axioms HodgeConjecture.SchemeCycles.exists_lifted_residue_normalization
+#print axioms HodgeConjecture.CommutativeAlgebra.genericFiberAlgebra
+#print axioms HodgeConjecture.CommutativeAlgebra.genericFiberAlgebra_algebraMap_eq
+#print axioms HodgeConjecture.CommutativeAlgebra.genericFiberAlgebra_isScalarTower
+#print axioms HodgeConjecture.CommutativeAlgebra.genericFiber_finiteType
+#print axioms HodgeConjecture.CommutativeAlgebra.genericFiber_denominators_le_nonZeroDivisors
+#print axioms HodgeConjecture.CommutativeAlgebra.genericFiber_isDomain
+#print axioms HodgeConjecture.CommutativeAlgebra.genericFiber_localization_injective
+#print axioms HodgeConjecture.CommutativeAlgebra.genericFiber_baseField_injective
+#print axioms HodgeConjecture.CommutativeAlgebra.genericFiber_isScalarTower_base
+#print axioms HodgeConjecture.CommutativeAlgebra.residueLocalization_comap_map
+#print axioms HodgeConjecture.CommutativeAlgebra.residueLocalization_map_isPrime
+#print axioms HodgeConjecture.CommutativeAlgebra.residueLocalization_map_isMaximal
+#print axioms HodgeConjecture.CommutativeAlgebra.residueLocalization_primeHeight_map
+#print axioms HodgeConjecture.SchemeCycles.residueNormalization_localization
+#print axioms HodgeConjecture.SchemeCycles.exists_residueNormalization_localization
+#print axioms HodgeConjecture.SchemeCycles.primeHeight_eq_residueNormalization_trdeg
+
+noncomputable section ResidueNormalizationLocalizationRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory
+open HodgeConjecture.CommutativeAlgebra HodgeConjecture.SchemeCycles
+
+-- The actual lift square does not need primality, a domain, or finite type.
+example (k B : Type) [CommRing k] [CommRing B] [Algebra k B]
+    (q : Ideal B) (n : ℕ) (g : MvPolynomial (Fin n) k →ₐ[k] B ⧸ q) :
+    (Ideal.Quotient.mkₐ k q).comp (quotientPolynomialLift k B q n g) = g := by
+  fail_if_success
+    have : q.IsPrime := inferInstance
+  fail_if_success
+    have : IsDomain B := inferInstance
+  fail_if_success
+    have : Algebra.FiniteType k B := inferInstance
+  exact quotient_comp_quotientPolynomialLift k B q n g
+
+example (k B : Type) [CommRing k] [CommRing B] [Algebra k B]
+    (q : Ideal B) (n : ℕ) (g : MvPolynomial (Fin n) k →ₐ[k] B ⧸ q)
+    (hinj : Function.Injective g) :
+    Function.Injective (quotientPolynomialLift k B q n g) :=
+  quotientPolynomialLift_injective k B q n g hinj
+
+-- Disjointness concerns the actual lifted polynomial images, not a replacement subring.
+example (k B : Type) [Field k] [CommRing B] [Algebra k B]
+    (q : Ideal B) [q.IsPrime] (n : ℕ) (f : MvPolynomial (Fin n) k →ₐ[k] B)
+    (hinj : Function.Injective ((Ideal.Quotient.mkₐ k q).comp f)) :
+    (nonZeroDivisors (MvPolynomial (Fin n) k)).map f.toMonoidHom ≤ q.primeCompl ∧
+      Disjoint (↑((nonZeroDivisors (MvPolynomial (Fin n) k)).map f.toMonoidHom) : Set B)
+        (q : Set B) := by
+  fail_if_success
+    have : IsDomain B := inferInstance
+  exact ⟨polynomial_map_nonZeroDivisors_le_primeCompl k B q n f hinj,
+    polynomial_map_nonZeroDivisors_disjoint k B q n f hinj⟩
+
+example (k B : Type) [CommRing k] [CommRing B] [Algebra k B]
+    (q : Ideal B) (n : ℕ) (g : MvPolynomial (Fin n) k →ₐ[k] B ⧸ q)
+    (hinj : Function.Injective g) (a : MvPolynomial (Fin n) k) (ha : a ≠ 0) :
+    quotientPolynomialLift k B q n g a ∉ q :=
+  quotientPolynomialLift_notMem k B q n g hinj a ha
+
+-- The zero-variable lift is literally the scalar map, with no variables to choose.
+example (k B : Type) [CommRing k] [CommRing B] [Algebra k B]
+    (q : Ideal B) (g : MvPolynomial (Fin 0) k →ₐ[k] B ⧸ q) :
+    quotientPolynomialLift k B q 0 g =
+      (Algebra.ofId k B).comp (MvPolynomial.isEmptyAlgEquiv k (Fin 0)).toAlgHom := by
+  apply MvPolynomial.algHom_ext
+  intro i
+  exact Fin.elim0 i
+
+-- Normalization is applied to the prime quotient; the original algebra may be reducible.
+example (k B : Type) [Field k] [CommRing B] [Algebra k B] [Algebra.FiniteType k B]
+    (q : Ideal B) [q.IsPrime] :
+    ∃ n, ∃ f : MvPolynomial (Fin n) k →ₐ[k] B,
+      Function.Injective f ∧ Function.Injective ((Ideal.Quotient.mkₐ k q).comp f) ∧
+        ((Ideal.Quotient.mkₐ k q).comp f).IsIntegral := by
+  fail_if_success
+    have : IsDomain B := inferInstance
+  exact exists_lifted_residue_normalization k B q
+
+section GenericFiberRegressions
+
+variable (R S S' : Type) [CommRing R] [CommRing S] [CommRing S']
+  [Algebra R S] [Algebra S S']
+  [IsLocalization (Algebra.algebraMapSubmonoid S (nonZeroDivisors R)) S']
+
+-- The algebra map is the actual localization map, definitionally.
+example :
+    letI := genericFiberAlgebra R S S'
+    algebraMap (FractionRing R) S' =
+      (IsLocalization.map (M := nonZeroDivisors R) (S := FractionRing R)
+        (T := Algebra.algebraMapSubmonoid S (nonZeroDivisors R)) S' (algebraMap R S)
+        (Submonoid.le_comap_map (nonZeroDivisors R)) : FractionRing R →+* S') := rfl
+
+example [Algebra R S'] [IsScalarTower R S S'] :
+    letI := genericFiberAlgebra R S S'
+    IsScalarTower R (FractionRing R) S' :=
+  genericFiberAlgebra_isScalarTower R S S'
+
+-- Canonical finite type follows from the actual pushout without domain assumptions.
+example [Algebra R S'] [IsScalarTower R S S'] [Algebra.FiniteType R S] :
+    letI := genericFiberAlgebra R S S'
+    Algebra.FiniteType (FractionRing R) S' := by
+  letI := genericFiberAlgebra R S S'
+  letI := genericFiberAlgebra_isScalarTower R S S'
+  fail_if_success
+    have : IsDomain R := inferInstance
+  fail_if_success
+    have : IsDomain S := inferInstance
+  exact genericFiber_finiteType R S S'
+
+-- Domain and localization injectivity are conclusions when the upper ring is a domain.
+example [IsDomain S] (hinj : Function.Injective (algebraMap R S)) :
+    IsDomain S' ∧ Function.Injective (algebraMap S S') :=
+  ⟨genericFiber_isDomain R S S' hinj, genericFiber_localization_injective R S S' hinj⟩
+
+example [IsDomain R] [IsDomain S] (hinj : Function.Injective (algebraMap R S)) :
+    letI := genericFiberAlgebra R S S'
+    Function.Injective (algebraMap (FractionRing R) S') := by
+  letI := genericFiberAlgebra R S S'
+  exact genericFiber_baseField_injective R S S' hinj
+
+end GenericFiberRegressions
+
+-- The smaller-base tower comparison needs no domain or integrality hypotheses.
+example (R S' k K : Type) [CommRing R] [CommRing S'] [CommRing k] [CommRing K]
+    [Algebra R K] [IsFractionRing R K] [Algebra k R] [Algebra k K]
+    [Algebra k S'] [Algebra R S'] [Algebra K S']
+    [IsScalarTower k R K] [IsScalarTower k R S'] [IsScalarTower R K S'] :
+    IsScalarTower k K S' :=
+  genericFiber_isScalarTower_base R S' k K
+
+section ResidueLocalizationCoreRegressions
+
+variable (R S S' : Type) [CommRing R] [IsDomain R] [CommRing S] [Algebra R S]
+  [CommRing S'] [Algebra S S']
+  [IsLocalization (Algebra.algebraMapSubmonoid S (nonZeroDivisors R)) S']
+  (q : Ideal S) [q.IsPrime] (hinj : Function.Injective (algebraMap R (S ⧸ q)))
+
+-- Prime preservation and contraction use no integral extension assumption.
+example : (q.map (algebraMap S S')).IsPrime ∧
+    (q.map (algebraMap S S')).comap (algebraMap S S') = q := by
+  fail_if_success
+    have : Algebra.IsIntegral R (S ⧸ q) := inferInstance
+  fail_if_success
+    have : IsDomain S := inferInstance
+  exact ⟨residueLocalization_map_isPrime R S S' q hinj,
+    residueLocalization_comap_map R S S' q hinj⟩
+
+-- The whole prime height is unchanged, also without an integrality hypothesis.
+example :
+    letI := residueLocalization_map_isPrime R S S' q hinj
+    (q.map (algebraMap S S')).primeHeight = q.primeHeight := by
+  fail_if_success
+    have : Algebra.IsIntegral R (S ⧸ q) := inferInstance
+  exact residueLocalization_primeHeight_map R S S' q hinj
+
+-- Quotient integrality is used for maximality; the ambient algebra need not be a domain.
+example (hint : (algebraMap R (S ⧸ q)).IsIntegral) :
+    (q.map (algebraMap S S')).IsMaximal := by
+  fail_if_success
+    have : IsDomain S := inferInstance
+  fail_if_success
+    have : IsNoetherianRing S := inferInstance
+  fail_if_success
+    have : Module.Finite R S := inferInstance
+  exact residueLocalization_map_isMaximal R S S' q hinj hint
+
+end ResidueLocalizationCoreRegressions
+
+-- A genuine non-domain ambient algebra: the product of two copies of a field.
+example (K : Type) [Field K] :
+    let q := RingHom.ker (RingHom.fst K K)
+    let S' := Localization (Algebra.algebraMapSubmonoid (K × K) (nonZeroDivisors K))
+    (q.map (algebraMap (K × K) S')).IsMaximal := by
+  let q := RingHom.ker (RingHom.fst K K)
+  let S' := Localization (Algebra.algebraMapSubmonoid (K × K) (nonZeroDivisors K))
+  letI : q.IsMaximal := RingHom.ker_isMaximal_of_surjective (RingHom.fst K K)
+    (fun a ↦ ⟨(a, 0), rfl⟩)
+  have hsurj : Function.Surjective (algebraMap K ((K × K) ⧸ q)) := by
+    intro x
+    obtain ⟨⟨a, b⟩, rfl⟩ := Ideal.Quotient.mk_surjective x
+    refine ⟨a, ?_⟩
+    apply (Ideal.Quotient.mk_eq_mk_iff_sub_mem _ _).mpr
+    change (a, a).1 - (a, b).1 = 0
+    simp
+  letI : Algebra.IsIntegral K ((K × K) ⧸ q) := Algebra.isIntegral_of_surjective hsurj
+  exact residueLocalization_map_isMaximal K (K × K) S' q
+    (algebraMap K ((K × K) ⧸ q)).injective
+    (algebraMap_isIntegral_iff.mpr inferInstance)
+
+-- The constructed finite-type generic fiber and its maximal prime require no domain B.
+example (k B : Type) [Field k] [CommRing B] [Algebra k B] [Algebra.FiniteType k B]
+    (q : Ideal B) [q.IsPrime] (n : ℕ) (f : MvPolynomial (Fin n) k →ₐ[k] B)
+    (hinj : Function.Injective ((Ideal.Quotient.mkₐ k q).comp f))
+    (hint : ((Ideal.Quotient.mkₐ k q).comp f).IsIntegral) :
+    letI := f.toRingHom.toAlgebra
+    let B' := Localization
+      (Algebra.algebraMapSubmonoid B (nonZeroDivisors (MvPolynomial (Fin n) k)))
+    letI := genericFiberAlgebra (MvPolynomial (Fin n) k) B B'
+    Algebra.FiniteType (FractionRing (MvPolynomial (Fin n) k)) B' ∧
+      (q.map (algebraMap B B')).IsMaximal ∧
+      (q.map (algebraMap B B')).comap (algebraMap B B') = q ∧
+      (q.map (algebraMap B B')).height = q.height := by
+  fail_if_success
+    have : IsDomain B := inferInstance
+  exact residueNormalization_localization k B q n f hinj hint
+
+-- Existence supplies the actual map and carrier, not a selected localization hypothesis.
+example (k B : Type) [Field k] [CommRing B] [Algebra k B] [Algebra.FiniteType k B]
+    (q : Ideal B) [q.IsPrime] :
+    ∃ n, ∃ f : MvPolynomial (Fin n) k →ₐ[k] B,
+      Function.Injective f ∧
+      (letI := f.toRingHom.toAlgebra
+       let B' := Localization
+         (Algebra.algebraMapSubmonoid B (nonZeroDivisors (MvPolynomial (Fin n) k)))
+       (q.map (algebraMap B B')).IsMaximal ∧
+         (q.map (algebraMap B B')).height = q.height) := by
+  obtain ⟨n, f, hf, _, _, h⟩ := exists_residueNormalization_localization k B q
+  exact ⟨n, f, hf, h.2.1, h.2.2.2⟩
+
+-- The transcendence-degree computation is the separate domain-only consumer.
+example (k B : Type) [Field k] [CommRing B] [IsDomain B] [Algebra k B]
+    [Algebra.FiniteType k B] (q : Ideal B) [q.IsPrime]
+    (n : ℕ) (f : MvPolynomial (Fin n) k →ₐ[k] B)
+    (hinj : Function.Injective ((Ideal.Quotient.mkₐ k q).comp f))
+    (hint : ((Ideal.Quotient.mkₐ k q).comp f).IsIntegral) :
+    letI := f.toRingHom.toAlgebra
+    let B' := Localization
+      (Algebra.algebraMapSubmonoid B (nonZeroDivisors (MvPolynomial (Fin n) k)))
+    letI := genericFiberAlgebra (MvPolynomial (Fin n) k) B B'
+    q.primeHeight =
+      ((Algebra.trdeg (FractionRing (MvPolynomial (Fin n) k)) B').toNat : ℕ∞) := by
+  fail_if_success
+    have : IsIntegrallyClosed B := inferInstance
+  fail_if_success
+    have : CharZero k := inferInstance
+  exact primeHeight_eq_residueNormalization_trdeg k B q n f hinj hint
+
+end ResidueNormalizationLocalizationRegressions

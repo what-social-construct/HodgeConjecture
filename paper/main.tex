@@ -1844,6 +1844,57 @@ Actual localization and stalk height comparisons give the remaining
 equalities.
 \end{proof}
 
+\begin{proposition}[Localization of a lifted quotient normalization --- \formal]
+\label{prop:residue-normalization-localization}
+Let \(k\) be a field, let \(B\) be a finite-type \(k\)-algebra, and
+let \(\mathfrak q\subset B\) be prime. There are a polynomial algebra
+\(P=k[T_1,\ldots,T_n]\) and a \(k\)-algebra injection
+\(f:P\hookrightarrow B\) such that the actual quotient composite
+\[
+  g=\pi_{\mathfrak q}\circ f:P\hookrightarrow B/\mathfrak q
+\]
+is injective and integral. More precisely, any polynomial normalization
+\(g\) of this quotient admits such a lift with exactly this composite.
+Put
+\[
+  M=f(P\setminus\{0\}),\qquad K=\operatorname{Frac}(P),\qquad
+  B'=M^{-1}B,\qquad \mathfrak q'=\mathfrak qB',
+\]
+and write \(\lambda:B\to B'\) for the localization map.
+The actual localization \(B'\) is a finite-type \(K\)-algebra, and
+\[
+  \mathfrak q'\text{ is maximal},\qquad
+  \lambda^{-1}(\mathfrak q')=\mathfrak q,\qquad
+  \operatorname{ht}(\mathfrak q')=\operatorname{ht}(\mathfrak q).
+\]
+These statements allow \(B\) to be reducible or nonreduced.
+If \(B\) is a domain, then \(B'\) is a domain and
+\[
+  \operatorname{ht}(\mathfrak q)
+    =\operatorname{trdeg}_{K}B',
+\]
+where the transcendence degree is finite.
+\end{proposition}
+
+\begin{proof}
+Apply Noether normalization to the actual domain \(B/\mathfrak q\)
+\cite{StacksNoetherNormalization}. Lift the images of its polynomial
+variables through \(\pi_{\mathfrak q}\); polynomial evaluation gives
+\(f\) and proves \(\pi_{\mathfrak q}\circ f=g\). Injectivity of
+\(g\) implies that \(f\) is injective and that \(M\) avoids
+\(\mathfrak q\). The localized quotient is a domain integral over
+\(K\), hence a field \cite{StacksIntegralDomainOverField}. The actual
+surjection from \(B'\) to that quotient has kernel \(\mathfrak q'\),
+as in \cite{StacksLocalizationQuotient}. This proves maximality.
+The localization correspondence identifies the complete intervals of
+primes below \(\mathfrak q'\) and \(\mathfrak q\), proving the
+contraction and height formulas. The localization pushout preserves
+finite type from \(P\to B\) to \(K\to B'\).
+When \(B\) is a domain, apply
+Proposition~\ref{prop:normalization-local-dimension} to the resulting
+finite-type domain over \(K\) and its maximal ideal \(\mathfrak q'\).
+\end{proof}
+
 For smooth projective schemes over a fixed field \(k\), composition of rational Chow
 correspondences is associative and bilinear
 \cite{StacksChowCorrespondenceComposition}, while graph classes compose
@@ -2072,6 +2123,22 @@ The actual closed-point endpoints are
 \leanpath{affine_stalk_dimension_of_isClosed} and
 \leanpath{affine_closedPoint_coheight_eq_trdeg} in
 \leanpath{Cycles/AffineClosedPointDimension.lean}.
+Proposition~\ref{prop:residue-normalization-localization} uses
+\leanpath{quotient_comp_quotientPolynomialLift} and
+\leanpath{exists_lifted_residue_normalization} in
+\leanpath{Cycles/ResidueNormalizationLift.lean}.
+The actual localization algebra and scalar towers, together with
+\leanpath{genericFiber_finiteType} and \leanpath{genericFiber_isDomain},
+are in \leanpath{CommutativeAlgebra/GenericFiberAlgebra.lean}.
+The generic quotient-localization results are
+\leanpath{residueLocalization_map_isMaximal},
+\leanpath{residueLocalization_comap_map}, and
+\leanpath{residueLocalization_primeHeight_map} in
+\leanpath{CommutativeAlgebra/ResidueLocalization.lean}.
+Their finite-type assembly and domain height formula are
+\leanpath{exists_residueNormalization_localization} and
+\leanpath{primeHeight_eq_residueNormalization_trdeg} in
+\leanpath{Cycles/ResidueNormalizationLocalization.lean}.
 \end{leanfiles}
 
 \begin{statusnote}{\openstatus}
@@ -2119,6 +2186,18 @@ stalk dimension, without a rational-point assumption.
 Proposition~\ref{prop:normalization-local-dimension} constructs normal-base
 going down and transfers that maximal-local equality through actual
 normalization to every finite-type domain and its closed-point stalks.
+Proposition~\ref{prop:residue-normalization-localization} makes any
+selected prime of a finite-type algebra maximal after an actual
+localization, preserving its height. For a domain, it computes that
+height over the new polynomial fraction field \(K\).
+The next algebraic comparison must relate transcendence degrees under
+this localization and the tower \(k\subset K\subset B'\), to obtain
+the arbitrary-prime dimension formula over \(k\) for finite-type
+\emph{domains}. The field \(K=k(T_1,\ldots,T_n)\) is generally not
+finite type as a \(k\)-algebra; its finite transcendence degree must
+instead be obtained from the variable count. Integrality of the
+quotient composite \(P\to B/\mathfrak q\) does not assert integrality
+of its lift \(P\to B\).
 The general field-based dimension-function construction
 \(\delta_k(x)=\operatorname{trdeg}_k\kappa(x)
   =\dim\overline{\{x\}}\), including its immediate-specialization
@@ -3396,6 +3475,16 @@ Normal-base going down and affine maximal local dimensions (\formal) &
 \leanpath{CommutativeAlgebra/NormalGoingDown.lean}\newline
 \leanpath{Cycles/NormalizationLocalDimension.lean}\newline
 \leanpath{Cycles/AffineClosedPointDimension.lean}\\
+Lifted quotient normalization and height-preserving localization (\formal) &
+\leanpath{exists_lifted_residue_normalization}\newline
+\leanpath{genericFiber_finiteType}\newline
+\leanpath{residueLocalization_primeHeight_map}\newline
+\leanpath{exists_residueNormalization_localization}\newline
+\leanpath{primeHeight_eq_residueNormalization_trdeg}\newline
+\leanpath{Cycles/ResidueNormalizationLift.lean}\newline
+\leanpath{CommutativeAlgebra/GenericFiberAlgebra.lean}\newline
+\leanpath{CommutativeAlgebra/ResidueLocalization.lean}\newline
+\leanpath{Cycles/ResidueNormalizationLocalization.lean}\\
 Compactified graph route (\formal; \conditional) &
 \leanpath{groupAlgebraProjectorExtension}\newline
 \leanpath{Boundary/CompactifiedGraphProjector.lean}\\

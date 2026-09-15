@@ -57,7 +57,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 
 ## Canonical semantic object and TeX registry
 
-### Construction and input checkpoints (SP17--SP44)
+### Construction and input checkpoints (SP17--SP45)
 
 | ID | Object or overlap | Disposition | Required action | Status |
 | --- | --- | --- | --- | --- |
@@ -89,6 +89,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 | SP42 | Strict transcendence-degree drop, exact affine dimension and actual carrier comparison | PROVE / IDENTIFY | Prove proper domain quotient drop and actual integral chain lifting. Combine the prime-chain upper bound with Noether normalization's lower bound to identify finite-type domain dimension with fraction-field transcendence degree. Connect prime quotients and actual residue fields to existing reduced carriers. Keep uniform chains, the immediate-specialization unit step and general scheme grading open. | PROVED; FULL BUILD, 386 AXIOM REPORTS, TWENTY-THREE REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP43 | Polynomial maximal height and actual closed-point local dimension | PROVE / IDENTIFY | Construct actual prime extension and its strict step below a maximal ideal. Combine Jacobson contraction with SP42's independent upper bound to prove every polynomial maximal ideal has height n and identify actual localization/stalk dimension and scheme-point coheight. Keep general finite-type-domain maximal-local comparison, uniform chains and unit-step grading separate. | PROVED; FULL BUILD, 398 AXIOM REPORTS, SIXTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP44 | Normal-base going down and finite-type-domain maximal-local dimensions | PROVE / CONNECT | Construct ideal-controlled annihilators, prove the monic coefficient comparison and normal-base cancellation, and construct primes below the selected terminal prime. Reuse the existing height bound to compare normalization heights and actual maximal-local/stalk dimensions. Keep saturated-chain uniformity and the higher-dimensional unit-step grading separate. | PROVED; FULL BUILD, 413 AXIOM REPORTS, NINETEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP45 | Actual residue-normalization localization and its maximal extended prime | CONSTRUCT / CONNECT | Lift the actual quotient normalization, localize at its nonzero polynomial denominators, and construct the compatible finite-type fraction-field algebra. Prove maximality, exact contraction and preserved height, then reuse SP44 for the domain generic-fiber transcendence-degree endpoint. | PROVED; FULL BUILD, 437 AXIOM REPORTS, NINETEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -482,6 +483,38 @@ instance, cycle type, Chow quotient or projector is introduced. The next
 bounded construction is the actual residue-normalization localization
 described in the gap map, before the arbitrary-prime dimension formula and
 higher-dimensional immediate-specialization unit-step law.
+
+SP45 validation (2026-09-15): all four new leaf modules and the full
+3118-job Lean build pass, with only the two existing `Challenge` warnings.
+Integrated `research/Verification.lean` passes with 545 declaration checks
+and all 269 examples, without warnings or errors. All 437 selected axiom
+reports were captured in the original integrated context and compared with
+the exact declaration inventory: no missing, unexpected or duplicate
+reports and no unpermitted axioms. The existing `polynomialDimensionBound`
+is axiom-free; `genericFiber_isScalarTower_base` uses only `propext` and
+`Quot.sound`; the other 435 reports use only `propext`, `Classical.choice`
+and `Quot.sound`. The independent SP45 replay checks all 24 new public
+declarations and nineteen regressions. These cover the exact quotient lift
+without primality or domain assumptions, zero variables, denominator
+disjointness, the canonical fraction-ring algebra and compatible scalar
+towers, finite type without domain assumptions, domain and injection
+conclusions, contraction and full height without integrality, maximality
+without ambient domain or Noetherian assumptions, the actual non-domain
+example \(K\times K\), constructed normalization/localization existence,
+and the domain-only transcendence-degree consumer without normality or
+characteristic-zero assumptions. The six primary proof-dependency
+assertions and two supporting reports pass. Independent mathematical,
+source and manuscript/parity reviews pass. The single PDF builds to 50
+pages with a clean final log; Proposition 6.18 and its proof, the updated
+module/status page and theorem-map row were visually inspected. The exact
+quotient-localization and integral-domain-over-field sources 00CT and 00GS
+are cited, without adding source axioms. Submission wrappers and dependency
+pins are unchanged; diff checks pass. No replacement localization carrier,
+global algebra instance, input package, cycle space, Chow quotient or
+projector is introduced. The next bounded algebraic checkpoint is the
+actual localization/tower transcendence-degree comparison over the original
+field for a finite-type domain, before the consecutive-prime unit step and
+scheme/target grading.
 
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
@@ -1143,11 +1176,51 @@ comparison does not assume its map remains integral after localization
 at a selected upstairs prime. Maximal-local equality does not yet prove
 uniform saturated chains or the higher-dimensional immediate-specialization
 unit-step law, and it does not construct general target realization.
-The next bounded construction is residue-normalization localization:
-normalize \(B/q\), lift the polynomial variables to \(B\), invert their
-nonzero polynomials, and prove the extended prime becomes maximal with
-unchanged height. This is the intended input to the affine prime
-dimension formula and then the consecutive-prime unit-step law.
+The subsequent residue-normalization construction is recorded in SP45
+below. It is the input to the affine prime dimension formula and then
+the consecutive-prime unit-step law, not a consequence of maximal-local
+equality alone.
+
+### Residue-normalization localization (SP45)
+
+Here \(\pi_q:B\to B/q\) is the actual quotient map,
+\(g:P=k[T_1,\ldots,T_n]\hookrightarrow B/q\) is an integral
+normalization and \(f:P\to B\) its chosen lift. Set
+\(M=f(P\setminus\{0\})\), \(B'=M^{-1}B\),
+\(K=\operatorname{Frac}(P)\), \(\lambda:B\to B'\), and
+\(q'=qB'\). The finite-type construction allows any commutative
+\(B\); only the transcendence-degree consumer requires a domain.
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `quotientPolynomialLift` / `quotient_comp_quotientPolynomialLift` | chosen lifts of actual quotient variables and exact quotient square | $f:P\to B,\quad\pi_q f=g$ |
+| `quotientPolynomialLift_injective` / `polynomial_notMem_of_quotient_injective` / `quotientPolynomialLift_notMem` | injection and nonzero polynomial images avoid the selected prime | $f\text{ injective},\ a\ne0\implies f(a)\notin q$ |
+| `polynomial_map_nonZeroDivisors_le_primeCompl` / `polynomial_map_nonZeroDivisors_disjoint` | actual denominator image submonoid | $M\subseteq B\setminus q$ |
+| `exists_lifted_residue_normalization` | Noether normalization of the actual prime quotient and variable lift | $\exists n,f:\ \pi_q f\text{ injective and integral}$ |
+| `genericFiberAlgebra` / `genericFiberAlgebra_algebraMap_eq` | canonical localized algebra map, not a new carrier | $K\to B'$ |
+| `genericFiberAlgebra_isScalarTower` / `genericFiber_isScalarTower_base` | exact compatibility of the actual scalar maps | $P\to K\to B',\quad k\to K\to B'$ |
+| `genericFiber_finiteType` | actual localization pushout gives finite type | $B\text{ finite type over }P\implies B'\text{ finite type over }K$ |
+| `genericFiber_denominators_le_nonZeroDivisors` / `genericFiber_isDomain` / `genericFiber_localization_injective` / `genericFiber_baseField_injective` | domain and injection properties of the actual localization | $B\text{ domain},\ P\hookrightarrow B\implies B'\text{ domain},\ B\hookrightarrow B',\ K\hookrightarrow B'$ |
+| `residueLocalization_comap_map` / `residueLocalization_map_isPrime` | actual contraction and primality, requiring only quotient injectivity | $\lambda^{-1}(q')=q,\quad q'\text{ prime}$ |
+| `residueLocalization_map_isMaximal` | field from the localized integral prime quotient, with exact kernel | $B'/q'\text{ field},\quad q'\text{ maximal}$ |
+| `residueLocalization_primeHeight_map` | exact prime height under actual localization; no integral premise | $\operatorname{ht}_{B'}(q')=\operatorname{ht}_B(q)$ |
+| `residueNormalization_localization` / `exists_residueNormalization_localization` | supplied-map and fully constructed finite-type localization endpoints | $B'/K\text{ finite type},\ q'\text{ maximal},\ \lambda^{-1}(q')=q,\ \operatorname{ht}(q')=\operatorname{ht}(q)$ |
+| `primeHeight_eq_residueNormalization_trdeg` | SP44 applied to the actual domain generic fiber | $\operatorname{ht}_B(q)=\operatorname{trdeg}_K B'$ |
+
+The generic algebra and localized-prime lemmas accept arbitrary actual
+models of the localization; the existential endpoint uses literal
+`Localization` and `FractionRing`, with the canonical algebra installed
+locally. The pushout proof does not replace the carrier by a tensor proxy.
+Only the quotient normalization is integral: \(P\to B\) is not
+declared integral. No new axiom, input package, global algebra instance,
+cycle space, Chow quotient or projector is introduced.
+
+The next algebraic checkpoint is the actual localization/tower
+transcendence-degree comparison for a finite-type domain \(B\), giving
+the affine prime formula
+\(\operatorname{ht}_B(q)+\operatorname{trdeg}_k(B/q)=\operatorname{trdeg}_k B\).
+The consecutive-prime unit step, actual scheme-chart transport, general
+grading and the remaining target realization are subsequent obligations.
 
 ## Objects deliberately assigned no independent notation
 

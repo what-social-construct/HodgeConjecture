@@ -476,15 +476,32 @@ be developed alongside that infrastructure.
    Neither normality of \(A\) nor rationality of the closed point is needed.
    Integrality of the selected local-ring map is not assumed.
 
+   **Residue-localization checkpoint (A11ad / SP45):**
+   `ResidueNormalizationLift.lean` lifts an actual polynomial normalization
+   of \(B/q\) through the quotient map, with an exact commuting square
+   and denominators disjoint from \(q\). `GenericFiberAlgebra.lean`
+   constructs the canonical \(K=\operatorname{Frac}(P)\)-algebra on
+   \(B'=f(P\setminus\{0\})^{-1}B\), with scalar compatibility and
+   finite type from the actual localization pushout.
+   `ResidueLocalization.lean` proves the extended prime \(q'\) maximal
+   via the actual localized quotient field and its exact kernel. It also
+   proves contraction to \(q\) and unchanged height; these comparisons
+   do not need integrality. `ResidueNormalizationLocalization.lean`
+   supplies the full existential construction for any finite-type algebra,
+   without requiring the ambient ring to be a domain. For domain \(B\),
+   SP44 further gives \(\operatorname{ht}_B(q)=\operatorname{trdeg}_K B'\).
+   Integrality concerns \(P\to B/q\), not the lifted \(P\to B\).
+
    **Next bounded obligation:** prove the higher-dimensional
    immediate-specialization dimension formula for finite-type schemes
    over a field. The finite integer closure-height function is already
    strictly monotone and its affine residue-field comparison is proved;
-   its one-step law is not yet proved. The next bounded algebraic construction
-   normalizes a prime quotient \(B/q\) by a polynomial algebra \(P\),
-   lifts its variables into \(B\), and localizes at \(P\setminus\{0\}\).
-   Prove the extended prime is maximal over \(\operatorname{Frac}(P)\)
-   and retains its height. SP44 and the transcendence-degree tower formula
+   its one-step law is not yet proved. For a finite-type domain \(B\),
+   the next bounded algebraic comparison preserves transcendence degree
+   through the actual localization and
+   uses the compatible \(k\to P\to K\to B'\) tower. SP45's
+   \(\operatorname{ht}_B(q)=\operatorname{trdeg}_K B'\), together with
+   the residue normalization's \(\operatorname{trdeg}_k(B/q)=n\),
    can then yield
    \(\operatorname{ht}(q)+\operatorname{trdeg}_k(B/q)=\operatorname{trdeg}_k B\),
    before the consecutive-prime unit step and actual chart/residue-field
