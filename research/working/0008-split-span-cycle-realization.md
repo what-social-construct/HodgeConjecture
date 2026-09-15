@@ -1,19 +1,26 @@
 # Additive cycle-coefficient realization of actual split scheme spans
 
-Checkpoint update: the exact finite point-decomposition kernel and additive
-quotient identified as open below are now proved in
-[0009-split-span-additive-quotient.md](0009-split-span-additive-quotient.md).
-The historical construction and verification record below is preserved;
-genuine Chow and Betti identifications remain separate open steps.
-
-Status: SPLIT GEOMETRIC SOURCE-TO-MATRIX BRIDGE IMPLEMENTED; GENUINE
-CHOW/BETTI IDENTIFICATION AND GENERAL HODGE COVERAGE REMAIN OPEN.
+Status: HISTORICAL SOURCE-TO-MATRIX CHECKPOINT; NOT A CURRENT PROOF PLAN.
 
 Date: 2026-09-11. This advances the dated checkpoint
 [0007-split-point-realization.md](0007-split-point-realization.md).
 Canonical manuscript: `paper/main.tex`, producing the single `paper/main.pdf`.
 Repository-wide release verification is recorded separately; this note is
 the construction and scope record, not a final build certificate.
+
+Current-status update, 2026-09-14: the exact kernel and additive quotient
+were subsequently proved in [0009](0009-split-span-additive-quotient.md).
+Actual finite split Chow groups and their correspondence operations are
+constructed in [0011](0011-split-zero-cycles.md) and
+[0012](0012-split-chow-composition.md); their genuine Betti cycle-class
+and action comparison is constructed in [0013](0013-split-betti-cycle-class.md).
+The effective degree-zero Hodge/Tate-block model and marked geometric
+comparison follow in [0014](0014-split-hodge-tate-block.md) and
+[0015](0015-split-galois-marked-comparison.md).
+[0016](0016-source-input-packages.md) records the separate conditional
+literature inputs. The [gap map](../GAP_MAP.md) controls current unresolved
+work. The body, next-step list, and verification below remain the dated
+record of this checkpoint, not current realization or release status.
 
 ## Result and exact source
 
@@ -208,7 +215,7 @@ All paths below are under `HodgeConjecture/`.
 | `Realization/Chow/Examples/SplitSpanRealization.lean` | `matrix_eq_of_class_eq`, `Presentation.matrix_eq`, `classSubmonoid`, `classMatrixHom`, `realization`, `toFiniteEtaleFreeAlgebra_injective`, `realization_sum`, `realization_empty`, `realization_surjective` |
 | `Realization/Chow/Examples/GeometricSplitPoints.lean` | `projector_toFiniteEtaleFreeAlgebra`, `projector_isIdempotent`, `matrixRealization_projector`, `coefficientRealization_projector`, `markedComparison`, `projectorLift`, `palomarTargetSquare` |
 
-## Scope and the next remaining comparisons
+## Scope and remaining comparisons at this checkpoint
 
 The field `k` is arbitrary. The main span and matrix construction is
 universe-polymorphic with finite label and carrier types; the two-point
@@ -220,7 +227,7 @@ to nonsplit carriers would require further degree or base-change/descent
 work, not an automatic consequence of the current map.
 
 The earlier additive realization arrow is now discharged in this precise
-split scope. The remaining comparisons are distinct:
+split scope. The comparisons remaining at this checkpoint were distinct:
 
 - Present the appropriate additive quotient and prove an exact kernel or
   universal-property theorem, if that quotient is to be identified with

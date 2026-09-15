@@ -1,18 +1,26 @@
 # Exact additive quotient of finite split scheme spans
 
-Checkpoint update: the actual integral closed-subscheme classification and
-absence of curves listed as the next geometric inputs below are now proved
-in [0010-split-integral-subschemes.md](0010-split-integral-subschemes.md).
-The cycle-group and rational-equivalence construction is the next step.
-The historical construction and verification record below is preserved.
-
-Status: EXACT FINITE POINT-DECOMPOSITION KERNEL AND QUOTIENT PROVED;
-GENUINE CHOW IDENTIFICATION AND BETTI COMPARISON REMAIN OPEN.
+Status: HISTORICAL EXACT-KERNEL/QUOTIENT CHECKPOINT; NOT A CURRENT PROOF PLAN.
 
 Date: 2026-09-11. This advances
 [0008-split-span-cycle-realization.md](0008-split-span-cycle-realization.md),
 whose historical construction and verification record is preserved.
 Canonical manuscript: `paper/main.tex`, producing the single `paper/main.pdf`.
+
+Current-status update, 2026-09-14: the actual integral-subscheme classification
+and absence of curves were subsequently proved in
+[0010](0010-split-integral-subschemes.md). Actual finite split Chow groups and
+their correspondence operations are constructed in
+[0011](0011-split-zero-cycles.md) and [0012](0012-split-chow-composition.md);
+their genuine Betti cycle-class and action comparison is constructed in
+[0013](0013-split-betti-cycle-class.md). The effective degree-zero
+Hodge/Tate-block model and marked geometric comparison follow in
+[0014](0014-split-hodge-tate-block.md) and
+[0015](0015-split-galois-marked-comparison.md).
+[0016](0016-source-input-packages.md) records the separate conditional
+literature inputs. The [gap map](../GAP_MAP.md) controls current unresolved
+work. The body, next-step list, and verification below remain the dated
+record of this checkpoint, not current realization or release status.
 
 ## Result and exact objects
 
@@ -135,10 +143,10 @@ SP19 record exactly this result. Canonical notation is `J_sp`,
 `C_sp^add`, and `χbar_sp`; presentation witnesses and the linear normal-form
 adapter do not receive additional semantic object names.
 
-## Next gap: actual Chow objects, then Betti
+## Next gap at this checkpoint: actual Chow objects, then Betti
 
 The exact additive quotient settles the first open item in `0008`. The
-next two constructions are:
+next two constructions at this checkpoint were:
 
 1. **Genuine zero-dimensional Chow identification.** Classify the actual
    integral closed subschemes of `Spec(k^I)` as reduced rational points and
@@ -158,7 +166,7 @@ next two constructions are:
    Identify the complex analytic point space and topology before applying
    that calculation to the Betti comparison.
 
-## Verification record
+## Verification record of this checkpoint
 
 - The new exact-kernel/quotient module compiled cleanly in isolation.
 - The actual finite indexed scheme-decomposition module compiled.

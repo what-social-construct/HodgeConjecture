@@ -210,17 +210,10 @@ theorem isAlgebraicHodgeClass_of_comparison
     (B : MarkedGaloisSelectorComparison rho E x alpha) :
     IsAlgebraicHodgeClass M alpha := by
   refine ⟨detect.decode (E.projector x), ?_⟩
-  have hDecode :=
-    LinearMap.congr_fun detect.cycleClass_decode (E.projector x)
-  rw [LinearMap.comp_apply, LinearMap.comp_apply,
-    AlgHom.toLinearMap_apply] at hDecode
-  calc
-    M.cycleClass (detect.decode (E.projector x)) =
-        ClassGraphProjector.lowerLeftClassLinear
-          (rho.action (E.projector x)) := hDecode
-    _ = ClassGraphProjector.lowerLeftClass
-          (rho.action (E.projector x)) := rfl
-    _ = alpha := B.lowerLeftClass_action_eq
+  simpa only [toMarkedSelectorActionComparison_residualRealization,
+    B.generatedClass_eq] using
+    MarkedProjectorActionComparison.cycleClass_decode_eq_generatedClass
+      B.toMarkedSelectorActionComparison.toMarkedProjectorActionComparison detect
 
 end MarkedGaloisSelectorComparison
 
@@ -323,6 +316,8 @@ replaced by existence of some class-dependent marked-selector witness.
 No replacement is constructed here.  This hypothesis is deliberately named
 separately because an arbitrary algebraic lift does not formally determine a
 group, subgroup, extension package, or residual realization.
+It is used only in the target-to-coverage direction of the conditional
+equivalence below; it does not assert preservation of the original projector.
 -/
 def StrongGraphProjectorLiftReplacementByClassDependentMarkedGaloisSelector
     (target : H → Prop)

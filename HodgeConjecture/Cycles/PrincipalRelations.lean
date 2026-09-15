@@ -1,0 +1,222 @@
+import HodgeConjecture.Cycles.PrincipalDivisorImage
+import HodgeConjecture.Cycles.PrincipalDivisorDegree
+import Mathlib.LinearAlgebra.Quotient.Basic
+import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+import Mathlib.Algebra.BigOperators.GroupWithZero.Action
+
+/-!
+# Actual principal relations in homogeneous finite cycles
+
+A relation datum is an actual integral closed carrier of degree `n + 1`
+together with a nonzero rational function on that carrier. Its relation
+is the existing ambient principal divisor, proved homogeneous of degree
+`n`. On a Noetherian ambient scheme the closed carriers inherit the local
+Noetherianity and quasi-compactness needed by that construction.
+
+The relation submodule is inside the existing homogeneous cycle module.
+Its elements are exactly finite lists of these actual relations: integer
+weights are absorbed into powers of the rational functions. Separately,
+quasi-compactness makes a locally finite family of the actual nonempty
+carriers finite, including carriers whose principal divisor is zero.
+The quotient therefore uses the finite-sum principal-relation convention;
+no arbitrary relation input or new cycle module is introduced.
+-/
+
+set_option autoImplicit false
+
+namespace HodgeConjecture.SchemeCycles
+
+open AlgebraicGeometry CategoryTheory
+
+noncomputable section
+
+universe u v
+
+variable {X : Scheme.{u}}
+
+/-- Closed subschemes inherit both parts of the Noetherian scheme property
+from the proved affine-quotient and closed-embedding comparisons. -/
+instance idealSubscheme_isNoetherian [IsNoetherian X] (I : X.IdealSheafData) :
+    IsNoetherian I.subscheme where
+  toIsLocallyNoetherian := idealSubscheme_isLocallyNoetherian I
+  toCompactSpace := idealSubscheme_compactSpace I
+
+/-- Actual degree-`n + 1` integral closed carriers with units in their
+own scheme function fields. The geometric index itself needs no
+Noetherian hypothesis. -/
+def PrincipalRelationData (δ : DimensionFunction X) (n : ℤ) :=
+  (W : {W : IntegralClosedSubscheme X // supportDegree δ W = n + 1}) ×
+    (letI := W.val.property; W.val.val.subscheme.functionFieldˣ)
+
+/-- Integral coefficients can be absorbed into actual powers of the
+function on the same relation carrier. -/
+def PrincipalRelationData.zpow {δ : DimensionFunction X} {n : ℤ}
+    (d : PrincipalRelationData δ n) (m : ℤ) : PrincipalRelationData δ n := by
+  letI := d.1.val.property
+  exact ⟨d.1, d.2 ^ m⟩
+
+/-- Local finiteness of the carrier family is equivalent to finiteness
+of its index on a quasi-compact ambient scheme. This concerns the actual
+nonempty carriers, not the possibly empty support of their divisor cycles. -/
+theorem principalRelationData_family_locallyFinite_iff [CompactSpace X]
+    {ι : Type v} (δ : DimensionFunction X) (n : ℤ)
+    (d : ι → PrincipalRelationData δ n) :
+    LocallyFinite (fun i ↦ ((d i).1.val.val.support : Set X)) ↔ Finite ι := by
+  constructor
+  · intro h
+    apply Finite.of_finite_univ
+    exact h.finite_of_compact fun i ↦ ⟨ambientGenericPoint (d i).1.val,
+      (ambientGenericPoint_isGenericPoint (d i).1.val).mem⟩
+  · intro h
+    letI := h
+    exact locallyFinite_of_finite _
+
+/-- An actual carrier principal divisor, placed in the existing degree-`n`
+submodule using the proved principal-divisor homogeneity theorem. -/
+def principalRelation [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ)
+    (d : PrincipalRelationData δ n) : cyclesOfDegree ℤ δ n := by
+  letI := d.1.val.property
+  refine ⟨ambientPrincipalDivisor d.1.val d.2, ?_⟩
+  change closedImmersionPushforward ℤ d.1.val.val.subschemeι
+    (principalDivisor d.1.val.val.subscheme d.2) ∈ cyclesOfDegree ℤ δ n
+  simpa only [d.1.property, add_sub_cancel_right] using
+    principalDivisor_closedSupport_mem_cyclesOfDegree δ d.1.val d.2
+
+/-- The homogeneous relation retains the literal existing ambient cycle. -/
+@[simp]
+theorem principalRelation_coe [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ)
+    (d : PrincipalRelationData δ n) :
+    letI := d.1.val.property
+    (principalRelation δ n d : Cycles X ℤ) = ambientPrincipalDivisor d.1.val d.2 := rfl
+
+/-- An integer multiple of a relation is the actual principal relation
+of the corresponding integral power of its rational function. -/
+theorem principalRelation_zpow [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ)
+    (d : PrincipalRelationData δ n) (m : ℤ) :
+    principalRelation δ n (d.zpow m) = m • principalRelation δ n d := by
+  letI := d.1.val.property
+  apply Subtype.ext
+  change ambientPrincipalDivisor d.1.val (d.2 ^ m) =
+    m • ambientPrincipalDivisor d.1.val d.2
+  simp only [ambientPrincipalDivisor_eq]
+  have h : principalDivisor d.1.val.val.subscheme (d.2 ^ m) =
+      m • principalDivisor d.1.val.val.subscheme d.2 := by
+    simpa only [← ofMul_zpow, principalDivisorAddHom_ofMul] using
+      (principalDivisorAddHom d.1.val.val.subscheme).map_zsmul (Additive.ofMul d.2) m
+  rw [h, map_zsmul]
+
+/-- The submodule generated by actual principal relations, inside the
+already defined homogeneous finite-cycle module. -/
+def principalRelations [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ) :
+    Submodule ℤ (cyclesOfDegree ℤ δ n) :=
+  Submodule.span ℤ (Set.range (principalRelation δ n))
+
+theorem principalRelation_mem [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ)
+    (d : PrincipalRelationData δ n) : principalRelation δ n d ∈ principalRelations δ n :=
+  Submodule.subset_span (Set.mem_range_self d)
+
+/-- Membership is exactly an unweighted finite sum of actual carrier
+relations. In particular the span introduces no extra kind of relation:
+integer coefficients are absorbed into actual rational functions. -/
+theorem mem_principalRelations_iff_exists_list [IsNoetherian X]
+    (δ : DimensionFunction X) (n : ℤ) (c : cyclesOfDegree ℤ δ n) :
+    c ∈ principalRelations δ n ↔
+      ∃ l : List (PrincipalRelationData δ n), (l.map (principalRelation δ n)).sum = c := by
+  constructor
+  · intro hc
+    induction hc using Submodule.span_induction with
+    | mem c hc =>
+        obtain ⟨d, rfl⟩ := hc
+        exact ⟨[d], by simp⟩
+    | zero => exact ⟨[], rfl⟩
+    | add c e hc he ihc ihe =>
+        obtain ⟨l, rfl⟩ := ihc
+        obtain ⟨k, rfl⟩ := ihe
+        exact ⟨l ++ k, by simp⟩
+    | smul m c hc ih =>
+        obtain ⟨l, rfl⟩ := ih
+        refine ⟨l.map (fun d ↦ d.zpow m), ?_⟩
+        simp only [List.map_map, List.smul_sum]
+        apply congrArg List.sum
+        apply List.map_congr_left
+        intro d _
+        exact principalRelation_zpow δ n d m
+  · rintro ⟨l, rfl⟩
+    induction l with
+    | nil => exact (principalRelations δ n).zero_mem
+    | cons d l ih =>
+        simpa only [List.map_cons, List.sum_cons] using
+          (principalRelations δ n).add_mem (principalRelation_mem δ n d) ih
+
+/-- The equivalent finitely supported integer-combination formulation. -/
+theorem mem_principalRelations_iff_exists_finsupp [IsNoetherian X]
+    (δ : DimensionFunction X) (n : ℤ) (c : cyclesOfDegree ℤ δ n) :
+    c ∈ principalRelations δ n ↔
+      ∃ a : PrincipalRelationData δ n →₀ ℤ,
+        (a.sum fun d m ↦ m • principalRelation δ n d) = c :=
+  Finsupp.mem_span_range_iff_exists_finsupp
+
+/-- Rational equivalence means that the difference is a proved finite
+sum of principal relations on actual degree-one-higher carriers. -/
+def RationallyEquivalent [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ)
+    (c e : cyclesOfDegree ℤ δ n) : Prop :=
+  c - e ∈ principalRelations δ n
+
+theorem rationallyEquivalent_iff_exists_list [IsNoetherian X]
+    (δ : DimensionFunction X) (n : ℤ) (c e : cyclesOfDegree ℤ δ n) :
+    RationallyEquivalent δ n c e ↔
+      ∃ l : List (PrincipalRelationData δ n), (l.map (principalRelation δ n)).sum = c - e :=
+  mem_principalRelations_iff_exists_list δ n (c - e)
+
+theorem rationallyEquivalent_refl [IsNoetherian X]
+    (δ : DimensionFunction X) (n : ℤ) (c : cyclesOfDegree ℤ δ n) :
+    RationallyEquivalent δ n c c := by
+  change c - c ∈ principalRelations δ n
+  simpa only [sub_self] using (principalRelations δ n).zero_mem
+
+theorem rationallyEquivalent_symm [IsNoetherian X]
+    (δ : DimensionFunction X) (n : ℤ) {c e : cyclesOfDegree ℤ δ n}
+    (h : RationallyEquivalent δ n c e) : RationallyEquivalent δ n e c := by
+  change e - c ∈ principalRelations δ n
+  simpa only [neg_sub] using (principalRelations δ n).neg_mem h
+
+theorem rationallyEquivalent_trans [IsNoetherian X]
+    (δ : DimensionFunction X) (n : ℤ) {c e b : cyclesOfDegree ℤ δ n}
+    (hce : RationallyEquivalent δ n c e) (heb : RationallyEquivalent δ n e b) :
+    RationallyEquivalent δ n c b := by
+  change c - b ∈ principalRelations δ n
+  simpa only [sub_add_sub_cancel] using (principalRelations δ n).add_mem hce heb
+
+/-- Degree-`n` finite cycles modulo actual finite sums of carrier principal
+divisors for the explicitly supplied dimension function. -/
+abbrev ChowGroup [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ) :=
+  (cyclesOfDegree ℤ δ n) ⧸ principalRelations δ n
+
+/-- The canonical quotient homomorphism on the existing homogeneous cycles. -/
+def classMap [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ) :
+    cyclesOfDegree ℤ δ n →ₗ[ℤ] ChowGroup δ n :=
+  (principalRelations δ n).mkQ
+
+/-- Equality of quotient classes is exactly the actual rational-equivalence relation. -/
+theorem classMap_eq_iff [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ)
+    (c e : cyclesOfDegree ℤ δ n) :
+    classMap δ n c = classMap δ n e ↔ RationallyEquivalent δ n c e :=
+  Submodule.Quotient.eq (principalRelations δ n)
+
+theorem classMap_eq_zero_iff [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ)
+    (c : cyclesOfDegree ℤ δ n) : classMap δ n c = 0 ↔ c ∈ principalRelations δ n :=
+  Submodule.Quotient.mk_eq_zero (principalRelations δ n)
+
+/-- Every class is represented by an actual homogeneous finite cycle. -/
+theorem classMap_surjective [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ) :
+    Function.Surjective (classMap δ n) :=
+  (principalRelations δ n).mkQ_surjective
+
+@[simp]
+theorem classMap_principalRelation [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ)
+    (d : PrincipalRelationData δ n) : classMap δ n (principalRelation δ n d) = 0 :=
+  (classMap_eq_zero_iff δ n _).mpr (principalRelation_mem δ n d)
+
+end
+
+end HodgeConjecture.SchemeCycles

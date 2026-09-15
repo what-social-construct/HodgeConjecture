@@ -21,7 +21,7 @@
   {\normalfont\Large\bfseries}{\thesubsection}{1em}{}
 
 \hypersetup{
-  pdftitle={A Formal Projector Spine for the Rational Hodge Target},
+  pdftitle={Galois Correspondences and the Hodge Conjecture},
   pdfauthor={Chloe van der Vlugt},
   colorlinks=true,
   linkcolor=blue!55!black,
@@ -85,8 +85,7 @@
 
 \setlength{\emergencystretch}{1.5em}
 
-\title{A Formal Projector Spine for the Rational Hodge Target:\\
-  Collisions, Marked Galois Sheets, and Boundary Interfaces}
+\title{Galois Correspondences and the Hodge Conjecture}
 \author{Chloe van der Vlugt}
 \date{Draft of September 14, 2026}
 
@@ -95,70 +94,36 @@
 \maketitle
 
 \begin{abstract}
-We describe a Lean~4 development organized around the exact abstract target
-of the rational Hodge conjecture.  For a supplied cycle-class model
-\(\mathscr H=(A,V,V_{\mathrm{Hdg}},\operatorname{cl})\), the modeled target
-\(\mathrm{HC}_{\Q}(\mathscr H)\) says that every class in the independently
-specified Hodge subspace lies in the image of the cycle-class map.  The
-development proves that, after supplying explicit Chow-level construction
-and lower-left detection maps, this target is equivalent to lifting every
-canonical graph projector \(P_\alpha(t,x)=(t,t\alpha)\).
+The rational Hodge conjecture asserts that, for every smooth projective
+complex variety \(X\) and codimension \(p\), the cycle-class map
+\[
+  \operatorname{cl}^p:\CH^p(X)_{\Q}
+    \longrightarrow \operatorname{Hdg}^p(X)
+\]
+is surjective, where \(\operatorname{Hdg}^p(X)\) is the space of rational
+classes of Hodge type \((p,p)\).  We study a route to this statement through
+algebraic correspondence projectors.  For a prescribed Hodge class
+\(\alpha\), the objective is to construct a projector \(\Pi\) whose action
+on the Tate-augmented cohomology is
+\(P_\alpha(t,x)=(t,t\alpha)\).  Chow-level detection then extracts a cycle
+representing \(\alpha\).  With explicit construction and detection maps,
+we prove that this graph-projector lifting problem is equivalent to
+cycle-class surjectivity.
 
-The dependency-ordered components leading toward such lifts consist of a collision algebra
-and its separability decomposition, a free finite-\'etale span algebra,
-transport of group and Hecke idempotents, a marked \(G/H\)-sheet calculation
-in which the residual term is the augmentation ideal
-\(E_H=\ker(\ev_H)=(1-q_H)\), its unital residual corner gives a genuine
-product-algebra decomposition, and the source action is multiplicative, a
-distinct graph-block normal form on the underlying module, normal-closure deck actions,
-and a conjugate-boundary separation theorem excluding ramification in
-codimension one.  The normal-closure splitting is accompanied by the exact
-augmentation/diagonal square.  The residual realization into cohomology
-remains linear, but its selector square is equivalently a morphism of
-representations of the universal one-idempotent algebra
-\(\mathcal U=\Q\times\Q\).  Under surjectivity, realization is expressed by
-the Palomar-style equality
-\(\rho\circ\varphi_\Pi=\varphi_{P_\alpha}\) of algebra homomorphisms.
-For compactification we distinguish a raw closure, whose idempotence defect
-merely restricts to zero, from a supplied compactified deck-graph square,
-which is a sufficient route to a genuinely idempotent compactified image.
-
-The finite split case has a constructed coefficient realization from actual
-scheme-span classes to rational matrices, compatible with scheme pullbacks
-and coproducts.  Its kernel is exactly the two-sided ideal of finite
-point-decomposition relations, so the resulting additive quotient is the
-matrix algebra.  The split scheme's integral closed subschemes are classified as the
-reduced rational points, and the absence of integral closed curves is
-proved.  The zero-cycle group on these actual subschemes has trivial
-rational equivalence, giving integral and rational Chow groups with the
-point basis.  Actual image and fiber identifications, with residue-field
-degree and local multiplicity one, construct proper pushforward, flat
-pullback, and intersection.  Their Chow correspondence composition is
-matrix multiplication in the point-pair basis, identifying the actual Chow
-endomorphism algebra with the additive span quotient.  The geometric
-action on zero-cycle Chow groups is matrix action.  Over \(\mathbf C\),
-the actual algebra-valued point space has the regular-function evaluation
-topology, proved discrete.  Its singular degree-zero cocycles give a
-Betti cycle-class isomorphism carrying each point class to its component
-characteristic cocycle, compatible with pullback, finite transfer,
-intersection, and correspondence action.  Its tensor complexification
-carries the effective degree-zero Hodge structure.  On the actual disjoint
-union with one point, geometric Chow pushforward constructs the graph
-projector, and flat pullback extracts its lower-left Chow block.  These
-constructions instantiate the finite degree-zero Hodge, graph-lifting,
-and Palomar target equivalences.  For a split finite-group torsor and its
-homogeneous sheet cover, the marked residual ideal is realized by actual
-Chow point cycles, multiplicatively for intersection.  An invertible
-Chow correspondence implements the constant-marked coordinate change and
-gives the selector-action and Palomar squares for the negative fundamental
-class.  Multiplicative residual rigidity identifies the exact class
-constraint of this construction.
-These statements are machine checked from their displayed hypotheses
-(\formal).  For the general Hodge application, the Chow/Hodge comparison, compactified realization, and
-class-dependent marked-sheet coverage packages remain supplied inputs
-(\conditional), and constructing them for genuine Chow groups and Betti
-cohomology remains \openstatus.  In particular, this manuscript proves no
-new case, partial case, or unconditional instance of the Hodge conjecture.
+The proposed geometric construction uses finite \'{e}tale covers and Galois
+correspondences, with normalization and inertia controlling the boundary
+extension problem.  Its remaining realization step must connect the
+chosen compactified projector to the prescribed class.  Lean~4 verifies
+the algebraic reductions and the conditional extension and realization
+arguments.  For finite split schemes, we construct the degree-zero
+Chow, Betti, and Hodge comparisons and the marked correspondence action.
+For a supplied finite \'{e}tale extension, we also construct closed deck
+graphs and prove their scheme-theoretic restriction over the open base;
+for integral covers this extends to actual cycles and rational graph sums.
+We identify the scheme-theoretic intersection composing two graphs with
+the graph of the composite automorphism.
+The general geometric realization and the class-dependent construction
+for arbitrary prescribed Hodge classes remain open.
 \end{abstract}
 
 \begin{center}
@@ -234,6 +199,12 @@ Let \(\Gamma\) be a rational algebra acting on \(\Q\oplus V\) through
   P_\alpha(t,x)=(t,t\alpha).
 \]
 
+In the intended untwisted geometric convention, the marked line is
+\(\Q(-p)\); the displayed block uses its underlying rational vector space.
+The graded or twisted correspondence realization must be supplied by the
+geometric instance.  No choice of \(\Gamma\) as the full endomorphism
+algebra is required by the abstract statement.
+
 Then \(P_\alpha^2=P_\alpha\), and the lower-left evaluation
 
 \[
@@ -251,16 +222,21 @@ interfaces:
         \(\operatorname{cl}(D(\gamma))=d_{\mathrm{ll}}(\rho(\gamma))\).
 \end{enumerate}
 
+The construction \(C\) is a function, not an asserted linear map: its
+formula includes the marked identity block.  It starts from an already
+given Chow class, not a choice of representative for an arbitrary Hodge
+class.
+
 Write \(\Lift_{\mathrm{CH}}(P_\alpha)\) for the type of idempotents
 \(\Pi\in\Gamma\) whose action is \(P_\alpha\).
-For an idempotent \(e\) in any rational algebra, let
+For an idempotent \(e\) in any rational algebra \(B\), let
 
 \[
   \mathcal U=\Q\times\Q,\qquad u=(1,0),\qquad
   \varphi_e(r,s)=re+s(1-e).
 \]
 
-Thus \(\varphi_e:\mathcal U\to C\) is an algebra homomorphism with
+Thus \(\varphi_e:\mathcal U\to B\) is an algebra homomorphism with
 \(\varphi_e(u)=e\).  An element of
 \(\Lift_{\mathrm{CH}}(P_\alpha)\) is equivalently an idempotent
 \(\Pi\in\Gamma\) for which the following equality of algebra-homomorphism
@@ -303,6 +279,12 @@ The quantified statement is obtained pointwise.  Finally,
 \eqref{eq:abstract-palomar-target} by functoriality of \(\varphi\), while
 evaluating that equation at \(u=(1,0)\) gives the converse.
 \end{proof}
+
+The two directions have different uses.  Construction turns a known cycle
+into a graph lift; detection turns an independently constructed lift into
+a cycle.  Accordingly, to prove the Hodge conclusion it suffices to build
+the latter witnesses and detection.  No converse replacement of arbitrary
+graph lifts by Galois data is needed for that implication.
 
 \begin{leanfiles}
 The model and target are \leanpath{RationalHodgeCycleClassModel} and
@@ -593,12 +575,19 @@ For any linear map \(\theta:E_H\to V\), put
   \Theta P_{a_H}=P_\alpha\Theta.
 \]
 
-This identity creates the precise linear bridge from a marked selector to a
-class graph.  It does not construct \(\theta\), make it motivic, or show that
+This is a supporting operator identity relating a marked selector to a
+class graph. It does not construct \(\theta\), make it motivic, or show that
 \(\alpha\) is algebraic.  Equivalently, it makes \(\Theta\) a morphism
 between the \(\mathcal U\)-representations defined by \(P_{a_H}\) and
 \(P_\alpha\).  This puts the homomorphism on the theorem surface without
 identifying the sheet and convolution algebras.
+
+The graph operator is idempotent for every vector \(\alpha\), so this
+coordinate calculation is not an algebraicity argument. The source algebra
+splitting above and the operator comparison have separate roles; neither
+produces the class-dependent geometric realization. In the finite split
+example below, the Chow shear and its action are instead constructed from
+actual point cycles.
 
 \begin{leanfiles}
 The augmentation ideal, its principal-ideal description, the regular algebra
@@ -925,6 +914,764 @@ The subgroup average \(e_H\) yields the corresponding singleton-witness
 extension package.
 \end{proposition}
 
+\begin{proposition}[Closed graphs and open restriction --- \formal]
+\label{prop:graph-restriction}
+Let \(j:U\hookrightarrow S\) be an open immersion and let a finite
+\'{e}tale morphism \(\bar p:\bar Y\to S\) be supplied with an
+identification \(Y\simeq U\times_S\bar Y\) over \(U\). Write
+\(p:Y\to U\) for the original cover, \(\iota:Y\to\bar Y\) for the
+inclusion, and \(\iota^{(2)}:Y\times_U Y\to\bar Y\times_S\bar Y\)
+for the induced open immersion. For \(\sigma\in\operatorname{Aut}_S(\bar Y)\),
+let \(\sigma_U\) be its restriction. The graph morphisms
+\(g_\sigma=(\operatorname{id},\sigma)\) and \(g_{\sigma_U}\) are closed
+immersions, hence proper, and identify their sources with the closed
+subschemes \(\operatorname{Gr}(\sigma)\) and
+\(\operatorname{Gr}(\sigma_U)\) defined by their kernel ideal sheaves.
+The square
+\[
+\begin{CD}
+Y @>{g_{\sigma_U}}>> Y\times_U Y\\
+@V{\iota}VV @VV{\iota^{(2)}}V\\
+\bar Y @>{g_\sigma}>> \bar Y\times_S\bar Y
+\end{CD}
+\]
+is Cartesian. In particular, writing \(\mathcal I_\sigma\) for the
+defining graph ideal, scheme-theoretic inverse image gives
+\[
+  \mathcal I_{\sigma_U}
+    =(\iota^{(2)})^*\mathcal I_\sigma.
+\]
+\end{proposition}
+
+\begin{proof}
+Finiteness supplies separatedness, so the graph morphisms are closed
+immersions and identify their sources with their image subschemes.
+Equivariance of restriction and monicity of \(\iota\) give the pullback
+universal property. Taking the kernel ideal of the pulled-back closed
+immersion gives the displayed ideal equality.
+\end{proof}
+
+Restriction of an already extended \(\sigma\) uses no deck-extension
+hypothesis. Starting instead with a prescribed action on \(Y\), the separate
+bijectivity premise on automorphism restriction permits its lift and then
+gives the same graph-ideal equality.
+
+\paragraph{Finite cycles and integral graphs.}
+For a scheme \(W\), write \(\operatorname{IntSub}(W)\) for its actual
+integral closed subschemes, represented by their ideal sheaves, and put
+\[
+  Z_{\mathrm{fin}}(W;R)
+    =\bigoplus_{Z\in\operatorname{IntSub}(W)}R[Z].
+\]
+This is the finite-support, ungraded cycle module; the integral and rational
+coefficient cases use \(R=\mathbf Z\) and \(R=\Q\). The generators agree
+with those in the usual cycle definition \cite{StacksCycles}. For an integral
+closed subscheme \(i:Z\hookrightarrow W\), with generic point \(\eta_Z\),
+the actual stalk map gives
+\[
+  \operatorname{length}_{\mathcal O_{W,i(\eta_Z)}}
+    \mathcal O_{Z,\eta_Z}=1.
+\]
+Thus the coefficient one is the ambient-stalk multiplicity appearing in
+\cite{StacksFundamentalCycle}; it is also proved directly in Lean.
+For an open immersion \(v:V\hookrightarrow W\), a nonempty inverse image of an integral
+closed subscheme is integral. Define the linear open restriction by
+\[
+  v^*_{\mathrm{cyc}}[Z]=
+  \begin{cases}
+    [v^{-1}Z],&v^{-1}Z\ne\varnothing,\\
+    0,&v^{-1}Z=\varnothing.
+  \end{cases}
+\]
+The inverse image here is the actual ideal-sheaf inverse image.
+This construction satisfies the identity and composition laws for open
+restriction. The dimension-graded flat-pullback comparison in its standard
+geometric setting is \cite{StacksFundamentalCyclePullback}; the present
+formalization directly proves the ungraded integral-generator case.
+
+\begin{proposition}[Integral graph-cycle restriction --- \formal]
+\label{prop:graph-cycle-restriction}
+In Proposition~\ref{prop:graph-restriction}, assume additionally that
+\(\bar Y\) is integral and \(Y\ne\varnothing\). Then \(Y\) is integral.
+Each closed graph is integral, has the same Krull dimension as its source,
+and defines a coefficient-one cycle. There is a rational linear graph map
+\[
+  \zeta_p:\Q[\operatorname{Aut}_U(Y)]
+    \longrightarrow Z_{\mathrm{fin}}(Y\times_UY;\Q),
+  \qquad [\tau]\longmapsto[\operatorname{Gr}(\tau)],
+\]
+and likewise \(\zeta_{\bar p}\). They satisfy
+\[
+  (\iota^{(2)})^*_{\mathrm{cyc}}\circ\zeta_{\bar p}
+    =\zeta_p\circ\Q[\operatorname{res}_E].
+\]
+No bijectivity hypothesis on \(\operatorname{res}_E\) is needed.
+\end{proposition}
+
+\begin{proof}
+Integrality restricts to the nonempty open cover. The graph isomorphisms
+transport integrality and dimension to the closed graphs. The ideal
+equality in Proposition~\ref{prop:graph-restriction} identifies the
+restricted integral graph generator. Linear extension proves the equation
+for every finite rational weighted sum of deck graphs.
+\end{proof}
+
+\begin{proposition}[Scheme-theoretic graph composition --- \formal]
+\label{prop:graph-composition}
+Let \(p:Y\to S\) be separated, put \(W=Y\times_S Y\), and realize the
+relative triple product as \(T=W\times_Y W\), using the second projection
+of the first factor and the first projection of the second. Write
+\(p_{12},p_{23},p_{13}:T\to W\) for the coordinate projections. For
+\(\sigma,\tau\in\operatorname{Aut}_S(Y)\), set
+\[
+  \mathcal J_{\sigma,\tau}
+    =p_{12}^*\mathcal I_\tau+p_{23}^*\mathcal I_\sigma,
+  \qquad Z_{\sigma,\tau}=V(\mathcal J_{\sigma,\tau})\subseteq T.
+\]
+Here the sum of ideal sheaves defines the scheme-theoretic intersection.
+The morphism
+\[
+  h_{\sigma,\tau}:Y\longrightarrow T,
+  \qquad y\longmapsto(y,\tau y,\sigma(\tau y)),
+\]
+identifies \(Y\) with \(Z_{\sigma,\tau}\). Moreover, \(p_{13}\) restricts
+to an isomorphism
+\[
+  Z_{\sigma,\tau}\xrightarrow{\ \sim\ }
+    \operatorname{Gr}(\sigma\tau)
+\]
+compatible with the closed inclusions into \(W\). Thus its
+scheme-theoretic image is exactly \(\operatorname{Gr}(\sigma\tau)\).
+The order is \((\sigma\tau)(y)=\sigma(\tau(y))\).
+\end{proposition}
+
+\begin{proof}
+Factoring a morphism into \(T\) through the two inverse-image graph
+subschemes imposes the equations \(y_2=\tau y_1\) and
+\(y_3=\sigma y_2\). Their sum ideal imposes both equations, so the first
+coordinate is inverse to the factorization of \(h_{\sigma,\tau}\).
+Composing with \(p_{13}\) gives \(g_{\sigma\tau}\). The source
+identification for the closed graph then gives the second isomorphism
+and the scheme-theoretic image equality.
+\end{proof}
+
+\paragraph{Closed-support pushforward.}
+For a closed immersion \(f:V\hookrightarrow W\), define
+\(f_{*,\mathrm{cyc}}[Z]=[f(Z)]\) on integral closed supports and extend
+linearly. The image is its actual ideal-sheaf image and is isomorphic to
+\(Z\). The induced residue map at the generic point has degree one,
+which verifies the coefficient in the usual proper-pushforward formula
+\cite{StacksProperCyclePushforward}. This construction satisfies identity
+and composition laws. For an arbitrary ambient map \(f\), the same
+generator construction applies whenever \(f|_Z\) is a closed immersion;
+write \(f_{*,Z}[Z]\) for this supportwise image.
+
+\begin{proposition}[Graph-slice cycle pull--push --- \formal]
+\label{prop:graph-cycle-composition}
+In Proposition~\ref{prop:graph-composition}, assume that \(Y\) is integral.
+For \(\tau\in\operatorname{Aut}_S(Y)\), the graph slice
+\[
+  s_\tau:W\longrightarrow T,\qquad
+  (y,z)\longmapsto(y,\tau y,z)
+\]
+is a closed immersion identifying \(W\) with
+\(p_{12}^{-1}\operatorname{Gr}(\tau)\). Its last-pair map
+\(u_\tau=p_{23}s_\tau\), given by \((y,z)\mapsto(\tau y,z)\),
+is an isomorphism, and \(p_{13}s_\tau=\operatorname{id}_W\).
+Define the actual linear cycle maps
+\[
+  \mathsf R_\tau=(u_\tau)^*_{\mathrm{cyc}},
+  \qquad \mathsf K_\tau=(s_\tau)_{*,\mathrm{cyc}}\mathsf R_\tau.
+\]
+Then
+\[
+\begin{aligned}
+  \mathsf R_\tau[\operatorname{Gr}(\sigma)]
+    &=[\operatorname{Gr}(\sigma\tau)],\\
+  \mathsf K_\tau[\operatorname{Gr}(\sigma)]
+    &=[Z_{\sigma,\tau}],\\
+  (p_{13})_{*,Z_{\sigma,\tau}}[Z_{\sigma,\tau}]
+    &=[\operatorname{Gr}(\sigma\tau)].
+\end{aligned}
+\]
+The first two formulas extend linearly to finite weighted graph sums.
+If \(p\) is additionally \'{e}tale, the slice, the graphs, their
+inverse-image graph subschemes, and the intersection inclusions are open
+as well as closed.
+\end{proposition}
+
+\begin{proof}
+The pair isomorphism gives
+\(u_\tau^*\mathcal I_\sigma=\mathcal I_{\sigma\tau}\).
+Its open restriction therefore gives the first cycle formula. The closed
+image of this integral graph under \(s_\tau\) has ideal
+\(\mathcal J_{\sigma,\tau}\), giving the second. Proposition~\ref{prop:graph-composition}
+identifies the restricted outer projection with an isomorphism onto the
+composite graph, so its degree-one image gives the third. The openness
+assertions follow from the \'{e}tale diagonal, as in
+\cite{StacksUnramifiedSections}.
+\end{proof}
+
+\begin{proposition}[Changing the structural base of graph cycles --- \formal]
+\label{prop:graph-cycle-base-comparison}
+Let \(p:Y\to S\) and \(b:S\to B\) be separated morphisms, and put
+\(r=b\circ p\). Write
+\[
+  W_p=Y\times_S Y,\qquad W_r=Y\times_B Y,
+  \qquad T_p=W_p\times_Y W_p,\qquad T_r=W_r\times_Y W_r.
+\]
+The coordinate-preserving comparisons
+\[
+  \kappa_2:W_p\hookrightarrow W_r,
+  \qquad \kappa_3:T_p\hookrightarrow T_r
+\]
+are closed immersions, by the separated-base comparison
+\cite{StacksRelativeProductClosedImmersion}. They commute with all three
+pair projections. Forgetting the intermediate base gives an injective
+group homomorphism
+\[
+  \operatorname{forg}_b:\operatorname{Aut}_S(Y)
+      \lhook\joinrel\longrightarrow\operatorname{Aut}_B(Y),
+  \qquad \sigma\longmapsto\bar\sigma,
+\]
+which retains the actual automorphism of \(Y\); thus
+\(\overline{\sigma\tau}=\bar\sigma\bar\tau\), with \(\tau\) acting first.
+No separatedness of \(p\) is needed for the closedness of \(\kappa_2,\kappa_3\),
+and no geometric hypothesis is needed for this injective group map.
+
+For \(R=\mathbf Z\) or \(\Q\), use superscripts \(p,r\) on the
+graph-slice maps of Proposition~\ref{prop:graph-cycle-composition} to
+specify their base. Closed-immersion pushforward gives maps
+\[
+\begin{aligned}
+  (\kappa_2)_{*,\mathrm{cyc}}&:Z_{\mathrm{fin}}(W_p;R)
+      \longrightarrow Z_{\mathrm{fin}}(W_r;R),\\
+  (\kappa_3)_{*,\mathrm{cyc}}&:Z_{\mathrm{fin}}(T_p;R)
+      \longrightarrow Z_{\mathrm{fin}}(T_r;R).
+\end{aligned}
+\]
+For every \(\tau\in\operatorname{Aut}_S(Y)\), the following are
+identities on the entire module \(Z_{\mathrm{fin}}(W_p;R)\):
+\[
+\begin{aligned}
+  (\kappa_2)_{*,\mathrm{cyc}}\circ\mathsf R^p_\tau
+    &=\mathsf R^r_{\bar\tau}\circ(\kappa_2)_{*,\mathrm{cyc}},\\
+  (\kappa_3)_{*,\mathrm{cyc}}\circ\mathsf K^p_\tau
+    &=\mathsf K^r_{\bar\tau}\circ(\kappa_2)_{*,\mathrm{cyc}}.
+\end{aligned}
+\]
+These identities do not require \(Y\) to be integral; the first also
+holds without separatedness of \(p\). If \(Y\) is integral, the graph
+and intersection cycles satisfy, for all \(\sigma,\tau\in\operatorname{Aut}_S(Y)\),
+\[
+\begin{aligned}
+  (\kappa_2)_{*,\mathrm{cyc}}[\operatorname{Gr}_p(\sigma)]
+    &=[\operatorname{Gr}_r(\bar\sigma)],\\
+  (\kappa_3)_{*,\mathrm{cyc}}[Z^p_{\sigma,\tau}]
+    &=[Z^r_{\bar\sigma,\bar\tau}],\\
+  (\kappa_2)_{*,\mathrm{cyc}}\circ\zeta_p
+    &=\zeta_r\circ\Q[\operatorname{forg}_b].
+\end{aligned}
+\]
+The last identity is for finite rational weighted sums of deck graphs.
+\end{proposition}
+
+\begin{proof}
+Forgetting the base is postcomposition in the slice category and does
+not change the underlying morphism, which proves injectivity and the
+group laws. The coordinate maps give
+\(\kappa_2g^p_\sigma=g^r_{\bar\sigma}\) and
+\(\kappa_3h^p_{\sigma,\tau}=h^r_{\bar\sigma,\bar\tau}\).
+Their ideal-sheaf images therefore identify the actual graph and
+intersection supports. The pair isomorphisms and graph slices satisfy
+\[
+  \kappa_2u^p_\tau=u^r_{\bar\tau}\kappa_2,
+  \qquad \kappa_3s^p_\tau=s^r_{\bar\tau}\kappa_2.
+\]
+Inverse image through these isomorphisms commutes with the closed images
+of integral supports. Functorial closed-immersion pushforward gives the
+two full-cycle identities. When \(Y\) is integral, the support
+identifications give the displayed coefficient-one graph formulas, and
+linear extension gives the weighted identity.
+\end{proof}
+
+When \(B=\Spec k\) for a field \(k\), the targets \(W_r,T_r\) are the
+absolute products over \(k\). The proposition does not assert that every \(B\)-automorphism
+comes from an \(S\)-automorphism, or that \(r\) is \'{e}tale when \(p\) is.
+
+\begin{proposition}[Signed local orders and isomorphism invariance --- \formal]
+\label{prop:scheme-local-order}
+Let \(X\) be an integral locally Noetherian scheme, let \(\eta_X\) be
+its generic point, and write \(k(X)=\mathcal O_{X,\eta_X}\) for its
+actual function field. Define the point index
+\[
+  \operatorname{DivPt}(X)
+    =\{x\in X:\dim\mathcal O_{X,x}=1\}.
+\]
+A height-one prime in an affine chart determines a point in this index.
+For each \(x\in\operatorname{DivPt}(X)\), the canonical map
+\(\mathcal O_{X,x}\to k(X)\) identifies \(k(X)\) with the fraction
+field of the stalk. The length-based order
+\cite{StacksLocalOrderOfVanishing} gives an integer-valued function
+\[
+  \operatorname{ord}_x:k(X)^\times\longrightarrow\mathbf Z.
+\]
+Writing \(A=\mathcal O_{X,x}\), for nonzero \(a,b\in A\) its value is
+\[
+  \operatorname{ord}_x(a/b)
+    =\operatorname{length}_A(A/(a))
+       -\operatorname{length}_A(A/(b)),
+\]
+where both lengths are finite. This is the local coefficient used for
+prime divisors in \cite{StacksSchemeOrderOfVanishing}. For
+\(f,g\in k(X)^\times\), it satisfies
+\[
+  \operatorname{ord}_x(1)=0,\qquad
+  \operatorname{ord}_x(fg)=\operatorname{ord}_x(f)+\operatorname{ord}_x(g),
+  \qquad \operatorname{ord}_x(f^{-1})=-\operatorname{ord}_x(f).
+\]
+No normality or discrete-valuation-ring hypothesis is required.
+
+If \(e:X\xrightarrow{\sim}Y\) is an isomorphism of integral locally
+Noetherian schemes, its actual point and stalk maps induce
+\[
+  e_1:\operatorname{DivPt}(X)\xrightarrow{\sim}\operatorname{DivPt}(Y),
+  \quad x\longmapsto e(x),
+  \qquad e^*:k(Y)\xrightarrow{\sim}k(X).
+\]
+The field map is contravariant and commutes with the canonical maps from
+the local stalks. For every \(x\in\operatorname{DivPt}(X)\) and
+\(f\in k(Y)^\times\),
+\[
+  \operatorname{ord}_x(e^*f)=\operatorname{ord}_{e_1(x)}(f).
+\]
+\end{proposition}
+
+\begin{proof}
+The stalk is a Noetherian domain of dimension one. Restrict the
+length-defined fraction-field order to \(k(X)^\times\) and read its integer
+exponent; the fraction and group laws follow. Under \(e\), the actual
+stalk isomorphisms preserve Krull dimension and the lengths of principal
+quotients. The generic-point stalk isomorphism gives \(e^*\), and
+naturality of specialization makes its square with each stalk map
+commute. The fraction formula then proves invariance of the signed order.
+\end{proof}
+
+\begin{proposition}[Generic points and codimension-one supports --- \formal]
+\label{prop:divisor-support}
+Let \(X\) be any scheme. For \(x\in X\), let
+\[
+  Z_x=\bigl(\overline{\{x\}}\bigr)_{\mathrm{red}}\subseteq X
+\]
+be the actual reduced induced closed subscheme
+\cite{StacksReducedClosedSubscheme}. It is integral. For
+\(Z\in\operatorname{IntSub}(X)\), write
+\(\xi_Z=\iota_Z(\eta_Z)\in X\) for the image of its generic point
+under its closed inclusion. Reduced closure and the unique generic point
+\cite{StacksGenericPoint} give mutually inverse maps
+\[
+  X\xrightarrow{\ \sim\ }\operatorname{IntSub}(X),
+  \qquad x\longmapsto Z_x,\qquad Z\longmapsto\xi_Z.
+\]
+Measure \(\operatorname{codim}(|Z|,X)\) by chains of irreducible closed
+subsets containing the actual support \(|Z|\). Then
+\[
+  \operatorname{codim}(|Z|,X)=\dim\mathcal O_{X,\xi_Z},
+\]
+as in \cite{StacksCodimensionStalkDimension}. Consequently, with
+\[
+  \operatorname{PrimeDiv}(X)
+    =\{Z\in\operatorname{IntSub}(X):\operatorname{codim}(|Z|,X)=1\},
+\]
+the same maps restrict to an equivalence
+\[
+  \operatorname{DivPt}(X)\xrightarrow{\ \sim\ }\operatorname{PrimeDiv}(X).
+\]
+These support and codimension statements require no integrality or
+Noetherian hypothesis on the ambient scheme.
+
+An isomorphism \(e:X\xrightarrow{\sim}Y\) induces
+\(e_{\mathrm{div}}:\operatorname{PrimeDiv}(X)\xrightarrow{\sim}
+\operatorname{PrimeDiv}(Y)\). Its value is the actual scheme-theoretic
+image \(e(Z)\), and \(\xi_{e(Z)}=e(\xi_Z)\).
+If \(X,Y\) are integral and locally Noetherian, reindex the existing
+local coefficient by
+\[
+  \operatorname{ord}_Z(f)=\operatorname{ord}_{\xi_Z}(f).
+\]
+For \(Z\in\operatorname{PrimeDiv}(X)\) and \(f\in k(Y)^\times\),
+\[
+  \operatorname{ord}_Z(e^*f)
+    =\operatorname{ord}_{e_{\mathrm{div}}(Z)}(f).
+\]
+\end{proposition}
+
+\begin{proof}
+The reduced closure is defined by its vanishing ideal. Its irreducible
+support makes it integral; the two inverse equations hold for these
+actual ideal-sheaf objects. The inclusion-ordered irreducible closed
+subsets correspond to points with their specialization order. In an
+affine neighbourhood of \(\xi_Z\), localization identifies the relevant
+chain length with the dimension of the stalk. Restricting this equality
+to value one gives the displayed equivalence. Under a scheme isomorphism,
+the actual closed-image operation preserves the generic point and
+codimension. Proposition~\ref{prop:scheme-local-order} then gives the
+coefficient identity on these same integral supports.
+\end{proof}
+
+\begin{proposition}[Local finiteness and finite coefficient support --- \formal]
+\label{prop:divisor-finiteness}
+Let \(X\) be an integral locally Noetherian scheme and let
+\(f\in k(X)^\times\). For every affine open \(U\subseteq X\), the set
+\[
+  \{x\in\operatorname{DivPt}(X):x\in U,
+      \ \operatorname{ord}_x(f)\ne0\}
+\]
+is finite. Consequently, the actual family of closed supports
+\[
+  (|Z|)_{Z\in\operatorname{PrimeDiv}(X),\ \operatorname{ord}_Z(f)\ne0}
+\]
+is locally finite: every point of \(X\) has an open neighbourhood meeting
+only finitely many members of this family. This is the nonzero-coefficient
+conclusion of \cite{StacksDivisorLocalFiniteness}.
+
+If \(X\) is also quasi-compact, both sets
+\[
+  \{Z\in\operatorname{PrimeDiv}(X):\operatorname{ord}_Z(f)\ne0\},
+  \qquad
+  \{x\in\operatorname{DivPt}(X):\operatorname{ord}_x(f)\ne0\}
+\]
+are finite. Neither conclusion requires normality or properness.
+\end{proposition}
+
+\begin{proof}
+The empty affine open contributes no points. On a nonempty affine open,
+the actual function field presents \(f=a/b\) with nonzero sections
+\(a,b\in\Gamma(U,\mathcal O_X)\). Outside the chart primes containing
+\(a\) or \(b\), both germs are units, so the local coefficient is zero.
+Only finitely many height-one primes of a Noetherian domain contain a
+fixed nonzero element, which proves affine finiteness.
+An integral support meets an open precisely when its ambient generic
+point lies in that open. Thus the affine result gives local finiteness
+of the closed-support family itself. Quasi-compactness makes a locally
+finite family of nonempty supports finite; the point/support equivalence
+then gives the second finite set.
+\end{proof}
+
+\begin{proposition}[Finite principal divisors and isomorphism transport --- \formal]
+\label{prop:principal-divisor}
+Let \(X\) be an integral, locally Noetherian, quasi-compact scheme.
+The actual local orders define a finite integral cycle
+\[
+  \operatorname{div}_X(f)
+    =\sum_{Z\in\operatorname{PrimeDiv}(X)}
+        \operatorname{ord}_Z(f)[Z]
+    \in Z_{\mathrm{fin}}(X;\mathbf Z),
+  \qquad f\in k(X)^\times.
+\]
+Here only finitely many summands are nonzero, by
+Proposition~\ref{prop:divisor-finiteness}; the coefficient of every
+integral closed subscheme not of codimension one is zero. This is the
+quasi-compact finite-cycle realization of the principal Weil divisor
+in \cite{StacksPrincipalWeilDivisor}, in the existing ungraded cycle module.
+Its support is exactly the integral subschemes underlying prime divisors
+with nonzero local order.
+
+The assignment is a homomorphism from the multiplicative group of
+nonzero rational functions to the additive group of these cycles:
+\[
+  \operatorname{div}_X(1)=0,\qquad
+  \operatorname{div}_X(fg)
+    =\operatorname{div}_X(f)+\operatorname{div}_X(g),
+\]
+\[
+  \operatorname{div}_X(f^{-1})=-\operatorname{div}_X(f),\qquad
+  \operatorname{div}_X(f/g)
+    =\operatorname{div}_X(f)-\operatorname{div}_X(g).
+\]
+The product identity is the finite-cycle form of
+\cite{StacksPrincipalWeilDivisorProduct}.
+
+Let \(e:X\xrightarrow{\sim}Y\) be an isomorphism between schemes
+satisfying these hypotheses, and let \(f\in k(Y)^\times\).
+For the actual function-field pullback
+\(e^*:k(Y)\xrightarrow{\sim}k(X)\), the existing cycle operations satisfy
+\[
+  e_*\operatorname{div}_X(e^*f)=\operatorname{div}_Y(f),
+  \qquad
+  e^*\operatorname{div}_Y(f)=\operatorname{div}_X(e^*f).
+\]
+Here \(e_*\) is closed-immersion pushforward along the isomorphism and
+the cycle pullback \(e^*\) is the existing open restriction along \(e\).
+Thus both identities compare previously constructed geometric operations,
+not a separately stipulated transport on divisor coefficients.
+\end{proposition}
+
+\begin{proof}
+Use the proved finite support to form the finitely supported local-order
+function on \(\operatorname{PrimeDiv}(X)\), then extend it by zero along
+the inclusion into \(\operatorname{IntSub}(X)\). This gives both the
+coefficient formula and the exact support. The group laws follow
+coefficientwise from the existing local-order laws.
+For isomorphism transport, closed pushforward carries the coefficient
+at \(Z\) to the coefficient at its actual image \(e(Z)\), with degree one.
+Codimension and local-order invariance give the first identity, including
+zero coefficients off codimension one. The second follows because open
+restriction along an isomorphism equals closed pushforward along its inverse.
+\end{proof}
+
+\begin{proposition}[Dimension functions and homogeneous principal divisors --- \formal]
+\label{prop:principal-divisor-degree}
+Supply a dimension function \(\delta:X\to\mathbf Z\) on the actual
+points of a scheme \(X\). Thus every proper specialization
+\(x\leadsto y\) satisfies \(\delta(x)>\delta(y)\), and every immediate
+specialization satisfies \(\delta(x)=\delta(y)+1\), retaining both
+conditions of \cite{StacksDimensionFunction}.
+For an actual closed immersion \(i:Y\hookrightarrow X\), the literal
+restriction \(\delta_Y=\delta\circ i\) is a dimension function on \(Y\).
+Restriction respects identities and composition.
+For an existing integral closed subscheme \(Z\subseteq X\), set
+\[
+  \deg_\delta(Z)=\delta(\xi_Z).
+\]
+If \(X\) is integral, each prime divisor satisfies
+\[
+  \deg_\delta(Z)=\delta(\eta_X)-1,
+  \qquad Z\in\operatorname{PrimeDiv}(X).
+\]
+This is the codimension-one degree drop used in
+\cite{StacksPrimeDivisorDimension}, here proved directly for the supplied
+dimension function.
+
+For a semiring \(R\) and \(n\in\mathbf Z\), define the homogeneous
+submodule of the existing finite-cycle module by
+\[
+  Z^{\delta}_{\mathrm{fin},n}(X;R)
+    =\{c\in Z_{\mathrm{fin}}(X;R):
+        \forall Z,\ c(Z)\ne0\Longrightarrow\deg_\delta(Z)=n\}.
+\]
+Distinct degrees intersect only in the zero cycle. The existing
+closed-immersion pushforward preserves these degrees:
+\[
+  c\in Z^{\delta_Y}_{\mathrm{fin},n}(Y;R)
+    \quad\Longrightarrow\quad
+  i_*c\in Z^{\delta}_{\mathrm{fin},n}(X;R).
+\]
+No new free cycle module is used.
+
+If \(X\) is integral, locally Noetherian and quasi-compact, its existing
+principal-divisor cycle satisfies
+\[
+  \operatorname{div}_X(f)
+    \in Z^{\delta}_{\mathrm{fin},\delta(\eta_X)-1}(X;\mathbf Z),
+  \qquad f\in k(X)^\times.
+\]
+This is the homogeneity required by the graded principal-divisor
+definition in \cite{StacksGradedPrincipalDivisor}.
+More generally, let \(W\in\operatorname{IntSub}(X)\) be locally
+Noetherian and quasi-compact as a scheme, and restrict \(\delta\) along
+its actual inclusion \(\iota_W\). Then
+\[
+  (\iota_W)_*\operatorname{div}_W(f)
+    \in Z^{\delta}_{\mathrm{fin},\deg_\delta(W)-1}(X;\mathbf Z),
+  \qquad f\in k(W)^\times.
+\]
+Here the ambient scheme need not be integral, locally Noetherian or
+quasi-compact. A dimension function is supplied, not constructed for
+every scheme; no difference of absolute Krull dimensions is assumed.
+\end{proposition}
+
+\begin{proof}
+The point image of a closed immersion contains every intervening
+specialization, so restriction preserves both dimension-function conditions.
+On an integral scheme, coheight one makes the ambient generic point of
+a prime divisor an immediate specialization of \(\eta_X\).
+The unit-step condition on \(\delta\) gives the displayed degree drop.
+The homogeneous pieces are supported submodules, so their membership
+and disjointness statements follow coefficientwise. The actual
+generic-point image formula gives
+\(\deg_\delta(i(Z))=\deg_{\delta_Y}(Z)\), proving preservation under
+closed pushforward. Finally, every nonzero principal-divisor coefficient
+is supported on a prime divisor. Apply the degree drop, and then the
+closed-pushforward comparison to the carrier \(W\).
+\end{proof}
+
+\begin{proposition}[Actual principal relations and their Chow quotient --- \formal]
+\label{prop:principal-relations}
+Let \(X\) be a Noetherian scheme, meaning locally Noetherian and
+quasi-compact, with a supplied dimension function \(\delta\), and let
+\(n\in\mathbf Z\). Inside the existing homogeneous integer cycle module,
+define
+\[
+\begin{aligned}
+  \mathcal R_n^\delta(X)
+    =\operatorname{span}_{\mathbf Z}\bigl\{
+      (\iota_W)_*\operatorname{div}_W(f):\ &W\in\operatorname{IntSub}(X),\\
+      &\deg_\delta(W)=n+1,\ f\in k(W)^\times\bigr\}.
+\end{aligned}
+\]
+Every carrier inherits local Noetherianity and quasi-compactness from
+\(X\); Proposition~\ref{prop:principal-divisor-degree} proves that its
+displayed relation has degree \(n\).
+Membership in \(\mathcal R_n^\delta(X)\) is equivalent to being a finite
+\emph{unweighted} sum of these actual relations. Indeed, integer
+coefficients are absorbed by powers of the same rational function:
+\[
+  (\iota_W)_*\operatorname{div}_W(f^m)
+    =m\,(\iota_W)_*\operatorname{div}_W(f),
+  \qquad m\in\mathbf Z.
+\]
+
+For any indexed family of these actual nonempty closed carriers, local
+finiteness is equivalent to finiteness of its index. Thus the finite-sum
+prescription agrees with \cite{StacksRationalEquivalence} in its
+quasi-compact case, when the supplied dimension function is the one used
+by that source. This statement concerns the carrier family, even when
+some of its principal-divisor cycles are zero.
+
+Define
+\[
+  c\sim_{\mathrm{rat}}d
+    \quad\Longleftrightarrow\quad c-d\in\mathcal R_n^\delta(X),
+  \qquad
+  \operatorname{CH}_n^\delta(X)
+    =Z^{\delta}_{\mathrm{fin},n}(X;\mathbf Z)/\mathcal R_n^\delta(X).
+\]
+The quotient class map is surjective, its equality relation is exactly
+\(\sim_{\mathrm{rat}}\), and every displayed principal relation has zero
+class. The subgroup is constructed from these actual cycles, not supplied
+as an input.
+
+Let \(i:X\hookrightarrow Y\) be a closed immersion of Noetherian schemes,
+give \(Y\) a dimension function \(\delta_Y\), and use the proved
+restriction \(\delta_X=\delta_Y\circ i\) on \(X\). Existing geometric
+pushforward carries actual principal relations to actual principal
+relations and therefore induces
+\[
+  i_*:\operatorname{CH}_n^{\delta_X}(X)
+    \longrightarrow\operatorname{CH}_n^{\delta_Y}(Y),
+  \qquad [c]\longmapsto[i_*c].
+\]
+These maps respect identities and composition. This proves the
+closed-immersion case of rational-equivalence preservation in
+\cite{StacksRationalEquivalenceProperPushforward} directly from the
+actual carrier-image calculation.
+For an isomorphism \(e:X\xrightarrow{\sim}Y\), this map is an isomorphism
+of abelian groups. Its inverse is induced by the existing geometric
+open restriction along \(e\), with the same restricted dimension
+function. No injectivity is asserted for a general closed immersion.
+\end{proposition}
+
+\begin{proof}
+Actual closed subschemes inherit local Noetherianity on their affine
+quotient charts and quasi-compactness through their closed embeddings.
+The existing principal-divisor and homogeneity constructions therefore
+apply to every carrier in the index. Span induction and the integer-power
+identity give the finite unweighted-sum characterization. Quasi-compactness
+makes the locally finite family of nonempty carrier supports finite.
+The relation and class-map statements then follow from the quotient by
+this proved principal-relation subgroup.
+For closed pushforward, let \(W'=i(W)\) be the actual image carrier and
+\(a:W\xrightarrow{\sim}W'\) its support-to-image isomorphism. The actual
+function-field isomorphism transports \(f\) to \((a^{-1})^*f\), and
+Proposition~\ref{prop:principal-divisor} identifies the pushed divisor
+with the divisor of that function. The image carrier retains degree
+\(n+1\). Thus generators, and then their generated subgroup, are
+preserved. Quotient descent inherits the existing cycle identity and
+composition laws. For \(e\), both inverse cycle maps preserve the
+relation subgroup, giving the stated quotient isomorphism and its
+open-restriction formula.
+\end{proof}
+
+\begin{proposition}[Carrier dimension and a constructed low-dimensional grading --- \formal]
+\label{prop:low-dimensional-grading}
+Let \(X\) be a scheme and \(W\in\operatorname{IntSub}(X)\).
+The actual point map of its closed inclusion identifies the ordered
+points of \(W\) with the specializations of \(\xi_W\). Consequently
+\[
+  \dim W=\operatorname{ht}(\xi_W),
+\]
+where height is taken in the closure-inclusion order on the points of
+\(X\). This is the dimension of the carrier, not its codimension in
+\(X\).
+
+If \(\dim X<\infty\), the function
+\[
+  h_X(x)=\dim\overline{\{x\}}\in\mathbf Z_{\geq0}
+\]
+is well defined and strictly decreases under every proper specialization.
+Here the closure is equipped with its actual reduced closed-subscheme
+structure. For a finite-type algebra \(A\) over a field \(k\), its actual
+polynomial presentation gives a finite bound on \(\dim A\), and hence
+on \(\dim\Spec A\) and every \(\dim\Spec(A/I)\). These finiteness
+statements also include the zero algebra and empty spectrum.
+More generally, an actual finite-type morphism
+\(X\to\Spec k\) implies \(\dim X<\infty\). Here finite type means
+locally of finite type and quasi-compact; the algebra on each affine
+chart is derived from the structural morphism.
+
+If \(\dim X\leq1\), then
+\[
+  \delta_X(x):=h_X(x)
+\]
+is a dimension function in the sense of \cite{StacksDimensionFunction}:
+its values lie in \(\{0,1\}\), and every proper specialization
+\(x\leadsto y\) satisfies \(\delta_X(x)=1\) and
+\(\delta_X(y)=0\). In particular, the immediate-specialization unit step
+is proved, not supplied as a separate hypothesis. The construction
+requires neither integrality nor Noetherianity of \(X\), and includes
+the empty scheme.
+
+For this constructed grading, actual carrier degrees are ordinary
+dimensions:
+\[
+  \deg_{\delta_X}(W)=\dim W.
+\]
+For a nontrivial semiring \(R\), \(n\in\mathbf N\), and the
+coefficient-one cycle \([W]\), this gives the exact existing-cycle test
+\[
+  [W]\in Z^{\delta_X}_{\mathrm{fin},n}(X;R)
+    \quad\Longleftrightarrow\quad \dim W=n.
+\]
+On Noetherian schemes of dimension at most one,
+Proposition~\ref{prop:principal-relations} therefore uses the actual
+dimensions of its carriers without an independently supplied grading.
+
+The construction applies to the actual affine line
+\(\mathbb A^1_k=\Spec k[T]\): its dimension is one, and
+\[
+  \delta_{\mathbb A^1_k}(\eta_{\mathbb A^1_k})=1,
+  \qquad \delta_{\mathbb A^1_k}(0)=0.
+\]
+Here the origin is the actual point defined by the kernel of the
+constant-coefficient homomorphism \(k[T]\to k\).
+\end{proposition}
+
+\begin{proof}
+The actual closed inclusion is an order embedding with image
+\(\overline{\{\xi_W\}}\). Sobriety identifies chains of points with
+chains of irreducible closed subsets, giving the dimension--height
+formula. Finite ambient dimension makes each point height a finite
+integer. Height strictly increases along proper inclusion of point
+closures. For the affine finiteness assertion, iterating the proved
+bound \(\dim B[T]\leq2\dim B+1\) for commutative rings \(B\) gives
+a finite bound on each
+finite polynomial algebra over \(k\), which passes to its actual
+quotients. Only this finiteness consequence of polynomial dimension
+theory is needed here, not the sharper formula of
+\cite{StacksPolynomialDimension}.
+An actual finite affine subcover extends the finite bound to \(X\):
+open-immersion stalk isomorphisms preserve point coheight, so the
+global dimension is bounded by the maximum of the chart dimensions.
+Under the bound one, a strict pair must therefore have
+heights zero and one; these are both defining laws of \(\delta_X\).
+The carrier dimension--height identity gives the degree comparison,
+and nontrivial coefficients detect the support of \([W]\).
+For the affine line, the one-variable polynomial PID calculation gives
+dimension one. Its generic point has that height; the origin's defining
+ideal is maximal, so its point is closed and has height zero.
+\end{proof}
+
 For smooth projective schemes over a fixed field \(k\), composition of rational Chow
 correspondences is associative and bilinear
 \cite{StacksChowCorrespondenceComposition}, while graph classes compose
@@ -948,13 +1695,230 @@ Proposition~\ref{prop:graph-route} are in
 \boundarysrc{CompactifiedGraphProjector.lean}, under
 \leanpath{CompactifiedDeckGraphComparison} and
 \leanpath{groupAlgebraProjectorExtension}.
+The actual graph morphism, ideal, and source isomorphism in
+Proposition~\ref{prop:graph-restriction} are
+\leanpath{SchemeCorrespondence.graphMorphism}, \leanpath{graphIdeal}, and
+\leanpath{graphSubschemeIso} in \corrsrc{GraphSubscheme.lean}.
+The open pair inclusion, Cartesian square, and ideal equality are
+\leanpath{FiniteEtaleExtension.pairInclusion_isOpenImmersion},
+\leanpath{graphRestriction_isPullback}, and \leanpath{graphIdeal_restriction}
+in \boundarysrc{GraphRestriction.lean};
+\leanpath{graphIdeal_liftDeckAction} states the additional-input corollary.
+The canonical cycle module and its functorial open restriction are in
+\leanpath{Cycles/Basic.lean} and \leanpath{Cycles/OpenRestriction.lean},
+under \leanpath{SchemeCycles.Cycles} and \leanpath{openRestriction}.
+The ambient generic-stalk calculation is
+\leanpath{genericStalk_length_of_isClosedImmersion} in
+\leanpath{Cycles/IntegralMultiplicity.lean}.
+The finite split cycle types are specializations of this same definition.
+Proposition~\ref{prop:graph-cycle-restriction} is in
+\corrsrc{GraphCycles.lean} and \boundarysrc{GraphCycleRestriction.lean},
+under \leanpath{graphIntegralSubscheme}, \leanpath{graphCycleLinearMap},
+\leanpath{graphCycle_restriction}, and
+\leanpath{graphCycleLinearMap_restriction}.
+Proposition~\ref{prop:graph-composition} is in
+\corrsrc{GraphComposition.lean}, under \leanpath{graphIntersectionIdeal},
+\leanpath{graphIntersectionIso}, \leanpath{graphCompositionIso}, and
+\leanpath{graphIntersectionIdeal_map_p13}.
+The closed-support cycle image and linear closed-immersion pushforward are
+\leanpath{closedImageCycle} and \leanpath{closedImmersionPushforward} in
+\leanpath{Cycles/ClosedImmersionPushforward.lean}. Their degree calculation
+uses \leanpath{Cycles/ResidueDegree.lean}; the older split-point declaration
+is a compatibility adapter to that same proof.
+The \'{e}tale openness results are in \corrsrc{EtaleGraphIntersection.lean}.
+Proposition~\ref{prop:graph-cycle-composition} uses
+\leanpath{graphSlice_isPullback} in \corrsrc{GraphSlice.lean} and
+\leanpath{graphRightPullback_graphCycle}, \leanpath{graphSlicePullPush_graphCycle},
+and \leanpath{graphIntersectionCycle_image_p13} in
+\corrsrc{GraphCycleComposition.lean}.
+Proposition~\ref{prop:graph-cycle-base-comparison} uses
+\leanpath{forgetDeckBase} and \leanpath{forgetDeckBase_injective} in
+\corrsrc{DeckBaseChange.lean}, the closed pair and triple comparisons in
+\corrsrc{RelativeProductComparison.lean}, and the graph and slice
+identities in \corrsrc{GraphBaseComparison.lean}.
+Its cycle formulas are \leanpath{graphCycle_pairBaseComparison},
+\leanpath{graphIntersectionCycle_tripleBaseComparison}, and
+\leanpath{graphCycleLinearMap_baseComparison} in
+\corrsrc{GraphCycleBaseComparison.lean}; the full-cycle squares are
+\leanpath{graphRightPullback_baseComparison} and
+\leanpath{graphSlicePullPush_baseComparison} in the same file.
+The comparison of isomorphism pullback with inverse closed pushforward is
+\leanpath{openRestriction_iso_eq_pushforward_inv} in
+\leanpath{Cycles/IsomorphismTransport.lean}.
+The cycle identities are formalized for every semiring of coefficients.
+Proposition~\ref{prop:scheme-local-order} uses \leanpath{localOrder},
+\leanpath{principalQuotient_length_ne_top}, and
+\leanpath{localOrder_fraction} in \leanpath{Cycles/LocalOrder.lean}.
+The quotient-length and fraction-field order comparisons are
+\leanpath{ord_ringEquiv} and \leanpath{ordFrac_ringEquiv} in
+\leanpath{Cycles/LocalOrderTransport.lean}.
+The actual generic-point field map and its stalk square are
+\leanpath{functionFieldEquiv} and \leanpath{functionFieldEquiv_algebraMap}
+in \leanpath{Cycles/FunctionFieldTransport.lean}.
+The point index, its transport, and the resulting local coefficient are
+\leanpath{DivisorPoint}, \leanpath{divisorPointEquiv}, and
+\leanpath{divisorOrder} in \leanpath{Cycles/SchemeLocalOrder.lean}.
+The affine constructor is \leanpath{divisorPointOfAffineHeightOne}, and
+the coefficient-invariance theorem is \leanpath{divisorOrder_iso}.
+Proposition~\ref{prop:divisor-support} uses \leanpath{pointSupport},
+\leanpath{ambientGenericPoint}, and
+\leanpath{pointEquivIntegralClosedSubscheme} in
+\leanpath{Cycles/PointSupport.lean}.
+The topological chain calculation is
+\leanpath{support_coheight_eq_stalkDim} in
+\leanpath{Cycles/SupportCodimension.lean}; its ideal-sheaf specialization
+is \leanpath{supportCodimension_eq_stalkDim} in
+\leanpath{Cycles/DivisorSupport.lean}.
+The same file contains \leanpath{divisorPointEquivPrimeDivisor},
+\leanpath{primeDivisorEquiv_val}, and \leanpath{primeDivisorOrder_iso},
+as well as the compatibility of reduced point closures with the existing
+closed-immersion cycle pushforward.
+Proposition~\ref{prop:divisor-finiteness} uses
+\leanpath{finite_heightOne_primes_containing} in
+\leanpath{Cycles/HeightOneFiniteness.lean} and
+\leanpath{exists_affine_fraction}, \leanpath{affineGerm_isUnit_iff}, and
+\leanpath{divisorOrder_eq_zero_of_affine_fraction} in
+\leanpath{Cycles/RationalFunctionPresentation.lean}.
+Its support conclusions are \leanpath{finite_divisorPoints_in_affine},
+\leanpath{primeDivisorSupports_locallyFinite},
+\leanpath{finite_primeDivisorOrder_support}, and
+\leanpath{finite_divisorOrder_support} in
+\leanpath{Cycles/DivisorFiniteness.lean}.
+Proposition~\ref{prop:principal-divisor} uses
+\leanpath{principalDivisor}, \leanpath{principalDivisor_apply},
+\leanpath{principalDivisor_support}, and \leanpath{principalDivisorAddHom}
+in \leanpath{Cycles/PrincipalDivisor.lean}; the one, product, inverse,
+and quotient laws are in the same file.
+The actual support equivalence \leanpath{closedImageSubschemeEquiv} and
+the coefficient formula \leanpath{closedImmersionPushforward_iso_apply_image}
+are in \leanpath{Cycles/IsomorphismTransport.lean}.
+The two divisor identities are \leanpath{principalDivisor_iso} and
+\leanpath{openRestriction_principalDivisor} in
+\leanpath{Cycles/PrincipalDivisorTransport.lean}.
+Proposition~\ref{prop:principal-divisor-degree} uses
+\leanpath{DimensionFunction}, \leanpath{supportDegree}, and
+\leanpath{supportDegree_primeDivisor} in
+\leanpath{Cycles/DimensionFunction.lean}.
+The literal restriction is \leanpath{DimensionFunction.comapClosedImmersion}
+in \leanpath{Cycles/DimensionFunctionRestriction.lean}, with
+\leanpath{supportDegree_comapClosedImmersion}.
+The supported submodule \leanpath{cyclesOfDegree}, its coefficient
+criterion and its disjointness theorem are in \leanpath{Cycles/CycleDegree.lean}.
+The principal and ambient-carrier endpoints are
+\leanpath{principalDivisor_mem_cyclesOfDegree} and
+\leanpath{principalDivisor_closedSupport_mem_cyclesOfDegree} in
+\leanpath{Cycles/PrincipalDivisorDegree.lean}; that file also proves
+closed-pushforward preservation for the restricted dimension function.
+Proposition~\ref{prop:principal-relations} uses
+\leanpath{ambientPrincipalDivisor} and
+\leanpath{closedImmersionPushforward_ambientPrincipalDivisor} in
+\leanpath{Cycles/PrincipalDivisorImage.lean}.
+The genuine relation index, span, and quotient are
+\leanpath{PrincipalRelationData}, \leanpath{principalRelations}, and
+\leanpath{ChowGroup} in \leanpath{Cycles/PrincipalRelations.lean}.
+That file proves \leanpath{principalRelationData_family_locallyFinite_iff},
+\leanpath{mem_principalRelations_iff_exists_list}, and the laws of
+\leanpath{classMap}.
+The restricted cycle map is \leanpath{gradedClosedImmersionPushforward}
+in \leanpath{Cycles/GradedPushforward.lean}; its proved relation
+preservation and \leanpath{chowClosedImmersionPushforward} are in
+\leanpath{Cycles/ChowPushforward.lean}.
+The quotient equivalence \leanpath{chowIsoEquiv} and its representative
+formulas are in \leanpath{Cycles/ChowIsomorphism.lean};
+\leanpath{gradedIsoEquiv_symm_val} identifies the inverse cycle map with
+the existing open restriction.
+The actual carrier order isomorphism and dimension--height comparison in
+Proposition~\ref{prop:low-dimensional-grading} are
+\leanpath{integralSubschemePointOrderIso} and
+\leanpath{ambientGenericPoint_height_eq_supportDim} in
+\leanpath{Cycles/SupportDimension.lean}; that file also proves
+\leanpath{point_height_toNat_eq} and
+\leanpath{point_height_toNat_strictMono}.
+The affine bounds are \leanpath{ringKrullDim_lt_top_of_finiteType} and
+\leanpath{spec_topologicalKrullDim_lt_top_of_finiteType} in
+\leanpath{Cycles/FiniteTypeDimension.lean}.
+The structural-morphism endpoint is
+\leanpath{topologicalKrullDim_lt_top_of_finiteType} in
+\leanpath{Cycles/FiniteTypeSchemeDimension.lean}, proved through
+\leanpath{topologicalKrullDim_lt_top_of_finite_openCover}.
+The constructed grading is \leanpath{DimensionFunction.ofKrullDimLEOne}
+in \leanpath{Cycles/LowDimensionalDimensionFunction.lean}, with
+\leanpath{supportDegree_ofKrullDimLEOne_eq_iff} and
+\leanpath{fundamentalCycle_mem_ofKrullDimLEOne_iff}.
+The actual example is \leanpath{affineLineDimensionFunction} in
+\leanpath{Cycles/Examples/DimensionFunction.lean};
+\leanpath{affineLine_dimension},
+\leanpath{affineLineDimensionFunction_genericPoint}, and
+\leanpath{affineLineDimensionFunction_origin} give its geometric values.
 \end{leanfiles}
 
 \begin{statusnote}{\openstatus}
-Neither a compactification carrying the required deck action nor a concrete
-Chow-valued graph square \(\mathscr G_r\) is constructed.  The sufficient
-route explains exactly why global deck graphs would bypass a separate
-boundary-defect vanishing proof; it does not assert that such graphs exist.
+Propositions~\ref{prop:graph-restriction} and
+\ref{prop:graph-cycle-restriction} construct closed graphs, integral graph
+cycles, and their open restriction for a supplied finite \'{e}tale extension.
+Proposition~\ref{prop:graph-composition} identifies the actual intersection
+and image schemes for composition of graph supports.
+Proposition~\ref{prop:graph-cycle-composition} constructs their graph-slice
+pull--push on actual cycles and the degree-one outer image.
+Proposition~\ref{prop:graph-cycle-base-comparison} carries these supports,
+weighted graph sums, and full-cycle slice maps from relative products
+over \(S\) to products over a separated structural base \(B\).
+Proposition~\ref{prop:scheme-local-order} constructs actual signed local
+coefficients and proves their invariance under scheme isomorphisms.
+Proposition~\ref{prop:divisor-support} identifies their point index with
+actual integral codimension-one closed supports and proves the
+coefficient comparison on these supports.
+Proposition~\ref{prop:divisor-finiteness} proves local finiteness of the
+actual nonzero-coefficient support family and finite coefficient support
+under quasi-compactness.
+Proposition~\ref{prop:principal-divisor} assembles those coefficients into
+finite principal-divisor cycles in the existing ungraded
+\(Z_{\mathrm{fin}}\), proves the multiplicative-to-additive law, and
+compares their actual isomorphism pushforward and pullback.
+Proposition~\ref{prop:principal-divisor-degree} supplies the dimension-function
+interface, its restriction to actual closed carriers, and homogeneity of
+their pushed principal divisors in the existing cycle module.
+Proposition~\ref{prop:principal-relations} constructs the actual
+principal-relation subgroup, its finite-cycle Chow quotient on a
+Noetherian scheme with supplied dimension function, and closed-pushforward
+and isomorphism descent.
+The new quotient has integral coefficients; general rational coefficient
+extension and its comparison with the intended rational Chow groups remain
+to be constructed. The earlier scalar-extension theorem is finite-split.
+Proposition~\ref{prop:low-dimensional-grading} identifies actual carrier
+dimensions, proves finite-type schemes over a field finite-dimensional, and constructs
+the closure-dimension grading in dimension at most one. The general
+field-based construction
+\(\delta_k(x)=\operatorname{trdeg}_k\kappa(x)
+  =\dim\overline{\{x\}}\), including its immediate-specialization
+law, is the next grading obligation
+\cite{StacksAlgebraicSchemeDimension}. Finiteness alone does not prove
+that unit-step law. The comparison between codimension \(p\) and
+homological degree \(d-p\) on the intended pure-dimensional target
+also remains to be proved.
+General-open restriction of rational functions, divisors and relations
+still needs to be constructed on this quotient for the graph-restriction
+route; the inverse-isomorphism case alone does not supply it.
+Further proper, flat and Gysin comparisons remain before the intended
+Chow-correspondence operations are available. Component cycles and multiplicities
+beyond integral carriers and more general intersection and pushforward
+operations require their own constructions. Open restriction need not preserve
+absolute Krull dimension, so no grading is silently imposed on
+\(Z_{\mathrm{fin}}\). The linear map \(\zeta_p\) is not yet a Chow algebra
+map. A geometric extension
+in the intended application and the concrete Chow-valued square
+\(\mathscr G_r\) remain to be constructed. The restricted projection of
+Proposition~\ref{prop:graph-composition} is proper on its graph support;
+properness of the ambient \(p_{13}\) is not asserted. Nor does the
+scheme-theoretic intersection alone identify a Chow intersection product.
+For \(B=\Spec k\), the base comparison reaches the absolute cycle
+spaces over \(k\); comparison with an intersection product and convolution
+on the eventual absolute Chow correspondence algebra remains to be
+justified, together with rational-equivalence descent. No integral generator is assigned to a
+possibly reducible inverse-image graph subscheme.
+The auxiliary cover base
+\(S\) and carrier \(\bar Y\) also require a separate geometric comparison
+with the Hodge target \(X\).
 \end{statusnote}
 
 \section{Residual realization, coverage, and the exact gap}
@@ -996,9 +1960,8 @@ square
 
 This common-source diagram through \(\mathcal U\) is canonical for the two selected
 idempotents.  It requires neither a map from all of \(A_H\) to a convolution
-algebra nor a restriction from all of \(\Gbar\) to \(A_H\).  The latter
-would exclude even the full correspondence algebra of two split points, as
-shown below.  In the actual deck-graph branch, the independent
+algebra nor a restriction from all of \(\Gbar\) to \(A_H\).
+In the actual deck-graph branch, the independent
 multiplicative square instead begins with \(\Q[G]\): the generic and
 compactified graph maps commute with restriction as in
 \(\mathscr G_r\).  Relating that compactified projector to the residual
@@ -1026,7 +1989,33 @@ Already without surjectivity, if the ambient action has the Chow lower-left dete
 Section~\ref{sec:target}, then \(\alpha\) lies in the cycle-class image.
 \end{proposition}
 
-\subsection{A split-point test and the restriction obstruction}
+For this lower-left conclusion alone, even idempotence of \(\Pi\) is
+unnecessary: evaluating Equation~\eqref{eq:action-square} at \((1,0)\)
+gives
+\[
+  \operatorname{cl}(D(\Pi))
+    =d_{\mathrm{ll}}(\rho(\Pi))=\theta(a_H).
+\]
+Idempotence and surjectivity enter the stronger projector-lift conclusion,
+not this cycle extraction.  The construction problem is to start with a
+prescribed \(\alpha\), produce geometric data for the square, and prove
+\(\theta(a_H)=\alpha\).  If instead a geometric map
+\(r_{\mathrm{CH}}:E_H\to A\) is constructed with
+\(\theta=\operatorname{cl}\circ r_{\mathrm{CH}}\), that equality already
+makes \(r_{\mathrm{CH}}(a_H)\) a cycle representative of \(\alpha\).
+
+\paragraph{The chosen projector.}
+For each prescribed class, the marked construction follows one chosen
+algebraic projector \(\Pi\).  Proposition~\ref{prop:realization} uses
+surjective cancellation to identify its entire action; the projector-lift
+conclusion also uses its idempotence.  For a chosen extension witness \(x\),
+write \(\Pi=\Pi_x\).  Its supplied extension data prove idempotence and
+the generic restriction law.  Those data and \(x\) must remain available
+alongside the ordinary graph-projector lift, which stores \(\Pi\) but
+not the extension package.  Construction \(C\) retains its separate role
+in the Hodge-to-graph direction of Theorem~\ref{thm:hodge-graph-equivalence}.
+
+\subsection{A split-point geometric test}
 \label{sec:split-points}
 
 Let \(I\) be finite and \(Z_I=\Spec(k^I)\) over a field \(k\).  The
@@ -1702,19 +2691,6 @@ The coefficient action factors through
 isomorphism; the same Palomar square holds for the quotient image of
 \(\pi_0^{\mathrm{sp}}\).
 
-\begin{proposition}[Ambient restriction obstruction --- \formal]
-There is no unital ring homomorphism from \(M_2(\Q)\) to any nonzero
-commutative ring.  In particular, there is no algebra homomorphism from this
-full coefficient correspondence algebra to a nonempty rational sheet algebra.
-\end{proposition}
-
-\begin{proof}
-Commutativity of the target and
-\(E_{01}E_{10}=E_{00}\), \(E_{10}E_{01}=E_{11}\) force the images of
-\(E_{00}\) and \(E_{11}\) to agree.  Their idempotence and orthogonality
-then force both images to vanish, contradicting \(E_{00}+E_{11}=1\).
-\end{proof}
-
 \begin{statusnote}{\formal/\openstatus}
 The additive cycle-coefficient bridge and its exact finite
 point-decomposition quotient are checked for split-presentable spans.
@@ -1760,9 +2736,7 @@ are \leanpath{additiveRelations_eq_ker} and
 square is \leanpath{GeometricSplitPoints.palomarTargetSquare} in
 \chowsrc{Examples/GeometricSplitPoints.lean}, with quotient factorization
 \leanpath{additiveCoefficientRealization_comp_classMap} and descended square
-\leanpath{additivePalomarTargetSquare}.  The obstruction is
-\leanpath{MatrixRestrictionObstruction.no_ringHom_to_commutative} in
-\leanpath{HodgeConjecture/LinearAlgebra/MatrixRestrictionObstruction.lean}.
+\leanpath{additivePalomarTargetSquare}.
 The actual integral-subscheme classification is
 \leanpath{existsUnique_pointIso_of_isIntegral} and
 \leanpath{labelEquivIntegralClosedSubscheme} in
@@ -1895,16 +2869,29 @@ one must additionally assume the explicitly named strong replacement
 hypothesis.
 \end{theorem}
 
+This replacement asserts existence of a marked witness for the same target
+class whenever an ordinary graph lift exists.  It does not identify the
+replacement projector with a given original projector.  It belongs only
+to the reverse \(\mathrm{HC}_{\Q}\Rightarrow\operatorname{Cov}_{\mathrm{Gal}}\)
+arrow, not to cycle detection or the forward Hodge
+implication.  The existing marked witness records abstract extension data;
+an application still has to connect those data to actual covers and their
+geometric restriction maps.
+
 \begin{leanfiles}
 The comparison record and its realization consequences are in
 \chowsrc{MarkedAugmentedRealization.lean}, under
 \leanpath{MarkedProjectorActionComparison},
+\leanpath{cycleClass_decode_eq_generatedClass},
 \leanpath{toIdempotentRepresentationMorphism}, and
 \leanpath{action_comp_idempotentMap_eq_classGraph}.  The extension-based
 \leanpath{MarkedSelectorActionComparison} is a specialization of this core.
 The
 restriction square is
 \leanpath{AlgebraProjectorExtension.restriction_comp_compactifiedIdempotentMap}.
+The chosen-projector
+\leanpath{toAlgebraicProjectorLift} stores \(\Pi\) and accepts
+idempotence and residual surjectivity explicitly in the core interface.
 The sheet specialization is in
 \chowsrc{GaloisMarkedRealization.lean}, under
 \leanpath{MarkedGaloisSelectorComparison},
@@ -1945,30 +2932,52 @@ cannot be obtained simply by varying surjective multiplicative residual
 maps.  The general residual interface is linear and asks for separately
 proved geometric comparison and coverage.
 
-For the general Hodge target, the following constructions remain, with
-their displayed compatibilities to be proved:
+For the general Hodge target, first fix \((X,p,\alpha)\) with independently
+specified Hodge membership.  The intended route is
+\[
+  \text{geometric data for }\alpha
+  \ \Longrightarrow\
+  d_{\mathrm{ll}}(\rho(\Pi))=\alpha
+  \ \Longrightarrow\
+  \operatorname{cl}(D(\Pi))=\alpha.
+\]
+The last arrow is supplied by detection.  Constructing the geometric data
+and proving the first arrow, uniformly for the prescribed classes, remains
+the substantive generation problem.  More explicitly:
 
 \begin{enumerate}[leftmargin=2.2em]
   \item beyond the finite split degree-zero case, genuine Chow groups,
         Betti cohomology, Hodge subspaces, and the
-        rational cycle-class map, together with the Tate-block construction,
-        lower-left Chow detection, and Hodge-morphism comparison;
-  \item for every targeted Hodge class, marked normal-closure data and a
+        rational cycle-class map, together with the ambient action and
+        lower-left Chow detection.  Tate-block construction supplies the
+        reverse reformulation; Hodge-morphism comparison is needed only
+        for that alternative presentation of Hodge membership;
+  \item for the marked route and every targeted Hodge class, actual
+        class-dependent cover data and a
         geometric residual realization \(\theta:E_H\to V\) carrying
-        \(a_H\) to that class; no full map
+        \(a_H\) to that class.  Normal-closure and inertia data must be
+        constructed if the selected cover argument uses them; no full map
         \(A_H\to\Q[G]\) or \(\Gbar\to A_H\) is required by the
         canonical action comparison;
-  \item either a compactified deck-graph square \(\mathscr G_r\), or a raw
-        closure plus a proof that its specific defect vanishes;
-  \item the representation-morphism identity
-        \(\varphi_{\rho(\Pi)}(z)\Theta
-          =\Theta\varphi_{P_{a_H}}(z)\), equivalently its selector square,
-        and enough surjectivity when the full target equality
+  \item when a boundary extension is needed, its genuine geometric maps
+        and Chow-level comparisons; the scheme-level restriction of graphs
+        for a supplied extension is Proposition~\ref{prop:graph-restriction}.
+        For the stronger projector route, a compactified
+        deck-graph square \(\mathscr G_r\), or a raw closure with its
+        specific idempotence defect corrected or proved zero, is sufficient;
+  \item the selector action square
+        \(\rho(\Pi)\Theta=\Theta P_{a_H}\).
+        For an idempotent correspondence this is equivalently the
+        representation-morphism identity.  Surjectivity is additionally
+        needed for the cancellation argument yielding the full equality
         \(\rho\circ\varphi_\Pi=\varphi_{P_\alpha}\) rather than only the
-        lower-left class is needed;
-  \item a proof of the class-dependent coverage assertion.  For a literal
-        equivalence with coverage, one also needs the strong replacement of
-        arbitrary graph lifts by marked Galois witnesses.
+        lower-left class.  The chosen \(\Pi\) must also satisfy its supplied
+        generic restriction law;
+  \item a construction for all prescribed classes and genuine models
+        covering every intended \(X,p\).  Only for a literal equivalence
+        with the stronger Galois coverage schema does one additionally need
+        its named replacement hypothesis; the basic graph equivalence and
+        the forward Hodge implication do not need it.
 \end{enumerate}
 
 The codimension-one theorem of Section~\ref{sec:boundary} can feed such a
@@ -2032,6 +3041,96 @@ Subgroup extension (\formal; \conditional) &
 Raw closure defect (\formal; \conditional) &
 \leanpath{restriction_convolutionDefect}\newline
 \leanpath{Boundary/ProjectorClosureDefect.lean}\\
+Closed graph restriction (\formal) &
+\leanpath{graphIdeal_restriction}\newline
+\leanpath{Boundary/GraphRestriction.lean}\\
+Integral graph cycles and open restriction (\formal) &
+\leanpath{SchemeCycles.openRestriction}\newline
+\leanpath{graphCycleLinearMap_restriction}\newline
+\leanpath{Cycles/OpenRestriction.lean}\newline
+\leanpath{Boundary/GraphCycleRestriction.lean}\\
+Graph intersection and composite image (\formal) &
+\leanpath{graphIntersectionIdeal_map_p13}\newline
+\leanpath{Correspondence/GraphComposition.lean}\newline
+\leanpath{Cycles/IntegralMultiplicity.lean}\\
+Graph-slice cycle pull--push (\formal) &
+\leanpath{graphSlicePullPush_graphCycle}\newline
+\leanpath{graphIntersectionCycle_image_p13}\newline
+\leanpath{Correspondence/GraphCycleComposition.lean}\newline
+\leanpath{Cycles/ClosedImmersionPushforward.lean}\\
+Structural-base comparison of graph cycles (\formal) &
+\leanpath{forgetDeckBase_injective}\newline
+\leanpath{graphCycleLinearMap_baseComparison}\newline
+\leanpath{graphRightPullback_baseComparison}\newline
+\leanpath{graphSlicePullPush_baseComparison}\newline
+\leanpath{Correspondence/DeckBaseChange.lean}\newline
+\leanpath{Correspondence/RelativeProductComparison.lean}\newline
+\leanpath{Correspondence/GraphBaseComparison.lean}\newline
+\leanpath{Correspondence/GraphCycleBaseComparison.lean}\newline
+\leanpath{Cycles/IsomorphismTransport.lean}\\
+Signed local orders and isomorphism invariance (\formal) &
+\leanpath{localOrder_fraction}\newline
+\leanpath{ordFrac_ringEquiv}\newline
+\leanpath{functionFieldEquiv_algebraMap}\newline
+\leanpath{divisorPointEquiv}; \leanpath{divisorOrder_iso}\newline
+\leanpath{Cycles/LocalOrder.lean}\newline
+\leanpath{Cycles/LocalOrderTransport.lean}\newline
+\leanpath{Cycles/FunctionFieldTransport.lean}\newline
+\leanpath{Cycles/SchemeLocalOrder.lean}\\
+Codimension-one supports and generic-point bridge (\formal) &
+\leanpath{pointEquivIntegralClosedSubscheme}\newline
+\leanpath{supportCodimension_eq_stalkDim}\newline
+\leanpath{divisorPointEquivPrimeDivisor}\newline
+\leanpath{primeDivisorEquiv_val}; \leanpath{primeDivisorOrder_iso}\newline
+\leanpath{Cycles/PointSupport.lean}\newline
+\leanpath{Cycles/SupportCodimension.lean}\newline
+\leanpath{Cycles/DivisorSupport.lean}\\
+Local finiteness and finite coefficient support (\formal) &
+\leanpath{finite_divisorPoints_in_affine}\newline
+\leanpath{primeDivisorSupports_locallyFinite}\newline
+\leanpath{finite_primeDivisorOrder_support}\newline
+\leanpath{Cycles/HeightOneFiniteness.lean}\newline
+\leanpath{Cycles/RationalFunctionPresentation.lean}\newline
+\leanpath{Cycles/DivisorFiniteness.lean}\\
+Finite principal divisors and isomorphism transport (\formal) &
+\leanpath{principalDivisor}; \leanpath{principalDivisor_support}\newline
+\leanpath{principalDivisor_mul}; \leanpath{principalDivisorAddHom}\newline
+\leanpath{closedImmersionPushforward_iso_apply_image}\newline
+\leanpath{principalDivisor_iso}; \leanpath{openRestriction_principalDivisor}\newline
+\leanpath{Cycles/PrincipalDivisor.lean}\newline
+\leanpath{Cycles/IsomorphismTransport.lean}\newline
+\leanpath{Cycles/PrincipalDivisorTransport.lean}\\
+Dimension functions and homogeneous principal divisors (\formal) &
+\leanpath{DimensionFunction}; \leanpath{supportDegree_primeDivisor}\newline
+\leanpath{DimensionFunction.comapClosedImmersion}\newline
+\leanpath{cyclesOfDegree}; \leanpath{cyclesOfDegree_disjoint}\newline
+\leanpath{principalDivisor_mem_cyclesOfDegree}\newline
+\leanpath{principalDivisor_closedSupport_mem_cyclesOfDegree}\newline
+\leanpath{Cycles/DimensionFunction.lean}\newline
+\leanpath{Cycles/DimensionFunctionRestriction.lean}\newline
+\leanpath{Cycles/CycleDegree.lean}\newline
+\leanpath{Cycles/PrincipalDivisorDegree.lean}\\
+Actual principal relations and Chow descent (\formal) &
+\leanpath{PrincipalRelationData}; \leanpath{principalRelations}\newline
+\leanpath{mem_principalRelations_iff_exists_list}\newline
+\leanpath{ChowGroup}; \leanpath{classMap_eq_iff}\newline
+\leanpath{chowClosedImmersionPushforward}; \leanpath{chowIsoEquiv}\newline
+\leanpath{Cycles/PrincipalDivisorImage.lean}\newline
+\leanpath{Cycles/PrincipalRelations.lean}\newline
+\leanpath{Cycles/GradedPushforward.lean}\newline
+\leanpath{Cycles/ChowPushforward.lean}\newline
+\leanpath{Cycles/ChowIsomorphism.lean}\\
+Carrier dimension, finite bounds and constructed grading (\formal) &
+\leanpath{ambientGenericPoint_height_eq_supportDim}\newline
+\leanpath{topologicalKrullDim_lt_top_of_finiteType}\newline
+\leanpath{DimensionFunction.ofKrullDimLEOne}\newline
+\leanpath{fundamentalCycle_mem_ofKrullDimLEOne_iff}\newline
+\leanpath{Examples.affineLineDimensionFunction}\newline
+\leanpath{Cycles/SupportDimension.lean}\newline
+\leanpath{Cycles/FiniteTypeDimension.lean}\newline
+\leanpath{Cycles/FiniteTypeSchemeDimension.lean}\newline
+\leanpath{Cycles/LowDimensionalDimensionFunction.lean}\newline
+\leanpath{Cycles/Examples/DimensionFunction.lean}\\
 Compactified graph route (\formal; \conditional) &
 \leanpath{groupAlgebraProjectorExtension}\newline
 \leanpath{Boundary/CompactifiedGraphProjector.lean}\\

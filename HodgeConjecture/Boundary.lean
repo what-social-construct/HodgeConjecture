@@ -3,6 +3,8 @@ import HodgeConjecture.Boundary.CompactifiedGraphProjector
 import HodgeConjecture.Boundary.Different
 import HodgeConjecture.Boundary.ExtensionCriterion
 import HodgeConjecture.Boundary.GaloisProjectorExtension
+import HodgeConjecture.Boundary.GraphRestriction
+import HodgeConjecture.Boundary.GraphCycleRestriction
 import HodgeConjecture.Boundary.HeightOneDifferent
 import HodgeConjecture.Boundary.NoetherDifferentRamification
 import HodgeConjecture.Boundary.ProjectorClosureDefect
@@ -33,11 +35,15 @@ contains the marked selector decomposition in which one and the same
 base-sheet multiplication operator is diagonal in selector/CRT coordinates
 and graph-shaped in constant-unit coordinates.  Its normal-closure comparison
 also records the algebra equivalence with split sheet functions together with
-the commuting augmentation/tensor-diagonal square.
+the commuting augmentation/tensor-diagonal square. For an actual finite
+étale extension, the closed graph of an extended deck automorphism pulls back
+to the graph of its restriction, with equality of the defining ideal sheaves.
+For an integral extended cover, this also gives restriction of actual graph
+cycles and their rational weighted sums.
 
-The broad normalization-purity/global-triviality prototype remains available
-by directly importing `Boundary.Normalization.GlobalExtension`, but it is not
-part of this active boundary umbrella.  The active endpoint stops at the
-proved codimension-one statement and keeps the actual compactification/gluing
-input visible.
+The broad normalization-purity/global-triviality prototype is preserved in
+`research/archive/legacy-lean/`, not as an importable library module.
+The normalization endpoint stops at the proved codimension-one statement.
+Existence of the finite étale extension remains an explicit input, and the
+scheme-theoretic graph restriction is not yet a Chow realization comparison.
 -/

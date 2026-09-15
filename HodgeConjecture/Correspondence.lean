@@ -3,6 +3,46 @@ import HodgeConjecture.Correspondence.EtaleClasses
 import HodgeConjecture.Correspondence.FiniteCoproduct
 import HodgeConjecture.Correspondence.FiniteEtaleModel
 import HodgeConjecture.Correspondence.Graph
+import HodgeConjecture.Correspondence.GraphSubscheme
+import HodgeConjecture.Correspondence.GraphCycles
+import HodgeConjecture.Correspondence.GraphComposition
+import HodgeConjecture.Correspondence.EtaleGraphIntersection
+import HodgeConjecture.Correspondence.GraphSlice
+import HodgeConjecture.Correspondence.GraphCycleComposition
+import HodgeConjecture.Correspondence.DeckBaseChange
+import HodgeConjecture.Correspondence.RelativeProductComparison
+import HodgeConjecture.Correspondence.GraphBaseComparison
+import HodgeConjecture.Correspondence.GraphCycleBaseComparison
+import HodgeConjecture.Cycles.IntegralMultiplicity
+import HodgeConjecture.Cycles.ClosedImmersionPushforward
+import HodgeConjecture.Cycles.IsomorphismTransport
+import HodgeConjecture.Cycles.LocalOrder
+import HodgeConjecture.Cycles.LocalOrderTransport
+import HodgeConjecture.Cycles.FunctionFieldTransport
+import HodgeConjecture.Cycles.SchemeLocalOrder
+import HodgeConjecture.Cycles.Examples.LocalOrder
+import HodgeConjecture.Cycles.PointSupport
+import HodgeConjecture.Cycles.SupportCodimension
+import HodgeConjecture.Cycles.DivisorSupport
+import HodgeConjecture.Cycles.HeightOneFiniteness
+import HodgeConjecture.Cycles.RationalFunctionPresentation
+import HodgeConjecture.Cycles.DivisorFiniteness
+import HodgeConjecture.Cycles.PrincipalDivisor
+import HodgeConjecture.Cycles.PrincipalDivisorTransport
+import HodgeConjecture.Cycles.DimensionFunction
+import HodgeConjecture.Cycles.DimensionFunctionRestriction
+import HodgeConjecture.Cycles.CycleDegree
+import HodgeConjecture.Cycles.PrincipalDivisorDegree
+import HodgeConjecture.Cycles.PrincipalDivisorImage
+import HodgeConjecture.Cycles.GradedPushforward
+import HodgeConjecture.Cycles.PrincipalRelations
+import HodgeConjecture.Cycles.ChowPushforward
+import HodgeConjecture.Cycles.ChowIsomorphism
+import HodgeConjecture.Cycles.SupportDimension
+import HodgeConjecture.Cycles.FiniteTypeDimension
+import HodgeConjecture.Cycles.FiniteTypeSchemeDimension
+import HodgeConjecture.Cycles.LowDimensionalDimensionFunction
+import HodgeConjecture.Cycles.Examples.DimensionFunction
 import HodgeConjecture.Correspondence.TransposeAlgebra
 import HodgeConjecture.Correspondence.ProjectorDefect
 import HodgeConjecture.Correspondence.ProjectorLift
@@ -50,9 +90,43 @@ Chow/cohomological realization:
     and degree/length-one comparisons through actual residue and stalk maps.
 20. actual split finite-group torsors, homogeneous sheet maps, and the regular
     torsor's collision decomposition into deck graphs.
+21. actual closed graph morphisms and their defining ideal-sheaf subschemes
+    for deck transformations of separated structural morphisms.
+22. integral graph cycle generators, their dimension, and rational linear
+    assembly into finite cycles on the actual relative product.
+23. actual graph intersections in the relative triple product, their
+    isomorphic projection onto the composite graph, and ambient generic
+    stalk length one for integral closed subschemes.
+24. closed-support degree-one cycle pushforward and the actual graph-slice
+    pull–push formula, with open-and-closed graph geometry for étale covers.
+25. closed comparison with products over a separated structural base,
+    preserving actual graph/intersection cycles and the full cycle slice maps.
+26. signed local divisor coefficients from actual stalk quotient lengths,
+    with function-field, point, and coefficient transport under scheme isomorphisms.
+27. reduced point closures and actual integral closed supports, their
+    codimension-one identification, and geometric support/coefficient transport.
+28. affine numerator/denominator bounds, local finiteness of actual prime
+    supports, and finite coefficient support under quasi-compactness.
+29. actual finite principal-divisor cycles, their multiplicative-to-additive
+    homomorphism, and compatibility with the existing geometric cycle maps
+    through scheme isomorphisms.
+30. explicit dimension functions, their actual closed-immersion restriction,
+    homogeneous submodules of the existing cycles, and the one-lower-degree
+    principal-divisor theorem on integral carriers and their ambient images.
+31. actual principal relations on Noetherian schemes with an explicit
+    dimension function, their finite-sum characterization and Chow quotient,
+    and proved descent of closed pushforward and scheme isomorphisms.
+32. actual carrier dimension as point height, finite-dimensionality for
+    finite-type schemes over a field, and the canonical dimension function
+    in dimension at most one, with carrier grading and an affine-line example.
 
-The free span algebra is not identified with a Chow ring.  Proper cycle
-extraction, rational equivalence, and compatibility with refined
-intersection remain geometric inputs to a `FiniteEtaleAlgebraModel` (or to
-another explicitly chosen admissible system).
+The free span algebra is not identified with a Chow ring. General proper
+cycle extraction, flat/Gysin operations and their rational-equivalence
+descent, and compatibility with refined intersection remain geometric
+inputs to a `FiniteEtaleAlgebraModel` (or to another explicitly chosen
+admissible system). The constructed closed-pushforward quotient is additive;
+it does not supply Chow convolution or its target realization.
+The higher-dimensional finite-type dimension-function construction still
+needs the immediate-specialization dimension formula; finite-dimensionality
+and strict monotonicity alone do not supply that law.
 -/

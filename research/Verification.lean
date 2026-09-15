@@ -234,12 +234,9 @@ It is intentionally outside the library's default import tree.
 #check HodgeConjecture.SplitPointCorrespondence.markedComparison
 #check HodgeConjecture.SplitPointCorrespondence.projectorLift
 #check HodgeConjecture.SplitPointCorrespondence.palomarTargetSquare
-#check HodgeConjecture.MatrixRestrictionObstruction.no_ringHom_to_commutative
-#check HodgeConjecture.MatrixRestrictionObstruction.no_algHom_to_pointwise_sheets
 
 #print axioms HodgeConjecture.SplitPointGeometry.pointProjector_isIdempotent
 #print axioms HodgeConjecture.SplitPointCorrespondence.palomarTargetSquare
-#print axioms HodgeConjecture.MatrixRestrictionObstruction.no_ringHom_to_commutative
 
 -- Actual finite split-span coefficient realization.
 #check HodgeConjecture.FiniteSpanMatrix.matrix_pullback
@@ -940,3 +937,1768 @@ theorem sourceInput_boundary_defect_can_be_nonzero :
 #print axioms sourceInput_boundary_defect_can_be_nonzero
 
 end SourceInputRegressions
+
+-- Core Chow detection does not require residual surjectivity.
+#check HodgeConjecture.MarkedProjectorActionComparison.cycleClass_decode_eq_generatedClass
+#print axioms HodgeConjecture.MarkedProjectorActionComparison.cycleClass_decode_eq_generatedClass
+#print axioms HodgeConjecture.MarkedGaloisSelectorComparison.isAlgebraicHodgeClass_of_comparison
+
+noncomputable section ChosenProjectorRegressions
+
+open HodgeConjecture
+
+variable {A Gamma H : Type*}
+variable [CommRing A] [Algebra ℚ A] [Ring Gamma] [Algebra ℚ Gamma]
+variable [AddCommGroup H] [Module ℚ H]
+variable {M : MarkedAugmentedAlgebra ℚ A}
+variable {rho : RationalCorrespondenceAction Gamma (ℚ × H)} {projector : Gamma}
+variable (B : MarkedProjectorActionComparison M rho projector)
+
+-- The lift retains the chosen correspondence.
+example (hProjector : IsIdempotentElem projector)
+    (hSurjective : Function.Surjective B.residualRealization) :
+    (B.toAlgebraicProjectorLift hProjector hSurjective).projector = projector :=
+  rfl
+
+-- Keeping the supplied extension package retains its original restriction law.
+example {E : AlgebraProjectorExtension A Gamma M.selector} {x : E.Extension}
+    (Bext : MarkedSelectorActionComparison M rho E x)
+    (hSurjective : Function.Surjective Bext.residualRealization) :
+    E.restriction (Bext.toAlgebraicProjectorLift hSurjective).projector =
+      M.selector :=
+  E.projector_restricts x
+
+end ChosenProjectorRegressions
+
+-- Actual closed deck graphs and their scheme-theoretic restriction.
+#check HodgeConjecture.SchemeCorrespondence.graphMorphism
+#check HodgeConjecture.SchemeCorrespondence.graphMorphism_fst
+#check HodgeConjecture.SchemeCorrespondence.graphMorphism_snd
+#check HodgeConjecture.SchemeCorrespondence.graphMorphism_isClosedImmersion
+#check HodgeConjecture.SchemeCorrespondence.graphIdeal
+#check HodgeConjecture.SchemeCorrespondence.graphSubschemeIso
+#check HodgeConjecture.SchemeCorrespondence.graphSubschemeIso_hom_subschemeι
+#check HodgeConjecture.SchemeCorrespondence.graphMorphism_isProper
+#check HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.pairInclusion
+#check HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.pairInclusion_isOpenImmersion
+#check HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.graph_restriction_commutes
+#check HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.graphRestriction_isPullback
+#check HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.graphIdeal_restriction
+#check HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.graphIdeal_liftDeckAction
+
+#print axioms HodgeConjecture.SchemeCorrespondence.graphMorphism
+#print axioms HodgeConjecture.SchemeCorrespondence.graphMorphism_fst
+#print axioms HodgeConjecture.SchemeCorrespondence.graphMorphism_snd
+#print axioms HodgeConjecture.SchemeCorrespondence.graphMorphism_isClosedImmersion
+#print axioms HodgeConjecture.SchemeCorrespondence.graphIdeal
+#print axioms HodgeConjecture.SchemeCorrespondence.graphSubschemeIso
+#print axioms HodgeConjecture.SchemeCorrespondence.graphSubschemeIso_hom_subschemeι
+#print axioms HodgeConjecture.SchemeCorrespondence.graphMorphism_isProper
+#print axioms HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.pairInclusion
+#print axioms HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.pairInclusion_isOpenImmersion
+#print axioms HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.graph_restriction_commutes
+#print axioms HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.graphRestriction_isPullback
+#print axioms HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.graphIdeal_restriction
+#print axioms HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.graphIdeal_liftDeckAction
+
+noncomputable section ClosedGraphRegressions
+
+open HodgeConjecture HodgeConjecture.LiteratureInputs
+open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+open HodgeConjecture.SchemeCorrespondence
+
+-- The identity graph is the actual relative diagonal.
+example {S X : Scheme} (pX : X ⟶ S) :
+    graphMorphism pX (1 : DeckTransformation pX) = pullback.diagonal pX := by
+  apply pullback.hom_ext
+  · simp
+  · simp only [graphMorphism_snd, pullback.diagonal_snd]
+    change (1 : DeckTransformation pX).hom.left = 𝟙 X
+    simp only [show (1 : DeckTransformation pX).hom = 𝟙 (Over.mk pX) from rfl,
+      Over.id_left]
+    rfl
+
+-- Both projections agree with the previously constructed graph span.
+example {S X : Scheme} (pX : X ⟶ S) (σ : DeckTransformation pX) :
+    graphMorphism pX σ ≫ pullback.fst pX pX = (graph pX σ).left ∧
+      graphMorphism pX σ ≫ pullback.snd pX pX = (graph pX σ).right := by
+  constructor <;> simp
+
+-- Separatedness supplies the closed graph and its exact subscheme inclusion.
+example {S X : Scheme} (pX : X ⟶ S) [IsSeparated pX]
+    (σ : DeckTransformation pX) :
+    IsClosedImmersion (graphMorphism pX σ) ∧
+      (graphSubschemeIso pX σ).hom ≫ (graphIdeal pX σ).subschemeι =
+        graphMorphism pX σ :=
+  ⟨inferInstance, graphSubschemeIso_hom_subschemeι pX σ⟩
+
+-- Restricting an already extended automorphism needs no deck-extension input.
+example {X U Y : Scheme} {j : U ⟶ X} {p : Y ⟶ U}
+    (E : FiniteEtaleExtension j p) [IsOpenImmersion j]
+    (σ : DeckTransformation E.toBase) :
+    graphIdeal p (E.restriction σ) =
+      (graphIdeal E.toBase σ).comap E.pairInclusion := by
+  fail_if_success
+    have : DeckExtensionHypothesis E := inferInstance
+  exact E.graphIdeal_restriction σ
+
+-- A prescribed original action uses precisely the explicit lifting input.
+example {X U Y : Scheme} {j : U ⟶ X} {p : Y ⟶ U}
+    (E : FiniteEtaleExtension j p) [IsOpenImmersion j] [DeckExtensionHypothesis E]
+    {G : Type} [Group G] (α : FiniteDeckAction p G) (g : G) :
+    graphIdeal p (α g) =
+      (graphIdeal E.toBase (E.liftDeckAction α g)).comap E.pairInclusion :=
+  E.graphIdeal_liftDeckAction α g
+
+end ClosedGraphRegressions
+
+-- General finite cycles reuse the split generators and restrict actual graph cycles.
+#check HodgeConjecture.SchemeCycles.IntegralClosedSubscheme
+#check HodgeConjecture.SchemeCycles.Cycles
+#check HodgeConjecture.SchemeCycles.openRestriction
+#check HodgeConjecture.SchemeCorrespondence.graphCycleLinearMap
+#check HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.graphCycleLinearMap_restriction
+
+#print axioms HodgeConjecture.SchemeCycles.fundamentalCycle
+#print axioms HodgeConjecture.SchemeCycles.isIntegral_of_iso
+#print axioms HodgeConjecture.SchemeCycles.openRestrictionSubscheme_isIntegral
+#print axioms HodgeConjecture.SchemeCycles.openRestriction
+#print axioms HodgeConjecture.SchemeCycles.openRestriction_fundamentalCycle_of_nonempty
+#print axioms HodgeConjecture.SchemeCycles.openRestriction_fundamentalCycle_of_isEmpty
+#print axioms HodgeConjecture.SchemeCycles.openRestriction_id
+#print axioms HodgeConjecture.SchemeCycles.openRestriction_comp
+#print axioms HodgeConjecture.SchemeCorrespondence.graphIdeal_isIntegral
+#print axioms HodgeConjecture.SchemeCorrespondence.graphIdeal_topologicalKrullDim
+#print axioms HodgeConjecture.SchemeCorrespondence.graphCycle
+#print axioms HodgeConjecture.SchemeCorrespondence.graphCycleLinearMap_single
+#print axioms HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.original_isIntegral
+#print axioms HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.graphCycle_restriction
+#print axioms HodgeConjecture.LiteratureInputs.FiniteEtaleExtension.graphCycleLinearMap_restriction
+
+noncomputable section IntegralGraphCycleRegressions
+
+open HodgeConjecture HodgeConjecture.LiteratureInputs
+open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+open HodgeConjecture.SchemeCycles HodgeConjecture.SchemeCorrespondence
+
+-- The split cycle type is the canonical scheme-cycle type, without a conversion.
+example (K : Type) [Field K] (I : Type) [Finite I] :
+    SplitZeroCycles.Cycles K I ℚ =
+      SchemeCycles.Cycles (SplitPointGeometry.scheme K I) ℚ := rfl
+
+-- The existing point generator is exactly the canonical integral generator.
+example (K : Type) [Field K] (I : Type) [Finite I] (i : I) :
+    SplitZeroCycles.pointCycle K I ℚ i =
+      fundamentalCycle ℚ (SplitPointGeometry.pointIntegralSubscheme K I i) := rfl
+
+-- Restriction to an empty open really kills each actual integral support.
+example {X U : Scheme} [IsEmpty U] (j : U ⟶ X) [IsOpenImmersion j]
+    (Z : SchemeCycles.IntegralClosedSubscheme X) :
+    openRestriction ℚ j (fundamentalCycle ℚ Z) = 0 := by
+  letI : IsEmpty (Z.val.comap j).subscheme :=
+    Function.isEmpty (Z.val.comap j).subschemeι.base
+  exact openRestriction_fundamentalCycle_of_isEmpty j ℚ Z
+
+-- Iterated open restriction has the geometric contravariant order.
+example {X U V : Scheme} (j : U ⟶ X) (k : V ⟶ U)
+    [IsOpenImmersion j] [IsOpenImmersion k] (z : SchemeCycles.Cycles X ℚ) :
+    openRestriction ℚ (k ≫ j) z =
+      openRestriction ℚ k (openRestriction ℚ j z) :=
+  (LinearMap.congr_fun (openRestriction_comp j ℚ k) z).symm
+
+-- Rational graph assembly retains a genuinely signed coefficient.
+example {S X : Scheme} (pX : X ⟶ S) [IsSeparated pX] [IsIntegral X]
+    (σ : DeckTransformation pX) :
+    graphCycleLinearMap pX (MonoidAlgebra.single σ (-3 / 2 : ℚ)) =
+      (-3 / 2 : ℚ) • graphCycle pX ℚ σ :=
+  graphCycleLinearMap_single pX σ (-3 / 2)
+
+-- Restricting a supplied graph still does not install a deck-extension input.
+example {X U Y : Scheme} {j : U ⟶ X} {p : Y ⟶ U}
+    (E : FiniteEtaleExtension j p) [IsOpenImmersion j]
+    [IsIntegral E.carrier] [Nonempty Y] (σ : DeckTransformation E.toBase) :
+    letI := E.finite
+    letI := E.original_isFinite
+    letI := E.original_isIntegral
+    letI := E.pairInclusion_isOpenImmersion
+    openRestriction ℚ E.pairInclusion (graphCycle E.toBase ℚ σ) =
+      graphCycle p ℚ (E.restriction σ) := by
+  fail_if_success
+    have : DeckExtensionHypothesis E := inferInstance
+  exact E.graphCycle_restriction ℚ σ
+
+end IntegralGraphCycleRegressions
+
+-- Actual scheme-theoretic graph composition and ambient integral multiplicity.
+#check HodgeConjecture.SchemeCorrespondence.tripleProduct
+#check HodgeConjecture.SchemeCorrespondence.graphIntersectionIdeal
+#check HodgeConjecture.SchemeCorrespondence.graphCompositionIso_hom_subschemeι
+#check HodgeConjecture.SchemeCycles.integralSubscheme_genericStalk_length
+
+#print axioms HodgeConjecture.SchemeCorrespondence.graphCompositionMorphism
+#print axioms HodgeConjecture.SchemeCorrespondence.graphCompositionMorphism_p13
+#print axioms HodgeConjecture.SchemeCorrespondence.graphIntersectionIdeal_eq_ker
+#print axioms HodgeConjecture.SchemeCorrespondence.graphIntersectionIso
+#print axioms HodgeConjecture.SchemeCorrespondence.graphIntersectionIso_hom_subschemeι
+#print axioms HodgeConjecture.SchemeCorrespondence.graphCompositionIso
+#print axioms HodgeConjecture.SchemeCorrespondence.graphCompositionIso_hom_subschemeι
+#print axioms HodgeConjecture.SchemeCorrespondence.graphIntersectionIdeal_map_p13
+#print axioms HodgeConjecture.SchemeCycles.genericStalk_length_of_isClosedImmersion
+#print axioms HodgeConjecture.SchemeCycles.integralSubscheme_genericStalk_length
+
+noncomputable section GraphCompositionRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+open HodgeConjecture.SchemeCorrespondence HodgeConjecture.SchemeCycles
+
+-- The two equations have the noncommutative order: τ first, then σ.
+example {S X : Scheme} (pX : X ⟶ S) (σ τ : DeckTransformation pX) :
+    graphCompositionMorphism pX σ τ ≫ tripleProductP12 pX = graphMorphism pX τ ∧
+      graphCompositionMorphism pX σ τ ≫ tripleProductP23 pX ≫
+        pullback.snd pX pX = τ.toSchemeHom ≫ σ.toSchemeHom := by
+  constructor <;> simp
+
+-- Identity graphs work in both multiplication positions.
+example {S X : Scheme} (pX : X ⟶ S) (σ : DeckTransformation pX) :
+    graphCompositionMorphism pX 1 σ ≫ tripleProductP13 pX = graphMorphism pX σ ∧
+      graphCompositionMorphism pX σ 1 ≫ tripleProductP13 pX = graphMorphism pX σ := by
+  constructor <;> simp
+
+-- Exact ideal-image equality requires separatedness, not finiteness or integrality.
+example {S X : Scheme} (pX : X ⟶ S) [IsSeparated pX]
+    (σ τ : DeckTransformation pX) :
+    (graphIntersectionIdeal pX σ τ).map (tripleProductP13 pX) =
+      graphIdeal pX (σ * τ) := by
+  fail_if_success
+    have : IsFinite pX := inferInstance
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  exact graphIntersectionIdeal_map_p13 pX σ τ
+
+-- The restricted projection is proper on this support, not asserted on all T.
+example {S X : Scheme} (pX : X ⟶ S) [IsSeparated pX]
+    (σ τ : DeckTransformation pX) :
+    IsProper ((graphIntersectionIdeal pX σ τ).subschemeι ≫ tripleProductP13 pX) := by
+  rw [← graphCompositionIso_hom_subschemeι]
+  infer_instance
+
+-- An integral source gives an actual integral intersection of the same dimension.
+example {S X : Scheme} (pX : X ⟶ S) [IsSeparated pX] [IsIntegral X]
+    (σ τ : DeckTransformation pX) :
+    IsIntegral (graphIntersectionIdeal pX σ τ).subscheme ∧
+      topologicalKrullDim (graphIntersectionIdeal pX σ τ).subscheme =
+        topologicalKrullDim X := by
+  refine ⟨SchemeCycles.isIntegral_of_iso (graphIntersectionIso pX σ τ), ?_⟩
+  let e := Scheme.homeoOfIso (graphIntersectionIso pX σ τ)
+  exact (IsHomeomorph.topologicalKrullDim_eq e e.isHomeomorph).symm
+
+-- The integral graph's coefficient uses the actual AMBIENT scalar structure.
+example {S X : Scheme} (pX : X ⟶ S) [IsSeparated pX] [IsIntegral X]
+    (σ : DeckTransformation pX) :
+    let Z := graphIntegralSubscheme pX σ
+    letI := Z.property
+    letI : Algebra
+        ((pullback pX pX).presheaf.stalk
+          (Z.val.subschemeι.base (genericPoint Z.val.subscheme)))
+        Z.val.subscheme.functionField :=
+      (Z.val.subschemeι.stalkMap (genericPoint Z.val.subscheme)).hom.toAlgebra
+    Module.length
+      ((pullback pX pX).presheaf.stalk
+        (Z.val.subschemeι.base (genericPoint Z.val.subscheme)))
+      Z.val.subscheme.functionField = 1 :=
+  integralSubscheme_genericStalk_length (graphIntegralSubscheme pX σ)
+
+-- Reuse the existing generic degree-one calculation for the actual isomorphism.
+example {S X : Scheme} (pX : X ⟶ S) [IsSeparated pX]
+    (σ τ : DeckTransformation pX) (z : (graphIntersectionIdeal pX σ τ).subscheme) :
+    let f := (graphCompositionIso pX σ τ).hom
+    letI : Algebra ((graphIdeal pX (σ * τ)).subscheme.residueField (f.base z))
+        ((graphIntersectionIdeal pX σ τ).subscheme.residueField z) :=
+      (f.residueFieldMap z).hom.toAlgebra
+    Module.finrank ((graphIdeal pX (σ * τ)).subscheme.residueField (f.base z))
+      ((graphIntersectionIdeal pX σ τ).subscheme.residueField z) = 1 :=
+  SplitPointGeometry.residueFieldMap_finrank_of_isIso (graphCompositionIso pX σ τ).hom z
+
+end GraphCompositionRegressions
+
+-- Actual degree-one image cycles and graph-slice pull–push.
+#print axioms HodgeConjecture.SchemeCycles.residueFieldMap_finrank_of_isIso
+#print axioms HodgeConjecture.SchemeCycles.closedImageSubschemeIso
+#print axioms HodgeConjecture.SchemeCycles.closedImageSubschemeIso_genericPoint
+#print axioms HodgeConjecture.SchemeCycles.closedImageCycle_eq_residueDegree_smul
+#print axioms HodgeConjecture.SchemeCycles.closedImmersionPushforward
+#print axioms HodgeConjecture.SchemeCycles.closedImmersionPushforward_id
+#print axioms HodgeConjecture.SchemeCycles.closedImmersionPushforward_comp
+#print axioms HodgeConjecture.SchemeCorrespondence.graphMorphism_isOpenImmersion
+#print axioms HodgeConjecture.SchemeCorrespondence.graphIntersectionIdeal_subschemeι_isOpenImmersion
+#print axioms HodgeConjecture.SchemeCorrespondence.graphSlicePairMap_isIso
+#print axioms HodgeConjecture.SchemeCorrespondence.graphSliceMorphism_isOpenImmersion
+#print axioms HodgeConjecture.SchemeCorrespondence.graphSlice_isPullback
+#print axioms HodgeConjecture.SchemeCorrespondence.graphIdeal_comap_p12_eq_graphSlice_ker
+#print axioms HodgeConjecture.SchemeCorrespondence.graphIdeal_comap_graphSlicePairMap
+#print axioms HodgeConjecture.SchemeCorrespondence.graphIdeal_map_graphSliceMorphism
+#print axioms HodgeConjecture.SchemeCorrespondence.graphRightPullback_graphCycle
+#print axioms HodgeConjecture.SchemeCorrespondence.graphSlicePullPush_graphCycle
+#print axioms HodgeConjecture.SchemeCorrespondence.graphIntersectionCycle_image_p13
+#print axioms HodgeConjecture.SchemeCorrespondence.graphSlicePullPush_graphCycleLinearMap_single
+
+noncomputable section GraphSliceCycleRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+open HodgeConjecture.SchemeCorrespondence HodgeConjecture.SchemeCycles
+
+-- The generic closed pushforward has the actual identity law.
+example {X : Scheme} (z : Cycles X ℚ) :
+    closedImmersionPushforward ℚ (𝟙 X) z = z := by
+  rw [closedImmersionPushforward_id]
+  rfl
+
+-- Its composition follows the geometric covariant order.
+example {X Y T : Scheme} (f : X ⟶ Y) (g : Y ⟶ T)
+    [IsClosedImmersion f] [IsClosedImmersion g] (z : Cycles X ℚ) :
+    closedImmersionPushforward ℚ (f ≫ g) z =
+      closedImmersionPushforward ℚ g (closedImmersionPushforward ℚ f z) :=
+  (LinearMap.congr_fun (closedImmersionPushforward_comp f ℚ g) z).symm
+
+-- Genuine closed image cycles retain negative coefficients.
+example {X Y : Scheme} (f : X ⟶ Y) [IsClosedImmersion f]
+    (Z : IntegralClosedSubscheme X) :
+    closedImmersionPushforward ℚ f (Finsupp.single Z (-3 / 2 : ℚ)) =
+      (-3 / 2 : ℚ) • closedImageCycle f ℚ Z :=
+  closedImmersionPushforward_single f ℚ Z (-3 / 2)
+
+-- The slice is the actual graph inverse image, before any integrality assumption.
+example {S X : Scheme} (pX : X ⟶ S) [IsSeparated pX] (τ : DeckTransformation pX) :
+    (graphIdeal pX τ).comap (tripleProductP12 pX) = (graphSliceMorphism pX τ).ker :=
+  graphIdeal_comap_p12_eq_graphSlice_ker pX τ
+
+-- Openness is an étale conclusion; no finite-cover premise is installed.
+example {S X : Scheme} (pX : X ⟶ S) [IsEtale pX] [IsSeparated pX]
+    (τ : DeckTransformation pX) :
+    IsOpenImmersion (graphSliceMorphism pX τ) ∧ IsClosedImmersion (graphSliceMorphism pX τ) := by
+  fail_if_success
+    have : IsFinite pX := inferInstance
+  exact ⟨inferInstance, inferInstance⟩
+
+-- Relative pairs and inverse-image graphs are not silently made integral.
+example {S X : Scheme} (pX : X ⟶ S) [IsSeparated pX] [IsIntegral X]
+    (σ τ : DeckTransformation pX) :
+    graphSlicePullPush pX ℚ τ (graphCycle pX ℚ σ) = graphIntersectionCycle pX ℚ σ τ := by
+  fail_if_success
+    have : IsIntegral (pullback pX pX) := inferInstance
+  exact graphSlicePullPush_graphCycle pX ℚ σ τ
+
+-- The generic cycle law acts by RIGHT multiplication on the graph index.
+example {S X : Scheme} (pX : X ⟶ S) [IsSeparated pX] [IsIntegral X]
+    (σ τ : DeckTransformation pX) :
+    graphRightPullback pX ℚ τ (graphCycle pX ℚ σ) = graphCycle pX ℚ (σ * τ) :=
+  graphRightPullback_graphCycle pX ℚ σ τ
+
+-- A supportwise outer pushforward requires no globally proper projection.
+example {S X : Scheme} (pX : X ⟶ S) [IsSeparated pX] [IsIntegral X]
+    (σ τ : DeckTransformation pX) :
+    closedImageCycle (tripleProductP13 pX) ℚ (graphIntersectionIntegralSubscheme pX σ τ) =
+      graphCycle pX ℚ (σ * τ) := by
+  fail_if_success
+    have : IsProper (tripleProductP13 pX) := inferInstance
+  exact graphIntersectionCycle_image_p13 pX ℚ σ τ
+
+-- The geometric slice map preserves rational weights, not only positive generators.
+example {S X : Scheme} (pX : X ⟶ S) [IsSeparated pX] [IsIntegral X]
+    (σ τ : DeckTransformation pX) :
+    graphSlicePullPush pX ℚ τ (graphCycleLinearMap pX (MonoidAlgebra.single σ (-3 / 2 : ℚ))) =
+      (-3 / 2 : ℚ) • graphIntersectionCycle pX ℚ σ τ :=
+  graphSlicePullPush_graphCycleLinearMap_single pX σ τ (-3 / 2)
+
+end GraphSliceCycleRegressions
+
+-- SP34: actual relative-to-structural-base geometry and cycle transport.
+#check HodgeConjecture.SchemeCorrespondence.forgetDeckBase
+#check HodgeConjecture.SchemeCorrespondence.pairBaseComparison
+#check HodgeConjecture.SchemeCorrespondence.tripleBaseComparison
+#check HodgeConjecture.SchemeCorrespondence.graphMorphism_pairBaseComparison
+#check HodgeConjecture.SchemeCorrespondence.graphCompositionMorphism_tripleBaseComparison
+#check HodgeConjecture.SchemeCorrespondence.graphCycleLinearMap_baseComparison
+
+#print axioms HodgeConjecture.SchemeCorrespondence.forgetDeckBase
+#print axioms HodgeConjecture.SchemeCorrespondence.forgetDeckBase_injective
+#print axioms HodgeConjecture.SchemeCorrespondence.pairBaseComparison
+#print axioms HodgeConjecture.SchemeCorrespondence.pairBaseComparison_isClosedImmersion
+#print axioms HodgeConjecture.SchemeCorrespondence.tripleBaseComparison
+#print axioms HodgeConjecture.SchemeCorrespondence.tripleBaseComparison_isClosedImmersion
+#print axioms HodgeConjecture.SchemeCorrespondence.graphIdeal_map_pairBaseComparison
+#print axioms HodgeConjecture.SchemeCorrespondence.graphIntersectionIdeal_map_tripleBaseComparison
+#print axioms HodgeConjecture.SchemeCorrespondence.graphSlicePairMap_baseComparison
+#print axioms HodgeConjecture.SchemeCorrespondence.graphSliceMorphism_baseComparison
+#print axioms HodgeConjecture.SchemeCycles.ideal_comap_iso_eq_map_inv
+#print axioms HodgeConjecture.SchemeCycles.openRestriction_iso_eq_pushforward_inv
+#print axioms HodgeConjecture.SchemeCycles.pushforward_openRestriction_iso
+#print axioms HodgeConjecture.SchemeCorrespondence.graphCycle_pairBaseComparison
+#print axioms HodgeConjecture.SchemeCorrespondence.graphIntersectionCycle_tripleBaseComparison
+#print axioms HodgeConjecture.SchemeCorrespondence.graphRightPullback_baseComparison
+#print axioms HodgeConjecture.SchemeCorrespondence.graphSlicePullPush_baseComparison
+#print axioms HodgeConjecture.SchemeCorrespondence.graphCycleLinearMap_baseComparison
+
+noncomputable section RelativeProductCycleRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+open HodgeConjecture.SchemeCorrespondence HodgeConjecture.SchemeCycles
+
+-- Closedness of the pair comparison needs only separatedness of the base map.
+example {X S B : Scheme} (p : X ⟶ S) (b : S ⟶ B) [IsSeparated b] :
+    IsClosedImmersion (pairBaseComparison p b) := by
+  fail_if_success
+    have : IsSeparated p := inferInstance
+  infer_instance
+
+-- The same minimal hypothesis suffices for the actual triple comparison.
+example {X S B : Scheme} (p : X ⟶ S) (b : S ⟶ B) [IsSeparated b] :
+    IsClosedImmersion (tripleBaseComparison p b) := by
+  fail_if_success
+    have : IsEtale p := inferInstance
+  infer_instance
+
+-- Forgetting the base retains the actual maps and noncommutative order.
+example {X S B : Scheme} (p : X ⟶ S) (b : S ⟶ B)
+    (σ τ : DeckTransformation p) :
+    (forgetDeckBase p b (σ * τ)).toSchemeHom = τ.toSchemeHom ≫ σ.toSchemeHom ∧
+      graphCompositionMorphism p σ τ ≫ tripleBaseComparison p b ≫
+          tripleProductP13 (p ≫ b) =
+        graphMorphism (p ≫ b) (forgetDeckBase p b (σ * τ)) := by
+  constructor
+  · exact forgetDeckBase_mul_toSchemeHom p b σ τ
+  · simp
+
+-- A signed graph coefficient survives the actual closed pair pushforward.
+example {X S B : Scheme} (p : X ⟶ S) (b : S ⟶ B)
+    [IsSeparated p] [IsSeparated b] [IsIntegral X] (σ : DeckTransformation p) :
+    closedImmersionPushforward ℚ (pairBaseComparison p b)
+        ((-3 / 2 : ℚ) • graphCycle p ℚ σ) =
+      (-3 / 2 : ℚ) • graphCycle (p ≫ b) ℚ (forgetDeckBase p b σ) := by
+  simp only [map_smul, graphCycle_pairBaseComparison]
+
+-- The triple comparison transports the actual integral intersection support.
+example {X S B : Scheme} (p : X ⟶ S) (b : S ⟶ B)
+    [IsSeparated p] [IsSeparated b] [IsIntegral X] (σ τ : DeckTransformation p) :
+    closedImmersionPushforward ℚ (tripleBaseComparison p b)
+        (graphIntersectionCycle p ℚ σ τ) =
+      graphIntersectionCycle (p ≫ b) ℚ
+        (forgetDeckBase p b σ) (forgetDeckBase p b τ) :=
+  graphIntersectionCycle_tripleBaseComparison p b ℚ σ τ
+
+-- The R-square holds on every finite cycle, without source integrality or separatedness.
+example {X S B : Scheme} (p : X ⟶ S) (b : S ⟶ B) [IsSeparated b]
+    (R : Type) [Semiring R] (τ : DeckTransformation p) (z : Cycles (pullback p p) R) :
+    closedImmersionPushforward R (pairBaseComparison p b) (graphRightPullback p R τ z) =
+      graphRightPullback (p ≫ b) R (forgetDeckBase p b τ)
+        (closedImmersionPushforward R (pairBaseComparison p b) z) := by
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  fail_if_success
+    have : IsSeparated p := inferInstance
+  exact LinearMap.congr_fun (graphRightPullback_baseComparison p b R τ) z
+
+-- The K-square also acts on all cycles, without integrality or étaleness.
+example {X S B : Scheme} (p : X ⟶ S) (b : S ⟶ B)
+    [IsSeparated p] [IsSeparated b] (R : Type) [Semiring R]
+    (τ : DeckTransformation p) (z : Cycles (pullback p p) R) :
+    closedImmersionPushforward R (tripleBaseComparison p b) (graphSlicePullPush p R τ z) =
+      graphSlicePullPush (p ≫ b) R (forgetDeckBase p b τ)
+        (closedImmersionPushforward R (pairBaseComparison p b) z) := by
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  fail_if_success
+    have : IsEtale p := inferInstance
+  exact LinearMap.congr_fun (graphSlicePullPush_baseComparison p b R τ) z
+
+-- The weighted comparison applies to an arbitrary rational group-algebra element ζ.
+example {X S B : Scheme} (p : X ⟶ S) (b : S ⟶ B)
+    [IsSeparated p] [IsSeparated b] [IsIntegral X]
+    (ζ : MonoidAlgebra ℚ (DeckTransformation p)) :
+    closedImmersionPushforward ℚ (pairBaseComparison p b) (graphCycleLinearMap p ζ) =
+      graphCycleLinearMap (p ≫ b)
+        (MonoidAlgebra.mapDomainAlgHom ℚ ℚ (forgetDeckBase p b) ζ) :=
+  LinearMap.congr_fun (graphCycleLinearMap_baseComparison p b) ζ
+
+-- Taking B = Spec k instantiates actual absolute pair and triple products.
+example (k : Type) [Field k] {X S : Scheme} (p : X ⟶ S)
+    (b : S ⟶ Spec (CommRingCat.of k)) [IsSeparated b] :
+    IsClosedImmersion (pairBaseComparison p b) ∧
+      IsClosedImmersion (tripleBaseComparison p b) :=
+  ⟨inferInstance, inferInstance⟩
+
+-- Étaleness over S plus separatedness of S → B does not install étaleness over B.
+example {X S B : Scheme} (p : X ⟶ S) (b : S ⟶ B)
+    [IsEtale p] [IsSeparated b] : IsClosedImmersion (pairBaseComparison p b) := by
+  fail_if_success
+    have : IsEtale (p ≫ b) := inferInstance
+  infer_instance
+
+end RelativeProductCycleRegressions
+
+-- SP35: actual local quotient lengths, signed orders, and divisor-point transport.
+#check HodgeConjecture.SchemeCycles.ord_ringEquiv
+#check HodgeConjecture.SchemeCycles.ordFrac_ringEquiv
+#check HodgeConjecture.SchemeCycles.localOrder
+#check HodgeConjecture.SchemeCycles.functionFieldEquiv
+#check HodgeConjecture.SchemeCycles.DivisorPoint
+#check HodgeConjecture.SchemeCycles.divisorPointOfAffineHeightOne
+#check HodgeConjecture.SchemeCycles.divisorOrder_iso
+#check HodgeConjecture.SchemeCycles.Examples.localOrder_int_two_inv
+
+#print axioms HodgeConjecture.SchemeCycles.localOrder
+#print axioms HodgeConjecture.SchemeCycles.localOrder_mul
+#print axioms HodgeConjecture.SchemeCycles.localOrder_inv
+#print axioms HodgeConjecture.SchemeCycles.principalQuotient_length_ne_top
+#print axioms HodgeConjecture.SchemeCycles.localOrder_algebraMap
+#print axioms HodgeConjecture.SchemeCycles.localOrder_fraction
+#print axioms HodgeConjecture.SchemeCycles.localOrder_map_unit
+#print axioms HodgeConjecture.SchemeCycles.ord_ringEquiv
+#print axioms HodgeConjecture.SchemeCycles.ordMonoidWithZeroHom_ringEquiv
+#print axioms HodgeConjecture.SchemeCycles.ordFrac_ringEquiv
+#print axioms HodgeConjecture.SchemeCycles.functionFieldEquiv
+#print axioms HodgeConjecture.SchemeCycles.functionFieldIso_stalkSpecializes
+#print axioms HodgeConjecture.SchemeCycles.functionFieldEquiv_algebraMap
+#print axioms HodgeConjecture.SchemeCycles.DivisorPoint
+#print axioms HodgeConjecture.SchemeCycles.stalkDimension_iso
+#print axioms HodgeConjecture.SchemeCycles.divisorPointEquiv
+#print axioms HodgeConjecture.SchemeCycles.divisorPointOfAffineHeightOne
+#print axioms HodgeConjecture.SchemeCycles.divisorOrder
+#print axioms HodgeConjecture.SchemeCycles.divisorOrder_mul
+#print axioms HodgeConjecture.SchemeCycles.divisorOrder_algebraMap
+#print axioms HodgeConjecture.SchemeCycles.divisorOrder_iso
+#print axioms HodgeConjecture.SchemeCycles.Examples.int_two_quotient_length
+#print axioms HodgeConjecture.SchemeCycles.Examples.localOrder_int_two
+#print axioms HodgeConjecture.SchemeCycles.Examples.localOrder_int_two_inv
+
+noncomputable section SignedLocalOrderRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory
+open HodgeConjecture.SchemeCycles
+
+-- Ring transport compares the actual quotient-module lengths, not a chosen divisor function.
+example {R S : Type} [CommRing R] [CommRing S] (e : R ≃+* S) (a : R) :
+    Module.length S (S ⧸ Ideal.span {e a}) = Module.length R (R ⧸ Ideal.span {a}) :=
+  ord_ringEquiv e a
+
+-- A genuine multiplicative inverse changes the sign in the product formula.
+example (R : Type) [CommRing R] [IsDomain R] [IsNoetherianRing R] [Ring.KrullDimLE 1 R]
+    {K : Type} [Field K] [Algebra R K] [IsFractionRing R K] (f g : Kˣ) :
+    localOrder R (f * g⁻¹) = localOrder R f - localOrder R g := by
+  rw [localOrder_mul, localOrder_inv, sub_eq_add_neg]
+
+-- Invertible local elements contribute zero through the actual fraction-ring map.
+example (R : Type) [CommRing R] [IsDomain R] [IsNoetherianRing R] [Ring.KrullDimLE 1 R]
+    {K : Type} [Field K] [Algebra R K] [IsFractionRing R K] (a : Rˣ) :
+    localOrder R (Units.map (algebraMap R K).toMonoidHom a) = 0 :=
+  localOrder_map_unit R a
+
+-- The contravariant function-field isomorphism commutes with the actual stalk map.
+example {X Y : Scheme} [IsIntegral X] [IsIntegral Y] (e : X ≅ Y) (x : X)
+    (a : Y.presheaf.stalk (e.hom.base x)) :
+    functionFieldEquiv e (algebraMap (Y.presheaf.stalk (e.hom.base x)) Y.functionField a) =
+      algebraMap (X.presheaf.stalk x) X.functionField ((e.hom.stalkMap x).hom a) := by
+  fail_if_success
+    have : IsLocallyNoetherian X := inferInstance
+  exact functionFieldEquiv_algebraMap e x a
+
+-- Divisor-point transport is geometric even without integrality or Noetherianity.
+example {X Y : Scheme} (e : X ≅ Y) (x : DivisorPoint X) :
+    (divisorPointEquiv e x).val = e.hom.base x.val := by
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  fail_if_success
+    have : IsLocallyNoetherian X := inferInstance
+  exact divisorPointEquiv_val e x
+
+-- An actual height-one prime in an affine chart gives the same underlying scheme point.
+example (X : Scheme) {U : X.Opens} (hU : IsAffineOpen U) (x : U)
+    (h : (hU.primeIdealOf x).asIdeal.height = 1) :
+    (divisorPointOfAffineHeightOne X hU x h).val = x.val ∧
+      ringKrullDim (X.presheaf.stalk (divisorPointOfAffineHeightOne X hU x h).val) = 1 :=
+  ⟨rfl, (divisorPointOfAffineHeightOne X hU x h).property⟩
+
+-- Local coefficient transport needs neither normality nor a DVR hypothesis.
+example {X Y : Scheme} [IsIntegral X] [IsIntegral Y]
+    [IsLocallyNoetherian X] [IsLocallyNoetherian Y]
+    (e : X ≅ Y) (x : DivisorPoint X) (f : Y.functionFieldˣ) :
+    divisorOrder X x (Units.map (functionFieldEquiv e).toMonoidHom f) =
+      divisorOrder Y (divisorPointEquiv e x) f := by
+  fail_if_success
+    have : IsIntegrallyClosed (X.presheaf.stalk x.val) := inferInstance
+  fail_if_success
+    have : IsDiscreteValuationRing (X.presheaf.stalk x.val) := inferInstance
+  exact divisorOrder_iso e x f
+
+-- Apply the coefficient theorem to the existing actual support-to-image isomorphism.
+-- Image integrality and local Noetherianity are derived, not supplied as new inputs.
+example {X Y : Scheme} (f : X ⟶ Y) (Z : IntegralClosedSubscheme X)
+    [IsClosedImmersion (Z.val.subschemeι ≫ f)] [IsLocallyNoetherian Z.val.subscheme]
+    (x : DivisorPoint Z.val.subscheme) :
+    letI := Z.property
+    letI := closedImageSubscheme_isIntegral f Z
+    letI : IsLocallyNoetherian (Z.val.map f).subscheme :=
+      isLocallyNoetherian_of_isOpenImmersion (closedImageSubschemeIso f Z).inv
+    ∀ g : (Z.val.map f).subscheme.functionFieldˣ,
+      divisorOrder Z.val.subscheme x
+          (Units.map (functionFieldEquiv (closedImageSubschemeIso f Z)).toMonoidHom g) =
+        divisorOrder (Z.val.map f).subscheme
+          (divisorPointEquiv (closedImageSubschemeIso f Z) x) g := by
+  letI := Z.property
+  letI := closedImageSubscheme_isIntegral f Z
+  letI : IsLocallyNoetherian (Z.val.map f).subscheme :=
+    isLocallyNoetherian_of_isOpenImmersion (closedImageSubschemeIso f Z).inv
+  intro g
+  fail_if_success
+    have : IsProper f := inferInstance
+  exact divisorOrder_iso (closedImageSubschemeIso f Z) x g
+
+-- A computed nonzero value: ℤ/(2) is actually simple, hence the order of 2 is 1.
+example : localOrder ℤ (Units.mk0 (2 : ℚ) two_ne_zero) = 1 :=
+  Examples.localOrder_int_two
+
+-- The negative value is proved, not made conditional on an assumed order.
+example : localOrder ℤ (Units.mk0 (2 : ℚ) two_ne_zero)⁻¹ = -1 :=
+  Examples.localOrder_int_two_inv
+
+-- Identify that inverse with the explicit rational function 1/2.
+example : localOrder ℤ (Units.mk0 ((1 : ℚ) / 2) (div_ne_zero one_ne_zero two_ne_zero)) = -1 := by
+  have h : Units.mk0 ((1 : ℚ) / 2) (div_ne_zero one_ne_zero two_ne_zero) =
+      (Units.mk0 (2 : ℚ) two_ne_zero)⁻¹ := by
+    apply Units.ext
+    simp [one_div]
+  rw [h]
+  exact Examples.localOrder_int_two_inv
+
+end SignedLocalOrderRegressions
+
+-- SP36: actual reduced point closures, support codimension, and prime-divisor transport.
+#check HodgeConjecture.SchemeCycles.pointEquivIntegralClosedSubscheme
+#check HodgeConjecture.SchemeCycles.point_coheight_eq_stalkDim
+#check HodgeConjecture.SchemeCycles.supportCodimension_eq_stalkDim
+#check HodgeConjecture.SchemeCycles.divisorPointEquivPrimeDivisor
+#check HodgeConjecture.SchemeCycles.primeDivisorEquiv_val
+#check HodgeConjecture.SchemeCycles.primeDivisorOrder_iso
+
+#print axioms HodgeConjecture.SchemeCycles.vanishingIdeal_subscheme_isReduced
+#print axioms HodgeConjecture.SchemeCycles.radical_eq_of_subscheme_isReduced
+#print axioms HodgeConjecture.SchemeCycles.pointSupport
+#print axioms HodgeConjecture.SchemeCycles.pointSupport_support
+#print axioms HodgeConjecture.SchemeCycles.ambientGenericPoint
+#print axioms HodgeConjecture.SchemeCycles.ambientGenericPoint_isGenericPoint
+#print axioms HodgeConjecture.SchemeCycles.ambientGenericPoint_pointSupport
+#print axioms HodgeConjecture.SchemeCycles.pointSupport_ambientGenericPoint
+#print axioms HodgeConjecture.SchemeCycles.pointEquivIntegralClosedSubscheme
+#print axioms HodgeConjecture.SchemeCycles.pointClosureOrderIso
+#print axioms HodgeConjecture.SchemeCycles.pointClosure_coheight
+#print axioms HodgeConjecture.SchemeCycles.point_coheight_eq_stalkDim
+#print axioms HodgeConjecture.SchemeCycles.integralSupport
+#print axioms HodgeConjecture.SchemeCycles.supportCodimension
+#print axioms HodgeConjecture.SchemeCycles.supportCodimension_eq_stalkDim
+#print axioms HodgeConjecture.SchemeCycles.supportCodimension_eq_one_iff
+#print axioms HodgeConjecture.SchemeCycles.PrimeDivisor
+#print axioms HodgeConjecture.SchemeCycles.divisorPointEquivPrimeDivisor
+#print axioms HodgeConjecture.SchemeCycles.ambientGenericPoint_closedImageSubscheme
+#print axioms HodgeConjecture.SchemeCycles.closedImage_pointSupport
+#print axioms HodgeConjecture.SchemeCycles.supportCodimension_iso
+#print axioms HodgeConjecture.SchemeCycles.primeDivisorEquiv
+#print axioms HodgeConjecture.SchemeCycles.primeDivisorEquiv_val
+#print axioms HodgeConjecture.SchemeCycles.closedImmersionPushforward_pointSupport
+#print axioms HodgeConjecture.SchemeCycles.primeDivisorOrder
+#print axioms HodgeConjecture.SchemeCycles.primeDivisorOrder_pointSupport
+#print axioms HodgeConjecture.SchemeCycles.primeDivisorOrder_iso
+
+noncomputable section PrimeDivisorSupportRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory
+open HodgeConjecture.SchemeCycles
+
+-- The support and its ambient generic point are constructed on arbitrary schemes.
+example (X : Scheme) (x : X) :
+    ((pointSupport X x).val.support : Set X) = closure {x} ∧
+      ambientGenericPoint (pointSupport X x) = x := by
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  fail_if_success
+    have : IsLocallyNoetherian X := inferInstance
+  exact ⟨congrArg (fun C : TopologicalSpace.Closeds X ↦ (C : Set X))
+    (pointSupport_support X x), ambientGenericPoint_pointSupport X x⟩
+
+-- Every existing integral ideal-sheaf generator is recovered, not just chosen representatives.
+example {X : Scheme} (Z : IntegralClosedSubscheme X) :
+    pointSupport X (ambientGenericPoint Z) = Z :=
+  pointSupport_ambientGenericPoint Z
+
+-- Codimension counts closed supersets; it is not absolute ambient dimension minus support dimension.
+example {X : Scheme} (Z : IntegralClosedSubscheme X) :
+    (Order.coheight (integralSupport Z) : WithBot ℕ∞) =
+      ringKrullDim (X.presheaf.stalk (ambientGenericPoint Z)) :=
+  supportCodimension_eq_stalkDim Z
+
+-- Codimension one is proved from the actual stalk condition.
+example {X : Scheme} (x : DivisorPoint X) :
+    supportCodimension (pointSupport X x.val) = 1 ∧
+      ambientGenericPoint (divisorPointEquivPrimeDivisor X x).val = x.val :=
+  ⟨(divisorPointEquivPrimeDivisor X x).property, ambientGenericPoint_pointSupport X x.val⟩
+
+-- The earlier affine height-one constructor now has its literal reduced closed support.
+example (X : Scheme) {U : X.Opens} (hU : IsAffineOpen U) (x : U)
+    (h : (hU.primeIdealOf x).asIdeal.height = 1) :
+    (divisorPointEquivPrimeDivisor X (divisorPointOfAffineHeightOne X hU x h)).val =
+      pointSupport X x.val := rfl
+
+-- Signed coefficients use the existing cycle module and closed pushforward.
+example {X Y : Scheme} (f : X ⟶ Y) [IsClosedImmersion f] (x : X) :
+    closedImmersionPushforward ℤ f (-fundamentalCycle ℤ (pointSupport X x)) =
+      -fundamentalCycle ℤ (pointSupport Y (f.base x)) := by
+  rw [map_neg, closedImmersionPushforward_pointSupport]
+
+-- Prime-support transport is the actual image ideal, even without ambient integrality.
+example {X Y : Scheme} (e : X ≅ Y) (Z : PrimeDivisor X) :
+    (primeDivisorEquiv e Z).val.val = Z.val.val.map e.hom := by
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  rw [primeDivisorEquiv_val]
+  rfl
+
+-- The support presentation introduces no second independent order.
+example {X : Scheme} [IsIntegral X] [IsLocallyNoetherian X]
+    (x : DivisorPoint X) (f : X.functionFieldˣ) :
+    primeDivisorOrder X (divisorPointEquivPrimeDivisor X x) f = divisorOrder X x f :=
+  primeDivisorOrder_pointSupport x f
+
+-- The coefficient comparison is on actual prime supports, with no normality input.
+example {X Y : Scheme} [IsIntegral X] [IsIntegral Y]
+    [IsLocallyNoetherian X] [IsLocallyNoetherian Y]
+    (e : X ≅ Y) (Z : PrimeDivisor X) (f : Y.functionFieldˣ) :
+    primeDivisorOrder X Z (Units.map (functionFieldEquiv e).toMonoidHom f) =
+      primeDivisorOrder Y (primeDivisorEquiv e Z) f := by
+  fail_if_success
+    have : IsIntegrallyClosed (X.presheaf.stalk (ambientGenericPoint Z.val)) := inferInstance
+  exact primeDivisorOrder_iso e Z f
+
+-- Passing to the inverse rational function still negates the support coefficient.
+example {X Y : Scheme} [IsIntegral X] [IsIntegral Y]
+    [IsLocallyNoetherian X] [IsLocallyNoetherian Y]
+    (e : X ≅ Y) (Z : PrimeDivisor X) (f : Y.functionFieldˣ) :
+    primeDivisorOrder X Z (Units.map (functionFieldEquiv e).toMonoidHom f⁻¹) =
+      -primeDivisorOrder Y (primeDivisorEquiv e Z) f := by
+  rw [primeDivisorOrder_iso]
+  exact divisorOrder_inv Y _ f
+
+-- Supportwise closedness suffices for the actual generic-point image formula.
+example {X Y : Scheme} (f : X ⟶ Y) (Z : IntegralClosedSubscheme X)
+    [IsClosedImmersion (Z.val.subschemeι ≫ f)] :
+    ambientGenericPoint (closedImageSubscheme f Z) = f.base (ambientGenericPoint Z) := by
+  fail_if_success
+    have : IsProper f := inferInstance
+  exact ambientGenericPoint_closedImageSubscheme f Z
+
+-- Point transport and prime-support transport give the same underlying cycle generator.
+example {X Y : Scheme} (e : X ≅ Y) (x : DivisorPoint X) :
+    (divisorPointEquivPrimeDivisor Y (divisorPointEquiv e x)).val =
+      closedImageSubscheme e.hom (divisorPointEquivPrimeDivisor X x).val := by
+  exact (closedImage_pointSupport e.hom x.val).symm
+
+-- Empty schemes do not acquire phantom integral generators under the classification.
+example (X : Scheme) [IsEmpty X] : IsEmpty (IntegralClosedSubscheme X) :=
+  ⟨fun Z ↦ isEmptyElim (ambientGenericPoint Z)⟩
+
+end PrimeDivisorSupportRegressions
+
+-- SP37: actual affine fractions and local/global finiteness of prime-divisor support.
+#check HodgeConjecture.SchemeCycles.heightOne_mem_minimalPrimes_span
+#check HodgeConjecture.SchemeCycles.finite_heightOne_primes_containing_either
+#check HodgeConjecture.SchemeCycles.exists_affine_fraction
+#check HodgeConjecture.SchemeCycles.divisorOrder_eq_zero_of_affine_fraction
+#check HodgeConjecture.SchemeCycles.primeDivisorSupports_locallyFinite
+#check HodgeConjecture.SchemeCycles.finite_primeDivisorOrder_support
+
+#print axioms HodgeConjecture.SchemeCycles.heightOne_mem_minimalPrimes_span
+#print axioms HodgeConjecture.SchemeCycles.finite_heightOne_ideals_containing
+#print axioms HodgeConjecture.SchemeCycles.finite_heightOne_primes_containing
+#print axioms HodgeConjecture.SchemeCycles.finite_heightOne_primes_containing_either
+#print axioms HodgeConjecture.SchemeCycles.exists_affine_fraction
+#print axioms HodgeConjecture.SchemeCycles.sectionToFunctionField_through_stalk
+#print axioms HodgeConjecture.SchemeCycles.affineGerm_isUnit_iff
+#print axioms HodgeConjecture.SchemeCycles.divisorOrder_eq_zero_of_affine_fraction
+#print axioms HodgeConjecture.SchemeCycles.finite_divisorPoints_in_affine
+#print axioms HodgeConjecture.SchemeCycles.primeDivisorSupports_locallyFinite
+#print axioms HodgeConjecture.SchemeCycles.finite_primeDivisorOrder_support
+#print axioms HodgeConjecture.SchemeCycles.finite_divisorOrder_support
+
+noncomputable section DivisorFinitenessRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory
+open HodgeConjecture.SchemeCycles
+
+-- Height one controls minimality without Noetherianity or a global dimension bound.
+example (A : Type) [CommRing A] [IsDomain A] (a : A) (ha : a ≠ 0)
+    (P : Ideal A) [P.IsPrime] (hP : P.height = 1) (haP : a ∈ P) :
+    P ∈ (Ideal.span {a}).minimalPrimes := by
+  fail_if_success
+    have : IsNoetherianRing A := inferInstance
+  fail_if_success
+    have : Ring.KrullDimLE 1 A := inferInstance
+  exact heightOne_mem_minimalPrimes_span a ha P hP haP
+
+-- Noetherianity supplies finiteness, not normality or dimension at most one.
+example (A : Type) [CommRing A] [IsDomain A] [IsNoetherianRing A]
+    (a : A) (ha : a ≠ 0) :
+    Set.Finite {p : PrimeSpectrum A | p.asIdeal.height = 1 ∧ a ∈ p.asIdeal} := by
+  fail_if_success
+    have : Ring.KrullDimLE 1 A := inferInstance
+  fail_if_success
+    have : IsIntegrallyClosed A := inferInstance
+  exact finite_heightOne_primes_containing A a ha
+
+-- A numerator and denominator give a finite union of genuine height-one loci.
+example (A : Type) [CommRing A] [IsDomain A] [IsNoetherianRing A]
+    (a b : A) (ha : a ≠ 0) (hb : b ≠ 0) :
+    Set.Finite {p : PrimeSpectrum A |
+      p.asIdeal.height = 1 ∧ (a ∈ p.asIdeal ∨ b ∈ p.asIdeal)} :=
+  finite_heightOne_primes_containing_either A a b ha hb
+
+-- Affine fraction presentation uses the actual generic stalk and no Noetherianity.
+example (X : Scheme) [IsIntegral X] {U : X.Opens}
+    (hU : IsAffineOpen U) [Nonempty U] (f : X.functionFieldˣ) :
+    ∃ a b : Γ(X, U), a ≠ 0 ∧ b ≠ 0 ∧
+      (f : X.functionField) =
+        algebraMap Γ(X, U) X.functionField a / algebraMap Γ(X, U) X.functionField b := by
+  fail_if_success
+    have : IsLocallyNoetherian X := inferInstance
+  exact exists_affine_fraction X hU f
+
+-- The field map factors through every actual germ, not a supplied compatibility square.
+example (X : Scheme) [IsIntegral X] (U : X.Opens) [Nonempty U]
+    (x : U) (a : Γ(X, U)) :
+    algebraMap (X.presheaf.stalk x.val) X.functionField
+        ((X.presheaf.germ U x.val x.property).hom a) =
+      algebraMap Γ(X, U) X.functionField a :=
+  sectionToFunctionField_through_stalk X U x a
+
+-- Localization detects unit germs on arbitrary schemes, even nonintegral ones.
+example (X : Scheme) {U : X.Opens} (hU : IsAffineOpen U)
+    (x : U) (a : Γ(X, U)) :
+    IsUnit ((X.presheaf.germ U x.val x.property).hom a) ↔
+      a ∉ (hU.primeIdealOf x).asIdeal := by
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  fail_if_success
+    have : IsLocallyNoetherian X := inferInstance
+  exact affineGerm_isUnit_iff X hU x a
+
+-- Outside both chart primes, the unique existing coefficient vanishes without normality.
+example (X : Scheme) [IsIntegral X] [IsLocallyNoetherian X]
+    {U : X.Opens} (hU : IsAffineOpen U) [Nonempty U]
+    (x : DivisorPoint X) (hx : x.val ∈ U) (f : X.functionFieldˣ) (a b : Γ(X, U))
+    (hf : (f : X.functionField) =
+      algebraMap Γ(X, U) X.functionField a / algebraMap Γ(X, U) X.functionField b)
+    (ha : a ∉ (hU.primeIdealOf ⟨x.val, hx⟩).asIdeal)
+    (hb : b ∉ (hU.primeIdealOf ⟨x.val, hx⟩).asIdeal) : divisorOrder X x f = 0 := by
+  fail_if_success
+    have : IsIntegrallyClosed (X.presheaf.stalk x.val) := inferInstance
+  fail_if_success
+    have : IsDiscreteValuationRing (X.presheaf.stalk x.val) := inferInstance
+  exact divisorOrder_eq_zero_of_affine_fraction X hU x hx f a b hf ha hb
+
+-- An affine chart bounds coefficients without compactness of the whole scheme.
+example (X : Scheme) [IsIntegral X] [IsLocallyNoetherian X]
+    {U : X.Opens} (hU : IsAffineOpen U) (f : X.functionFieldˣ) :
+    Set.Finite {x : DivisorPoint X | x.val ∈ U ∧ divisorOrder X x f ≠ 0} := by
+  fail_if_success
+    have : CompactSpace X := inferInstance
+  exact finite_divisorPoints_in_affine X hU f
+
+-- The affine endpoint also accepts empty charts, where its indexed set is literally empty.
+example (X : Scheme) [IsIntegral X] [IsLocallyNoetherian X]
+    {U : X.Opens} (hU : IsAffineOpen U) [IsEmpty {x : X // x ∈ U}]
+    (f : X.functionFieldˣ) :
+    {x : DivisorPoint X | x.val ∈ U ∧ divisorOrder X x f ≠ 0} = ∅ ∧
+      Set.Finite {x : DivisorPoint X | x.val ∈ U ∧ divisorOrder X x f ≠ 0} := by
+  refine ⟨Set.eq_empty_iff_forall_notMem.mpr ?_, finite_divisorPoints_in_affine X hU f⟩
+  intro x hx
+  exact isEmptyElim (⟨x.val, hx.1⟩ : {x : X // x ∈ U})
+
+-- Local finiteness concerns actual closed supports and needs no global compactness.
+example (X : Scheme) [IsIntegral X] [IsLocallyNoetherian X] (f : X.functionFieldˣ) :
+    LocallyFinite (fun Z : {Z : PrimeDivisor X // primeDivisorOrder X Z f ≠ 0} ↦
+      (Z.val.val.val.support : Set X)) := by
+  fail_if_success
+    have : CompactSpace X := inferInstance
+  exact primeDivisorSupports_locallyFinite X f
+
+-- A globally Noetherian scheme already supplies the compactness needed for finite support.
+example (X : Scheme) [IsIntegral X] [IsNoetherian X] (f : X.functionFieldˣ) :
+    Set.Finite {Z : PrimeDivisor X | primeDivisorOrder X Z f ≠ 0} := by
+  have : CompactSpace X := inferInstance
+  exact finite_primeDivisorOrder_support X f
+
+-- Both equivalent indices have finite support under exactly the global compactness input.
+example (X : Scheme) [IsIntegral X] [IsLocallyNoetherian X] [CompactSpace X]
+    (f : X.functionFieldˣ) :
+    Set.Finite {Z : PrimeDivisor X | primeDivisorOrder X Z f ≠ 0} ∧
+      Set.Finite {x : DivisorPoint X | divisorOrder X x f ≠ 0} :=
+  ⟨finite_primeDivisorOrder_support X f, finite_divisorOrder_support X f⟩
+
+-- Taking an inverse reverses signs but leaves the nonzero prime-support set unchanged.
+example (X : Scheme) [IsIntegral X] [IsLocallyNoetherian X] (f : X.functionFieldˣ) :
+    {Z : PrimeDivisor X | primeDivisorOrder X Z f⁻¹ ≠ 0} =
+      {Z : PrimeDivisor X | primeDivisorOrder X Z f ≠ 0} := by
+  ext Z
+  simp only [Set.mem_setOf_eq, primeDivisorOrder, divisorOrder_inv, neg_ne_zero]
+
+-- The constant function one has empty support even without compactness.
+example (X : Scheme) [IsIntegral X] [IsLocallyNoetherian X] :
+    {Z : PrimeDivisor X | primeDivisorOrder X Z (1 : X.functionFieldˣ) ≠ 0} = ∅ := by
+  ext Z
+  simp only [Set.mem_setOf_eq, primeDivisorOrder, divisorOrder_one, ne_eq, not_true_eq_false,
+    Set.mem_empty_iff_false]
+
+-- Cancellation may shrink product support; only inclusion in the union is asserted.
+example (X : Scheme) [IsIntegral X] [IsLocallyNoetherian X] (f g : X.functionFieldˣ) :
+    {Z : PrimeDivisor X | primeDivisorOrder X Z (f * g) ≠ 0} ⊆
+      {Z : PrimeDivisor X | primeDivisorOrder X Z f ≠ 0} ∪
+        {Z : PrimeDivisor X | primeDivisorOrder X Z g ≠ 0} := by
+  intro Z hZ
+  by_contra h
+  simp only [Set.mem_union, Set.mem_setOf_eq, not_or, not_not] at h
+  apply hZ
+  change divisorOrder X _ (f * g) = 0
+  rw [divisorOrder_mul]
+  change primeDivisorOrder X Z f + primeDivisorOrder X Z g = 0
+  rw [h.1, h.2, add_zero]
+
+end DivisorFinitenessRegressions
+
+-- SP38: assembled principal-divisor cycles and actual isomorphism transport.
+#check HodgeConjecture.SchemeCycles.principalDivisor
+#check HodgeConjecture.SchemeCycles.principalDivisor_apply
+#check HodgeConjecture.SchemeCycles.principalDivisor_support
+#check HodgeConjecture.SchemeCycles.principalDivisorAddHom
+#check HodgeConjecture.SchemeCycles.closedImmersionPushforward_iso_apply
+#check HodgeConjecture.SchemeCycles.principalDivisor_iso
+#check HodgeConjecture.SchemeCycles.openRestriction_principalDivisor
+
+#print axioms HodgeConjecture.SchemeCycles.principalDivisor
+#print axioms HodgeConjecture.SchemeCycles.principalDivisor_apply_prime
+#print axioms HodgeConjecture.SchemeCycles.principalDivisor_apply_of_not_prime
+#print axioms HodgeConjecture.SchemeCycles.principalDivisor_apply
+#print axioms HodgeConjecture.SchemeCycles.principalDivisor_support
+#print axioms HodgeConjecture.SchemeCycles.principalDivisor_eq_zero_iff
+#print axioms HodgeConjecture.SchemeCycles.principalDivisor_one
+#print axioms HodgeConjecture.SchemeCycles.principalDivisor_mul
+#print axioms HodgeConjecture.SchemeCycles.principalDivisor_inv
+#print axioms HodgeConjecture.SchemeCycles.principalDivisor_div
+#print axioms HodgeConjecture.SchemeCycles.principalDivisorAddHom
+#print axioms HodgeConjecture.SchemeCycles.principalDivisorAddHom_ofMul
+#print axioms HodgeConjecture.SchemeCycles.closedImageSubschemeEquiv
+#print axioms HodgeConjecture.SchemeCycles.closedImageSubschemeEquiv_apply
+#print axioms HodgeConjecture.SchemeCycles.closedImageSubschemeEquiv_symm_apply
+#print axioms HodgeConjecture.SchemeCycles.closedImmersionPushforward_iso_eq_lmapDomain
+#print axioms HodgeConjecture.SchemeCycles.closedImmersionPushforward_iso_apply_image
+#print axioms HodgeConjecture.SchemeCycles.closedImmersionPushforward_iso_apply
+#print axioms HodgeConjecture.SchemeCycles.principalDivisor_iso
+#print axioms HodgeConjecture.SchemeCycles.openRestriction_principalDivisor
+
+noncomputable section PrincipalDivisorRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory
+open HodgeConjecture.SchemeCycles
+
+-- The coefficient in the existing cycle module is the existing signed order.
+example (X : Scheme) [IsIntegral X] [IsLocallyNoetherian X] [CompactSpace X]
+    (f : X.functionFieldˣ) (Z : PrimeDivisor X) :
+    (principalDivisor X f : Cycles X ℤ) Z.val = primeDivisorOrder X Z f :=
+  principalDivisor_apply_prime X f Z
+
+-- No absolute-dimension grading is inferred: other codimensions have coefficient zero.
+example (X : Scheme) [IsIntegral X] [IsLocallyNoetherian X] [CompactSpace X]
+    (f : X.functionFieldˣ) (Z : IntegralClosedSubscheme X)
+    (hZ : supportCodimension Z ≠ 1) : principalDivisor X f Z = 0 :=
+  principalDivisor_apply_of_not_prime X f Z hZ
+
+-- The exact cycle support consists of the actual prime supports with nonzero order.
+example (X : Scheme) [IsIntegral X] [IsLocallyNoetherian X] [CompactSpace X]
+    (f : X.functionFieldˣ) :
+    ((principalDivisor X f).support : Set (IntegralClosedSubscheme X)) =
+      Subtype.val '' {Z : PrimeDivisor X | primeDivisorOrder X Z f ≠ 0} :=
+  principalDivisor_support X f
+
+-- Zero means vanishing local coefficients, not a converse assertion of global invertibility.
+example (X : Scheme) [IsIntegral X] [IsLocallyNoetherian X] [CompactSpace X]
+    (f : X.functionFieldˣ) :
+    principalDivisor X f = 0 ↔ ∀ Z : PrimeDivisor X, primeDivisorOrder X Z f = 0 :=
+  principalDivisor_eq_zero_iff X f
+
+example (X : Scheme) [IsIntegral X] [IsLocallyNoetherian X] [CompactSpace X] :
+    principalDivisor X (1 : X.functionFieldˣ) = 0 :=
+  principalDivisor_one X
+
+-- Multiplicative rational functions map to additive integral cycles.
+example (X : Scheme) [IsIntegral X] [IsLocallyNoetherian X] [CompactSpace X]
+    (f g : X.functionFieldˣ) :
+    principalDivisor X (f * g) = principalDivisor X f + principalDivisor X g :=
+  principalDivisor_mul X f g
+
+example (X : Scheme) [IsIntegral X] [IsLocallyNoetherian X] [CompactSpace X]
+    (f : X.functionFieldˣ) : principalDivisor X f⁻¹ = -principalDivisor X f :=
+  principalDivisor_inv X f
+
+example (X : Scheme) [IsIntegral X] [IsLocallyNoetherian X] [CompactSpace X]
+    (f g : X.functionFieldˣ) :
+    principalDivisor X (f / g) = principalDivisor X f - principalDivisor X g :=
+  principalDivisor_div X f g
+
+-- Genuine cancellation is retained when coefficients are assembled into a cycle.
+example (X : Scheme) [IsIntegral X] [IsLocallyNoetherian X] [CompactSpace X]
+    (f : X.functionFieldˣ) : principalDivisor X (f / f) = 0 := by
+  rw [principalDivisor_div, sub_self]
+
+-- The bundled homomorphism has the same principal-divisor function, not a second assignment.
+example (X : Scheme) [IsIntegral X] [IsLocallyNoetherian X] [CompactSpace X]
+    (f g : X.functionFieldˣ) :
+    principalDivisorAddHom X (Additive.ofMul f + Additive.ofMul g) =
+      principalDivisor X f + principalDivisor X g := by
+  rw [map_add, principalDivisorAddHom_ofMul, principalDivisorAddHom_ofMul]
+
+-- Inverse image operations on actual integral supports are proved for arbitrary schemes.
+example {X Y : Scheme} (e : X ≅ Y) (Z : IntegralClosedSubscheme X) :
+    closedImageSubscheme e.inv (closedImageSubscheme e.hom Z) = Z := by
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  fail_if_success
+    have : IsLocallyNoetherian X := inferInstance
+  exact (closedImageSubschemeEquiv e).left_inv Z
+
+-- The already-defined pushforward preserves all-cycle coefficients over any semiring.
+example {X Y : Scheme} (R : Type) [Semiring R] (e : X ≅ Y)
+    (c : Cycles X R) (Z : IntegralClosedSubscheme X) (W : IntegralClosedSubscheme Y) :
+    closedImmersionPushforward R e.hom c (closedImageSubscheme e.hom Z) = c Z ∧
+      closedImmersionPushforward R e.hom c W = c (closedImageSubscheme e.inv W) := by
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  fail_if_success
+    have : IsLocallyNoetherian X := inferInstance
+  exact ⟨closedImmersionPushforward_iso_apply_image R e c Z,
+    closedImmersionPushforward_iso_apply R e c W⟩
+
+-- A pushed principal cycle keeps its signed coefficient at the actual image support.
+example {X Y : Scheme} [IsIntegral X] [IsLocallyNoetherian X] [CompactSpace X]
+    (e : X ≅ Y) (f : X.functionFieldˣ) (Z : PrimeDivisor X) :
+    closedImmersionPushforward ℤ e.hom (principalDivisor X f)
+      (closedImageSubscheme e.hom Z.val) = primeDivisorOrder X Z f := by
+  rw [closedImmersionPushforward_iso_apply_image, principalDivisor_apply_prime]
+
+-- Rational functions pull contravariantly while the same integral cycle pushes forward.
+example {X Y : Scheme} [IsIntegral X] [IsIntegral Y]
+    [IsLocallyNoetherian X] [IsLocallyNoetherian Y] [CompactSpace X] [CompactSpace Y]
+    (e : X ≅ Y) (f : Y.functionFieldˣ) :
+    closedImmersionPushforward ℤ e.hom
+        (principalDivisor X (Units.map (functionFieldEquiv e).toMonoidHom f)) =
+      principalDivisor Y f :=
+  principalDivisor_iso e f
+
+-- The existing open-restriction map gives the same contravariant principal divisor.
+example {X Y : Scheme} [IsIntegral X] [IsIntegral Y]
+    [IsLocallyNoetherian X] [IsLocallyNoetherian Y] [CompactSpace X] [CompactSpace Y]
+    (e : X ≅ Y) (f : Y.functionFieldˣ) :
+    openRestriction ℤ e.hom (principalDivisor Y f) =
+      principalDivisor X (Units.map (functionFieldEquiv e).toMonoidHom f) :=
+  openRestriction_principalDivisor e f
+
+-- Inversion retains the negative sign through the actual scheme/cycle comparison.
+example {X Y : Scheme} [IsIntegral X] [IsIntegral Y]
+    [IsLocallyNoetherian X] [IsLocallyNoetherian Y] [CompactSpace X] [CompactSpace Y]
+    (e : X ≅ Y) (f : Y.functionFieldˣ) :
+    closedImmersionPushforward ℤ e.hom
+        (principalDivisor X (Units.map (functionFieldEquiv e).toMonoidHom f⁻¹)) =
+      -principalDivisor Y f := by
+  rw [principalDivisor_iso, principalDivisor_inv]
+
+-- Apply whole-cycle transport to the actual support-to-image isomorphism.
+-- Only the support composite is closed; the ambient morphism need not be closed or proper.
+example {X Y : Scheme} (f : X ⟶ Y) (Z : IntegralClosedSubscheme X)
+    [IsClosedImmersion (Z.val.subschemeι ≫ f)]
+    [IsLocallyNoetherian Z.val.subscheme] [CompactSpace Z.val.subscheme] :
+    letI := Z.property
+    letI := closedImageSubscheme_isIntegral f Z
+    letI : IsLocallyNoetherian (Z.val.map f).subscheme :=
+      isLocallyNoetherian_of_isOpenImmersion (closedImageSubschemeIso f Z).inv
+    letI : CompactSpace (Z.val.map f).subscheme :=
+      (Scheme.homeoOfIso (closedImageSubschemeIso f Z)).compactSpace
+    ∀ g : (Z.val.map f).subscheme.functionFieldˣ,
+      closedImmersionPushforward ℤ (closedImageSubschemeIso f Z).hom
+          (principalDivisor Z.val.subscheme
+            (Units.map (functionFieldEquiv (closedImageSubschemeIso f Z)).toMonoidHom g)) =
+        principalDivisor (Z.val.map f).subscheme g := by
+  letI := Z.property
+  letI := closedImageSubscheme_isIntegral f Z
+  letI : IsLocallyNoetherian (Z.val.map f).subscheme :=
+    isLocallyNoetherian_of_isOpenImmersion (closedImageSubschemeIso f Z).inv
+  letI : CompactSpace (Z.val.map f).subscheme :=
+    (Scheme.homeoOfIso (closedImageSubschemeIso f Z)).compactSpace
+  intro g
+  fail_if_success
+    have : IsClosedImmersion f := inferInstance
+  fail_if_success
+    have : IsProper f := inferInstance
+  exact principalDivisor_iso (closedImageSubschemeIso f Z) g
+
+end PrincipalDivisorRegressions
+
+-- SP39: explicit dimension functions and homogeneous existing finite cycles.
+#check HodgeConjecture.SchemeCycles.DimensionFunction
+#check HodgeConjecture.SchemeCycles.DimensionFunction.strictMono
+#check HodgeConjecture.SchemeCycles.DimensionFunction.map_covBy
+#check HodgeConjecture.SchemeCycles.supportDegree_primeDivisor
+#check HodgeConjecture.SchemeCycles.DimensionFunction.comapClosedImmersion
+#check HodgeConjecture.SchemeCycles.cyclesOfDegree
+#check HodgeConjecture.SchemeCycles.principalDivisor_mem_cyclesOfDegree
+#check HodgeConjecture.SchemeCycles.principalDivisor_closedSupport_mem_cyclesOfDegree
+
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction
+#print axioms HodgeConjecture.SchemeCycles.supportDegree
+#print axioms HodgeConjecture.SchemeCycles.primeDivisor_covBy_genericPoint
+#print axioms HodgeConjecture.SchemeCycles.supportDegree_primeDivisor
+#print axioms HodgeConjecture.SchemeCycles.supportDegree_closedImageSubscheme
+#print axioms HodgeConjecture.SchemeCycles.closedImmersion_covBy
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.comapClosedImmersion
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.comapClosedImmersion_apply
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.comapClosedImmersion_id
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.comapClosedImmersion_comp
+#print axioms HodgeConjecture.SchemeCycles.supportDegree_comapClosedImmersion
+#print axioms HodgeConjecture.SchemeCycles.cyclesOfDegree
+#print axioms HodgeConjecture.SchemeCycles.mem_cyclesOfDegree_iff
+#print axioms HodgeConjecture.SchemeCycles.single_mem_cyclesOfDegree
+#print axioms HodgeConjecture.SchemeCycles.fundamentalCycle_mem_cyclesOfDegree
+#print axioms HodgeConjecture.SchemeCycles.fundamentalCycle_mem_cyclesOfDegree_iff
+#print axioms HodgeConjecture.SchemeCycles.cyclesOfDegree_disjoint
+#print axioms HodgeConjecture.SchemeCycles.closedImmersionPushforward_mem_cyclesOfDegree
+#print axioms HodgeConjecture.SchemeCycles.principalDivisor_mem_cyclesOfDegree
+#print axioms HodgeConjecture.SchemeCycles.closedImmersionPushforward_mem_cyclesOfDegree_comap
+#print axioms HodgeConjecture.SchemeCycles.closedImmersionPushforward_principalDivisor_mem_cyclesOfDegree
+#print axioms HodgeConjecture.SchemeCycles.principalDivisor_closedSupport_mem_cyclesOfDegree
+
+noncomputable section DimensionFunctionRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory TopologicalSpace
+open HodgeConjecture.SchemeCycles
+
+-- Both conditions are retained on arbitrary schemes, not just the unit step on covers.
+example (X : Scheme) (δ : DimensionFunction X) :
+    StrictMono (fun x : X ↦ δ x) ∧ ∀ x y : X, x ⋖ y → δ y = δ x + 1 :=
+  ⟨δ.strictMono, fun _ _ h ↦ δ.map_covBy h⟩
+
+-- Actual codimension one gives an immediate specialization without Noetherianity.
+example (X : Scheme) [IsIntegral X] (Z : PrimeDivisor X) :
+    ambientGenericPoint Z.val ⋖ genericPoint X := by
+  fail_if_success
+    have : IsLocallyNoetherian X := inferInstance
+  exact primeDivisor_covBy_genericPoint X Z
+
+-- The shift is minus one in the supplied dimension function, not absolute dimension.
+example (X : Scheme) [IsIntegral X] (δ : DimensionFunction X) (Z : PrimeDivisor X) :
+    supportDegree δ Z.val = δ (genericPoint X) - 1 := by
+  fail_if_success
+    have : IsLocallyNoetherian X := inferInstance
+  exact supportDegree_primeDivisor δ Z
+
+-- Restriction is evaluation on the actual closed-immersion point map.
+example {X Y : Scheme} (δ : DimensionFunction Y) (i : X ⟶ Y)
+    [IsClosedImmersion i] (x : X) : δ.comapClosedImmersion i x = δ (i.base x) := by
+  fail_if_success
+    have : IsIntegral Y := inferInstance
+  fail_if_success
+    have : IsLocallyNoetherian Y := inferInstance
+  exact DimensionFunction.comapClosedImmersion_apply δ i x
+
+-- Actual identity and composition give literal restriction identities.
+example {X Y Z : Scheme} (δ : DimensionFunction Z) (i : X ⟶ Y) (j : Y ⟶ Z)
+    [IsClosedImmersion i] [IsClosedImmersion j] :
+    δ.comapClosedImmersion (𝟙 Z) = δ ∧
+      (δ.comapClosedImmersion j).comapClosedImmersion i =
+        δ.comapClosedImmersion (i ≫ j) :=
+  ⟨DimensionFunction.comapClosedImmersion_id Z δ,
+    DimensionFunction.comapClosedImmersion_comp δ i j⟩
+
+-- Restriction compares degrees of actual image supports, not their ambient codimensions.
+example {X Y : Scheme} (δ : DimensionFunction Y) (i : X ⟶ Y)
+    [IsClosedImmersion i] (W : IntegralClosedSubscheme X) :
+    supportDegree (δ.comapClosedImmersion i) W =
+      supportDegree δ (closedImageSubscheme i W) :=
+  supportDegree_comapClosedImmersion δ i W
+
+-- The homogeneous object is a supported submodule of the original cycle module.
+example (X : Scheme) (R : Type) [Semiring R] (δ : DimensionFunction X) (n : ℤ) :
+    (cyclesOfDegree R δ n : Submodule R (Cycles X R)) =
+      Finsupp.supported R R {W : IntegralClosedSubscheme X | supportDegree δ W = n} := rfl
+
+-- Distinct degrees are disjoint over arbitrary, possibly trivial, coefficient semirings.
+example (X : Scheme) (R : Type) [Semiring R] (δ : DimensionFunction X)
+    (n m : ℤ) (hnm : n ≠ m) :
+    Disjoint (cyclesOfDegree R δ n) (cyclesOfDegree R δ m) :=
+  cyclesOfDegree_disjoint R δ n m hnm
+
+-- With trivial coefficients the fundamental cycle is zero and belongs to every degree.
+example (X : Scheme) (R : Type) [Semiring R] [Subsingleton R]
+    (δ : DimensionFunction X) (W : IntegralClosedSubscheme X) (n : ℤ) :
+    fundamentalCycle R W ∈ cyclesOfDegree R δ n := by
+  have hzero : fundamentalCycle R W = 0 := Subsingleton.elim _ _
+  rw [hzero]
+  exact (cyclesOfDegree R δ n).zero_mem
+
+-- Detecting the degree from a fundamental cycle explicitly requires nontrivial coefficients.
+example (X : Scheme) (R : Type) [Semiring R] [Nontrivial R]
+    (δ : DimensionFunction X) (W : IntegralClosedSubscheme X) (n : ℤ) :
+    fundamentalCycle R W ∈ cyclesOfDegree R δ n ↔ supportDegree δ W = n :=
+  fundamentalCycle_mem_cyclesOfDegree_iff R δ n W
+
+-- The existing principal cycle is homogeneous in the chosen dimension function.
+example (X : Scheme) [IsIntegral X] [IsLocallyNoetherian X] [CompactSpace X]
+    (δ : DimensionFunction X) (f : X.functionFieldˣ) :
+    principalDivisor X f ∈ cyclesOfDegree ℤ δ (δ (genericPoint X) - 1) :=
+  principalDivisor_mem_cyclesOfDegree δ f
+
+-- Actual restricted degree suffices for closed pushforward, with no supplied comparison law.
+example {X Y : Scheme} (R : Type) [Semiring R] (δ : DimensionFunction Y)
+    (i : X ⟶ Y) [IsClosedImmersion i] (n : ℤ) (c : Cycles X R)
+    (hc : c ∈ cyclesOfDegree R (δ.comapClosedImmersion i) n) :
+    closedImmersionPushforward R i c ∈ cyclesOfDegree R δ n := by
+  fail_if_success
+    have : IsIntegral Y := inferInstance
+  fail_if_success
+    have : IsLocallyNoetherian Y := inferInstance
+  exact closedImmersionPushforward_mem_cyclesOfDegree_comap R δ i n c hc
+
+-- Only the integral source of the principal divisor needs Noetherianity and compactness.
+example {X Y : Scheme} [IsIntegral X] [IsLocallyNoetherian X] [CompactSpace X]
+    (δ : DimensionFunction Y) (i : X ⟶ Y) [IsClosedImmersion i]
+    (f : X.functionFieldˣ) :
+    closedImmersionPushforward ℤ i (principalDivisor X f) ∈
+      cyclesOfDegree ℤ δ (δ (i.base (genericPoint X)) - 1) := by
+  fail_if_success
+    have : IsIntegral Y := inferInstance
+  exact closedImmersionPushforward_principalDivisor_mem_cyclesOfDegree δ i f
+
+-- An actual closed relation carrier supplies a homogeneous ambient cycle on any ambient scheme.
+example (X : Scheme) (δ : DimensionFunction X) (W : IntegralClosedSubscheme X)
+    [IsLocallyNoetherian W.val.subscheme] [CompactSpace W.val.subscheme] :
+    letI := W.property
+    ∀ f : W.val.subscheme.functionFieldˣ,
+    closedImmersionPushforward ℤ W.val.subschemeι (principalDivisor W.val.subscheme f) ∈
+      cyclesOfDegree ℤ δ (supportDegree δ W - 1) := by
+  letI := W.property
+  intro f
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  fail_if_success
+    have : IsLocallyNoetherian X := inferInstance
+  fail_if_success
+    have : CompactSpace X := inferInstance
+  exact principalDivisor_closedSupport_mem_cyclesOfDegree δ W f
+
+-- Nonvacuous example: Spec of a field has an actual point and admits the constant-zero function.
+-- Both dimension-function fields are constructed, not supplied as additional inputs.
+example (K : Type) [Field K] :
+    ∃ δ : DimensionFunction (Scheme.Spec.obj (Opposite.op (CommRingCat.of K))),
+      ∃ x : Scheme.Spec.obj (Opposite.op (CommRingCat.of K)), δ x = 0 := by
+  let X : Scheme := Scheme.Spec.obj (Opposite.op (CommRingCat.of K))
+  letI : Subsingleton X := inferInstanceAs (Subsingleton (PrimeSpectrum K))
+  let δ : DimensionFunction X :=
+    { toFun := fun _ ↦ 0
+      strictMono := fun x y h ↦ False.elim (h.ne (Subsingleton.elim x y))
+      map_covBy := fun {x y} h ↦ False.elim (h.lt.ne (Subsingleton.elim x y)) }
+  exact ⟨δ, (show X from (⟨⊥, Ideal.bot_prime⟩ : PrimeSpectrum K)), rfl⟩
+
+-- The generic-point degree formula also applies when only the support composite is closed.
+example {X Y : Scheme} (δ : DimensionFunction Y) (f : X ⟶ Y)
+    (W : IntegralClosedSubscheme X) [IsClosedImmersion (W.val.subschemeι ≫ f)] :
+    supportDegree δ (closedImageSubscheme f W) = δ (f.base (ambientGenericPoint W)) := by
+  fail_if_success
+    have : IsClosedImmersion f := inferInstance
+  exact supportDegree_closedImageSubscheme δ f W
+
+end DimensionFunctionRegressions
+
+-- SP40: actual finite principal relations, their quotient, and geometric descent.
+#check HodgeConjecture.SchemeCycles.ambientPrincipalDivisor
+#check HodgeConjecture.SchemeCycles.PrincipalRelationData
+#check HodgeConjecture.SchemeCycles.principalRelationData_family_locallyFinite_iff
+#check HodgeConjecture.SchemeCycles.mem_principalRelations_iff_exists_list
+#check HodgeConjecture.SchemeCycles.ChowGroup
+#check HodgeConjecture.SchemeCycles.classMap_eq_iff
+#check HodgeConjecture.SchemeCycles.PrincipalRelationData.closedImage
+#check HodgeConjecture.SchemeCycles.chowClosedImmersionPushforward
+#check HodgeConjecture.SchemeCycles.chowIsoEquiv
+#check HodgeConjecture.SchemeCycles.gradedIsoEquiv_symm_val
+
+#print axioms HodgeConjecture.SchemeCycles.idealSubscheme_isLocallyNoetherian
+#print axioms HodgeConjecture.SchemeCycles.idealSubscheme_compactSpace
+#print axioms HodgeConjecture.SchemeCycles.ambientPrincipalDivisor
+#print axioms HodgeConjecture.SchemeCycles.ambientPrincipalDivisor_mul
+#print axioms HodgeConjecture.SchemeCycles.closedImmersionPushforward_ambientPrincipalDivisor
+#print axioms HodgeConjecture.SchemeCycles.exists_ambientPrincipalDivisor_image
+#print axioms HodgeConjecture.SchemeCycles.gradedClosedImmersionPushforward
+#print axioms HodgeConjecture.SchemeCycles.gradedClosedImmersionPushforward_id
+#print axioms HodgeConjecture.SchemeCycles.gradedClosedImmersionPushforward_comp
+#print axioms HodgeConjecture.SchemeCycles.idealSubscheme_isNoetherian
+#print axioms HodgeConjecture.SchemeCycles.PrincipalRelationData
+#print axioms HodgeConjecture.SchemeCycles.PrincipalRelationData.zpow
+#print axioms HodgeConjecture.SchemeCycles.principalRelationData_family_locallyFinite_iff
+#print axioms HodgeConjecture.SchemeCycles.principalRelation
+#print axioms HodgeConjecture.SchemeCycles.principalRelation_zpow
+#print axioms HodgeConjecture.SchemeCycles.principalRelations
+#print axioms HodgeConjecture.SchemeCycles.mem_principalRelations_iff_exists_list
+#print axioms HodgeConjecture.SchemeCycles.RationallyEquivalent
+#print axioms HodgeConjecture.SchemeCycles.rationallyEquivalent_iff_exists_list
+#print axioms HodgeConjecture.SchemeCycles.ChowGroup
+#print axioms HodgeConjecture.SchemeCycles.classMap
+#print axioms HodgeConjecture.SchemeCycles.classMap_eq_iff
+#print axioms HodgeConjecture.SchemeCycles.classMap_eq_zero_iff
+#print axioms HodgeConjecture.SchemeCycles.classMap_principalRelation
+#print axioms HodgeConjecture.SchemeCycles.PrincipalRelationData.closedImage
+#print axioms HodgeConjecture.SchemeCycles.gradedClosedImmersionPushforward_principalRelation
+#print axioms HodgeConjecture.SchemeCycles.principalRelations_le_comap_closedImmersionPushforward
+#print axioms HodgeConjecture.SchemeCycles.chowClosedImmersionPushforward
+#print axioms HodgeConjecture.SchemeCycles.chowClosedImmersionPushforward_classMap
+#print axioms HodgeConjecture.SchemeCycles.chowClosedImmersionPushforward_restricted_classMap
+#print axioms HodgeConjecture.SchemeCycles.chowClosedImmersionPushforward_id
+#print axioms HodgeConjecture.SchemeCycles.chowClosedImmersionPushforward_comp
+#print axioms HodgeConjecture.SchemeCycles.gradedIsoEquiv
+#print axioms HodgeConjecture.SchemeCycles.gradedIsoEquiv_val
+#print axioms HodgeConjecture.SchemeCycles.gradedIsoEquiv_symm_val
+#print axioms HodgeConjecture.SchemeCycles.principalRelations_map_gradedIsoEquiv
+#print axioms HodgeConjecture.SchemeCycles.chowIsoEquiv
+#print axioms HodgeConjecture.SchemeCycles.chowIsoEquiv_classMap
+#print axioms HodgeConjecture.SchemeCycles.chowIsoEquiv_symm_classMap
+#print axioms HodgeConjecture.SchemeCycles.chowIsoEquiv_toLinearMap
+
+noncomputable section PrincipalRelationsRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory
+open HodgeConjecture.SchemeCycles
+
+-- Closed carriers inherit Noetherianity from the actual affine quotient construction.
+example (X : Scheme) [IsNoetherian X] (I : X.IdealSheafData) :
+    IsNoetherian I.subscheme := by
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  infer_instance
+
+-- Ambient principal cycles use only the actual carrier's finiteness properties.
+example {X : Scheme} (W : IntegralClosedSubscheme X)
+    [IsLocallyNoetherian W.val.subscheme] [CompactSpace W.val.subscheme] :
+    letI := W.property
+    ∀ f g : W.val.subscheme.functionFieldˣ,
+      ambientPrincipalDivisor W (f * g) =
+          ambientPrincipalDivisor W f + ambientPrincipalDivisor W g ∧
+        ambientPrincipalDivisor W f⁻¹ = -ambientPrincipalDivisor W f ∧
+        ambientPrincipalDivisor W (1 : W.val.subscheme.functionFieldˣ) = 0 := by
+  letI := W.property
+  intro f g
+  exact ⟨ambientPrincipalDivisor_mul W f g,
+    ambientPrincipalDivisor_inv W f, ambientPrincipalDivisor_one W⟩
+
+-- Local finiteness is tested on actual carrier supports, with no Noetherianity needed.
+example (X : Scheme) [CompactSpace X] {ι : Type}
+    (δ : DimensionFunction X) (n : ℤ) (d : ι → PrincipalRelationData δ n) :
+    LocallyFinite (fun i ↦ ((d i).1.val.val.support : Set X)) ↔ Finite ι := by
+  fail_if_success
+    have : IsNoetherian X := inferInstance
+  exact principalRelationData_family_locallyFinite_iff δ n d
+
+-- Even when every principal cycle is zero, an infinitely repeated nonempty carrier
+-- is not a locally finite carrier family. No divisor-support surrogate is used.
+example (X : Scheme) [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ)
+    (d : PrincipalRelationData δ n) :
+    (∀ k : ℕ, principalRelation δ n ((fun _ : ℕ ↦ d.zpow 0) k) = 0) ∧
+      ¬ LocallyFinite (fun k : ℕ ↦ (((fun _ : ℕ ↦ d.zpow 0) k).1.val.val.support : Set X)) := by
+  constructor
+  · intro k
+    simpa only [zero_smul] using principalRelation_zpow δ n d 0
+  · intro h
+    letI : Finite ℕ :=
+      (principalRelationData_family_locallyFinite_iff δ n (fun _ : ℕ ↦ d.zpow 0)).mp h
+    exact not_finite ℕ
+
+-- A homogeneous generator is literally the existing ambient principal divisor.
+example (X : Scheme) [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ)
+    (d : PrincipalRelationData δ n) :
+    letI := d.1.val.property
+    (principalRelation δ n d : Cycles X ℤ) = ambientPrincipalDivisor d.1.val d.2 :=
+  principalRelation_coe δ n d
+
+-- Negative integer weights are absorbed into actual inverse powers of the same function.
+example (X : Scheme) [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ)
+    (d : PrincipalRelationData δ n) :
+    principalRelation δ n (d.zpow (-3)) = (-3 : ℤ) • principalRelation δ n d :=
+  principalRelation_zpow δ n d (-3)
+
+-- The relation span equals unweighted finite sums of actual relation data.
+example (X : Scheme) [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ)
+    (c : cyclesOfDegree ℤ δ n) :
+    c ∈ principalRelations δ n ↔
+      ∃ l : List (PrincipalRelationData δ n), (l.map (principalRelation δ n)).sum = c :=
+  mem_principalRelations_iff_exists_list δ n c
+
+-- Rational equivalence uses that same finite-sum difference criterion.
+example (X : Scheme) [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ)
+    (c e : cyclesOfDegree ℤ δ n) :
+    RationallyEquivalent δ n c e ↔
+      ∃ l : List (PrincipalRelationData δ n), (l.map (principalRelation δ n)).sum = c - e :=
+  rationallyEquivalent_iff_exists_list δ n c e
+
+-- Quotient equality and the zero class detect precisely the actual relation submodule.
+example (X : Scheme) [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ)
+    (c e : cyclesOfDegree ℤ δ n) :
+    (classMap δ n c = classMap δ n e ↔ RationallyEquivalent δ n c e) ∧
+      (classMap δ n c = 0 ↔ c ∈ principalRelations δ n) :=
+  ⟨classMap_eq_iff δ n c e, classMap_eq_zero_iff δ n c⟩
+
+example (X : Scheme) [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ)
+    (d : PrincipalRelationData δ n) : classMap δ n (principalRelation δ n d) = 0 :=
+  classMap_principalRelation δ n d
+
+-- Every quotient element has a representative in the existing homogeneous cycle module.
+example (X : Scheme) [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ)
+    (q : ChowGroup δ n) : ∃ c : cyclesOfDegree ℤ δ n, classMap δ n c = q :=
+  classMap_surjective δ n q
+
+-- Relation data transport has the actual scheme-theoretic image as its carrier.
+example {X Y : Scheme} (δX : DimensionFunction X) (δY : DimensionFunction Y)
+    (i : X ⟶ Y) [IsClosedImmersion i]
+    (hdeg : ∀ W : IntegralClosedSubscheme X,
+      supportDegree δY (closedImageSubscheme i W) = supportDegree δX W)
+    (n : ℤ) (d : PrincipalRelationData δX n) :
+    (d.closedImage δX δY i hdeg n).1.val = closedImageSubscheme i d.1.val := rfl
+
+-- The actual geometric principal-divisor identity supplies generator preservation.
+example {X Y : Scheme} [IsNoetherian X] [IsNoetherian Y]
+    (δX : DimensionFunction X) (δY : DimensionFunction Y)
+    (i : X ⟶ Y) [IsClosedImmersion i]
+    (hdeg : ∀ W : IntegralClosedSubscheme X,
+      supportDegree δY (closedImageSubscheme i W) = supportDegree δX W)
+    (n : ℤ) (d : PrincipalRelationData δX n) :
+    gradedClosedImmersionPushforward δX δY i hdeg n (principalRelation δX n d) =
+      principalRelation δY n (d.closedImage δX δY i hdeg n) :=
+  gradedClosedImmersionPushforward_principalRelation δX δY i hdeg n d
+
+-- Preservation of the entire relation submodule is proved, not supplied as an input.
+example {X Y : Scheme} [IsNoetherian X] [IsNoetherian Y]
+    (δX : DimensionFunction X) (δY : DimensionFunction Y)
+    (i : X ⟶ Y) [IsClosedImmersion i]
+    (hdeg : ∀ W : IntegralClosedSubscheme X,
+      supportDegree δY (closedImageSubscheme i W) = supportDegree δX W)
+    (n : ℤ) (c : cyclesOfDegree ℤ δX n) (hc : c ∈ principalRelations δX n) :
+    gradedClosedImmersionPushforward δX δY i hdeg n c ∈ principalRelations δY n :=
+  principalRelations_le_comap_closedImmersionPushforward δX δY i hdeg n hc
+
+-- Canonical dimension restriction gives the quotient square without a comparison hypothesis.
+example {X Y : Scheme} [IsNoetherian X] [IsNoetherian Y]
+    (δ : DimensionFunction Y) (i : X ⟶ Y) [IsClosedImmersion i]
+    (n : ℤ) (c : cyclesOfDegree ℤ (δ.comapClosedImmersion i) n) :
+    chowClosedImmersionPushforward (δ.comapClosedImmersion i) δ i
+        (fun W ↦ (supportDegree_comapClosedImmersion δ i W).symm) n
+        (classMap (δ.comapClosedImmersion i) n c) =
+      classMap δ n (gradedClosedImmersionPushforward (δ.comapClosedImmersion i) δ i
+        (fun W ↦ (supportDegree_comapClosedImmersion δ i W).symm) n c) :=
+  chowClosedImmersionPushforward_restricted_classMap δ i n c
+
+-- The identity acts identically on quotient classes, using the actual degree formula.
+example (X : Scheme) [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ) :
+    chowClosedImmersionPushforward δ δ (𝟙 X)
+      (fun W ↦ supportDegree_closedImageSubscheme δ (𝟙 X) W) n = LinearMap.id :=
+  chowClosedImmersionPushforward_id X δ _ n
+
+-- Composition is inherited by the quotient from the existing closed cycle maps.
+example {X Y Z : Scheme} [IsNoetherian X] [IsNoetherian Y] [IsNoetherian Z]
+    (δX : DimensionFunction X) (δY : DimensionFunction Y) (δZ : DimensionFunction Z)
+    (i : X ⟶ Y) (j : Y ⟶ Z) [IsClosedImmersion i] [IsClosedImmersion j]
+    (hi : ∀ W : IntegralClosedSubscheme X,
+      supportDegree δY (closedImageSubscheme i W) = supportDegree δX W)
+    (hj : ∀ W : IntegralClosedSubscheme Y,
+      supportDegree δZ (closedImageSubscheme j W) = supportDegree δY W)
+    (hij : ∀ W : IntegralClosedSubscheme X,
+      supportDegree δZ (closedImageSubscheme (i ≫ j) W) = supportDegree δX W)
+    (n : ℤ) :
+    (chowClosedImmersionPushforward δY δZ j hj n).comp
+      (chowClosedImmersionPushforward δX δY i hi n) =
+        chowClosedImmersionPushforward δX δZ (i ≫ j) hij n :=
+  chowClosedImmersionPushforward_comp δX δY δZ i j hi hj hij n
+
+-- Before quotienting, the graded inverse is the existing geometric open restriction.
+example {X Y : Scheme} (δ : DimensionFunction Y) (e : X ≅ Y) (n : ℤ)
+    (c : cyclesOfDegree ℤ δ n) :
+    ((gradedIsoEquiv δ e n).symm c).val = openRestriction ℤ e.hom c.val := by
+  fail_if_success
+    have : IsNoetherian X := inferInstance
+  exact gradedIsoEquiv_symm_val δ e n c
+
+example {X Y : Scheme} [IsNoetherian X] [IsNoetherian Y]
+    (δ : DimensionFunction Y) (e : X ≅ Y) (n : ℤ)
+    (c : cyclesOfDegree ℤ (δ.comapClosedImmersion e.hom) n) :
+    chowIsoEquiv δ e n (classMap (δ.comapClosedImmersion e.hom) n c) =
+      classMap δ n (gradedIsoEquiv δ e n c) :=
+  chowIsoEquiv_classMap δ e n c
+
+-- The inverse representative square explicitly retains the same open-restriction map.
+example {X Y : Scheme} [IsNoetherian X] [IsNoetherian Y]
+    (δ : DimensionFunction Y) (e : X ≅ Y) (n : ℤ)
+    (c : cyclesOfDegree ℤ δ n) :
+    (chowIsoEquiv δ e n).symm (classMap δ n c) =
+        classMap (δ.comapClosedImmersion e.hom) n ((gradedIsoEquiv δ e n).symm c) ∧
+      ((gradedIsoEquiv δ e n).symm c).val = openRestriction ℤ e.hom c.val :=
+  ⟨chowIsoEquiv_symm_classMap δ e n c, gradedIsoEquiv_symm_val δ e n c⟩
+
+-- Actual scheme isomorphisms yield inverse maps on all quotient classes.
+example {X Y : Scheme} [IsNoetherian X] [IsNoetherian Y]
+    (δ : DimensionFunction Y) (e : X ≅ Y) (n : ℤ)
+    (q : ChowGroup (δ.comapClosedImmersion e.hom) n) (r : ChowGroup δ n) :
+    (chowIsoEquiv δ e n).symm (chowIsoEquiv δ e n q) = q ∧
+      chowIsoEquiv δ e n ((chowIsoEquiv δ e n).symm r) = r :=
+  ⟨(chowIsoEquiv δ e n).symm_apply_apply q, (chowIsoEquiv δ e n).apply_symm_apply r⟩
+
+-- The quotient isomorphism's forward map is not a second pushforward assignment.
+example {X Y : Scheme} [IsNoetherian X] [IsNoetherian Y]
+    (δ : DimensionFunction Y) (e : X ≅ Y) (n : ℤ) :
+    (chowIsoEquiv δ e n).toLinearMap =
+      chowClosedImmersionPushforward (δ.comapClosedImmersion e.hom) δ e.hom
+        (fun W ↦ (supportDegree_comapClosedImmersion δ e.hom W).symm) n :=
+  chowIsoEquiv_toLinearMap δ e n
+
+end PrincipalRelationsRegressions
+
+-- SP41: actual finite geometric dimension and constructed low-dimensional grading.
+#check HodgeConjecture.SchemeCycles.integralSubschemePointOrderIso
+#check HodgeConjecture.SchemeCycles.ambientGenericPoint_height_eq_supportDim
+#check HodgeConjecture.SchemeCycles.ringKrullDim_lt_top_of_finiteType
+#check HodgeConjecture.SchemeCycles.topologicalKrullDim_lt_top_of_finiteType
+#check HodgeConjecture.SchemeCycles.DimensionFunction.ofKrullDimLEOne
+#check HodgeConjecture.SchemeCycles.supportDegree_ofKrullDimLEOne_eq_iff
+#check HodgeConjecture.SchemeCycles.fundamentalCycle_mem_ofKrullDimLEOne_iff
+#check HodgeConjecture.SchemeCycles.Examples.affineLineDimensionFunction
+
+#print axioms HodgeConjecture.SchemeCycles.integralSubschemePointOrderIso
+#print axioms HodgeConjecture.SchemeCycles.integralSubschemePointOrderIso_val
+#print axioms HodgeConjecture.SchemeCycles.topologicalKrullDim_eq_pointKrullDim
+#print axioms HodgeConjecture.SchemeCycles.genericPoint_height_eq_topologicalKrullDim
+#print axioms HodgeConjecture.SchemeCycles.ambientGenericPoint_height_eq_supportDim
+#print axioms HodgeConjecture.SchemeCycles.point_height_eq_supportDim
+#print axioms HodgeConjecture.SchemeCycles.point_height_ne_top
+#print axioms HodgeConjecture.SchemeCycles.point_height_toNat_eq
+#print axioms HodgeConjecture.SchemeCycles.point_height_toNat_strictMono
+#print axioms HodgeConjecture.SchemeCycles.polynomialDimensionBound
+#print axioms HodgeConjecture.SchemeCycles.mvPolynomial_ringKrullDim_le_bound
+#print axioms HodgeConjecture.SchemeCycles.ringKrullDim_le_bound_of_surjective
+#print axioms HodgeConjecture.SchemeCycles.exists_ringKrullDim_le_of_finiteType
+#print axioms HodgeConjecture.SchemeCycles.ringKrullDim_lt_top_of_finiteType
+#print axioms HodgeConjecture.SchemeCycles.finiteRingKrullDim_of_finiteType
+#print axioms HodgeConjecture.SchemeCycles.spec_topologicalKrullDim_lt_top_of_finiteType
+#print axioms HodgeConjecture.SchemeCycles.quotientSpec_topologicalKrullDim_lt_top_of_finiteType
+#print axioms HodgeConjecture.SchemeCycles.affine_topologicalKrullDim_lt_top_of_finiteType
+#print axioms HodgeConjecture.SchemeCycles.point_coheight_eq_of_isOpenImmersion
+#print axioms HodgeConjecture.SchemeCycles.topologicalKrullDim_lt_top_of_finite_openCover
+#print axioms HodgeConjecture.SchemeCycles.affine_topologicalKrullDim_lt_top_of_locallyOfFiniteType
+#print axioms HodgeConjecture.SchemeCycles.topologicalKrullDim_lt_top_of_compact_locallyOfFiniteType
+#print axioms HodgeConjecture.SchemeCycles.topologicalKrullDim_lt_top_of_finiteType
+#print axioms HodgeConjecture.SchemeCycles.point_height_le_one
+#print axioms HodgeConjecture.SchemeCycles.point_height_eq_zero_and_eq_one_of_lt
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.ofKrullDimLEOne
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.ofKrullDimLEOne_apply
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.ofKrullDimLEOne_nonneg
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.ofKrullDimLEOne_eq_zero_or_eq_one
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.ofKrullDimLEOne_values_of_lt
+#print axioms HodgeConjecture.SchemeCycles.supportDegree_ofKrullDimLEOne_eq_iff
+#print axioms HodgeConjecture.SchemeCycles.fundamentalCycle_mem_ofKrullDimLEOne_iff
+#print axioms HodgeConjecture.SchemeCycles.Examples.affineLine
+#print axioms HodgeConjecture.SchemeCycles.Examples.affineLine_dimension
+#print axioms HodgeConjecture.SchemeCycles.Examples.affineLineDimensionFunction
+#print axioms HodgeConjecture.SchemeCycles.Examples.affineLineDimensionFunction_genericPoint
+#print axioms HodgeConjecture.SchemeCycles.Examples.affineLineOriginIdeal_isMaximal
+#print axioms HodgeConjecture.SchemeCycles.Examples.affineLineOrigin
+#print axioms HodgeConjecture.SchemeCycles.Examples.affineLineOrigin_isClosed
+#print axioms HodgeConjecture.SchemeCycles.Examples.affineLineDimensionFunction_origin
+
+noncomputable section GeometricDimensionRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory
+open HodgeConjecture.SchemeCycles
+open HodgeConjecture.SchemeCycles.Examples
+
+-- The carrier/interval comparison retains the literal closed-inclusion point map.
+example {X : Scheme} (W : IntegralClosedSubscheme X) (x : W.val.subscheme) :
+    (integralSubschemePointOrderIso W x).val = W.val.subschemeι.base x := rfl
+
+-- This is dimension of the actual carrier, with no ambient integrality or Noetherianity.
+example {X : Scheme} (W : IntegralClosedSubscheme X) :
+    (Order.height (ambientGenericPoint W) : WithBot ℕ∞) =
+      topologicalKrullDim W.val.subscheme := by
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  fail_if_success
+    have : IsNoetherian X := inferInstance
+  exact ambientGenericPoint_height_eq_supportDim W
+
+example (X : Scheme) (x : X) :
+    (Order.height x : WithBot ℕ∞) =
+      topologicalKrullDim (pointSupport X x).val.subscheme :=
+  point_height_eq_supportDim X x
+
+-- Finite dimension proves strict monotonicity, without an immediate-step premise.
+example (X : Scheme) (h : topologicalKrullDim X < ⊤) :
+    StrictMono (fun x : X ↦ ((Order.height x).toNat : ℤ)) :=
+  point_height_toNat_strictMono X h
+
+-- The zero-variable bound comes from the field's actual dimension.
+example (k : Type) [Field k] :
+    ringKrullDim (MvPolynomial (Fin 0) k) ≤ 0 := by
+  simpa only [polynomialDimensionBound, Nat.cast_zero] using
+    mvPolynomial_ringKrullDim_le_bound k 0
+
+-- Three variables give the proved upper bound seven, not a claimed sharp formula.
+example (k : Type) [Field k] :
+    ringKrullDim (MvPolynomial (Fin 3) k) ≤ 7 := by
+  simpa [polynomialDimensionBound] using mvPolynomial_ringKrullDim_le_bound k 3
+
+-- The finite bound does not require a domain or even a nontrivial target algebra.
+example (k A : Type) [Field k] [CommRing A] [Algebra k A] [Algebra.FiniteType k A] :
+    ∃ n : ℕ, ringKrullDim A ≤ n := by
+  fail_if_success
+    have : Nontrivial A := inferInstance
+  fail_if_success
+    have : IsDomain A := inferInstance
+  exact exists_ringKrullDim_le_of_finiteType k A
+
+-- Only the nonempty finite-dimensional-order package adds nontriviality.
+example (k A : Type) [Field k] [CommRing A] [Nontrivial A]
+    [Algebra k A] [Algebra.FiniteType k A] : FiniteRingKrullDim A :=
+  finiteRingKrullDim_of_finiteType k A
+
+-- The quotient by the unit ideal is genuinely empty, but still has dimension below infinity.
+example (k A : Type) [Field k] [CommRing A] [Algebra k A] [Algebra.FiniteType k A] :
+    topologicalKrullDim (Spec (CommRingCat.of (A ⧸ (⊤ : Ideal A)))) = ⊥ ∧
+      topologicalKrullDim (Spec (CommRingCat.of (A ⧸ (⊤ : Ideal A)))) < ⊤ := by
+  constructor
+  · change topologicalKrullDim (PrimeSpectrum (A ⧸ (⊤ : Ideal A))) = ⊥
+    rw [PrimeSpectrum.topologicalKrullDim_eq_ringKrullDim]
+    exact ringKrullDim_eq_bot_of_subsingleton
+  · exact quotientSpec_topologicalKrullDim_lt_top_of_finiteType k A ⊤
+
+-- The actual structural morphism supplies all finite-generation data on affine charts.
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] [QuasiCompact p] :
+    topologicalKrullDim X < ⊤ :=
+  topologicalKrullDim_lt_top_of_finiteType k X p
+
+-- Globalization uses an actual finite open cover and needs no integral ambient scheme.
+example (X : Scheme) (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
+    (h𝒰 : ∀ i, topologicalKrullDim (𝒰.X i) < ⊤) :
+    topologicalKrullDim X < ⊤ := by
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  exact topologicalKrullDim_lt_top_of_finite_openCover 𝒰 h𝒰
+
+-- Both dimension-function conditions are outputs of the proved low-dimensional construction.
+example (X : Scheme) (h : topologicalKrullDim X ≤ 1) :
+    StrictMono (DimensionFunction.ofKrullDimLEOne X h) ∧
+      ∀ {x y : X}, x ⋖ y →
+        DimensionFunction.ofKrullDimLEOne X h y =
+          DimensionFunction.ofKrullDimLEOne X h x + 1 :=
+  ⟨(DimensionFunction.ofKrullDimLEOne X h).strictMono,
+    (DimensionFunction.ofKrullDimLEOne X h).map_covBy⟩
+
+example (X : Scheme) (h : topologicalKrullDim X ≤ 1) (x : X) :
+    0 ≤ DimensionFunction.ofKrullDimLEOne X h x ∧
+      (DimensionFunction.ofKrullDimLEOne X h x = 0 ∨
+        DimensionFunction.ofKrullDimLEOne X h x = 1) :=
+  ⟨DimensionFunction.ofKrullDimLEOne_nonneg X h x,
+    DimensionFunction.ofKrullDimLEOne_eq_zero_or_eq_one X h x⟩
+
+-- The existing support degree is now the dimension of the actual closed scheme.
+example {X : Scheme} (h : topologicalKrullDim X ≤ 1)
+    (W : IntegralClosedSubscheme X) (n : ℕ) :
+    supportDegree (DimensionFunction.ofKrullDimLEOne X h) W = (n : ℤ) ↔
+      topologicalKrullDim W.val.subscheme = (n : WithBot ℕ∞) :=
+  supportDegree_ofKrullDimLEOne_eq_iff h W n
+
+example {X : Scheme} (R : Type) [Semiring R] [Nontrivial R]
+    (h : topologicalKrullDim X ≤ 1) (W : IntegralClosedSubscheme X) (n : ℕ) :
+    fundamentalCycle R W ∈ cyclesOfDegree R (DimensionFunction.ofKrullDimLEOne X h) n ↔
+      topologicalKrullDim W.val.subscheme = (n : WithBot ℕ∞) :=
+  fundamentalCycle_mem_ofKrullDimLEOne_iff R h W n
+
+-- With trivial coefficients every fundamental cycle is zero: no dimension converse is inferred.
+example {X : Scheme} (R : Type) [Semiring R] [Subsingleton R]
+    (h : topologicalKrullDim X ≤ 1) (W : IntegralClosedSubscheme X) (n : ℤ) :
+    fundamentalCycle R W ∈ cyclesOfDegree R (DimensionFunction.ofKrullDimLEOne X h) n := by
+  have hz : fundamentalCycle R W = 0 := Subsingleton.elim _ _
+  rw [hz]
+  exact Submodule.zero_mem _
+
+-- The constructor works without Noetherianity or integrality, and strict pairs have exact values.
+example (X : Scheme) (h : topologicalKrullDim X ≤ 1) {x y : X} (hxy : x < y) :
+    DimensionFunction.ofKrullDimLEOne X h x = 0 ∧
+      DimensionFunction.ofKrullDimLEOne X h y = 1 := by
+  fail_if_success
+    have : IsNoetherian X := inferInstance
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  exact DimensionFunction.ofKrullDimLEOne_values_of_lt X h hxy
+
+-- Nonvacuous geometry: Spec k[T] has dimension one, generic degree one and origin degree zero.
+example (k : Type) [Field k] :
+    topologicalKrullDim (affineLine k) = 1 ∧
+      affineLineDimensionFunction k (genericPoint (affineLine k)) = 1 ∧
+      affineLineDimensionFunction k (affineLineOrigin k) = 0 :=
+  ⟨affineLine_dimension k, affineLineDimensionFunction_genericPoint k,
+    affineLineDimensionFunction_origin k⟩
+
+-- The origin is the actual constant-coefficient kernel, not an auxiliary label.
+example (k : Type) [Field k] :
+    (affineLineOrigin k).asIdeal =
+      RingHom.ker (Polynomial.constantCoeff : Polynomial k →+* k) := rfl
+
+-- Existing cycle grading specializes to the actual generic carrier and actual origin.
+example (k : Type) [Field k] :
+    fundamentalCycle ℤ (pointSupport (affineLine k) (genericPoint (affineLine k))) ∈
+        cyclesOfDegree ℤ (affineLineDimensionFunction k) 1 ∧
+      fundamentalCycle ℤ (pointSupport (affineLine k) (affineLineOrigin k)) ∈
+        cyclesOfDegree ℤ (affineLineDimensionFunction k) 0 := by
+  constructor
+  · apply fundamentalCycle_mem_cyclesOfDegree
+    simpa only [supportDegree, ambientGenericPoint_pointSupport] using
+      affineLineDimensionFunction_genericPoint k
+  · apply fundamentalCycle_mem_cyclesOfDegree
+    simpa only [supportDegree, ambientGenericPoint_pointSupport] using
+      affineLineDimensionFunction_origin k
+
+-- This is the existing Chow quotient on the actual affine line, with no supplied δ.
+example (k : Type) [Field k]
+    (c : cyclesOfDegree ℤ (affineLineDimensionFunction k) 0) :
+    (classMap (affineLineDimensionFunction k) 0 c :
+        ChowGroup (affineLineDimensionFunction k) 0) = 0 ↔
+      ∃ l : List (PrincipalRelationData (affineLineDimensionFunction k) 0),
+        (l.map (principalRelation (affineLineDimensionFunction k) 0)).sum = c :=
+  (classMap_eq_zero_iff _ _ c).trans (mem_principalRelations_iff_exists_list _ _ c)
+
+-- The degree-one actual generic carrier supplies real relation data; its unit function
+-- has zero principal cycle and zero class, using no assumed grading laws.
+example (k : Type) [Field k] :
+    ∃ d : PrincipalRelationData (affineLineDimensionFunction k) 0,
+      d.1.val = pointSupport (affineLine k) (genericPoint (affineLine k)) ∧
+        principalRelation (affineLineDimensionFunction k) 0 d = 0 ∧
+        classMap (affineLineDimensionFunction k) 0
+          (principalRelation (affineLineDimensionFunction k) 0 d) = 0 := by
+  let W := pointSupport (affineLine k) (genericPoint (affineLine k))
+  have hW : supportDegree (affineLineDimensionFunction k) W = (0 : ℤ) + 1 := by
+    simpa only [W, supportDegree, ambientGenericPoint_pointSupport, zero_add] using
+      affineLineDimensionFunction_genericPoint k
+  letI := W.property
+  let d : PrincipalRelationData (affineLineDimensionFunction k) 0 := ⟨⟨W, hW⟩, 1⟩
+  refine ⟨d, rfl, ?_, classMap_principalRelation _ _ d⟩
+  apply Subtype.ext
+  change ambientPrincipalDivisor W (1 : W.val.subscheme.functionFieldˣ) = 0
+  exact ambientPrincipalDivisor_one W
+
+end GeometricDimensionRegressions

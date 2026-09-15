@@ -1,8 +1,18 @@
 # Research workspace
 
-This directory is a non-destructive staging area for research notes derived
-from the Lean development. Nothing in `HodgeConjecture/` is moved or deleted
-by this workflow.
+This directory separates current proof status, dated research checkpoints,
+and archived material. Authorized pruning preserves retired Lean sources
+under `archive/legacy-lean/` after checking that active imports do not use
+them; old planning documents live under `archive/planning/`.
+
+The current reading order is [TARGET_BRIDGE.md](TARGET_BRIDGE.md),
+`GAP_MAP.md`, `CLAIM_LEDGER.md`, then the single manuscript.
+The [object bench](bench/README.md) holds valid but currently non-spine
+diagnostics for reconsideration; it is distinct from deprecated provenance
+in `archive/` and publication candidates in `queue/`.
+`working/0017-proof-spine-and-archive.md` records which supporting
+calculations are used and which geometric steps remain unconstructed. Older
+checkpoints document their own dates, not competing current proof plans.
 
 ## Workflow
 

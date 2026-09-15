@@ -7,7 +7,8 @@ import HodgeConjecture.Inputs
 /-!
 # Collision decompositions and correspondence projector lifting
 
-The root library exports the active five-stage construction:
+The root library exports five related proof components, not a completed
+composite proof of the Hodge conjecture:
 
 1. collision ideals and scheme decomposition;
 2. scheme correspondences, the finite étale admissible algebra,
@@ -39,9 +40,11 @@ Hodge-class graph projector for general varieties.
 
 Height-one fixed-ring localization and the valuation/prime-inertia comparison
 form a supporting branch inside `Boundary.Normalization`; they do not replace
-the compactification, Chow, or residual-realization inputs.  Historical
-commutative selector and broad normalization-triviality prototypes remain
-directly importable but are not re-exported by the active umbrellas.
+the compactification, Chow, or residual-realization inputs. The block and
+shear calculations are supporting coordinate identities, not constructions
+of algebraic representatives for prescribed Hodge classes. Historical
+commutative selector and broad normalization-triviality prototypes are
+preserved under `research/archive/legacy-lean/`, outside the Lean library.
 
 `Inputs` collects the selected literature conclusions as explicit local
 hypotheses. Their conditional consumers construct finite-étale extension

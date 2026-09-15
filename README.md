@@ -9,13 +9,24 @@ mechanisms. It constructs a finite split degree-zero Chow/Betti/Hodge model,
 but does not establish a new case of the Hodge conjecture or construct the
 required general realization.
 
+For the intended statement and its existing Lean equivalence, start with the
+[target bridge sketch](research/TARGET_BRIDGE.md). For component evidence, use the
+[gap map](research/GAP_MAP.md) and
+[proof-dependency/archive audit](research/working/0017-proof-spine-and-archive.md).
+The [claim ledger](research/CLAIM_LEDGER.md) records theorem scope; dated
+checkpoints and [archived plans](research/archive/planning/README.md) are not
+alternative current proof outlines.
+The [object bench](research/bench/README.md) preserves the standalone
+matrix-restriction diagnostic outside the active proof path; matrix
+coordinates used by the actual finite Chow constructions remain active.
+
 The central distinction is now explicit:
 
 - a coordinate-ring idempotent gives a clopen decomposition of a scheme;
 - a correspondence projector is idempotent for **convolution**.
 
-The first statement does not automatically imply the second.  The formal
-spine is therefore
+The first statement does not automatically imply the second. One formal
+branch, with its missing geometric step displayed, is
 
 \[
 \begin{aligned}
@@ -147,17 +158,24 @@ multiplicative source is only the universal one-idempotent algebra
 algebra map from \(U\), so the generic restriction, compactified projector,
 and cohomological action are compared by equalities of algebra-homomorphism
 composites without postulating a map between the larger sheet and convolution
-algebras.  A map from the entire commutative sheet algebra into a generic
-correspondence algebra is retained only as an optional stronger interface.
+algebras. A map from the entire commutative sheet algebra into a generic
+correspondence algebra is an optional stronger interface in the general
+schema. The finite split model separately constructs such an embedding by
+actual diagonal Chow classes and an invertible Chow shear.
 In the separate
 constant-unit linear splitting
 \(A_H\simeq_{\mathbf Q}\mathbf Q\oplus E_H\), multiplication by \(q\) is the
 graph projector of the residual class \(q-1\).  Lean proves the ideal
 identification, both block formulas, and their shear transition.  A residual
-realization \(\theta:E_H\to V\) is only rational linear.  The direct-only
-`SheetLinearization.lean` experiment also defines an auxiliary linear
-coset construction, but it is not part of the active route and supplies no
+realization \(\theta:E_H\to V\) is only rational linear. The archived
+`SheetLinearization.lean` experiment defines an auxiliary linear
+coset construction, but is outside the library and supplies no
 map of algebras from \(A_H\) to \(\mathbf Q[G]\).
+
+These coordinate identities are supporting calculations. A graph projector
+exists for every vector, whether or not that vector is algebraic. Neither
+its linear idempotence nor the multiplicative source decomposition constructs
+a Chow representative of a separately prescribed Hodge class.
 
 The next conditional arrow is also formalized.  An
 `AlgebraProjectorExtension` keeps the generic algebra separate from a
@@ -439,14 +457,16 @@ endpoint; mathematically, Tag `0BST` supplies it.
 
 ### Canonical manuscript
 
-[*A Formal Projector Spine for the Rational Hodge Target: Collisions, Marked
-Galois Sheets, and Boundary Interfaces*](paper/main.pdf) is the canonical
+[*Galois Correspondences and the Hodge Conjecture*](paper/main.pdf) is the canonical
 author-review candidate.  Its section order follows the dependency-ordered
 components reflected by the active Lean modules: target equivalence,
 collision and finite-etale convolution, group and
 Hecke projectors, the marked-sheet block form, the codimension-one boundary
 endpoint, the compactification fork, and the exact conditional realization
 gap.  Fixed-ring localization and source inputs are supporting appendices.
+The abstract states the conjecture and the proposed route directly; the
+[construction-first plan](research/TARGET_BRIDGE.md#6-construction-first-plan)
+records the next geometric work and its acceptance criteria.
 
 `paper/main.pdf` is the single current manuscript PDF. The earlier drafts
 and their sources are preserved in the
@@ -455,9 +475,10 @@ current build and release checks. No manuscript has been placed in the publicati
 queue.  The canonical draft does not identify the free span algebra with Chow
 correspondences, does not claim an unconditional boundary extension, and does
 not prove a new Hodge case.  Licensing, literature/novelty review, and final
-author review remain release blockers.  The exact section/module plan is
-recorded in
-[`research/working/0006-lean-spine-manuscript-outline.md`](research/working/0006-lean-spine-manuscript-outline.md).
+author review remain release blockers. Current proof roles and retained
+dependencies are recorded in the
+[proof-spine audit](research/working/0017-proof-spine-and-archive.md).
+The superseded section/module plan is preserved only in the planning archive.
 
 ### Palomar packaging status
 
@@ -585,9 +606,6 @@ Those advertised fixed-ring statements do not prove Tag `0BST` or global
     the comparison as a morphism of representations of the universal
     one-idempotent algebra, and keeps the residual realization linear; its
     full sheet-algebra presentation is an optional stronger interface;
-  - [`SheetLinearization.lean`](HodgeConjecture/Realization/Chow/SheetLinearization.lean)
-    is a direct-import-only auxiliary linear coset construction, not an
-    algebra map and not part of the active Chow umbrella;
   - [`GaloisMarkedBlock.lean`](HodgeConjecture/Realization/Chow/GaloisMarkedBlock.lean)
     identifies the marked sheet selector action with the canonical Tate graph
     operator and proves rational naturality under a residual realization map;
@@ -606,17 +624,18 @@ Those advertised fixed-ring statements do not prove Tag `0BST` or global
     rational degree formula, while leaving construction of Chow pullback and
     pushforward to the geometric model.
 
-  The historical commutative selector realization remains directly
-  importable for provenance but is absent from the active root umbrella. The
+  The historical commutative selector realization is preserved in the
+  [Lean archive](research/archive/legacy-lean/README.md), outside the library. The
   presentation layer does not claim that ordinary raw cycles already
   possess an everywhere-defined refined-convolution product, nor that its
   quotient is a Chow algebra without the required geometric identification.
 
-The root library imports the active proof stages.  The specifically excluded
-historical selector-realization modules and broad normalization-triviality
-prototype are directly importable but are not re-exported by the active
-umbrellas; compatibility declarations retained inside active modules remain
-available.
+The root library imports the active proof components. Six unused historical
+or auxiliary modules, including the nonmultiplicative sheet linearization,
+have been physically archived; their former import paths are retired.
+The declaration-free `InertiaSaturation.lean` import shim and compatibility
+declarations inside active modules remain. Their retention is not evidence
+of an additional theorem or of a completed geometric bridge.
 
 ## Correspondence layer: what is formalized
 

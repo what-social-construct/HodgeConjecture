@@ -19,9 +19,15 @@ requiring a restriction map to the marked commutative source.  When that
 element is idempotent, the square is equivalently exposed as a morphism of
 representations of the universal one-idempotent algebra `ℚ × ℚ`.  Evaluating it at the
 marked unit recovers the generated class without a surjectivity assumption.
-Surjectivity is used only to identify the entire cohomological action with
-the graph projector, at which point the target is also stated as an equality
-of algebra-homomorphism composites.
+The cancellation proof uses surjectivity to identify the entire cohomological
+action of the original correspondence with the graph projector, at which
+point the target is also stated as an equality of algebra-homomorphism composites.
+
+With explicit Chow detection, the same marked-unit evaluation identifies the
+cycle class of the decoded correspondence. Surjective cancellation retains
+the supplied projector.
+In extension-based specializations, it uses supplied abstract extension data;
+these do not automatically provide an actual geometric cover.
 
 `MarkedSelectorActionComparison` retains the extension-based interface as a
 lossless specialization of this core comparison.  A geometric construction
@@ -223,6 +229,25 @@ theorem lowerLeftClass_action_eq_generatedClass
   simpa [ClassGraphProjector.lowerLeftClass,
     LinearMap.comp_apply, MarkedAugmentedAlgebra.generatedClass] using hSecond
 
+/-- Chow detection identifies an actual representative of the generated class.
+Only the marked-unit comparison is used: the original correspondence need
+not be idempotent and the residual realization need not be surjective. -/
+theorem cycleClass_decode_eq_generatedClass
+    {Chow : Type z} [AddCommGroup Chow] [Module ℚ Chow]
+    {N : RationalHodgeCycleClassModel Chow H}
+    (B : MarkedProjectorActionComparison M rho projector)
+    (detect : ClassGraphProjectorDetection N rho) :
+    N.cycleClass (detect.decode projector) =
+      M.generatedClass B.residualRealization := by
+  have hDecode := LinearMap.congr_fun detect.cycleClass_decode projector
+  calc
+    N.cycleClass (detect.decode projector) =
+        ClassGraphProjector.lowerLeftClass (rho.action projector) := by
+      simpa only [LinearMap.comp_apply, AlgHom.toLinearMap_apply,
+        ClassGraphProjector.lowerLeftClassLinear_apply] using hDecode
+    _ = M.generatedClass B.residualRealization :=
+      B.lowerLeftClass_action_eq_generatedClass
+
 /-- Surjective cancellation identifies the whole compactified selector action
 with the graph projector of the generated class. -/
 theorem realizes
@@ -249,8 +274,9 @@ theorem realizes
         (M.productRealization_intertwines_selectorMultiplication
           B.residualRealization) z
 
-/-- Under surjectivity, a compactified selector is an algebraic lift of the
-graph projector of its generated class. -/
+/-- Under surjectivity, the original compactified selector is an algebraic lift
+of the graph projector of its generated class. This keeps the supplied
+correspondence as its projector. -/
 def toAlgebraicProjectorLift
     (B : MarkedProjectorActionComparison M rho projector)
     (hProjector : IsIdempotentElem projector)

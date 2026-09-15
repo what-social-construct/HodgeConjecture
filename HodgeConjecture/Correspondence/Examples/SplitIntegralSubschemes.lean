@@ -1,4 +1,5 @@
 import HodgeConjecture.Correspondence.Examples.SplitPointDimension
+import HodgeConjecture.Cycles.Basic
 
 /-!
 # Integral closed subschemes of finite split schemes
@@ -61,7 +62,7 @@ theorem existsUnique_pointIso_of_isIntegral
 /-- Integral closed subschemes are represented canonically by their actual
 ideal-sheaf data and associated subschemes. -/
 abbrev IntegralClosedSubscheme :=
-  {J : (scheme K I).IdealSheafData // IsIntegral J.subscheme}
+  SchemeCycles.IntegralClosedSubscheme (scheme K I)
 
 /-- The ideal sheaf of the labelled reduced point component. -/
 def pointIdealSheaf (i : I) : (scheme K I).IdealSheafData :=

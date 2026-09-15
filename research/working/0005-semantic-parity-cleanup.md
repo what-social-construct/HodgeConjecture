@@ -29,6 +29,8 @@ The former Paper I/Paper II sources and PDFs are preserved in
 - **COMPAT**: a public wrapper retained temporarily while callers migrate.
 - **LEGACY**: a superseded branch excluded from the active umbrella imports.
 - **RESEARCH**: retained outside the release proof path.
+- **BENCH**: a valid object set aside for possible reuse, without active
+  library exports or a role in the intended target sketch.
 - **DEFERRED**: cleanup depends on an unfinished mathematical endpoint.
 
 ## Cleanup queue
@@ -55,7 +57,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 
 ## Canonical semantic object and TeX registry
 
-### Construction and input checkpoints (SP17--SP26)
+### Construction and input checkpoints (SP17--SP41)
 
 | ID | Object or overlap | Disposition | Required action | Status |
 | --- | --- | --- | --- | --- |
@@ -69,6 +71,21 @@ The former Paper I/Paper II sources and PDFs are preserved in
 | SP24 | Independent finite Hodge data, actual point-plus-scheme block, graph encoding, and lower-left detection | CONSTRUCT / INSTANTIATE | Form the actual tensor complexification and canonical conjugation; specify and verify the effective degree-zero bigrading, then define rational Hodge classes by inverse image. On the actual scheme coproduct, encode by point-pair addition plus column pushforward and decode by column pullback. Prove their actual Betti realization laws and instantiate the Hodge/graph/Palomar targets. | PROVED; FULL BUILD, VERIFICATION, AND SINGLE-PDF CHECKS PASS |
 | SP25 | Actual split torsor, multiplicative residual Chow map, diagonal source embedding, and marked action comparison | CONSTRUCT / COMPARE | Realize the marked ideal by actual point cycles, then cycle class; build the regular torsor and homogeneous intermediate cover. Implement the constant-marked coordinate change by an invertible actual Chow shear inside the fixed target action. Keep the raw point projector, its conjugate, and the canonical negative fundamental class distinct; formalize the multiplicative obstruction to arbitrary class coverage. | PROVED; FULL BUILD, VERIFICATION, AND SINGLE-PDF CHECKS PASS |
 | SP26 | Selected literature conclusions versus their full source theorems and geometric applications | CANONICALIZE / SEPARATE | Move the fixed-inertia record without duplicating it; expose actual finite étale extension data and separate automorphism-restriction bijectivity; package rational-linear Chow exactness and prove conditional raw-lift/boundary-defect consequences. Keep source instantiation, multiplication compatibility, defect vanishing, graph/action comparison, and coverage distinct. Preserve the Mathlib-only submission statements. | CONDITIONAL CONSEQUENCES PROVED; FULL BUILD, VERIFICATION, AND SINGLE-PDF CHECKS PASS |
+| SP27 | Standalone matrix diagnostic versus the intended target and actual finite Chow coordinates | BENCH / CLARIFY | Preserve the diagnostic unchanged in `research/bench/`; remove active exports, verification entries, and manuscript proposition. Keep used finite Chow matrix constructions. Record the genuine target, C/D equivalence, minimal marked detection route, and exact geometric gaps in `research/TARGET_BRIDGE.md` and the single manuscript. | DONE; FULL BUILD, 98 AXIOM REPORTS, DEPENDENCY AUDIT, BENCH CHECK, AND SINGLE-PDF BUILD PASS |
+| SP28 | Core Chow detection, chosen extension projector, and reverse Galois coverage | PLACE / KEEP DISTINCT | Put Chow detection in the core comparison and reuse it in the Galois specialization. Keep idempotence/surjectivity on the chosen-projector branch and replacement on the reverse coverage arrow. Preserve the supplied extension data. | DONE; ORIGINAL 101-REPORT CHECKPOINT PASSED; AUXILIARY MATERIAL SUBSEQUENTLY BENCHED IN SP29 |
+| SP29 | One chosen algebraic projector in the active proof spine | BENCH / SIMPLIFY | Preserve the unused auxiliary helper and its tests on the bench; remove its active Lean, manuscript, claim, and notation references. Keep the chosen projector, cycle detection, C/D target equivalence, and the named Galois replacement premise. Normalize the extension notation and the universal-map codomain. | DONE; FULL BUILD, 100 AXIOM REPORTS, TWO CHOSEN-PROJECTOR REGRESSIONS, BENCH CHECK, DEPENDENCY AUDIT, AND SINGLE-PDF BUILD PASS |
+| SP30 | Graph span versus actual closed graph subscheme and its open restriction | CONSTRUCT / KEEP DISTINCT | Construct the graph morphism and kernel ideal, identify its subscheme under separatedness, and prove the actual Cartesian restriction square and ideal-sheaf comap equality for a supplied finite étale extension. Keep Chow classes and convolution comparison as the next checkpoint. | PROVED; FULL BUILD, 114 AXIOM REPORTS, FIVE GRAPH REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP31 | Canonical finite cycles, integral graph generators, and open restriction | GENERALIZE / CONNECT | Reuse one actual integral-subscheme cycle type in the split and general cases; prove nonempty/empty open restriction, identity/composition, graph integrality/dimension, and the weighted graph-cycle restriction square. Keep the cycle maps linear and ungraded until geometric Chow composition and its grading are constructed. | PROVED; FULL BUILD, 129 AXIOM REPORTS, SIX CYCLE REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP32 | Actual graph-intersection scheme versus formal span composition and cycle products | CONSTRUCT / KEEP DISTINCT | Prove the sum-of-comaps intersection, its source isomorphism, and the isomorphic first/last projection onto the composite graph. Compute integral fundamental multiplicity as ambient generic-stalk length. Retain the Chow intersection-product and proper-pushforward comparison as separate obligations. | PROVED; FULL BUILD, 139 AXIOM REPORTS, SEVEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP33 | Closed-support cycle pushforward and relative graph-slice pull–push | CONSTRUCT / CONNECT | Use actual ideal images and generic residue degree one; construct functorial closed-immersion pushforward, the actual graph slice and its pair isomorphism, and their cycle pull–push/outer-image formulas. Move the generic degree proof out of the split example without duplication. Keep relative selection, general cycle products, and absolute Chow convolution distinct. | PROVED; FULL BUILD, 158 AXIOM REPORTS, NINE REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP34 | Relative/absolute products and their actual graph-cycle operations | CONSTRUCT / COMPARE | Construct the closed pair/triple inclusions for a separated structural base and injective deck forgetting. Identify graph/intersection image cycles, weighted graph assembly, and full finite-cycle right-pullback/slice-pull–push squares. Reuse canonical cycle maps via isomorphism transport; keep principal-divisor descent and arbitrary intersection products separate. | PROVED; FULL BUILD, 176 AXIOM REPORTS, TEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP35 | Actual signed local divisor coefficients and isomorphism transport | CONSTRUCT / COMPARE | Reuse the length-defined fraction-field order; prove finite local lengths, signed laws and ring/field transport. Construct actual generic-point function-field transport and one-dimensional-stalk point equivalences, then prove local coefficient invariance. Keep closed support identification, finite support, grading and divisor assembly separate. | PROVED; FULL BUILD, 200 AXIOM REPORTS, ELEVEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP36 | Actual reduced point closures, prime supports and coefficient transport | CONSTRUCT / IDENTIFY | Prove points equivalent to the existing integral ideal-sheaf subschemes; identify chain codimension with ambient stalk dimension. Restrict to prime divisors, prove transport is the existing ideal image and reuse the local order on supports. Keep finite support, grading and divisor assembly separate. | PROVED; FULL BUILD, 227 AXIOM REPORTS, THIRTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP37 | Local finiteness of actual prime supports and quasi-compact finite coefficients | PROVE / CONNECT | Bound affine nonzero coefficients by finite height-one numerator/denominator loci; construct the actual fraction and unit-germ comparison. Pass from generic points to closed-support families and use quasi-compactness for finite support. Keep finite-cycle assembly and Chow grading separate. | PROVED; FULL BUILD, 239 AXIOM REPORTS, FIFTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP38 | Actual finite principal-divisor cycles and their geometric isomorphism laws | ASSEMBLE / CONNECT | Embed the proved finite prime coefficients into the existing integral cycle module; prove exact coefficients/support and product/inverse/quotient laws; bundle the homomorphism. Prove actual support reindexing and compatibility with existing pushforward/open restriction through isomorphisms. Keep grading and Chow relations separate. | PROVED; FULL BUILD, 259 AXIOM REPORTS, SEVENTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP39 | Explicit dimension functions, homogeneous cycle degrees and principal-divisor images | CONSTRUCT / GRADE | Retain both dimension-function conditions; prove prime support degree drop and actual closed-immersion restriction. Use supported submodules of the existing cycles and prove principal-divisor homogeneity, including ambient closed images. Keep geometric dimension-function instantiation and genuine relations separate. | PROVED; FULL BUILD, 281 AXIOM REPORTS, SIXTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP40 | Genuine principal relations, finite-sum source parity and closed-pushforward quotient descent | GENERATE / DESCEND | Use actual degree-\(n+1\) carriers and their actual function fields on Noetherian schemes with explicit dimension function. Prove carrier-family finite/local-finite parity and the unweighted finite-sum criterion. Transport generators through actual closed images, derive quotient pushforward and isomorphism equivalence using the existing cycle maps. | PROVED; FULL BUILD, 321 AXIOM REPORTS, TWENTY-TWO REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP41 | Actual support dimensions, finite-type dimension bounds and a canonical low-dimensional grading | IDENTIFY / INSTANTIATE | Identify actual carrier dimension with point height. Prove finite dimension for finite-type algebras and schemes over a field. Construct the canonical dimension function under dimension at most one, identify its carrier degrees, and instantiate it on the actual affine line. Keep the general finite-type one-step law and target codimension conversion open. | PROVED; FULL BUILD, 361 AXIOM REPORTS, TWENTY-TWO REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -116,6 +133,261 @@ Full build (3028 jobs), integrated verification without warnings, the
 99-report standard-axiom allowlist audit (22 new reports), no-automatic-instance
 and nonzero-boundary-defect regressions, unchanged submission-wrapper checks,
 source/parity review, and the single-PDF build and visual review pass.
+
+SP30 validation (2026-09-14): full Lean build (3029 jobs; only the two
+existing `Challenge` warnings), integrated verification without warnings or
+errors, and all 114 axiom reports pass the standard-three allowlist. The
+14 new reports and five graph regressions cover the actual diagonal,
+existing graph-span orientation, closed-subscheme identification, restriction
+without a deck-extension premise, and the explicitly conditional action lift.
+The six proof-dependency assertions, independent mathematical review, and
+single-PDF build (32 pages, clean final log) pass; the title/abstract and graph
+proposition pages were visually checked. No new literature input or projector
+was added. The next step remains the actual Chow-cycle interface in
+`../TARGET_BRIDGE.md` §6.
+
+SP31 validation (2026-09-14): all four new leaf modules and the split
+specialization build pass, followed by the full 3033-job build (only the two
+existing `Challenge` warnings). Integrated verification passes without
+warnings or errors; all 129 reports use only the permitted three axioms.
+The 15 new reports and six regressions check canonical split types and point
+generators, empty-open restriction, composition order, signed coefficients,
+and graph restriction without a deck-extension premise. The six existing
+proof-dependency assertions, independent mathematical/source review, and
+the 33-page single-PDF build pass; the title/abstract and cycle-definition
+and proposition pages were visually inspected. No new source hypothesis,
+projector, Chow quotient, or cycle multiplication was introduced.
+
+SP32 validation (2026-09-14): both new leaf modules and the full 3035-job
+build pass, with only the two existing `Challenge` warnings. Integrated
+verification passes without warnings or errors; all 139 axiom reports use
+only `propext`, `Classical.choice`, and `Quot.sound`. The ten new reports
+and seven regressions check noncommutative composition order, both units,
+the separated-only image theorem, properness of the support projection,
+intersection integrality/dimension, actual ambient-stalk multiplicity, and
+the degree-one residue map of the constructed isomorphism. The latter
+reuses the existing generic theorem rather than duplicating it. All six
+proof-dependency assertions and the independent mathematical/parity review
+pass. The single PDF builds to 34 pages with a clean final log; title,
+cycle/multiplicity, and composition-proposition pages were visually checked.
+Submission wrappers and dependency pins are unchanged. No new source input,
+projector, cycle product, or rational-equivalence relation was introduced.
+
+SP33 validation (2026-09-14): all five new leaf modules, the updated
+split-point compatibility adapter and its realization consumers, and the
+full 3040-job build pass. Only the two existing `Challenge` warnings remain.
+Integrated verification passes without warnings or errors, and all 158
+axiom reports use only the permitted three axioms. The 19 new reports and
+nine regressions cover closed pushforward identity/composition, signed
+coefficients, actual slice inverse image, étale openness without finiteness,
+absence of an assumed integral pair product, right-multiplication order,
+supportwise outer image without ambient properness, and weighted graph
+assembly. All six proof-dependency assertions and the independent
+mathematical/parity review pass. The 35-page single PDF has a clean final
+log; the new pushforward paragraph, Proposition 6.6, and status pages were
+visually inspected. Submission wrappers and dependency pins are unchanged.
+No new source hypothesis, projector, Chow quotient, or ambient cycle product
+was introduced.
+
+SP34 validation (2026-09-14): all five new leaf modules and the full
+3045-job build pass, with only the two existing `Challenge` warnings.
+Integrated verification passes without warnings or errors; all 176 axiom
+reports use only `propext`, `Classical.choice`, and `Quot.sound`. The
+18 new reports and ten regressions cover minimal separated-base hypotheses,
+retained automorphism order, signed graph pushforward, actual intersection
+cycles, both full-cycle comparison squares, arbitrary rational graph sums,
+the literal `Spec k` target, and absence of an inferred étale composite.
+All six proof-dependency assertions and two supporting reports pass.
+Independent mathematical and Lean/TeX/ledger parity reviews pass. The
+single PDF builds to 37 pages with a clean final log; Proposition 6.7 and
+the surrounding proof/status pages were visually inspected. Submission
+wrappers and dependency pins are unchanged, and the diff check is clean.
+No new source hypothesis, projector, quotient, or cycle product was added.
+
+SP35 validation (2026-09-14): all five new leaf modules and the full
+3074-job Lean build pass; only the two existing `Challenge` warnings remain.
+Integrated verification passes without warnings or errors. All 200 axiom
+reports use only `propext`, `Classical.choice`, and `Quot.sound`. The
+24 new reports and eleven regressions cover actual quotient-length
+transport, product/inverse signs, vanishing on base-ring units, the actual
+field/stalk square, point transport without integral/Noetherian assumptions,
+the affine height-one constructor, coefficient invariance without normality
+or DVR assumptions, and its application to the existing closed
+support-to-image isomorphism. The computed integer-ring example proves
+orders of `2` and `1/2` equal to `1` and `−1`, without a normalization
+premise. All six proof-dependency assertions and two supporting reports
+pass. Independent mathematical/source/parity review passes. The 38-page
+single PDF builds with a clean final log; Proposition 6.8 and its surrounding
+proof/status pages were visually inspected. Submission wrappers and
+dependency pins are unchanged, and the diff check passes. No new source
+hypothesis, projector, valuation inequality, divisor cycle, or relation
+package was introduced. SP36 supplies the subsequent closed support
+identification, SP37 supplies finite support, and SP38 assembles the
+finite divisor cycle.
+
+SP36 validation (2026-09-14): the three new leaf modules and the full
+3077-job Lean build pass, with only the two existing `Challenge` warnings.
+Integrated `research/Verification.lean` passes with all 100 examples and
+no warnings or errors. All 227 selected axiom reports were checked against
+the allowlist: only `propext`, `Classical.choice`, and `Quot.sound` occur.
+The complete inventory check combines the integrated output with an
+imported-declaration-only capture; the locally declared verification
+regression is checked in its original integrated context. The 27 new
+reports, six declaration checks and thirteen new regressions cover actual
+point closures with no ambient assumptions,
+both inverse identifications, genuine chain codimension, the affine
+height-one support, signed existing-cycle pushforward, actual image ideals,
+reuse of the existing order, field/support variance and inverse signs,
+supportwise rather than global properness, transport naturality, and the
+empty scheme. All six proof-dependency assertions and two supporting
+reports pass. Independent mathematical/source/parity review passes. The
+single PDF builds to 39 pages with a clean final log; Proposition 6.9 and
+the adjacent module map were visually inspected. Submission wrappers and
+dependency pins are unchanged, and the diff check passes. No new axiom,
+source hypothesis, cycle module, projector, principal-divisor cycle, or
+relation package was added. SP37 supplies the subsequent local finiteness
+and quasi-compact finite-support step; SP38 supplies finite ungraded
+divisor assembly. SP39 adds homogeneous degrees for an explicit dimension
+function; its geometric instantiation and Chow relations remain separate.
+
+SP37 validation (2026-09-14): all three new leaf modules and the full
+3080-job Lean build pass; only the two existing `Challenge` warnings
+remain. Integrated `research/Verification.lean` passes with all 115
+examples. All 239 axiom reports were captured in their original integrated
+context and checked against the allowlist; only `propext`,
+`Classical.choice`, and `Quot.sound` occur, with no warnings or errors.
+The twelve new reports, six declaration checks and fifteen new regressions
+cover domain-only minimality, arbitrary-dimensional Noetherian finiteness,
+actual affine fractions without Noetherianity, stalk compatibility, unit
+germs without ambient integrality, the coefficient-zero implication
+without normality or DVRs, affine and closed-support local finiteness
+without compactness, empty affine charts, quasi-compact global support,
+automatic compactness for globally Noetherian schemes, inverse signs,
+empty support for one, and cancellation-compatible product support.
+All six proof-dependency assertions and two supporting reports pass.
+Independent mathematical/source/parity review passes. The single PDF
+builds to 40 pages with a clean final log; Proposition 6.10 and the adjacent
+module/status map were visually inspected. Submission wrappers and
+dependency pins are unchanged, and the diff check passes. No new axiom,
+source hypothesis, coefficient function, cycle module, projector,
+principal-divisor cycle or relation package was introduced in SP37.
+SP38 supplies finite ungraded principal-divisor assembly and its
+product/isomorphism laws; dimension-function grading and
+rational-equivalence descent follow.
+
+SP38 validation (2026-09-14): both new leaf modules, the extended
+isomorphism-transport module, and the full 3082-job Lean build pass.
+Only the two existing `Challenge` warnings remain in the full build.
+Integrated `research/Verification.lean` passes with all 132 examples and
+no warnings or errors. All 259 selected axiom reports were captured in
+their original integrated context and checked against both the exact
+declaration inventory and the allowlist; only `propext`,
+`Classical.choice`, and `Quot.sound` occur. The twenty new reports,
+seven declaration checks and seventeen new regressions cover actual
+prime and nonprime coefficients, exact support, the coefficientwise zero
+criterion, signed product/inverse/quotient laws and cancellation, the
+bundled homomorphism, actual inverse support images, arbitrary-semiring
+coefficient transport without ambient integrality or Noetherianity,
+both principal-divisor variances, and the existing closed support-to-image
+isomorphism. The final regression derives the image hypotheses and checks
+that neither global closedness nor properness of the ambient morphism is
+available. All six proof-dependency assertions and two supporting reports
+pass. Independent mathematical/source/parity review passes. The single
+PDF builds to 41 pages with a clean final log; Proposition 6.11 and the
+adjacent proof, module map and status pages were visually inspected.
+Submission wrappers and dependency pins are unchanged, and the diff
+check passes. No new axiom, source hypothesis, projector, cycle module,
+dimension-function grading or relation package is introduced. The new
+principal divisor is an element of the existing cycle module. Compatible
+grading for an explicit dimension function is supplied in SP39; its
+geometric instantiation and genuine rational-equivalence descent remain.
+
+SP39 validation (2026-09-14): all four new leaf modules and the full
+3086-job Lean build pass, with only the two existing `Challenge` warnings.
+Integrated `research/Verification.lean` passes with all 148 examples and
+no warnings or errors. All 281 axiom reports were captured in their
+original integrated context and compared against the complete declaration
+inventory and the allowlist; only `propext`, `Classical.choice`, and
+`Quot.sound` occur. The twenty-two new reports, eight declaration checks
+and sixteen new regressions cover both dimension-function conditions,
+prime immediate specialization and degree drop without Noetherianity,
+actual closed restriction with identity/composition and support-image
+degree compatibility, supported submodules of the original cycle type,
+distinct degrees, trivial coefficients and the nontrivial-coefficient
+fundamental-cycle converse, principal homogeneity, and ambient closed
+carrier images without ambient integrality, Noetherianity or compactness.
+The regression suite constructs the constant-zero dimension function and
+an actual point on the spectrum of a field, and also checks the image
+degree formula when only the support composite is closed. All six
+proof-dependency assertions and two supporting reports pass. Independent
+mathematical/source/parity review passes. The single PDF builds to 42
+pages with a clean final log; Proposition 6.12 and the adjacent proof,
+module map and status pages were visually inspected. Submission wrappers
+and dependency pins are unchanged; the diff check passes. No new axiom,
+projector, free cycle type, relation package or Chow quotient is introduced.
+The dimension function is explicit data satisfying its standard two
+conditions, not a postulated universal existence theorem. The next
+construction is genuine relation generation and quotient descent, with
+geometric dimension-function instantiation kept separate.
+
+SP40 validation (2026-09-14): all five new leaf modules and the full
+3091-job Lean build pass, with only the two existing `Challenge` warnings.
+Integrated `research/Verification.lean` passes with all 170 examples and
+no warnings or errors. All 321 selected axiom reports were captured in
+their original integrated context and compared with the exact declaration
+inventory: no missing, unexpected or duplicate reports, and only `propext`,
+`Classical.choice`, and `Quot.sound` occur. The forty new reports, ten
+declaration checks and twenty-two new regressions also pass independently.
+They cover derived closed-carrier finiteness; literal ambient principal
+cycles and multiplicative laws; local-finite carrier families; homogeneous
+generators and negative function powers; the unweighted finite-list
+criterion; genuine rational equivalence and quotient equality/kernel;
+representative surjectivity; actual closed-image carriers and generator
+transport; proved submodule preservation; canonical restricted-degree
+quotient pushforward with identity/composition; and quotient isomorphisms
+whose inverse cycle map is the existing open restriction. In particular,
+an infinitely repeated nonempty carrier with zero principal cycle is
+proved not locally finite as a carrier family. The six primary
+proof-dependency assertions and two supporting reports pass. Independent
+mathematical and manuscript/source/parity audits pass. The single PDF
+builds to 44 pages with a clean final log; Proposition 6.13, its proof,
+adjacent module/status pages and the updated theorem-map page were
+visually inspected. Submission wrappers and dependency pins are unchanged;
+the diff check passes. No new axiom, source-input package, cycle module
+or projector is introduced. The new integral quotient is constructed from
+actual relations, and their preservation is proved rather than assumed.
+The intended geometric dimension function and grading, general rational
+coefficient comparison, arbitrary open/proper/flat/Gysin descent, Chow
+convolution and target realization remain separate constructions.
+
+SP41 validation (2026-09-15): all five new leaf modules and the full
+3099-job Lean build pass, with only the two existing `Challenge` warnings.
+Integrated `research/Verification.lean` passes with all 192 examples and
+no warnings or errors. All 361 selected axiom reports were captured in
+their original integrated context and compared with the exact declaration
+inventory: no missing, unexpected or duplicate reports. The recursive
+`polynomialDimensionBound` definition has no axioms; the other 360 reports
+use only `propext`, `Classical.choice`, and `Quot.sound`. The forty new
+reports, eight declaration checks and twenty-two new regressions also
+pass independently. They cover actual carrier dimension and point height;
+finite polynomial-presentation bounds, including trivial quotients;
+finite-dimensional finite-type schemes via their structural morphisms and
+finite affine covers; both proved dimension-function laws in dimension at
+most one; actual carrier degrees and coefficient-one cycle membership;
+the existing Chow quotient with that constructed grading; and the actual
+affine line with generic degree one and origin degree zero. The six primary
+proof-dependency assertions and two supporting reports pass. Independent
+mathematical/source/parity review passes. The single PDF builds to 46 pages
+with a clean final log; Proposition 6.14, its proof and the adjacent
+module/status pages were visually inspected. Submission wrappers and dependency pins are
+unchanged; the diff check passes. No new axiom, source-input package, cycle
+module or projector is introduced. This completes the first geometric-
+grading subcheckpoint: finite-type finite-dimensionality is general, but
+the constructed dimension function is currently restricted to dimension
+at most one. The higher-dimensional immediate-specialization unit-step
+law, transcendence-degree comparison, pure-dimensional codimension
+conversion, general rational coefficient extension, Chow operations and
+target realization remain separate constructions.
 
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
@@ -217,7 +489,6 @@ source/parity review, and the single-PDF build and visual review pass.
 | `SplitPointCorrespondence.constantCoordinates` | constant-unit coordinates | $T(a,b)=(a,b-a)$ |
 | `SplitPointCorrespondence.pointRealization` / `realization` | ordinary / conjugated matrix action | $C\mapsto C(-)$ / $\rho(C)=TCT^{-1}$ |
 | `SplitPointCorrespondence.markedComparison` / `projectorLift` | explicit instances of the canonical comparison / lift | specialization only; no independent symbol |
-| `MatrixRestrictionObstruction.no_ringHom_to_commutative` | exclusion of unital maps from full matrices to a nontrivial commutative ring | prose only |
 | `SplitPointGeometry.mapOfFunction` / `span` | scheme map and span induced by finite indexing functions | $Z_S\to Z_I$ / $Z_I\xleftarrow{\ell}Z_S\xrightarrow{r}Z_I$ |
 | `labelEquivScheme` / `labelEquivOfIso` | intrinsic-point and relabelling equivalences used for descent | prose only; presentation adapters |
 | `Fiber` / `fiberIso` / `span_comp_iso` | finite matching pairs compute the actual scheme pullback | $\{(s,t):r(s)=\ell'(t)\}$ / $Z_S\times_{Z_J}Z_T$ |
@@ -305,6 +576,319 @@ source/parity review, and the single-PDF build and visual review pass.
 | `CompactifiedSubgroupProjectorExtension` | all-boundary extensions of $e_H$ | $\operatorname{Ext}_{\partial,r}(e_H)$ |
 | `CompactifiedDeckGraphComparison` | generic/compactified graph square | $\mathscr G_r$ |
 
+### Actual closed graphs and restriction (SP30)
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `SchemeCorrespondence.graphMorphism p σ` | actual graph morphism, with the same ordered legs as the existing graph span | $g_\sigma=(\operatorname{id},\sigma):Y\to Y\times_UY$ |
+| `SchemeCorrespondence.graphIdeal p σ` | kernel ideal of the graph morphism; defines the closed graph when $p$ is separated | $\mathcal I_\sigma$ |
+| `(graphIdeal p σ).subscheme` / `graphSubschemeIso p σ` | actual closed graph and its source identification, not a cycle class | $\operatorname{Gr}(\sigma)$ / $Y\simeq\operatorname{Gr}(\sigma)$ |
+| `graphMorphism_isClosedImmersion` / `graphMorphism_isProper` | proved properties of the graph morphism under separatedness | prose only; no extra source input |
+| `FiniteEtaleExtension.inclusion` / `pairInclusion` | actual inclusion of the cover and induced open inclusion of relative products | $\iota:Y\hookrightarrow\bar Y$ / $\iota^{(2)}:Y\times_UY\hookrightarrow\bar Y\times_S\bar Y$ |
+| `pairInclusion_isOpenImmersion` / `graph_restriction_commutes` / `graphRestriction_isPullback` | open immersion and actual Cartesian graph restriction square | prose only; no duplicate comparison package |
+| `graphIdeal_restriction` | scheme-theoretic inverse-image equality for an already extended automorphism | $\mathcal I_{\operatorname{res}_E\sigma}=(\iota^{(2)})^*\mathcal I_\sigma$ |
+| `graphIdeal_liftDeckAction` | specialization to a prescribed original action under the explicit deck-extension hypothesis | same ideal equality; theorem only |
+
+The graph span, its closed-subscheme realization, and any later Chow class
+remain distinct types. The new construction has no new projector or
+literature premise. Its base $S$ is auxiliary, not the ultimate Hodge target.
+Here $(-)^*$ on ideals means scheme-theoretic inverse image, not yet a map
+of Chow groups.
+
+### Finite cycles and integral graph assembly (SP31)
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `SchemeCycles.IntegralClosedSubscheme W` | actual integral ideal-sheaf subschemes; the split type is its definitional specialization | $\operatorname{IntSub}(W)$ |
+| `SchemeCycles.Cycles W R` | finite, ungraded cycles; no rational-equivalence quotient | $Z_{\mathrm{fin}}(W;R)=\bigoplus_{Z\in\operatorname{IntSub}(W)}R[Z]$ |
+| `SchemeCycles.fundamentalCycle R Z` | coefficient-one integral generator | $[Z]$ |
+| `openRestrictionSubschemeMap` / `openRestrictionSubscheme` | actual open map on inverse-image supports and nonempty integral support | $v^{-1}Z\to Z$ / $v^{-1}Z$ |
+| `openRestrictionGenerator` / `openRestriction` | empty-aware generator restriction and its linear extension | $v^*_{\mathrm{cyc}}[Z]$ / $v^*_{\mathrm{cyc}}:Z_{\mathrm{fin}}(W;R)\to_R Z_{\mathrm{fin}}(V;R)$ |
+| `openRestriction_id` / `openRestriction_comp` | functoriality of the same open restriction | prose only; no extra comparison object |
+| `graphIntegralSubscheme` / `graphCycle` | the existing closed graph as an integral support, then its cycle generator | $\operatorname{Gr}(\sigma)$ / $[\operatorname{Gr}(\sigma)]$ |
+| `graphIdeal_topologicalKrullDim` | graph dimension transported through its actual source isomorphism | $\dim\operatorname{Gr}(\sigma)=\dim Y$; theorem only |
+| `graphCycleLinearMap p` | rational linear assembly of actual integral graph cycles | $\zeta_p:\mathbf Q[\operatorname{Aut}_U(Y)]\to_{\mathbf Q}Z_{\mathrm{fin}}(Y\times_UY;\mathbf Q)$ |
+| `FiniteEtaleExtension.original_isIntegral` | integrality inherited by the nonempty open original cover | prose only; derived property, not a new source premise |
+| `graphCycle_restriction` / `graphCycleLinearMap_restriction` | generator compatibility and weighted cycle restriction square | $(\iota^{(2)})^*_{\mathrm{cyc}}\circ\zeta_{\bar p}=\zeta_p\circ\mathbf Q[\operatorname{res}_E]$ |
+
+The new $\zeta_p$ is not the existing free-span algebra map $\gamma$ or a
+Chow realization. Its codomain has no newly imposed product. The split
+zero-cycle notation remains $Z_0(Z_I;R)$ because every split integral
+support already has proved dimension zero. General open restriction
+introduces no assertion that absolute dimension is unchanged.
+
+### Scheme-theoretic graph composition and integral multiplicity (SP32)
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `tripleProduct p` | actual relative triple product, with matching middle coordinates | $T=(Y\times_S Y)\times_Y(Y\times_S Y)$ |
+| `tripleProductP12`, `tripleProductP23`, `tripleProductP13` | coordinate-pair projections | $p_{12},p_{23},p_{13}$ |
+| `graphCompositionMorphism p σ τ` | source parameterization, with $\tau$ acting first | $h_{\sigma,\tau}(y)=(y,\tau y,\sigma(\tau y))$ |
+| `graphIntersectionIdeal p σ τ` | sum of inverse-image graph ideals, not their intersection as ideals | $\mathcal J_{\sigma,\tau}=p_{12}^*\mathcal I_\tau+p_{23}^*\mathcal I_\sigma$ |
+| `(graphIntersectionIdeal p σ τ).subscheme` | actual scheme-theoretic intersection of the two pulled-back closed graphs | $Z_{\sigma,\tau}=V(\mathcal J_{\sigma,\tau})$ |
+| `graphIntersectionIso` | source identifies with that intersection | $Y\simeq Z_{\sigma,\tau}$; no extra object notation |
+| `graphCompositionIso` | first/last projection identifies intersection with composite graph | $Z_{\sigma,\tau}\simeq\operatorname{Gr}(\sigma\tau)$ |
+| `graphIntersectionIdeal_map_p13` | exact scheme-theoretic image ideal | $\operatorname{Im}_{\mathrm{sch}}(Z_{\sigma,\tau}\to Y\times_S Y)=\operatorname{Gr}(\sigma\tau)$ |
+| `genericStalk_length_of_isClosedImmersion` / `integralSubscheme_genericStalk_length` | fundamental multiplicity for an integral closed support, with actual ambient scalars | $\operatorname{length}_{\mathcal O_{W,i(\eta_Z)}}\mathcal O_{Z,\eta_Z}=1$ |
+
+No second projector, graph cycle type, or assumed convolution operation is
+introduced. `graphMulIsom` remains the span comparison; the new theorem
+identifies actual ideal-sheaf subschemes. Ideal `map` means the kernel ideal
+of the composite inclusion, not a cycle pushforward. Ambient length one
+does not yet identify a Chow intersection product.
+
+### Closed-support images and graph-slice cycle maps (SP33)
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `SchemeCycles.closedImageSubscheme f Z` | actual ideal image of a support whose composite into the target is a closed immersion | $f(Z)$ |
+| `closedImageSubschemeIso` / `closedImageSubschemeIso_genericPoint` | support-to-image isomorphism, preserving the generic point | $Z\simeq f(Z)$; no extra object notation |
+| `SchemeCycles.residueFieldMap_finrank_of_isIso` | canonical generic degree-one proof; old split name is an adapter | $[\kappa(\eta_Z):\kappa(\eta_{f(Z)})]=1$ in the support-image application |
+| `closedImageCycle` | degree-one pushforward of a single admissible support | $f_{*,Z}[Z]$ |
+| `closedImmersionPushforward` | linear pushforward along a globally closed immersion | $f_{*,\mathrm{cyc}}$ |
+| `graphSliceMorphism p τ` | closed graph slice with free first and last coordinates | $s_\tau(y,z)=(y,\tau y,z)$ |
+| `graphSlicePairMap p τ` | actual pair isomorphism, changing the input coordinate | $u_\tau=p_{23}s_\tau=(\tau,\mathrm{id})$ |
+| `graphSlice_isPullback` / `graphIdeal_comap_p12_eq_graphSlice_ker` | slice identifies with the first graph's actual inverse image | $s_\tau(W)=p_{12}^{-1}\operatorname{Gr}(\tau)$ |
+| `graphRightPullback` | open restriction along the pair isomorphism | $\mathsf R_\tau=u_\tau^*{}_{\mathrm{cyc}}$ |
+| `graphSlicePullPush` | pair pullback followed by closed slice pushforward | $\mathsf K_\tau=(s_\tau)_{*,\mathrm{cyc}}\mathsf R_\tau$ |
+| `graphIntersectionIntegralSubscheme` / `graphIntersectionCycle` | existing actual intersection as an integral support and its canonical cycle | $Z_{\sigma,\tau}$ / $[Z_{\sigma,\tau}]$ |
+| `graphIntersectionCycle_image_p13` | supportwise outer-image formula | $(p_{13})_{*,Z_{\sigma,\tau}}[Z_{\sigma,\tau}]=[\operatorname{Gr}(\sigma\tau)]$ |
+| `EtaleGraphIntersection` openness instances / `graphSliceMorphism_isOpenImmersion` | additional open-and-closed relative graph geometry under étaleness | prose only; no new cycle or projector |
+
+The pair and inverse-image graph schemes may be reducible. They are not
+installed as integral generators. The cycle maps above have specified
+domains; no ambient outer pushforward or Chow algebra product is declared.
+The canonical residue-degree proof now lives in `Cycles/ResidueDegree.lean`,
+with the old split-point theorem retained only as a compatibility adapter.
+
+### Structural-base graph and cycle comparison (SP34)
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `forgetDeckBase p b` | injective change-of-base group map retaining the actual automorphism | $\operatorname{forg}_b:\operatorname{Aut}_S(Y)\hookrightarrow\operatorname{Aut}_B(Y)$, $\sigma\mapsto\bar\sigma$ |
+| `pairBaseComparison p b`, `tripleBaseComparison p b` | actual closed inclusions, for separated $b:S\to B$ and $r=b\circ p$ | $\kappa_2:W_p\hookrightarrow W_r$, $\kappa_3:T_p\hookrightarrow T_r$, with $W_p=Y\times_S Y$ |
+| `GraphBaseComparison` morphism and ideal-image theorems | graph, intersection, pair-isomorphism and slice compatibility | prose only; the graphs and slices are the existing objects with base subscripts |
+| `ideal_comap_iso_eq_map_inv`, `openRestriction_iso_eq_pushforward_inv` | genuine ideal and cycle transport through inverse isomorphisms | $e^*_{\mathrm{cyc}}=(e^{-1})_{*,\mathrm{cyc}}$; theorem only |
+| `graphCycle_pairBaseComparison`, `graphIntersectionCycle_tripleBaseComparison` | closed inclusion carries actual integral generators to their new-base versions | $\kappa_{2,*\mathrm{cyc}}[\operatorname{Gr}_p(\sigma)]=[\operatorname{Gr}_r(\bar\sigma)]$, $\kappa_{3,*\mathrm{cyc}}[Z^p_{\sigma,\tau}]=[Z^r_{\bar\sigma,\bar\tau}]$ |
+| `graphCycleLinearMap_baseComparison` | rational weighted assembly square | $\kappa_{2,*\mathrm{cyc}}\zeta_p=\zeta_r\mathbf Q[\operatorname{forg}_b]$ |
+| `graphRightPullback_baseComparison`, `graphSlicePullPush_baseComparison` | entire finite-cycle comparison squares, without ambient integrality | $\kappa_{2,*\mathrm{cyc}}\mathsf R^p_\tau=\mathsf R^r_{\bar\tau}\kappa_{2,*\mathrm{cyc}}$, $\kappa_{3,*\mathrm{cyc}}\mathsf K^p_\tau=\mathsf K^r_{\bar\tau}\kappa_{2,*\mathrm{cyc}}$ |
+
+The numbered $\kappa_2,\kappa_3$ are scoped product inclusions, distinct
+from the split-coordinate $\kappa_{JI}$ and the open extension inclusion
+$\iota^{(2)}$. No second cycle, projector, or relation type is installed.
+Products over $B$ are absolute over $k$ only when $B=\operatorname{Spec}k$.
+Closed cycle pushforward is not asserted injective after passage to Chow.
+SP35--SP38 supply actual principal-divisor construction and invariance
+under support isomorphisms. SP39 adds compatible homogeneous degrees for
+an explicit dimension function. SP40 constructs genuine relations and
+quotient descent for closed pushforward and scheme isomorphisms. Geometric
+dimension-function instantiation and general proper/flat/Gysin descent
+remain separate gates to the target Chow operations.
+
+### Signed local divisor coefficients (SP35)
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| Mathlib `Ring.ord`, `Ring.ordFrac` / `SchemeCycles.localOrder` | actual principal-quotient length, extended to the fraction field and read as an integer on units | $\operatorname{ord}_A(f)$; one order, not a second valuation |
+| `principalQuotient_length_ne_top`, `localOrder_algebraMap`, `localOrder_fraction` | finite lengths and fraction formula | $\operatorname{ord}_A(a/b)=\ell_A(A/(a))-\ell_A(A/(b))$ |
+| `ord_ringEquiv`, `ordFrac_ringEquiv` | invariance of the actual length-defined order under compatible ring/field maps | prose only; compatibility theorem, not a new order input |
+| Mathlib `Scheme.functionField` | actual generic-point stalk, a field for integral schemes | $k(X)=\mathcal O_{X,\eta_X}$ |
+| `functionFieldIso` / `functionFieldEquiv` | categorical and ring presentations of one actual contravariant field isomorphism | $e^*:k(Y)\xrightarrow{\sim}k(X)$ |
+| `functionFieldEquiv_algebraMap` | actual field/local-stalk compatibility | prose only; proved commutative square |
+| `DivisorPoint X` | literal points with one-dimensional local ring | $\operatorname{DivPt}(X)=\{x:\dim\mathcal O_{X,x}=1\}$ |
+| `divisorPointOfAffineHeightOne` | constructor from an actual affine-chart height-one prime | prose only; no second point index |
+| `divisorPointEquiv e` | restriction of the actual scheme point equivalence | $e_1:\operatorname{DivPt}(X)\simeq\operatorname{DivPt}(Y)$ |
+| `divisorOrder X x` | signed order through the canonical stalk-to-function-field algebra | $\operatorname{ord}_x:k(X)^\times\to\mathbf Z$ |
+| `divisorOrder_iso` | local coefficient invariance through the actual geometric maps | $\operatorname{ord}_x(e^*f)=\operatorname{ord}_{e_1(x)}(f)$ |
+| `Examples.localOrder_int_two`, `Examples.localOrder_int_two_inv` | computed nonzero signed coefficients, from $\mathbf Z/(2)$ having length one | $\operatorname{ord}_{\mathbf Z}(2)=1$, $\operatorname{ord}_{\mathbf Z}(1/2)=-1$; test only |
+
+The algebra API allows Noetherian domains of dimension at most one; the
+scheme index requires local dimension exactly one. No normality or DVR
+premise, valuation inequality, divisor cycle, or arbitrary relation package
+is introduced. `DivisorPoint` is not the boundary's ramified-prime/valuation
+index. SP36 identifies it with the existing integral closed prime supports;
+SP37 supplies finite support under quasi-compactness; SP38 assembles the
+finite divisor cycle in the existing module.
+
+### Actual prime supports (SP36)
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `pointSupport X x` | actual reduced closed subscheme defined by the vanishing ideal of the point closure | $Z_x=(\overline{\{x\}})_{\mathrm{red}}$ |
+| `ambientGenericPoint Z` | image of the integral subscheme's own generic point under its closed immersion | $\xi_Z=\iota_Z(\eta_Z)$; distinguish $\eta_Z\in Z$ from $\xi_Z\in X$ |
+| `pointEquivIntegralClosedSubscheme X` | reduced closure and ambient generic point are inverse | $X\simeq\operatorname{IntSub}(X)$ |
+| `pointClosureOrderIso`, `integralSupport` | topological irreducible point closure and the actual underlying closed support | $\overline{\{x\}}$, $|Z|$; underlying spaces, not additional scheme generators |
+| `supportCodimension Z` | chain codimension of the actual irreducible closed support | $\operatorname{codim}(|Z|,X)$; not $\dim X-\dim Z$ |
+| `supportCodimension_eq_stalkDim` | actual codimension/local-ring bridge | $\operatorname{codim}(|Z|,X)=\dim\mathcal O_{X,\xi_Z}$ |
+| `PrimeDivisor X` | codimension-one subtype of the existing integral cycle generators | $\operatorname{PrimeDiv}(X)$ |
+| `divisorPointEquivPrimeDivisor X` | existing divisor points identified with actual prime supports | $\operatorname{DivPt}(X)\simeq\operatorname{PrimeDiv}(X)$, $x\mapsto Z_x$ |
+| `primeDivisorEquiv e`, `primeDivisorEquiv_val` | existing point transport on supports, proved equal to the scheme-theoretic image | $e_{\mathrm{div}}: \operatorname{PrimeDiv}(X)\simeq\operatorname{PrimeDiv}(Y)$, $Z\mapsto e(Z)$ |
+| `closedImmersionPushforward_pointSupport` | compatibility with the existing finite-cycle pushforward | $f_{*,\mathrm{cyc}}[Z_x]=[Z_{f(x)}]$ for closed immersions |
+| `primeDivisorOrder X Z` | the existing signed local order, reindexed by actual prime supports | $\operatorname{ord}_Z(f)=\operatorname{ord}_{\xi_Z}(f)$; no second order |
+| `primeDivisorOrder_iso` | actual support/field coefficient comparison | $\operatorname{ord}_Z(e^*f)=\operatorname{ord}_{e_{\mathrm{div}}(Z)}(f)$ |
+
+The support equivalence and codimension comparison hold for arbitrary
+schemes. Integral locally Noetherian hypotheses are imposed only for the
+existing signed coefficients. Codimension preservation is asserted for
+isomorphisms, not for arbitrary closed immersions. The cycle module and
+fundamental-cycle constructor are unchanged; no finite-support theorem,
+graded principal divisor, quotient, projector, or relation package is
+introduced by this checkpoint.
+
+### Local and finite coefficient support (SP37)
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `heightOne_mem_minimalPrimes_span` | height-one prime containing a nonzero element is minimal over its principal ideal | $\mathfrak p\in\operatorname{Min}(a)$; theorem, not a new support object |
+| `finite_heightOne_primes_containing`, `finite_heightOne_primes_containing_either` | finite numerator/denominator prime bound in an arbitrary-dimensional Noetherian domain | $\{\mathfrak p:\operatorname{ht}\mathfrak p=1,\ a\in\mathfrak p\text{ or }b\in\mathfrak p\}$ |
+| `exists_affine_fraction` | representation through the actual affine section-to-function-field map | $f=a/b$, $a,b\in\Gamma(U,\mathcal O_X)\setminus\{0\}$; auxiliary sections, not chosen cycle coefficients |
+| `sectionToFunctionField_through_stalk`, `affineGerm_isUnit_iff` | actual section/stalk/field compatibility and unit-germ criterion | prose only; existing canonical maps |
+| `divisorOrder_eq_zero_of_affine_fraction` | existing coefficient vanishes outside the numerator/denominator prime loci | $a,b\notin\mathfrak p_x\Rightarrow\operatorname{ord}_x(f)=0$; no converse asserted |
+| `finite_divisorPoints_in_affine` | finite nonzero point-indexed coefficients in each affine chart | $\{x\in\operatorname{DivPt}(X):x\in U,\ \operatorname{ord}_x(f)\ne0\}$ |
+| `primeDivisorSupports_locallyFinite` | locally finite family of the actual closed supports with nonzero coefficients | $(|Z|)_{Z\in\operatorname{PrimeDiv}(X),\ \operatorname{ord}_Z(f)\ne0}$; no new named projector or cycle type |
+| `finite_primeDivisorOrder_support`, `finite_divisorOrder_support` | finite support of the same coefficient function under quasi-compactness, in its equivalent support/point indices | $\{Z:\operatorname{ord}_Z(f)\ne0\}$, equivalently $\{x:\operatorname{ord}_x(f)\ne0\}$ |
+
+Local finiteness refers to the actual closed-support family, not just
+point-finiteness of a set. Quasi-compactness is explicit only at the global
+finite-support endpoint. No normality or global ring-dimension bound is
+used, and the full prime-divisor type need not be finite. SP38 assembles
+the finite principal-divisor cycle in the existing ungraded module;
+SP39 gives its homogeneous degree for an explicit dimension function.
+
+### Finite principal-divisor cycles and isomorphism transport (SP38)
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `principalDivisor X f` | finite sum of the existing local orders on the existing prime-divisor subtype, embedded in the original cycle module | $\operatorname{div}_X(f)=\sum_Z\operatorname{ord}_Z(f)[Z]\in Z_{\mathrm{fin}}(X;\mathbf Z)$ |
+| `principalDivisor_apply_prime`, `principalDivisor_apply_of_not_prime`, `principalDivisor_apply` | full coefficient formula on the original integral generators | $\operatorname{ord}_Z(f)$ at prime divisors, zero elsewhere; no new coefficient function |
+| `principalDivisor_support`, `principalDivisor_eq_zero_iff` | exact finite support and coefficientwise zero criterion | $\operatorname{supp}(\operatorname{div}_X(f))=\{Z:\operatorname{ord}_Z(f)\ne0\}$ inside $\operatorname{IntSub}(X)$ |
+| `principalDivisor_one`, `principalDivisor_mul`, `principalDivisor_inv`, `principalDivisor_div` | identity, product, inverse and quotient laws in the same cycle module | $\operatorname{div}_X(fg)=\operatorname{div}_X(f)+\operatorname{div}_X(g)$, $\operatorname{div}_X(f^{-1})=-\operatorname{div}_X(f)$ |
+| `principalDivisorAddHom`, `principalDivisorAddHom_ofMul` | the same map bundled as a homomorphism, with an additive type tag on its multiplicative source | $\operatorname{div}_X:k(X)^\times\to Z_{\mathrm{fin}}(X;\mathbf Z)$; one map, not a second divisor |
+| `closedImageSubschemeEquiv e` and its application lemmas | actual ideal-image equivalence on all existing integral cycle generators | $Z\mapsto e(Z)$ on $\operatorname{IntSub}$; extends the previously proved $e_{\mathrm{div}}$ |
+| `closedImmersionPushforward_iso_eq_lmapDomain`, `_iso_apply_image`, `_iso_apply` | the existing geometric pushforward preserves coefficients at actual image supports | $(e_{*,\mathrm{cyc}}c)(e(Z))=c(Z)$ |
+| `principalDivisor_iso` | pushforward/function-field compatibility through an actual scheme isomorphism | $e_{*,\mathrm{cyc}}\operatorname{div}_X(e^*f)=\operatorname{div}_Y(f)$ |
+| `openRestriction_principalDivisor` | existing open restriction specialized to the same actual isomorphism | $e^*_{\mathrm{cyc}}\operatorname{div}_Y(f)=\operatorname{div}_X(e^*f)$ |
+
+The principal-cycle endpoints have explicit integral, locally Noetherian
+and quasi-compact hypotheses. The all-cycle coefficient transport holds
+over any semiring without these ambient assumptions. No normality or DVR
+assumption, zero-divisor/global-unit converse, new source hypothesis,
+second cycle module, or relation package is introduced. Pullback of
+principal divisors is asserted here only through an isomorphism, not an
+arbitrary open immersion. SP39 supplies compatible dimension-function
+degrees on relation supports and their ambient closed images. SP40 adds
+genuine relations and closed-pushforward/isomorphism quotient descent.
+
+### Dimension functions and homogeneous principal-divisor images (SP39)
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `DimensionFunction X` | explicit integer-valued point function, strictly increasing in closure-inclusion order and incrementing by one across covers | $\delta:X\to\mathbf Z$; both conditions of the standard definition |
+| `supportDegree δ Z` | degree of an existing integral support at its actual ambient generic point | $\deg_\delta(Z)=\delta(\xi_Z)$ |
+| `primeDivisor_covBy_genericPoint`, `supportDegree_primeDivisor` | prime codimension gives immediate specialization and one-lower degree on an integral scheme | $\xi_Z\lessdot\eta_X$, $\deg_\delta(Z)=\delta(\eta_X)-1$ |
+| `supportDegree_closedImageSubscheme` | degree of actual image support, even when only the support composite is closed | $\deg_\delta(f(Z))=\delta(f(\xi_Z))$ |
+| `closedImmersion_covBy` | actual closed point embedding preserves immediate specialization | prose only; follows from the order-convex image |
+| `DimensionFunction.comapClosedImmersion` and apply/id/comp laws | actual restriction of a dimension function, including both defining conditions | $\delta_W=\delta\circ\iota_W$, or $\delta\circ i$ |
+| `supportDegree_comapClosedImmersion` | source degree equals actual ambient image degree | $\deg_{\delta\circ i}(Z)=\deg_\delta(i(Z))$; not codimension preservation |
+| `cyclesOfDegree R δ n`, `mem_cyclesOfDegree_iff` | supported homogeneous submodule of the original cycle module | $Z^{\delta}_{\mathrm{fin},n}(X;R)\subset Z_{\mathrm{fin}}(X;R)$ |
+| `single_mem_cyclesOfDegree`, `fundamentalCycle_mem_cyclesOfDegree`, `_iff` | generator membership and degree detection; the converse requires nontrivial coefficients | $[Z]\in Z^{\delta}_{\mathrm{fin},n}\iff\deg_\delta(Z)=n$ for nontrivial $R$ |
+| `cyclesOfDegree_disjoint` | cycles of distinct degrees intersect only at zero | $Z^{\delta}_{\mathrm{fin},n}\cap Z^{\delta}_{\mathrm{fin},m}=0$ for $n\ne m$ |
+| `closedImmersionPushforward_mem_cyclesOfDegree`, `_comap` | existing closed pushforward preserves compatible degrees; compatibility is proved for actual restriction | $i_{*,\mathrm{cyc}}Z^{\delta\circ i}_{\mathrm{fin},n}\subset Z^{\delta}_{\mathrm{fin},n}$ |
+| `principalDivisor_mem_cyclesOfDegree` | existing finite principal divisor is one degree below the generic point | $\operatorname{div}_X(f)\in Z^{\delta}_{\mathrm{fin},\delta(\eta_X)-1}(X;\mathbf Z)$ |
+| `closedImmersionPushforward_principalDivisor_mem_cyclesOfDegree`, `principalDivisor_closedSupport_mem_cyclesOfDegree` | actual principal-divisor image has one-lower ambient carrier degree | $(\iota_W)_{*,\mathrm{cyc}}\operatorname{div}_W(f)\in Z^{\delta}_{\mathrm{fin},\deg_\delta(W)-1}(X;\mathbf Z)$ |
+
+Degree drop is proved from codimension inside the integral carrier, not
+assumed of its divisor coefficients or computed by absolute Krull-dimension
+subtraction. The topology and closed restriction need no local
+Noetherianity; the finite principal cycle needs an integral locally
+Noetherian quasi-compact carrier. The generic closed-cycle degree maps
+work over any semiring, even trivial coefficients. The degree submodules
+are not a second free cycle type, a direct-sum decomposition theorem,
+a relation subgroup or a Chow quotient. A dimension function is explicit
+input, not postulated to exist for every scheme. Constructing it from the
+intended finite-type base and matching the target grading remain separate
+from SP40's genuine relation generation and quotient descent.
+
+### Genuine principal relations and closed quotient maps (SP40)
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `idealSubscheme_isLocallyNoetherian`, `idealSubscheme_compactSpace`, `idealSubscheme_isNoetherian` | derived finiteness of actual closed carriers | prose only; no new hypothesis package |
+| `closedImageSubscheme_isLocallyNoetherian`, `closedImageSubscheme_compactSpace` | finiteness transported by the actual support-to-image isomorphism | prose only; no new carrier |
+| `ambientPrincipalDivisor W f` | the existing carrier principal cycle followed by the existing closed inclusion pushforward | $(\iota_W)_{*,\mathrm{cyc}}\operatorname{div}_W(f)$; a composite, not a second divisor |
+| `closedImmersionPushforward_ambientPrincipalDivisor` | actual principal-generator image identity, using the inverse contravariant function-field isomorphism | $i_{*,\mathrm{cyc}}(\iota_W)_{*,\mathrm{cyc}}\operatorname{div}_W(f)=(\iota_{i(W)})_{*,\mathrm{cyc}}\operatorname{div}_{i(W)}((e_W^*)^{-1}f)$ |
+| `PrincipalRelationData δ n` | actual integral degree-$n+1$ carriers with units in their function fields | $(W,f)$, $\deg_\delta(W)=n+1$, $f\in k(W)^\times$ |
+| `principalRelationData_family_locallyFinite_iff` | local finiteness of actual nonempty carrier families is finiteness of the index under quasi-compactness | $(|W_a|)_{a\in A}$ locally finite $\Longleftrightarrow A$ finite |
+| `principalRelation δ n d` | the same ambient principal image in the supported degree submodule | $(\iota_W)_{*,\mathrm{cyc}}\operatorname{div}_W(f)\in Z^\delta_{\mathrm{fin},n}(X;\mathbf Z)$ |
+| `PrincipalRelationData.zpow`, `principalRelation_zpow` | absorb integer coefficients into actual rational-function powers | $\operatorname{div}_W(f^m)=m\operatorname{div}_W(f)$ |
+| `principalRelations δ n` | submodule generated by the actual degree-$n+1$ carrier principal images | $\mathcal R_n^\delta(X)$ |
+| `mem_principalRelations_iff_exists_list`, `_iff_exists_finsupp` | exact unweighted finite-sum criterion and weighted finite-support criterion | $c\in\mathcal R_n^\delta\Longleftrightarrow c=\sum_{a=1}^r(\iota_{W_a})_{*,\mathrm{cyc}}\operatorname{div}_{W_a}(f_a)$ |
+| `RationallyEquivalent δ n c e` and its equivalence laws | cycle difference is a genuine principal relation | $c\sim_{\mathrm{rat}}e$ |
+| `ChowGroup δ n`, `classMap δ n` | quotient of the existing homogeneous integral cycles; canonical class map | $\mathrm{CH}_n^\delta(X)=Z^\delta_{\mathrm{fin},n}(X;\mathbf Z)/\mathcal R_n^\delta(X)$, $c\mapsto[c]$ |
+| `classMap_eq_iff`, `classMap_eq_zero_iff`, `classMap_surjective`, `classMap_principalRelation` | exact quotient equality/kernel, surjectivity, and generator vanishing | $[c]=[e]\Longleftrightarrow c\sim_{\mathrm{rat}}e$, $\ker(c\mapsto[c])=\mathcal R_n^\delta$ |
+| `gradedClosedImmersionPushforward` and val/id/comp laws | restriction of the existing cycle map to compatible homogeneous submodules | $i_{*,\mathrm{cyc}}$ with domain $Z^{\delta_X}_{\mathrm{fin},n}$ |
+| `PrincipalRelationData.closedImage`, `gradedClosedImmersionPushforward_principalRelation` | actual image carrier/function and its proved generator identity | $(W,f)\mapsto(i(W),(e_W^*)^{-1}f)$ |
+| `principalRelations_le_comap_closedImmersionPushforward` | preservation of the generated submodule, deduced from geometry | $i_{*,\mathrm{cyc}}\mathcal R_n^{\delta_X}(X)\subseteq\mathcal R_n^{\delta_Y}(Y)$ |
+| `chowClosedImmersionPushforward` and classMap/id/comp laws | induced closed pushforward on the genuine quotient, with the existing cycle representative | $i_*:\mathrm{CH}_n^{\delta_X}(X)\to\mathrm{CH}_n^{\delta_Y}(Y)$, $[c]\mapsto[i_{*,\mathrm{cyc}}c]$ |
+| `chowClosedImmersionPushforward_restricted_classMap` | canonical specialization where degree compatibility is already proved | $\delta_X=\delta_Y\circ i$ |
+| `gradedIsoEquiv`, `_val`, `_symm_val` | actual homogeneous-cycle equivalence with inverse the existing open restriction | $e_{*,\mathrm{cyc}}$, with inverse $e^*_{\mathrm{cyc}}$ |
+| `principalRelations_map_gradedIsoEquiv` | exact relation-submodule transport through the actual isomorphism | $e_{*,\mathrm{cyc}}\mathcal R_n^{\delta\circ e}(X)=\mathcal R_n^\delta(Y)$ |
+| `chowIsoEquiv`, `_classMap`, `_symm_classMap`, `_toLinearMap` | induced quotient equivalence, identified with the existing closed quotient pushforward | $e_*:\mathrm{CH}_n^{\delta\circ e}(X)\xrightarrow{\sim}\mathrm{CH}_n^\delta(Y)$, with inverse induced by $e^*_{\mathrm{cyc}}$ |
+
+The finite/local-finite comparison uses the closed **carriers**, including
+carriers whose divisor is zero, not only nonzero divisor supports. The
+unweighted finite-sum criterion identifies the generated subgroup with
+the source convention on the chosen Noetherian domain. Integer scalars
+are absorbed by actual function powers, not by a supplied relation axiom.
+The dimension function is explicit, and the canonical closed restriction
+provides the degree comparison. Relation preservation is proved, not a
+theorem premise. The quotient is additive; no general closed-pushforward
+injectivity, arbitrary open/flat/Gysin descent, proper norm theorem,
+intersection product, Chow convolution or Hodge realization is supplied.
+The new class notation $[c]$ is distinct from the existing Betti cycle
+class map and the Hodge quotient selector. This does not install a second
+cycle module or projector; the earlier finite-split zero-cycle adapter
+remains separately scoped and has not been silently identified with this
+general quotient. Its comparison is a later parity adapter if needed.
+The general quotient here has integer coefficients; rational coefficient
+extension and comparison with the prescribed rational Chow target remain
+separate from the already proved finite-split scalar-extension adapter.
+
+### Actual dimensions and a canonical low-dimensional grading (SP41)
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `integralSubschemePointOrderIso W`, `_val` | actual points of the closed carrier are the specialization interval below its ambient generic point | $\lvert W\rvert\simeq\{x:x\leq\xi_W\}$; the point map is the existing inclusion |
+| `topologicalKrullDim_eq_pointKrullDim` | sobriety identifies point chains with irreducible-closed chains | $\dim X$; no second dimension invariant |
+| `ambientGenericPoint_height_eq_supportDim`, `point_height_eq_supportDim`, `genericPoint_height_eq_topologicalKrullDim` | actual carrier dimension is generic-point height; the whole integral scheme is the generic closure | $\dim W=\operatorname{height}(\xi_W)$, $h_X(x)=\dim\overline{\{x\}}$ |
+| `point_height_ne_top`, `point_height_toNat_eq`, `point_height_toNat_strictMono` | finite dimension makes conversion to integer height lossless and gives strict specialization monotonicity | $h_X:X\to\mathbf Z_{\geq0}$ when $\dim X<\infty$; not yet called a dimension function in general |
+| `polynomialDimensionBound`, `mvPolynomial_ringKrullDim_le_bound`, `ringKrullDim_le_bound_of_surjective` | explicit finite upper bound from actual polynomial presentations | proof-local bound only; not a sharp dimension formula or a new grading |
+| `exists_ringKrullDim_le_of_finiteType`, `ringKrullDim_lt_top_of_finiteType`, `finiteRingKrullDim_of_finiteType` | finite-type field algebras have finite dimension; nonempty order package additionally requires a nontrivial ring | $\dim A<\infty$ |
+| `spec_topologicalKrullDim_lt_top_of_finiteType`, `quotientSpec_topologicalKrullDim_lt_top_of_finiteType`, `affine_topologicalKrullDim_lt_top_of_finiteType` | bounds on actual affine spectra, quotient spectra and affine schemes with their section algebras | $\dim\operatorname{Spec}A<\infty$ |
+| `point_coheight_eq_of_isOpenImmersion` | actual stalk isomorphisms preserve point coheight | $\operatorname{coheight}_U(x)=\operatorname{coheight}_X(jx)$; not height or absolute-dimension preservation |
+| `topologicalKrullDim_lt_top_of_finite_openCover` | finite chart bounds control global point-chain dimension | $\dim X\leq\max_i\dim U_i<\infty$ |
+| `affine_topologicalKrullDim_lt_top_of_locallyOfFiniteType`, `topologicalKrullDim_lt_top_of_compact_locallyOfFiniteType`, `topologicalKrullDim_lt_top_of_finiteType` | the actual structural morphism supplies the affine finite-type algebras; quasi-compactness supplies the finite subcover | $X\to\operatorname{Spec}k$ finite type $\Longrightarrow\dim X<\infty$ |
+| `point_height_le_one`, `point_height_eq_zero_and_eq_one_of_lt` | under the actual dimension bound, every strict pair has heights zero and one | $x<y\Longrightarrow(h_X(x),h_X(y))=(0,1)$ if $\dim X\leq1$ |
+| `DimensionFunction.ofKrullDimLEOne` and its apply/nonneg/value laws | the existing dimension-function type instantiated by literal point height, with both laws proved | $\delta_X:=h_X$ under $\dim X\leq1$; no extra grading-law input |
+| `supportDegree_ofKrullDimLEOne_eq_iff`, `fundamentalCycle_mem_ofKrullDimLEOne_iff` | the existing support degree and homogeneous-cycle test match actual carrier dimension | $\deg_{\delta_X}(W)=n\Longleftrightarrow\dim W=n$, $[W]\in Z^{\delta_X}_{\mathrm{fin},n}\Longleftrightarrow\dim W=n$ for nontrivial coefficients |
+| `Examples.affineLine`, `affineLine_dimension`, `affineLineDimensionFunction` | the actual polynomial spectrum and its constructed dimension function | $\mathbf A^1_k=\operatorname{Spec}k[T]$, $\delta_{\mathbf A^1_k}$ |
+| `Examples.affineLineOriginIdeal_isMaximal`, `affineLineOrigin`, `affineLineOrigin_isClosed` | the actual origin is the prime kernel of the constant-coefficient map | $o=V(T)$; no freely chosen closed point |
+| `Examples.affineLineDimensionFunction_genericPoint`, `affineLineDimensionFunction_origin` | explicit positive-dimensional checks of the constructed grading | $\delta(\eta)=1$, $\delta(o)=0$ |
+
+The carrier-height theorem has no ambient geometric assumptions. The
+finite-type bounds include the empty spectrum and do not use the pinned
+Mathlib's unproved exact multivariate-polynomial dimension statement.
+Finite-dimensionality gives finite, strictly monotone height, but not the
+unit step across covers. Only the dimension-at-most-one case is installed
+as a `DimensionFunction` here, without integrality or Noetherianity of the
+ambient scheme. Its use in SP40 still requires the existing Noetherian
+quotient hypotheses. In higher-dimensional finite-type geometry, the
+prime-chain/transcendence-degree comparison and one-step law remain open.
+The target's codimension convention and rational coefficient comparison
+also remain separate; mixed-dimensional components do not acquire a
+silently chosen global $d-p$ conversion. There is one cycle module, one
+principal-relation quotient construction and no new projector or source axiom.
+
 ### Selected literature inputs
 
 | Lean object | Mathematical role | Canonical TeX notation |
@@ -338,7 +922,7 @@ record rather than copying it.
 | `MarkedAugmentedAlgebra.regularAction` | multiplicative regular action of the commutative source | $\lambda_H:F_{\mathbf Q}(H)\to\operatorname{End}_{\mathbf Q}(F_{\mathbf Q}(H))$ |
 | `UniversalIdempotentAlgebra ℚ` | universal rational algebra with one distinguished idempotent | $\mathcal U=\mathbf Q\times\mathbf Q$ |
 | `UniversalIdempotentAlgebra.selector` | distinguished universal idempotent | $u=(1,0)\in\mathcal U$ |
-| `UniversalIdempotentAlgebra.mapOfIdempotent` | canonical algebra map determined by an idempotent $e$ | $\varphi_e:\mathcal U\to C$, $(r,s)\mapsto re+s(1-e)$ |
+| `UniversalIdempotentAlgebra.mapOfIdempotent` | canonical algebra map determined by an idempotent $e$ in a rational algebra $B$ | $\varphi_e:\mathcal U\to B$, $(r,s)\mapsto re+s(1-e)$ |
 | `UniversalIdempotentAlgebra.RepresentationMorphism` | linear intertwiner between two one-idempotent representations | $T:(V,\varphi_{e_V})\to(W,\varphi_{e_W})$ |
 | `MarkedSelectorAlgebraPresentation` | optional stronger full component-algebra presentation; not required by the active Galois route | $\iota_H:F_{\mathbf Q}(H)\to\Gamma_\eta$ |
 | `SchemeCorrespondence.sheetLinearization H` | auxiliary direct-import-only linear coset-average comparison, not an algebra map | $\ell_H(gH)=[g]e_H$ |
@@ -346,6 +930,8 @@ record rather than copying it.
 | generic diagonal operator | projector onto the marked rational line | $P_0(t,x)=(t,0)$ |
 | generic shear | change from diagonal to graph splitting | $U_\alpha(t,x)=(t,x+t\alpha)$ |
 | `MarkedProjectorActionComparison` | canonical residual map and action square for a chosen projector, without ambient restriction | $\mathscr R_{\Pi}$ |
+| `MarkedProjectorActionComparison.cycleClass_decode_eq_generatedClass` | detected Chow representative from the core comparison, without surjectivity or original idempotence | $\operatorname{cl}(D(\Pi))=\theta(a_H)$ |
+| `MarkedProjectorActionComparison.toAlgebraicProjectorLift` | full lift using the chosen idempotent and surjective cancellation | $\Pi$; the same chosen element |
 | `MarkedSelectorActionComparison` | extension-based specialization of the canonical comparison | $\mathscr R_{\Pi_x}$; no independent comparison fields |
 | `MarkedGaloisSelectorComparison` | sheet specialization with prescribed generated class | $\mathscr R_{\alpha,x}$; retains the extension premise |
 | residual realization | rational linear map from the underlying module of the augmentation ideal | $\theta:E_H\to V$ |
@@ -357,11 +943,14 @@ record rather than copying it.
 | `PrescribedChowProjectorLift` | lift with prescribed action | $\operatorname{Lift}_{\mathrm{CH}}(P)$ |
 | `AlgebraicProjectorLift.realization_idempotentMap_square` | one lift displayed as a commuting algebra-homomorphism square | $\rho\circ\varphi_\Pi=\varphi_P$ |
 | `RationalHodgeCycleClassModel` | supplied cycle/Hodge model | $\mathscr H=(A,V,V_{\mathrm{Hdg}},\operatorname{cl})$ |
+| `ClassGraphProjectorConstruction.encode` | graph construction from a supplied Chow class, used in the Hodge-to-graph equivalence direction; not asserted linear | $C:A\to\Gamma$ |
+| `ClassGraphProjectorDetection.decode` | linear Chow detection compatible with lower-left cohomological evaluation | $D:\Gamma\to_{\mathbf Q} A$ |
 | `IsRationalHodgeClass M alpha` | rational Hodge membership | $\alpha\in V_{\mathrm{Hdg}}$ |
 | `IsAlgebraicHodgeClass M alpha` | cycle-class membership | $\alpha\in\operatorname{im}(\operatorname{cl})$ |
 | `RationalHodgeConjectureAt M` | modeled rational Hodge target | $\mathrm{HC}_{\mathbf Q}(\mathscr H)$ |
 | `EveryHodgeClassHasPalomarTargetSquare` | equality-of-composites presentation of graph-projector coverage | $\forall\alpha\in V_{\mathrm{Hdg}},\ \exists\Pi:\rho\circ\varphi_\Pi=\varphi_{P_\alpha}$ |
 | `ClassDependentMarkedGaloisSelectorCoverage` | classwise marked-selector coverage | $\operatorname{Cov}_{\mathrm{Gal}}(\mathscr H,\rho)$ |
+| `StrongGraphProjectorLiftReplacementByClassDependentMarkedGaloisSelector` | existential replacement for the same target class, used only for the reverse coverage implication; no equality with an original projector | named hypothesis; no new projector notation |
 
 ## Objects deliberately assigned no independent notation
 

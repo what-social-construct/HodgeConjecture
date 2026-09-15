@@ -2,8 +2,7 @@
 
 The single current manuscript is:
 
-- [`main.tex`](main.tex), *A Formal Projector Spine for the Rational Hodge
-  Target: Collisions, Marked Galois Sheets, and Boundary Interfaces*.
+- [`main.tex`](main.tex), *Galois Correspondences and the Hodge Conjecture*.
 - [`main.pdf`](main.pdf), the compiled author-review candidate.
 
 It follows the dependency-ordered components reflected by the active Lean

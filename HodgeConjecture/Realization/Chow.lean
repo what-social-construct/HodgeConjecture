@@ -19,7 +19,6 @@ import HodgeConjecture.Realization.Chow.Examples.GeometricSplitPoints
 import HodgeConjecture.Realization.Chow.Examples.SplitGaloisResidual
 import HodgeConjecture.Realization.Chow.Examples.SplitChowDiagonal
 import HodgeConjecture.Realization.Chow.Examples.SplitChowShear
-import HodgeConjecture.LinearAlgebra.MatrixRestrictionObstruction
 
 /-!
 # Rational Chow-correspondence realization
@@ -46,10 +45,9 @@ intersection. Diagonal pushforward and an invertible Chow shear construct
 the sheet-to-correspondence algebra map; `Realization.Betti` proves its
 marked action comparison. Multiplicative residual rigidity forces the
 generated class to be minus the unit when the residual map is surjective.
-The auxiliary linear coset-average comparison remains
-available by directly importing `Realization.Chow.SheetLinearization`, but is
-not part of this active umbrella because pointwise and convolution products
-differ.
+The auxiliary linear coset-average comparison is archived under
+`research/archive/legacy-lean/`: pointwise and convolution products differ,
+and this map is not an active geometric bridge.
 
 The split-span realization now connects actual split-presentable geometric
 classes to rational matrices by a surjective algebra map. The two-sided ideal
@@ -68,10 +66,8 @@ span quotient, sending each span to its carrier's proper cycle pushforward.
 Its actual Chow action is matrix-vector multiplication in point coordinates.
 `Realization.Betti` constructs the singular degree-zero cycle-class
 comparison and cohomological action for these schemes over the complex field.
-No realization on all nonsplit finite-étale classes is claimed. The matrix restriction obstruction
-explains why the full ambient algebra cannot in general map back to sheets.
+No realization on all nonsplit finite-étale classes is claimed.
 
-The superseded commutative selector-generated specialization remains
-available by directly importing `Realization.Chow.SelectorRealization`; it is
-intentionally absent from this active umbrella.
+The superseded commutative selector-generated specialization is also
+archived outside the library, not available through its former import path.
 -/

@@ -27,7 +27,7 @@ variable (R : Type v)
 
 /-- Zero-cycles with coefficients in `R`, on actual integral closed subschemes.
 Every generator has dimension zero by `integralClosedSubscheme_dimension`. -/
-abbrev Cycles [Zero R] := IntegralClosedSubscheme K I →₀ R
+abbrev Cycles [Zero R] := SchemeCycles.Cycles (scheme K I) R
 
 variable [Semiring R]
 

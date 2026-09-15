@@ -1,18 +1,26 @@
 # First concrete realization checkpoint: split points
 
-Status: HISTORICAL FIRST CHECKPOINT; CONNECTING SPLIT-SPAN REALIZATION NOW
-IMPLEMENTED IN `0008-split-span-cycle-realization.md`.
+Status: HISTORICAL FIRST CHECKPOINT; NOT A CURRENT PROOF PLAN.
 
 Date: 2026-09-11. Canonical manuscript: `paper/main.tex`, Section 7.
 
-Checkpoint update, 2026-09-11: the additive and multiplicative arrow proposed
-below is now constructed on actual finite split-presentable scheme-span
+Checkpoint advance, 2026-09-11: the additive and multiplicative arrow proposed
+below was subsequently constructed on actual finite split-presentable scheme-span
 classes. It sends the earlier geometric point projector to its matrix unit,
 and hence to the coefficient graph-projector action; see
 [0008-split-span-cycle-realization.md](0008-split-span-cycle-realization.md).
-The older gap statements and verification results below are retained as the
-dated record of the preceding checkpoint, not the current realization status.
-The genuine scheme-theoretic Chow/Betti comparison remains open.
+
+Current-status update, 2026-09-14: actual finite split Chow groups and their
+correspondence operations are constructed in [0011](0011-split-zero-cycles.md)
+and [0012](0012-split-chow-composition.md); their genuine Betti cycle-class
+and action comparison is constructed in [0013](0013-split-betti-cycle-class.md).
+The effective degree-zero Hodge/Tate-block model and marked geometric
+comparison follow in [0014](0014-split-hodge-tate-block.md) and
+[0015](0015-split-galois-marked-comparison.md).
+[0016](0016-source-input-packages.md) records the separate conditional
+literature inputs. The [gap map](../GAP_MAP.md) controls current unresolved
+work. The body, next-step list, and verification below remain the dated
+record of this checkpoint, not current realization or release status.
 
 ## What was constructed
 
@@ -61,7 +69,7 @@ extend that core and delegate their consequences; no comparison fields or
 proofs are duplicated. The existing Galois coverage interface still carries
 its extra ambient restriction: it remains a stronger specialized route.
 
-## Exact next arrow
+## Next arrow at this checkpoint
 
 The actual span and the coefficient matrix are not yet related by a Lean map.
 In particular, the free span algebra does not impose disjoint-union
@@ -96,7 +104,7 @@ Tag 0FG0](https://stacks.math.columbia.edu/tag/0FG0), with variance fixed
 explicitly. These source identifications have not yet been encoded as a
 scheme Chow comparison or a Betti cycle-class map in Lean.
 
-## Scope and parity
+## Scope and parity at this checkpoint
 
 - Active source: `HodgeConjecture/Correspondence/Examples/SplitPoints.lean`.
 - Active coefficients: `HodgeConjecture/Realization/Chow/Examples/SplitPoints.lean`.
@@ -109,7 +117,7 @@ geometric Hodge cycle-class model, a class-dependent cover, or Hodge coverage.
 It is a concrete consistency test and interface correction, not a new case
 of the Hodge conjecture.
 
-## Verification
+## Verification of this checkpoint
 
 - Full `lake build` passed (2,803 jobs). It replayed only the two pre-existing
   `sorry` warnings in `Challenge.lean`; that file was unchanged.

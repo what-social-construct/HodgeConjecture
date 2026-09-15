@@ -24,8 +24,10 @@ algebra from the noncommutative compactified correspondence algebra and
 exposes the comparison as a morphism of representations of the universal
 one-idempotent algebra.  It detects the lower-left class from the selector
 square and, by surjective cancellation, proves the exact target equality of
-algebra-homomorphism composites.  No Chow-motivic residual realization or
-such square is constructed.  The finite-cover branch has not
+algebra-homomorphism composites. No such residual realization or action square
+is constructed for a general variety. The finite split specialization below
+constructs both; its canonical marked residual class is minus the fundamental
+class. The finite-cover branch has not
 been identified with the full target; only implications from explicit
 class-indexed witness packages are formalized.
 
@@ -35,10 +37,8 @@ isomorphism, and the cohomological action of the actual Chow algebra.
 Its compatibility with geometric Chow action is proved. Higher-dimensional
 Betti/Hodge realization and the general residual comparison remain separate.
 
-The earlier commutative selector-realization chain remains directly
-importable from `Realization.BoundaryProjector`,
-`Realization.CohomologicalProjector`, and
-`Realization.CompactificationProjector`, but it is not part of this active
-umbrella: it identifies a historical interface, not the noncommutative
-correspondence spine used by the current target.
+The earlier commutative selector-realization chain is preserved under
+`research/archive/legacy-lean/`, outside the library. The retained block
+calculations certify operator identities; they do not supply the general
+geometric realization or class-dependent coverage hypotheses.
 -/
