@@ -621,29 +621,75 @@ as \(n\). Closed-point carrier dimension and scheme-point height remain
 zero; these are distinct quantities. No regularity or generator bound is
 asserted.
 
+### Normal-base going down and finite-type-domain local dimension
+
+A11ac / SP44 proves going down for an actual integral injection of domains
+\(R\hookrightarrow S\) when \(R\) is integrally closed in its fraction
+field. `CommutativeAlgebra/IntegralIdealPolynomial.lean` constructs a
+monic annihilator for each \(y\in IS\), with its degree-\(i\)
+coefficient in \(I^{d-i}\), using finite ideal-membership witnesses
+and an actual finite integral subalgebra. The ambient integral algebra
+need not itself be finite or Noetherian. In
+`CommutativeAlgebra/MonicPrimeCoefficients.lean`, reduction modulo a prime
+and passage to its actual fraction field control coefficients of a monic
+divisor, including the scalar-substitution case.
+
+`CommutativeAlgebra/NormalGoingDown.lean` uses the actual minimal polynomial
+over the normal base to prove cancellation relative to the chosen prime:
+\[
+ p\subseteq Q\cap R,\quad a\notin p,\quad ab\in pS
+ \quad\Longrightarrow\quad b\in Q.
+\]
+An actual prime disjoint from \((R\setminus p)(S\setminus Q)\)
+then lies below the prescribed \(Q\) and contracts to \(p\).
+There is no supplied going-down hypothesis or global instance, and no
+separability, flatness, Noetherianity or normality-of-\(S\) premise.
+
+`Cycles/NormalizationLocalDimension.lean` combines this construction with
+integral incomparability and reuses
+`NormalizationInertia.primeHeight_under_le_of_hasGoingDown`; it does not
+duplicate that generic height comparison. Prime heights are equal under
+an integral map with going down. For an actual injective integral
+normalization \(k[T_1,\ldots,T_s]\hookrightarrow A\) of a domain, every
+maximal ideal of \(A\) therefore has height \(s\). Noether normalization
+supplies such a map for every finite-type domain, giving
+\[
+ \dim A_m=\operatorname{ht}(m)=\dim A
+   =\operatorname{trdeg}_k\operatorname{Frac}(A).
+\]
+`Cycles/AffineClosedPointDimension.lean` computes the actual closed-point
+structure-sheaf stalk dimension and scheme-point coheight accordingly.
+The domain \(A\) need not be normal and the point need not be rational.
+The local comparison uses prime chains, not an assumption that localizing
+at one selected upstairs prime preserves integrality of the local-ring map.
+
 **The next bounded goal is the higher-dimensional immediate-specialization
 dimension formula.** For finite-type schemes over a field, prove the
 one-step law for \(x\mapsto\dim\overline{\{x\}}\). The affine
-transcendence-degree comparison is now proved, but the uniform
-maximal-chain/local dimension formula is not. Prove that stronger
-prime-chain statement, then transport the affine residue-field comparison
-through the actual scheme charts. Finiteness, strict monotonicity and the
-global affine dimension equality alone do not prove the unit-step law.
-Polynomial maximal heights and their actual local dimensions are now proved.
-Passing from this polynomial case to maximal-local dimensions of arbitrary
-finite-type domains through Noether normalization additionally
-needs normal-base going down: `Mathlib/RingTheory/Ideal/GoingDown.lean`
-still lists that general theorem as a TODO. Its flat going-down instance
-cannot be substituted without proving flatness. These are proof tasks,
-not new input packages. The polynomial base's normality is already available
-from the pinned unique-factorization and integrally-closed instances; it is
-the going-down theorem for the actual integral domain extension that must
-be proved. Going up alone does not lift chains beneath a preselected
-terminal prime. For the subsequent height comparison, reuse the
-already proved generic
-`NormalizationInertia.primeHeight_under_le_of_hasGoingDown` rather than
-introducing a duplicate. The uniform-chain/unit-step theorem remains the
-subsequent goal.
+transcendence-degree comparison and finite-type-domain maximal-local
+dimension equality are now proved. The next algebraic subcheckpoint is
+an actual residue-normalization localization: for a finite-type domain
+\(B\) and prime \(q\), normalize \(B/q\) by a polynomial algebra
+\(P\), lift its variables to \(B\), and invert \(P\setminus\{0\}\).
+Construct \(B'\) over \(K=\operatorname{Frac}(P)\), prove the extended
+prime \(q'\) is maximal, and prove \(\operatorname{ht}(q')=\operatorname{ht}(q)\).
+Use the actual localization and quotient maps, not a supplied maximality
+or height-comparison premise. The pinned APIs include
+`IsLocalization.primeHeight_comap`,
+`IsLocalization.map_surjective_of_surjective`,
+`Algebra.FiniteType.of_restrictScalars_finiteType`,
+`RingHom.finiteType_localizationPreserves`, `isIntegral_localization`,
+and `isField_of_isIntegral_of_isField'`. Integrality is used only for
+the same-denominator localization of the actual quotient normalization.
+SP44 can then give the full affine prime formula
+\(\operatorname{ht}(q)+\operatorname{trdeg}_k(B/q)=\operatorname{trdeg}_k B\).
+Applying that formula on prime quotients is the route to the unit-step
+law, followed by actual scheme-chart/residue-field transport. Finiteness,
+strict monotonicity and global dimension equality alone do not supply it.
+The normal-base going-down theorem missing from the pinned library is now
+proved locally in SP44. Maximal-local equality still does not determine the
+length of every saturated chain or the dimension difference of every
+consecutive prime pair. Those are proof tasks, not new input packages.
 The general canonical
 field dimension function is therefore still open, not hidden in a new
 input package. Matching dimension grading with codimension \(p\) via

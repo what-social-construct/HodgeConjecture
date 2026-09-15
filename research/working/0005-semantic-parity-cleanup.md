@@ -57,7 +57,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 
 ## Canonical semantic object and TeX registry
 
-### Construction and input checkpoints (SP17--SP43)
+### Construction and input checkpoints (SP17--SP44)
 
 | ID | Object or overlap | Disposition | Required action | Status |
 | --- | --- | --- | --- | --- |
@@ -88,6 +88,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 | SP41 | Actual support dimensions, finite-type dimension bounds and a canonical low-dimensional grading | IDENTIFY / INSTANTIATE | Identify actual carrier dimension with point height. Prove finite dimension for finite-type algebras and schemes over a field. Construct the canonical dimension function under dimension at most one, identify its carrier degrees, and instantiate it on the actual affine line. Keep the general finite-type one-step law and target codimension conversion open. | PROVED; FULL BUILD, 361 AXIOM REPORTS, TWENTY-TWO REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP42 | Strict transcendence-degree drop, exact affine dimension and actual carrier comparison | PROVE / IDENTIFY | Prove proper domain quotient drop and actual integral chain lifting. Combine the prime-chain upper bound with Noether normalization's lower bound to identify finite-type domain dimension with fraction-field transcendence degree. Connect prime quotients and actual residue fields to existing reduced carriers. Keep uniform chains, the immediate-specialization unit step and general scheme grading open. | PROVED; FULL BUILD, 386 AXIOM REPORTS, TWENTY-THREE REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP43 | Polynomial maximal height and actual closed-point local dimension | PROVE / IDENTIFY | Construct actual prime extension and its strict step below a maximal ideal. Combine Jacobson contraction with SP42's independent upper bound to prove every polynomial maximal ideal has height n and identify actual localization/stalk dimension and scheme-point coheight. Keep general finite-type-domain maximal-local comparison, uniform chains and unit-step grading separate. | PROVED; FULL BUILD, 398 AXIOM REPORTS, SIXTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP44 | Normal-base going down and finite-type-domain maximal-local dimensions | PROVE / CONNECT | Construct ideal-controlled annihilators, prove the monic coefficient comparison and normal-base cancellation, and construct primes below the selected terminal prime. Reuse the existing height bound to compare normalization heights and actual maximal-local/stalk dimensions. Keep saturated-chain uniformity and the higher-dimensional unit-step grading separate. | PROVED; FULL BUILD, 413 AXIOM REPORTS, NINETEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -448,6 +449,39 @@ Noether normalization, reusing the existing generic height comparison.
 Polynomial-base normality is already available. General finite-type-domain
 maximal-local equality, uniform chains, the higher-dimensional unit-step
 law and target realization remain subsequent proof obligations.
+
+SP44 validation (2026-09-15): all five new leaf modules and the full
+3114-job Lean build pass, with only the two existing `Challenge` warnings.
+Integrated `research/Verification.lean` passes with 521 declaration checks
+and all 250 examples, without warnings or errors. All 413 selected axiom
+reports were captured in the original integrated context and compared with
+the exact declaration inventory: no missing, unexpected or duplicate
+reports and no unpermitted axioms. The existing `polynomialDimensionBound`
+is axiom-free; the other 412 reports use only `propext`, `Classical.choice`,
+and `Quot.sound`. The independent SP44 replay covers all fifteen new public
+theorems, fifteen checks and nineteen regressions. These include
+ideal-controlled annihilators without domain, Noetherian or global
+module-finiteness assumptions; prime-coefficient descent over arbitrary
+coefficient rings; normal-base going down without target normality or
+finiteness; weak-order prime lifting and a finite chain ending at the
+prescribed terminal prime; the generic height comparison without domain
+hypotheses; an actual normalization without a finite-type premise on the
+upper domain; the full finite-type-domain maximal-local and actual-stalk
+endpoints without normality or characteristic-zero premises; scheme
+coheight versus closed-point height zero; polynomial and zero-variable
+consistency; and the actual integral noninjective evaluation map k[T] to k,
+for which going down is proved to fail. The six primary proof-dependency
+assertions and two supporting reports pass. Independent mathematical,
+source and manuscript/parity audits pass. The single PDF builds to 49 pages
+with a clean final log; Proposition 6.17, its proof, module/status pages and
+theorem-map row were visually inspected. The exact normal-base source
+00H8 is cited, and the existing 00P0 citation now covers the maximal-local
+conclusion as well. Submission wrappers and dependency pins are unchanged;
+diff checks pass. No new axiom, literature-input package, global going-down
+instance, cycle type, Chow quotient or projector is introduced. The next
+bounded construction is the actual residue-normalization localization
+described in the gap map, before the arbitrary-prime dimension formula and
+higher-dimensional immediate-specialization unit-step law.
 
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
@@ -1074,6 +1108,46 @@ give an immediate-specialization unit step. General finite-type-domain
 maximal-local comparison, normal-base going down, uniform saturated chains,
 general scheme grading and the target Chow operations remain subsequent
 proof obligations. No regularity or generator theorem is asserted here.
+
+### Normal-base going down and finite-type-domain local dimension (SP44)
+
+Here \(R\hookrightarrow S\) denotes the actual algebra map; normality
+means integral closedness of the domain \(R\) in its fraction field.
+For the normalization application \(A\) is a domain over a field \(k\),
+and \(g:k[T_1,\ldots,T_s]\hookrightarrow A\) is the actual integral
+normalization map. Neither \(A\) nor \(S\) is assumed normal.
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `exists_monic_annihilator_coeff_mem_pow_of_mem_map` / `exists_monic_annihilator_of_mem_map` | actual finite integral subalgebra and determinant-trick annihilator; no global module finiteness | $y\in IS\implies\exists F\text{ monic},\ F(y)=0,\ F_i\in I^{d-i}\ (d=\deg F)$ |
+| `monic_map_eq_X_pow_of_lower_coeff_zero` | actual coefficient-map reduction of a monic polynomial | $\overline F=X^{\deg F}$ |
+| `coeff_mem_prime_of_monic_dvd_scaled` / `coeff_mem_prime_of_monic_dvd` | prime-ideal coefficient comparison for actual monic divisors, including scalar substitution | $G\mid F(aX),\ a\notin p,\ F_i\in p\ (i<\deg F)\implies G_j\in p\ (j<\deg G)$ |
+| `mem_prime_of_mul_mem_map_of_isIntegrallyClosed` | normal-base cancellation relative to the prescribed upstairs prime | $p\subseteq Q\cap R,\ a\notin p,\ ab\in pS\implies b\in Q$ |
+| `hasGoingDown_of_isIntegrallyClosed` | proved going down for integral injections of domains with normal base; no new global instance | $p\subseteq Q\cap R\implies\exists P\subseteq Q,\ P\cap R=p$ |
+| `primeHeight_eq_under_of_isIntegral_of_hasGoingDown` | integral incomparability plus reuse of the existing going-down height bound | $\operatorname{ht}_S(Q)=\operatorname{ht}_R(Q\cap R)$ |
+| `normalization_primeHeight_eq_size` | full maximal height from the actual polynomial normalization, without a finite-type assumption on A | $g:k[T_1,\ldots,T_s]\hookrightarrow A\text{ integral}\implies\operatorname{ht}_A(m)=s$ |
+| `primeHeight_eq_trdeg_toNat_of_isMaximal` / `height_eq_trdeg_toNat_of_isMaximal` | finite-type-domain maximal heights | $\operatorname{ht}_A(m)=\operatorname{trdeg}_k A$ |
+| `localization_dimension_eq_of_isMaximal` | dimension of the actual prime localization | $\dim A_m=\dim A$ |
+| `affine_stalk_dimension_of_isMaximal` / `affine_stalk_dimension_of_isClosed` | dimension of the actual structure-sheaf stalk on X=Spec(A) | $\dim\mathcal O_{X,m}=\dim A$ |
+| `affine_closedPoint_coheight_eq_trdeg` | actual scheme-order coheight at a closed point | $\operatorname{coht}_X(m)=\operatorname{trdeg}_k A$ |
+
+The prime-height comparison theorem exposes its generic going-down premise;
+the normalization and finite-type endpoints discharge that premise using
+the proved normal-base theorem. The existing
+`NormalizationInertia.primeHeight_under_le_of_hasGoingDown` is reused,
+not copied. The older finite-invariant going-down theorem remains distinct:
+it does not require a normal base, so this new theorem does not replace it.
+No source-input package, scalar-linear proxy, new cycle space
+or dimension-function assumption is introduced. The actual local-ring
+comparison does not assume its map remains integral after localization
+at a selected upstairs prime. Maximal-local equality does not yet prove
+uniform saturated chains or the higher-dimensional immediate-specialization
+unit-step law, and it does not construct general target realization.
+The next bounded construction is residue-normalization localization:
+normalize \(B/q\), lift the polynomial variables to \(B\), invert their
+nonzero polynomials, and prove the extended prime becomes maximal with
+unchanged height. This is the intended input to the affine prime
+dimension formula and then the consecutive-prime unit-step law.
 
 ## Objects deliberately assigned no independent notation
 

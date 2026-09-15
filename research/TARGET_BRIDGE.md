@@ -455,21 +455,42 @@ be developed alongside that infrastructure.
    This is not the closed carrier's dimension, which is zero, and does not
    claim regularity, generators or uniform saturated-chain lengths.
 
+   **Normal-base/local-dimension checkpoint (A11ac / SP44):**
+   `IntegralIdealPolynomial.lean` constructs ideal-controlled monic
+   annihilators in any integral algebra, using an actual finite integral
+   subalgebra. `MonicPrimeCoefficients.lean` controls monic-divisor
+   coefficients after reduction modulo a prime and scalar substitution.
+   `NormalGoingDown.lean` uses actual minimal polynomials to prove
+   cancellation, then constructs a prime below the prescribed terminal
+   prime. Thus integral injections of domains over an integrally closed
+   base have going down, with no separability, Noetherianity or
+   target-normality premise and no assumed going-down input.
+   `NormalizationLocalDimension.lean` reuses the existing going-down
+   height bound and integral incomparability to compare actual heights.
+   Polynomial-base normality and SP43's maximal heights give
+   \(\operatorname{ht}(m)=s\) through an actual polynomial normalization.
+   Every finite-type domain therefore satisfies
+   \(\dim A_m=\dim A=\operatorname{trdeg}_k\operatorname{Frac}(A)\)
+   at every maximal ideal. `AffineClosedPointDimension.lean` identifies
+   actual closed-point stalk dimensions and scheme-point coheights.
+   Neither normality of \(A\) nor rationality of the closed point is needed.
+   Integrality of the selected local-ring map is not assumed.
+
    **Next bounded obligation:** prove the higher-dimensional
    immediate-specialization dimension formula for finite-type schemes
    over a field. The finite integer closure-height function is already
    strictly monotone and its affine residue-field comparison is proved;
-   its one-step law is not yet proved. The next algebraic step is the
-   stronger uniform maximal-chain/local dimension formula, followed by
-   actual chart/residue-field transport to schemes. The global affine
-   equality and the now-proved polynomial maximal heights do not supply
-   these. A normalization-based finite-type-domain maximal-local comparison
-   next needs a proof of normal-base going
-   down, which remains a TODO in the pinned library; the available flat
-   instance does not silently discharge it. Polynomial-base normality is
-   already available; the missing construction is going down for the actual
-   integral domain extension, controlling primes beneath the selected
-   terminal prime. Then identify dimension
+   its one-step law is not yet proved. The next bounded algebraic construction
+   normalizes a prime quotient \(B/q\) by a polynomial algebra \(P\),
+   lifts its variables into \(B\), and localizes at \(P\setminus\{0\}\).
+   Prove the extended prime is maximal over \(\operatorname{Frac}(P)\)
+   and retains its height. SP44 and the transcendence-degree tower formula
+   can then yield
+   \(\operatorname{ht}(q)+\operatorname{trdeg}_k(B/q)=\operatorname{trdeg}_k B\),
+   before the consecutive-prime unit step and actual chart/residue-field
+   transport to schemes. Normal-base going down and maximal-local equality
+   alone do not already supply that unit step.
+   Then identify dimension
    grading with target codimension grading in the intended integral or
    pure-dimensional setting; a uniform \(d-p\) shift is not asserted
    on mixed-dimensional schemes. Construct rational coefficient extension of this

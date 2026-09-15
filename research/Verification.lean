@@ -3070,3 +3070,236 @@ example (k : Type) [Field k] (p : PrimeSpectrum (MvPolynomial (Fin 0) k))
   simpa using mvPolynomial_stalk_dimension_of_isMaximal k 0 p
 
 end PolynomialMaximalHeightRegressions
+
+-- SP44: proved normal-base going down and actual maximal-local dimensions.
+#check HodgeConjecture.CommutativeAlgebra.exists_monic_annihilator_coeff_mem_pow_of_mem_map
+#check HodgeConjecture.CommutativeAlgebra.exists_monic_annihilator_of_mem_map
+#check HodgeConjecture.CommutativeAlgebra.monic_map_eq_X_pow_of_lower_coeff_zero
+#check HodgeConjecture.CommutativeAlgebra.coeff_mem_prime_of_monic_dvd_scaled
+#check HodgeConjecture.CommutativeAlgebra.coeff_mem_prime_of_monic_dvd
+#check HodgeConjecture.CommutativeAlgebra.mem_prime_of_mul_mem_map_of_isIntegrallyClosed
+#check HodgeConjecture.CommutativeAlgebra.hasGoingDown_of_isIntegrallyClosed
+#check HodgeConjecture.SchemeCycles.primeHeight_eq_under_of_isIntegral_of_hasGoingDown
+#check HodgeConjecture.SchemeCycles.normalization_primeHeight_eq_size
+#check HodgeConjecture.SchemeCycles.primeHeight_eq_trdeg_toNat_of_isMaximal
+#check HodgeConjecture.SchemeCycles.height_eq_trdeg_toNat_of_isMaximal
+#check HodgeConjecture.SchemeCycles.localization_dimension_eq_of_isMaximal
+#check HodgeConjecture.SchemeCycles.affine_stalk_dimension_of_isMaximal
+#check HodgeConjecture.SchemeCycles.affine_stalk_dimension_of_isClosed
+#check HodgeConjecture.SchemeCycles.affine_closedPoint_coheight_eq_trdeg
+
+#print axioms HodgeConjecture.CommutativeAlgebra.exists_monic_annihilator_coeff_mem_pow_of_mem_map
+#print axioms HodgeConjecture.CommutativeAlgebra.exists_monic_annihilator_of_mem_map
+#print axioms HodgeConjecture.CommutativeAlgebra.monic_map_eq_X_pow_of_lower_coeff_zero
+#print axioms HodgeConjecture.CommutativeAlgebra.coeff_mem_prime_of_monic_dvd_scaled
+#print axioms HodgeConjecture.CommutativeAlgebra.coeff_mem_prime_of_monic_dvd
+#print axioms HodgeConjecture.CommutativeAlgebra.mem_prime_of_mul_mem_map_of_isIntegrallyClosed
+#print axioms HodgeConjecture.CommutativeAlgebra.hasGoingDown_of_isIntegrallyClosed
+#print axioms HodgeConjecture.SchemeCycles.primeHeight_eq_under_of_isIntegral_of_hasGoingDown
+#print axioms HodgeConjecture.SchemeCycles.normalization_primeHeight_eq_size
+#print axioms HodgeConjecture.SchemeCycles.primeHeight_eq_trdeg_toNat_of_isMaximal
+#print axioms HodgeConjecture.SchemeCycles.height_eq_trdeg_toNat_of_isMaximal
+#print axioms HodgeConjecture.SchemeCycles.localization_dimension_eq_of_isMaximal
+#print axioms HodgeConjecture.SchemeCycles.affine_stalk_dimension_of_isMaximal
+#print axioms HodgeConjecture.SchemeCycles.affine_stalk_dimension_of_isClosed
+#print axioms HodgeConjecture.SchemeCycles.affine_closedPoint_coheight_eq_trdeg
+
+noncomputable section NormalGoingDownLocalDimensionRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory
+open HodgeConjecture.CommutativeAlgebra HodgeConjecture.SchemeCycles
+
+-- The determinant argument needs neither domains nor global module finiteness.
+example (R S : Type) [CommRing R] [CommRing S] [Algebra R S]
+    [Algebra.IsIntegral R S] (I : Ideal R) (y : S)
+    (hy : y ∈ I.map (algebraMap R S)) :
+    ∃ F : Polynomial R, F.Monic ∧ Polynomial.aeval y F = 0 ∧
+      ∀ i, F.coeff i ∈ I ^ (F.natDegree - i) := by
+  fail_if_success
+    have : IsDomain R := inferInstance
+  fail_if_success
+    have : IsDomain S := inferInstance
+  fail_if_success
+    have : Module.Finite R S := inferInstance
+  fail_if_success
+    have : IsNoetherianRing R := inferInstance
+  exact exists_monic_annihilator_coeff_mem_pow_of_mem_map R S I y hy
+
+-- The zero ideal and zero element are allowed; no injectivity premise is introduced.
+example (R S : Type) [CommRing R] [CommRing S] [Algebra R S]
+    [Algebra.IsIntegral R S] :
+    ∃ F : Polynomial R, F.Monic ∧ Polynomial.aeval (0 : S) F = 0 ∧
+      ∀ i < F.natDegree, F.coeff i ∈ (⊥ : Ideal R) :=
+  exists_monic_annihilator_of_mem_map R S ⊥ 0 (Ideal.zero_mem _)
+
+-- Reduction of a monic polynomial is literal coefficient reduction, over any rings.
+example (R A : Type) [CommRing R] [CommRing A] (f : R →+* A)
+    (F : Polynomial R) (hF : F.Monic)
+    (hcoeff : ∀ i < F.natDegree, f (F.coeff i) = 0) :
+    F.map f = Polynomial.X ^ F.natDegree :=
+  monic_map_eq_X_pow_of_lower_coeff_zero f hF hcoeff
+
+-- Prime-coefficient descent does not assume a domain or normal ambient ring.
+example (R : Type) [CommRing R] (p : Ideal R) [p.IsPrime]
+    (a : R) (ha : a ∉ p) (F g : Polynomial R) (hF : F.Monic) (hg : g.Monic)
+    (hcoeff : ∀ i < F.natDegree, F.coeff i ∈ p)
+    (hdiv : g ∣ F.comp (Polynomial.C a * Polynomial.X)) :
+    ∀ i < g.natDegree, g.coeff i ∈ p := by
+  fail_if_success
+    have : IsDomain R := inferInstance
+  exact coeff_mem_prime_of_monic_dvd_scaled p ha hF hg hcoeff hdiv
+
+example (R : Type) [CommRing R] (p : Ideal R) [p.IsPrime]
+    (F g : Polynomial R) (hF : F.Monic) (hg : g.Monic) (hdiv : g ∣ F)
+    (hcoeff : ∀ i < F.natDegree, F.coeff i ∈ p) :
+    ∀ i < g.natDegree, g.coeff i ∈ p :=
+  coeff_mem_prime_of_monic_dvd p hF hg hdiv hcoeff
+
+-- Normality is on the base only. Neither Noetherianity nor finiteness is assumed.
+example (R S : Type) [CommRing R] [CommRing S] [IsDomain R] [IsDomain S]
+    [Algebra R S] [IsIntegrallyClosed R] [Algebra.IsIntegral R S]
+    (hinj : Function.Injective (algebraMap R S)) : Algebra.HasGoingDown R S := by
+  fail_if_success
+    have : IsIntegrallyClosed S := inferInstance
+  fail_if_success
+    have : IsNoetherianRing R := inferInstance
+  fail_if_success
+    have : Module.Finite R S := inferInstance
+  exact hasGoingDown_of_isIntegrallyClosed R S hinj
+
+-- The cancellation statement retains the actual selected prime upstairs.
+example (R S : Type) [CommRing R] [CommRing S] [IsDomain R] [IsDomain S]
+    [Algebra R S] [IsIntegrallyClosed R] [Algebra.IsIntegral R S]
+    (hinj : Function.Injective (algebraMap R S))
+    (p : Ideal R) [p.IsPrime] (Q : Ideal S) [Q.IsPrime]
+    (hpQ : p ≤ Q.under R) (a : R) (b : S) (ha : a ∉ p)
+    (hab : algebraMap R S a * b ∈ p.map (algebraMap R S)) : b ∈ Q :=
+  mem_prime_of_mul_mem_map_of_isIntegrallyClosed R S hinj p Q hpQ a b ha hab
+
+-- Going down lifts below this Q, not just to some prime over p.
+example (R S : Type) [CommRing R] [CommRing S] [IsDomain R] [IsDomain S]
+    [Algebra R S] [IsIntegrallyClosed R] [Algebra.IsIntegral R S]
+    (hinj : Function.Injective (algebraMap R S))
+    (p q : Ideal R) [p.IsPrime] [q.IsPrime] (Q : Ideal S) [Q.IsPrime]
+    [Q.LiesOver q] (hpq : p ≤ q) : ∃ P ≤ Q, P.IsPrime ∧ P.LiesOver p := by
+  letI := hasGoingDown_of_isIntegrallyClosed R S hinj
+  exact Q.exists_ideal_le_liesOver_of_le (p := p) (q := q) hpq
+
+-- The same terminal-prime condition is retained for an entire finite strict chain.
+example (R S : Type) [CommRing R] [CommRing S] [IsDomain R] [IsDomain S]
+    [Algebra R S] [IsIntegrallyClosed R] [Algebra.IsIntegral R S]
+    (hinj : Function.Injective (algebraMap R S)) (l : LTSeries (PrimeSpectrum R))
+    (Q : Ideal S) [Q.IsPrime] [Q.LiesOver l.last.asIdeal] :
+    ∃ L : LTSeries (PrimeSpectrum S), L.length = l.length ∧
+      L.last = ⟨Q, inferInstance⟩ ∧
+      List.map (algebraMap R S).specComap L.toList = l.toList := by
+  letI := hasGoingDown_of_isIntegrallyClosed R S hinj
+  exact Ideal.exists_ltSeries_of_hasGoingDown l Q
+
+-- The height comparison itself requires no extra domain hypotheses.
+example (R S : Type) [CommRing R] [CommRing S] [Algebra R S]
+    [Algebra.IsIntegral R S] [Algebra.HasGoingDown R S]
+    (Q : Ideal S) [Q.IsPrime] : Q.primeHeight = (Q.under R).primeHeight := by
+  fail_if_success
+    have : IsDomain R := inferInstance
+  fail_if_success
+    have : IsDomain S := inferInstance
+  exact primeHeight_eq_under_of_isIntegral_of_hasGoingDown R S Q
+
+-- An actual normalization map suffices, even without finite type of the upstairs algebra.
+example (k A : Type) [Field k] [CommRing A] [IsDomain A] [Algebra k A]
+    (s : ℕ) (g : MvPolynomial (Fin s) k →ₐ[k] A)
+    (hinj : Function.Injective g) (hint : g.IsIntegral) (m : Ideal A) [m.IsMaximal] :
+    m.primeHeight = (s : ℕ∞) := by
+  fail_if_success
+    have : Algebra.FiniteType k A := inferInstance
+  fail_if_success
+    have : IsIntegrallyClosed A := inferInstance
+  exact normalization_primeHeight_eq_size k A s g hinj hint m
+
+-- No normality, characteristic-zero, or rational-closed-point condition is required.
+example (k A : Type) [Field k] [CommRing A] [IsDomain A] [Algebra k A]
+    [Algebra.FiniteType k A] (m : Ideal A) [m.IsMaximal] :
+    m.primeHeight = ((Algebra.trdeg k A).toNat : ℕ∞) ∧
+      m.height = ((Algebra.trdeg k A).toNat : ℕ∞) := by
+  fail_if_success
+    have : IsIntegrallyClosed A := inferInstance
+  fail_if_success
+    have : CharZero k := inferInstance
+  exact ⟨primeHeight_eq_trdeg_toNat_of_isMaximal k A m,
+    height_eq_trdeg_toNat_of_isMaximal k A m⟩
+
+example (k A : Type) [Field k] [CommRing A] [IsDomain A] [Algebra k A]
+    [Algebra.FiniteType k A] (m : Ideal A) [m.IsMaximal] :
+    ringKrullDim (Localization.AtPrime m) = ringKrullDim A :=
+  localization_dimension_eq_of_isMaximal k A m
+
+-- The actual stalk result is valid at every maximal ideal of the affine domain.
+example (k A : Type) [Field k] [CommRing A] [IsDomain A] [Algebra k A]
+    [Algebra.FiniteType k A] (p : PrimeSpectrum A) [p.asIdeal.IsMaximal] :
+    ringKrullDim ((Spec (CommRingCat.of A)).presheaf.stalk p) = ringKrullDim A :=
+  affine_stalk_dimension_of_isMaximal k A p
+
+-- Closedness suffices without supplying a separate maximal-ideal instance.
+example (k A : Type) [Field k] [CommRing A] [IsDomain A] [Algebra k A]
+    [Algebra.FiniteType k A] (p : PrimeSpectrum A)
+    (hp : IsClosed ({p} : Set (PrimeSpectrum A))) :
+    ringKrullDim ((Spec (CommRingCat.of A)).presheaf.stalk p) = ringKrullDim A :=
+  affine_stalk_dimension_of_isClosed k A p hp
+
+-- The scheme-order coheight is local dimension, not closed-carrier height.
+example (k A : Type) [Field k] [CommRing A] [IsDomain A] [Algebra k A]
+    [Algebra.FiniteType k A] (p : PrimeSpectrum A)
+    (hp : IsClosed ({p} : Set (PrimeSpectrum A))) :
+    Order.coheight (α := (Spec (CommRingCat.of A) : Scheme)) p =
+        ((Algebra.trdeg k A).toNat : ℕ∞) ∧
+      Order.height (α := (Spec (CommRingCat.of A) : Scheme)) p = 0 := by
+  refine ⟨affine_closedPoint_coheight_eq_trdeg k A p hp, ?_⟩
+  rw [spec_point_height_eq_prime_coheight]
+  exact Order.coheight_eq_zero.mpr
+    (PrimeSpectrum.isMax_iff.mpr ((PrimeSpectrum.isClosed_singleton_iff_isMaximal p).mp hp))
+
+-- The general local-ring theorem agrees with the earlier polynomial calculation.
+example (k : Type) [Field k] (n : ℕ) (m : Ideal (MvPolynomial (Fin n) k))
+    [m.IsMaximal] : ringKrullDim (Localization.AtPrime m) = (n : WithBot ℕ∞) := by
+  rw [localization_dimension_eq_of_isMaximal k (MvPolynomial (Fin n) k) m,
+    mvPolynomial_ringKrullDim_eq_card]
+
+-- The actual zero-variable stalk is still zero-dimensional through the general endpoint.
+example (k : Type) [Field k] (p : PrimeSpectrum (MvPolynomial (Fin 0) k))
+    [p.asIdeal.IsMaximal] :
+    ringKrullDim ((Spec (CommRingCat.of (MvPolynomial (Fin 0) k))).presheaf.stalk p) = 0 := by
+  rw [affine_stalk_dimension_of_isMaximal k (MvPolynomial (Fin 0) k) p,
+    mvPolynomial_ringKrullDim_eq_card]
+  rfl
+
+-- Actual evaluation is integral but not injective, and going down fails.
+example (k : Type) [Field k] :
+    letI : Algebra (Polynomial k) k := (Polynomial.evalRingHom (0 : k)).toAlgebra
+    Algebra.IsIntegral (Polynomial k) k ∧ ¬ Algebra.HasGoingDown (Polynomial k) k := by
+  letI : Algebra (Polynomial k) k := (Polynomial.evalRingHom (0 : k)).toAlgebra
+  have he : Function.Surjective (algebraMap (Polynomial k) k) := by
+    intro a
+    exact ⟨Polynomial.C a, by simp [RingHom.algebraMap_toAlgebra]⟩
+  refine ⟨Algebra.isIntegral_of_surjective he, ?_⟩
+  intro hdown
+  letI := hdown
+  letI : (⊥ : Ideal (Polynomial k)).IsPrime := Ideal.bot_prime
+  letI : (⊥ : Ideal k).IsPrime := Ideal.bot_prime
+  have hX : Polynomial.X ∈ (⊥ : Ideal k).under (Polynomial k) := by
+    change Polynomial.evalRingHom (0 : k) Polynomial.X ∈ (⊥ : Ideal k)
+    simp
+  have hlt : (⊥ : Ideal (Polynomial k)) < (⊥ : Ideal k).under (Polynomial k) := by
+    apply bot_lt_iff_ne_bot.mpr
+    intro heq
+    rw [heq, Ideal.mem_bot] at hX
+    exact Polynomial.X_ne_zero hX
+  obtain ⟨P, hP, hp, hlie⟩ :=
+    Algebra.HasGoingDown.exists_ideal_le_liesOver_of_lt (p := (⊥ : Ideal (Polynomial k)))
+      (⊥ : Ideal k) hlt
+  have hPbot : P = ⊥ := le_bot_iff.mp hP
+  subst P
+  rw [← hlie.over, Ideal.mem_bot] at hX
+  exact Polynomial.X_ne_zero hX
+
+end NormalGoingDownLocalDimensionRegressions

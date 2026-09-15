@@ -51,6 +51,11 @@ import HodgeConjecture.Cycles.AffineSupportDimension
 import HodgeConjecture.Cycles.PolynomialPrimeHeight
 import HodgeConjecture.Cycles.PolynomialMaximalHeight
 import HodgeConjecture.Cycles.PolynomialClosedPointDimension
+import HodgeConjecture.CommutativeAlgebra.IntegralIdealPolynomial
+import HodgeConjecture.CommutativeAlgebra.MonicPrimeCoefficients
+import HodgeConjecture.CommutativeAlgebra.NormalGoingDown
+import HodgeConjecture.Cycles.NormalizationLocalDimension
+import HodgeConjecture.Cycles.AffineClosedPointDimension
 import HodgeConjecture.Correspondence.TransposeAlgebra
 import HodgeConjecture.Correspondence.ProjectorDefect
 import HodgeConjecture.Correspondence.ProjectorLift
@@ -134,6 +139,10 @@ Chow/cohomological realization:
 34. actual constant-polynomial prime extension and its strict step below
     every maximal ideal, giving full polynomial maximal height and actual
     maximal-localization and closed-point stalk dimension over any field.
+35. ideal-controlled monic annihilators and normal-base going down for
+    actual integral injections of domains, giving prime-height comparison
+    through Noether normalization and full maximal-localization and
+    closed-point stalk dimension for every finite-type domain over a field.
 
 The free span algebra is not identified with a Chow ring. General proper
 cycle extraction, flat/Gysin operations and their rational-equivalence
@@ -143,6 +152,6 @@ admissible system). The constructed closed-pushforward quotient is additive;
 it does not supply Chow convolution or its target realization.
 The higher-dimensional finite-type dimension-function construction still
 needs the immediate-specialization dimension formula; finite-dimensionality,
-strict monotonicity, polynomial maximal height and the global affine
-dimension equality do not supply that law or the uniform maximal-chain theorem.
+strict monotonicity and the affine global/maximal-local dimension
+equalities do not supply that law or the uniform maximal-chain theorem.
 -/

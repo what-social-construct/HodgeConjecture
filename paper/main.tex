@@ -1794,6 +1794,56 @@ dimension equal to the prime height. The point-coheight comparison
 then gives the scheme formula.
 \end{proof}
 
+\begin{proposition}[Normal-base going down and maximal local dimensions --- \formal]
+\label{prop:normalization-local-dimension}
+Let \(R\hookrightarrow S\) be an integral injection of domains,
+with \(R\) integrally closed in its fraction field.
+The inclusion satisfies going down \cite{StacksNormalGoingDown},
+and every prime \(\mathfrak Q\subset S\) satisfies
+\[
+  \operatorname{ht}(\mathfrak Q)
+    =\operatorname{ht}(\mathfrak Q\cap R).
+\]
+No finiteness or Noetherian hypothesis is required for this statement.
+
+Let \(k\) be a field and let \(A\) be a finite-type \(k\)-algebra
+that is a domain. For every maximal ideal \(\mathfrak m\subset A\),
+\[
+  \operatorname{ht}(\mathfrak m)
+    =\dim A_{\mathfrak m}
+    =\dim A
+    =\operatorname{trdeg}_k\operatorname{Frac}(A).
+\]
+This gives the maximal-local conclusion of
+\cite{StacksAffineDimensionTranscendenceDegree}, complementing
+Proposition~\ref{prop:affine-dimension}.
+For \(X=\Spec A\) and every actual closed point \(x\),
+\[
+  \dim\mathcal O_{X,x}=\operatorname{coht}_X(x)=\dim A.
+\]
+The algebra \(A\) need not be normal, and the closed point need not
+be rational over \(k\).
+\end{proposition}
+
+\begin{proof}
+A finite witness for membership in an extended ideal lies in a finite
+integral subalgebra. The determinant trick gives a monic annihilator
+with coefficients in the required powers of the original ideal.
+Normal-base minimal-polynomial divisibility and reduction modulo a
+prime give the scalar-cancellation step; a prime disjoint from the
+resulting multiplicative set gives the actual going-down lift.
+Integral incomparability contracts strict prime chains, while going
+down lifts chains to a prescribed terminal prime. These prove the
+height equality.
+Apply it to the actual polynomial injection supplied by Noether
+normalization. Its base is normal, its maximal contractions are
+maximal, and Proposition~\ref{prop:polynomial-maximal-height} computes
+their heights. The normalization variable count equals the finite
+transcendence degree by Proposition~\ref{prop:affine-dimension}.
+Actual localization and stalk height comparisons give the remaining
+equalities.
+\end{proof}
+
 For smooth projective schemes over a fixed field \(k\), composition of rational Chow
 correspondences is associative and bilinear
 \cite{StacksChowCorrespondenceComposition}, while graph classes compose
@@ -2003,6 +2053,25 @@ The actual stalk and coheight endpoints are
 \leanpath{mvPolynomial_stalk_dimension_of_isClosed} and
 \leanpath{mvPolynomial_closedPoint_coheight} in
 \leanpath{Cycles/PolynomialClosedPointDimension.lean}.
+Proposition~\ref{prop:normalization-local-dimension} uses
+\leanpath{exists_monic_annihilator_coeff_mem_pow_of_mem_map} in
+\leanpath{CommutativeAlgebra/IntegralIdealPolynomial.lean} and
+\leanpath{coeff_mem_prime_of_monic_dvd_scaled} in
+\leanpath{CommutativeAlgebra/MonicPrimeCoefficients.lean}.
+The cancellation theorem and constructed going-down property are
+\leanpath{mem_prime_of_mul_mem_map_of_isIntegrallyClosed} and
+\leanpath{hasGoingDown_of_isIntegrallyClosed} in
+\leanpath{CommutativeAlgebra/NormalGoingDown.lean}.
+The prime-height comparison, \leanpath{normalization_primeHeight_eq_size},
+\leanpath{height_eq_trdeg_toNat_of_isMaximal}, and
+\leanpath{localization_dimension_eq_of_isMaximal} are in
+\leanpath{Cycles/NormalizationLocalDimension.lean}.
+The existing \leanpath{NormalizationInertia.primeHeight_under_le_of_hasGoingDown}
+supplies the chain-lifting inequality.
+The actual closed-point endpoints are
+\leanpath{affine_stalk_dimension_of_isClosed} and
+\leanpath{affine_closedPoint_coheight_eq_trdeg} in
+\leanpath{Cycles/AffineClosedPointDimension.lean}.
 \end{leanfiles}
 
 \begin{statusnote}{\openstatus}
@@ -2047,16 +2116,18 @@ affine point-closure dimensions with residue-field transcendence degrees.
 Proposition~\ref{prop:polynomial-maximal-height} computes the full
 height of every polynomial maximal ideal and the actual closed-point
 stalk dimension, without a rational-point assumption.
+Proposition~\ref{prop:normalization-local-dimension} constructs normal-base
+going down and transfers that maximal-local equality through actual
+normalization to every finite-type domain and its closed-point stalks.
 The general field-based dimension-function construction
 \(\delta_k(x)=\operatorname{trdeg}_k\kappa(x)
   =\dim\overline{\{x\}}\), including its immediate-specialization
 law and passage from affine charts to the intended scheme, remains the
 grading obligation \cite{StacksAlgebraicSchemeDimension}.
 Neither finite dimension nor the affine dimension equality alone
-proves that unit-step law. Extending maximal-local dimension equality
-from polynomial algebras to arbitrary finite-type domains, including
-the required going-down height comparison for a normal base, remains
-to be done. No regular-local or uniform-chain theorem is claimed here.
+proves that unit-step law. The maximal-local equality does not yet
+provide the required height comparison for every consecutive prime
+pair. No regular-local or uniform-chain theorem is claimed here.
 The comparison between codimension \(p\) and
 homological degree \(d-p\) on the intended pure-dimensional target
 also remains to be proved.
@@ -3315,6 +3386,16 @@ Polynomial maximal heights and actual closed-point stalks (\formal) &
 \leanpath{Cycles/PolynomialPrimeHeight.lean}\newline
 \leanpath{Cycles/PolynomialMaximalHeight.lean}\newline
 \leanpath{Cycles/PolynomialClosedPointDimension.lean}\\
+Normal-base going down and affine maximal local dimensions (\formal) &
+\leanpath{hasGoingDown_of_isIntegrallyClosed}\newline
+\leanpath{normalization_primeHeight_eq_size}\newline
+\leanpath{localization_dimension_eq_of_isMaximal}\newline
+\leanpath{affine_stalk_dimension_of_isClosed}\newline
+\leanpath{CommutativeAlgebra/IntegralIdealPolynomial.lean}\newline
+\leanpath{CommutativeAlgebra/MonicPrimeCoefficients.lean}\newline
+\leanpath{CommutativeAlgebra/NormalGoingDown.lean}\newline
+\leanpath{Cycles/NormalizationLocalDimension.lean}\newline
+\leanpath{Cycles/AffineClosedPointDimension.lean}\\
 Compactified graph route (\formal; \conditional) &
 \leanpath{groupAlgebraProjectorExtension}\newline
 \leanpath{Boundary/CompactifiedGraphProjector.lean}\\
