@@ -907,20 +907,46 @@ under arbitrary actual open immersions over the field. No ambient
 affineness, quasi-compactness, integrality or global dimension bound is
 assumed.
 
-**The next bounded goal is the global point-height and carrier-dimension
-comparison.** The two dimension-function laws alone allow additive shifts
-and do not identify absolute height. Use the constructed function's
-nonnegative finite values and strictness for the upper height bound.
-For the lower bound, choose one actual affine chart through the point,
-use its finite point height and the proved affine normalization, and
-transport height monotonically through the actual chart point map.
-Then reuse the existing point-closure and integral-carrier height
-identifications. This is a planned proof, not a new hypothesis or a
-claim of unrestricted open-immersion invariance of absolute point height.
-Matching dimension grading with codimension \(p\) via
-\(d-p\) also needs the intended integral or pure-dimensional geometric
-setting; it is not asserted uniformly on schemes with components of
-different dimensions. Rational coefficient extension of this general
+### Global point height and actual carrier dimension
+
+A11al / SP53 proves the comparison in `Cycles/FieldSupportDimension.lean`:
+\[
+ h_X(x)=\delta_{X/k}(x)=\dim\overline{\{x\}}<\infty.
+\]
+Here height uses the scheme's closure-inclusion point order, and the
+closure is the existing actual reduced closed carrier. Nonnegative
+strictness bounds height above by the finite dimension value. One actual
+affine chart, its finite point height and the affine normalization supply
+the lower bound through the actual open embedding's strict point map.
+Thus the comparison uses the normalization, not just the two abstract
+dimension-function laws, which would allow additive shifts.
+The equalities retain the full extended height/dimension types before
+integer conversion. No global dimension bound, affineness,
+quasi-compactness, integrality or Noetherian premise on \(X\) is needed.
+
+For every existing integral closed carrier \(W\), the support degree is
+its actual finite dimension. For \(n\in\mathbb N\) and nontrivial
+coefficient semiring \(R\), its existing fundamental cycle belongs to
+degree \(n\) exactly when \(\dim W=n\). Actual open immersions over
+the field preserve point height in this locally finite-type setting;
+no unrestricted assertion about arbitrary schemes is made.
+
+**The next bounded goal is the integral codimension/degree formula.**
+First take actual integral \(X\) and put \(d=\delta_{X/k}(\eta_X)\).
+Prove finite actual chain codimension and
+\[
+ \operatorname{codim}_X W+\deg_{\delta_{X/k}}W=d,
+\]
+then identify codimension \(p\) with degree \(d-p\). The generic-point
+height comparison makes the integral scheme finite-dimensional. Finite
+point coheight and the already proved unit-step law give a route by
+induction on coheight, without a new catenarity or uniform-chain input.
+This formula and the corresponding reindexing remain to be proved.
+An extension to reducible schemes must use an actual pure-dimensional
+hypothesis or componentwise grading; even smooth schemes may have
+components of different dimensions. The existing finite-cycle quotient's
+Noetherian premise is not removed by these pointwise comparisons.
+Rational coefficient extension of this general
 integral quotient and comparison with the target's rational Chow groups
 also remain; the earlier finite-split scalar-extension theorem is not
 silently promoted to this general setting. General proper pushforward requires its

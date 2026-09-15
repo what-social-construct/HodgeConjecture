@@ -2221,6 +2221,50 @@ Proposition~\ref{prop:structural-affine-value}; open compatibility
 follows from the structural residue-field algebra equivalence.
 \end{proof}
 
+\begin{proposition}[Global point heights and geometric carrier degrees --- \formal]
+\label{prop:global-field-carrier-dimension}
+Let \(k\) be a field and let \(p:X\to\Spec k\) be locally of
+finite type. Every actual point height is finite, and
+\[
+  \delta_{X/k}(x)=h_X(x)=\dim\overline{\{x\}}.
+\]
+Here the closure has its actual reduced induced scheme structure.
+For every actual integral closed carrier
+\(W\in\operatorname{IntSub}(X)\), its dimension is finite and
+\[
+  \deg_{\delta_{X/k}}(W)=\dim W.
+\]
+This is the field-base cycle-dimension comparison of
+\cite{StacksCycleDimensionComparison}; compare also
+\cite{StacksAlgebraicSchemeDimension}.
+For \(n\in\mathbf N\) and a nontrivial semiring \(R\), the existing
+fundamental cycle satisfies
+\[
+  [W]\in Z^{\delta_{X/k}}_{\mathrm{fin},n}(X;R)
+    \quad\Longleftrightarrow\quad\dim W=n.
+\]
+For an open immersion \(i:U\to X\), with structural map
+\(p\circ i\), actual point heights therefore satisfy
+\(h_U(u)=h_X(i(u))\).
+No affineness, quasi-compactness, ambient integrality or reducedness,
+or global dimension bound on \(X\) is assumed.
+\end{proposition}
+
+\begin{proof}
+Nonnegativity and strict increase of the constructed dimension function
+bound the length of every chain below a selected point by its residue
+degree, giving the upper height bound. Choose one actual affine chart
+through that point. Its existing affine normalization identifies height
+with the same residue degree, and the strict point map of the chart
+gives the reverse height inequality.
+The existing actual point-closure and integral-carrier comparisons
+identify these heights with the corresponding dimensions. The existing
+homogeneous-cycle membership criterion gives the fundamental-cycle test.
+Finally, the open-value compatibility of
+Proposition~\ref{prop:global-field-dimension-function} gives the stated
+height equality over \(k\).
+\end{proof}
+
 For smooth projective schemes over a fixed field \(k\), composition of rational Chow
 correspondences is associative and bilinear
 \cite{StacksChowCorrespondenceComposition}, while graph classes compose
@@ -2552,6 +2596,17 @@ Its evaluation and comparison theorems are
 \leanpath{DimensionFunction.ofLocallyOfFiniteType_nonneg},
 \leanpath{DimensionFunction.ofLocallyOfFiniteType_eq_ofAffineLocallyOfFiniteType}, and
 \leanpath{DimensionFunction.ofLocallyOfFiniteType_apply_of_isOpenImmersion}.
+Proposition~\ref{prop:global-field-carrier-dimension} is in
+\leanpath{Cycles/FieldSupportDimension.lean}, under
+\leanpath{point_height_eq_ofLocallyOfFiniteType},
+\leanpath{point_height_ne_top_of_locallyOfFiniteType},
+\leanpath{DimensionFunction.ofLocallyOfFiniteType_eq_pointHeight}, and
+\leanpath{pointSupport_dimension_eq_ofLocallyOfFiniteType}.
+The existing carrier and cycle tests are
+\leanpath{supportDegree_ofLocallyOfFiniteType_eq_iff} and
+\leanpath{fundamentalCycle_mem_ofLocallyOfFiniteType_iff};
+qualified open-height invariance is
+\leanpath{point_height_eq_of_isOpenImmersion_of_locallyOfFiniteType}.
 \end{leanfiles}
 
 \begin{statusnote}{\openstatus}
@@ -2636,16 +2691,19 @@ proves the common-chart strictness and immediate-specialization laws
 and constructs the global \(\delta_{X/k}\). Its affine specialization
 is the existing dimension-function object, and its values are compatible
 with all open immersions over the structural field.
-The next comparison identifies this global grading with actual
-point-closure and integral-carrier dimensions
-\cite{StacksAlgebraicSchemeDimension}. No such global dimension
-identification, regular-local or uniform-chain theorem, or reducible
-version of the global prime formula is claimed here.
+Proposition~\ref{prop:global-field-carrier-dimension} identifies this
+global grading with finite actual point heights, reduced point-closure
+dimensions and integral-carrier dimensions. It proves the existing
+fundamental-cycle dimension test and the qualified open-height
+invariance over the structural field.
+The next comparison proves that actual chain codimension plus carrier
+degree equals the generic degree on an integral target, before converting
+codimension \(p\) to homological degree \(d-p\) on a pure-dimensional
+target or componentwise. No uniform shift across mixed-dimensional
+components, regular-local or uniform-chain theorem, or reducible version
+of the global prime formula is claimed here.
 The unit drop in residue degrees does not assert that ambient stalk
 dimensions rise by one on arbitrary reducible schemes.
-The comparison between codimension \(p\) and
-homological degree \(d-p\) on the intended pure-dimensional target
-also remains to be proved.
 General-open restriction of rational functions, divisors and relations
 still needs to be constructed on this quotient for the graph-restriction
 route; the inverse-isomorphism case alone does not supply it.
@@ -3975,6 +4033,12 @@ Constructed global dimension function over a field (\formal) &
 Affine equality and open-value invariance
 (Proposition~\ref{prop:global-field-dimension-function})\newline
 \leanpath{Cycles/FieldDimensionFunction.lean}\\
+Global point heights and geometric carrier degrees (\formal) &
+\leanpath{point_height_eq_ofLocallyOfFiniteType}\newline
+\leanpath{supportDegree_ofLocallyOfFiniteType_eq_iff}\newline
+Fundamental-cycle dimension test and qualified open-height invariance
+(Proposition~\ref{prop:global-field-carrier-dimension})\newline
+\leanpath{Cycles/FieldSupportDimension.lean}\\
 Compactified graph route (\formal; \conditional) &
 \leanpath{groupAlgebraProjectorExtension}\newline
 \leanpath{Boundary/CompactifiedGraphProjector.lean}\\

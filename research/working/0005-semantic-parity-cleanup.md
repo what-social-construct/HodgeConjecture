@@ -57,7 +57,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 
 ## Canonical semantic object and TeX registry
 
-### Construction and input checkpoints (SP17--SP52)
+### Construction and input checkpoints (SP17--SP53)
 
 | ID | Object or overlap | Disposition | Required action | Status |
 | --- | --- | --- | --- | --- |
@@ -97,6 +97,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 | SP50 | Structural residue-degree values on arbitrary affine schemes | IDENTIFY / COMPARE | Extract the actual finite-type sections algebra and retain its structural-map equality. Use the canonical affine isomorphism and SP49's base-compatible residue map to prove finiteness and identify the existing dimension value, then compare values under affine open immersions. Reuse the exposed point-height isomorphism theorem. | PROVED; FULL BUILD, 484 AXIOM REPORTS, THIRTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP51 | Pointwise residue degrees and affine-chart value agreement | PROVE / COMPARE | Use one actual affine-cover preimage to prove finite structural residue degree on a general locally finite-type scheme. Compare each existing affine-chart value with its ambient residue degree, and compare two chart values at equal actual ambient images. | PROVED; FULL BUILD, 487 AXIOM REPORTS, TEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP52 | Global structural residue-degree dimension function | CONSTRUCT / COMPARE | Put specialization pairs in a common actual affine open, transfer strictness and the cover law, and construct the global function. Prove nonnegativity, equality with the existing affine object and value compatibility under arbitrary open immersions. Keep global height/carrier dimension and target codimension comparison separate. | PROVED; FULL BUILD, 493 AXIOM REPORTS, FOURTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP53 | Global point height and actual integral-carrier dimension | IDENTIFY / COMPARE | Bound height above by nonnegative strict grading and below by one actual affine chart. Identify the global function with finite height and actual point-closure dimension; derive carrier-degree and fundamental-cycle criteria and qualified open-height invariance. Keep integral codimension conversion separate. | PROVED; FULL BUILD, 500 AXIOM REPORTS, FOURTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -780,6 +781,38 @@ equal to the existing affine construction when the scheme is affine.
 The next bounded checkpoint is global point-height and carrier-dimension
 identification; target codimension conversion and further realization
 remain separate.
+
+SP53 validation (2026-09-15): the leaf module and final full 3131-job
+Lean build pass, with only the two existing `Challenge` warnings.
+The six primary proof-dependency assertions and two supporting reports
+pass. The independent leaf audit checks seven public axiom reports and
+eight regressions without diagnostics; every new endpoint uses exactly
+`propext`, `Classical.choice` and `Quot.sound`. The exact-original-four-
+import replay passes seven checks and fourteen regressions, including
+scope guards against affine, compact, Noetherian, integral and
+preinstalled-algebra assumptions; full extended height and closure
+dimension; carrier-degree and cycle-homogeneity criteria; negative
+degrees and trivial coefficients; qualified open-height invariance;
+the empty scheme; and the actual noncompact countable coproduct with
+pointwise finite heights. Earlier verification content and imports are
+unchanged. Independent mathematical and cross-document reviews pass.
+The single PDF builds to 57 pages with a clean final log. Proposition
+6.26 and its proof on pages 27--28, module/status pages 31--32 and the
+theorem-map row on page 50 were visually inspected. Existing sources
+0A21, 02QO and 02QM are rechecked in their exact field-base scope, with
+no source axiom or bibliography change. Submission wrappers and
+dependency pins are unchanged; diff checks pass. The final integrated
+`research/Verification.lean` run passes all 608 declaration checks and
+383 examples without warnings or errors. All 500 selected axiom reports
+were captured and compared with the exact declaration inventory, with
+no missing, unexpected or duplicate reports and no unpermitted axioms.
+The existing `polynomialDimensionBound` is axiom-free;
+`genericFiber_isScalarTower_base` uses only `propext` and `Quot.sound`;
+the other 498 reports use exactly the standard three.
+The checkpoint introduces no new grading, carrier, scalar action,
+cycle module, Chow quotient or projector. The next bounded theorem is
+finite chain codimension plus support degree equals generic degree for
+actual integral schemes, before the intended target reindexing.
 
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
@@ -1594,7 +1627,8 @@ SP50 below proves the arbitrary structural affine value comparison and
 affine-open value agreement. SP51 adds pointwise finiteness and affine-chart
 value agreement in a general ambient scheme. SP52 below transfers the
 common-chart order and cover laws and constructs the global function.
-Its global height/carrier dimension identification remains separate.
+SP53 below identifies its values with global point height and actual
+closure/carrier dimension.
 
 ### Structural and affine residue-field comparison (SP49)
 
@@ -1635,9 +1669,9 @@ SP50 below identifies `ofAffineLocallyOfFiniteType` on an arbitrary affine
 structural \(X\) with its actual structural residue degree and proves
 affine-open value agreement. SP51 adds pointwise finiteness and affine-chart
 value agreement in a general ambient scheme. SP52 below constructs the
-global function using the common-chart order and cover laws. Global
-height/carrier dimension, target codimension conversion and further
-realization remain separate comparisons.
+global function using the common-chart order and cover laws. SP53 below
+identifies global point height and closure/carrier dimension. Target
+codimension conversion and further realization remain separate.
 
 ### Structural residue-degree values on actual affine schemes (SP50)
 
@@ -1671,9 +1705,9 @@ source instance follows by composition with the actual open immersion.
 SP51 below proves pointwise structural residue-degree finiteness and
 affine-chart value agreement in a general locally finite-type ambient
 scheme. SP52 transfers the common-chart order and cover laws to construct
-the global dimension function. Its global height/carrier dimension
-comparison, target codimension conversion and further realization remain
-open.
+the global dimension function. SP53 below identifies its values with
+global point height and actual closure/carrier dimension. Target
+codimension conversion and further realization remain open.
 
 ### Pointwise residue degrees and affine-chart values (SP51)
 
@@ -1739,15 +1773,57 @@ needed. No supplied dimension-function or gluing hypothesis, new point
 order, global algebra instance, residue carrier, cycle module, Chow
 quotient or projector is introduced.
 
-The next bounded checkpoint is to identify the constructed global values
-with actual point height and the existing closure/carrier dimension.
-Strictness and the nonnegative finite normalization provide an upper
-height bound. An actual affine chart, its finite point height and the
-affine normalization provide the lower bound via the chart point map.
-The two defining laws alone allow additive shifts, so this comparison
-is not inferred from those laws alone. Target codimension conversion in
-the intended pure-dimensional geometry and further realization remain
-separate obligations.
+SP53 below identifies these global values with actual point height and
+the existing closure/carrier dimension, using both the strictness and
+the affine normalization. The two defining laws alone allow additive
+shifts, so the comparison is not inferred from those laws alone. Target
+codimension conversion and further realization remain separate.
+
+### Global point height and actual carrier dimension (SP53)
+
+Keep the same \(\delta_{X/k}\), actual point height \(h_X(x)\),
+scheme residue field \(\kappa_X(x)\) and existing integral closed
+carrier \(W\). These are comparisons of existing objects, not new
+gradings or replacement carrier types.
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `point_height_eq_ofLocallyOfFiniteType` | literal extended point height equals the finite structural value | $h_X(x)=\delta_{X/k}(x)$ in $\mathbb N\cup\{\infty\}$ |
+| `point_height_ne_top_of_locallyOfFiniteType` | pointwise finite height without a global dimension bound | $h_X(x)<\infty$ |
+| `DimensionFunction.ofLocallyOfFiniteType_eq_pointHeight` | the existing global function equals integer point height | $\delta_{X/k}(x)=h_X(x)\in\mathbb Z$ |
+| `pointSupport_dimension_eq_ofLocallyOfFiniteType` | dimension of the actual reduced point-closure carrier | $\dim\overline{\{x\}}=\delta_{X/k}(x)$ |
+| `supportDegree_ofLocallyOfFiniteType_eq_iff` | the existing support degree detects actual carrier dimension | $\deg_{\delta_{X/k}}W=n\iff\dim W=n$, $n\in\mathbb N$ |
+| `fundamentalCycle_mem_ofLocallyOfFiniteType_iff` | existing homogeneous fundamental cycles detect actual dimension | $[W]\in Z^{\delta_{X/k}}_{\mathrm{fin},n}(X;R)\iff\dim W=n$, for nontrivial $R$ |
+| `point_height_eq_of_isOpenImmersion_of_locallyOfFiniteType` | open immersions over the field preserve actual point height in the stated setting | $h_U(u)=h_X(i(u))$, for locally finite-type $X/k$ and open $i:U\to X$ |
+
+All seven endpoints are in `Cycles/FieldSupportDimension.lean`.
+Nonnegative strictness of the constructed function gives the upper height
+bound by a strictly increasing natural-valued map. One actual affine
+neighbourhood provides the lower bound: the existing affine function is
+literal finite chart height, SP52 compares its value with the ambient
+function, and the actual open embedding has a strict point map. The
+proof fixes the open scheme's specialization order explicitly; it does
+not identify that order with a subtype instance by fiat. The full extended
+height equality is proved before any finite-height conversion. Reusing
+the existing actual point-closure and generic-point carrier comparisons
+then gives the geometric grading criteria. Ambient affineness,
+quasi-compactness, Noetherianity, integrality, nonemptiness and a global
+dimension bound are not premises. Nontriviality of coefficients is
+retained for the fundamental-cycle converse. No new scalar action,
+dimension function, carrier, cycle module, Chow quotient or projector
+is introduced.
+
+The next bounded goal is the integral codimension/degree formula. For
+actual integral \(X\), put \(d=\delta_{X/k}(\eta_X)\) and prove
+finite actual chain codimension and
+\(\operatorname{codim}_X W+\deg_{\delta_{X/k}}W=d\).
+The generic-point height comparison gives finite integral ambient
+dimension, enabling induction on coheight using the existing unit-step
+law. Then reindex codimension \(p\) as degree \(d-p\). A later
+reducible extension must use actual pure-dimensional geometry or
+componentwise grading; smoothness alone does not supply one uniform
+dimension. The current quotient's Noetherian premise, general rational
+coefficient extension and target realization remain separate obligations.
 
 ## Objects deliberately assigned no independent notation
 

@@ -587,15 +587,29 @@ be developed alongside that infrastructure.
    immersions over the field. No affine, quasi-compact or integral
    ambient premise or supplied gluing package is used.
 
-   **Next bounded obligation:** identify these global values with actual
-   point height and then existing closure/carrier dimension. Strictness
-   and nonnegative finite values give the upper height bound; one actual
-   affine chart, its finite point height and the affine normalization
-   give the lower bound. The two defining laws alone do not fix an
-   additive normalization. After this comparison, identify dimension
-   grading with target codimension grading in the intended integral or
-   pure-dimensional setting; a uniform \(d-p\) shift is not asserted
-   on mixed-dimensional schemes. Construct rational coefficient extension of this
+   **Global height/carrier checkpoint (A11al / SP53):**
+   `FieldSupportDimension.lean` identifies the constructed function with
+   actual point height and reduced point-closure dimension. Nonnegative
+   strictness supplies the upper bound; one actual affine chart, finite
+   affine height and the proved normalization supply the lower bound.
+   Each point height and each integral closed carrier dimension is finite
+   without a global bound, quasi-compactness or Noetherianity of \(X\).
+   The existing support degree is its actual carrier dimension, and
+   fundamental-cycle membership in natural degree \(n\) is equivalent
+   to dimension \(n\) for nontrivial coefficients. Actual open immersions
+   preserve point height in this locally finite-type field setting.
+
+   **Next bounded obligation:** start with actual integral \(X\), set
+   \(d=\delta_{X/k}(\eta_X)\), and prove finite chain codimension and
+   \(\operatorname{codim}_X W+\deg_{\delta_{X/k}}W=d\).
+   The generic-point height comparison gives finite integral ambient
+   dimension; induction on finite coheight using the existing unit-step
+   law provides a route without a supplied uniform-chain theorem.
+   Then identify codimension \(p\) with degree \(d-p\) in the existing
+   cycle grading. A pure-dimensional or componentwise extension is needed
+   for reducible targets; smoothness alone does not make all connected
+   components have the same dimension. The current integral quotient's
+   Noetherian premise is retained. Construct rational coefficient extension of this
    general integral quotient and the comparison with the target's rational
    Chow groups; the earlier split-case scalar extension is not that theorem.
    General proper pushforward still needs its norm

@@ -72,6 +72,7 @@ import HodgeConjecture.Cycles.AffineResidueFieldDimension
 import HodgeConjecture.Cycles.AffineSchemeResidueDegree
 import HodgeConjecture.Cycles.ChartResidueDegree
 import HodgeConjecture.Cycles.FieldDimensionFunction
+import HodgeConjecture.Cycles.FieldSupportDimension
 import HodgeConjecture.Correspondence.TransposeAlgebra
 import HodgeConjecture.Correspondence.ProjectorDefect
 import HodgeConjecture.Correspondence.ProjectorLift
@@ -192,6 +193,10 @@ Chow/cohomological realization:
     locally of finite type over a field, with both specialization laws
     proved in a common actual affine chart, equality to the existing
     affine construction and value compatibility under open immersions.
+44. identification of the global dimension function with actual finite
+    point height and reduced point-closure dimension, actual integral
+    carrier degrees and fundamental-cycle homogeneity, and point-height
+    invariance under open immersions in the locally finite-type field setting.
 
 The free span algebra is not identified with a Chow ring. General proper
 cycle extraction, flat/Gysin operations and their rational-equivalence
@@ -206,6 +211,7 @@ affine schemes and their agreement under affine open immersions. Pointwise
 finiteness and affine-chart value agreement in a general locally finite-type
 ambient scheme are also proved. Common-chart specialization and cover-law
 transfer now construct the global field-induced dimension function.
-Its global point-height and carrier-dimension identification and the
-target codimension grading remain separate comparisons.
+Its values are now identified with actual point height and carrier
+dimension, without a global dimension bound. Target codimension grading
+in the intended integral or pure-dimensional geometry remains separate.
 -/

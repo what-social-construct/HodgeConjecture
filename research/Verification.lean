@@ -4776,3 +4776,178 @@ example (k : Type) [Field k] :
     ⟨DimensionFunction.ofLocallyOfFiniteType k X p⟩⟩
 
 end FieldDimensionFunctionRegressions
+
+-- SP53: global point height, actual support dimension and existing finite-cycle grading.
+#check HodgeConjecture.SchemeCycles.point_height_eq_ofLocallyOfFiniteType
+#check HodgeConjecture.SchemeCycles.point_height_ne_top_of_locallyOfFiniteType
+#check HodgeConjecture.SchemeCycles.DimensionFunction.ofLocallyOfFiniteType_eq_pointHeight
+#check HodgeConjecture.SchemeCycles.pointSupport_dimension_eq_ofLocallyOfFiniteType
+#check HodgeConjecture.SchemeCycles.supportDegree_ofLocallyOfFiniteType_eq_iff
+#check HodgeConjecture.SchemeCycles.fundamentalCycle_mem_ofLocallyOfFiniteType_iff
+#check HodgeConjecture.SchemeCycles.point_height_eq_of_isOpenImmersion_of_locallyOfFiniteType
+
+#print axioms HodgeConjecture.SchemeCycles.point_height_eq_ofLocallyOfFiniteType
+#print axioms HodgeConjecture.SchemeCycles.point_height_ne_top_of_locallyOfFiniteType
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.ofLocallyOfFiniteType_eq_pointHeight
+#print axioms HodgeConjecture.SchemeCycles.pointSupport_dimension_eq_ofLocallyOfFiniteType
+#print axioms HodgeConjecture.SchemeCycles.supportDegree_ofLocallyOfFiniteType_eq_iff
+#print axioms HodgeConjecture.SchemeCycles.fundamentalCycle_mem_ofLocallyOfFiniteType_iff
+#print axioms HodgeConjecture.SchemeCycles.point_height_eq_of_isOpenImmersion_of_locallyOfFiniteType
+
+noncomputable section FieldSupportDimensionRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory CategoryTheory.Limits TopologicalSpace
+open HodgeConjecture.SchemeCycles
+
+-- The pointwise comparison imposes no affine or global finiteness hypothesis.
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] (x : X) :
+    letI := residueFieldBaseAlgebra k p x
+    Order.height x = ((Algebra.trdeg k (X.residueField x)).toNat : ℕ∞) := by
+  fail_if_success
+    have : IsAffine X := inferInstance
+  fail_if_success
+    have : CompactSpace X := inferInstance
+  fail_if_success
+    have : IsNoetherian X := inferInstance
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  fail_if_success
+    have : Algebra k (X.residueField x) := inferInstance
+  simpa only [DimensionFunction.ofLocallyOfFiniteType_apply, Int.toNat_natCast] using
+    point_height_eq_ofLocallyOfFiniteType k X p x
+
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] (x : X) :
+    Order.height x ≠ ⊤ :=
+  point_height_ne_top_of_locallyOfFiniteType k X p x
+
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] (x : X) :
+    DimensionFunction.ofLocallyOfFiniteType k X p x = ((Order.height x).toNat : ℤ) :=
+  DimensionFunction.ofLocallyOfFiniteType_eq_pointHeight k X p x
+
+-- The carrier is the existing actual reduced closure, not a new dimension label.
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] (x : X) :
+    letI := residueFieldBaseAlgebra k p x
+    topologicalKrullDim (pointSupport X x).val.subscheme =
+      ((Algebra.trdeg k (X.residueField x)).toNat : WithBot ℕ∞) := by
+  simpa only [DimensionFunction.ofLocallyOfFiniteType_apply, Int.toNat_natCast] using
+    pointSupport_dimension_eq_ofLocallyOfFiniteType k X p x
+
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (W : IntegralClosedSubscheme X) (n : ℕ) :
+    supportDegree (DimensionFunction.ofLocallyOfFiniteType k X p) W = (n : ℤ) ↔
+      topologicalKrullDim W.val.subscheme = (n : WithBot ℕ∞) :=
+  supportDegree_ofLocallyOfFiniteType_eq_iff k X p W n
+
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (R : Type) [Semiring R] [Nontrivial R] (W : IntegralClosedSubscheme X) (n : ℕ) :
+    fundamentalCycle R W ∈ cyclesOfDegree R (DimensionFunction.ofLocallyOfFiniteType k X p) n ↔
+      topologicalKrullDim W.val.subscheme = (n : WithBot ℕ∞) :=
+  fundamentalCycle_mem_ofLocallyOfFiniteType_iff k X p R W n
+
+-- Arbitrary finite cycles use the same supported submodule and geometric carrier test.
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (R : Type) [Semiring R] (c : Cycles X R) (n : ℕ) :
+    c ∈ cyclesOfDegree R (DimensionFunction.ofLocallyOfFiniteType k X p) n ↔
+      ∀ W : IntegralClosedSubscheme X, c W ≠ 0 →
+        topologicalKrullDim W.val.subscheme = (n : WithBot ℕ∞) := by
+  rw [mem_cyclesOfDegree_iff]
+  constructor
+  · intro h W hW
+    exact (supportDegree_ofLocallyOfFiniteType_eq_iff k X p W n).mp (h W hW)
+  · intro h W hW
+    exact (supportDegree_ofLocallyOfFiniteType_eq_iff k X p W n).mpr (h W hW)
+
+-- Negative degrees cannot contain a nonzero fundamental cycle.
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (R : Type) [Semiring R] [Nontrivial R] (W : IntegralClosedSubscheme X)
+    (n : ℤ) (hn : n < 0) :
+    fundamentalCycle R W ∉ cyclesOfDegree R (DimensionFunction.ofLocallyOfFiniteType k X p) n := by
+  intro h
+  have hdeg := (fundamentalCycle_mem_cyclesOfDegree_iff R
+    (DimensionFunction.ofLocallyOfFiniteType k X p) n W).mp h
+  have hnon := DimensionFunction.ofLocallyOfFiniteType_nonneg k X p (ambientGenericPoint W)
+  change DimensionFunction.ofLocallyOfFiniteType k X p (ambientGenericPoint W) = n at hdeg
+  omega
+
+-- With trivial coefficients every fundamental cycle vanishes; no converse is inferred.
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (W : IntegralClosedSubscheme X) (n : ℤ) :
+    fundamentalCycle (PUnit : Type) W ∈
+      cyclesOfDegree (PUnit : Type) (DimensionFunction.ofLocallyOfFiniteType k X p) n := by
+  fail_if_success
+    have : Nontrivial (PUnit : Type) := inferInstance
+  have hz : fundamentalCycle (PUnit : Type) W = 0 := Subsingleton.elim _ _
+  rw [hz]
+  exact Submodule.zero_mem _
+
+-- Open-height invariance is qualified by the locally finite-type structural map.
+example (k : Type) [Field k] (X Y : Scheme)
+    (p : Y ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (f : X ⟶ Y) [IsOpenImmersion f] (x : X) :
+    Order.height (f.base x) = Order.height x := by
+  fail_if_success
+    have : IsAffine X := inferInstance
+  fail_if_success
+    have : IsAffine Y := inferInstance
+  exact (point_height_eq_of_isOpenImmersion_of_locallyOfFiniteType k p f x).symm
+
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (U : X.Opens) (x : U) :
+    Order.height (x.val : X) =
+      @Order.height (U : Scheme) (specializationPreorder (U : Scheme)) x :=
+  (point_height_eq_of_isOpenImmersion_of_locallyOfFiniteType k p U.ι x).symm
+
+-- Empty schemes require no selected point or integrality hypothesis.
+example (k : Type) [Field k] :
+    IsEmpty (Spec (CommRingCat.of (PUnit : Type)) : Scheme) ∧
+      ∀ x : Spec (CommRingCat.of (PUnit : Type)), Order.height x ≠ ⊤ :=
+  ⟨inferInstance, fun x ↦ point_height_ne_top_of_locallyOfFiniteType k
+    (Spec (CommRingCat.of (PUnit : Type)))
+    (Spec.map (CommRingCat.ofHom (algebraMap k (PUnit : Type)))) x⟩
+
+-- The same actual noncompact coproduct from SP52 now has finite height at every point.
+example (k : Type) [Field k] :
+    ∃ (X : Scheme) (p : X ⟶ Spec (CommRingCat.of k)),
+      LocallyOfFiniteType p ∧ ¬ CompactSpace X ∧ ¬ IsAffine X ∧
+        ∀ x : X, Order.height x ≠ ⊤ := by
+  let components : ℕ → Scheme := fun _ ↦ Spec (CommRingCat.of k)
+  let X : Scheme := ∐ components
+  let p : X ⟶ Spec (CommRingCat.of k) := Sigma.desc fun _ ↦ 𝟙 _
+  haveI : LocallyOfFiniteType p :=
+    IsZariskiLocalAtSource.sigmaDesc (P := @LocallyOfFiniteType)
+      (fun _ ↦ inferInstanceAs (LocallyOfFiniteType (𝟙 (Spec (CommRingCat.of k)))))
+  have hnc : ¬ CompactSpace X := by
+    intro h
+    letI : CompactSpace X := h
+    let e := AlgebraicGeometry.sigmaMk components
+    letI : CompactSpace (Σ n : ℕ, components n) := e.symm.compactSpace
+    letI : Finite (Σ n : ℕ, components n) := finite_of_compact_of_discrete
+    have hn : Finite ℕ := Finite.of_surjective
+      (fun z : Σ n : ℕ, components n ↦ z.1) (fun n ↦ ⟨⟨n, default⟩, rfl⟩)
+    exact hn.false
+  have hna : ¬ IsAffine X := by
+    intro h
+    letI : IsAffine X := h
+    exact hnc inferInstance
+  exact ⟨X, p, inferInstance, hnc, hna, point_height_ne_top_of_locallyOfFiniteType k X p⟩
+
+-- Each actual integral carrier has finite dimension, without asserting a uniform ambient bound.
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (W : IntegralClosedSubscheme X) :
+    topologicalKrullDim W.val.subscheme < ⊤ := by
+  rw [← ambientGenericPoint_height_eq_supportDim]
+  exact WithBot.coe_lt_coe.mpr (lt_top_iff_ne_top.mpr
+    (point_height_ne_top_of_locallyOfFiniteType k X p (ambientGenericPoint W)))
+
+end FieldSupportDimensionRegressions
