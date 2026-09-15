@@ -2039,6 +2039,73 @@ point height. The carrier-dimension identity and existing homogeneous-cycle
 membership criterion give the remaining statements.
 \end{proof}
 
+\begin{proposition}[Structural and affine residue-field comparisons --- \formal]
+\label{prop:structural-residue-field}
+Let \(k\) be a commutative ring and let \(p:X\to\Spec k\) be a
+structural morphism. Write
+\(\kappa_X(x)=\mathcal O_{X,x}/\mathfrak m_x\) for the actual
+scheme-stalk residue field \cite{StacksSchemeResidueField}.
+The canonical composite
+\[
+  k\simeq\Gamma(\Spec k,\mathcal O)
+    \xrightarrow{p^\sharp}\Gamma(X,\mathcal O_X)
+    \xrightarrow{\operatorname{ev}_x}\kappa_X(x)
+\]
+constructs its \(k\)-algebra structure. If \(u:X\to Y\) is a
+morphism over \(\Spec k\), its actual residue-field map
+\[
+  u_x^*:\kappa_Y(u(x))\longrightarrow\kappa_X(x)
+\]
+is a \(k\)-algebra homomorphism. For an open immersion \(u\), it is
+a \(k\)-algebra isomorphism.
+
+For any commutative \(k\)-algebra \(A\) and \(x\in\Spec A\), the
+actual affine stalk isomorphism induces
+\[
+  \psi_{A,x}:\kappa_{\Spec A}(x)
+      \xrightarrow{\ \sim\ }_k\kappa(\mathfrak p_x).
+\]
+Here the right-hand field is the residue field of the actual prime
+localization \(A_{\mathfrak p_x}\), and the left-hand algebra uses
+the structural map \(\Spec A\to\Spec k\). For every \(a\in A\),
+\(\psi_{A,x}\) sends evaluation of the corresponding global section
+to the image of \(a\) in \(\kappa(\mathfrak p_x)\).
+These comparisons require no finite-type, domain, reducedness or
+normality assumption.
+
+If \(k\) is a field, the comparisons preserve the full
+transcendence-degree cardinal. In particular, an open immersion as
+above gives
+\[
+  \operatorname{trdeg}_k\kappa_Y(u(x))
+    =\operatorname{trdeg}_k\kappa_X(x),
+\]
+without an affineness or finite-type hypothesis.
+For \(A\) finite type over \(k\), the actual scheme-residue degree
+is proved finite, and the existing affine function satisfies
+\[
+  \delta_{A/k}(x)
+    =\operatorname{trdeg}_k\kappa_{\Spec A}(x)\in\mathbf Z.
+\]
+Thus the affine value of \cite{StacksAlgebraicSchemeDimension} is
+realized on the actual scheme residue field with its structural action.
+\end{proposition}
+
+\begin{proof}
+Naturality of global-section evaluation identifies the composite
+structural action with the action through the actual residue-field map.
+For an open immersion, the map on stalks is an isomorphism; passing to
+residue fields retains the proved scalar compatibility.
+On a spectrum, use the canonical global-sections and stalk
+identifications of \cite{StacksAffineStalk}. Their compatibility with
+constants proves the displayed affine comparison as a \(k\)-algebra
+isomorphism, not merely as a ring isomorphism.
+Algebra equivalence preserves transcendence degree. In the finite-type
+case, the actual prime quotient proves finiteness before passage to an
+integer, and Proposition~\ref{prop:affine-dimension-function} supplies
+the stated value without redefining its dimension function.
+\end{proof}
+
 For smooth projective schemes over a fixed field \(k\), composition of rational Chow
 correspondences is associative and bilinear
 \cite{StacksChowCorrespondenceComposition}, while graph classes compose
@@ -2330,6 +2397,25 @@ For an actual structural affine scheme, the constructor is
 Its carrier and existing-cycle tests are
 \leanpath{supportDegree_ofAffineLocallyOfFiniteType_eq_iff} and
 \leanpath{fundamentalCycle_mem_ofAffineLocallyOfFiniteType_iff}.
+Proposition~\ref{prop:structural-residue-field} constructs
+\leanpath{residueFieldBaseMap} and \leanpath{residueFieldBaseAlgebra},
+with \leanpath{residueFieldBaseAlgebra_algebraMap} and
+\leanpath{residueFieldBaseMap_comp}, in
+\leanpath{Cycles/StructuralResidueField.lean}.
+Its map and open-immersion comparison are
+\leanpath{residueFieldBaseAlgHom}, \leanpath{residueFieldBaseAlgHom_apply},
+\leanpath{residueFieldBaseAlgEquivOfIsOpenImmersion}, and
+\leanpath{residueFieldBaseAlgEquivOfIsOpenImmersion_apply}.
+The actual affine comparison is \leanpath{specResidueFieldEquiv},
+\leanpath{specResidueFieldEquiv_evaluation},
+\leanpath{specResidueFieldAlgEquiv}, and
+\leanpath{specResidueFieldAlgEquiv_apply} in
+\leanpath{Cycles/AffineResidueField.lean}.
+The consumers \leanpath{spec_schemeResidueField_trdeg_eq},
+\leanpath{spec_schemeResidueField_trdeg_lt_aleph0},
+\leanpath{DimensionFunction.ofSpecFiniteType_eq_schemeResidueField_trdeg}, and
+\leanpath{residueFieldBase_trdeg_eq_of_isOpenImmersion} are in
+\leanpath{Cycles/AffineResidueFieldDimension.lean}.
 \end{leanfiles}
 
 \begin{statusnote}{\openstatus}
@@ -2397,11 +2483,17 @@ algebra. Proposition~\ref{prop:affine-dimension-function} transports
 this law into the actual affine scheme-point order and constructs its
 dimension function on both literal spectra and actual affine schemes with their structural
 morphism. Their carrier degrees are proved to be actual dimensions.
-The remaining extension beyond affine schemes must derive the
-structural field action on each actual scheme-stalk residue field and
-retain it through affine and open-immersion comparisons. These
-open-chart and residue-field compatibilities must construct the general
-grading
+Proposition~\ref{prop:structural-residue-field} constructs the structural
+action on each actual scheme residue field and proves the affine and
+open-immersion algebra comparisons. It identifies the existing
+literal-spectrum grading with the actual scheme-residue degree and
+proves open-immersion invariance of that degree as a cardinal.
+The next step identifies the height-defined \(\delta_{X/k}\) for an
+arbitrary structural affine \(X\) with its actual scheme-residue degree,
+retaining the induced sections algebra and structural action through
+\(X\simeq\Spec\Gamma(X,\mathcal O_X)\).
+Agreement on overlaps and the common-chart specialization laws must
+then assemble the general grading
 \(\delta_k(x)=\operatorname{trdeg}_k\kappa(x)
   =\dim\overline{\{x\}}\)
 on the intended scheme \cite{StacksAlgebraicSchemeDimension}.
@@ -3712,6 +3804,16 @@ Actual affine dimension functions and carrier grading (\formal) &
 \leanpath{fundamentalCycle_mem_ofAffineLocallyOfFiniteType_iff}\newline
 \leanpath{Cycles/AffineDimensionFunction.lean}\newline
 \leanpath{Cycles/AffineSchemeDimensionFunction.lean}\\
+Structural and affine residue-field comparisons (\formal) &
+\leanpath{residueFieldBaseAlgebra}\newline
+\leanpath{residueFieldBaseAlgHom}\newline
+\leanpath{residueFieldBaseAlgEquivOfIsOpenImmersion}\newline
+\leanpath{specResidueFieldAlgEquiv}\newline
+\leanpath{spec_schemeResidueField_trdeg_eq}\newline
+\leanpath{residueFieldBase_trdeg_eq_of_isOpenImmersion}\newline
+\leanpath{Cycles/StructuralResidueField.lean}\newline
+\leanpath{Cycles/AffineResidueField.lean}\newline
+\leanpath{Cycles/AffineResidueFieldDimension.lean}\\
 Compactified graph route (\formal; \conditional) &
 \leanpath{groupAlgebraProjectorExtension}\newline
 \leanpath{Boundary/CompactifiedGraphProjector.lean}\\

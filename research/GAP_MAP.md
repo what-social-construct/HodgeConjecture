@@ -799,22 +799,52 @@ cycle over a nontrivial coefficient semiring belongs to degree \(n\)
 exactly when that carrier has dimension \(n\). These use the existing
 support and cycle objects, not a new grading module or Chow quotient.
 
-**The next bounded goal is the structural-field residue-field bridge.**
-Derive the field algebra on each actual scheme residue field from
-the structural morphism to \(\operatorname{Spec}k\), transport through
-actual affine isomorphisms and open immersions, and prove the global
-strict-monotonicity and cover conditions on a common affine chart.
-The open-immersion residue-field map is an actual isomorphism; its
-compatibility with the structural field map must also be retained.
-The affine `Ideal.ResidueField` and the scheme's stalk residue field are
-not definitionally the same model: use `StructureSheaf.stalkIso` and
-`IsLocalRing.ResidueField.mapEquiv` with their field-action compatibility.
-The structural action can use `p.appTop` and `Γevaluation`; the naturality
-square and `residueFieldMap_comp` control transport along chart maps.
-First prove the affine residue-field comparison as an actual
-\(k\)-algebra equivalence, then its compatibility with open chart maps.
-This enables comparison of the constructed affine dimension functions on
-overlaps; the global construction is a subsequent assembly step.
+### Structural residue fields and their affine comparison
+
+A11ah / SP49 constructs the structural base map in
+`Cycles/StructuralResidueField.lean` as the literal composite
+\[
+ k\longrightarrow\Gamma(\operatorname{Spec}k,\mathcal O)
+ \xrightarrow{p^*}\Gamma(X,\mathcal O_X)
+ \xrightarrow{\operatorname{ev}_x}\kappa_X(x).
+\]
+The associated algebra is an ordinary definition used locally, not a
+global instance or an action defined by transporting through the desired
+equivalence. Actual evaluation naturality proves that the existing
+residue-field map for any morphism commutes with these actions. For an
+open immersion, the existing residue-field isomorphism is upgraded to a
+base-algebra equivalence with the same underlying map. These constructions
+work over any commutative base ring, without finite type or affineness.
+
+`Cycles/AffineResidueField.lean` uses the actual `StructureSheaf.stalkIso`
+and `IsLocalRing.ResidueField.mapEquiv` to compare
+\(\kappa_{\operatorname{Spec}A}(x)\) with the actual prime-localization
+residue field \(\kappa(\mathfrak p_x)\). Evaluation of every actual
+\(A\)-constant maps to its canonical prime-residue-field image. Global
+section naturality and the existing scalar tower therefore give a genuine
+\(k\)-algebra equivalence for the structural map induced by
+\(k\to A\). No domain, reducedness, normality or finite type is needed.
+
+Over a field, `Cycles/AffineResidueFieldDimension.lean` identifies the full
+transcendence-degree cardinals of these two actual residue fields, without
+a finiteness premise. Finite type of \(A\) separately proves finiteness
+of that degree, not finite type of the residue field. The existing
+\(\delta_{A/k}\) then equals the integer transcendence degree of the
+actual scheme residue field. Actual open immersions preserve the full
+structural residue degree without affine or finite-type hypotheses.
+
+**The next bounded goal is the arbitrary-affine structural value comparison.**
+For an actual affine \(X\) with locally finite-type structural morphism
+\(p\), identify `DimensionFunction.ofAffineLocallyOfFiniteType k X p`
+with transcendence degree of \(\kappa_X(x)\) under SP49's structural
+action. Extract the actual sections algebra through `X.isoSpec`, retain
+the equality between its spectrum morphism and the transported \(p\),
+and use the new residue-field algebra maps and literal-spectrum formula.
+This must compare the actual actions, not merely isomorphic field carriers.
+Then use the proved open-immersion degree invariance to compare affine
+values on overlaps and prove the global strictness and unit-step laws on
+a common affine chart. Pointwise finiteness comes from an actual affine
+chart; no global finite-dimensionality premise alone supplies these laws.
 Do not replace these steps by a supplied dimension-function or gluing
 package, or by an unrestricted claim that open immersions preserve
 absolute point height. The general constructor remains open.

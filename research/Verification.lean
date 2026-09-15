@@ -4078,3 +4078,228 @@ example (k A : Type) [Field k] [CommRing A] [Algebra k A] [Algebra.FiniteType k 
     DimensionFunction.ofSpecFiniteType_eq_pointHeight]
 
 end AffineDimensionFunctionRegressions
+
+-- SP49: structural scalar actions on actual scheme residue fields and affine comparison.
+#check HodgeConjecture.SchemeCycles.residueFieldBaseMap
+#check HodgeConjecture.SchemeCycles.residueFieldBaseAlgebra
+#check HodgeConjecture.SchemeCycles.residueFieldBaseAlgebra_algebraMap
+#check HodgeConjecture.SchemeCycles.residueFieldBaseMap_comp
+#check HodgeConjecture.SchemeCycles.residueFieldBaseAlgHom
+#check HodgeConjecture.SchemeCycles.residueFieldBaseAlgHom_apply
+#check HodgeConjecture.SchemeCycles.residueFieldBaseAlgEquivOfIsOpenImmersion
+#check HodgeConjecture.SchemeCycles.residueFieldBaseAlgEquivOfIsOpenImmersion_apply
+#check HodgeConjecture.SchemeCycles.specResidueFieldEquiv
+#check HodgeConjecture.SchemeCycles.specResidueFieldEquiv_evaluation
+#check HodgeConjecture.SchemeCycles.specResidueFieldAlgEquiv
+#check HodgeConjecture.SchemeCycles.specResidueFieldAlgEquiv_apply
+#check HodgeConjecture.SchemeCycles.spec_schemeResidueField_trdeg_eq
+#check HodgeConjecture.SchemeCycles.spec_schemeResidueField_trdeg_lt_aleph0
+#check HodgeConjecture.SchemeCycles.DimensionFunction.ofSpecFiniteType_eq_schemeResidueField_trdeg
+#check HodgeConjecture.SchemeCycles.residueFieldBase_trdeg_eq_of_isOpenImmersion
+
+#print axioms HodgeConjecture.SchemeCycles.residueFieldBaseMap
+#print axioms HodgeConjecture.SchemeCycles.residueFieldBaseAlgebra
+#print axioms HodgeConjecture.SchemeCycles.residueFieldBaseAlgebra_algebraMap
+#print axioms HodgeConjecture.SchemeCycles.residueFieldBaseMap_comp
+#print axioms HodgeConjecture.SchemeCycles.residueFieldBaseAlgHom
+#print axioms HodgeConjecture.SchemeCycles.residueFieldBaseAlgHom_apply
+#print axioms HodgeConjecture.SchemeCycles.residueFieldBaseAlgEquivOfIsOpenImmersion
+#print axioms HodgeConjecture.SchemeCycles.residueFieldBaseAlgEquivOfIsOpenImmersion_apply
+#print axioms HodgeConjecture.SchemeCycles.specResidueFieldEquiv
+#print axioms HodgeConjecture.SchemeCycles.specResidueFieldEquiv_evaluation
+#print axioms HodgeConjecture.SchemeCycles.specResidueFieldAlgEquiv
+#print axioms HodgeConjecture.SchemeCycles.specResidueFieldAlgEquiv_apply
+#print axioms HodgeConjecture.SchemeCycles.spec_schemeResidueField_trdeg_eq
+#print axioms HodgeConjecture.SchemeCycles.spec_schemeResidueField_trdeg_lt_aleph0
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.ofSpecFiniteType_eq_schemeResidueField_trdeg
+#print axioms HodgeConjecture.SchemeCycles.residueFieldBase_trdeg_eq_of_isOpenImmersion
+
+noncomputable section StructuralResidueFieldRegressions
+open HodgeConjecture AlgebraicGeometry CategoryTheory
+open HodgeConjecture.SchemeCycles
+
+-- Structural constants come from the actual map and evaluation, before any comparison.
+example (k : Type) [CommRing k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) (x : X) :
+    residueFieldBaseMap k p x =
+      ((Scheme.ΓSpecIso (CommRingCat.of k)).inv ≫ p.appTop ≫ X.Γevaluation x).hom := by
+  fail_if_success
+    have : Field k := inferInstance
+  fail_if_success
+    have : IsAffine X := inferInstance
+  fail_if_success
+    have : LocallyOfFiniteType p := inferInstance
+  fail_if_success
+    have : Algebra k (X.residueField x) := inferInstance
+  rfl
+
+example (k : Type) [CommRing k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) (x : X) :
+    letI := residueFieldBaseAlgebra k p x
+    algebraMap k (X.residueField x) = residueFieldBaseMap k p x := rfl
+
+-- Scalar compatibility is proved for the geometric residue map itself.
+example (k : Type) [CommRing k] (X Y : Scheme)
+    (p : Y ⟶ Spec (CommRingCat.of k)) (f : X ⟶ Y) (x : X) (a : k) :
+    f.residueFieldMap x (residueFieldBaseMap k p (f.base x) a) =
+      residueFieldBaseMap k (f ≫ p) x a :=
+  DFunLike.congr_fun (residueFieldBaseMap_comp k p f x) a
+
+example (k : Type) [CommRing k] (X Y : Scheme)
+    (p : Y ⟶ Spec (CommRingCat.of k)) (f : X ⟶ Y) (x : X)
+    (a : Y.residueField (f.base x)) :
+    residueFieldBaseAlgHom k p f x a = f.residueFieldMap x a := rfl
+
+example (k : Type) [CommRing k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) (x : X) (a : X.residueField x) :
+    residueFieldBaseAlgHom k p (𝟙 X) x a = a := by
+  simp only [residueFieldBaseAlgHom_apply, Scheme.residueFieldMap_id]
+  rfl
+
+example (k : Type) [CommRing k] (X Y Z : Scheme)
+    (p : Z ⟶ Spec (CommRingCat.of k)) (f : X ⟶ Y) (g : Y ⟶ Z) (x : X)
+    (a : Z.residueField (g.base (f.base x))) :
+    residueFieldBaseAlgHom k p (f ≫ g) x a =
+      residueFieldBaseAlgHom k (g ≫ p) f x
+        (residueFieldBaseAlgHom k p g (f.base x) a) := by
+  simp only [residueFieldBaseAlgHom_apply, Scheme.residueFieldMap_comp]
+  rfl
+
+-- The open-immersion equivalence retains the actual field map and its inverse.
+example (k : Type) [CommRing k] (X Y : Scheme)
+    (p : Y ⟶ Spec (CommRingCat.of k)) (f : X ⟶ Y) [IsOpenImmersion f] (x : X)
+    (a : Y.residueField (f.base x)) :
+    residueFieldBaseAlgEquivOfIsOpenImmersion k p f x a = f.residueFieldMap x a := rfl
+
+example (k : Type) [CommRing k] (X Y : Scheme)
+    (p : Y ⟶ Spec (CommRingCat.of k)) (f : X ⟶ Y) [IsOpenImmersion f] (x : X)
+    (a : Y.residueField (f.base x)) :
+    letI := residueFieldBaseAlgebra k p (f.base x)
+    letI := residueFieldBaseAlgebra k (f ≫ p) x
+    (residueFieldBaseAlgEquivOfIsOpenImmersion k p f x).symm
+      (f.residueFieldMap x a) = a := by
+  letI := residueFieldBaseAlgebra k p (f.base x)
+  letI := residueFieldBaseAlgebra k (f ≫ p) x
+  exact (residueFieldBaseAlgEquivOfIsOpenImmersion k p f x).symm_apply_apply a
+
+
+-- The affine ring comparison is induced by the actual stalk isomorphism.
+example (A : Type) [CommRing A] (x : Spec (CommRingCat.of A)) :
+    letI : IsLocalRing ((Spec.structureSheaf A).presheaf.stalk x) :=
+      inferInstanceAs (IsLocalRing ((Spec (CommRingCat.of A)).presheaf.stalk x))
+    specResidueFieldEquiv A x = IsLocalRing.ResidueField.mapEquiv
+      (StructureSheaf.stalkIso A x).commRingCatIsoToRingEquiv := rfl
+
+example (A : Type) [CommRing A] (x : Spec (CommRingCat.of A)) (a : A) :
+    specResidueFieldEquiv A x
+        ((Spec (CommRingCat.of A)).Γevaluation x ((Scheme.ΓSpecIso (.of A)).inv a)) =
+      algebraMap A x.asIdeal.ResidueField a :=
+  specResidueFieldEquiv_evaluation A x a
+
+-- Base linearity is proved against the independently defined structural action.
+example (k A : Type) [CommRing k] [CommRing A] [Algebra k A]
+    (x : Spec (CommRingCat.of A)) (a : k) :
+    letI := residueFieldBaseAlgebra k
+      (Spec.map (CommRingCat.ofHom (algebraMap k A))) x
+    specResidueFieldAlgEquiv k A x
+        (algebraMap k ((Spec (CommRingCat.of A)).residueField x) a) =
+      algebraMap k x.asIdeal.ResidueField a := by
+  fail_if_success
+    have : Field k := inferInstance
+  fail_if_success
+    have : IsDomain A := inferInstance
+  fail_if_success
+    have : Algebra.FiniteType k A := inferInstance
+  letI := residueFieldBaseAlgebra k
+    (Spec.map (CommRingCat.ofHom (algebraMap k A))) x
+  exact (specResidueFieldAlgEquiv k A x).commutes a
+
+example (k A : Type) [CommRing k] [CommRing A] [Algebra k A]
+    (x : Spec (CommRingCat.of A)) :
+    letI := residueFieldBaseAlgebra k
+      (Spec.map (CommRingCat.ofHom (algebraMap k A))) x
+    (specResidueFieldAlgEquiv k A x).toRingEquiv = specResidueFieldEquiv A x := rfl
+
+-- A genuinely nonreduced algebra over the non-field base ℤ is allowed.
+example :
+    ¬ IsReduced (ZMod 4) ∧
+      ∀ x : Spec (CommRingCat.of (ZMod 4)),
+        letI := residueFieldBaseAlgebra ℤ
+          (Spec.map (CommRingCat.ofHom (algebraMap ℤ (ZMod 4)))) x
+        Nonempty ((Spec (CommRingCat.of (ZMod 4))).residueField x ≃ₐ[ℤ]
+          x.asIdeal.ResidueField) := by
+  constructor
+  · intro h
+    have ht : IsNilpotent (2 : ZMod 4) := ⟨2, by decide⟩
+    exact (by decide : (2 : ZMod 4) ≠ 0) (IsReduced.eq_zero _ ht)
+  · intro x
+    exact ⟨specResidueFieldAlgEquiv ℤ (ZMod 4) x⟩
+
+-- The zero algebra's empty spectrum requires no artificial residue point.
+example :
+    IsEmpty (Spec (CommRingCat.of (PUnit : Type)) : Scheme) ∧
+      ∀ x : Spec (CommRingCat.of (PUnit : Type)), Nonempty (Algebra ℤ
+        ((Spec (CommRingCat.of (PUnit : Type))).residueField x)) :=
+  ⟨inferInstance, fun x ↦ ⟨residueFieldBaseAlgebra ℤ
+    (Spec.map (CommRingCat.ofHom (algebraMap ℤ (PUnit : Type)))) x⟩⟩
+
+-- The full-cardinal comparison has no finite-type or reducedness premise.
+example (k A : Type) [Field k] [CommRing A] [Algebra k A]
+    (x : Spec (CommRingCat.of A)) :
+    letI := residueFieldBaseAlgebra k
+      (Spec.map (CommRingCat.ofHom (algebraMap k A))) x
+    Algebra.trdeg k ((Spec (CommRingCat.of A)).residueField x) =
+      Algebra.trdeg k x.asIdeal.ResidueField := by
+  fail_if_success
+    have : Algebra.FiniteType k A := inferInstance
+  fail_if_success
+    have : IsReduced A := inferInstance
+  exact spec_schemeResidueField_trdeg_eq k A x
+
+example (k A : Type) [Field k] [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
+    (x : Spec (CommRingCat.of A)) :
+    letI := residueFieldBaseAlgebra k
+      (Spec.map (CommRingCat.ofHom (algebraMap k A))) x
+    Algebra.trdeg k ((Spec (CommRingCat.of A)).residueField x) < Cardinal.aleph0 := by
+  fail_if_success
+    have : IsDomain A := inferInstance
+  fail_if_success
+    have : CharZero k := inferInstance
+  exact spec_schemeResidueField_trdeg_lt_aleph0 k A x
+
+example (k A : Type) [Field k] [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
+    (x : Spec (CommRingCat.of A)) :
+    letI := residueFieldBaseAlgebra k
+      (Spec.map (CommRingCat.ofHom (algebraMap k A))) x
+    DimensionFunction.ofSpecFiniteType k A x =
+      ((Algebra.trdeg k ((Spec (CommRingCat.of A)).residueField x)).toNat : ℤ) :=
+  DimensionFunction.ofSpecFiniteType_eq_schemeResidueField_trdeg k A x
+
+-- Open immersions preserve the actual structural-field cardinal, not merely a truncation.
+example (k : Type) [Field k] (X Y : Scheme)
+    (p : Y ⟶ Spec (CommRingCat.of k)) (f : X ⟶ Y) [IsOpenImmersion f] (x : X) :
+    letI := residueFieldBaseAlgebra k p (f.base x)
+    letI := residueFieldBaseAlgebra k (f ≫ p) x
+    Algebra.trdeg k (Y.residueField (f.base x)) =
+      Algebra.trdeg k (X.residueField x) := by
+  fail_if_success
+    have : IsAffine X := inferInstance
+  fail_if_success
+    have : LocallyOfFiniteType p := inferInstance
+  exact residueFieldBase_trdeg_eq_of_isOpenImmersion k p f x
+
+-- At the zero prime of a countably generated polynomial algebra, the degree is genuinely infinite.
+example (k : Type) [Field k] :
+    let x : Spec (CommRingCat.of (MvPolynomial ℕ k)) := ⟨⊥, Ideal.bot_prime⟩
+    letI := residueFieldBaseAlgebra k
+      (Spec.map (CommRingCat.ofHom (algebraMap k (MvPolynomial ℕ k)))) x
+    Algebra.trdeg k ((Spec (CommRingCat.of (MvPolynomial ℕ k))).residueField x) =
+      Cardinal.aleph0 := by
+  dsimp only
+  rw [spec_schemeResidueField_trdeg_eq,
+    ← primeQuotient_trdeg_eq_residueField k (MvPolynomial ℕ k)]
+  change Algebra.trdeg k (MvPolynomial ℕ k ⧸ (⊥ : Ideal (MvPolynomial ℕ k))) = _
+  rw [(AlgEquiv.quotientBot k (MvPolynomial ℕ k)).trdeg_eq]
+  simp only [MvPolynomial.trdeg_of_isDomain, Cardinal.mk_nat, Cardinal.lift_aleph0]
+
+end StructuralResidueFieldRegressions

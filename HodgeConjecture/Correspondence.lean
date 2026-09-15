@@ -66,6 +66,9 @@ import HodgeConjecture.CommutativeAlgebra.PrimeQuotientCover
 import HodgeConjecture.Cycles.ConsecutivePrimeDimension
 import HodgeConjecture.Cycles.AffineDimensionFunction
 import HodgeConjecture.Cycles.AffineSchemeDimensionFunction
+import HodgeConjecture.Cycles.StructuralResidueField
+import HodgeConjecture.Cycles.AffineResidueField
+import HodgeConjecture.Cycles.AffineResidueFieldDimension
 import HodgeConjecture.Correspondence.TransposeAlgebra
 import HodgeConjecture.Correspondence.ProjectorDefect
 import HodgeConjecture.Correspondence.ProjectorLift
@@ -170,6 +173,10 @@ Chow/cohomological realization:
     schemes with a locally finite-type structural morphism to a field,
     proving both specialization laws and identifying support degrees and
     fundamental-cycle homogeneity with actual carrier dimensions.
+40. independently derived structural base actions on actual scheme residue
+    fields, natural residue algebra maps and open-immersion equivalences,
+    and the affine stalk-induced algebra comparison identifying the existing
+    spectrum dimension function with its actual scheme residue-field degree.
 
 The free span algebra is not identified with a Chow ring. General proper
 cycle extraction, flat/Gysin operations and their rational-equivalence
@@ -178,7 +185,8 @@ inputs to a `FiniteEtaleAlgebraModel` (or to another explicitly chosen
 admissible system). The constructed closed-pushforward quotient is additive;
 it does not supply Chow convolution or its target realization.
 The affine dimension-function construction is now proved in all dimensions.
-General scheme-chart transport and compatibility of the actual scheme
-residue fields with the structural field action remain before the global
-field-induced dimension function and target codimension grading.
+Structural residue-field compatibility and open-immersion degree invariance
+are also proved. Comparing arbitrary affine structural presentations with
+these values, assembling the global field-induced dimension function and
+identifying the target codimension grading remain separate steps.
 -/

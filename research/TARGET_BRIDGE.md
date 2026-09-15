@@ -535,13 +535,27 @@ be developed alongside that infrastructure.
    tests identify geometric dimension, also on reducible or nonreduced
    ambient affine schemes and without a dimension-at-most-one bound.
 
-   **Next bounded obligation:** construct the structural-field
-   residue-field bridge and its affine comparison as an actual
-   \(k\)-algebra equivalence. Derive the algebra on each actual scheme
-   residue field from the structural
-   morphism, retain compatibility through open-immersion residue-field
-   isomorphisms. Then compare the affine functions on chart overlaps and
-   prove the global laws on a common affine chart.
+   **Structural residue-field checkpoint (A11ah / SP49):**
+   `StructuralResidueField.lean` derives the base action on the actual
+   scheme residue field by pulling back and evaluating global constants.
+   The action is independently defined and locally installed. Naturality
+   proves that actual residue maps are base-algebra maps; actual open
+   immersions give base-algebra equivalences. `AffineResidueField.lean`
+   constructs the stalk-induced comparison with `Ideal.ResidueField`,
+   proves its equality on every \(A\)-constant, and upgrades it to an
+   algebra equivalence over any commutative base. Over a field,
+   `AffineResidueFieldDimension.lean` preserves full transcendence degree,
+   proves its finiteness for a finite-type ambient algebra, and identifies
+   the existing literal-spectrum dimension function with actual scheme
+   residue degree. It also proves full-cardinal invariance under arbitrary
+   open immersions. No finite-type hypothesis on residue fields is asserted.
+
+   **Next bounded obligation:** extend the literal-spectrum value formula
+   to `ofAffineLocallyOfFiniteType` on an arbitrary actual affine \(X\)
+   with structural morphism \(p\). Use `X.isoSpec` and the actual
+   induced sections algebra, retaining compatibility of structural actions.
+   Then compare affine values on overlaps via the proved open-immersion
+   residue-degree invariance and prove the global laws on a common chart.
    No general constructor or open-gluing package is supplied as an input.
    Then identify dimension
    grading with target codimension grading in the intended integral or

@@ -57,7 +57,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 
 ## Canonical semantic object and TeX registry
 
-### Construction and input checkpoints (SP17--SP48)
+### Construction and input checkpoints (SP17--SP49)
 
 | ID | Object or overlap | Disposition | Required action | Status |
 | --- | --- | --- | --- | --- |
@@ -93,6 +93,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 | SP46 | Original-field prime dimension formula for finite-type domains | PROVE / CONNECT | Prove actual localization preserves full cardinal transcendence degree, use the compatible polynomial fraction-field tower, and combine SP45 with quotient normalization. Retain the domain condition and actual quotient, residue-field and prime-localization carriers. | PROVED; FULL BUILD, 446 AXIOM REPORTS, FOURTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP47 | Consecutive-prime quotient and residue-field unit drop | PROVE / CONNECT | Transport the actual prime interval into B/p, prove height one of the image of q, and apply SP46 with the actual double-quotient algebra equivalence. Keep the ambient algebra arbitrary and the cover relation in the prime spectrum. | PROVED; FULL BUILD, 452 AXIOM REPORTS, ELEVEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP48 | Actual affine dimension functions and geometric support degrees | CONSTRUCT / IDENTIFY | Reuse the prime/scheme order reversal and SP47 to prove both dimension-function laws on literal Spec A. Extract the finite-type sections algebra from an actual affine structural morphism and transport through X.isoSpec. Identify support degrees and fundamental-cycle membership with carrier dimension. | PROVED; FULL BUILD, 464 AXIOM REPORTS, NINETEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP49 | Structural base actions and actual affine residue-field algebra comparison | CONSTRUCT / COMPARE | Define the action independently by structural pullback and evaluation. Prove actual residue-map base compatibility, open-immersion algebra equivalence and the stalk-induced affine comparison on constants. Identify full residue-degree cardinals and the existing literal-spectrum dimension value. | PROVED; FULL BUILD, 480 AXIOM REPORTS, NINETEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -615,6 +616,45 @@ is introduced. The next bounded checkpoint is the structural-field action
 on actual scheme residue fields and its compatible affine algebra
 equivalence. Open-chart compatibility, global dimension-function assembly,
 target codimension grading and realization remain subsequent obligations.
+
+SP49 validation (2026-09-15): all three new leaf modules and the full
+3127-job Lean build pass, with only the two existing `Challenge` warnings.
+Integrated `research/Verification.lean` passes with 588 declaration checks
+and all 332 examples, without warnings or errors. All 480 selected axiom
+reports were captured in the original integrated context and compared with
+the exact declaration inventory: no missing, unexpected or duplicate reports
+and no unpermitted axioms. The existing `polynomialDimensionBound` is
+axiom-free; the existing `genericFiber_isScalarTower_base` uses only
+`propext` and `Quot.sound`; the other 478 reports use only `propext`,
+`Classical.choice` and `Quot.sound`. The independent SP49 replay retains
+exactly the original four verification imports and checks all sixteen new
+public declarations and nineteen regressions. These cover the literal
+structural base action, actual residue-map compatibility, identity and
+composition, open-immersion equivalences and their inverses, the affine
+stalk-induced comparison on constants, the nonreduced algebra
+`ZMod 4` over the integers, and the empty spectrum of `PUnit`. Full-cardinal
+comparison is tested without finite-type assumptions, including the actual
+scheme residue field at the zero prime of a polynomial algebra on countably
+many variables, whose transcendence degree is `aleph0`. The finite-type
+regressions check finiteness and the existing literal-spectrum dimension
+value without a domain hypothesis. A separate affine-leaf audit passes
+with four axiom reports and six regressions. The six primary
+proof-dependency assertions and two supporting reports pass. Independent
+mathematical, source and cross-document parity reviews pass.
+The single PDF builds to 55 pages with a clean final log; Proposition 6.22
+and its proof, the updated module/status pages and the theorem-map row were
+visually inspected. The 01HB and 01HV citations are added for the actual
+scheme residue-field and affine-stalk definitions and comparisons; the
+existing 0A21 citation is reused. Scalar compatibility is proved directly,
+not supplied as a source axiom. Submission wrappers and dependency pins
+are unchanged; diff checks pass. The structural action is defined
+independently of the affine equivalence and installed only locally; no
+global algebra instance, source input package, replacement carrier, Chow
+quotient or projector is introduced. The next bounded checkpoint compares
+the existing dimension function on an arbitrary affine structural scheme
+with its actual residue-field degree. Overlapping-chart comparisons,
+global dimension-function assembly, target codimension grading and
+realization remain subsequent obligations.
 
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
@@ -1422,14 +1462,55 @@ dimension-at-most-one premise is needed. The fundamental-cycle iff uses
 nontrivial coefficient semirings; its nontriviality premise is retained.
 
 The spectrum constructor uses `Ideal.ResidueField`; the structural-affine
-constructor uses literal point height. A compatible field action on the
-separate `Scheme.residueField` has not been silently installed. The next
-bounded checkpoint constructs that action and the affine residue-field
-comparison as an actual \(k\)-algebra equivalence, then proves compatibility
-through open chart maps. Overlap comparison and the global dimension
-function, target codimension conversion and further realization follow
-separately. No cycle module, Chow quotient, projector, source input package,
-global algebra instance or unrestricted open-height invariance is added.
+constructor uses literal point height. SP49 below explicitly constructs the
+structural action on the separate `Scheme.residueField` and proves the
+affine algebra comparison and open-immersion residue-degree invariance.
+The arbitrary structural affine value comparison, overlaps and the global
+dimension function remain separate from these proved residue-field facts.
+
+### Structural and affine residue-field comparison (SP49)
+
+Write \(\kappa_X(x)=\mathcal O_{X,x}/\mathfrak m_x\) for the actual
+scheme residue field, and \(\kappa(\mathfrak p_x)\) for the existing
+prime-localization residue field on a spectrum. The canonical comparison
+is \(\psi_{A,x}\). The structural action is defined before this map,
+by pulling back and evaluating actual global constants.
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `residueFieldBaseMap`, `residueFieldBaseAlgebra`, `residueFieldBaseAlgebra_algebraMap` | actual structural ring map and its locally installed algebra | $k\to\Gamma(\operatorname{Spec}k,\mathcal O)\xrightarrow{p^\sharp}\Gamma(X,\mathcal O_X)\xrightarrow{\operatorname{ev}_x}\kappa_X(x)$ |
+| `residueFieldBaseMap_comp` | actual evaluation naturality retains the structural action | $u_x^*\circ\operatorname{ev}_{u(x)}\circ p^\sharp=\operatorname{ev}_x\circ(p\circ u)^\sharp$ on global base constants |
+| `residueFieldBaseAlgHom`, `residueFieldBaseAlgHom_apply` | existing geometric residue map bundled as a base-algebra map | $u_x^*:\kappa_Y(u(x))\to_k\kappa_X(x)$ |
+| `residueFieldBaseAlgEquivOfIsOpenImmersion`, `_apply` | same map is a base-algebra equivalence for an actual open immersion | $u_x^*:\kappa_Y(u(x))\simeq_k\kappa_X(x)$ |
+| `specResidueFieldEquiv` | actual stalk/localization-induced residue-field equivalence | $\psi_{A,x}:\kappa_{\operatorname{Spec}A}(x)\simeq\kappa(\mathfrak p_x)$ |
+| `specResidueFieldEquiv_evaluation` | compatibility with every actual A-constant | $\psi_{A,x}(\operatorname{ev}_x(a))=\overline a\in\kappa(\mathfrak p_x)$ |
+| `specResidueFieldAlgEquiv`, `specResidueFieldAlgEquiv_apply` | same canonical map with structural base compatibility proved | $\psi_{A,x}:\kappa_{\operatorname{Spec}A}(x)\simeq_k\kappa(\mathfrak p_x)$ |
+| `spec_schemeResidueField_trdeg_eq` | full-cardinal comparison over a field | $\operatorname{trdeg}_k\kappa_{\operatorname{Spec}A}(x)=\operatorname{trdeg}_k\kappa(\mathfrak p_x)$ |
+| `spec_schemeResidueField_trdeg_lt_aleph0` | finite type of A proves finite residue transcendence degree | $\operatorname{trdeg}_k\kappa_{\operatorname{Spec}A}(x)<\aleph_0$ |
+| `DimensionFunction.ofSpecFiniteType_eq_schemeResidueField_trdeg` | existing affine function evaluated in the actual scheme residue field | $\delta_{A/k}(x)=\operatorname{trdeg}_k\kappa_{\operatorname{Spec}A}(x)$ |
+| `residueFieldBase_trdeg_eq_of_isOpenImmersion` | full-cardinal invariance for actual open immersions | $\operatorname{trdeg}_k\kappa_Y(u(x))=\operatorname{trdeg}_k\kappa_X(x)$ |
+
+The base action is an ordinary definition, installed with `letI` in each
+signature that uses it. No global instance is added and the action is not
+defined by transport through \(\psi_{A,x}\). The underlying ring maps,
+stalks, localizations and residue fields are the existing actual objects.
+Naturality of global sections, evaluation and the existing scalar tower
+prove multiplicativity and base compatibility. All algebra comparisons
+allow arbitrary commutative base and ambient rings; a field is required
+only for the transcendence-degree statements. Full-cardinal invariance
+does not require finite type. Finite type of the ambient algebra proves
+finite residue degree before numeric conversion; it does not assert that
+the residue field is a finite-type algebra. The existing dimension function
+is unchanged, and no new cycle module, Chow quotient or projector is added.
+
+The next bounded checkpoint identifies `ofAffineLocallyOfFiniteType` on
+an arbitrary affine structural \(X\) with its actual structural residue
+degree through `X.isoSpec` and the induced sections algebra. The literal
+spectrum formula alone has not supplied that adapter. The proved
+open-immersion degree invariance then supports overlap comparison and
+global assembly on actual charts. Target codimension conversion and further
+realization remain separate; no unrestricted open-height invariance or
+general dimension-function constructor is assumed.
 
 ## Objects deliberately assigned no independent notation
 
