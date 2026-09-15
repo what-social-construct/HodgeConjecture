@@ -2144,6 +2144,43 @@ For the open-immersion formula, apply the value identity on both affine
 schemes and the already proved structural residue-degree invariance.
 \end{proof}
 
+\begin{proposition}[Pointwise residue finiteness and affine-chart agreement --- \formal]
+\label{prop:chart-residue-degree}
+Let \(k\) be a field and let \(p:X\to\Spec k\) be locally of
+finite type. Every actual structural residue degree is finite:
+\[
+  \operatorname{trdeg}_k\kappa_X(x)<\aleph_0
+  \qquad(x\in X).
+\]
+For an open immersion \(i:U\to X\) with \(U\) affine, equip
+\(U\) with \(p\circ i\). Its existing dimension function satisfies
+\[
+  \delta_{U/k}(u)
+    =\operatorname{trdeg}_k\kappa_X(i(u))\in\mathbf Z.
+\]
+Consequently, if \(j:V\to X\) is another affine open immersion and
+\(i(u)=j(v)\), then
+\[
+  \delta_{U/k}(u)=\delta_{V/k}(v).
+\]
+No affineness or quasi-compactness of \(X\), finite subcover,
+integrality or reducedness assumption is needed.
+\end{proposition}
+
+\begin{proof}
+Choose one actual affine chart containing the selected point. Its
+structural morphism is locally of finite type, so
+Proposition~\ref{prop:structural-affine-value} gives finite residue
+degree on the chart. The base-compatible open-immersion comparison of
+Proposition~\ref{prop:structural-residue-field} identifies its full
+degree cardinal with that in \(X\).
+For any affine chart, the same comparison identifies its existing
+dimension-function value with the ambient residue degree. Two chart
+values with equal ambient images therefore agree. This is the
+pointwise affine reduction underlying
+\cite{StacksAlgebraicSchemeDimension}.
+\end{proof}
+
 For smooth projective schemes over a fixed field \(k\), composition of rational Chow
 correspondences is associative and bilinear
 \cite{StacksChowCorrespondenceComposition}, while graph classes compose
@@ -2461,6 +2498,11 @@ Its value comparisons are \leanpath{affine_schemeResidueField_trdeg_lt_aleph0},
 \leanpath{DimensionFunction.ofAffineLocallyOfFiniteType_eq_schemeResidueField_trdeg},
 and \leanpath{DimensionFunction.ofAffineLocallyOfFiniteType_apply_of_isOpenImmersion}
 in \leanpath{Cycles/AffineSchemeResidueDegree.lean}.
+Proposition~\ref{prop:chart-residue-degree} is
+\leanpath{schemeResidueField_trdeg_lt_aleph0},
+\leanpath{affineChart_dimension_eq_schemeResidueField_trdeg}, and
+\leanpath{affineChart_dimension_eq_of_eq_image} in
+\leanpath{Cycles/ChartResidueDegree.lean}.
 \end{leanfiles}
 
 \begin{statusnote}{\openstatus}
@@ -2537,10 +2579,11 @@ Proposition~\ref{prop:structural-affine-value} identifies the
 height-defined \(\delta_{X/k}\) on an arbitrary structural affine
 scheme with that residue degree and proves value agreement under open
 immersions between affine schemes.
-The next step compares affine charts at a common point of an arbitrary
-nonaffine ambient scheme and proves pointwise residue-degree finiteness
-there. The common-chart order and immediate-specialization laws must
-then assemble the general grading
+Proposition~\ref{prop:chart-residue-degree} proves pointwise
+residue-degree finiteness and agreement of affine-chart values at the
+same ambient point, without affineness or quasi-compactness of that
+ambient scheme. The remaining common-chart order and
+immediate-specialization laws must assemble the general grading
 \(\delta_k(x)=\operatorname{trdeg}_k\kappa(x)
   =\dim\overline{\{x\}}\)
 on the intended scheme \cite{StacksAlgebraicSchemeDimension}.
@@ -3868,6 +3911,12 @@ Dimension-function value and open-immersion comparison
 (Proposition~\ref{prop:structural-affine-value})\newline
 \leanpath{Cycles/AffineSchemeDimensionFunction.lean}\newline
 \leanpath{Cycles/AffineSchemeResidueDegree.lean}\\
+Pointwise residue degrees and affine-chart agreement (\formal) &
+\leanpath{schemeResidueField_trdeg_lt_aleph0}\newline
+\leanpath{affineChart_dimension_eq_of_eq_image}\newline
+Affine-chart value comparison
+(Proposition~\ref{prop:chart-residue-degree})\newline
+\leanpath{Cycles/ChartResidueDegree.lean}\\
 Compactified graph route (\formal; \conditional) &
 \leanpath{groupAlgebraProjectorExtension}\newline
 \leanpath{Boundary/CompactifiedGraphProjector.lean}\\

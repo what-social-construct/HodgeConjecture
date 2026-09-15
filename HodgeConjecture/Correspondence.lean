@@ -70,6 +70,7 @@ import HodgeConjecture.Cycles.StructuralResidueField
 import HodgeConjecture.Cycles.AffineResidueField
 import HodgeConjecture.Cycles.AffineResidueFieldDimension
 import HodgeConjecture.Cycles.AffineSchemeResidueDegree
+import HodgeConjecture.Cycles.ChartResidueDegree
 import HodgeConjecture.Correspondence.TransposeAlgebra
 import HodgeConjecture.Correspondence.ProjectorDefect
 import HodgeConjecture.Correspondence.ProjectorLift
@@ -182,6 +183,10 @@ Chow/cohomological realization:
     comparison on arbitrary affine schemes locally of finite type over a
     field, with base-compatible transport through the canonical affine
     isomorphism and agreement under affine open immersions.
+42. pointwise structural residue-degree finiteness on arbitrary schemes
+    locally of finite type over a field, identifying existing affine-chart
+    dimension values with ambient residue degrees and proving agreement
+    of two charts at points with the same actual ambient image.
 
 The free span algebra is not identified with a Chow ring. General proper
 cycle extraction, flat/Gysin operations and their rational-equivalence
@@ -192,8 +197,9 @@ it does not supply Chow convolution or its target realization.
 The affine dimension-function construction is now proved in all dimensions.
 Structural residue-field compatibility and open-immersion degree invariance
 are also proved, as are the structural residue-degree values on arbitrary
-affine schemes and their agreement under affine open immersions. Comparing
-charts in a general ambient scheme, assembling the global field-induced
-dimension function and identifying the target codimension grading remain
-separate steps.
+affine schemes and their agreement under affine open immersions. Pointwise
+finiteness and affine-chart value agreement in a general locally finite-type
+ambient scheme are also proved. Common-chart specialization and cover laws,
+the global field-induced dimension function and the target codimension
+grading remain separate steps.
 -/

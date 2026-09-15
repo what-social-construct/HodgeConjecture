@@ -858,19 +858,45 @@ finite-type \(p:Y\to\operatorname{Spec}k\), the same comparison proves
 morphism \(p\circ f\). This is a value theorem for the existing affine
 functions, not unrestricted open-immersion invariance of point height.
 
-**The next bounded goal is the actual chartwise construction.** Use an
-actual affine chart to prove pointwise structural residue-degree finiteness
-on a general locally finite-type \(k\)-scheme and compare affine chart
-values at the same ambient point. Then prove the global strictness and
-unit-step laws on a common affine chart. No global finite-dimensionality
-premise alone supplies these laws.
-For pointwise finiteness, use `Scheme.affineCover` and `Cover.exists_eq`
-to represent the ambient point by an actual affine-chart point before
-installing its point-dependent scalar action. Apply SP50 on the chart
-and SP49 to its open map. For two charts, compare each existing affine
-value with the ambient structural residue-degree expression, then use
-equality of their ambient images. No finite subcover or new global
-dimension-function object is needed for these three preliminary results.
+### Pointwise residue degrees and affine-chart agreement
+
+A11aj / SP51 proves the chartwise value comparison in
+`Cycles/ChartResidueDegree.lean`. For arbitrary \(X\) with locally
+finite-type \(p:X\to\operatorname{Spec}k\), each actual structural
+residue degree \(\operatorname{trdeg}_k\kappa_X(x)\) is finite.
+The proof uses `Scheme.affineCover` and `Cover.exists_eq` to represent
+the point by an actual affine-chart point before installing its
+point-dependent scalar action. SP50 gives finiteness on that chart,
+and SP49's actual residue map transfers the full cardinal. No ambient
+affineness, quasi-compactness, finite subcover, integrality or reducedness
+is required; this is not a global dimension bound.
+
+For any actual affine open chart \(i:U\to X\), its existing function
+satisfies
+\[
+ \delta_{U/k}(u)=\operatorname{trdeg}_k\kappa_X(i(u)),
+\]
+with the source structural morphism \(p\circ i\). Thus for another
+chart \(j:V\to X\), equality \(i(u)=j(v)\) implies
+\(\delta_{U/k}(u)=\delta_{V/k}(v)\). The proof packages the point,
+residue field and structural scalar action in one local proof expression;
+it does not identify dependent field carriers by fiat or introduce a new
+global dimension-function object.
+
+**The next bounded goal is common-chart specialization and cover-law
+transfer.** Put a specialization pair in an actual affine neighbourhood
+of its specialized point, prove that the actual chart point map reflects
+the relevant order and cover relation, and apply the existing affine
+strictness and unit-step laws. Combine these with the now-proved value
+comparison to construct the global field-induced dimension function.
+No global finite-dimensionality premise alone supplies these laws.
+In the repository's closure-inclusion order, choose the neighbourhood of
+\(x\) when \(x\leq y\): `Scheme.le_iff_specializes` and
+`Specializes.mem_open` then place \(y\) in the same open. The existing
+`exists_isAffineOpen_mem_and_subset` supplies an actual affine open, and
+`OrderEmbedding.subtype` with `CovBy.of_image` provides the reusable
+order-theoretic route into that chart. No second point-order object is
+needed for this planned transport.
 Do not replace these steps by a supplied dimension-function or gluing
 package, or by an unrestricted claim that open immersions preserve
 absolute point height. The general constructor remains open.

@@ -4470,3 +4470,143 @@ example (k : Type) [Field k]
   exact DimensionFunction.ofAffineLocallyOfFiniteType_eq_schemeResidueField_trdeg k _ _ x
 
 end AffineSchemeResidueDegreeRegressions
+
+-- SP51: pointwise structural residue degrees and affine-chart agreement in a general ambient scheme.
+#check HodgeConjecture.SchemeCycles.schemeResidueField_trdeg_lt_aleph0
+#check HodgeConjecture.SchemeCycles.affineChart_dimension_eq_schemeResidueField_trdeg
+#check HodgeConjecture.SchemeCycles.affineChart_dimension_eq_of_eq_image
+
+#print axioms HodgeConjecture.SchemeCycles.schemeResidueField_trdeg_lt_aleph0
+#print axioms HodgeConjecture.SchemeCycles.affineChart_dimension_eq_schemeResidueField_trdeg
+#print axioms HodgeConjecture.SchemeCycles.affineChart_dimension_eq_of_eq_image
+
+noncomputable section ChartResidueDegreeRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory
+open HodgeConjecture.SchemeCycles
+
+-- The pointwise theorem needs neither a global affine chart nor a finite cover.
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] (x : X) :
+    letI := residueFieldBaseAlgebra k p x
+    Algebra.trdeg k (X.residueField x) < Cardinal.aleph0 := by
+  fail_if_success
+    have : IsAffine X := inferInstance
+  fail_if_success
+    have : CompactSpace X := inferInstance
+  fail_if_success
+    have : IsNoetherian X := inferInstance
+  fail_if_success
+    have : Algebra k Γ(X, ⊤) := inferInstance
+  fail_if_success
+    have : Algebra k (X.residueField x) := inferInstance
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  exact schemeResidueField_trdeg_lt_aleph0 k X p x
+
+-- Proven pointwise finiteness makes conversion to a natural number lossless.
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] (x : X) :
+    letI := residueFieldBaseAlgebra k p x
+    ((Algebra.trdeg k (X.residueField x)).toNat : Cardinal) =
+      Algebra.trdeg k (X.residueField x) := by
+  letI := residueFieldBaseAlgebra k p x
+  exact Cardinal.cast_toNat_of_lt_aleph0 (schemeResidueField_trdeg_lt_aleph0 k X p x)
+
+-- The chart value is compared with the actual ambient field at its image.
+example (k : Type) [Field k] (X U : Scheme) [IsAffine U]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (i : U ⟶ X) [IsOpenImmersion i] (u : U) :
+    letI := residueFieldBaseAlgebra k p (i.base u)
+    DimensionFunction.ofAffineLocallyOfFiniteType k U (i ≫ p) u =
+      ((Algebra.trdeg k (X.residueField (i.base u))).toNat : ℤ) := by
+  fail_if_success
+    have : IsAffine X := inferInstance
+  fail_if_success
+    have : CompactSpace X := inferInstance
+  exact affineChart_dimension_eq_schemeResidueField_trdeg k p i u
+
+-- This applies to the existing canonical affine-cover maps without new chart data.
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (a : X.affineCover.I₀) (u : X.affineCover.X a) :
+    letI := residueFieldBaseAlgebra k p ((X.affineCover.f a).base u)
+    DimensionFunction.ofAffineLocallyOfFiniteType k (X.affineCover.X a)
+        (X.affineCover.f a ≫ p) u =
+      ((Algebra.trdeg k (X.residueField ((X.affineCover.f a).base u))).toNat : ℤ) :=
+  affineChart_dimension_eq_schemeResidueField_trdeg k p (X.affineCover.f a) u
+
+-- Every actual point has a chart preimage with that exact ambient point and value.
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] (x : X) :
+    letI := residueFieldBaseAlgebra k p x
+    ∃ (a : X.affineCover.I₀) (u : X.affineCover.X a),
+      (X.affineCover.f a).base u = x ∧
+      DimensionFunction.ofAffineLocallyOfFiniteType k (X.affineCover.X a)
+          (X.affineCover.f a ≫ p) u =
+        ((Algebra.trdeg k (X.residueField x)).toNat : ℤ) := by
+  obtain ⟨a, u, rfl⟩ := X.affineCover.exists_eq x
+  exact ⟨a, u, rfl, affineChart_dimension_eq_schemeResidueField_trdeg k p
+    (X.affineCover.f a) u⟩
+
+-- The comparison consumes equality of actual ambient images.
+example (k : Type) [Field k] (X U V : Scheme) [IsAffine U] [IsAffine V]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (i : U ⟶ X) [IsOpenImmersion i] (j : V ⟶ X) [IsOpenImmersion j]
+    (u : U) (v : V) (h : i.base u = j.base v) :
+    DimensionFunction.ofAffineLocallyOfFiniteType k U (i ≫ p) u =
+      DimensionFunction.ofAffineLocallyOfFiniteType k V (j ≫ p) v :=
+  affineChart_dimension_eq_of_eq_image k p i j u v h
+
+-- Two actual affine open subsets give the same value at a common ambient point.
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (U V : X.Opens) [IsAffine (U : Scheme)] [IsAffine (V : Scheme)]
+    (x : X) (hxU : x ∈ U) (hxV : x ∈ V) :
+    DimensionFunction.ofAffineLocallyOfFiniteType k U (U.ι ≫ p) ⟨x, hxU⟩ =
+      DimensionFunction.ofAffineLocallyOfFiniteType k V (V.ι ≫ p) ⟨x, hxV⟩ :=
+  affineChart_dimension_eq_of_eq_image k p U.ι V.ι ⟨x, hxU⟩ ⟨x, hxV⟩ rfl
+
+-- The identity chart recovers the preceding affine structural-value theorem.
+example (k : Type) [Field k] (X : Scheme) [IsAffine X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] (x : X) :
+    letI := residueFieldBaseAlgebra k p x
+    DimensionFunction.ofAffineLocallyOfFiniteType k X p x =
+      ((Algebra.trdeg k (X.residueField x)).toNat : ℤ) := by
+  simpa only [Category.id_comp] using
+    affineChart_dimension_eq_schemeResidueField_trdeg k p (𝟙 X) x
+
+-- Empty schemes require no chosen residue point.
+example (k : Type) [Field k] :
+    IsEmpty (Spec (CommRingCat.of (PUnit : Type)) : Scheme) ∧
+      ∀ x : Spec (CommRingCat.of (PUnit : Type)),
+        let p := Spec.map (CommRingCat.ofHom (algebraMap k (PUnit : Type)))
+        letI := residueFieldBaseAlgebra k p x
+        Algebra.trdeg k ((Spec (CommRingCat.of (PUnit : Type))).residueField x) <
+          Cardinal.aleph0 :=
+  ⟨inferInstance, fun x ↦ schemeResidueField_trdeg_lt_aleph0 k
+    (Spec (CommRingCat.of (PUnit : Type))) _ x⟩
+
+-- One cannot drop the equal-image condition: even the affine line has different point values.
+example (k : Type) [Field k] :
+    let p := Spec.map (CommRingCat.ofHom (algebraMap k (Polynomial k)))
+    letI : LocallyOfFiniteType p :=
+      (HasRingHomProperty.Spec_iff (P := @LocallyOfFiniteType)).mpr
+        (RingHom.finiteType_algebraMap.mpr inferInstance)
+    ¬ ∀ x y : Examples.affineLine k,
+      DimensionFunction.ofAffineLocallyOfFiniteType k (Examples.affineLine k) p x =
+        DimensionFunction.ofAffineLocallyOfFiniteType k (Examples.affineLine k) p y := by
+  let p := Spec.map (CommRingCat.ofHom (algebraMap k (Polynomial k)))
+  letI : LocallyOfFiniteType p :=
+    (HasRingHomProperty.Spec_iff (P := @LocallyOfFiniteType)).mpr
+      (RingHom.finiteType_algebraMap.mpr inferInstance)
+  dsimp only
+  intro h
+  have hv := h (genericPoint (Examples.affineLine k)) (Examples.affineLineOrigin k)
+  change Examples.affineLineDimensionFunction k (genericPoint (Examples.affineLine k)) =
+    Examples.affineLineDimensionFunction k (Examples.affineLineOrigin k) at hv
+  rw [Examples.affineLineDimensionFunction_genericPoint,
+    Examples.affineLineDimensionFunction_origin] at hv
+  norm_num at hv
+
+end ChartResidueDegreeRegressions

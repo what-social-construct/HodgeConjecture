@@ -563,9 +563,21 @@ be developed alongside that infrastructure.
    values agree under every open immersion between affine schemes over
    this field, using the pulled-back source structural map.
 
-   **Next bounded obligation:** prove pointwise finiteness and compare
-   affine chart values in a general locally finite-type ambient scheme,
-   then prove the global strictness and unit-step laws on a common chart.
+   **Chartwise value checkpoint (A11aj / SP51):**
+   `ChartResidueDegree.lean` proves finite structural residue degree at
+   every point of an arbitrary locally finite-type \(k\)-scheme using
+   one actual affine chart. Neither ambient affineness, quasi-compactness,
+   a finite subcover nor a global dimension bound is required. For any
+   affine open chart, its existing dimension value equals the actual
+   structural residue degree at its ambient image. Two chart values
+   therefore agree when their actual ambient images agree. The
+   point-dependent scalar action is retained throughout; no global
+   dimension-function object is introduced by these value theorems.
+
+   **Next bounded obligation:** put specialization pairs in a common
+   actual affine chart, transfer the order and cover relation there,
+   and prove the global strictness and unit-step laws using SP51's
+   value comparison. These laws must construct the global grading.
    No general constructor or open-gluing package is supplied as an input.
    Then identify dimension
    grading with target codimension grading in the intended integral or
