@@ -1016,12 +1016,43 @@ directions from tensor and quotient universal properties; flatness and
 quotient injectivity are not premises. General Chow rationalization need
 not be injective: it may kill torsion.
 
-**The next bounded goal is naturality for the already proved closed
-pushforward and scheme-isomorphism operations.** Prove coefficient
-extension commutes with those actual homogeneous-cycle maps, descend
-their proved principal-generator identities to rational Chow, and prove
-the rationalization squares on class representatives. Keep the same
-degree-compatibility and Noetherian premises as the integral operations.
+### Rational closed pushforward and scheme-isomorphism naturality
+
+A11ap / SP57 factors the existing graded closed pushforward through one
+semiring-parametric construction in `Cycles/GradedPushforward.lean`.
+The integer API is its definitional specialization; the actual image
+supports and the identity/composition laws are unchanged.
+`Cycles/CoefficientPushforward.lean` proves coefficient-cast compatibility
+on actual ungraded and homogeneous cycles. Actual open restriction along
+a scheme isomorphism preserves the corresponding homogeneous submodule
+over any semiring. These cycle statements require no Noetherian or
+integrality premise.
+
+`Cycles/RationalChowPushforward.lean` uses the existing integer
+principal-generator image identity to preserve the rational relation
+span. It descends to rational Chow with the same cycle representative,
+identity and composition laws. The original source/target Noetherianity
+and support-degree compatibility are retained; the latter is already
+proved for the actual restricted dimension function. The rationalization
+and tensor-comparison squares commute on all classes and tensors.
+
+`Cycles/RationalChowIsomorphism.lean` transports scalar extension of the
+existing integral Chow isomorphism into the actual rational-cycle
+quotients, then proves that its forward map is the independently
+constructed geometric closed pushforward. Its inverse on rational
+cycle representatives is exactly the existing open restriction. No
+second graded-isomorphism model or new inverse cycle operation is used.
+The proof never cancels the generally non-injective Chow rationalization
+map.
+
+**The next bounded goal is the actual function-field and local-order
+comparison for integral open immersions.** Generalize the existing
+generic-stalk function-field equivalence, its specialization and local
+algebra-map compatibility, from scheme isomorphisms to open immersions
+between integral schemes. Then transport actual divisor points and their
+signed orders through these maps. This precedes arbitrary-open
+principal-divisor/relation descent: an empty restricted carrier has no
+function field and must be handled separately, not assumed integral.
 Comparison with the prescribed target rational Chow groups and its
 intersection/Betti structure remains a separate geometric identification.
 An extension to reducible schemes must use an actual pure-dimensional

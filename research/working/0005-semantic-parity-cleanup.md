@@ -68,7 +68,7 @@ same PDF. No proof-status change follows from this editorial reorganization.
 
 ## Canonical semantic object and TeX registry
 
-### Construction and input checkpoints (SP17--SP56)
+### Construction and input checkpoints (SP17--SP57)
 
 | ID | Object or overlap | Disposition | Required action | Status |
 | --- | --- | --- | --- | --- |
@@ -112,6 +112,7 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP54 | Actual integral chain codimension and the existing d-minus-n grading | IDENTIFY / REINDEX | Prove finite ambient dimension and coheight, then derive codimension plus degree from the existing cover law. Identify support, fundamental-cycle and full-cycle degree d-minus-n criteria with actual codimension n. Reuse the existing grading; principal-relation data reindexing is recorded in SP55. | PROVED; FULL BUILD, 509 AXIOM REPORTS, SIXTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP55 | Actual codimension indexing of principal relations and generic-degree vanishing | REINDEX / CONNECT | Reindex degree d-minus-(n+1) relation data by the same codimension-n carriers and their unchanged function-field units. Preserve the actual ambient principal-divisor generator. Prove generic-degree index emptiness for any integral scheme with a supplied dimension function, and derive zero relation span and rational equivalence as equality under the existing Noetherian premise. | PROVED; FULL BUILD, 518 AXIOM REPORTS, SIXTEEN REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP56 | Rational homogeneous cycles and the scalar-extended principal-relation quotient | EXTEND COEFFICIENTS / COMPARE | Extend coefficients on the same homogeneous cycle module and identify its tensor scalar extension. Form the rational span of the same actual principal divisors and compare the resulting rational quotient with the tensor extension of the integral Chow group, preserving class representatives. Retain quotient-layer Noetherianity and distinguish coefficient injectivity from Chow rationalization. | PROVED; FULL BUILD, 538 AXIOM REPORTS, TWENTY REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+| SP57 | Rational closed pushforward and actual isomorphism restriction on the existing Chow quotient | EXTEND / DESCEND / COMPARE | Factor one coefficient-parametric graded closed pushforward, retain the integer specializations, prove coefficient compatibility and preservation of the same principal-relation span, and descend to rational Chow with identity/composition and tensor naturality. Identify the rational isomorphism's forward and inverse representative formulas with actual closed pushforward and open restriction. | PROVED; FULL BUILD, 560 AXIOM REPORTS, TWENTY REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -934,6 +935,49 @@ unique and every reference resolves. Historical SP18--SP55 validation
 blocks remain byte-identical. No manuscript status/gap commentary,
 project axiom, bibliography entry, submission-wrapper change or
 dependency-pin change was introduced. Diff checks pass.
+
+SP57 validation (2026-09-15): the modified graded-pushforward module,
+all three new leaf modules, and the full 3140-job Lean build pass, with
+only the two existing `Challenge` warnings. The twenty-one new public
+endpoints comprise four coefficient-parametric graded declarations,
+three coefficient/open-restriction compatibility declarations, eight
+rational Chow pushforward declarations and six rational Chow isomorphism
+declarations. The four existing integer graded API names retain their
+signatures as specializations of the same geometric map. The focused
+replay uses the unchanged original four imports and passes twenty-two
+checks/axiom reports: all twenty-one new endpoints plus the previously
+unreported integer `_val` theorem. All these reports use exactly
+`propext`, `Classical.choice`, and `Quot.sound`.
+
+All twenty new regressions pass without warnings or errors. They cover
+semiring-parametric cycles without Noetherianity, the literal integer
+specialization, actual fundamental-image supports, raw and graded cast
+compatibility, inverse isomorphism open restriction, unchanged actual
+principal generators, rational quotient representatives, canonical
+restricted grading, identity/composition, both rationalization squares,
+and the rational isomorphism's actual forward/inverse maps and tensor
+comparison. No cancellation or injectivity of general Chow
+rationalization is used.
+
+The complete integrated `research/Verification.lean` passes all 668
+declaration checks and 455 examples, without warnings or errors. All 560
+selected axiom reports were captured and matched against their exact
+inventory: no missing, unexpected or duplicate reports and no disallowed
+axiom. Of these, 558 use exactly the standard three. The existing
+`polynomialDimensionBound` uses no axioms, and the existing
+`genericFiber_isScalarTower_base` uses only `propext` and `Quot.sound`.
+The six primary proof-dependency checks and two supporting reports pass.
+Independent source and mathematical/manuscript parity reviews pass.
+
+The single PDF builds to 60 pages with a clean final log. The main
+statement on page 13, Proposition A.28 and its proof on pages 35--36,
+the new crosswalk row on page 50, and additional declarations on page 55
+were visually inspected. All twenty-one new public APIs occur exactly
+once in Appendix C; all 78 manuscript labels are unique and every
+reference resolves. Historical SP18--SP56 validation blocks remain
+byte-identical. No manuscript status/gap commentary, project axiom,
+bibliography entry, submission-wrapper change or dependency-pin change
+was introduced. Diff checks pass.
 
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
@@ -1942,8 +1986,10 @@ identifies codimension \(n\) with the existing degree \(d-n\)
 submodule. SP55 then reindexes the existing principal-relation data
 while retaining its actual carriers and function-field units. SP56
 extends the existing homogeneous cycles and Chow quotient to rational
-coefficients, preserving representatives. The next bounded step is
-naturality for the existing closed-pushforward and isomorphism operations.
+coefficients, preserving representatives. SP57 proves naturality for the
+existing closed-pushforward and isomorphism operations. The next bounded
+step is integral open-immersion function-field and local-order transport,
+before arbitrary-open descent of principal divisors and relations.
 
 ### Actual integral codimension and the existing shifted grading (SP54)
 
@@ -2145,17 +2191,101 @@ not extend to this general quotient. Generic-degree vanishing is a
 separate reuse of SP55 for integral Noetherian schemes with any supplied
 dimension function, without a field or finite-type premise.
 
-The next bounded implementation is rational closed-pushforward and
-isomorphism naturality for the existing proved operations. Extend their
-homogeneous cycle maps compatibly with \(z\mapsto z_{\mathbb Q}\),
-transport the rational span of the same principal generators, descend to
-the rational quotient, and compare with tensoring the existing integral
-Chow maps. Preserve class representatives and the actual inverse
-open-restriction formula in the isomorphism case. General proper
-pushforward still requires its norm comparison; arbitrary open,
-flat/Gysin operations require their own relation-preservation proofs.
-Chow convolution and the prescribed target identification/realization
-remain separate, as recorded in `GAP_MAP.md` and `TARGET_BRIDGE.md`.
+SP57 below proves rational closed-pushforward and isomorphism naturality
+for those existing operations. It preserves the actual cycle and class
+representatives and compares the descended maps with tensoring the
+integral Chow maps, without cancelling the potentially noninjective
+integer-to-rational Chow map.
+
+### Rational closed pushforward and isomorphism naturality (SP57)
+
+Let \(i:X\hookrightarrow Y\) be an actual closed immersion, supply
+dimension functions \(\delta_X,\delta_Y\), and assume the same
+support-degree comparison used by the integer pushforward:
+\[
+ \deg_{\delta_Y}(i(W))=\deg_{\delta_X}(W)
+ \qquad(W\in\operatorname{IntSub}(X)).
+\]
+Here \(i(W)\) is the already constructed actual closed image, not a
+replacement support. For \(\delta_X=i^*\delta_Y\), the existing
+restricted dimension function proves this equality. The cycle layer
+works over any coefficient semiring \(R\); the rational relation and
+Chow layers retain `IsNoetherian X` and `IsNoetherian Y`.
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `gradedClosedImmersionPushforwardWithCoefficients` | the existing geometric pushforward restricted to homogeneous cycles over any semiring | $i_{*,\mathrm{cyc}}:Z^{\delta_X}_{\mathrm{fin},m}(X;R)\to Z^{\delta_Y}_{\mathrm{fin},m}(Y;R)$ |
+| `gradedClosedImmersionPushforwardWithCoefficients_val` | its underlying finite cycle is the existing actual closed pushforward | prose only; the same $i_{*,\mathrm{cyc}}z$ |
+| `gradedClosedImmersionPushforwardWithCoefficients_id` | graded identity over any coefficient semiring | $(\mathrm{id}_X)_{*,\mathrm{cyc}}=\mathrm{id}$ |
+| `gradedClosedImmersionPushforwardWithCoefficients_comp` | graded composition is the existing geometric composition | $j_{*,\mathrm{cyc}}i_{*,\mathrm{cyc}}=(j\circ i)_{*,\mathrm{cyc}}$ |
+| `closedImmersionPushforward_rationalize` | actual ungraded closed pushforward commutes with coefficient cast | $i_{*,\mathrm{cyc}}(z_{\mathbb Q})=(i_{*,\mathrm{cyc}}z)_{\mathbb Q}$ |
+| `gradedClosedImmersionPushforward_rationalize` | the same coefficient square on the existing homogeneous submodules | prose only; the preceding equality in degree $m$ |
+| `openRestriction_iso_mem_cyclesOfDegree` | actual open restriction along an isomorphism has the canonical restricted degree | $e^*z\in Z^{e^*\delta}_{\mathrm{fin},m}(X;R)$ for $z\in Z^\delta_{\mathrm{fin},m}(Y;R)$ |
+| `rationalPrincipalRelations_le_comap_closedImmersionPushforward` | preservation of the rational span of the same actual principal generators | $i_{*,\mathrm{cyc}}\mathcal R_m^{\delta_X}(X;\mathbb Q)\subseteq\mathcal R_m^{\delta_Y}(Y;\mathbb Q)$ |
+| `rationalChowClosedImmersionPushforward` | descent of actual closed pushforward to the rational quotient | $i_*:\operatorname{CH}_m^{\delta_X}(X;\mathbb Q)\to\operatorname{CH}_m^{\delta_Y}(Y;\mathbb Q)$ |
+| `rationalChowClosedImmersionPushforward_classMap` | the quotient map preserves the actual cycle formula | $i_*[z]_{\mathbb Q}=[i_{*,\mathrm{cyc}}z]_{\mathbb Q}$ |
+| `rationalChowClosedImmersionPushforward_restricted_classMap` | canonical dimension restriction supplies the support-degree premise | prose only; the same formula for $\delta_X=i^*\delta_Y$ |
+| `rationalChowClosedImmersionPushforward_id` | rational quotient identity | $(\mathrm{id}_X)_*=\mathrm{id}$ |
+| `rationalChowClosedImmersionPushforward_comp` | rational quotient composition | $j_*i_*=(j\circ i)_*$ |
+| `rationalChowClosedImmersionPushforward_chowRationalize` | the integral-to-rational class map commutes with actual pushforward | prose only; the coefficient-extension square for $i_*$ |
+| `rationalChowClosedImmersionPushforward_chowRationalizationEquiv` | the descended rational map is the scalar extension of integral Chow pushforward | prose only; the tensor-comparison square with $1\otimes i_*$ |
+| `rationalChowIsoEquiv` | scalar extension of the existing integral Chow isomorphism in the actual rational quotient models | $e_*:\operatorname{CH}_m^{e^*\delta}(X;\mathbb Q)\xrightarrow{\sim}\operatorname{CH}_m^\delta(Y;\mathbb Q)$ |
+| `rationalChowIsoEquiv_chowRationalizationEquiv` | the rational isomorphism agrees with tensoring the existing integral isomorphism | prose only; the same tensor-comparison square |
+| `rationalChowIsoEquiv_toLinearMap` | its forward map is the already descended rational closed pushforward | prose only; the same $e_*$ |
+| `rationalChowIsoEquiv_classMap` | forward isomorphism preserves actual closed-image representatives | $e_*[z]_{\mathbb Q}=[e_{*,\mathrm{cyc}}z]_{\mathbb Q}$ |
+| `rationalChowIsoEquiv_symm_classMap` | inverse isomorphism is actual open restriction on representatives | $e_*^{-1}[z]_{\mathbb Q}=[e^*z]_{\mathbb Q}$ |
+| `rationalChowIsoEquiv_chowRationalize` | rationalization commutes with the existing integral Chow isomorphism | prose only; the corresponding class-map square |
+
+The four coefficient-parametric endpoints extend
+`Cycles/GradedPushforward.lean`. Its four integer API names keep their
+existing signatures as definitional specializations at \(R=\mathbb Z\);
+there is only one geometric graded pushforward. The three compatibility
+endpoints are in `Cycles/CoefficientPushforward.lean`, the eight rational
+closed-pushforward endpoints in `Cycles/RationalChowPushforward.lean`,
+and the six rational isomorphism endpoints in
+`Cycles/RationalChowIsomorphism.lean`. Manuscript Proposition A.28,
+`prop:rational-chow-naturality`, states the same scope and representative
+formulas.
+
+The cycle proof uses the existing actual closed-image generator formula
+and finite-support linearity. Neither it nor the isomorphism
+open-restriction membership proof requires Noetherianity, integrality,
+a field base, finite type or a finite set of available supports. The
+isomorphism proof uses actual open restriction as closed pushforward
+along the inverse scheme isomorphism; the closed-image equivalence
+supplies the support-degree equality. Identity and composition therefore
+remain the same geometric operations over every semiring, including
+trivial coefficients.
+
+For the rational quotient, the integral principal-generator image
+identity and coefficient square show that each generator lands in the
+target rational relation span. Span preservation then gives quotient
+descent. No extra relation-preservation hypothesis is supplied. The
+class-map formula is definitional, and identity/composition follow from
+the already proved cycle formulas. Naturality with the full tensor
+comparison is checked on scalar-weighted class representatives. The
+rational isomorphism is constructed by conjugating the scalar extension
+of the existing integral Chow equivalence through the two tensor
+comparisons. Its actual closed-pushforward formula follows from the
+tensor square, and its inverse formula follows from actual inverse
+closed pushforward/open restriction. These arguments use equivalences
+and quotient representatives; they do not cancel `chowRationalize` or
+assert its injectivity. No new carrier, dimension function, relation
+prescription or Chow quotient is introduced.
+
+The next bounded checkpoint generalizes the existing actual
+function-field isomorphism/equivalence and its stalk-specialization /
+algebra-map compatibility from scheme isomorphisms to open immersions
+between integral schemes. The existing `FunctionFieldTransport` proof
+already uses open-immersion geometry. The subsequent step is the
+corresponding divisor-point and local-order transport. This prepares,
+but does not yet prove, arbitrary-open restriction of principal divisors
+and descent of their relation span; an empty restricted carrier requires
+a separate branch. General proper pushforward still needs its norm
+comparison, and flat/Gysin operations need their own relation-preservation
+proofs. General Chow convolution and prescribed target
+identification/realization/coverage remain separate, as recorded in
+`GAP_MAP.md` and `TARGET_BRIDGE.md`.
 
 ## Objects deliberately assigned no independent notation
 

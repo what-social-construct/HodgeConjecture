@@ -1037,6 +1037,11 @@ of these same principal relations gives
  \qquad q\otimes[z]\longmapsto[qz_{\mathbf Q}],
 \]
 where \(z_{\mathbf Q}\) is the coefficientwise image of \(z\).
+Closed pushforward on these rational quotients preserves the same
+representatives, respects identity and composition, and commutes
+with the tensor comparison and integral-to-rational class maps.
+For a scheme isomorphism its inverse is induced by the existing
+rational open restriction.
 
 \item
 If \(p:X\to\operatorname{Spec}k\) is locally of finite type over
@@ -1093,8 +1098,10 @@ every carrier has degree at most the generic degree, so the
 top-degree relation index is empty.
 Coefficient extension on the actual support basis and the
 tensor--quotient comparison give the rational formula.
+Actual principal-generator transport then gives rational closed
+pushforward and its compatibility with coefficient extension.
 The detailed statements and proofs are
-Propositions~\ref{prop:scheme-local-order}--\ref{prop:rational-chow-coefficients}.
+Propositions~\ref{prop:scheme-local-order}--\ref{prop:rational-chow-naturality}.
 \end{proof}
 
 For smooth projective schemes over a fixed field \(k\), composition of rational Chow
@@ -2959,6 +2966,78 @@ generic-degree relation index is empty by
 Proposition~\ref{prop:principal-relation-codimension}.
 \end{proof}
 
+\begin{proposition}[Rational Chow pushforward and isomorphism naturality]
+\label{prop:rational-chow-naturality}
+Let \(i:X\hookrightarrow Y\) be a closed immersion, and let
+\(\delta_X,\delta_Y\) be dimension functions such that
+\[
+ \deg_{\delta_Y}i(W)=\deg_{\delta_X}W
+       \qquad\bigl(W\in\operatorname{IntSub}(X)\bigr),
+\]
+where \(i(W)\) is the actual integral closed image.
+For every \(m\in\mathbf Z\) and semiring \(R\), the existing cycle pushforward restricts to
+\[
+ i_*:Z^{\delta_X}_{\mathrm{fin},m}(X;R)
+       \longrightarrow Z^{\delta_Y}_{\mathrm{fin},m}(Y;R).
+\]
+These maps respect identity and composition. Integer-to-rational
+coefficient extension commutes with them. The degree condition
+holds canonically for \(\delta_X=\delta_Y\circ i\).
+
+If \(X\) and \(Y\) are Noetherian, the same rational cycle map
+preserves the rational principal-relation submodules and induces
+\[
+ i_*:\operatorname{CH}_m^{\delta_X}(X;\mathbf Q)
+       \longrightarrow\operatorname{CH}_m^{\delta_Y}(Y;\mathbf Q),
+ \qquad i_*[z]=[i_*z].
+\]
+It respects identity and composition, and the tensor comparisons of
+Proposition~\ref{prop:rational-chow-coefficients} form a commutative square
+\[
+\begin{CD}
+ \mathbf Q\otimes_{\mathbf Z}\operatorname{CH}_m^{\delta_X}(X)
+   @>{1\otimes i_*}>>
+ \mathbf Q\otimes_{\mathbf Z}\operatorname{CH}_m^{\delta_Y}(Y)\\
+ @V{\simeq}VV @VV{\simeq}V\\
+ \operatorname{CH}_m^{\delta_X}(X;\mathbf Q)
+   @>{i_*}>> \operatorname{CH}_m^{\delta_Y}(Y;\mathbf Q).
+\end{CD}
+\]
+Its tensor-\(1\) specialization gives
+\((i_*c)_{\mathbf Q}=i_*(c_{\mathbf Q})\) for integral Chow classes \(c\).
+
+For an isomorphism \(e:X\xrightarrow{\sim}Y\) of Noetherian schemes and
+\(\delta_X=\delta_Y\circ e\), this rational pushforward is a
+\(\mathbf Q\)-linear equivalence. On rational cycle representatives,
+\[
+ e_*[z]=[e_*z],\qquad e_*^{-1}[w]=[e^*w],
+\]
+where \(e^*\) is the existing open restriction along \(e\).
+The equivalence commutes with scalar extension of the integral
+Chow isomorphism.
+\end{proposition}
+
+\begin{proof}
+The actual image of each integral closed carrier defines the same
+coefficientwise pushforward for every \(R\); the degree condition
+places its image in the existing homogeneous submodule. Checking
+on that carrier basis proves coefficient compatibility. The
+previously proved closed-image isomorphism transports each actual
+principal divisor to the principal divisor of its transported
+function, the closed-immersion case of
+\cite{StacksRationalEquivalenceProperPushforward}.
+Coefficient compatibility therefore carries every rational relation
+generator into the target span. Quotient descent gives the stated
+map, and its representative formula proves identity, composition
+and both rationalization squares. For an isomorphism, scalar
+extension of the existing integral Chow equivalence, conjugated by
+the two coefficient comparisons, defines a \(\mathbf Q\)-linear isomorphism.
+Its representative formula identifies the forward map with the
+actual rational closed pushforward. Closed pushforward along the
+inverse equals the existing open restriction, giving the stated
+inverse formula on rational cycle representatives.
+\end{proof}
+
 \section{Detailed split geometric computations}
 \label{app:split-computations}
 
@@ -3910,6 +3989,15 @@ Actual generators, class maps and representative formulas
 \leanpath{Cycles/CoefficientExtension.lean}\newline
 \leanpath{Cycles/ScalarExtensionQuotient.lean}\newline
 \leanpath{Cycles/RationalChow.lean}\\
+Rational closed pushforward and scheme-isomorphism naturality &
+\leanpath{rationalChowClosedImmersionPushforward}\newline
+\leanpath{rationalChowIsoEquiv}\newline
+Coefficient-parametric cycles, actual representatives and tensor squares
+(Proposition~\ref{prop:rational-chow-naturality})\newline
+\leanpath{Cycles/GradedPushforward.lean}\newline
+\leanpath{Cycles/CoefficientPushforward.lean}\newline
+\leanpath{Cycles/RationalChowPushforward.lean}\newline
+\leanpath{Cycles/RationalChowIsomorphism.lean}\\
 Compactified graph route &
 \leanpath{groupAlgebraProjectorExtension}\newline
 \leanpath{Boundary/CompactifiedGraphProjector.lean}\\
@@ -4349,7 +4437,26 @@ principal table, grouped by mathematical layer.
 \leanpath{chowRationalizationEquiv_tmul_classMap};
 \leanpath{chowRationalize};
 \leanpath{chowRationalize_classMap};
-\leanpath{rationalPrincipalRelations_genericDegree_eq_bot}.
+\leanpath{rationalPrincipalRelations_genericDegree_eq_bot};
+\leanpath{gradedClosedImmersionPushforwardWithCoefficients};
+\leanpath{gradedClosedImmersionPushforwardWithCoefficients_val};
+\leanpath{gradedClosedImmersionPushforwardWithCoefficients_id};
+\leanpath{gradedClosedImmersionPushforwardWithCoefficients_comp};
+\leanpath{closedImmersionPushforward_rationalize};
+\leanpath{gradedClosedImmersionPushforward_rationalize};
+\leanpath{openRestriction_iso_mem_cyclesOfDegree};
+\leanpath{rationalPrincipalRelations_le_comap_closedImmersionPushforward};
+\leanpath{rationalChowClosedImmersionPushforward_classMap};
+\leanpath{rationalChowClosedImmersionPushforward_restricted_classMap};
+\leanpath{rationalChowClosedImmersionPushforward_id};
+\leanpath{rationalChowClosedImmersionPushforward_comp};
+\leanpath{rationalChowClosedImmersionPushforward_chowRationalize};
+\leanpath{rationalChowClosedImmersionPushforward_chowRationalizationEquiv};
+\leanpath{rationalChowIsoEquiv_chowRationalizationEquiv};
+\leanpath{rationalChowIsoEquiv_toLinearMap};
+\leanpath{rationalChowIsoEquiv_classMap};
+\leanpath{rationalChowIsoEquiv_symm_classMap};
+\leanpath{rationalChowIsoEquiv_chowRationalize}.
 
 \paragraph{localization, fixed rings, and inertia.}
 \normsrc{FixedRingLocalization.lean};

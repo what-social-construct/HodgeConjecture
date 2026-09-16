@@ -643,19 +643,32 @@ be developed alongside that infrastructure.
    proof uses universal properties, not flatness or an injectivity
    assumption; Chow rationalization may kill torsion.
 
-   **Next bounded obligation:** prove rational coefficient naturality
-   for the existing homogeneous closed pushforward and scheme-isomorphism
-   maps, descend their proved principal-generator identities to rational
-   Chow, and verify compatibility with the new scalar-extension
-   equivalences on actual representatives. Retain degree compatibility
-   and the integral operations' Noetherian premises. The current graded
-   pushforward fixes integer coefficients, but its construction and
-   identity/composition proofs are semiring-parametric. Factor out one
-   coefficient-parametric core while retaining the integer API as a
-   specialization. Reuse the actual principal-generator image theorem
-   for rational relation preservation; do not copy the geometric
-   construction or cancel the non-injective Chow rationalization map.
-   The target's actual
+   **Rational operation checkpoint (A11ap / SP57):**
+   The graded closed pushforward now has one semiring-parametric core;
+   its original integer names are definitional specializations.
+   `CoefficientPushforward.lean` proves coefficient-cast compatibility
+   on actual ungraded and homogeneous cycles, and degree preservation
+   for the actual isomorphism open restriction, without Noetherianity.
+   `RationalChowPushforward.lean` reuses the proved integral
+   principal-generator image theorem to preserve the rational relation
+   span and descend to rational Chow. Its actual representative,
+   identity/composition, integral-rationalization and tensor-comparison
+   formulas retain the original degree-compatibility and Noetherian
+   premises. The canonical restricted dimension function supplies the
+   degree compatibility. `RationalChowIsomorphism.lean` identifies the
+   scalar extension of the existing integral Chow isomorphism with that
+   geometric rational pushforward, and identifies its inverse on actual
+   rational cycle representatives with the existing open restriction.
+   Neither a second graded-isomorphism construction nor cancellation of
+   Chow rationalization is used.
+
+   **Next bounded obligation:** extend the actual generic-stalk
+   function-field equivalence and its specialization/algebra-map
+   compatibility from isomorphisms to open immersions between integral
+   schemes; prove the associated divisor-point and signed local-order
+   transport. General-open principal-divisor and relation descent then
+   need the actual restricted carrier, with an explicit empty-carrier
+   branch rather than a nonexistent function field. The target's actual
    rational Chow groups and their intersection/Betti structure still
    require a geometric identification.
    A pure-dimensional or componentwise extension is needed

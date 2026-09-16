@@ -5523,3 +5523,240 @@ example :
   exact h₁
 
 end RationalChowCoefficientRegressions
+
+-- SP57: coefficient-compatible actual closed pushforward and rational Chow isomorphisms.
+#check HodgeConjecture.SchemeCycles.gradedClosedImmersionPushforwardWithCoefficients
+#check HodgeConjecture.SchemeCycles.gradedClosedImmersionPushforwardWithCoefficients_val
+#check HodgeConjecture.SchemeCycles.gradedClosedImmersionPushforwardWithCoefficients_id
+#check HodgeConjecture.SchemeCycles.gradedClosedImmersionPushforwardWithCoefficients_comp
+#check HodgeConjecture.SchemeCycles.closedImmersionPushforward_rationalize
+#check HodgeConjecture.SchemeCycles.gradedClosedImmersionPushforward_rationalize
+#check HodgeConjecture.SchemeCycles.openRestriction_iso_mem_cyclesOfDegree
+#check HodgeConjecture.SchemeCycles.rationalPrincipalRelations_le_comap_closedImmersionPushforward
+#check HodgeConjecture.SchemeCycles.rationalChowClosedImmersionPushforward
+#check HodgeConjecture.SchemeCycles.rationalChowClosedImmersionPushforward_classMap
+#check HodgeConjecture.SchemeCycles.rationalChowClosedImmersionPushforward_restricted_classMap
+#check HodgeConjecture.SchemeCycles.rationalChowClosedImmersionPushforward_id
+#check HodgeConjecture.SchemeCycles.rationalChowClosedImmersionPushforward_comp
+#check HodgeConjecture.SchemeCycles.rationalChowClosedImmersionPushforward_chowRationalize
+#check HodgeConjecture.SchemeCycles.rationalChowClosedImmersionPushforward_chowRationalizationEquiv
+#check HodgeConjecture.SchemeCycles.rationalChowIsoEquiv
+#check HodgeConjecture.SchemeCycles.rationalChowIsoEquiv_chowRationalizationEquiv
+#check HodgeConjecture.SchemeCycles.rationalChowIsoEquiv_toLinearMap
+#check HodgeConjecture.SchemeCycles.rationalChowIsoEquiv_classMap
+#check HodgeConjecture.SchemeCycles.rationalChowIsoEquiv_symm_classMap
+#check HodgeConjecture.SchemeCycles.rationalChowIsoEquiv_chowRationalize
+
+#print axioms HodgeConjecture.SchemeCycles.gradedClosedImmersionPushforwardWithCoefficients
+#print axioms HodgeConjecture.SchemeCycles.gradedClosedImmersionPushforwardWithCoefficients_val
+#print axioms HodgeConjecture.SchemeCycles.gradedClosedImmersionPushforwardWithCoefficients_id
+#print axioms HodgeConjecture.SchemeCycles.gradedClosedImmersionPushforwardWithCoefficients_comp
+#print axioms HodgeConjecture.SchemeCycles.closedImmersionPushforward_rationalize
+#print axioms HodgeConjecture.SchemeCycles.gradedClosedImmersionPushforward_rationalize
+#print axioms HodgeConjecture.SchemeCycles.openRestriction_iso_mem_cyclesOfDegree
+#print axioms HodgeConjecture.SchemeCycles.rationalPrincipalRelations_le_comap_closedImmersionPushforward
+#print axioms HodgeConjecture.SchemeCycles.rationalChowClosedImmersionPushforward
+#print axioms HodgeConjecture.SchemeCycles.rationalChowClosedImmersionPushforward_classMap
+#print axioms HodgeConjecture.SchemeCycles.rationalChowClosedImmersionPushforward_restricted_classMap
+#print axioms HodgeConjecture.SchemeCycles.rationalChowClosedImmersionPushforward_id
+#print axioms HodgeConjecture.SchemeCycles.rationalChowClosedImmersionPushforward_comp
+#print axioms HodgeConjecture.SchemeCycles.rationalChowClosedImmersionPushforward_chowRationalize
+#print axioms HodgeConjecture.SchemeCycles.rationalChowClosedImmersionPushforward_chowRationalizationEquiv
+#print axioms HodgeConjecture.SchemeCycles.rationalChowIsoEquiv
+#print axioms HodgeConjecture.SchemeCycles.rationalChowIsoEquiv_chowRationalizationEquiv
+#print axioms HodgeConjecture.SchemeCycles.rationalChowIsoEquiv_toLinearMap
+#print axioms HodgeConjecture.SchemeCycles.rationalChowIsoEquiv_classMap
+#print axioms HodgeConjecture.SchemeCycles.rationalChowIsoEquiv_symm_classMap
+#print axioms HodgeConjecture.SchemeCycles.rationalChowIsoEquiv_chowRationalize
+
+-- Complete coverage of the unchanged integer specialization's coefficient formula.
+#check HodgeConjecture.SchemeCycles.gradedClosedImmersionPushforward_val
+#print axioms HodgeConjecture.SchemeCycles.gradedClosedImmersionPushforward_val
+
+noncomputable section RationalChowPushforwardRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory TensorProduct
+open HodgeConjecture.SchemeCycles
+
+-- The coefficient-parametric map uses the old geometric operation without Noetherianity.
+example (R : Type) [Semiring R] (X Y : Scheme)
+    (δX : DimensionFunction X) (δY : DimensionFunction Y)
+    (i : X ⟶ Y) [IsClosedImmersion i]
+    (hdeg : ∀ W, supportDegree δY (closedImageSubscheme i W) = supportDegree δX W)
+    (n : ℤ) (c : cyclesOfDegree R δX n) :
+    (gradedClosedImmersionPushforwardWithCoefficients R δX δY i hdeg n c).val =
+      closedImmersionPushforward R i c.val := by
+  fail_if_success
+    have : IsNoetherian X := inferInstance
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  exact gradedClosedImmersionPushforwardWithCoefficients_val R δX δY i hdeg n c
+
+-- The old integer API is a literal specialization, not a second map.
+example (X Y : Scheme) (δX : DimensionFunction X) (δY : DimensionFunction Y)
+    (i : X ⟶ Y) [IsClosedImmersion i]
+    (hdeg : ∀ W, supportDegree δY (closedImageSubscheme i W) = supportDegree δX W)
+    (n : ℤ) :
+    gradedClosedImmersionPushforward δX δY i hdeg n =
+      gradedClosedImmersionPushforwardWithCoefficients ℤ δX δY i hdeg n := rfl
+
+example (R : Type) [Semiring R] (X : Scheme) (δ : DimensionFunction X)
+    (hdeg : ∀ W, supportDegree δ (closedImageSubscheme (𝟙 X) W) = supportDegree δ W)
+    (n : ℤ) :
+    gradedClosedImmersionPushforwardWithCoefficients R δ δ (𝟙 X) hdeg n = LinearMap.id :=
+  gradedClosedImmersionPushforwardWithCoefficients_id R X δ hdeg n
+
+-- Fundamental cycles go to the identical actual image support over any semiring.
+example (R : Type) [Semiring R] (X Y : Scheme)
+    (δX : DimensionFunction X) (δY : DimensionFunction Y)
+    (i : X ⟶ Y) [IsClosedImmersion i]
+    (hdeg : ∀ W, supportDegree δY (closedImageSubscheme i W) = supportDegree δX W)
+    (n : ℤ) (W : IntegralClosedSubscheme X) (hW : supportDegree δX W = n) :
+    (gradedClosedImmersionPushforwardWithCoefficients R δX δY i hdeg n
+      ⟨fundamentalCycle R W, fundamentalCycle_mem_cyclesOfDegree R δX n W hW⟩).val =
+      fundamentalCycle R (closedImageSubscheme i W) :=
+  closedImmersionPushforward_fundamentalCycle i R W
+
+example (X Y : Scheme) (i : X ⟶ Y) [IsClosedImmersion i] (c : Cycles X ℤ) :
+    closedImmersionPushforward ℚ i (Finsupp.mapRange (Int.castAddHom ℚ) (map_zero _) c) =
+      Finsupp.mapRange (Int.castAddHom ℚ) (map_zero _) (closedImmersionPushforward ℤ i c) :=
+  closedImmersionPushforward_rationalize i c
+
+example (X Y : Scheme) (δX : DimensionFunction X) (δY : DimensionFunction Y)
+    (i : X ⟶ Y) [IsClosedImmersion i]
+    (hdeg : ∀ W, supportDegree δY (closedImageSubscheme i W) = supportDegree δX W)
+    (n : ℤ) (c : cyclesOfDegree ℤ δX n) :
+    gradedClosedImmersionPushforwardWithCoefficients ℚ δX δY i hdeg n
+        (cyclesOfDegreeRationalize δX n c) =
+      cyclesOfDegreeRationalize δY n (gradedClosedImmersionPushforward δX δY i hdeg n c) :=
+  gradedClosedImmersionPushforward_rationalize δX δY i hdeg n c
+
+-- Inverse open restriction preserves degree before any relation quotient is available.
+example (R : Type) [Semiring R] (X Y : Scheme) (δ : DimensionFunction Y)
+    (e : X ≅ Y) (n : ℤ) (c : cyclesOfDegree R δ n) :
+    openRestriction R e.hom c.val ∈ cyclesOfDegree R (δ.comapClosedImmersion e.hom) n := by
+  fail_if_success
+    have : IsNoetherian X := inferInstance
+  exact openRestriction_iso_mem_cyclesOfDegree R δ e n c.val c.property
+
+-- A rationalized principal generator maps to the old geometric closed-image generator.
+example (X Y : Scheme) [IsNoetherian X] [IsNoetherian Y]
+    (δX : DimensionFunction X) (δY : DimensionFunction Y)
+    (i : X ⟶ Y) [IsClosedImmersion i]
+    (hdeg : ∀ W, supportDegree δY (closedImageSubscheme i W) = supportDegree δX W)
+    (n : ℤ) (d : PrincipalRelationData δX n) :
+    gradedClosedImmersionPushforwardWithCoefficients ℚ δX δY i hdeg n
+        (cyclesOfDegreeRationalize δX n (principalRelation δX n d)) =
+      cyclesOfDegreeRationalize δY n
+        (principalRelation δY n (d.closedImage δX δY i hdeg n)) := by
+  rw [gradedClosedImmersionPushforward_rationalize,
+    gradedClosedImmersionPushforward_principalRelation]
+
+example (X Y : Scheme) [IsNoetherian X] [IsNoetherian Y]
+    (δX : DimensionFunction X) (δY : DimensionFunction Y)
+    (i : X ⟶ Y) [IsClosedImmersion i]
+    (hdeg : ∀ W, supportDegree δY (closedImageSubscheme i W) = supportDegree δX W)
+    (n : ℤ) (c : cyclesOfDegree ℚ δX n) :
+    rationalChowClosedImmersionPushforward δX δY i hdeg n (rationalClassMap δX n c) =
+      rationalClassMap δY n
+        (gradedClosedImmersionPushforwardWithCoefficients ℚ δX δY i hdeg n c) :=
+  rationalChowClosedImmersionPushforward_classMap δX δY i hdeg n c
+
+-- The canonical restricted dimension function supplies its own degree comparison.
+example (X Y : Scheme) [IsNoetherian X] [IsNoetherian Y]
+    (δ : DimensionFunction Y) (i : X ⟶ Y) [IsClosedImmersion i]
+    (n : ℤ) (c : cyclesOfDegree ℚ (δ.comapClosedImmersion i) n) :
+    rationalChowClosedImmersionPushforward (δ.comapClosedImmersion i) δ i
+        (fun W ↦ (supportDegree_comapClosedImmersion δ i W).symm) n
+        (rationalClassMap (δ.comapClosedImmersion i) n c) =
+      rationalClassMap δ n
+        (gradedClosedImmersionPushforwardWithCoefficients ℚ (δ.comapClosedImmersion i)
+          δ i (fun W ↦ (supportDegree_comapClosedImmersion δ i W).symm) n c) :=
+  rationalChowClosedImmersionPushforward_restricted_classMap δ i n c
+
+example (X : Scheme) [IsNoetherian X] (δ : DimensionFunction X)
+    (hdeg : ∀ W, supportDegree δ (closedImageSubscheme (𝟙 X) W) = supportDegree δ W)
+    (n : ℤ) :
+    rationalChowClosedImmersionPushforward δ δ (𝟙 X) hdeg n = LinearMap.id :=
+  rationalChowClosedImmersionPushforward_id X δ hdeg n
+
+example (X Y Z : Scheme) [IsNoetherian X] [IsNoetherian Y] [IsNoetherian Z]
+    (δX : DimensionFunction X) (δY : DimensionFunction Y) (δZ : DimensionFunction Z)
+    (i : X ⟶ Y) (j : Y ⟶ Z) [IsClosedImmersion i] [IsClosedImmersion j]
+    (hi : ∀ W, supportDegree δY (closedImageSubscheme i W) = supportDegree δX W)
+    (hj : ∀ W, supportDegree δZ (closedImageSubscheme j W) = supportDegree δY W)
+    (hij : ∀ W, supportDegree δZ (closedImageSubscheme (i ≫ j) W) = supportDegree δX W)
+    (n : ℤ) :
+    (rationalChowClosedImmersionPushforward δY δZ j hj n).comp
+      (rationalChowClosedImmersionPushforward δX δY i hi n) =
+        rationalChowClosedImmersionPushforward δX δZ (i ≫ j) hij n :=
+  rationalChowClosedImmersionPushforward_comp δX δY δZ i j hi hj hij n
+
+-- Naturality concerns the map, not an invalid cancellation of integral Chow rationalization.
+example (X Y : Scheme) [IsNoetherian X] [IsNoetherian Y]
+    (δX : DimensionFunction X) (δY : DimensionFunction Y)
+    (i : X ⟶ Y) [IsClosedImmersion i]
+    (hdeg : ∀ W, supportDegree δY (closedImageSubscheme i W) = supportDegree δX W)
+    (n : ℤ) (z : ChowGroup δX n) :
+    rationalChowClosedImmersionPushforward δX δY i hdeg n (chowRationalize δX n z) =
+      chowRationalize δY n (chowClosedImmersionPushforward δX δY i hdeg n z) :=
+  rationalChowClosedImmersionPushforward_chowRationalize δX δY i hdeg n z
+
+example (X Y : Scheme) [IsNoetherian X] [IsNoetherian Y]
+    (δX : DimensionFunction X) (δY : DimensionFunction Y)
+    (i : X ⟶ Y) [IsClosedImmersion i]
+    (hdeg : ∀ W, supportDegree δY (closedImageSubscheme i W) = supportDegree δX W)
+    (n : ℤ) (t : ℚ ⊗[ℤ] ChowGroup δX n) :
+    rationalChowClosedImmersionPushforward δX δY i hdeg n (chowRationalizationEquiv δX n t) =
+      chowRationalizationEquiv δY n
+        ((chowClosedImmersionPushforward δX δY i hdeg n).baseChange ℚ t) :=
+  rationalChowClosedImmersionPushforward_chowRationalizationEquiv δX δY i hdeg n t
+
+-- The tensor-constructed isomorphism is identified with the actual quotient pushforward.
+example (X Y : Scheme) [IsNoetherian X] [IsNoetherian Y]
+    (δ : DimensionFunction Y) (e : X ≅ Y) (n : ℤ) :
+    (rationalChowIsoEquiv δ e n).toLinearMap =
+      rationalChowClosedImmersionPushforward (δ.comapClosedImmersion e.hom) δ e.hom
+        (fun W ↦ (supportDegree_comapClosedImmersion δ e.hom W).symm) n :=
+  rationalChowIsoEquiv_toLinearMap δ e n
+
+example (X Y : Scheme) [IsNoetherian X] [IsNoetherian Y]
+    (δ : DimensionFunction Y) (e : X ≅ Y) (n : ℤ)
+    (c : cyclesOfDegree ℚ (δ.comapClosedImmersion e.hom) n) :
+    rationalChowIsoEquiv δ e n (rationalClassMap (δ.comapClosedImmersion e.hom) n c) =
+      rationalClassMap δ n
+        (gradedClosedImmersionPushforwardWithCoefficients ℚ (δ.comapClosedImmersion e.hom)
+          δ e.hom (fun W ↦ (supportDegree_comapClosedImmersion δ e.hom W).symm) n c) :=
+  rationalChowIsoEquiv_classMap δ e n c
+
+-- The inverse on rational representatives is literally the pre-existing open restriction.
+example (X Y : Scheme) [IsNoetherian X] [IsNoetherian Y]
+    (δ : DimensionFunction Y) (e : X ≅ Y) (n : ℤ) (c : cyclesOfDegree ℚ δ n) :
+    (rationalChowIsoEquiv δ e n).symm (rationalClassMap δ n c) =
+      rationalClassMap (δ.comapClosedImmersion e.hom) n
+        ⟨openRestriction ℚ e.hom c.val,
+          openRestriction_iso_mem_cyclesOfDegree ℚ δ e n c.val c.property⟩ :=
+  rationalChowIsoEquiv_symm_classMap δ e n c
+
+example (X Y : Scheme) [IsNoetherian X] [IsNoetherian Y]
+    (δ : DimensionFunction Y) (e : X ≅ Y) (n : ℤ)
+    (z : ChowGroup (δ.comapClosedImmersion e.hom) n) :
+    rationalChowIsoEquiv δ e n (chowRationalize (δ.comapClosedImmersion e.hom) n z) =
+      chowRationalize δ n (chowIsoEquiv δ e n z) :=
+  rationalChowIsoEquiv_chowRationalize δ e n z
+
+example (X Y : Scheme) [IsNoetherian X] [IsNoetherian Y]
+    (δ : DimensionFunction Y) (e : X ≅ Y) (n : ℤ)
+    (t : ℚ ⊗[ℤ] ChowGroup (δ.comapClosedImmersion e.hom) n) :
+    rationalChowIsoEquiv δ e n
+        (chowRationalizationEquiv (δ.comapClosedImmersion e.hom) n t) =
+      chowRationalizationEquiv δ n
+        (LinearEquiv.baseChange ℤ ℚ _ _ (chowIsoEquiv δ e n) t) :=
+  rationalChowIsoEquiv_chowRationalizationEquiv δ e n t
+
+example (X Y : Scheme) [IsNoetherian X] [IsNoetherian Y]
+    (δ : DimensionFunction Y) (e : X ≅ Y) (n : ℤ) (z : RationalChowGroup δ n) :
+    rationalChowIsoEquiv δ e n ((rationalChowIsoEquiv δ e n).symm z) = z :=
+  (rationalChowIsoEquiv δ e n).apply_symm_apply z
+
+end RationalChowPushforwardRegressions
