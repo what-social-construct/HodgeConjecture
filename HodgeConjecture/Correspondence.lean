@@ -75,6 +75,7 @@ import HodgeConjecture.Cycles.FieldDimensionFunction
 import HodgeConjecture.Cycles.FieldSupportDimension
 import HodgeConjecture.Cycles.IntegralCodimension
 import HodgeConjecture.Cycles.PrincipalRelationCodimension
+import HodgeConjecture.Cycles.RationalChow
 import HodgeConjecture.Correspondence.TransposeAlgebra
 import HodgeConjecture.Correspondence.ProjectorDefect
 import HodgeConjecture.Correspondence.ProjectorLift

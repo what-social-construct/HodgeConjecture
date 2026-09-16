@@ -68,7 +68,7 @@ same PDF. No proof-status change follows from this editorial reorganization.
 
 ## Canonical semantic object and TeX registry
 
-### Construction and input checkpoints (SP17--SP55)
+### Construction and input checkpoints (SP17--SP56)
 
 | ID | Object or overlap | Disposition | Required action | Status |
 | --- | --- | --- | --- | --- |
@@ -111,6 +111,7 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP53 | Global point height and actual integral-carrier dimension | IDENTIFY / COMPARE | Bound height above by nonnegative strict grading and below by one actual affine chart. Identify the global function with finite height and actual point-closure dimension; derive carrier-degree and fundamental-cycle criteria and qualified open-height invariance. Keep integral codimension conversion separate. | PROVED; FULL BUILD, 500 AXIOM REPORTS, FOURTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP54 | Actual integral chain codimension and the existing d-minus-n grading | IDENTIFY / REINDEX | Prove finite ambient dimension and coheight, then derive codimension plus degree from the existing cover law. Identify support, fundamental-cycle and full-cycle degree d-minus-n criteria with actual codimension n. Reuse the existing grading; principal-relation data reindexing is recorded in SP55. | PROVED; FULL BUILD, 509 AXIOM REPORTS, SIXTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP55 | Actual codimension indexing of principal relations and generic-degree vanishing | REINDEX / CONNECT | Reindex degree d-minus-(n+1) relation data by the same codimension-n carriers and their unchanged function-field units. Preserve the actual ambient principal-divisor generator. Prove generic-degree index emptiness for any integral scheme with a supplied dimension function, and derive zero relation span and rational equivalence as equality under the existing Noetherian premise. | PROVED; FULL BUILD, 518 AXIOM REPORTS, SIXTEEN REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+| SP56 | Rational homogeneous cycles and the scalar-extended principal-relation quotient | EXTEND COEFFICIENTS / COMPARE | Extend coefficients on the same homogeneous cycle module and identify its tensor scalar extension. Form the rational span of the same actual principal divisors and compare the resulting rational quotient with the tensor extension of the integral Chow group, preserving class representatives. Retain quotient-layer Noetherianity and distinguish coefficient injectivity from Chow rationalization. | PROVED; FULL BUILD, 538 AXIOM REPORTS, TWENTY REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -897,6 +898,43 @@ conventions in 02I9, 02RW and 02QO were rechecked; no new source axiom,
 bibliography entry, submission-wrapper change or dependency-pin change
 was introduced. Diff checks pass.
 
+SP56 validation (2026-09-15): all three new leaf modules and the full
+3137-job Lean build pass, with only the two existing `Challenge`
+warnings. The twenty public endpoints comprise seven coefficient
+extension declarations, two generic scalar-extension quotient
+declarations, and eleven rational principal-relation/Chow declarations.
+The focused replay uses the unchanged original four imports and passes
+all twenty declaration checks, twenty axiom reports and twenty new
+regressions without warnings or errors. These cover arbitrary-scheme
+coefficient extension without Noetherianity, signed and fundamental
+cycles on the same actual supports, tensor/inverse formulas, empty and
+negative degrees, unchanged actual principal generators, quotient
+representatives, generic-degree vanishing, a nonflat integer-to-mod-two
+scalar extension, and a genuinely nonzero torsion class killed by
+rational tensoring.
+
+The complete integrated `research/Verification.lean` passes all 646
+declaration checks and 435 examples, with no warnings or errors. All 538
+selected axiom reports were captured and matched against their exact
+declaration inventory: no missing, unexpected or duplicate reports, and
+no disallowed axiom. The twenty new reports and 516 previous reports use
+exactly `propext`, `Classical.choice`, and `Quot.sound`. The existing
+`polynomialDimensionBound` uses no axioms; the existing
+`genericFiber_isScalarTower_base` uses `propext` and `Quot.sound` only.
+The six primary proof-dependency checks and two supporting reports pass.
+Independent source and mathematical/parity reviews pass.
+
+The single PDF builds to 58 pages with a clean final log. Main-theorem
+pages 12--13, Proposition A.27 and its proof on page 35, the new crosswalk
+row on page 48, and additional declarations on page 53 were visually
+inspected. All twenty new public endpoints occur once in the Appendix C
+declaration map, with the general Chow equivalence qualified to
+distinguish the older split-specific name. All 77 manuscript labels are
+unique and every reference resolves. Historical SP18--SP55 validation
+blocks remain byte-identical. No manuscript status/gap commentary,
+project axiom, bibliography entry, submission-wrapper change or
+dependency-pin change was introduced. Diff checks pass.
+
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
 | `SplitPointGeometry.scheme` | finite split scheme | $Z_I=\operatorname{Spec}(k^I)$ |
@@ -1358,9 +1396,11 @@ class map and the Hodge quotient selector. This does not install a second
 cycle module or projector; the earlier finite-split zero-cycle adapter
 remains separately scoped and has not been silently identified with this
 general quotient. Its comparison is a later parity adapter if needed.
-The general quotient here has integer coefficients; rational coefficient
-extension and comparison with the prescribed rational Chow target remain
-separate from the already proved finite-split scalar-extension adapter.
+The quotient constructed at SP40 has integer coefficients. SP56 below
+constructs its rational coefficient extension using the same homogeneous
+cycles and principal generators, independently of the earlier finite-split
+adapter. Comparison with the prescribed target rational Chow groups
+remains a separate geometric identification.
 
 ### Actual dimensions and a canonical low-dimensional grading (SP41)
 
@@ -1394,10 +1434,11 @@ quotient hypotheses. SP42 subsequently proves the affine
 transcendence-degree comparison. In higher-dimensional finite-type
 geometry, the uniform-chain theorem, one-step law and general scheme
 grading remain open.
-The target's codimension convention and rational coefficient comparison
-also remain separate; mixed-dimensional components do not acquire a
-silently chosen global $d-p$ conversion. There is one cycle module, one
-principal-relation quotient construction and no new projector or source axiom.
+SP54 below identifies the integral target's codimension convention, and
+SP56 constructs the rational coefficient comparison. Mixed-dimensional
+components do not acquire a silently chosen global $d-p$ conversion.
+Both comparisons retain the existing cycle module and actual
+principal-relation construction, with no new projector or source axiom.
 
 ### Selected literature inputs
 
@@ -1899,9 +1940,10 @@ is introduced.
 SP54 below proves the integral codimension/degree comparison and
 identifies codimension \(n\) with the existing degree \(d-n\)
 submodule. SP55 then reindexes the existing principal-relation data
-while retaining its actual carriers and function-field units. The next
-bounded step is rational coefficient extension of the existing
-homogeneous cycles and Chow quotient, preserving representatives.
+while retaining its actual carriers and function-field units. SP56
+extends the existing homogeneous cycles and Chow quotient to rational
+coefficients, preserving representatives. The next bounded step is
+naturality for the existing closed-pushforward and isomorphism operations.
 
 ### Actual integral codimension and the existing shifted grading (SP54)
 
@@ -1959,8 +2001,8 @@ quotient.
 
 A reducible extension still needs actual pure-dimensional geometry or
 componentwise grading; smoothness alone does not supply one uniform
-dimension. The general rational coefficient comparison and target
-realization remain separate obligations.
+dimension. SP56 supplies the general rational coefficient comparison;
+target identification and realization remain separate obligations.
 
 ### Actual codimension indexing of principal relations (SP55)
 
@@ -2016,9 +2058,8 @@ cycle degree alone does not imply an empty relation-data type. At
 \(-1\). No new carrier type, function-field transport, dimension
 function, relation operation, cycle module or Chow quotient is introduced.
 
-The next bounded implementation is rational coefficient extension of
-the existing homogeneous cycles, followed by the representative-preserving
-comparison
+SP56 below constructs rational coefficient extension of the existing
+homogeneous cycles and the representative-preserving comparison
 \[
  \mathbb Q\otimes_{\mathbb Z}\operatorname{CH}_m^\delta(X)
  \;\cong\;
@@ -2027,14 +2068,94 @@ comparison
  \{(\iota_W)_*\operatorname{div}_W(f):\deg_\delta W=m+1\}.
 \]
 The displayed rational generators are the coefficient extensions of the
-same actual integer principal divisors. Preserve the class maps and
-their cycle representatives, and retain the existing quotient's
-Noetherian premise. Do not assert injectivity of general Chow
-rationalization: torsion may be killed, and the earlier finite-split
-injectivity theorem is not a general comparison. Identifying this
-quotient with the prescribed target rational Chow groups remains a
-separate geometric identification, as in `GAP_MAP.md` and
-`TARGET_BRIDGE.md`.
+same actual integer principal divisors. Its class maps retain their
+cycle representatives, and the quotient retains the existing Noetherian
+premise. General Chow rationalization is not asserted to be injective:
+torsion may be killed, and the earlier finite-split injectivity theorem
+is not a general comparison.
+
+### Rational coefficient extension of the existing cycle and Chow constructions (SP56)
+
+Keep the same actual integral closed carriers, supplied dimension
+function \(\delta\), degree \(m\in\mathbb Z\), and homogeneous
+cycle modules \(Z^\delta_{\mathrm{fin},m}(X;R)\). Write
+\(z_{\mathbb Q}\) for the coefficientwise cast of an integer cycle.
+Use \(\mathcal R_m^\delta(X;\mathbb Q)\) for the rational span of
+the same actual principal generators and
+\(\operatorname{CH}_m^\delta(X;\mathbb Q)\) for its quotient.
+These are coefficient extensions of the existing construction, not
+replacement geometric cycle or relation data.
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `cyclesOfDegreeRationalize` | coefficient extension on the existing homogeneous submodule | $z\mapsto z_{\mathbb Q}:Z^\delta_{\mathrm{fin},m}(X;\mathbb Z)\to Z^\delta_{\mathrm{fin},m}(X;\mathbb Q)$ |
+| `cyclesOfDegreeRationalize_apply` | literal coefficient cast at the same support | $z_{\mathbb Q}(W)=(z(W):\mathbb Q)$ |
+| `cyclesOfDegreeRationalize_injective` | coefficient injectivity before any relation quotient | prose only; injectivity of $z\mapsto z_{\mathbb Q}$ |
+| `cyclesOfDegreeRationalize_single` | the same integral support, with its coefficient cast | $a[W]\mapsto(a:\mathbb Q)[W]$ |
+| `cyclesOfDegreeRationalizationEquiv` | rational homogeneous cycles are scalar extension of the integer module | $\mathbb Q\otimes_{\mathbb Z}Z^\delta_{\mathrm{fin},m}(X;\mathbb Z)\simeq Z^\delta_{\mathrm{fin},m}(X;\mathbb Q)$ |
+| `cyclesOfDegreeRationalizationEquiv_tmul` | scalar extension preserves actual cycle representatives | $q\otimes z\mapsto qz_{\mathbb Q}$ |
+| `cyclesOfDegreeRationalizationEquiv_one_tmul` | the tensor unit recovers the coefficient cast | $1\otimes z\mapsto z_{\mathbb Q}$ |
+| `scalarExtensionQuotientEquiv` | universal-property quotient comparison for an existing scalar-extension model $E:S\otimes_R M\simeq N$ | $S\otimes_R(M/\langle r_i\rangle_R)\simeq N/\langle f(r_i)\rangle_S$ when $E(s\otimes m)=s f(m)$ |
+| `scalarExtensionQuotientEquiv_tmul_mk` | the generic comparison retains quotient representatives | $s\otimes[m]\mapsto[s f(m)]$ |
+| `rationalPrincipalRelations` | rational span of coefficient-extended actual principal divisors | $\mathcal R_m^\delta(X;\mathbb Q)=\operatorname{span}_{\mathbb Q}\{((\iota_W)_*\operatorname{div}_W(f))_{\mathbb Q}:\deg_\delta W=m+1\}$ |
+| `RationalChowGroup` | rational cycles modulo that same generator prescription | $\operatorname{CH}_m^\delta(X;\mathbb Q)=Z^\delta_{\mathrm{fin},m}(X;\mathbb Q)/\mathcal R_m^\delta(X;\mathbb Q)$ |
+| `rationalClassMap` | quotient class map on rational homogeneous cycles | $z\mapsto[z]_{\mathbb Q}$ |
+| `rationalClassMap_eq_zero_iff` | the actual rational relation space is the class-map kernel | $[z]_{\mathbb Q}=0\iff z\in\mathcal R_m^\delta(X;\mathbb Q)$ |
+| `rationalClassMap_surjective` | every rational class has an actual finite homogeneous representative | prose only; surjectivity of $z\mapsto[z]_{\mathbb Q}$ |
+| `rationalClassMap_principalRelation` | each existing principal generator vanishes after coefficient extension | $[((\iota_W)_*\operatorname{div}_W(f))_{\mathbb Q}]_{\mathbb Q}=0$ |
+| `chowRationalizationEquiv` | tensor extension of the integer Chow quotient equals the rational quotient | $\mathbb Q\otimes_{\mathbb Z}\operatorname{CH}_m^\delta(X)\simeq\operatorname{CH}_m^\delta(X;\mathbb Q)$ |
+| `chowRationalizationEquiv_tmul_classMap` | the Chow comparison preserves scalar-weighted representatives | $q\otimes[z]\mapsto[qz_{\mathbb Q}]_{\mathbb Q}$ |
+| `chowRationalize` | canonical coefficient extension on integral Chow classes | $\operatorname{CH}_m^\delta(X)\to\operatorname{CH}_m^\delta(X;\mathbb Q)$; ordinary arrow |
+| `chowRationalize_classMap` | the canonical rationalization commutes with the existing class map | $[z]\mapsto[z_{\mathbb Q}]_{\mathbb Q}$ |
+| `rationalPrincipalRelations_genericDegree_eq_bot` | the rational relation span also vanishes in generic degree | $\mathcal R_{\delta(\eta_X)}^\delta(X;\mathbb Q)=0$ on integral Noetherian $X$ |
+
+The seven coefficient endpoints are in `Cycles/CoefficientExtension.lean`,
+the two generic algebraic endpoints in `Cycles/ScalarExtensionQuotient.lean`,
+and the eleven rational-quotient endpoints in `Cycles/RationalChow.lean`.
+Manuscript Proposition A.27, `prop:rational-chow-coefficients`, records
+the same coefficient and representative comparisons.
+
+The coefficient map is the actual integer cast on finitely supported
+functions and retains the support-degree proof. Its injectivity uses
+injectivity of \(\mathbb Z\to\mathbb Q\) coefficientwise. Restricting
+the existing supported-module equivalence to the same set of degree-\(m\)
+carriers gives the tensor comparison. No Noetherian, integral, field-base,
+finite-type or finite-carrier-set hypothesis is needed; an empty or
+infinite set of available carriers still gives finite-support cycles.
+Neither the dimension function nor the codimension reindexing changes.
+
+The scalar-extension quotient theorem works over arbitrary commutative
+rings \(R,S\) and an \(R\)-algebra \(S\), with compatible module
+actions and the displayed existing equivalence \(E\). The forward map
+is a quotient lift followed by tensor extension. The inverse is the
+existing \(E^{-1}\), followed by tensoring the original quotient map,
+then descent through the span of the extended generators. Both inverse
+laws are proved on actual representatives. No flatness assumption or
+injectivity of the coefficient or quotient map is used.
+
+The geometric rational quotient retains `IsNoetherian X` exactly where
+the existing actual principal-relation map requires it. Its generator
+index, carrier and rational function are those of SP40/SP55; only the
+coefficients and the span's scalar ring change. Applying the generic
+comparison gives the Chow tensor equivalence with its pure-tensor formula
+by definitional equality. The canonical integer-to-rational Chow map
+then uses \(1\otimes[z]\). It is not asserted to be injective: torsion
+may be killed. The earlier finite-split Chow injectivity theorem does
+not extend to this general quotient. Generic-degree vanishing is a
+separate reuse of SP55 for integral Noetherian schemes with any supplied
+dimension function, without a field or finite-type premise.
+
+The next bounded implementation is rational closed-pushforward and
+isomorphism naturality for the existing proved operations. Extend their
+homogeneous cycle maps compatibly with \(z\mapsto z_{\mathbb Q}\),
+transport the rational span of the same principal generators, descend to
+the rational quotient, and compare with tensoring the existing integral
+Chow maps. Preserve class representatives and the actual inverse
+open-restriction formula in the isomorphism case. General proper
+pushforward still requires its norm comparison; arbitrary open,
+flat/Gysin operations require their own relation-preservation proofs.
+Chow convolution and the prescribed target identification/realization
+remain separate, as recorded in `GAP_MAP.md` and `TARGET_BRIDGE.md`.
 
 ## Objects deliberately assigned no independent notation
 

@@ -5293,3 +5293,233 @@ example (Y : Scheme) [IsIntegral Y] [IsNoetherian Y] (ε : DimensionFunction Y) 
     ((classMap_eq_iff ε (ε (genericPoint Y)) c e).mp h)
 
 end PrincipalRelationCodimensionRegressions
+
+-- SP56: rational coefficients on the existing cycles and actual principal-relation quotient.
+#check HodgeConjecture.SchemeCycles.cyclesOfDegreeRationalize
+#check HodgeConjecture.SchemeCycles.cyclesOfDegreeRationalize_apply
+#check HodgeConjecture.SchemeCycles.cyclesOfDegreeRationalize_injective
+#check HodgeConjecture.SchemeCycles.cyclesOfDegreeRationalize_single
+#check HodgeConjecture.SchemeCycles.cyclesOfDegreeRationalizationEquiv
+#check HodgeConjecture.SchemeCycles.cyclesOfDegreeRationalizationEquiv_tmul
+#check HodgeConjecture.SchemeCycles.cyclesOfDegreeRationalizationEquiv_one_tmul
+#check HodgeConjecture.SchemeCycles.scalarExtensionQuotientEquiv
+#check HodgeConjecture.SchemeCycles.scalarExtensionQuotientEquiv_tmul_mk
+#check HodgeConjecture.SchemeCycles.rationalPrincipalRelations
+#check HodgeConjecture.SchemeCycles.RationalChowGroup
+#check HodgeConjecture.SchemeCycles.rationalClassMap
+#check HodgeConjecture.SchemeCycles.rationalClassMap_eq_zero_iff
+#check HodgeConjecture.SchemeCycles.rationalClassMap_surjective
+#check HodgeConjecture.SchemeCycles.rationalClassMap_principalRelation
+#check HodgeConjecture.SchemeCycles.chowRationalizationEquiv
+#check HodgeConjecture.SchemeCycles.chowRationalizationEquiv_tmul_classMap
+#check HodgeConjecture.SchemeCycles.chowRationalize
+#check HodgeConjecture.SchemeCycles.chowRationalize_classMap
+#check HodgeConjecture.SchemeCycles.rationalPrincipalRelations_genericDegree_eq_bot
+
+#print axioms HodgeConjecture.SchemeCycles.cyclesOfDegreeRationalize
+#print axioms HodgeConjecture.SchemeCycles.cyclesOfDegreeRationalize_apply
+#print axioms HodgeConjecture.SchemeCycles.cyclesOfDegreeRationalize_injective
+#print axioms HodgeConjecture.SchemeCycles.cyclesOfDegreeRationalize_single
+#print axioms HodgeConjecture.SchemeCycles.cyclesOfDegreeRationalizationEquiv
+#print axioms HodgeConjecture.SchemeCycles.cyclesOfDegreeRationalizationEquiv_tmul
+#print axioms HodgeConjecture.SchemeCycles.cyclesOfDegreeRationalizationEquiv_one_tmul
+#print axioms HodgeConjecture.SchemeCycles.scalarExtensionQuotientEquiv
+#print axioms HodgeConjecture.SchemeCycles.scalarExtensionQuotientEquiv_tmul_mk
+#print axioms HodgeConjecture.SchemeCycles.rationalPrincipalRelations
+#print axioms HodgeConjecture.SchemeCycles.RationalChowGroup
+#print axioms HodgeConjecture.SchemeCycles.rationalClassMap
+#print axioms HodgeConjecture.SchemeCycles.rationalClassMap_eq_zero_iff
+#print axioms HodgeConjecture.SchemeCycles.rationalClassMap_surjective
+#print axioms HodgeConjecture.SchemeCycles.rationalClassMap_principalRelation
+#print axioms HodgeConjecture.SchemeCycles.chowRationalizationEquiv
+#print axioms HodgeConjecture.SchemeCycles.chowRationalizationEquiv_tmul_classMap
+#print axioms HodgeConjecture.SchemeCycles.chowRationalize
+#print axioms HodgeConjecture.SchemeCycles.chowRationalize_classMap
+#print axioms HodgeConjecture.SchemeCycles.rationalPrincipalRelations_genericDegree_eq_bot
+
+noncomputable section RationalChowCoefficientRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory TensorProduct
+open HodgeConjecture.SchemeCycles
+
+-- Coefficient extension itself has no integrality, Noetherianity, or finite-support-index premise.
+example (X : Scheme) (δ : DimensionFunction X) (n : ℤ) :
+    Nonempty ((ℚ ⊗[ℤ] cyclesOfDegree ℤ δ n) ≃ₗ[ℚ] cyclesOfDegree ℚ δ n) := by
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  fail_if_success
+    have : IsNoetherian X := inferInstance
+  fail_if_success
+    have : CompactSpace X := inferInstance
+  exact ⟨cyclesOfDegreeRationalizationEquiv δ n⟩
+
+example (X : Scheme) (δ : DimensionFunction X) (n : ℤ)
+    (c : cyclesOfDegree ℤ δ n) (W : IntegralClosedSubscheme X) :
+    (cyclesOfDegreeRationalize δ n c : Cycles X ℚ) W = (c.val W : ℚ) :=
+  cyclesOfDegreeRationalize_apply δ n c W
+
+example (X : Scheme) (δ : DimensionFunction X) (n : ℤ) :
+    Function.Injective (cyclesOfDegreeRationalize δ n) :=
+  cyclesOfDegreeRationalize_injective δ n
+
+-- Negative multiplicities are preserved on the identical actual support.
+example (X : Scheme) (δ : DimensionFunction X) (n : ℤ)
+    (W : IntegralClosedSubscheme X) (hW : supportDegree δ W = n) :
+    cyclesOfDegreeRationalize δ n
+      ⟨Finsupp.single W (-3), single_mem_cyclesOfDegree ℤ δ n W (-3) hW⟩ =
+      ⟨Finsupp.single W (-3), single_mem_cyclesOfDegree ℚ δ n W (-3) hW⟩ := by
+  simpa only [Int.cast_neg, Int.cast_ofNat] using
+    cyclesOfDegreeRationalize_single δ n W (-3) hW
+
+example (X : Scheme) (δ : DimensionFunction X) (n : ℤ)
+    (W : IntegralClosedSubscheme X) (hW : supportDegree δ W = n) :
+    cyclesOfDegreeRationalize δ n
+      ⟨fundamentalCycle ℤ W, fundamentalCycle_mem_cyclesOfDegree ℤ δ n W hW⟩ =
+      ⟨fundamentalCycle ℚ W, fundamentalCycle_mem_cyclesOfDegree ℚ δ n W hW⟩ := by
+  simpa only [fundamentalCycle, Int.cast_one] using
+    cyclesOfDegreeRationalize_single δ n W 1 hW
+
+example (X : Scheme) (δ : DimensionFunction X) (n : ℤ)
+    (q : ℚ) (c : cyclesOfDegree ℤ δ n) (W : IntegralClosedSubscheme X) :
+    (cyclesOfDegreeRationalizationEquiv δ n (q ⊗ₜ[ℤ] c) : Cycles X ℚ) W =
+      q * (c.val W : ℚ) := by
+  rw [cyclesOfDegreeRationalizationEquiv_tmul]
+  rfl
+
+example (X : Scheme) (δ : DimensionFunction X) (n : ℤ)
+    (c : cyclesOfDegree ℤ δ n) :
+    (cyclesOfDegreeRationalizationEquiv δ n).symm (cyclesOfDegreeRationalize δ n c) =
+      1 ⊗ₜ[ℤ] c := by
+  apply (cyclesOfDegreeRationalizationEquiv δ n).injective
+  simp
+
+example (X : Scheme) (δ : DimensionFunction X) (n : ℤ)
+    (c : cyclesOfDegree ℚ δ n) :
+    cyclesOfDegreeRationalizationEquiv δ n
+      ((cyclesOfDegreeRationalizationEquiv δ n).symm c) = c :=
+  (cyclesOfDegreeRationalizationEquiv δ n).apply_symm_apply c
+
+-- An absent degree has no cycles; the equivalence does not need a nonempty basis.
+example (X : Scheme) (δ : DimensionFunction X) (n : ℤ)
+    (hn : ∀ W : IntegralClosedSubscheme X, supportDegree δ W ≠ n)
+    (c : cyclesOfDegree ℚ δ n) : c = 0 := by
+  apply Subtype.ext
+  apply Finsupp.ext
+  intro W
+  by_contra h
+  exact hn W ((mem_cyclesOfDegree_iff ℚ δ n c.val).mp c.property W h)
+
+-- Negative natural-geometric degrees are empty without global Noetherianity or compactness.
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (n : ℤ) (hn : n < 0)
+    (c : cyclesOfDegree ℚ (DimensionFunction.ofLocallyOfFiniteType k X p) n) :
+    c = 0 := by
+  apply Subtype.ext
+  apply Finsupp.ext
+  intro W
+  by_contra h
+  have hd := (mem_cyclesOfDegree_iff ℚ _ n c.val).mp c.property W h
+  have hnon := DimensionFunction.ofLocallyOfFiniteType_nonneg k X p (ambientGenericPoint W)
+  change DimensionFunction.ofLocallyOfFiniteType k X p (ambientGenericPoint W) = n at hd
+  omega
+
+-- Actual rational Chow classes have finite representatives on any Noetherian scheme.
+example (X : Scheme) [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ) :
+    Function.Surjective (rationalClassMap δ n) := by
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  exact rationalClassMap_surjective δ n
+
+-- The generator family is literally the old actual principal relations, coefficient-extended.
+example (X : Scheme) [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ) :
+    rationalPrincipalRelations δ n =
+      Submodule.span ℚ (Set.range (fun d : PrincipalRelationData δ n ↦
+        cyclesOfDegreeRationalize δ n (principalRelation δ n d))) := rfl
+
+example (X : Scheme) [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ)
+    (d : PrincipalRelationData δ n) (W : IntegralClosedSubscheme X) :
+    letI := d.1.val.property
+    (cyclesOfDegreeRationalize δ n (principalRelation δ n d) : Cycles X ℚ) W =
+      ((ambientPrincipalDivisor d.1.val d.2) W : ℚ) := rfl
+
+example (X : Scheme) [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ)
+    (d : PrincipalRelationData δ n) :
+    rationalClassMap δ n (cyclesOfDegreeRationalize δ n (principalRelation δ n d)) = 0 :=
+  rationalClassMap_principalRelation δ n d
+
+example (X : Scheme) [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ)
+    (q : ℚ) (c : cyclesOfDegree ℤ δ n) :
+    chowRationalizationEquiv δ n (q ⊗ₜ[ℤ] classMap δ n c) =
+      rationalClassMap δ n (q • cyclesOfDegreeRationalize δ n c) :=
+  chowRationalizationEquiv_tmul_classMap δ n q c
+
+example (X : Scheme) [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ)
+    (c : cyclesOfDegree ℤ δ n) :
+    chowRationalize δ n (classMap δ n c) =
+      rationalClassMap δ n (cyclesOfDegreeRationalize δ n c) :=
+  chowRationalize_classMap δ n c
+
+-- Generic-degree vanishing uses supplied dimension data, not a field realization.
+example (X : Scheme) [IsIntegral X] [IsNoetherian X] (δ : DimensionFunction X) :
+    rationalPrincipalRelations δ (δ (genericPoint X)) = ⊥ :=
+  rationalPrincipalRelations_genericDegree_eq_bot X δ
+
+example (X : Scheme) [IsIntegral X] [IsNoetherian X] (δ : DimensionFunction X) :
+    Function.Injective (rationalClassMap δ (δ (genericPoint X))) := by
+  intro c e h
+  have hz : rationalClassMap δ (δ (genericPoint X)) (c - e) = 0 := by
+    rw [map_sub, h, sub_self]
+  have hm := (rationalClassMap_eq_zero_iff δ _ (c - e)).mp hz
+  rw [rationalPrincipalRelations_genericDegree_eq_bot] at hm
+  exact sub_eq_zero.mp hm
+
+-- Nonflat scalar extension ℤ → ℤ/2 still gives the quotient equivalence.
+example :
+    Nonempty ((ZMod 2 ⊗[ℤ] (ℤ ⧸ Submodule.span ℤ (Set.range (fun _ : Unit ↦ (2 : ℤ))))) ≃ₗ[ZMod 2]
+      (ZMod 2 ⧸ Submodule.span (ZMod 2)
+        (Set.range (fun _ : Unit ↦ ((2 : ℤ) : ZMod 2))))) := by
+  let f : ℤ →ₗ[ℤ] ZMod 2 := (Int.castAddHom (ZMod 2)).toIntLinearMap
+  let E := TensorProduct.AlgebraTensorModule.rid ℤ (ZMod 2) (ZMod 2)
+  have hE : ∀ s m, E (s ⊗ₜ[ℤ] m) = s • f m := by
+    intro s m
+    simp [E, f, smul_eq_mul, mul_comm]
+  exact ⟨scalarExtensionQuotientEquiv (fun _ : Unit ↦ (2 : ℤ)) f E hE⟩
+
+-- A genuinely nonzero torsion class can disappear: no quotient-injectivity claim is implicit.
+example :
+    let P := Submodule.span ℤ (Set.range (fun _ : Unit ↦ (2 : ℤ)))
+    ∃ c : ℤ ⧸ P, c ≠ 0 ∧ (1 : ℚ) ⊗ₜ[ℤ] c = 0 := by
+  dsimp only
+  let r : Unit → ℤ := fun _ ↦ 2
+  let P := Submodule.span ℤ (Set.range r)
+  let c : ℤ ⧸ P := Submodule.Quotient.mk 1
+  let f₂ : ℤ →ₗ[ℤ] ZMod 2 := (Int.castAddHom (ZMod 2)).toIntLinearMap
+  have hP : P ≤ LinearMap.ker f₂ := by
+    rw [Submodule.span_le]
+    rintro _ ⟨i, rfl⟩
+    change ((2 : ℤ) : ZMod 2) = 0
+    simpa only [Int.cast_ofNat] using ZMod.natCast_self 2
+  have hc : c ≠ 0 := by
+    intro h
+    have hh := congrArg (P.liftQ f₂ hP) h
+    change (1 : ZMod 2) = 0 at hh
+    exact one_ne_zero hh
+  refine ⟨c, hc, ?_⟩
+  let f : ℤ →ₗ[ℤ] ℚ := (Int.castAddHom ℚ).toIntLinearMap
+  let E := TensorProduct.AlgebraTensorModule.rid ℤ ℚ ℚ
+  have hE : ∀ s m, E (s ⊗ₜ[ℤ] m) = s • f m := by
+    intro s m
+    simp [E, f, smul_eq_mul, mul_comm]
+  let T := scalarExtensionQuotientEquiv r f E hE
+  apply T.injective
+  rw [map_zero]
+  change Submodule.Quotient.mk (1 • f 1) = 0
+  apply (Submodule.Quotient.mk_eq_zero _).mpr
+  have h₂ : (2 : ℚ) ∈ Submodule.span ℚ (Set.range (fun i ↦ f (r i))) := by
+    exact Submodule.subset_span (Set.mem_range_self ())
+  have h₁ := (Submodule.span ℚ (Set.range (fun i ↦ f (r i)))).smul_mem (1 / 2 : ℚ) h₂
+  norm_num at h₁ ⊢
+  exact h₁
+
+end RationalChowCoefficientRegressions

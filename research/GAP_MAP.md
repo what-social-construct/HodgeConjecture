@@ -983,22 +983,53 @@ The codimension reindexing at \(n=0\) instead concerns degree \(d-1\)
 and has data on the whole carrier. A negative cycle degree alone does not
 make its relation data empty: at \(n=d\), carriers have degree zero.
 
-**The next bounded goal is rational coefficient extension of the existing
-homogeneous cycle and Chow constructions.** Construct the coefficient map
-on actual cycles and identify
-\(\mathbb Q\otimes_{\mathbb Z}\operatorname{CH}_m^\delta(X)\) with
-the rational homogeneous cycles modulo the rational span of those same
-principal divisors, preserving quotient representatives. The existing
-quotient's Noetherian premise remains. General Chow rationalization need
-not be injective; the finite-split injectivity theorem does not apply in
-the presence of torsion. Comparison with the prescribed target rational
-Chow groups follows as a separate geometric identification.
+### Rational coefficients on the actual principal-relation quotient
+
+A11ao / SP56 constructs coefficientwise extension in
+`Cycles/CoefficientExtension.lean` on the existing degree submodule:
+\[
+ c\longmapsto c_{\mathbb Q},\qquad
+ \mathbb Q\otimes_{\mathbb Z}Z^\delta_{\mathrm{fin},m}(X;\mathbb Z)
+ \simeq Z^\delta_{\mathrm{fin},m}(X;\mathbb Q),\qquad
+ q\otimes c\longmapsto q c_{\mathbb Q}.
+\]
+The map preserves the actual integral supports and their coefficients.
+It is injective before taking the quotient and needs only an arbitrary
+scheme and a supplied dimension function, not integrality, finite type,
+Noetherianity or finitely many supports.
+
+`Cycles/RationalChow.lean` retains the existing quotient's Noetherian
+premise, takes the rational span of coefficient extensions of the same
+`principalRelation` generators, and proves
+\[
+ \mathbb Q\otimes_{\mathbb Z}\operatorname{CH}_m^\delta(X)
+ \simeq \operatorname{CH}_m^\delta(X;\mathbb Q),\qquad
+ q\otimes[c]\longmapsto[q c_{\mathbb Q}].
+\]
+Here the right side is the quotient of actual rational homogeneous cycles
+by that rational relation span. Its class map is surjective, has exactly
+that kernel, and kills the unchanged principal generators. The comparison
+gives the canonical integral-to-rational Chow map. Generic-degree relation
+vanishing also holds for rational coefficients on an integral scheme.
+The general `Cycles/ScalarExtensionQuotient.lean` lemma constructs both
+directions from tensor and quotient universal properties; flatness and
+quotient injectivity are not premises. General Chow rationalization need
+not be injective: it may kill torsion.
+
+**The next bounded goal is naturality for the already proved closed
+pushforward and scheme-isomorphism operations.** Prove coefficient
+extension commutes with those actual homogeneous-cycle maps, descend
+their proved principal-generator identities to rational Chow, and prove
+the rationalization squares on class representatives. Keep the same
+degree-compatibility and Noetherian premises as the integral operations.
+Comparison with the prescribed target rational Chow groups and its
+intersection/Betti structure remains a separate geometric identification.
 An extension to reducible schemes must use an actual pure-dimensional
 hypothesis or componentwise grading; even smooth schemes may have
 components of different dimensions. The existing finite-cycle quotient's
 Noetherian premise is not removed by the codimension formulas.
-The earlier finite-split scalar-extension theorem is not silently promoted
-to this general setting. General proper pushforward requires its
+The general comparison is now proved independently of the earlier
+finite-split scalar-extension theorem. General proper pushforward requires its
 norm compatibility, and flat/Gysin operations require their own
 principal-relation comparison before descent; these are not supplied
 by the closed-immersion case.

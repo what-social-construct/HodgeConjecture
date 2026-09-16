@@ -624,18 +624,45 @@ be developed alongside that infrastructure.
    requiring a field or finite type. The existing Noetherian relation
    span is zero in that degree and rational equivalence is equality.
 
-   **Next bounded obligation:** construct rational coefficient extension
-   of the existing homogeneous cycles and identify the scalar-extended
-   integral Chow quotient with rational cycles modulo the rational span
-   of the same principal divisors. Preserve cycle representatives and
-   class maps. Retain the quotient's Noetherian premise; do not assert
-   injectivity of general Chow rationalization, which may kill torsion.
-   Then compare with the target's actual rational Chow groups.
+   **Rational coefficient checkpoint (A11ao / SP56):**
+   `CoefficientExtension.lean` constructs coefficientwise cast on the
+   existing homogeneous cycles and identifies their rational module with
+   the scalar extension of the integral module. The equivalence sends
+   \(q\otimes c\) to \(q c_{\mathbb Q}\), without an integrality,
+   Noetherian or finite-type premise. `RationalChow.lean` defines the
+   rational span of the same actual principal generators and proves
+   \[
+    \mathbb Q\otimes_{\mathbb Z}\operatorname{CH}_m^\delta(X)
+    \simeq\operatorname{CH}_m^\delta(X;\mathbb Q),\qquad
+    q\otimes[c]\longmapsto[q c_{\mathbb Q}].
+   \]
+   The rational class map is surjective and has precisely that relation
+   kernel. The integral-to-rational Chow map preserves representatives;
+   generic-degree relations still vanish. The quotient retains the
+   existing Noetherian premise. The generic scalar-extension quotient
+   proof uses universal properties, not flatness or an injectivity
+   assumption; Chow rationalization may kill torsion.
+
+   **Next bounded obligation:** prove rational coefficient naturality
+   for the existing homogeneous closed pushforward and scheme-isomorphism
+   maps, descend their proved principal-generator identities to rational
+   Chow, and verify compatibility with the new scalar-extension
+   equivalences on actual representatives. Retain degree compatibility
+   and the integral operations' Noetherian premises. The current graded
+   pushforward fixes integer coefficients, but its construction and
+   identity/composition proofs are semiring-parametric. Factor out one
+   coefficient-parametric core while retaining the integer API as a
+   specialization. Reuse the actual principal-generator image theorem
+   for rational relation preservation; do not copy the geometric
+   construction or cancel the non-injective Chow rationalization map.
+   The target's actual
+   rational Chow groups and their intersection/Betti structure still
+   require a geometric identification.
    A pure-dimensional or componentwise extension is needed
    for reducible targets; smoothness alone does not make all connected
    components have the same dimension. The current integral quotient's
-   Noetherian premise is retained; the earlier split-case scalar extension
-   is not the general quotient comparison.
+   Noetherian premise is retained; the general scalar-extension comparison
+   is now proved independently of the earlier split-case adapter.
    General proper pushforward still needs its norm
    compatibility; arbitrary open restriction and flat/Gysin operations
    need their own principal-relation comparisons and quotient descent.
