@@ -24,6 +24,7 @@ import HodgeConjecture.Cycles.Examples.LocalOrder
 import HodgeConjecture.Cycles.PointSupport
 import HodgeConjecture.Cycles.SupportCodimension
 import HodgeConjecture.Cycles.DivisorSupport
+import HodgeConjecture.Cycles.OpenSupport
 import HodgeConjecture.Cycles.HeightOneFiniteness
 import HodgeConjecture.Cycles.RationalFunctionPresentation
 import HodgeConjecture.Cycles.DivisorFiniteness

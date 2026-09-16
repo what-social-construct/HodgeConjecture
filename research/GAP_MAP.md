@@ -1070,31 +1070,66 @@ compatible local-ring/function-field isomorphisms. The old isomorphism
 order theorem is now a specialization, and the point embedding agrees
 definitionally with the old isomorphism equivalence's forward map.
 
-**The next bounded goal is the actual prime-support and coefficient
-comparison for open restriction.** Connect the pointwise embedding to
-the existing nonempty `openRestrictionSubscheme` and its inverse given
-by reduced closure in the ambient scheme. Establish the coefficient
-formula for the existing finite-cycle restriction, then use the proved
-local-order comparison to obtain the actual principal-divisor cycle
-identity. Retain the principal-cycle construction's finite-support
-hypotheses; an arbitrary open of a quasi-compact scheme is not assumed
-quasi-compact. The empty restricted carrier must still contribute zero,
-not be assigned a function field. Open relation preservation and quotient
-descent follow only after these actual carrier/cycle comparisons; an
-open image is not a closed-immersion image.
+### Actual reduced open-support closure and principal-divisor restriction
 
-The bounded implementation can use the existing
-`openRestrictionSubschemeMap` to compare ambient generic points, then
-`pointSupport X (j.base (ambientGenericPoint W))` as the reduced-closure
-inverse for a support `W` on the source. The coefficient target is
-`(openRestriction R j c) W = c (pointSupport X (j.base (ambientGenericPoint W)))`.
-These support and coefficient comparisons need no ambient integrality,
-Noetherianity or compactness. For the subsequent principal-cycle step,
-target local Noetherianity supplies `QuasiCompact j`, so target compactness
-also yields source compactness through
-`QuasiCompact.compactSpace_of_compactSpace`; compactness alone is not used
-to infer this. Thus the existing finite-assembly hypotheses can be
-discharged from the appropriate target hypotheses, not silently omitted.
+A11ar / SP59 proves the support and coefficient comparison in
+`Cycles/OpenSupport.lean`. For an actual open immersion \(j:U\to X\),
+`openClosureSubscheme j W` is the existing reduced point support
+`pointSupport X (j.base (ambientGenericPoint W))`. Its literal defining
+ideal sheaf pulls back to `W.val`. Conversely, reduced closure of a
+nonempty `openRestrictionSubscheme` recovers the original integral
+closed support. Nonemptiness is equivalent to its ambient generic point
+lying in the actual open image. The existing chain codimension is
+preserved, and the prime-support comparison agrees with SP58's
+`divisorPointEmbedding`.
+
+For every semiring and existing finite cycle, `openRestriction_apply`
+proves
+\[
+ (j^*c)(W)=c\bigl(\overline{j(W)}_{\mathrm{red}}\bigr).
+\]
+These support and coefficient statements impose no ambient integrality,
+Noetherianity or compactness. The existing empty-restriction generator
+remains zero; reduced closure is not a closed-image operation on \(j\).
+
+In `Cycles/PrincipalDivisorTransport.lean`,
+`primeDivisorOrder_openImmersion` gives the signed-order comparison on
+these actual prime supports. For integral source and target, target
+local Noetherianity and quasi-compactness suffice for
+`openRestriction_principalDivisor_of_isOpenImmersion`:
+\[
+ j^*\operatorname{div}_X(f)=\operatorname{div}_U(j^*f).
+\]
+The source's local Noetherianity is derived, and local Noetherianity of
+the target supplies `QuasiCompact j`; target compactness then yields
+source compactness by `QuasiCompact.compactSpace_of_compactSpace`.
+Thus both sides use the existing finite principal-divisor construction
+with its finiteness hypotheses proved. The previous isomorphism
+restriction theorem retains its signature and specializes this proof.
+
+**The next bounded goal is graded open restriction and compatibility
+with closed carrier inclusions.** Construct the restricted dimension
+function by the actual open point map and prove that the existing cycle
+restriction preserves the corresponding homogeneous modules. Prove its
+Cartesian compatibility with actual closed-support pushforward, then
+restrict `ambientPrincipalDivisor` on a relation carrier. Its nonempty
+branch uses the actual support open map and the new principal-divisor
+identity; its empty branch is zero and receives no function field.
+For an integral closed carrier `Z` in `X`, the concrete cycle square is
+
+```lean
+(openRestriction R j).comp (closedImmersionPushforward R Z.val.subschemeι) =
+  (closedImmersionPushforward R (Z.val.comap j).subschemeι).comp
+    (openRestriction R (openRestrictionSubschemeMap j Z))
+```
+
+The existing ideal-comap square and generic-point comparisons should
+prove this on actual generators, including the empty restricted carrier,
+without new ambient finiteness hypotheses or a replacement pullback.
+Only after that carrier-level comparison can the actual principal-relation
+span and its integral/rational quotients descend. The principal-divisor
+identity on integral ambient schemes alone does not supply this square
+inside an arbitrary ambient scheme.
 
 Comparison with the prescribed target rational Chow groups and its
 intersection/Betti structure remains a separate geometric identification.

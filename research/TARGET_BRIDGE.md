@@ -677,16 +677,31 @@ be developed alongside that infrastructure.
    is a specialization and the existing point-equivalence forward map
    agrees with the new embedding.
 
-   **Next bounded obligation:** connect this divisor-point comparison to
-   actual nonempty restricted prime supports and their reduced closures.
-   Prove the coefficient formula for the existing geometric open
-   restriction on finite cycles, then the principal-divisor cycle
-   identity from the pointwise order comparison. Preserve the existing
-   finite-support assembly hypotheses, and retain the explicit
-   empty-carrier zero branch. An arbitrary open immersion supplies
-   neither a closed-image support nor quasi-compactness of its source.
-   General-open principal-relation preservation and quotient descent
-   still follow only after these comparisons. The target's actual
+   **Open-support and principal-divisor checkpoint (A11ar / SP59):**
+   `OpenSupport.lean` proves that reduced ambient closure and nonempty
+   actual ideal-comap restriction are inverse on integral supports.
+   The nonempty criterion uses the actual ambient generic point, and
+   chain codimension is preserved. For any semiring, the existing
+   restriction reads the coefficient of the corresponding reduced
+   ambient closure. None of these support/cycle statements requires
+   ambient integrality, Noetherianity or compactness; empty restricted
+   generators remain zero. `PrincipalDivisorTransport.lean` now proves
+   restriction of principal divisors for integral open immersions.
+   Target local Noetherianity and quasi-compactness supply the source
+   hypotheses through the actual open map, so finite-cycle assembly is
+   justified on both sides. The old isomorphism restriction theorem is
+   a specialization. Neither a new cycle module nor a closed-image
+   operation on the open immersion is used.
+
+   **Next bounded obligation:** construct actual open restriction of
+   dimension functions and homogeneous cycles, and prove compatibility
+   with the Cartesian square of closed carrier inclusions. Use that
+   square and the principal-divisor identity to restrict actual
+   `ambientPrincipalDivisor` generators, with an explicit zero branch
+   for empty restricted carriers. The nonempty carrier receives its
+   function through its actual open support map. Principal-relation
+   preservation and integral/rational quotient descent follow only
+   after these comparisons. The target's actual
    rational Chow groups and their intersection/Betti structure still
    require a geometric identification.
    A pure-dimensional or componentwise extension is needed

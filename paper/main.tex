@@ -985,6 +985,11 @@ If \(X\) is also quasi-compact, they define
   f\longmapsto\sum_W\operatorname{ord}_W(f)[W],
 \]
 a homomorphism from multiplication to addition.
+For every open immersion \(j:U\hookrightarrow X\) with \(U\) integral,
+the source inherits the finiteness hypotheses for this construction and
+\[
+ j^*\operatorname{div}_X(f)=\operatorname{div}_U(j^*f).
+\]
 For an isomorphism \(e:X\simeq Y\) between such schemes,
 \[
  e_{*,\mathrm{cyc}}\operatorname{div}_X(e^*f)
@@ -1108,7 +1113,7 @@ tensor--quotient comparison give the rational formula.
 Actual principal-generator transport then gives rational closed
 pushforward and its compatibility with coefficient extension.
 The detailed statements and proofs are
-Propositions~\ref{prop:scheme-local-order}--\ref{prop:open-function-field-order}.
+Propositions~\ref{prop:scheme-local-order}--\ref{prop:open-principal-divisor}.
 \end{proof}
 
 For smooth projective schemes over a fixed field \(k\), composition of rational Chow
@@ -3099,6 +3104,74 @@ orders of \cite{StacksLocalOrderOfVanishing,StacksSchemeOrderOfVanishing},
 giving the signed coefficient equality.
 \end{proof}
 
+\begin{proposition}[Reduced open-support closure and principal-divisor restriction]
+\label{prop:open-principal-divisor}
+Let \(j:U\hookrightarrow X\) be an open immersion of schemes.
+For an integral closed carrier \(W\subseteq U\), write
+\(\overline{j(W)}_{\mathrm{red}}\) for its reduced closure in \(X\).
+Scheme-theoretic inverse image gives
+\[
+ j^{-1}\bigl(\overline{j(W)}_{\mathrm{red}}\bigr)=W.
+\]
+Conversely, if an integral closed carrier \(Z\subseteq X\) has
+nonempty inverse image, then that inverse image is integral and
+\[
+ \overline{j(j^{-1}Z)}_{\mathrm{red}}=Z.
+\]
+This nonemptiness is equivalent to \(\xi_Z\in j(U)\).
+The generic point of \(\overline{j(W)}_{\mathrm{red}}\) is
+\(j(\xi_W)\), and actual chain codimension is preserved:
+\[
+ \operatorname{codim}_X\bigl(\overline{j(W)}_{\mathrm{red}}\bigr)
+       =\operatorname{codim}_U(W).
+\]
+For every semiring \(R\) and existing finite cycle
+\(c\in Z_{\mathrm{fin}}(X;R)\), its actual open restriction satisfies
+\[
+ (j^*c)(W)=c\bigl(\overline{j(W)}_{\mathrm{red}}\bigr).
+\]
+An integral generator whose inverse image is empty restricts to zero.
+
+Suppose now that \(U\) and \(X\) are integral and that \(X\) is
+locally Noetherian. For every prime divisor \(W\subseteq U\) and
+\(f\in k(X)^\times\),
+\[
+ \operatorname{ord}_W(j^*f)
+    =\operatorname{ord}_{\overline{j(W)}_{\mathrm{red}}}(f).
+\]
+If \(X\) is also quasi-compact, then \(U\) is locally Noetherian
+and quasi-compact, and for every \(f\in k(X)^\times\),
+\[
+ j^*\operatorname{div}_X(f)
+      =\operatorname{div}_U(j^*f)
+      \quad\text{in }Z_{\mathrm{fin}}(U;\mathbf Z).
+\]
+Here the cycle map is the existing open restriction and the
+function map is the actual generic-stalk isomorphism of
+Proposition~\ref{prop:open-function-field-order}.
+\end{proposition}
+
+\begin{proof}
+Reduced closure is determined by the actual image of the carrier's
+generic point. Pulling back its ideal sheaf through the open immersion
+recovers \(W\); a nonempty open inverse image contains the generic
+point of \(Z\), giving the converse. The two support identities,
+together with the empty-generator case, give the coefficient formula
+by linear extension on finite cycles.
+
+Local Noetherianity restricts to \(U\), and the open immersion into
+the locally Noetherian target is quasi-compact, so target
+quasi-compactness gives source quasi-compactness. Both principal
+divisors are therefore the existing finite sums of
+\cite{StacksPrincipalWeilDivisor}. The actual stalk isomorphism
+identifies the codimension-one points of \(U\) with those in the
+open image, and reduced closure identifies their integral closed
+supports. At such a support, the coefficient formula and
+Proposition~\ref{prop:open-function-field-order} give equality of
+signed orders. At every other support both principal coefficients
+are zero. Coefficientwise equality proves the displayed identity.
+\end{proof}
+
 \section{Detailed split geometric computations}
 \label{app:split-computations}
 
@@ -4066,6 +4139,13 @@ Actual stalk compatibility and the divisor-point image
 (Proposition~\ref{prop:open-function-field-order})\newline
 \leanpath{Cycles/FunctionFieldTransport.lean}\newline
 \leanpath{Cycles/SchemeLocalOrder.lean}\\
+Reduced open-support closure and principal-divisor restriction &
+\leanpath{openRestriction_apply}\newline
+\leanpath{openRestriction_principalDivisor_of_isOpenImmersion}\newline
+Actual inverse supports, codimension and finite principal cycles
+(Proposition~\ref{prop:open-principal-divisor})\newline
+\leanpath{Cycles/OpenSupport.lean}\newline
+\leanpath{Cycles/PrincipalDivisorTransport.lean}\\
 Compactified graph route &
 \leanpath{groupAlgebraProjectorExtension}\newline
 \leanpath{Boundary/CompactifiedGraphProjector.lean}\\
@@ -4532,7 +4612,17 @@ principal table, grouped by mathematical layer.
 \leanpath{divisorPointEmbedding};
 \leanpath{divisorPointEmbedding_val};
 \leanpath{mem_range_divisorPointEmbedding_iff};
-\leanpath{divisorPointEmbedding_iso}.
+\leanpath{divisorPointEmbedding_iso};
+\leanpath{openClosureSubscheme};
+\leanpath{openClosureSubscheme_ambientGenericPoint};
+\leanpath{ambientGenericPoint_openRestrictionSubscheme};
+\leanpath{nonempty_openRestrictionSubscheme_iff};
+\leanpath{openClosureSubscheme_comap};
+\leanpath{openClosureSubscheme_openRestrictionSubscheme};
+\leanpath{supportCodimension_openClosureSubscheme};
+\leanpath{supportCodimension_openRestrictionSubscheme};
+\leanpath{openClosureSubscheme_divisorPoint};
+\leanpath{primeDivisorOrder_openImmersion}.
 
 \paragraph{localization, fixed rings, and inertia.}
 \normsrc{FixedRingLocalization.lean};

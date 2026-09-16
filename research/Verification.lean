@@ -5967,3 +5967,220 @@ example (X Y : Scheme) (j : X ⟶ Y) [IsOpenImmersion j] (x : X) :
   exact stalkDimension_openImmersion j x
 
 end OpenImmersionLocalOrderRegressions
+
+-- SP59: actual reduced-closure support inverse and principal-divisor open restriction.
+#check HodgeConjecture.SchemeCycles.openClosureSubscheme
+#check HodgeConjecture.SchemeCycles.openClosureSubscheme_ambientGenericPoint
+#check HodgeConjecture.SchemeCycles.ambientGenericPoint_openRestrictionSubscheme
+#check HodgeConjecture.SchemeCycles.nonempty_openRestrictionSubscheme_iff
+#check HodgeConjecture.SchemeCycles.openClosureSubscheme_comap
+#check HodgeConjecture.SchemeCycles.openClosureSubscheme_openRestrictionSubscheme
+#check HodgeConjecture.SchemeCycles.supportCodimension_openClosureSubscheme
+#check HodgeConjecture.SchemeCycles.supportCodimension_openRestrictionSubscheme
+#check HodgeConjecture.SchemeCycles.openClosureSubscheme_divisorPoint
+#check HodgeConjecture.SchemeCycles.openRestriction_apply
+#check HodgeConjecture.SchemeCycles.primeDivisorOrder_openImmersion
+#check HodgeConjecture.SchemeCycles.openRestriction_principalDivisor_of_isOpenImmersion
+
+#print axioms HodgeConjecture.SchemeCycles.openClosureSubscheme
+#print axioms HodgeConjecture.SchemeCycles.openClosureSubscheme_ambientGenericPoint
+#print axioms HodgeConjecture.SchemeCycles.ambientGenericPoint_openRestrictionSubscheme
+#print axioms HodgeConjecture.SchemeCycles.nonempty_openRestrictionSubscheme_iff
+#print axioms HodgeConjecture.SchemeCycles.openClosureSubscheme_comap
+#print axioms HodgeConjecture.SchemeCycles.openClosureSubscheme_openRestrictionSubscheme
+#print axioms HodgeConjecture.SchemeCycles.supportCodimension_openClosureSubscheme
+#print axioms HodgeConjecture.SchemeCycles.supportCodimension_openRestrictionSubscheme
+#print axioms HodgeConjecture.SchemeCycles.openClosureSubscheme_divisorPoint
+#print axioms HodgeConjecture.SchemeCycles.openRestriction_apply
+#print axioms HodgeConjecture.SchemeCycles.primeDivisorOrder_openImmersion
+#print axioms HodgeConjecture.SchemeCycles.openRestriction_principalDivisor_of_isOpenImmersion
+
+noncomputable section OpenSupportPrincipalDivisorRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory TopologicalSpace
+open HodgeConjecture.SchemeCycles
+
+-- The support inverse is actual reduced point closure, without ambient integrality.
+example (U X : Scheme) (j : U ⟶ X)
+    (W : IntegralClosedSubscheme U) :
+    openClosureSubscheme j W = pointSupport X (j.base (ambientGenericPoint W)) := by
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  fail_if_success
+    have : IsNoetherian X := inferInstance
+  fail_if_success
+    have : IsOpenImmersion j := inferInstance
+  rfl
+
+example (U X : Scheme) (j : U ⟶ X)
+    (W : IntegralClosedSubscheme U) :
+    ambientGenericPoint (openClosureSubscheme j W) = j.base (ambientGenericPoint W) :=
+  openClosureSubscheme_ambientGenericPoint j W
+
+-- The actual closed support is the closure of the actual image generic point.
+example (U X : Scheme) (j : U ⟶ X)
+    (W : IntegralClosedSubscheme U) :
+    (openClosureSubscheme j W).val.support =
+      Closeds.closure ({j.base (ambientGenericPoint W)} : Set X) := by
+  exact pointSupport_support X _
+
+example (U X : Scheme) (j : U ⟶ X) [IsOpenImmersion j]
+    (Z : IntegralClosedSubscheme X) :
+    Nonempty (Z.val.comap j).subscheme ↔ ambientGenericPoint Z ∈ Set.range j.base :=
+  nonempty_openRestrictionSubscheme_iff j Z
+
+-- This is an equality of the actual ideal-sheaf data, not only of their supports.
+example (U X : Scheme) (j : U ⟶ X) [IsOpenImmersion j]
+    (W : IntegralClosedSubscheme U) :
+    (openClosureSubscheme j W).val.comap j = W.val :=
+  openClosureSubscheme_comap j W
+
+example (U X : Scheme) (j : U ⟶ X) [IsOpenImmersion j]
+    (Z : IntegralClosedSubscheme X) [Nonempty (Z.val.comap j).subscheme] :
+    openClosureSubscheme j (openRestrictionSubscheme j Z) = Z :=
+  openClosureSubscheme_openRestrictionSubscheme j Z
+
+example (U X : Scheme) (j : U ⟶ X) [IsOpenImmersion j]
+    (Z : IntegralClosedSubscheme X) [Nonempty (Z.val.comap j).subscheme] :
+    j.base (ambientGenericPoint (openRestrictionSubscheme j Z)) = ambientGenericPoint Z :=
+  ambientGenericPoint_openRestrictionSubscheme j Z
+
+-- Local codimension is preserved; no absolute support-dimension claim is used.
+example (U X : Scheme) (j : U ⟶ X) [IsOpenImmersion j]
+    (W : IntegralClosedSubscheme U) :
+    supportCodimension (openClosureSubscheme j W) = supportCodimension W :=
+  supportCodimension_openClosureSubscheme j W
+
+example (U X : Scheme) (j : U ⟶ X) [IsOpenImmersion j]
+    (Z : IntegralClosedSubscheme X) [Nonempty (Z.val.comap j).subscheme] :
+    supportCodimension (openRestrictionSubscheme j Z) = supportCodimension Z :=
+  supportCodimension_openRestrictionSubscheme j Z
+
+example (U X : Scheme) (j : U ⟶ X) [IsOpenImmersion j] (x : DivisorPoint U) :
+    openClosureSubscheme j (divisorPointEquivPrimeDivisor U x).val =
+      (divisorPointEquivPrimeDivisor X (divisorPointEmbedding j x)).val :=
+  openClosureSubscheme_divisorPoint j x
+
+-- Restriction reads one corresponding coefficient over arbitrary semirings and schemes.
+example (R : Type) [Semiring R] (U X : Scheme) (j : U ⟶ X) [IsOpenImmersion j]
+    (c : Cycles X R) (W : IntegralClosedSubscheme U) :
+    openRestriction R j c W = c (openClosureSubscheme j W) := by
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  fail_if_success
+    have : CompactSpace X := inferInstance
+  exact openRestriction_apply j R c W
+
+example (R : Type) [Semiring R] (U X : Scheme) (j : U ⟶ X) [IsOpenImmersion j]
+    (W : IntegralClosedSubscheme U) :
+    openRestriction R j (fundamentalCycle R (openClosureSubscheme j W)) =
+      fundamentalCycle R W :=
+  openRestriction_fundamentalCycle_of_comap_eq j R _ W (openClosureSubscheme_comap j W)
+
+-- A genuinely empty inverse image still contributes zero.
+example (R : Type) [Semiring R] (U X : Scheme) (j : U ⟶ X) [IsOpenImmersion j]
+    (Z : IntegralClosedSubscheme X) [IsEmpty (Z.val.comap j).subscheme] :
+    openRestriction R j (fundamentalCycle R Z) = 0 :=
+  openRestriction_fundamentalCycle_of_isEmpty j R Z
+
+-- On D(T) in the affine line, the actual origin cycle disappears.
+example (k : Type) [Field k] :
+    let U : (Examples.affineLine k).Opens :=
+      PrimeSpectrum.basicOpen (Polynomial.X : Polynomial k)
+    openRestriction ℤ U.ι
+      (fundamentalCycle ℤ (pointSupport (Examples.affineLine k) (Examples.affineLineOrigin k))) = 0 := by
+  classical
+  dsimp only
+  let U : (Examples.affineLine k).Opens :=
+    PrimeSpectrum.basicOpen (Polynomial.X : Polynomial k)
+  have horigin : Examples.affineLineOrigin k ∉ U := by
+    change ¬ ((Polynomial.X : Polynomial k) ∉ RingHom.ker Polynomial.constantCoeff)
+    apply not_not.mpr
+    change (Polynomial.X : Polynomial k).coeff 0 = 0
+    exact Polynomial.coeff_X_zero
+  ext W
+  rw [openRestriction_apply]
+  have hne : pointSupport (Examples.affineLine k) (Examples.affineLineOrigin k) ≠
+      openClosureSubscheme U.ι W := by
+    intro h
+    have hg := congrArg ambientGenericPoint h
+    simp only [ambientGenericPoint_pointSupport, openClosureSubscheme_ambientGenericPoint] at hg
+    have hxU : U.ι.base (ambientGenericPoint W) ∈ U := (ambientGenericPoint W).property
+    exact horigin (hg.symm ▸ hxU)
+  simp only [fundamentalCycle, Finsupp.single_apply, Finsupp.zero_apply]
+  split_ifs with h
+  · exact (hne h).elim
+  · rfl
+
+-- Prime coefficients agree through the actual reduced-closure support.
+example (X Y : Scheme) [IsIntegral X] [IsIntegral Y] [IsLocallyNoetherian Y]
+    (j : X ⟶ Y) [IsOpenImmersion j] (Z : PrimeDivisor X) (f : Y.functionFieldˣ) :
+    letI : IsLocallyNoetherian X := isLocallyNoetherian_of_isOpenImmersion j
+    primeDivisorOrder X Z (Units.map (functionFieldEquivOfOpenImmersion j).toMonoidHom f) =
+      primeDivisorOrder Y
+        ⟨openClosureSubscheme j Z.val,
+          (supportCodimension_openClosureSubscheme j Z.val).trans Z.property⟩ f :=
+  primeDivisorOrder_openImmersion j Z f
+
+-- Source finiteness is derived from the target, rather than added as an input.
+example (X Y : Scheme) [IsIntegral X] [IsIntegral Y]
+    [IsLocallyNoetherian Y] [CompactSpace Y]
+    (j : X ⟶ Y) [IsOpenImmersion j] (f : Y.functionFieldˣ) :
+    letI : IsLocallyNoetherian X := isLocallyNoetherian_of_isOpenImmersion j
+    letI : CompactSpace X := QuasiCompact.compactSpace_of_compactSpace j
+    openRestriction ℤ j (principalDivisor Y f) =
+      principalDivisor X (Units.map (functionFieldEquivOfOpenImmersion j).toMonoidHom f) :=
+  openRestriction_principalDivisor_of_isOpenImmersion j f
+
+-- The pre-existing isomorphism theorem retains its original signature and geometric map.
+example (X Y : Scheme) [IsIntegral X] [IsIntegral Y]
+    [IsLocallyNoetherian X] [IsLocallyNoetherian Y] [CompactSpace X] [CompactSpace Y]
+    (e : X ≅ Y) (f : Y.functionFieldˣ) :
+    openRestriction ℤ e.hom (principalDivisor Y f) =
+      principalDivisor X (Units.map (functionFieldEquiv e).toMonoidHom f) :=
+  openRestriction_principalDivisor e f
+
+example (X Y : Scheme) [IsIntegral X] [IsIntegral Y]
+    [IsLocallyNoetherian Y] [CompactSpace Y]
+    (j : X ⟶ Y) [IsOpenImmersion j] (f : Y.functionFieldˣ) :
+    letI : IsLocallyNoetherian X := isLocallyNoetherian_of_isOpenImmersion j
+    letI : CompactSpace X := QuasiCompact.compactSpace_of_compactSpace j
+    openRestriction ℤ j (principalDivisor Y f⁻¹) =
+      -principalDivisor X (Units.map (functionFieldEquivOfOpenImmersion j).toMonoidHom f) := by
+  letI : IsLocallyNoetherian X := isLocallyNoetherian_of_isOpenImmersion j
+  letI : CompactSpace X := QuasiCompact.compactSpace_of_compactSpace j
+  rw [principalDivisor_inv, map_neg, openRestriction_principalDivisor_of_isOpenImmersion]
+
+-- The new principal-divisor identity applies to an actual proper open, for every rational function.
+example (k : Type) [Field k] (f : (Examples.affineLine k).functionFieldˣ) :
+    let U : (Examples.affineLine k).Opens :=
+      PrimeSpectrum.basicOpen (Polynomial.X : Polynomial k)
+    ∃ hI : IsIntegral (U : Scheme),
+      letI := hI
+      letI : IsLocallyNoetherian (U : Scheme) := isLocallyNoetherian_of_isOpenImmersion U.ι
+      letI : CompactSpace (U : Scheme) := QuasiCompact.compactSpace_of_compactSpace U.ι
+      openRestriction ℤ U.ι (principalDivisor (Examples.affineLine k) f) =
+        principalDivisor (U : Scheme)
+          (Units.map (functionFieldEquivOfOpenImmersion U.ι).toMonoidHom f) := by
+  dsimp only
+  let U : (Examples.affineLine k).Opens :=
+    PrimeSpectrum.basicOpen (Polynomial.X : Polynomial k)
+  have hU : Nonempty (U : Scheme) := by
+    refine ⟨⟨⟨⊥, Ideal.bot_prime⟩, ?_⟩⟩
+    change (Polynomial.X : Polynomial k) ∉ (⊥ : Ideal (Polynomial k))
+    simpa only [Ideal.mem_bot] using (Polynomial.X_ne_zero : (Polynomial.X : Polynomial k) ≠ 0)
+  letI := hU
+  letI : IsIntegral (U : Scheme) := isIntegral_of_isOpenImmersion U.ι
+  exact ⟨inferInstance, openRestriction_principalDivisor_of_isOpenImmersion U.ι f⟩
+
+-- Non-prime generators have zero coefficient after restriction as well.
+example (X Y : Scheme) [IsIntegral X] [IsIntegral Y]
+    [IsLocallyNoetherian Y] [CompactSpace Y]
+    (j : X ⟶ Y) [IsOpenImmersion j] (f : Y.functionFieldˣ)
+    (W : IntegralClosedSubscheme X) (hW : supportCodimension W ≠ 1) :
+    openRestriction ℤ j (principalDivisor Y f) W = 0 := by
+  rw [openRestriction_apply]
+  apply principalDivisor_apply_of_not_prime
+  simpa only [supportCodimension_openClosureSubscheme] using hW
+
+end OpenSupportPrincipalDivisorRegressions
