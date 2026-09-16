@@ -1177,15 +1177,44 @@ proves `principalRelations_le_comap_openRestriction`, and linearity
 proves `rationallyEquivalent_openRestriction` for the existing predicate.
 No relation-preservation or quotient-descent hypothesis is introduced.
 
-**The next bounded goal is actual open Chow quotient descent.** Use
-the proved integral relation-span inclusion to construct the integral
-open Chow map, with its actual representative formula and identity/
-composition laws. Establish coefficient-extension compatibility of
-the existing open cycle maps and preservation of the rational relation
-span, then descend the rational map and prove its integral-to-rational
-and tensor comparison squares. Keep the existing Noetherian hypotheses.
-SP61 proves relation preservation, not these quotient maps, localization
-exactness or general flat pullback.
+### Actual open Chow maps and coefficient compatibility
+
+A11au / SP62 constructs `chowOpenRestriction` in
+`Cycles/ChowOpenRestriction.lean` by the existing quotient universal
+property and SP61's proved relation-span inclusion. Its class-map
+formula is literal restriction of the actual homogeneous representative.
+Identity and contravariant composition follow from the existing graded
+cycle laws, with the canonical dimension function `δ.comapOpenImmersion j`.
+Only the target is assumed Noetherian; source and intermediate
+Noetherianity are derived from the actual open immersions. There is no
+new Chow quotient or supplied descent hypothesis.
+
+`Cycles/CoefficientRestriction.lean` proves that actual open restriction
+commutes with coefficientwise integer-to-rational extension, both on raw
+finite cycles and on the existing homogeneous submodules. Coefficients
+are compared at the existing reduced open closure. This layer has no
+Noetherian, compactness or integrality premise.
+
+`Cycles/RationalChowOpenRestriction.lean` uses that comparison and
+SP61's actual nonempty/empty generator identities to prove preservation
+of the existing rational relation span. `rationalChowOpenRestriction`
+then descends the same rational cycle map, with literal representatives,
+identity and contravariant composition. It commutes with `chowRationalize`
+and, on every tensor element, with the full `chowRationalizationEquiv`
+comparison. The tensor square is proved by tensor induction and
+surjectivity of the existing class map, not by cancelling rationalization
+or assuming that torsion survives. These quotient results retain the
+target-only Noetherian premise.
+
+**The next bounded goal is surjectivity of actual open restriction.**
+Lift each integral support in the open through its existing reduced
+ambient closure and use the proved support-degree comparison to lift
+homogeneous finite cycles. Then deduce integral and rational Chow
+restriction surjectivity from their representative formulas and the
+existing class-map surjectivity. After that, construct the actual
+closed-complement support/kernel/image comparison and prove localization
+exactness separately. SP62 supplies the quotient maps and naturality,
+not surjectivity, a localization sequence or general flat pullback.
 
 Comparison with the prescribed target rational Chow groups and its
 intersection/Betti structure remains a separate geometric identification.

@@ -68,7 +68,7 @@ same PDF. No proof-status change follows from this editorial reorganization.
 
 ## Canonical semantic object and TeX registry
 
-### Construction and input checkpoints (SP17--SP61)
+### Construction and input checkpoints (SP17--SP62)
 
 | ID | Object or overlap | Disposition | Required action | Status |
 | --- | --- | --- | --- | --- |
@@ -117,6 +117,7 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP59 | Actual open support restriction, reduced closure and principal-divisor cycles | IDENTIFY / ASSEMBLE | Prove inverse support identities for nonempty actual ideal-comap restriction and ambient reduced closure, preserve chain codimension, and evaluate the existing finite-cycle restriction at the closure coefficient. Combine this with the actual local-order transport to restrict principal-divisor cycles, deriving source local Noetherianity and compactness from the target. | PROVED; FULL BUILD, 584 AXIOM REPORTS, TWENTY REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP60 | Supplied dimension-function restriction, homogeneous cycles and the actual carrier square | RESTRICT / COMPARE | Restrict the dimension function by the actual open point map, proving both laws, and preserve the existing homogeneous cycle modules over any semiring. Prove the Cartesian open-restriction/closed-pushforward square for an actual integral carrier, including empty inverse images, without introducing principal-relation or Chow descent hypotheses. | PROVED; FULL BUILD, 599 AXIOM REPORTS, TWENTY REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP61 | Actual ambient principal-generator restriction and preservation of its relation span | TRANSPORT / PRESERVE | Apply the actual carrier square to the existing ambient principal divisor, using the actual function-field map on a nonempty restriction and zero for an empty carrier. Restrict degree-one-higher relation data without finiteness premises; under target-only Noetherianity identify the graded generators, preserve their span and preserve rational equivalence of integral cycles. | PROVED; FULL BUILD, 609 AXIOM REPORTS, SIXTEEN REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+| SP62 | Integral and rational Chow open restriction with coefficient and tensor compatibility | DESCEND / COMPARE | Descend the existing actual graded open restriction to both existing Chow quotients, preserving cycle representatives, identity and contravariant composition. Prove raw and graded coefficient compatibility without finiteness premises, and the full tensor square with only target Noetherianity at the quotient layer. | PROVED; FULL BUILD, 622 AXIOM REPORTS, EIGHTEEN REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -1148,6 +1149,52 @@ verification prefix remain byte-identical. No manuscript status/gap
 commentary, project axiom, bibliography entry, submission-wrapper change
 or dependency-pin change was introduced. Diff checks pass.
 
+SP62 validation: the full `lake build` passes all 3148 jobs, with only
+the two existing intentional `Challenge.lean` sorry warnings.
+`ChowOpenRestriction.lean` passes its targeted 2396-job build,
+`CoefficientRestriction.lean` passes its 2386-job build, and
+`RationalChowOpenRestriction.lean` passes its 2402-job build, all without
+warnings. The thirteen new public endpoints comprise four integral
+quotient-map declarations, two raw/graded coefficient comparisons, and
+seven rational relation-span, quotient-map and scalar-extension
+declarations.
+
+The focused replay with the verification file's original four imports
+passes all thirteen new axiom reports and eighteen regressions without
+warnings. Tests cover coefficient compatibility without ambient
+finiteness, signed coefficients on actual reduced-closure supports,
+literal integral/rational representatives, target-only Noetherianity,
+identity and contravariant composition, principal-generator classes,
+rational-span preservation and both empty-open quotient maps. The
+ordinary rationalization comparison, full tensor comparison and
+arbitrary pure-tensor representative formula pass. The rational map
+agrees with the existing inverse scheme-isomorphism map. An explicit
+generic-degree example proves that empty-open restriction is not
+injective, using the existing zero relation span and a nonzero actual
+fundamental cycle; no injectivity of restriction or Chow rationalization
+is assumed.
+
+The full integrated `research/Verification.lean` replay passes without
+warnings: 730 declaration checks, 549 examples and all 622 selected
+axiom reports. The reports match their exact inventory with no missing,
+unexpected or duplicate report and no disallowed axiom. Of these, 620
+use exactly the standard three. The existing `polynomialDimensionBound`
+uses no axioms, and `genericFiber_isScalarTower_base` uses only `propext`
+and `Quot.sound`. The six primary proof-dependency checks and two
+supporting reports pass. Independent source and mathematical/manuscript
+parity reviews pass.
+
+The single PDF builds to 65 pages with a clean final log. The main
+statement on page 13, Proposition A.33 and its tensor square and proof
+on pages 40--41, the new crosswalk row on page 54 and additional
+declarations on page 60 were visually inspected. All thirteen new APIs
+occur exactly once in Appendix C; all 83 manuscript labels are unique
+and every reference resolves. Historical SP18--SP61 validation blocks
+and the pre-SP62 verification prefix remain byte-identical. No manuscript
+status/gap commentary, project axiom, bibliography entry,
+submission-wrapper change or dependency-pin change was introduced.
+Diff checks pass.
+
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
 | `SplitPointGeometry.scheme` | finite split scheme | $Z_I=\operatorname{Spec}(k^I)$ |
@@ -2163,8 +2210,10 @@ closure and proves the finite principal-cycle identity. SP60 supplies
 general-open grading and Cartesian compatibility with actual closed
 carrier inclusions. SP61 transports the ambient principal generator in
 both nonempty and empty branches and preserves the graded relation span.
-The next bounded step is the actual integral and rational Chow quotient
-maps with representative, functoriality and coefficient comparisons.
+SP62 descends to the actual integral and rational Chow quotient maps,
+with representative, functoriality, coefficient and tensor comparisons.
+The next bounded step is graded cycle surjectivity via actual reduced
+closure, followed by surjectivity of these quotient maps.
 
 ### Actual integral codimension and the existing shifted grading (SP54)
 
@@ -2511,9 +2560,9 @@ or Chow-relation restriction identity is asserted here.
 
 SP59 below proves the actual support comparison, finite-cycle coefficient
 formula and principal-divisor restriction identity. The existing
-empty-generator branch remains zero. These results do not yet prove
-graded ambient principal-relation preservation or general open Chow
-descent.
+empty-generator branch remains zero. SP60 and SP61 supply graded ambient
+principal-relation preservation, and SP62 descends the same operation to
+the existing integral and rational Chow quotients.
 
 ### Actual open supports and finite principal-divisor restriction (SP59)
 
@@ -2588,7 +2637,8 @@ function and proves preservation of the existing homogeneous cycle
 submodules. It also proves the actual open/closed carrier cycle square,
 including the empty inverse-image case. SP61 uses that square for the
 ambient principal-generator identity and relation-span preservation;
-the quotient maps remain the subsequent step.
+SP62 supplies the resulting integral and rational quotient maps, with
+their representative and scalar-extension comparisons.
 
 ### Open grading and the actual closed-carrier cycle square (SP60)
 
@@ -2665,8 +2715,8 @@ arbitrary-ideal base-change theorem. No nonemptiness premise on
 SP61 below applies the actual square to `ambientPrincipalDivisor`,
 retaining the nonempty function-field branch and the empty zero branch.
 It transports the graded generator and proves relation-span preservation.
-These results prepare, but do not define, the existing integer and
-rational Chow quotients' open restriction maps.
+SP62 then defines the existing integer and rational Chow quotients' open
+restriction maps from those proved identities.
 
 ### Ambient principal-generator restriction and relation preservation (SP61)
 
@@ -2699,8 +2749,8 @@ The two ambient identities are in
 are in `Cycles/PrincipalRelationRestriction.lean`. Manuscript Proposition
 A.32, `prop:open-principal-relations`, retains these same hypothesis
 levels. All generators, carriers, function fields, dimension functions
-and finite-cycle modules are the existing objects. This checkpoint
-does not define an open map on either Chow quotient.
+and finite-cycle modules are the existing objects. The quotient maps are
+constructed separately in SP62 below from this relation-span preservation.
 
 For the nonempty ambient identity, apply SP60's actual cycle square to
 the principal divisor on \(W\), then SP59's principal-divisor identity
@@ -2731,19 +2781,78 @@ is an existing target generator, and the empty image is zero. Linear
 span preservation therefore follows without a relation-preservation
 input. Applying it to \(c-e\) proves preservation of the existing
 rational-equivalence predicate. Here rational equivalence still concerns
-integer cycles; it is not a claim that the rational-coefficient quotient
-map has already been constructed.
+integer cycles. SP62 extends this proved compatibility to the
+rational-coefficient relation span and quotient.
 
-The next bounded checkpoint descends the actual graded open maps to the
-existing integral and rational Chow quotients. Preserve the literal cycle
-representatives, prove identity and contravariant composition, and prove
-coefficient-cast and full tensor-comparison compatibility. Do not infer
-injectivity of general Chow rationalization or cancel it in these
-comparisons. Localization and its kernel/image statement come after the
-quotient maps and require their own proof. Proper pushforward's norm
-comparison, flat/Gysin operations, general Chow convolution and prescribed
-target identification/realization/coverage remain separate, as recorded
-in `GAP_MAP.md` and `TARGET_BRIDGE.md`.
+### Integral and rational Chow open restriction (SP62)
+
+Retain the actual open immersion \(j:U\hookrightarrow X\), the
+supplied dimension function \(\delta\), its literal restriction
+\(\delta_U=\delta\circ j\), and the existing homogeneous degree
+\(m\in\mathbb Z\). Write \(z_{\mathbf Q}\) for the existing
+coefficient extension and \([z]\) for the existing quotient class.
+Both quotient maps use the same \(j^*\) notation as the cycle operation;
+their domains and coefficient types distinguish them.
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `chowOpenRestriction` | descend the actual graded integral cycle map using the proved relation-span inclusion | $j^*:\operatorname{CH}_m^\delta(X)\to\operatorname{CH}_m^{\delta_U}(U)$ |
+| `chowOpenRestriction_classMap` | preserve the actual integral cycle representative | $j^*[z]=[j^*z]$ |
+| `chowOpenRestriction_id` | the identity immersion induces the identity on the existing quotient | $\operatorname{id}^*=\operatorname{id}$ |
+| `chowOpenRestriction_comp` | preserve contravariant composition with the literal composed dimension function | $(j\circ i)^*=i^*\circ j^*$ |
+| `openRestriction_rationalize` | coefficient extension commutes with the existing finite-cycle operation | $j^*(z_{\mathbf Q})=(j^*z)_{\mathbf Q}$ |
+| `gradedOpenRestriction_rationalize` | the same coefficient equality in the existing homogeneous submodules | prose only; the preceding identity in degree $m$ |
+| `rationalPrincipalRelations_le_comap_openRestriction` | preserve the rational span of the same actual principal generators | $j^*\mathcal R_m^\delta(X;\mathbf Q)\subseteq\mathcal R_m^{\delta_U}(U;\mathbf Q)$ |
+| `rationalChowOpenRestriction` | descend the actual rational cycle restriction to the existing quotient | $j^*:\operatorname{CH}_m^\delta(X;\mathbf Q)\to\operatorname{CH}_m^{\delta_U}(U;\mathbf Q)$ |
+| `rationalChowOpenRestriction_classMap` | preserve the actual rational cycle representative | $j^*[z]=[j^*z]$ for rational $z$ |
+| `rationalChowOpenRestriction_id` | retain the identity on the rational quotient | $\operatorname{id}^*=\operatorname{id}$ |
+| `rationalChowOpenRestriction_comp` | retain contravariant composition on the rational quotient | $(j\circ i)^*=i^*\circ j^*$ |
+| `rationalChowOpenRestriction_chowRationalize` | commute with the existing integral-to-rational Chow class map | $j^*(c_{\mathbf Q})=(j^*c)_{\mathbf Q}$ for integral Chow classes $c$ |
+| `rationalChowOpenRestriction_chowRationalizationEquiv` | identify the rational quotient map with scalar extension of the integral map on all tensors | prose only; the full square under the existing comparisons $q\otimes[z]\mapsto[qz_{\mathbf Q}]$ |
+
+The four integral endpoints are in `Cycles/ChowOpenRestriction.lean`,
+the two coefficient endpoints in `Cycles/CoefficientRestriction.lean`,
+and the seven rational endpoints in
+`Cycles/RationalChowOpenRestriction.lean`. Manuscript Proposition A.33,
+`prop:open-chow-restriction`, uses the same objects, hypotheses and
+representative formulas. The coefficient comparisons require no
+Noetherianity, integrality, quasi-compactness or field base on the ambient
+schemes. The quotient assertions assume only `IsNoetherian X`;
+Noetherianity of the open source and every intermediate open is derived
+explicitly by `openImmersion_isNoetherian`, not added as a separate
+premise or global instance.
+
+The reduced-closure coefficient formula proves raw coefficient
+compatibility directly, and restriction to the existing homogeneous
+submodules proves its graded form. SP61's actual relation-span inclusion
+then gives the integral quotient map by the quotient universal property.
+For the rational span, coefficient compatibility sends a cast principal
+generator to the cast of its actual nonempty restricted generator, or
+to zero when its carrier misses the open. The rational quotient map is
+therefore induced by the same geometric cycle operation. Neither map
+uses an assumed relation-preservation or descent hypothesis.
+
+The representative formulas are definitional. Quotient extensionality
+reduces identity and composition to the existing graded cycle identities,
+with definitionally compatible dimension functions. Integral class-map
+surjectivity reduces the ordinary rationalization comparison to its
+cycle coefficient identity. Tensor induction and actual cycle
+representatives prove the full tensor square, not just its tensor-one
+part. No injectivity of general Chow rationalization is asserted or used;
+torsion may be killed by coefficient extension. No new Chow quotient,
+cycle carrier, dimension function or independent comparison symbol is
+introduced.
+
+The next bounded checkpoint proves surjectivity of the existing graded
+cycle restriction by extending each actual integral support to its
+reduced ambient closure and preserving its degree. Surjectivity of the
+integral and rational Chow restriction maps then follows from their
+representative formulas. The actual closed-complement image/kernel
+identification and localization exactness require later proofs; they do
+not follow just from the maps or the planned surjectivity. Proper
+pushforward's norm comparison, flat/Gysin operations, general Chow
+convolution and prescribed target identification/realization/coverage
+remain separate, as recorded in `GAP_MAP.md` and `TARGET_BRIDGE.md`.
 
 ## Objects deliberately assigned no independent notation
 

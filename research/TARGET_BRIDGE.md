@@ -722,12 +722,25 @@ be developed alongside that infrastructure.
    resulting span inclusion and preservation of the existing rational-
    equivalence predicate are proved, not supplied as inputs.
 
-   **Next bounded obligation:** descend this proved integral relation
-   inclusion to the existing Chow quotient with actual representative
-   and identity/composition formulas. Prove open restriction commutes
-   with coefficient extension, preserve the rational relation span and
-   descend the rational map with its integral-to-rational and tensor
-   comparison squares. Retain the existing Noetherian hypotheses.
+   **Open Chow maps and coefficient compatibility (A11au / SP62):**
+   `ChowOpenRestriction.lean` descends the existing actual graded map
+   through SP61's proved relation inclusion. It retains actual cycle
+   representatives, identity and contravariant composition, with
+   source Noetherianity derived from the target. `CoefficientRestriction.lean`
+   proves that integer-to-rational coefficient extension commutes with
+   the same raw and graded maps, without finiteness hypotheses.
+   `RationalChowOpenRestriction.lean` proves rational-span preservation
+   from the actual generator branches and descends the rational map.
+   Its representative, identity/composition, integral-to-rational and
+   full tensor-comparison formulas are proved. No injectivity of
+   `chowRationalize` is used, and the quotient maps retain target
+   Noetherianity as an explicit hypothesis.
+
+   **Next bounded obligation:** lift actual homogeneous cycles through
+   the existing reduced open closure to prove graded restriction
+   surjectivity, then deduce integral/rational Chow surjectivity on
+   representatives. The actual closed-complement support/kernel/image
+   statement and localization exactness require separate proofs.
    The target's actual
    rational Chow groups and their intersection/Betti structure still
    require a geometric identification.
@@ -737,8 +750,8 @@ be developed alongside that infrastructure.
    Noetherian premise is retained; the general scalar-extension comparison
    is now proved independently of the earlier split-case adapter.
    General proper pushforward still needs its norm
-   compatibility; open quotient descent and localization exactness
-   remain to be constructed, and general flat/Gysin operations need
+   compatibility; open restriction surjectivity and localization
+   exactness remain to be proved, and general flat/Gysin operations need
    their own principal-relation comparisons and quotient descent.
    Absolute
    relations may use larger-dimensional supports outside the relative

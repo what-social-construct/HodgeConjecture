@@ -42,6 +42,7 @@ import HodgeConjecture.Cycles.GradedPushforward
 import HodgeConjecture.Cycles.PrincipalRelations
 import HodgeConjecture.Cycles.PrincipalRelationRestriction
 import HodgeConjecture.Cycles.ChowPushforward
+import HodgeConjecture.Cycles.ChowOpenRestriction
 import HodgeConjecture.Cycles.ChowIsomorphism
 import HodgeConjecture.Cycles.SupportDimension
 import HodgeConjecture.Cycles.FiniteTypeDimension
@@ -81,6 +82,8 @@ import HodgeConjecture.Cycles.FieldSupportDimension
 import HodgeConjecture.Cycles.IntegralCodimension
 import HodgeConjecture.Cycles.PrincipalRelationCodimension
 import HodgeConjecture.Cycles.RationalChow
+import HodgeConjecture.Cycles.CoefficientRestriction
+import HodgeConjecture.Cycles.RationalChowOpenRestriction
 import HodgeConjecture.Cycles.RationalChowIsomorphism
 import HodgeConjecture.Correspondence.TransposeAlgebra
 import HodgeConjecture.Correspondence.ProjectorDefect

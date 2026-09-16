@@ -6606,3 +6606,226 @@ example (k : Type) [Field k] :
   exact openRestriction_ambientPrincipalDivisor_of_isEmpty U.ι W f
 
 end OpenPrincipalRelationRegressions
+
+-- SP62: integral and rational Chow open restriction with coefficient and tensor naturality.
+#check HodgeConjecture.SchemeCycles.chowOpenRestriction
+#check HodgeConjecture.SchemeCycles.chowOpenRestriction_classMap
+#check HodgeConjecture.SchemeCycles.chowOpenRestriction_id
+#check HodgeConjecture.SchemeCycles.chowOpenRestriction_comp
+#check HodgeConjecture.SchemeCycles.openRestriction_rationalize
+#check HodgeConjecture.SchemeCycles.gradedOpenRestriction_rationalize
+#check HodgeConjecture.SchemeCycles.rationalPrincipalRelations_le_comap_openRestriction
+#check HodgeConjecture.SchemeCycles.rationalChowOpenRestriction
+#check HodgeConjecture.SchemeCycles.rationalChowOpenRestriction_classMap
+#check HodgeConjecture.SchemeCycles.rationalChowOpenRestriction_id
+#check HodgeConjecture.SchemeCycles.rationalChowOpenRestriction_comp
+#check HodgeConjecture.SchemeCycles.rationalChowOpenRestriction_chowRationalize
+#check HodgeConjecture.SchemeCycles.rationalChowOpenRestriction_chowRationalizationEquiv
+
+#print axioms HodgeConjecture.SchemeCycles.chowOpenRestriction
+#print axioms HodgeConjecture.SchemeCycles.chowOpenRestriction_classMap
+#print axioms HodgeConjecture.SchemeCycles.chowOpenRestriction_id
+#print axioms HodgeConjecture.SchemeCycles.chowOpenRestriction_comp
+#print axioms HodgeConjecture.SchemeCycles.openRestriction_rationalize
+#print axioms HodgeConjecture.SchemeCycles.gradedOpenRestriction_rationalize
+#print axioms HodgeConjecture.SchemeCycles.rationalPrincipalRelations_le_comap_openRestriction
+#print axioms HodgeConjecture.SchemeCycles.rationalChowOpenRestriction
+#print axioms HodgeConjecture.SchemeCycles.rationalChowOpenRestriction_classMap
+#print axioms HodgeConjecture.SchemeCycles.rationalChowOpenRestriction_id
+#print axioms HodgeConjecture.SchemeCycles.rationalChowOpenRestriction_comp
+#print axioms HodgeConjecture.SchemeCycles.rationalChowOpenRestriction_chowRationalize
+#print axioms HodgeConjecture.SchemeCycles.rationalChowOpenRestriction_chowRationalizationEquiv
+
+noncomputable section ChowOpenRestrictionRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory TensorProduct
+open HodgeConjecture.SchemeCycles
+
+-- Raw coefficient extension commutes with the actual open map without finiteness assumptions.
+example (U X : Scheme) (j : U ⟶ X) [IsOpenImmersion j] (c : Cycles X ℤ) :
+    openRestriction ℚ j (Finsupp.mapRange (Int.castAddHom ℚ) (map_zero _) c) =
+      Finsupp.mapRange (Int.castAddHom ℚ) (map_zero _) (openRestriction ℤ j c) := by
+  fail_if_success
+    have : IsNoetherian X := inferInstance
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  exact openRestriction_rationalize j c
+
+example (U X : Scheme) (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j]
+    (n : ℤ) (c : cyclesOfDegree ℤ δ n) :
+    gradedOpenRestriction ℚ δ j n (cyclesOfDegreeRationalize δ n c) =
+      cyclesOfDegreeRationalize (δ.comapOpenImmersion j) n
+        (gradedOpenRestriction ℤ δ j n c) := by
+  fail_if_success
+    have : CompactSpace U := inferInstance
+  exact gradedOpenRestriction_rationalize δ j n c
+
+-- A signed integral coefficient keeps its actual support and sign after both operations.
+example (U X : Scheme) (j : U ⟶ X) [IsOpenImmersion j]
+    (W : IntegralClosedSubscheme U) :
+    openRestriction ℚ j
+      (Finsupp.mapRange (Int.castAddHom ℚ) (map_zero _)
+        (Finsupp.single (openClosureSubscheme j W) (-2 : ℤ))) W = -2 := by
+  rw [openRestriction_rationalize]
+  change ((openRestriction ℤ j
+    (Finsupp.single (openClosureSubscheme j W) (-2 : ℤ))) W : ℚ) = -2
+  rw [openRestriction_apply, Finsupp.single_eq_same]
+  norm_num
+
+-- Only target Noetherianity is supplied; the quotient formula keeps the exact representative.
+example (U X : Scheme) [IsNoetherian X] (δ : DimensionFunction X)
+    (j : U ⟶ X) [IsOpenImmersion j] (n : ℤ) (c : cyclesOfDegree ℤ δ n) :
+    letI := openImmersion_isNoetherian j
+    chowOpenRestriction δ j n (classMap δ n c) =
+      classMap (δ.comapOpenImmersion j) n (gradedOpenRestriction ℤ δ j n c) := by
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  exact chowOpenRestriction_classMap δ j n c
+
+example (X : Scheme) [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ) :
+    chowOpenRestriction δ (𝟙 X) n = LinearMap.id :=
+  chowOpenRestriction_id X δ n
+
+-- Composition has the geometric contravariant order, with only the final target Noetherian.
+example (V U X : Scheme) [IsNoetherian X] (δ : DimensionFunction X)
+    (i : V ⟶ U) (j : U ⟶ X) [IsOpenImmersion i] [IsOpenImmersion j]
+    (n : ℤ) (z : ChowGroup δ n) :
+    letI := openImmersion_isNoetherian j
+    letI := openImmersion_isNoetherian i
+    chowOpenRestriction (δ.comapOpenImmersion j) i n (chowOpenRestriction δ j n z) =
+      chowOpenRestriction δ (i ≫ j) n z :=
+  LinearMap.congr_fun (chowOpenRestriction_comp δ i j n) z
+
+example (U X : Scheme) [IsEmpty U] [IsNoetherian X] (δ : DimensionFunction X)
+    (j : U ⟶ X) [IsOpenImmersion j] (n : ℤ) (z : ChowGroup δ n) :
+    letI := openImmersion_isNoetherian j
+    chowOpenRestriction δ j n z = 0 := by
+  letI := openImmersion_isNoetherian j
+  obtain ⟨c, rfl⟩ := classMap_surjective δ n z
+  rw [chowOpenRestriction_classMap]
+  have hc : gradedOpenRestriction ℤ δ j n c = 0 := by
+    apply Subtype.ext
+    ext W
+    exact isEmptyElim (ambientGenericPoint W)
+  rw [hc, map_zero]
+
+-- A genuine principal generator has zero class after quotient restriction.
+example (U X : Scheme) [IsNoetherian X] (δ : DimensionFunction X)
+    (j : U ⟶ X) [IsOpenImmersion j] (n : ℤ) (d : PrincipalRelationData δ n) :
+    letI := openImmersion_isNoetherian j
+    chowOpenRestriction δ j n (classMap δ n (principalRelation δ n d)) = 0 := by
+  letI := openImmersion_isNoetherian j
+  rw [classMap_principalRelation, map_zero]
+
+example (U X : Scheme) [IsNoetherian X] (δ : DimensionFunction X)
+    (j : U ⟶ X) [IsOpenImmersion j] (n : ℤ) :
+    letI := openImmersion_isNoetherian j
+    rationalPrincipalRelations δ n ≤
+      (rationalPrincipalRelations (δ.comapOpenImmersion j) n).comap
+        (gradedOpenRestriction ℚ δ j n) :=
+  rationalPrincipalRelations_le_comap_openRestriction δ j n
+
+example (U X : Scheme) [IsNoetherian X] (δ : DimensionFunction X)
+    (j : U ⟶ X) [IsOpenImmersion j] (n : ℤ) (c : cyclesOfDegree ℚ δ n) :
+    letI := openImmersion_isNoetherian j
+    rationalChowOpenRestriction δ j n (rationalClassMap δ n c) =
+      rationalClassMap (δ.comapOpenImmersion j) n (gradedOpenRestriction ℚ δ j n c) := by
+  fail_if_success
+    have : IsIntegral U := inferInstance
+  exact rationalChowOpenRestriction_classMap δ j n c
+
+example (X : Scheme) [IsNoetherian X] (δ : DimensionFunction X) (n : ℤ) :
+    rationalChowOpenRestriction δ (𝟙 X) n = LinearMap.id :=
+  rationalChowOpenRestriction_id X δ n
+
+example (V U X : Scheme) [IsNoetherian X] (δ : DimensionFunction X)
+    (i : V ⟶ U) (j : U ⟶ X) [IsOpenImmersion i] [IsOpenImmersion j]
+    (n : ℤ) (z : RationalChowGroup δ n) :
+    letI := openImmersion_isNoetherian j
+    letI := openImmersion_isNoetherian i
+    rationalChowOpenRestriction (δ.comapOpenImmersion j) i n
+        (rationalChowOpenRestriction δ j n z) =
+      rationalChowOpenRestriction δ (i ≫ j) n z :=
+  LinearMap.congr_fun (rationalChowOpenRestriction_comp δ i j n) z
+
+example (U X : Scheme) [IsEmpty U] [IsNoetherian X] (δ : DimensionFunction X)
+    (j : U ⟶ X) [IsOpenImmersion j] (n : ℤ) (z : RationalChowGroup δ n) :
+    letI := openImmersion_isNoetherian j
+    rationalChowOpenRestriction δ j n z = 0 := by
+  letI := openImmersion_isNoetherian j
+  obtain ⟨c, rfl⟩ := rationalClassMap_surjective δ n z
+  rw [rationalChowOpenRestriction_classMap]
+  have hc : gradedOpenRestriction ℚ δ j n c = 0 := by
+    apply Subtype.ext
+    ext W
+    exact isEmptyElim (ambientGenericPoint W)
+  rw [hc, map_zero]
+
+-- Rationalization commutes in the actual direction of open pullback.
+example (U X : Scheme) [IsNoetherian X] (δ : DimensionFunction X)
+    (j : U ⟶ X) [IsOpenImmersion j] (n : ℤ) (z : ChowGroup δ n) :
+    letI := openImmersion_isNoetherian j
+    rationalChowOpenRestriction δ j n (chowRationalize δ n z) =
+      chowRationalize (δ.comapOpenImmersion j) n (chowOpenRestriction δ j n z) :=
+  rationalChowOpenRestriction_chowRationalize δ j n z
+
+-- The comparison holds for every tensor, not merely tensors with coefficient one.
+example (U X : Scheme) [IsNoetherian X] (δ : DimensionFunction X)
+    (j : U ⟶ X) [IsOpenImmersion j] (n : ℤ) (t : ℚ ⊗[ℤ] ChowGroup δ n) :
+    letI := openImmersion_isNoetherian j
+    rationalChowOpenRestriction δ j n (chowRationalizationEquiv δ n t) =
+      chowRationalizationEquiv (δ.comapOpenImmersion j) n
+        ((chowOpenRestriction δ j n).baseChange ℚ t) :=
+  rationalChowOpenRestriction_chowRationalizationEquiv δ j n t
+
+example (U X : Scheme) [IsNoetherian X] (δ : DimensionFunction X)
+    (j : U ⟶ X) [IsOpenImmersion j] (n : ℤ) (q : ℚ) (c : cyclesOfDegree ℤ δ n) :
+    letI := openImmersion_isNoetherian j
+    rationalChowOpenRestriction δ j n
+        (chowRationalizationEquiv δ n (q ⊗ₜ[ℤ] classMap δ n c)) =
+      rationalClassMap (δ.comapOpenImmersion j) n
+        (q • cyclesOfDegreeRationalize (δ.comapOpenImmersion j) n
+          (gradedOpenRestriction ℤ δ j n c)) := by
+  letI := openImmersion_isNoetherian j
+  rw [chowRationalizationEquiv_tmul_classMap, rationalChowOpenRestriction_classMap,
+    map_smul, gradedOpenRestriction_rationalize]
+
+-- The new rational restriction agrees with the existing actual inverse isomorphism map.
+example (U X : Scheme) [IsNoetherian X] (δ : DimensionFunction X)
+    (e : U ≅ X) (n : ℤ) (z : RationalChowGroup δ n) :
+    letI := openImmersion_isNoetherian e.hom
+    rationalChowOpenRestriction δ e.hom n z = (rationalChowIsoEquiv δ e n).symm z := by
+  letI := openImmersion_isNoetherian e.hom
+  obtain ⟨c, rfl⟩ := rationalClassMap_surjective δ n z
+  rw [rationalChowOpenRestriction_classMap, rationalChowIsoEquiv_symm_classMap]
+  rfl
+
+-- Restriction is not generally injective: an empty open kills a nonzero generic-degree class.
+example (U X : Scheme) [IsEmpty U] [IsIntegral X] [IsNoetherian X]
+    (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j] :
+    letI := openImmersion_isNoetherian j
+    ¬ Function.Injective (chowOpenRestriction δ j (δ (genericPoint X))) := by
+  letI := openImmersion_isNoetherian j
+  let W := pointSupport X (genericPoint X)
+  have hW : supportDegree δ W = δ (genericPoint X) := by
+    simp only [supportDegree, W, ambientGenericPoint_pointSupport]
+  let c : cyclesOfDegree ℤ δ (δ (genericPoint X)) :=
+    ⟨fundamentalCycle ℤ W, fundamentalCycle_mem_cyclesOfDegree ℤ δ _ W hW⟩
+  intro hinj
+  have hcU : gradedOpenRestriction ℤ δ j (δ (genericPoint X)) c = 0 := by
+    apply Subtype.ext
+    ext Z
+    exact isEmptyElim (ambientGenericPoint Z)
+  have hmap : chowOpenRestriction δ j (δ (genericPoint X))
+        (classMap δ (δ (genericPoint X)) c) =
+      chowOpenRestriction δ j (δ (genericPoint X))
+        (classMap δ (δ (genericPoint X)) 0) := by
+    simp only [chowOpenRestriction_classMap, hcU, map_zero]
+  have hc : c = 0 :=
+    (rationallyEquivalent_genericDegree_iff_eq X δ c 0).mp
+      ((classMap_eq_iff δ _ c 0).mp (hinj hmap))
+  have hcoeff := congrArg
+    (fun a : cyclesOfDegree ℤ δ (δ (genericPoint X)) ↦ a.val W) hc
+  simp [c, fundamentalCycle] at hcoeff
+
+end ChowOpenRestrictionRegressions

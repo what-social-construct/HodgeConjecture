@@ -1052,7 +1052,14 @@ Define
     =Z^\delta_{\mathrm{fin},m}(X;\mathbf Z)/
         \mathcal R_m^\delta(X).
 \]
-The class-map equality relation is rational equivalence.
+The class-map equality relation is rational equivalence. Open restriction
+descends to the existing quotient by
+\[
+ j^*:\operatorname{CH}_m^\delta(X)
+       \longrightarrow\operatorname{CH}_m^{\delta\circ j}(U),
+ \qquad j^*[z]=[j^*z],
+\]
+and respects identity and contravariant composition.
 A closed immersion \(i:X\hookrightarrow Y\) of Noetherian schemes,
 with \(\delta_X=\delta_Y\circ i\), induces
 \[
@@ -1073,6 +1080,9 @@ of these same principal relations gives
  \qquad q\otimes[z]\longmapsto[qz_{\mathbf Q}],
 \]
 where \(z_{\mathbf Q}\) is the coefficientwise image of \(z\).
+Open restriction likewise descends to the rational quotients with
+the same representative formula and functoriality. It commutes with
+the tensor comparison and the integral-to-rational class maps.
 Closed pushforward on these rational quotients preserves the same
 representatives, respects identity and composition, and commutes
 with the tensor comparison and integral-to-rational class maps.
@@ -1136,8 +1146,11 @@ Coefficient extension on the actual support basis and the
 tensor--quotient comparison give the rational formula.
 Actual principal-generator transport then gives rational closed
 pushforward and its compatibility with coefficient extension.
+For open restriction, the nonempty and empty generator identities
+give quotient descent, and the same coefficient comparison proves
+the rationalization squares.
 The detailed statements and proofs are
-Propositions~\ref{prop:scheme-local-order}--\ref{prop:open-principal-relations}.
+Propositions~\ref{prop:scheme-local-order}--\ref{prop:open-chow-restriction}.
 \end{proof}
 
 For smooth projective schemes over a fixed field \(k\), composition of rational Chow
@@ -3324,6 +3337,73 @@ existing relation span. Apply this inclusion to \(c-e\) to obtain
 the rational-equivalence assertion.
 \end{proof}
 
+\begin{proposition}[Integral and rational Chow restriction]
+\label{prop:open-chow-restriction}
+Let \(j:U\hookrightarrow X\) be an open immersion of schemes,
+let \(\delta\) be a dimension function on \(X\), and write
+\(\delta_U=\delta\circ j\). On the existing finite-cycle modules,
+coefficientwise extension from \(\mathbf Z\) to \(\mathbf Q\)
+commutes with actual open restriction:
+\[
+ j^*(z_{\mathbf Q})=(j^*z)_{\mathbf Q}
+       \qquad\bigl(z\in Z_{\mathrm{fin}}(X;\mathbf Z)\bigr).
+\]
+The same equality holds in every homogeneous degree \(m\in\mathbf Z\).
+
+Suppose \(X\) is Noetherian. Then \(U\) is Noetherian, and the
+existing cycle maps induce
+\[
+\begin{aligned}
+ j^*&:\operatorname{CH}_m^\delta(X)
+           \longrightarrow\operatorname{CH}_m^{\delta_U}(U),\\
+ j^*&:\operatorname{CH}_m^\delta(X;\mathbf Q)
+           \longrightarrow\operatorname{CH}_m^{\delta_U}(U;\mathbf Q).
+\end{aligned}
+\]
+The first map is \(\mathbf Z\)-linear and the second is
+\(\mathbf Q\)-linear. Both preserve the actual cycle representatives,
+\(j^*[z]=[j^*z]\), and both respect identity and contravariant
+composition. For every further open immersion \(k:V\hookrightarrow U\),
+\[
+ (j\circ k)^*=k^*\circ j^*
+\]
+with the dimension function \(\delta\circ j\circ k\) on \(V\).
+
+The scalar-extension comparisons of
+Proposition~\ref{prop:rational-chow-coefficients} form the commutative square
+\[
+\begin{CD}
+ \mathbf Q\otimes_{\mathbf Z}\operatorname{CH}_m^\delta(X)
+   @>{1\otimes j^*}>>
+ \mathbf Q\otimes_{\mathbf Z}\operatorname{CH}_m^{\delta_U}(U)\\
+ @V{\simeq}VV @VV{\simeq}V\\
+ \operatorname{CH}_m^\delta(X;\mathbf Q)
+   @>{j^*}>> \operatorname{CH}_m^{\delta_U}(U;\mathbf Q).
+\end{CD}
+\]
+On tensor-\(1\) classes this gives
+\(j^*(c_{\mathbf Q})=(j^*c)_{\mathbf Q}\) for every
+\(c\in\operatorname{CH}_m^\delta(X)\).
+\end{proposition}
+
+\begin{proof}
+The coefficient at an integral carrier in \(U\) is the coefficient
+at its actual reduced closure in \(X\). Applying the integer-to-rational
+cast to that formula proves the raw cycle identity; the existing
+homogeneity comparison gives its graded form.
+Proposition~\ref{prop:open-principal-relations} proves preservation
+of the integral relation span. The quotient universal property
+therefore constructs the integral map with the stated class formula.
+Coefficient compatibility carries each rational principal generator
+to the cast of its restricted integral generator, or to zero in the
+empty-carrier case. Thus the rational span is preserved as well,
+giving the rational quotient map. Surjectivity of the two class maps
+reduces identity and composition to the existing graded cycle laws.
+The representative formulas prove the integral-to-rational square.
+Every tensor is a sum of pure tensors; linearity and the formula
+\(q\otimes[z]\mapsto[qz_{\mathbf Q}]\) prove the full tensor square.
+\end{proof}
+
 \section{Detailed split geometric computations}
 \label{app:split-computations}
 
@@ -4314,6 +4394,14 @@ Actual carrier branches, graded generators and rational equivalence
 (Proposition~\ref{prop:open-principal-relations})\newline
 \leanpath{Cycles/PrincipalDivisorRestriction.lean}\newline
 \leanpath{Cycles/PrincipalRelationRestriction.lean}\\
+Integral and rational Chow restriction &
+\leanpath{chowOpenRestriction}\newline
+\leanpath{rationalChowOpenRestriction}\newline
+Actual representatives, contravariant functoriality and tensor comparison
+(Proposition~\ref{prop:open-chow-restriction})\newline
+\leanpath{Cycles/ChowOpenRestriction.lean}\newline
+\leanpath{Cycles/CoefficientRestriction.lean}\newline
+\leanpath{Cycles/RationalChowOpenRestriction.lean}\\
 Compactified graph route &
 \leanpath{groupAlgebraProjectorExtension}\newline
 \leanpath{Boundary/CompactifiedGraphProjector.lean}\\
@@ -4810,7 +4898,18 @@ principal table, grouped by mathematical layer.
 \leanpath{PrincipalRelationData.openRestriction_function};
 \leanpath{gradedOpenRestriction_principalRelation_of_nonempty};
 \leanpath{gradedOpenRestriction_principalRelation_of_isEmpty};
-\leanpath{rationallyEquivalent_openRestriction}.
+\leanpath{rationallyEquivalent_openRestriction};
+\leanpath{chowOpenRestriction_classMap};
+\leanpath{chowOpenRestriction_id};
+\leanpath{chowOpenRestriction_comp};
+\leanpath{openRestriction_rationalize};
+\leanpath{gradedOpenRestriction_rationalize};
+\leanpath{rationalPrincipalRelations_le_comap_openRestriction};
+\leanpath{rationalChowOpenRestriction_classMap};
+\leanpath{rationalChowOpenRestriction_id};
+\leanpath{rationalChowOpenRestriction_comp};
+\leanpath{rationalChowOpenRestriction_chowRationalize};
+\leanpath{rationalChowOpenRestriction_chowRationalizationEquiv}.
 
 \paragraph{localization, fixed rings, and inertia.}
 \normsrc{FixedRingLocalization.lean};
