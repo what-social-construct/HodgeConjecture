@@ -1045,14 +1045,57 @@ second graded-isomorphism model or new inverse cycle operation is used.
 The proof never cancels the generally non-injective Chow rationalization
 map.
 
-**The next bounded goal is the actual function-field and local-order
-comparison for integral open immersions.** Generalize the existing
-generic-stalk function-field equivalence, its specialization and local
-algebra-map compatibility, from scheme isomorphisms to open immersions
-between integral schemes. Then transport actual divisor points and their
-signed orders through these maps. This precedes arbitrary-open
-principal-divisor/relation descent: an empty restricted carrier has no
-function field and must be handled separately, not assumed integral.
+### Actual integral-open function fields and signed local orders
+
+A11aq / SP58 generalizes `Cycles/FunctionFieldTransport.lean` to an
+actual open immersion \(j:X\to Y\) of integral schemes. The actual
+generic-point stalk map gives \(j^*:k(Y)\simeq k(X)\); its compatibility
+with specialization and with each local ring's canonical map to the
+function field is proved. These statements need no Noetherianity,
+compactness, finite-type, normality or field-base premise. The old
+isomorphism APIs definitionally specialize this same construction.
+
+In `Cycles/SchemeLocalOrder.lean`, the actual stalk isomorphisms preserve
+local ring dimension for open immersions of arbitrary schemes. They
+give an embedding of the existing divisor-point types, with image exactly
+the divisor points whose underlying points lie in the open image.
+This does not require integrality or Noetherianity. For integral source
+and target, local Noetherianity of the target suffices for
+\[
+ \operatorname{ord}_x(j^*f)=\operatorname{ord}_{j(x)}(f).
+\]
+Local Noetherianity on the source is derived from the actual open
+immersion. The proof reuses the existing local-order invariance under
+compatible local-ring/function-field isomorphisms. The old isomorphism
+order theorem is now a specialization, and the point embedding agrees
+definitionally with the old isomorphism equivalence's forward map.
+
+**The next bounded goal is the actual prime-support and coefficient
+comparison for open restriction.** Connect the pointwise embedding to
+the existing nonempty `openRestrictionSubscheme` and its inverse given
+by reduced closure in the ambient scheme. Establish the coefficient
+formula for the existing finite-cycle restriction, then use the proved
+local-order comparison to obtain the actual principal-divisor cycle
+identity. Retain the principal-cycle construction's finite-support
+hypotheses; an arbitrary open of a quasi-compact scheme is not assumed
+quasi-compact. The empty restricted carrier must still contribute zero,
+not be assigned a function field. Open relation preservation and quotient
+descent follow only after these actual carrier/cycle comparisons; an
+open image is not a closed-immersion image.
+
+The bounded implementation can use the existing
+`openRestrictionSubschemeMap` to compare ambient generic points, then
+`pointSupport X (j.base (ambientGenericPoint W))` as the reduced-closure
+inverse for a support `W` on the source. The coefficient target is
+`(openRestriction R j c) W = c (pointSupport X (j.base (ambientGenericPoint W)))`.
+These support and coefficient comparisons need no ambient integrality,
+Noetherianity or compactness. For the subsequent principal-cycle step,
+target local Noetherianity supplies `QuasiCompact j`, so target compactness
+also yields source compactness through
+`QuasiCompact.compactSpace_of_compactSpace`; compactness alone is not used
+to infer this. Thus the existing finite-assembly hypotheses can be
+discharged from the appropriate target hypotheses, not silently omitted.
+
 Comparison with the prescribed target rational Chow groups and its
 intersection/Betti structure remains a separate geometric identification.
 An extension to reducible schemes must use an actual pure-dimensional

@@ -5760,3 +5760,210 @@ example (X Y : Scheme) [IsNoetherian X] [IsNoetherian Y]
   (rationalChowIsoEquiv δ e n).apply_symm_apply z
 
 end RationalChowPushforwardRegressions
+
+-- SP58: actual open-immersion function fields, divisor points and local orders.
+#check HodgeConjecture.SchemeCycles.functionFieldIsoOfOpenImmersion
+#check HodgeConjecture.SchemeCycles.functionFieldEquivOfOpenImmersion
+#check HodgeConjecture.SchemeCycles.functionFieldIsoOfOpenImmersion_stalkSpecializes
+#check HodgeConjecture.SchemeCycles.functionFieldEquivOfOpenImmersion_algebraMap
+#check HodgeConjecture.SchemeCycles.stalkDimension_openImmersion
+#check HodgeConjecture.SchemeCycles.divisorPointEmbedding
+#check HodgeConjecture.SchemeCycles.divisorPointEmbedding_val
+#check HodgeConjecture.SchemeCycles.mem_range_divisorPointEmbedding_iff
+#check HodgeConjecture.SchemeCycles.divisorPointEmbedding_iso
+#check HodgeConjecture.SchemeCycles.divisorOrder_openImmersion
+#check HodgeConjecture.SchemeCycles.functionFieldIso
+#check HodgeConjecture.SchemeCycles.divisorPointEquiv_val
+
+#print axioms HodgeConjecture.SchemeCycles.functionFieldIsoOfOpenImmersion
+#print axioms HodgeConjecture.SchemeCycles.functionFieldEquivOfOpenImmersion
+#print axioms HodgeConjecture.SchemeCycles.functionFieldIsoOfOpenImmersion_stalkSpecializes
+#print axioms HodgeConjecture.SchemeCycles.functionFieldEquivOfOpenImmersion_algebraMap
+#print axioms HodgeConjecture.SchemeCycles.stalkDimension_openImmersion
+#print axioms HodgeConjecture.SchemeCycles.divisorPointEmbedding
+#print axioms HodgeConjecture.SchemeCycles.divisorPointEmbedding_val
+#print axioms HodgeConjecture.SchemeCycles.mem_range_divisorPointEmbedding_iff
+#print axioms HodgeConjecture.SchemeCycles.divisorPointEmbedding_iso
+#print axioms HodgeConjecture.SchemeCycles.divisorOrder_openImmersion
+#print axioms HodgeConjecture.SchemeCycles.functionFieldIso
+#print axioms HodgeConjecture.SchemeCycles.divisorPointEquiv_val
+
+noncomputable section OpenImmersionLocalOrderRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory TopologicalSpace
+open HodgeConjecture.SchemeCycles
+
+-- Stalk dimension uses only the actual open immersion, not integral or Noetherian geometry.
+example (X Y : Scheme) (j : X ⟶ Y) [IsOpenImmersion j] (x : X) :
+    ringKrullDim (Y.presheaf.stalk (j.base x)) = ringKrullDim (X.presheaf.stalk x) := by
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  fail_if_success
+    have : IsLocallyNoetherian X := inferInstance
+  exact stalkDimension_openImmersion j x
+
+example (X Y : Scheme) (j : X ⟶ Y) [IsOpenImmersion j] :
+    Nonempty (DivisorPoint X ↪ DivisorPoint Y) :=
+  ⟨divisorPointEmbedding j⟩
+
+example (X Y : Scheme) (j : X ⟶ Y) [IsOpenImmersion j] (x : DivisorPoint X) :
+    (divisorPointEmbedding j x).val = j.base x.val :=
+  divisorPointEmbedding_val j x
+
+example (X Y : Scheme) (j : X ⟶ Y) [IsOpenImmersion j] :
+    Function.Injective (divisorPointEmbedding j) :=
+  (divisorPointEmbedding j).injective
+
+-- The image is the actual open image, not every divisor point of the target.
+example (X Y : Scheme) (j : X ⟶ Y) [IsOpenImmersion j] (y : DivisorPoint Y) :
+    y ∈ Set.range (divisorPointEmbedding j) ↔ y.val ∈ Set.range j.base :=
+  mem_range_divisorPointEmbedding_iff j y
+
+example (X : Scheme) (U : X.Opens) (y : DivisorPoint X) :
+    y ∈ Set.range (divisorPointEmbedding U.ι) ↔ y.val ∈ U := by
+  rw [mem_range_divisorPointEmbedding_iff]
+  constructor
+  · rintro ⟨x, hx⟩
+    have hxU : U.ι.base x ∈ U := x.property
+    exact hx ▸ hxU
+  · intro hy
+    exact ⟨⟨y.val, hy⟩, rfl⟩
+
+-- Even the empty open has the divisor-point embedding; function fields are not needed.
+example (X : Scheme) :
+    Set.range (divisorPointEmbedding (⊥ : X.Opens).ι) = ∅ := by
+  apply Set.eq_empty_iff_forall_notMem.mpr
+  rintro y ⟨x, _⟩
+  exact x.val.property
+
+example (X Y : Scheme) [IsIntegral X] [IsIntegral Y]
+    (j : X ⟶ Y) [IsOpenImmersion j] :
+    Nonempty (Y.functionField ≃+* X.functionField) := by
+  fail_if_success
+    have : IsLocallyNoetherian X := inferInstance
+  fail_if_success
+    have : IsLocallyNoetherian Y := inferInstance
+  exact ⟨functionFieldEquivOfOpenImmersion j⟩
+
+-- The actual generic-point map commutes with actual specialization maps.
+example (X Y : Scheme) [IsIntegral X] [IsIntegral Y]
+    (j : X ⟶ Y) [IsOpenImmersion j] (x : X) :
+    Y.presheaf.stalkSpecializes ((genericPoint_spec Y).specializes
+        (Set.mem_univ (j.base x))) ≫ (functionFieldIsoOfOpenImmersion j).hom =
+      j.stalkMap x ≫
+        X.presheaf.stalkSpecializes ((genericPoint_spec X).specializes (Set.mem_univ x)) :=
+  functionFieldIsoOfOpenImmersion_stalkSpecializes j x
+
+example (X Y : Scheme) [IsIntegral X] [IsIntegral Y]
+    (j : X ⟶ Y) [IsOpenImmersion j] (x : X) (a : Y.presheaf.stalk (j.base x)) :
+    functionFieldEquivOfOpenImmersion j
+        (algebraMap (Y.presheaf.stalk (j.base x)) Y.functionField a) =
+      algebraMap (X.presheaf.stalk x) X.functionField ((j.stalkMap x).hom a) :=
+  functionFieldEquivOfOpenImmersion_algebraMap j x a
+
+-- Both old isomorphism constructions are literal specializations.
+example (X Y : Scheme) [IsIntegral X] [IsIntegral Y] (e : X ≅ Y) :
+    functionFieldIso e = functionFieldIsoOfOpenImmersion e.hom := rfl
+
+example (X Y : Scheme) [IsIntegral X] [IsIntegral Y] (e : X ≅ Y) :
+    functionFieldEquiv e = functionFieldEquivOfOpenImmersion e.hom := rfl
+
+example (X Y : Scheme) (e : X ≅ Y) (x : DivisorPoint X) :
+    divisorPointEmbedding e.hom x = divisorPointEquiv e x :=
+  divisorPointEmbedding_iso e x
+
+-- Only target local Noetherianity is supplied; the source proof is derived from openness.
+example (X Y : Scheme) [IsIntegral X] [IsIntegral Y] [IsLocallyNoetherian Y]
+    (j : X ⟶ Y) [IsOpenImmersion j] (x : DivisorPoint X) (f : Y.functionFieldˣ) :
+    letI : IsLocallyNoetherian X := isLocallyNoetherian_of_isOpenImmersion j
+    divisorOrder X x (Units.map (functionFieldEquivOfOpenImmersion j).toMonoidHom f) =
+      divisorOrder Y (divisorPointEmbedding j x) f :=
+  divisorOrder_openImmersion j x f
+
+example (X Y : Scheme) [IsIntegral X] [IsIntegral Y] [IsLocallyNoetherian Y]
+    (j : X ⟶ Y) [IsOpenImmersion j] (x : DivisorPoint X) (f : Y.functionFieldˣ) :
+    letI : IsLocallyNoetherian X := isLocallyNoetherian_of_isOpenImmersion j
+    divisorOrder X x (Units.map (functionFieldEquivOfOpenImmersion j).toMonoidHom f⁻¹) =
+      -divisorOrder Y (divisorPointEmbedding j x) f := by
+  letI : IsLocallyNoetherian X := isLocallyNoetherian_of_isOpenImmersion j
+  rw [divisorOrder_openImmersion, divisorOrder_inv]
+
+example (X Y : Scheme) [IsIntegral X] [IsIntegral Y] [IsLocallyNoetherian Y]
+    (j : X ⟶ Y) [IsOpenImmersion j] (x : DivisorPoint X) :
+    letI : IsLocallyNoetherian X := isLocallyNoetherian_of_isOpenImmersion j
+    divisorOrder X x (Units.map (functionFieldEquivOfOpenImmersion j).toMonoidHom 1) = 0 := by
+  letI : IsLocallyNoetherian X := isLocallyNoetherian_of_isOpenImmersion j
+  rw [divisorOrder_openImmersion, divisorOrder_one]
+
+example (X Y : Scheme) [IsIntegral X] [IsIntegral Y]
+    [IsLocallyNoetherian X] [IsLocallyNoetherian Y]
+    (e : X ≅ Y) (x : DivisorPoint X) (f : Y.functionFieldˣ) :
+    divisorOrder X x (Units.map (functionFieldEquiv e).toMonoidHom f) =
+      divisorOrder Y (divisorPointEquiv e x) f :=
+  divisorOrder_iso e x f
+
+-- D(T) is a genuinely proper nonempty open, yet has the same actual function field.
+example (k : Type) [Field k] :
+    let U : (Examples.affineLine k).Opens :=
+      PrimeSpectrum.basicOpen (Polynomial.X : Polynomial k)
+    (¬ Function.Surjective U.ι.base) ∧
+      ∃ hI : IsIntegral (U : Scheme),
+        letI := hI
+        Nonempty ((Examples.affineLine k).functionField ≃+* (U : Scheme).functionField) := by
+  dsimp only
+  let U : (Examples.affineLine k).Opens :=
+    PrimeSpectrum.basicOpen (Polynomial.X : Polynomial k)
+  change (¬ Function.Surjective U.ι.base) ∧ _
+  have hU : Nonempty (U : Scheme) := by
+    refine ⟨⟨⟨⊥, Ideal.bot_prime⟩, ?_⟩⟩
+    change (Polynomial.X : Polynomial k) ∉ (⊥ : Ideal (Polynomial k))
+    simpa only [Ideal.mem_bot] using (Polynomial.X_ne_zero : (Polynomial.X : Polynomial k) ≠ 0)
+  letI := hU
+  letI : IsIntegral (U : Scheme) := isIntegral_of_isOpenImmersion U.ι
+  have horigin : Examples.affineLineOrigin k ∉ U := by
+    change ¬ ((Polynomial.X : Polynomial k) ∉ RingHom.ker Polynomial.constantCoeff)
+    apply not_not.mpr
+    change (Polynomial.X : Polynomial k).coeff 0 = 0
+    exact Polynomial.coeff_X_zero
+  refine ⟨?_, inferInstance, ⟨functionFieldEquivOfOpenImmersion U.ι⟩⟩
+  intro hs
+  obtain ⟨x, hx⟩ := hs (Examples.affineLineOrigin k)
+  have hxU : U.ι.base x ∈ U := x.property
+  exact horigin (hx ▸ hxU)
+
+-- The omitted affine-line origin is an actual divisor point, not just an omitted generic label.
+example (k : Type) [Field k] :
+    let U : (Examples.affineLine k).Opens :=
+      PrimeSpectrum.basicOpen (Polynomial.X : Polynomial k)
+    ∃ y : DivisorPoint (Examples.affineLine k),
+      y.val = Examples.affineLineOrigin k ∧
+        y ∉ Set.range (divisorPointEmbedding U.ι) := by
+  dsimp only
+  let U : (Examples.affineLine k).Opens :=
+    PrimeSpectrum.basicOpen (Polynomial.X : Polynomial k)
+  have hdim : ringKrullDim
+      ((Examples.affineLine k).presheaf.stalk (Examples.affineLineOrigin k)) = 1 := by
+    rw [affine_stalk_dimension_of_isClosed k (Polynomial k) (Examples.affineLineOrigin k)
+      (Examples.affineLineOrigin_isClosed k)]
+    exact IsPrincipalIdealRing.ringKrullDim_eq_one (Polynomial k) (Polynomial.not_isField k)
+  let y : DivisorPoint (Examples.affineLine k) := ⟨Examples.affineLineOrigin k, hdim⟩
+  refine ⟨y, rfl, ?_⟩
+  rw [mem_range_divisorPointEmbedding_iff]
+  rintro ⟨x, hx⟩
+  change U.ι.base x = Examples.affineLineOrigin k at hx
+  have horigin : Examples.affineLineOrigin k ∉ U := by
+    change ¬ ((Polynomial.X : Polynomial k) ∉ RingHom.ker Polynomial.constantCoeff)
+    apply not_not.mpr
+    change (Polynomial.X : Polynomial k).coeff 0 = 0
+    exact Polynomial.coeff_X_zero
+  have hxU : U.ι.base x ∈ U := x.property
+  exact horigin (hx ▸ hxU)
+
+-- The preserved dimension is actual local codimension (coheight), not global point height.
+example (X Y : Scheme) (j : X ⟶ Y) [IsOpenImmersion j] (x : X) :
+    Order.coheight (j.base x) = Order.coheight x := by
+  apply WithBot.coe_injective
+  rw [point_coheight_eq_stalkDim Y, point_coheight_eq_stalkDim X]
+  exact stalkDimension_openImmersion j x
+
+end OpenImmersionLocalOrderRegressions

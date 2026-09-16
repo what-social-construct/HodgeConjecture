@@ -68,7 +68,7 @@ same PDF. No proof-status change follows from this editorial reorganization.
 
 ## Canonical semantic object and TeX registry
 
-### Construction and input checkpoints (SP17--SP57)
+### Construction and input checkpoints (SP17--SP58)
 
 | ID | Object or overlap | Disposition | Required action | Status |
 | --- | --- | --- | --- | --- |
@@ -113,6 +113,7 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP55 | Actual codimension indexing of principal relations and generic-degree vanishing | REINDEX / CONNECT | Reindex degree d-minus-(n+1) relation data by the same codimension-n carriers and their unchanged function-field units. Preserve the actual ambient principal-divisor generator. Prove generic-degree index emptiness for any integral scheme with a supplied dimension function, and derive zero relation span and rational equivalence as equality under the existing Noetherian premise. | PROVED; FULL BUILD, 518 AXIOM REPORTS, SIXTEEN REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP56 | Rational homogeneous cycles and the scalar-extended principal-relation quotient | EXTEND COEFFICIENTS / COMPARE | Extend coefficients on the same homogeneous cycle module and identify its tensor scalar extension. Form the rational span of the same actual principal divisors and compare the resulting rational quotient with the tensor extension of the integral Chow group, preserving class representatives. Retain quotient-layer Noetherianity and distinguish coefficient injectivity from Chow rationalization. | PROVED; FULL BUILD, 538 AXIOM REPORTS, TWENTY REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP57 | Rational closed pushforward and actual isomorphism restriction on the existing Chow quotient | EXTEND / DESCEND / COMPARE | Factor one coefficient-parametric graded closed pushforward, retain the integer specializations, prove coefficient compatibility and preservation of the same principal-relation span, and descend to rational Chow with identity/composition and tensor naturality. Identify the rational isomorphism's forward and inverse representative formulas with actual closed pushforward and open restriction. | PROVED; FULL BUILD, 560 AXIOM REPORTS, TWENTY REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+| SP58 | Actual function fields, divisor-point embedding and signed orders under open immersions | GENERALIZE / PRESERVE | Generalize the existing generic-stalk/function-field construction to integral open immersions and retain the old isomorphism specializations. Use actual stalk isomorphisms to embed divisor points with exact open-image range, then preserve the signed local coefficient using target local Noetherianity. | PROVED; FULL BUILD, 572 AXIOM REPORTS, TWENTY REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -978,6 +979,44 @@ reference resolves. Historical SP18--SP56 validation blocks remain
 byte-identical. No manuscript status/gap commentary, project axiom,
 bibliography entry, submission-wrapper change or dependency-pin change
 was introduced. Diff checks pass.
+
+SP58 validation: both affected leaf modules compile clean, and the full
+Lean build passes all 3140 jobs with only the two existing intentional
+Challenge warnings. The ten new public endpoints comprise four actual
+open-immersion function-field declarations and six stalk-dimension,
+divisor-point and signed-order declarations. The axiom audit additionally
+selects the previously unreported existing `functionFieldIso` and
+`divisorPointEquiv_val`; these are not new APIs.
+
+The focused replay with the exact original four imports passes twelve
+checks/reports and twenty regressions without warnings. The regressions
+cover arbitrary-scheme stalk dimensions and divisor-point embeddings,
+the exact image and empty-open branch, the actual specialization and
+local-algebra squares, unchanged isomorphism specializations, target-only
+local Noetherianity, inverse/unit orders, and actual local coheight.
+On the genuine punctured affine line, the point map is nonsurjective
+but the actual function-field equivalence exists; the omitted origin is
+an actual divisor point outside the embedding's image.
+
+The full integrated `research/Verification.lean` replay passes without
+warnings: 680 declaration checks, 475 examples and all 572 selected
+axiom reports. The reports match their exact inventory with no missing,
+unexpected or duplicate report and no disallowed axiom. Of these, 570
+use exactly the standard three. The existing `polynomialDimensionBound`
+uses no axioms, and `genericFiber_isScalarTower_base` uses only `propext`
+and `Quot.sound`. The six primary proof-dependency checks and two
+supporting reports pass. Independent source and mathematical/manuscript
+parity reviews pass.
+
+The single PDF builds to 60 pages with a clean final log. The main
+statement on page 12, Proposition A.29 and its proof on pages 36--37,
+the new crosswalk row on page 50 and additional declarations on page 56
+were visually inspected. All ten new APIs occur exactly once in
+Appendix C; all 79 manuscript labels are unique and every reference
+resolves. Historical SP18--SP57 validation blocks and the pre-SP58
+verification prefix remain byte-identical. No manuscript status/gap
+commentary, project axiom, bibliography entry, submission-wrapper change
+or dependency-pin change was introduced. Diff checks pass.
 
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
@@ -1987,9 +2026,11 @@ submodule. SP55 then reindexes the existing principal-relation data
 while retaining its actual carriers and function-field units. SP56
 extends the existing homogeneous cycles and Chow quotient to rational
 coefficients, preserving representatives. SP57 proves naturality for the
-existing closed-pushforward and isomorphism operations. The next bounded
-step is integral open-immersion function-field and local-order transport,
-before arbitrary-open descent of principal divisors and relations.
+existing closed-pushforward and isomorphism operations. SP58 supplies
+integral open-immersion function-field and local-order transport. The
+next bounded step compares actual prime supports with nonempty open
+restriction and reduced closure, before the finite principal-cycle
+identity and arbitrary-open relation descent.
 
 ### Actual integral codimension and the existing shifted grading (SP54)
 
@@ -2273,17 +2314,78 @@ and quotient representatives; they do not cancel `chowRationalize` or
 assert its injectivity. No new carrier, dimension function, relation
 prescription or Chow quotient is introduced.
 
-The next bounded checkpoint generalizes the existing actual
-function-field isomorphism/equivalence and its stalk-specialization /
-algebra-map compatibility from scheme isomorphisms to open immersions
-between integral schemes. The existing `FunctionFieldTransport` proof
-already uses open-immersion geometry. The subsequent step is the
-corresponding divisor-point and local-order transport. This prepares,
-but does not yet prove, arbitrary-open restriction of principal divisors
-and descent of their relation span; an empty restricted carrier requires
-a separate branch. General proper pushforward still needs its norm
-comparison, and flat/Gysin operations need their own relation-preservation
-proofs. General Chow convolution and prescribed target
+SP58 below generalizes the same actual function-field construction to
+integral open immersions, proves its local-stalk compatibility, and
+transports divisor points and signed local orders. These are pointwise
+comparisons; the support and finite-cycle comparisons required for
+arbitrary-open principal-divisor and relation descent remain separate.
+
+### Actual function fields and local orders under open immersions (SP58)
+
+Let \(j:X\hookrightarrow Y\) be an actual open immersion. The
+stalk-dimension and divisor-point assertions apply to arbitrary schemes.
+The function-field assertions retain integral \(X\) and \(Y\),
+so the source is a nonempty open. The signed-order assertion additionally
+requires only that \(Y\) be locally Noetherian; the source's local
+Noetherianity is explicitly derived from \(j\).
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `functionFieldIsoOfOpenImmersion` | the actual generic-stalk isomorphism induced by the open immersion | $j^*:k(Y)\xrightarrow{\sim}k(X)$ |
+| `functionFieldEquivOfOpenImmersion` | the same map as a ring equivalence, not another field construction | prose only; the same $j^*$ |
+| `functionFieldIsoOfOpenImmersion_stalkSpecializes` | the actual generic-stalk map commutes with specialization from each local stalk | prose only; the local-to-generic stalk square |
+| `functionFieldEquivOfOpenImmersion_algebraMap` | the same square for the canonical local-ring algebra maps | $j^*(a)=j_x^{\#}(a)$ after the canonical maps into $k(X)$, for $a\in\mathcal O_{Y,j(x)}$ |
+| `stalkDimension_openImmersion` | actual local-ring isomorphism preserves Krull dimension | $\dim\mathcal O_{Y,j(x)}=\dim\mathcal O_{X,x}$ |
+| `divisorPointEmbedding` | the actual point map embeds the one-dimensional local-ring locus | $j_1:\operatorname{DivPt}(X)\hookrightarrow\operatorname{DivPt}(Y)$ |
+| `divisorPointEmbedding_val` | the embedded divisor point has the unchanged actual point image | $j_1(x)=j(x)$ on underlying points |
+| `mem_range_divisorPointEmbedding_iff` | exact range of the divisor-point embedding | $y\in\operatorname{im}(j_1)\iff y\in j(X)$ for $y\in\operatorname{DivPt}(Y)$ |
+| `divisorPointEmbedding_iso` | the old isomorphism point equivalence has this same forward map | prose only; $j_1=e_1$ when $j=e.\mathrm{hom}$, by definitional equality |
+| `divisorOrder_openImmersion` | the same signed local order is preserved through the actual field/stalk maps | $\operatorname{ord}_x(j^*f)=\operatorname{ord}_{j_1(x)}(f)$ |
+
+The four function-field endpoints generalize
+`Cycles/FunctionFieldTransport.lean`; the six local endpoints extend
+`Cycles/SchemeLocalOrder.lean`. Manuscript Proposition A.29,
+`prop:open-function-field-order`, states these same separate hypothesis
+levels. The four old function-field API signatures are unchanged and
+definitionally specialize the open-immersion construction at
+\(j=e.\mathrm{hom}\). The old `stalkDimension_iso` and
+`divisorOrder_iso` proofs likewise specialize the new results. The
+existing `divisorPointEquiv` remains an equivalence for scheme
+isomorphisms, with forward compatibility proved by `rfl`; arbitrary
+open immersions give only an embedding with the stated exact range.
+
+The actual open stalk map is an isomorphism at every point. At the
+generic point, its source is identified with the target scheme's generic
+stalk using the proved generic-point image equality. Naturality of
+stalk specialization gives the local-ring/function-field square without
+introducing a transported substitute algebra action. The same local
+stalk isomorphism gives the dimension equality; actual injectivity on
+points gives the divisor-point embedding, and any target divisor point
+in the open image pulls back to a one-dimensional stalk. These local
+dimension and point assertions need neither integrality nor
+Noetherianity.
+
+For signed order, local Noetherianity of \(X\) is derived from the
+target by an explicit `letI` in the theorem statement and proof. The
+existing length-based fraction-field order comparison is applied to
+the actual stalk ring equivalence and actual function-field equivalence,
+using their proved algebra-map compatibility. No compactness, finite-type,
+base-field, normality or DVR assumption is introduced. Neither the order
+function nor the divisor-point type is replaced, and no principal-cycle
+or Chow-relation restriction identity is asserted here.
+
+The next bounded step compares actual prime supports under the nonempty
+`openRestrictionSubscheme` construction with the reduced closure inverse
+obtained from the existing point/support equivalence. An open immersion
+is not a general closed immersion: extending a support uses reduced
+closure, not the closed-image API. This support comparison should give
+the actual coefficient formula for `openRestriction`; together with
+the proved pointwise signed-order comparison, it can then give the
+actual principal-divisor cycle identity under the retained finite-cycle
+assembly hypotheses. An empty restricted carrier still requires its
+separate zero branch. General open Chow descent is not yet proved.
+General proper pushforward retains its norm-comparison obligation;
+flat/Gysin operations, general Chow convolution and prescribed target
 identification/realization/coverage remain separate, as recorded in
 `GAP_MAP.md` and `TARGET_BRIDGE.md`.
 

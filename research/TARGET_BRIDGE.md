@@ -662,13 +662,31 @@ be developed alongside that infrastructure.
    Neither a second graded-isomorphism construction nor cancellation of
    Chow rationalization is used.
 
-   **Next bounded obligation:** extend the actual generic-stalk
-   function-field equivalence and its specialization/algebra-map
-   compatibility from isomorphisms to open immersions between integral
-   schemes; prove the associated divisor-point and signed local-order
-   transport. General-open principal-divisor and relation descent then
-   need the actual restricted carrier, with an explicit empty-carrier
-   branch rather than a nonexistent function field. The target's actual
+   **Integral-open local comparison checkpoint (A11aq / SP58):**
+   `FunctionFieldTransport.lean` now constructs the contravariant
+   function-field equivalence for an actual open immersion of integral
+   schemes, together with its actual stalk-specialization and local
+   algebra-map compatibility. No Noetherian or compactness premise is
+   needed, and the previous isomorphism APIs specialize this same map.
+   `SchemeLocalOrder.lean` proves local stalk-dimension invariance and
+   embeds divisor points for open immersions of arbitrary schemes. The
+   image is exactly the target divisor points in the actual open image,
+   not all target divisor points. On integral schemes, target local
+   Noetherianity suffices for the actual signed-order comparison; source
+   local Noetherianity is derived. The existing isomorphism order theorem
+   is a specialization and the existing point-equivalence forward map
+   agrees with the new embedding.
+
+   **Next bounded obligation:** connect this divisor-point comparison to
+   actual nonempty restricted prime supports and their reduced closures.
+   Prove the coefficient formula for the existing geometric open
+   restriction on finite cycles, then the principal-divisor cycle
+   identity from the pointwise order comparison. Preserve the existing
+   finite-support assembly hypotheses, and retain the explicit
+   empty-carrier zero branch. An arbitrary open immersion supplies
+   neither a closed-image support nor quasi-compactness of its source.
+   General-open principal-relation preservation and quotient descent
+   still follow only after these comparisons. The target's actual
    rational Chow groups and their intersection/Betti structure still
    require a geometric identification.
    A pure-dimensional or componentwise extension is needed

@@ -969,6 +969,13 @@ field gives the signed order
        -\operatorname{length}_A(A/(b)),
   \qquad a,b\ne0.
 \]
+For an open immersion \(j:U\hookrightarrow X\) with \(U\) integral,
+the actual generic-stalk map gives
+\(j^*:k(X)\xrightarrow{\sim}k(U)\), and
+\[
+ \operatorname{ord}_u(j^*f)=\operatorname{ord}_{j(u)}(f)
+ \qquad\bigl(u\in\operatorname{DivPt}(U),\ f\in k(X)^\times\bigr).
+\]
 For each \(f\in k(X)^\times\), the family of prime divisors
 \(W\) with \(\operatorname{ord}_W(f)\ne0\) is locally finite.
 If \(X\) is also quasi-compact, they define
@@ -1101,7 +1108,7 @@ tensor--quotient comparison give the rational formula.
 Actual principal-generator transport then gives rational closed
 pushforward and its compatibility with coefficient extension.
 The detailed statements and proofs are
-Propositions~\ref{prop:scheme-local-order}--\ref{prop:rational-chow-naturality}.
+Propositions~\ref{prop:scheme-local-order}--\ref{prop:open-function-field-order}.
 \end{proof}
 
 For smooth projective schemes over a fixed field \(k\), composition of rational Chow
@@ -3038,6 +3045,60 @@ inverse equals the existing open restriction, giving the stated
 inverse formula on rational cycle representatives.
 \end{proof}
 
+\begin{proposition}[Open-immersion function fields and signed local orders]
+\label{prop:open-function-field-order}
+Let \(j:X\hookrightarrow Y\) be an open immersion of schemes.
+Its actual stalk map is an isomorphism at every point, so
+\[
+ \dim\mathcal O_{Y,j(x)}=\dim\mathcal O_{X,x}
+       \qquad(x\in X).
+\]
+The point map therefore restricts to an embedding
+\[
+ j_1:\operatorname{DivPt}(X)\hookrightarrow\operatorname{DivPt}(Y),
+ \qquad x\longmapsto j(x).
+\]
+Its image consists exactly of the points of
+\(\operatorname{DivPt}(Y)\) lying in the actual open image \(j(X)\).
+If \(X\) and \(Y\) are integral, the actual generic-point stalk
+map induces a contravariant field isomorphism
+\[
+ j^*:k(Y)\xrightarrow{\sim}k(X).
+\]
+It commutes with the specialization maps from each local stalk;
+equivalently, the canonical local-to-function-field maps form a
+commutative square
+\[
+\begin{CD}
+ \mathcal O_{Y,j(x)} @>{j_x^{\#}}>> \mathcal O_{X,x}\\
+ @VVV @VVV\\
+ k(Y) @>{j^*}>> k(X).
+\end{CD}
+\]
+If, in addition, \(Y\) is locally Noetherian, then for every
+\(x\in\operatorname{DivPt}(X)\) and \(f\in k(Y)^\times\),
+\[
+ \operatorname{ord}_x(j^*f)
+       =\operatorname{ord}_{j_1(x)}(f).
+\]
+For a scheme isomorphism these are the preceding point, function-field
+and local-order comparisons.
+\end{proposition}
+
+\begin{proof}
+The actual stalk isomorphism preserves Krull dimension, and the
+underlying open immersion is injective on points. A preimage of a
+divisor point in \(j(X)\) has the same one-dimensional stalk,
+which proves the image description. On integral
+schemes it sends the generic point to the generic point; the
+corresponding stalk isomorphism is \(j^*\). Naturality of stalk
+specialization gives the displayed square. Local Noetherianity
+restricts along the open immersion. The actual stalk and function-field
+isomorphisms therefore identify the length-based fraction-field
+orders of \cite{StacksLocalOrderOfVanishing,StacksSchemeOrderOfVanishing},
+giving the signed coefficient equality.
+\end{proof}
+
 \section{Detailed split geometric computations}
 \label{app:split-computations}
 
@@ -3998,6 +4059,13 @@ Coefficient-parametric cycles, actual representatives and tensor squares
 \leanpath{Cycles/CoefficientPushforward.lean}\newline
 \leanpath{Cycles/RationalChowPushforward.lean}\newline
 \leanpath{Cycles/RationalChowIsomorphism.lean}\\
+Open function fields, divisor points and signed local orders &
+\leanpath{functionFieldEquivOfOpenImmersion}\newline
+\leanpath{divisorOrder_openImmersion}\newline
+Actual stalk compatibility and the divisor-point image
+(Proposition~\ref{prop:open-function-field-order})\newline
+\leanpath{Cycles/FunctionFieldTransport.lean}\newline
+\leanpath{Cycles/SchemeLocalOrder.lean}\\
 Compactified graph route &
 \leanpath{groupAlgebraProjectorExtension}\newline
 \leanpath{Boundary/CompactifiedGraphProjector.lean}\\
@@ -4456,7 +4524,15 @@ principal table, grouped by mathematical layer.
 \leanpath{rationalChowIsoEquiv_toLinearMap};
 \leanpath{rationalChowIsoEquiv_classMap};
 \leanpath{rationalChowIsoEquiv_symm_classMap};
-\leanpath{rationalChowIsoEquiv_chowRationalize}.
+\leanpath{rationalChowIsoEquiv_chowRationalize};
+\leanpath{functionFieldIsoOfOpenImmersion};
+\leanpath{functionFieldIsoOfOpenImmersion_stalkSpecializes};
+\leanpath{functionFieldEquivOfOpenImmersion_algebraMap};
+\leanpath{stalkDimension_openImmersion};
+\leanpath{divisorPointEmbedding};
+\leanpath{divisorPointEmbedding_val};
+\leanpath{mem_range_divisorPointEmbedding_iff};
+\leanpath{divisorPointEmbedding_iso}.
 
 \paragraph{localization, fixed rings, and inertia.}
 \normsrc{FixedRingLocalization.lean};
