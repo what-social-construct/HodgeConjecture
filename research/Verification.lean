@@ -5130,3 +5130,166 @@ example (k : Type) [Field k] (X : Scheme)
   trivial
 
 end IntegralCodimensionRegressions
+
+-- SP55: actual codimension reindexing of principal relations and generic-degree vanishing.
+#check HodgeConjecture.SchemeCycles.principalRelationDataEquivCodimension
+#check HodgeConjecture.SchemeCycles.principalRelationDataEquivCodimension_apply_carrier
+#check HodgeConjecture.SchemeCycles.principalRelationDataEquivCodimension_apply_function
+#check HodgeConjecture.SchemeCycles.principalRelationDataEquivCodimension_symm_apply_carrier
+#check HodgeConjecture.SchemeCycles.principalRelationDataEquivCodimension_symm_apply_function
+#check HodgeConjecture.SchemeCycles.principalRelation_equivCodimension_symm_coe
+#check HodgeConjecture.SchemeCycles.isEmpty_principalRelationData_genericDegree
+#check HodgeConjecture.SchemeCycles.principalRelations_genericDegree_eq_bot
+#check HodgeConjecture.SchemeCycles.rationallyEquivalent_genericDegree_iff_eq
+
+#print axioms HodgeConjecture.SchemeCycles.principalRelationDataEquivCodimension
+#print axioms HodgeConjecture.SchemeCycles.principalRelationDataEquivCodimension_apply_carrier
+#print axioms HodgeConjecture.SchemeCycles.principalRelationDataEquivCodimension_apply_function
+#print axioms HodgeConjecture.SchemeCycles.principalRelationDataEquivCodimension_symm_apply_carrier
+#print axioms HodgeConjecture.SchemeCycles.principalRelationDataEquivCodimension_symm_apply_function
+#print axioms HodgeConjecture.SchemeCycles.principalRelation_equivCodimension_symm_coe
+#print axioms HodgeConjecture.SchemeCycles.isEmpty_principalRelationData_genericDegree
+#print axioms HodgeConjecture.SchemeCycles.principalRelations_genericDegree_eq_bot
+#print axioms HodgeConjecture.SchemeCycles.rationallyEquivalent_genericDegree_iff_eq
+
+noncomputable section PrincipalRelationCodimensionRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory TopologicalSpace
+open HodgeConjecture.SchemeCycles
+
+variable (k : Type) [Field k] (X : Scheme) [IsIntegral X]
+  (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+
+local notation "δ" => DimensionFunction.ofLocallyOfFiniteType k X p
+local notation "D" => δ (genericPoint X)
+local notation "E" => principalRelationDataEquivCodimension k X p
+
+-- The reindexing itself needs neither Noetherianity nor quasi-compactness.
+example (n : ℕ) :
+    Nonempty (PrincipalRelationData δ (D - ((n : ℤ) + 1)) ≃
+      ((W : {W : IntegralClosedSubscheme X // supportCodimension W = (n : ℕ∞)}) ×
+        (letI := W.val.property; W.val.val.subscheme.functionFieldˣ))) := by
+  fail_if_success
+    have : IsAffine X := inferInstance
+  fail_if_success
+    have : CompactSpace X := inferInstance
+  fail_if_success
+    have : IsNoetherian X := inferInstance
+  exact ⟨E n⟩
+
+-- Forward carrier and function preservation are literal equalities.
+example (n : ℕ) (a : PrincipalRelationData δ (D - ((n : ℤ) + 1))) :
+    ((E n) a).1.val = a.1.val :=
+  principalRelationDataEquivCodimension_apply_carrier k X p n a
+
+example (n : ℕ) (a : PrincipalRelationData δ (D - ((n : ℤ) + 1))) :
+    ((E n) a).2 = a.2 :=
+  principalRelationDataEquivCodimension_apply_function k X p n a
+
+-- Inverse reindexing keeps the same scheme function field and its actual unit.
+example (n : ℕ)
+    (a : (W : {W : IntegralClosedSubscheme X // supportCodimension W = (n : ℕ∞)}) ×
+      (letI := W.val.property; W.val.val.subscheme.functionFieldˣ)) :
+    ((E n).symm a).1.val = a.1.val :=
+  principalRelationDataEquivCodimension_symm_apply_carrier k X p n a
+
+example (n : ℕ)
+    (a : (W : {W : IntegralClosedSubscheme X // supportCodimension W = (n : ℕ∞)}) ×
+      (letI := W.val.property; W.val.val.subscheme.functionFieldˣ)) :
+    ((E n).symm a).2 = a.2 :=
+  principalRelationDataEquivCodimension_symm_apply_function k X p n a
+
+example (n : ℕ) (a : PrincipalRelationData δ (D - ((n : ℤ) + 1))) :
+    (E n).symm ((E n) a) = a :=
+  (E n).symm_apply_apply a
+
+example (n : ℕ)
+    (a : (W : {W : IntegralClosedSubscheme X // supportCodimension W = (n : ℕ∞)}) ×
+      (letI := W.val.property; W.val.val.subscheme.functionFieldˣ)) :
+    (E n) ((E n).symm a) = a :=
+  (E n).apply_symm_apply a
+
+-- The relation construction retains its Noetherian premise and exact old ambient cycle.
+example [IsNoetherian X] (n : ℕ)
+    (a : (W : {W : IntegralClosedSubscheme X // supportCodimension W = (n : ℕ∞)}) ×
+      (letI := W.val.property; W.val.val.subscheme.functionFieldˣ)) :
+    letI := a.1.val.property
+    (principalRelation δ (D - ((n : ℤ) + 1)) ((E n).symm a) : Cycles X ℤ) =
+      ambientPrincipalDivisor a.1.val a.2 :=
+  principalRelation_equivCodimension_symm_coe k X p n a
+
+-- Top-degree emptiness is generic in a supplied dimension function, with no field hypothesis.
+example (Y : Scheme) [IsIntegral Y] (ε : DimensionFunction Y) :
+    IsEmpty (PrincipalRelationData ε (ε (genericPoint Y))) := by
+  fail_if_success
+    have : CompactSpace Y := inferInstance
+  fail_if_success
+    have : IsNoetherian Y := inferInstance
+  exact isEmpty_principalRelationData_genericDegree Y ε
+
+example (Y : Scheme) [IsIntegral Y] [IsNoetherian Y] (ε : DimensionFunction Y) :
+    principalRelations ε (ε (genericPoint Y)) = ⊥ :=
+  principalRelations_genericDegree_eq_bot Y ε
+
+example (Y : Scheme) [IsIntegral Y] [IsNoetherian Y] (ε : DimensionFunction Y)
+    (c e : cyclesOfDegree ℤ ε (ε (genericPoint Y))) :
+    RationallyEquivalent ε (ε (genericPoint Y)) c e ↔ c = e :=
+  rationallyEquivalent_genericDegree_iff_eq Y ε c e
+
+-- Degree d-1 has relation data on the actual whole-X carrier; it is not the empty top index.
+example (Y : Scheme) [IsIntegral Y] (ε : DimensionFunction Y) :
+    Nonempty (PrincipalRelationData ε (ε (genericPoint Y) - 1)) := by
+  let W := pointSupport Y (genericPoint Y)
+  have hW : supportDegree ε W = (ε (genericPoint Y) - 1) + 1 := by
+    simp only [supportDegree, W, ambientGenericPoint_pointSupport]
+    omega
+  letI := W.property
+  exact ⟨⟨⟨W, hW⟩, 1⟩⟩
+
+-- At n=0 the equivalence reads codimension-zero carriers for relations in cycle degree d-1.
+example (a : PrincipalRelationData δ (D - ((0 : ℤ) + 1))) :
+    supportCodimension ((E 0) a).1.val = 0 :=
+  ((E 0) a).1.property
+
+-- A genuine negative-degree datum exists on a point, but its unit principal divisor is zero.
+example (k₀ : Type) [Field k₀] :
+    let Y := Spec (CommRingCat.of k₀)
+    let ε := DimensionFunction.ofLocallyOfFiniteType k₀ Y (𝟙 Y)
+    ∃ a : PrincipalRelationData ε (-1),
+      (principalRelation ε (-1) a : Cycles Y ℤ) = 0 := by
+  dsimp only
+  let Y := Spec (CommRingCat.of k₀)
+  let ε := DimensionFunction.ofLocallyOfFiniteType k₀ Y (𝟙 Y)
+  let W := pointSupport Y (genericPoint Y)
+  have hε : ε (genericPoint Y) = 0 := by
+    rw [DimensionFunction.ofLocallyOfFiniteType_eq_pointHeight]
+    have hmin : IsMin (genericPoint Y) := by
+      intro y _
+      exact (Subsingleton.elim _ _).le
+    simp only [Order.height_eq_zero.mpr hmin, ENat.toNat_zero, Nat.cast_zero]
+  have hW : supportDegree ε W = (-1 : ℤ) + 1 := by
+    simp only [supportDegree, W, ambientGenericPoint_pointSupport, hε]
+    norm_num
+  letI := W.property
+  refine ⟨⟨⟨W, hW⟩, 1⟩, ?_⟩
+  change ambientPrincipalDivisor W 1 = 0
+  exact ambientPrincipalDivisor_one W
+
+-- Once n>d, the required carrier degree itself is negative, so this shifted index is empty.
+example (n : ℕ) (hn : D < (n : ℤ)) :
+    IsEmpty (PrincipalRelationData δ (D - ((n : ℤ) + 1))) := by
+  refine ⟨fun a ↦ ?_⟩
+  have hdeg := a.1.property
+  have hnon := DimensionFunction.ofLocallyOfFiniteType_nonneg k X p
+    (ambientGenericPoint a.1.val)
+  change δ (ambientGenericPoint a.1.val) = _ at hdeg
+  omega
+
+-- The existing quotient class map is injective in generic degree, with no replacement quotient.
+example (Y : Scheme) [IsIntegral Y] [IsNoetherian Y] (ε : DimensionFunction Y) :
+    Function.Injective (classMap ε (ε (genericPoint Y))) := by
+  intro c e h
+  exact (rationallyEquivalent_genericDegree_iff_eq Y ε c e).mp
+    ((classMap_eq_iff ε (ε (genericPoint Y)) c e).mp h)
+
+end PrincipalRelationCodimensionRegressions

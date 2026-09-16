@@ -612,20 +612,30 @@ be developed alongside that infrastructure.
    an assumed \(n\leq d\); the fundamental-cycle converse retains
    nontrivial coefficients. No new carrier or cycle module is introduced.
 
-   **Next bounded obligation:** reindex existing `PrincipalRelationData`
-   in degree \(d-(n+1)\) by actual codimension-\(n\) carriers with
-   units in their unchanged function fields. Preserve the carrier and
-   function in both directions. Prove that the relation data for top
-   degree \(d\) are empty (carrier degree \(d+1\) is impossible),
-   then that the existing relation submodule is zero under its current
-   Noetherian premise. This is a comparison inside the existing quotient
-   construction, not a new Chow model.
+   **Principal-relation codimension checkpoint (A11an / SP55):**
+   `PrincipalRelationCodimension.lean` identifies the existing relation
+   data in degree \(d-(n+1)\) with the same codimension-\(n\) carriers
+   and units in their actual function fields. The carrier, function and
+   ambient divisor are preserved by definitional equality. These are
+   relations on codimension-\(n+1\) cycles. The data equivalence has no
+   Noetherian premise; the existing relation map retains it.
+   In `PrincipalRelations.lean`, generic-degree relation data are empty
+   for any integral scheme with any supplied dimension function, without
+   requiring a field or finite type. The existing Noetherian relation
+   span is zero in that degree and rational equivalence is equality.
+
+   **Next bounded obligation:** construct rational coefficient extension
+   of the existing homogeneous cycles and identify the scalar-extended
+   integral Chow quotient with rational cycles modulo the rational span
+   of the same principal divisors. Preserve cycle representatives and
+   class maps. Retain the quotient's Noetherian premise; do not assert
+   injectivity of general Chow rationalization, which may kill torsion.
+   Then compare with the target's actual rational Chow groups.
    A pure-dimensional or componentwise extension is needed
    for reducible targets; smoothness alone does not make all connected
    components have the same dimension. The current integral quotient's
-   Noetherian premise is retained. Construct rational coefficient extension of this
-   general integral quotient and the comparison with the target's rational
-   Chow groups; the earlier split-case scalar extension is not that theorem.
+   Noetherian premise is retained; the earlier split-case scalar extension
+   is not the general quotient comparison.
    General proper pushforward still needs its norm
    compatibility; arbitrary open restriction and flat/Gysin operations
    need their own principal-relation comparisons and quotient descent.

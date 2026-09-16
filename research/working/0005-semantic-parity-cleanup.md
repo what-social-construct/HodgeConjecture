@@ -68,7 +68,7 @@ same PDF. No proof-status change follows from this editorial reorganization.
 
 ## Canonical semantic object and TeX registry
 
-### Construction and input checkpoints (SP17--SP54)
+### Construction and input checkpoints (SP17--SP55)
 
 | ID | Object or overlap | Disposition | Required action | Status |
 | --- | --- | --- | --- | --- |
@@ -109,7 +109,8 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP51 | Pointwise residue degrees and affine-chart value agreement | PROVE / COMPARE | Use one actual affine-cover preimage to prove finite structural residue degree on a general locally finite-type scheme. Compare each existing affine-chart value with its ambient residue degree, and compare two chart values at equal actual ambient images. | PROVED; FULL BUILD, 487 AXIOM REPORTS, TEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP52 | Global structural residue-degree dimension function | CONSTRUCT / COMPARE | Put specialization pairs in a common actual affine open, transfer strictness and the cover law, and construct the global function. Prove nonnegativity, equality with the existing affine object and value compatibility under arbitrary open immersions. Keep global height/carrier dimension and target codimension comparison separate. | PROVED; FULL BUILD, 493 AXIOM REPORTS, FOURTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP53 | Global point height and actual integral-carrier dimension | IDENTIFY / COMPARE | Bound height above by nonnegative strict grading and below by one actual affine chart. Identify the global function with finite height and actual point-closure dimension; derive carrier-degree and fundamental-cycle criteria and qualified open-height invariance. Keep integral codimension conversion separate. | PROVED; FULL BUILD, 500 AXIOM REPORTS, FOURTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
-| SP54 | Actual integral chain codimension and the existing d-minus-n grading | IDENTIFY / REINDEX | Prove finite ambient dimension and coheight, then derive codimension plus degree from the existing cover law. Identify support, fundamental-cycle and full-cycle degree d-minus-n criteria with actual codimension n. Reuse the existing grading and retain principal-relation data reindexing as the next step. | PROVED; FULL BUILD, 509 AXIOM REPORTS, SIXTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP54 | Actual integral chain codimension and the existing d-minus-n grading | IDENTIFY / REINDEX | Prove finite ambient dimension and coheight, then derive codimension plus degree from the existing cover law. Identify support, fundamental-cycle and full-cycle degree d-minus-n criteria with actual codimension n. Reuse the existing grading; principal-relation data reindexing is recorded in SP55. | PROVED; FULL BUILD, 509 AXIOM REPORTS, SIXTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP55 | Actual codimension indexing of principal relations and generic-degree vanishing | REINDEX / CONNECT | Reindex degree d-minus-(n+1) relation data by the same codimension-n carriers and their unchanged function-field units. Preserve the actual ambient principal-divisor generator. Prove generic-degree index emptiness for any integral scheme with a supplied dimension function, and derive zero relation span and rational equivalence as equality under the existing Noetherian premise. | PROVED; FULL BUILD, 518 AXIOM REPORTS, SIXTEEN REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -864,6 +865,37 @@ separate construction, detection, extension, action and coverage premises.
 Existing sources 0A21 and 02IZ were checked for the integral numerical
 formula. No source axiom, bibliography or dependency-pin change was made;
 the submission wrappers are unchanged. Diff checks pass.
+
+SP55 validation (2026-09-15): the new leaf and updated
+`PrincipalRelations.lean` pass the 2804-job leaf build. The full 3133-job
+Lean build passes with only the two existing `Challenge` warnings.
+The six primary proof-dependency assertions and two supporting reports
+pass. The independent leaf audit passes nine public axiom reports and
+ten regressions without warnings or errors; all nine endpoints depend
+exactly on `propext`, `Classical.choice` and `Quot.sound`.
+The exact-original-four-import replay passes nine endpoint checks/reports
+and sixteen new regressions without warnings or errors. Tests retain both
+roundtrips, all four literal projections, the unchanged ambient generator,
+generic no-field scope, generic-degree class-map injectivity, nonempty
+degree d-minus-one data, and the actual Spec(k) negative-degree datum with
+zero unit divisor. The earlier verification content and imports are
+unchanged. The full integrated run passes all 626 declaration checks and
+415 examples without warnings or errors. All 518 selected axiom reports
+match the exact declaration inventory, with no missing, unexpected or
+duplicate reports and no unpermitted axioms. The existing
+`polynomialDimensionBound` is axiom-free;
+`genericFiber_isScalarTower_base` uses only `propext` and `Quot.sound`;
+the other 516 reports use exactly the standard three.
+The single PDF builds to 57 pages with a clean final log. The main
+infrastructure theorem on pages 12--13, Proposition A.26 and its proof on
+page 34, and the declaration crosswalk on pages 47 and 52 were visually
+checked. All nine new API names appear once each, in Appendix C; the
+manuscript has 76 unique labels and no missing references. No editorial
+status or gap commentary was added to the manuscript. Independent
+mathematical and manuscript parity reviews pass. The existing source
+conventions in 02I9, 02RW and 02QO were rechecked; no new source axiom,
+bibliography entry, submission-wrapper change or dependency-pin change
+was introduced. Diff checks pass.
 
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
@@ -1866,9 +1898,10 @@ is introduced.
 
 SP54 below proves the integral codimension/degree comparison and
 identifies codimension \(n\) with the existing degree \(d-n\)
-submodule. The next bounded step is to reindex the existing
-principal-relation data while retaining its actual carriers and
-function-field units.
+submodule. SP55 then reindexes the existing principal-relation data
+while retaining its actual carriers and function-field units. The next
+bounded step is rational coefficient extension of the existing
+homogeneous cycles and Chow quotient, preserving representatives.
 
 ### Actual integral codimension and the existing shifted grading (SP54)
 
@@ -1914,24 +1947,94 @@ premises, but integrality of \(X\) is retained. The proof introduces
 no new dimension function, codimension, carrier, cycle module or
 Chow quotient.
 
-The next bounded implementation is an equivalence reindexing
+SP55 below proves the equivalence reindexing
 `PrincipalRelationData δ (d - (n + 1))` by the same actual
-codimension-\(n\) carriers \(W\) and the same units
-\(f\in k(W)^\times\): its existing carrier condition is
-\(\deg_\delta W=(d-(n+1))+1=d-n\).
-This geometric indexing type needs no Noetherian premise. Next prove
-the top-degree index `PrincipalRelationData δ d` empty, since its
-carriers would have degree \(d+1\). Under the current `IsNoetherian X`
-premise for the actual relation map and span, this should give
-`principalRelations δ d = ⊥`. These are queued consequences, not
-additional SP54 declarations. Reuse the existing principal divisors,
-relations and quotient; do not introduce another quotient or rational
-coefficient extension at this step.
+codimension-\(n\) carriers and function-field units, with the existing
+ambient principal divisor unchanged. It also proves generic-degree
+relation-data emptiness in the stronger setting of an arbitrary
+integral scheme with a supplied dimension function. The relation-span
+and rational-equivalence consequences retain the current Noetherian
+premise. These reuse the existing principal divisors, relations and
+quotient.
 
 A reducible extension still needs actual pure-dimensional geometry or
 componentwise grading; smoothness alone does not supply one uniform
 dimension. The general rational coefficient comparison and target
 realization remain separate obligations.
+
+### Actual codimension indexing of principal relations (SP55)
+
+For the field-geometric reindexing, retain integral \(X\), its actual
+locally finite-type morphism \(p:X\to\operatorname{Spec}k\),
+\(\delta=\delta_{X/k}\), and \(d=\delta(\eta_X)\).
+The input is the existing `PrincipalRelationData` in degree
+\(d-(n+1)\), for \(n\in\mathbb N\). Its carrier degree is
+\((d-(n+1))+1=d-n\); hence it describes relations on
+codimension-\(n+1\) cycles using codimension-\(n\) carriers.
+For the generic-degree statements, instead let \(X\) be any integral
+scheme, supply any dimension function \(\delta\), and write
+\(d_\delta=\delta(\eta_X)\). No field or finite-type assumption is
+part of those three statements.
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `principalRelationDataEquivCodimension` | reindex the existing dependent pair by actual codimension | $(W,f)$ with $\deg_\delta W=d-n\;\longleftrightarrow\;(W,f)$ with $\operatorname{codim}_X W=n$, always $f\in k(W)^\times$ |
+| `principalRelationDataEquivCodimension_apply_carrier` | forward reindexing preserves the literal integral closed carrier | prose only; the same $W$ |
+| `principalRelationDataEquivCodimension_apply_function` | forward reindexing preserves the literal rational function | prose only; the same $f\in k(W)^\times$ |
+| `principalRelationDataEquivCodimension_symm_apply_carrier` | inverse reindexing preserves the literal integral closed carrier | prose only; the same $W$ |
+| `principalRelationDataEquivCodimension_symm_apply_function` | inverse reindexing preserves the literal rational function | prose only; the same $f\in k(W)^\times$ |
+| `principalRelation_equivCodimension_symm_coe` | the reindexed generator is the existing ambient principal divisor | $(\iota_W)_{*,\mathrm{cyc}}\operatorname{div}_W(f)\in Z^\delta_{\mathrm{fin},d-(n+1)}(X;\mathbf Z)$ |
+| `isEmpty_principalRelationData_genericDegree` | generic-degree relation data would require an impossible larger carrier degree | no $(W,f)$ with $\deg_\delta W=d_\delta+1$ |
+| `principalRelations_genericDegree_eq_bot` | the existing relation span vanishes in generic degree | $\mathcal R_{d_\delta}^{\delta}(X)=0$ |
+| `rationallyEquivalent_genericDegree_iff_eq` | rational equivalence is equality in the existing generic-degree cycle module | $c\sim_{\mathrm{rat}}e\iff c=e$ in $Z^\delta_{\mathrm{fin},d_\delta}(X;\mathbf Z)$ |
+
+The first six endpoints are in
+`Cycles/PrincipalRelationCodimension.lean`; the last three extend the
+existing `Cycles/PrincipalRelations.lean`. Manuscript Proposition A.26,
+`prop:principal-relation-codimension`, records the same scope.
+SP54 supplies the degree/codimension equivalence. Reindexing changes
+only the proof in the carrier subtype: the carrier and its actual
+function field are unchanged, both function projections are
+definitionally equal, and the inverse generator's underlying cycle is
+the existing ambient principal divisor by `rfl`. The index equivalence
+requires no Noetherian or quasi-compact premise; forming the actual
+principal relation retains `IsNoetherian X`.
+
+For generic-degree emptiness, every carrier's ambient generic point
+specializes from \(\eta_X\). Actual specialization antisymmetry
+handles equality of points; strict monotonicity of the supplied
+dimension function handles the strict case. Thus every carrier has
+degree at most \(d_\delta\), excluding degree \(d_\delta+1\).
+This argument uses neither a field nor finite type nor Noetherianity.
+Under the existing Noetherian premise, the span of the empty generator
+range is zero, and its rational-equivalence relation is literal equality.
+
+The shift at \(n=0\) is different: relation data in degree \(d-1\)
+include the whole integral carrier and its unit function. A negative
+cycle degree alone does not imply an empty relation-data type. At
+\(n=d\), the carriers have degree zero and the relation degree is
+\(-1\). No new carrier type, function-field transport, dimension
+function, relation operation, cycle module or Chow quotient is introduced.
+
+The next bounded implementation is rational coefficient extension of
+the existing homogeneous cycles, followed by the representative-preserving
+comparison
+\[
+ \mathbb Q\otimes_{\mathbb Z}\operatorname{CH}_m^\delta(X)
+ \;\cong\;
+ Z^\delta_{\mathrm{fin},m}(X;\mathbb Q)
+ \big/\operatorname{span}_{\mathbb Q}
+ \{(\iota_W)_*\operatorname{div}_W(f):\deg_\delta W=m+1\}.
+\]
+The displayed rational generators are the coefficient extensions of the
+same actual integer principal divisors. Preserve the class maps and
+their cycle representatives, and retain the existing quotient's
+Noetherian premise. Do not assert injectivity of general Chow
+rationalization: torsion may be killed, and the earlier finite-split
+injectivity theorem is not a general comparison. Identifying this
+quotient with the prescribed target rational Chow groups remains a
+separate geometric identification, as in `GAP_MAP.md` and
+`TARGET_BRIDGE.md`.
 
 ## Objects deliberately assigned no independent notation
 

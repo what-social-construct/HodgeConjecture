@@ -217,6 +217,41 @@ theorem classMap_principalRelation [IsNoetherian X] (δ : DimensionFunction X) (
     (d : PrincipalRelationData δ n) : classMap δ n (principalRelation δ n d) = 0 :=
   (classMap_eq_zero_iff δ n _).mpr (principalRelation_mem δ n d)
 
+/-- Every support specializes from the ambient generic point. A relation
+in generic degree would therefore require a carrier of impossible degree. -/
+theorem isEmpty_principalRelationData_genericDegree
+    (X : Scheme.{u}) [IsIntegral X] (δ : DimensionFunction X) :
+    IsEmpty (PrincipalRelationData δ (δ (genericPoint X))) := by
+  refine ⟨fun d ↦ ?_⟩
+  have hforward : ambientGenericPoint d.1.val ≤ genericPoint X :=
+    Scheme.le_iff_specializes.mpr (genericPoint_specializes (ambientGenericPoint d.1.val))
+  have hle : supportDegree δ d.1.val ≤ δ (genericPoint X) := by
+    by_cases hback : genericPoint X ≤ ambientGenericPoint d.1.val
+    · have heq : ambientGenericPoint d.1.val = genericPoint X :=
+        ((Scheme.le_iff_specializes.mp hback).antisymm
+          (Scheme.le_iff_specializes.mp hforward)).eq
+      simp only [supportDegree, heq, le_refl]
+    · exact (δ.strictMono (lt_of_le_not_ge hforward hback)).le
+  have hdeg := d.1.property
+  omega
+
+/-- The existing principal-relation span vanishes in the generic degree.
+Noetherianity is the premise of the existing relation construction. -/
+theorem principalRelations_genericDegree_eq_bot
+    (X : Scheme.{u}) [IsIntegral X] [IsNoetherian X] (δ : DimensionFunction X) :
+    principalRelations δ (δ (genericPoint X)) = ⊥ := by
+  letI := isEmpty_principalRelationData_genericDegree X δ
+  simp only [principalRelations, Set.range_eq_empty, Submodule.span_empty]
+
+/-- Rational equivalence in generic degree is literal equality in the
+existing homogeneous cycle module. -/
+theorem rationallyEquivalent_genericDegree_iff_eq
+    (X : Scheme.{u}) [IsIntegral X] [IsNoetherian X] (δ : DimensionFunction X)
+    (c e : cyclesOfDegree ℤ δ (δ (genericPoint X))) :
+    RationallyEquivalent δ (δ (genericPoint X)) c e ↔ c = e := by
+  simp only [RationallyEquivalent, principalRelations_genericDegree_eq_bot,
+    Submodule.mem_bot, sub_eq_zero]
+
 end
 
 end HodgeConjecture.SchemeCycles

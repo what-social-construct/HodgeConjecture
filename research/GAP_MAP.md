@@ -958,23 +958,47 @@ is exactly the finite cycles whose nonzero coefficients have that
 codimension. Nontrivial coefficients are needed only for the
 coefficient-one fundamental-cycle converse.
 
-**The next bounded goal is to reindex the existing principal-relation
-data by actual codimension.** `PrincipalRelationData` in degree
-\(d-(n+1)\) uses carriers of degree \(d-n\). Construct its literal
-equivalence with codimension-\(n\) carriers and units in those same
-actual function fields, preserving each carrier and rational function.
-For top cycle degree \(d\), prove the relation-data type empty because
-it would require carrier degree \(d+1\); then identify the existing
-principal-relation submodule with zero under its current Noetherian
-premise. These data and quotient comparisons are not part of SP54.
+### Actual codimension indexing of principal relations
+
+A11an / SP55 proves the reindexing in
+`Cycles/PrincipalRelationCodimension.lean`. `PrincipalRelationData` in
+degree \(d-(n+1)\) is equivalent to actual codimension-\(n\) carriers
+with units in their unchanged function fields. Thus these are relations
+on codimension-\(n+1\) cycles. Both directions preserve the carrier and
+function literally, and the inverse generator is the existing ambient
+principal divisor by definitional equality. No Noetherian hypothesis is
+needed for the data equivalence; the generator map retains its existing
+Noetherian premise.
+
+The top-degree statements are proved more generally in the existing
+`Cycles/PrincipalRelations.lean`. For any integral scheme and any supplied
+dimension function \(\delta\), every carrier degree is at most
+\(d_\delta=\delta(\eta_X)\). Hence
+`PrincipalRelationData δ dδ` is empty: it would require degree
+\(d_\delta+1\). This uses actual specialization antisymmetry and strict
+monotonicity, without a field, finite-type or Noetherian assumption.
+Under the existing `IsNoetherian X` premise, the relation span is zero
+and rational equivalence in generic degree is equality.
+The codimension reindexing at \(n=0\) instead concerns degree \(d-1\)
+and has data on the whole carrier. A negative cycle degree alone does not
+make its relation data empty: at \(n=d\), carriers have degree zero.
+
+**The next bounded goal is rational coefficient extension of the existing
+homogeneous cycle and Chow constructions.** Construct the coefficient map
+on actual cycles and identify
+\(\mathbb Q\otimes_{\mathbb Z}\operatorname{CH}_m^\delta(X)\) with
+the rational homogeneous cycles modulo the rational span of those same
+principal divisors, preserving quotient representatives. The existing
+quotient's Noetherian premise remains. General Chow rationalization need
+not be injective; the finite-split injectivity theorem does not apply in
+the presence of torsion. Comparison with the prescribed target rational
+Chow groups follows as a separate geometric identification.
 An extension to reducible schemes must use an actual pure-dimensional
 hypothesis or componentwise grading; even smooth schemes may have
 components of different dimensions. The existing finite-cycle quotient's
 Noetherian premise is not removed by the codimension formulas.
-Rational coefficient extension of this general
-integral quotient and comparison with the target's rational Chow groups
-also remain; the earlier finite-split scalar-extension theorem is not
-silently promoted to this general setting. General proper pushforward requires its
+The earlier finite-split scalar-extension theorem is not silently promoted
+to this general setting. General proper pushforward requires its
 norm compatibility, and flat/Gysin operations require their own
 principal-relation comparison before descent; these are not supplied
 by the closed-immersion case.

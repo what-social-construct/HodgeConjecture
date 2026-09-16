@@ -74,6 +74,7 @@ import HodgeConjecture.Cycles.ChartResidueDegree
 import HodgeConjecture.Cycles.FieldDimensionFunction
 import HodgeConjecture.Cycles.FieldSupportDimension
 import HodgeConjecture.Cycles.IntegralCodimension
+import HodgeConjecture.Cycles.PrincipalRelationCodimension
 import HodgeConjecture.Correspondence.TransposeAlgebra
 import HodgeConjecture.Correspondence.ProjectorDefect
 import HodgeConjecture.Correspondence.ProjectorLift
@@ -202,6 +203,11 @@ Chow/cohomological realization:
     carrier dimension equals ambient dimension, with degree d-n detecting
     actual codimension n on supports, fundamental cycles and all finite
     cycles in the existing homogeneous submodule.
+46. codimension indexing of the existing principal-relation data, preserving
+    the actual carrier, function and ambient divisor; empty relation data
+    in generic degree for any integral scheme with a dimension function,
+    vanishing of its Noetherian relation span, and an equality criterion
+    for rational equivalence in that degree.
 
 The free span algebra is not identified with a Chow ring. General proper
 cycle extraction, flat/Gysin operations and their rational-equivalence
@@ -219,7 +225,9 @@ transfer now construct the global field-induced dimension function.
 Its values are now identified with actual point height and carrier
 dimension, without a global dimension bound. On integral schemes, actual
 chain codimension now gives the degree d-n convention in the existing
-cycle module. Reindexing the existing principal-relation data, extending
-to pure-dimensional or componentwise targets, and rational Chow comparison
-remain separate steps.
+cycle module. Principal-relation data now have the matching codimension
+indexing, and generic-degree relations vanish under the existing quotient
+hypotheses. Rational coefficient extension of the general homogeneous
+quotient, comparison with the target rational Chow groups, and extension
+to pure-dimensional or componentwise targets remain separate steps.
 -/

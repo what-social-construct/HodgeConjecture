@@ -1026,6 +1026,9 @@ with \(\delta_X=\delta_Y\circ i\), induces
 These maps respect identity and composition.
 For an isomorphism, the inverse is induced by the existing
 open restriction.
+If \(X\) is integral and \(d=\delta(\eta_X)\), then
+\(\mathcal R_d^\delta(X)=0\), so rational equivalence in degree
+\(d\) is equality of cycles.
 
 \item
 If \(p:X\to\operatorname{Spec}k\) is locally of finite type over
@@ -1049,6 +1052,10 @@ For every \(n\in\mathbf N\) and semiring \(R\), the homogeneous
 submodule \(Z^{\delta_{X/k}}_{\mathrm{fin},d-n}(X;R)\) consists exactly
 of finite cycles whose nonzero coefficients have actual chain
 codimension \(n\). Subtraction is in \(\mathbf Z\).
+The principal-relation data in degree \(d-(n+1)\) are the same
+carriers and rational functions indexed by codimension-\(n\)
+carriers. When \(X\) is Noetherian, their pushed principal
+divisors generate the relations among codimension-\((n+1)\) cycles.
 \end{enumerate}
 \end{theorem}
 
@@ -1072,8 +1079,12 @@ dimension formulas construct \(\delta_{X/k}\).
 Nonnegative strictness and affine normalization identify it with
 point height. On integral \(X\), induction on finite coheight gives
 the codimension formula and the displayed grading criterion.
+The same criterion reindexes the relation carriers without changing
+their functions. For any dimension function on an integral scheme,
+every carrier has degree at most the generic degree, so the
+top-degree relation index is empty.
 The detailed statements and proofs are
-Propositions~\ref{prop:scheme-local-order}--\ref{prop:integral-field-codimension}.
+Propositions~\ref{prop:scheme-local-order}--\ref{prop:principal-relation-codimension}.
 \end{proof}
 
 For smooth projective schemes over a fixed field \(k\), composition of rational Chow
@@ -2822,6 +2833,60 @@ Applying the support criterion coefficientwise gives the description
 of the whole existing homogeneous submodule.
 \end{proof}
 
+\begin{proposition}[Codimension-indexed relations and the top degree]
+\label{prop:principal-relation-codimension}
+Let \(X\) be integral and locally of finite type over a field \(k\),
+put \(\delta=\delta_{X/k}\) and \(d=\delta(\eta_X)\), and let
+\(n\in\mathbf N\). The principal-relation data in cycle degree
+\(d-(n+1)\) identify with
+\[
+ \bigl\{(W,f):W\in\operatorname{IntSub}(X),\quad
+       \operatorname{codim}_X W=n,\quad f\in k(W)^\times\bigr\}.
+\]
+This identification retains the same closed carrier and the same
+element of its function field. If \(X\) is Noetherian, the relation
+attached to \((W,f)\) is the unchanged cycle
+\[
+ (\iota_W)_*\operatorname{div}_W(f)
+       \in Z^\delta_{\mathrm{fin},d-(n+1)}(X;\mathbf Z).
+\]
+Its nonzero coefficients have actual chain codimension \(n+1\).
+These cycles generate the existing submodule
+\(\mathcal R_{d-(n+1)}^\delta(X)\).
+
+More generally, let \(X\) be any integral scheme equipped with a
+dimension function \(\delta\), and put \(d=\delta(\eta_X)\).
+The principal-relation data in degree \(d\) are empty.
+If \(X\) is Noetherian, then
+\[
+ \mathcal R_d^\delta(X)=0.
+\]
+Consequently, for \(c,c'\in Z^\delta_{\mathrm{fin},d}(X;\mathbf Z)\),
+\[
+ c\sim_{\mathrm{rat}}c'\quad\Longleftrightarrow\quad c=c'.
+\]
+\end{proposition}
+
+\begin{proof}
+The existing relation index requires
+\(\deg_\delta W=(d-(n+1))+1=d-n\).
+Proposition~\ref{prop:integral-field-codimension} identifies this
+condition with \(\operatorname{codim}_X W=n\), using the
+field-based carrier normalization of
+\cite{StacksCycleDimensionComparison}. Only the proof of the
+degree condition changes; the carrier, its function field and the
+rational function are retained. The relation map and its generated
+submodule therefore agree with the same principal-divisor
+prescription of \cite{StacksRationalEquivalence}. The cycle-degree
+criterion gives codimension \(n+1\) for every nonzero coefficient.
+For the final assertion, the generic point specializes to the
+generic point of every integral closed carrier. Monotonicity of
+\(\delta\) gives \(\deg_\delta W\leq d\), whereas a relation
+in degree \(d\) would require \(\deg_\delta W=d+1\).
+The empty index has zero span, and the defining difference
+criterion for rational equivalence gives the last equivalence.
+\end{proof}
+
 \section{Detailed split geometric computations}
 \label{app:split-computations}
 
@@ -3758,6 +3823,13 @@ Actual codimension-plus-degree formula and complementary-degree
 criteria for supports, fundamental cycles and finite cycles
 (Proposition~\ref{prop:integral-field-codimension})\newline
 \leanpath{Cycles/IntegralCodimension.lean}\\
+Codimension-indexed principal relations and the top degree &
+\leanpath{principalRelationDataEquivCodimension}\newline
+\leanpath{principalRelations_genericDegree_eq_bot}\newline
+Literal carrier/function preservation and top-degree rational equivalence
+(Proposition~\ref{prop:principal-relation-codimension})\newline
+\leanpath{Cycles/PrincipalRelationCodimension.lean}\newline
+\leanpath{Cycles/PrincipalRelations.lean}\\
 Compactified graph route &
 \leanpath{groupAlgebraProjectorExtension}\newline
 \leanpath{Boundary/CompactifiedGraphProjector.lean}\\
@@ -4172,7 +4244,14 @@ principal table, grouped by mathematical layer.
 \leanpath{supportCodimension_add_dimension_of_integral_locallyOfFiniteType};
 \leanpath{supportDegree_eq_sub_iff_supportCodimension_eq_of_integral_locallyOfFiniteType};
 \leanpath{fundamentalCycle_mem_sub_iff_supportCodimension_eq_of_integral_locallyOfFiniteType};
-\leanpath{mem_cyclesOfDegree_sub_iff_supportCodimension_of_integral_locallyOfFiniteType}.
+\leanpath{mem_cyclesOfDegree_sub_iff_supportCodimension_of_integral_locallyOfFiniteType};
+\leanpath{principalRelationDataEquivCodimension_apply_carrier};
+\leanpath{principalRelationDataEquivCodimension_apply_function};
+\leanpath{principalRelationDataEquivCodimension_symm_apply_carrier};
+\leanpath{principalRelationDataEquivCodimension_symm_apply_function};
+\leanpath{principalRelation_equivCodimension_symm_coe};
+\leanpath{isEmpty_principalRelationData_genericDegree};
+\leanpath{rationallyEquivalent_genericDegree_iff_eq}.
 
 \paragraph{localization, fixed rings, and inertia.}
 \normsrc{FixedRingLocalization.lean};
