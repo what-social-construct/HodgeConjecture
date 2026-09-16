@@ -1,6 +1,7 @@
 import HodgeConjecture.Cycles.CoefficientExtension
 import HodgeConjecture.Cycles.GradedPushforward
 import HodgeConjecture.Cycles.IsomorphismTransport
+import HodgeConjecture.Cycles.OpenGrading
 
 /-!
 # Coefficient extension and actual closed pushforward
@@ -59,15 +60,8 @@ theorem openRestriction_iso_mem_cyclesOfDegree
     (δ : DimensionFunction Y) (e : X ≅ Y) (n : ℤ) (c : Cycles Y R)
     (hc : c ∈ cyclesOfDegree R δ n) :
     openRestriction R e.hom c ∈
-      cyclesOfDegree R (δ.comapClosedImmersion e.hom) n := by
-  rw [openRestriction_iso_eq_pushforward_inv]
-  apply closedImmersionPushforward_mem_cyclesOfDegree R δ
-    (δ.comapClosedImmersion e.hom) e.inv n c hc
-  intro W
-  rw [supportDegree_comapClosedImmersion]
-  have h : closedImageSubscheme e.hom (closedImageSubscheme e.inv W) = W :=
-    (closedImageSubschemeEquiv e).apply_symm_apply W
-  rw [h]
+      cyclesOfDegree R (δ.comapClosedImmersion e.hom) n :=
+  openRestriction_mem_cyclesOfDegree R δ e.hom n c hc
 
 end
 

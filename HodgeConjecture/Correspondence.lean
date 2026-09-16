@@ -25,6 +25,7 @@ import HodgeConjecture.Cycles.PointSupport
 import HodgeConjecture.Cycles.SupportCodimension
 import HodgeConjecture.Cycles.DivisorSupport
 import HodgeConjecture.Cycles.OpenSupport
+import HodgeConjecture.Cycles.OpenClosedBaseChange
 import HodgeConjecture.Cycles.HeightOneFiniteness
 import HodgeConjecture.Cycles.RationalFunctionPresentation
 import HodgeConjecture.Cycles.DivisorFiniteness
@@ -33,6 +34,7 @@ import HodgeConjecture.Cycles.PrincipalDivisorTransport
 import HodgeConjecture.Cycles.DimensionFunction
 import HodgeConjecture.Cycles.DimensionFunctionRestriction
 import HodgeConjecture.Cycles.CycleDegree
+import HodgeConjecture.Cycles.OpenGrading
 import HodgeConjecture.Cycles.PrincipalDivisorDegree
 import HodgeConjecture.Cycles.PrincipalDivisorImage
 import HodgeConjecture.Cycles.GradedPushforward

@@ -34,7 +34,8 @@ theorem openClosureSubscheme_ambientGenericPoint (W : IntegralClosedSubscheme U)
   ambientGenericPoint_pointSupport X _
 
 omit [IsOpenImmersion j] in
-private theorem openRestrictionSubschemeMap_subschemeι
+/-- The actual ideal-comap support map commutes with the two closed inclusions. -/
+theorem openRestrictionSubschemeMap_subschemeι
     (Z : IntegralClosedSubscheme X) :
     openRestrictionSubschemeMap j Z ≫ Z.val.subschemeι =
       (Z.val.comap j).subschemeι ≫ j := by

@@ -1107,15 +1107,30 @@ Thus both sides use the existing finite principal-divisor construction
 with its finiteness hypotheses proved. The previous isomorphism
 restriction theorem retains its signature and specializes this proof.
 
-**The next bounded goal is graded open restriction and compatibility
-with closed carrier inclusions.** Construct the restricted dimension
-function by the actual open point map and prove that the existing cycle
-restriction preserves the corresponding homogeneous modules. Prove its
-Cartesian compatibility with actual closed-support pushforward, then
-restrict `ambientPrincipalDivisor` on a relation carrier. Its nonempty
-branch uses the actual support open map and the new principal-divisor
-identity; its empty branch is zero and receives no function field.
-For an integral closed carrier `Z` in `X`, the concrete cycle square is
+### Graded open restriction and the closed-carrier cycle square
+
+A11as / SP60 constructs `DimensionFunction.comapOpenImmersion` in
+`Cycles/OpenGrading.lean`. Its value is literally \(\delta\circ j\).
+The actual open point map reflects specialization and has order-convex
+image; it preserves immediate specialization, proving both conditions
+of the existing dimension-function structure. Identity and composition
+are preserved. On a morphism that is both open and closed, this is
+definitionally the existing closed restriction, not another grading.
+
+The actual reduced-closure and nonempty restriction support degrees
+agree for these dimension functions. `openRestriction_mem_cyclesOfDegree`
+therefore proves homogeneity using the existing coefficient formula.
+`gradedOpenRestriction` is the same geometric cycle map restricted to
+the existing homogeneous submodules, over any semiring. Its literal
+representative, identity and contravariant composition formulas are
+proved. The previous isomorphism-only homogeneity theorem retains its
+signature and now specializes the general result. No ambient
+integrality, Noetherianity, compactness or global-dimension convention
+is imposed, and no dimension function is assumed to exist universally.
+
+`Cycles/OpenClosedBaseChange.lean` proves the actual cycle square
+`openRestriction_closedImmersionPushforward_subscheme`. For any integral
+closed carrier `Z` in `X`, including an empty inverse image, it states
 
 ```lean
 (openRestriction R j).comp (closedImmersionPushforward R Z.val.subschemeι) =
@@ -1123,13 +1138,25 @@ For an integral closed carrier `Z` in `X`, the concrete cycle square is
     (openRestriction R (openRestrictionSubschemeMap j Z))
 ```
 
-The existing ideal-comap square and generic-point comparisons should
-prove this on actual generators, including the empty restricted carrier,
-without new ambient finiteness hypotheses or a replacement pullback.
-Only after that carrier-level comparison can the actual principal-relation
-span and its integral/rational quotients descend. The principal-divisor
-identity on integral ambient schemes alone does not supply this square
-inside an arbitrary ambient scheme.
+The original `openRestrictionSubschemeMap_subschemeι` is now public,
+with the same actual Cartesian inclusion equation. No replacement
+pullback is introduced. Actual generic-point comparison identifies the
+nonempty integral generators on both sides; the empty branches are
+zero. Linear extension proves the square over every semiring without
+ambient finiteness hypotheses. This square is stated on raw finite
+cycles, separately from the homogeneous restriction construction.
+
+**The next bounded goal is restriction of actual ambient principal
+generators.** Apply this proved square and SP59's principal-divisor
+identity to `ambientPrincipalDivisor`. In the nonempty branch, the
+function pulls back through the actual support open map, and SP60's
+degree comparison places the resulting carrier in the correct relation
+index. In the empty branch the cycle is zero and no function field is
+assigned to the empty scheme. Retain the existing carrier/quotient
+Noetherian and finite-assembly hypotheses. Then prove preservation of
+the generated principal-relation span before constructing integral and
+rational open Chow maps with actual representative formulas. Neither
+relation preservation nor quotient descent is supplied by SP60 alone.
 
 Comparison with the prescribed target rational Chow groups and its
 intersection/Betti structure remains a separate geometric identification.

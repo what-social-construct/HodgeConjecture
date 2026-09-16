@@ -56,7 +56,14 @@
 \newcommand{\fe}{\mathrm{f\acute et}}
 \newcommand{\Geta}{\Gamma_{\eta}}
 \newcommand{\Gbar}{\overline{\Gamma}}
-\newcommand{\leanpath}[1]{\texttt{\nolinkurl{#1}}}
+\newcommand{\leanpath}[1]{%
+  % Keep this Unicode API name literal while avoiding bytewise URL rendering.
+  \ifnum\pdfstrcmp{\detokenize{#1}}%
+      {\detokenize{openRestrictionSubschemeMap_subschemeι}}=0
+    \texttt{\nolinkurl{openRestrictionSubschemeMap_subscheme}}\ensuremath{\iota}%
+  \else
+    \texttt{\nolinkurl{#1}}%
+  \fi}
 \newcommand{\corrsrc}[1]{%
   \leanpath{HodgeConjecture/Correspondence/#1}}
 \newcommand{\collsrc}[1]{%
@@ -1006,6 +1013,15 @@ For a dimension function \(\delta:X\to\mathbf Z\), put
 \]
 Distinct degrees intersect in zero. Closed immersions preserve the
 grading for the restricted dimension function.
+For an open immersion \(j:U\hookrightarrow X\), the literal
+restriction \(\delta_U=\delta\circ j\) is a dimension function, and
+the existing cycle restriction induces functorial maps
+\[
+ j^*:Z^\delta_{\mathrm{fin},m}(X;R)
+       \longrightarrow Z^{\delta_U}_{\mathrm{fin},m}(U;R).
+\]
+On finite cycles, open restriction commutes with closed pushforward
+through the actual inverse-image square of every integral closed carrier.
 If an integral carrier \(W\subseteq X\) is locally Noetherian and
 quasi-compact, then
 \[
@@ -1113,7 +1129,7 @@ tensor--quotient comparison give the rational formula.
 Actual principal-generator transport then gives rational closed
 pushforward and its compatibility with coefficient extension.
 The detailed statements and proofs are
-Propositions~\ref{prop:scheme-local-order}--\ref{prop:open-principal-divisor}.
+Propositions~\ref{prop:scheme-local-order}--\ref{prop:open-grading-base-change}.
 \end{proof}
 
 For smooth projective schemes over a fixed field \(k\), composition of rational Chow
@@ -3172,6 +3188,71 @@ signed orders. At every other support both principal coefficients
 are zero. Coefficientwise equality proves the displayed identity.
 \end{proof}
 
+\begin{proposition}[Open grading and closed-carrier base change]
+\label{prop:open-grading-base-change}
+Let \(j:U\hookrightarrow X\) be an open immersion of schemes,
+let \(\delta:X\to\mathbf Z\) be a dimension function, and let
+\(R\) be a semiring. The literal composite
+\(\delta_U=\delta\circ j\) is a dimension function. For every
+integral closed carrier \(W\subseteq U\),
+\[
+\deg_{\delta_U}W
+   =\deg_\delta\bigl(\overline{j(W)}_{\mathrm{red}}\bigr).
+\]
+Equivalently, a nonempty inverse image of an integral closed carrier
+retains its original degree. When \(j\) is also a closed immersion,
+the open and closed restrictions of \(\delta\) agree.
+Consequently, for every \(m\in\mathbf Z\), the existing open
+restriction induces an \(R\)-linear map
+\[
+ j^*:Z^\delta_{\mathrm{fin},m}(X;R)
+      \longrightarrow Z^{\delta_U}_{\mathrm{fin},m}(U;R).
+\]
+Restriction of dimension functions and these graded cycle maps respect
+identity and composition: for another open immersion
+\(k:V\hookrightarrow U\), the restricted dimension function is
+\(\delta\circ j\circ k\), and \((j\circ k)^*=k^*j^*\).
+
+For an integral closed carrier \(Z\subseteq X\), let
+\(Z_U=Z\times_X U\) be its actual ideal-sheaf inverse image,
+including the case \(Z_U=\varnothing\). The actual maps form the
+Cartesian square
+\[
+\begin{CD}
+ Z_U @>{j_Z}>> Z\\
+ @V{\iota_{Z_U}}VV @VV{\iota_Z}V\\
+ U @>{j}>> X,
+\end{CD}
+\]
+where \(j_Z\) is an open immersion and the vertical maps are
+closed immersions. On the existing finite-cycle modules,
+\[
+ j^*\circ(\iota_Z)_*
+       =(\iota_{Z_U})_*\circ j_Z^*
+ \quad:\quad Z_{\mathrm{fin}}(Z;R)
+                 \longrightarrow Z_{\mathrm{fin}}(U;R).
+\]
+\end{proposition}
+
+\begin{proof}
+The actual open point map reflects specialization, and its image
+is stable under generization. It therefore preserves strict order
+and immediate specialization, so both dimension-function conditions
+of \cite{StacksDimensionFunction} hold for \(\delta\circ j\).
+The generic-point identity for reduced open closure gives the
+displayed degree equality. The coefficient formula of
+Proposition~\ref{prop:open-principal-divisor} then proves homogeneity;
+identity and composition follow from the existing finite-cycle laws.
+
+The ideal-comap subscheme is canonically isomorphic to the displayed
+fiber product. On each integral generator inside \(Z\), its inverse
+image is nonempty exactly when the inverse image of its actual closed
+image in \(X\) is nonempty. In that case the two resulting integral
+supports have the same actual ambient generic point and hence agree.
+In the empty case both cycle images vanish. Linear extension proves
+the square for every finite cycle.
+\end{proof}
+
 \section{Detailed split geometric computations}
 \label{app:split-computations}
 
@@ -4146,6 +4227,15 @@ Actual inverse supports, codimension and finite principal cycles
 (Proposition~\ref{prop:open-principal-divisor})\newline
 \leanpath{Cycles/OpenSupport.lean}\newline
 \leanpath{Cycles/PrincipalDivisorTransport.lean}\\
+Open grading and closed-carrier base change &
+\leanpath{DimensionFunction.comapOpenImmersion}\newline
+\leanpath{gradedOpenRestriction}\newline
+\leanpath{openRestriction_closedImmersionPushforward_subscheme}\newline
+Actual restricted degrees and the full finite-cycle square
+(Proposition~\ref{prop:open-grading-base-change})\newline
+\leanpath{Cycles/OpenGrading.lean}\newline
+\leanpath{Cycles/OpenSupport.lean}\newline
+\leanpath{Cycles/OpenClosedBaseChange.lean}\\
 Compactified graph route &
 \leanpath{groupAlgebraProjectorExtension}\newline
 \leanpath{Boundary/CompactifiedGraphProjector.lean}\\
@@ -4622,7 +4712,19 @@ principal table, grouped by mathematical layer.
 \leanpath{supportCodimension_openClosureSubscheme};
 \leanpath{supportCodimension_openRestrictionSubscheme};
 \leanpath{openClosureSubscheme_divisorPoint};
-\leanpath{primeDivisorOrder_openImmersion}.
+\leanpath{primeDivisorOrder_openImmersion};
+\leanpath{openImmersion_covBy};
+\leanpath{DimensionFunction.comapOpenImmersion_apply};
+\leanpath{DimensionFunction.comapOpenImmersion_id};
+\leanpath{DimensionFunction.comapOpenImmersion_comp};
+\leanpath{DimensionFunction.comapOpenImmersion_eq_comapClosedImmersion};
+\leanpath{supportDegree_openClosureSubscheme};
+\leanpath{supportDegree_openRestrictionSubscheme};
+\leanpath{openRestriction_mem_cyclesOfDegree};
+\leanpath{gradedOpenRestriction_val};
+\leanpath{gradedOpenRestriction_id};
+\leanpath{gradedOpenRestriction_comp};
+\leanpath{openRestrictionSubschemeMap_subschemeι}.
 
 \paragraph{localization, fixed rings, and inertia.}
 \normsrc{FixedRingLocalization.lean};

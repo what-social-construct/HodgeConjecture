@@ -68,7 +68,7 @@ same PDF. No proof-status change follows from this editorial reorganization.
 
 ## Canonical semantic object and TeX registry
 
-### Construction and input checkpoints (SP17--SP59)
+### Construction and input checkpoints (SP17--SP60)
 
 | ID | Object or overlap | Disposition | Required action | Status |
 | --- | --- | --- | --- | --- |
@@ -115,6 +115,7 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP57 | Rational closed pushforward and actual isomorphism restriction on the existing Chow quotient | EXTEND / DESCEND / COMPARE | Factor one coefficient-parametric graded closed pushforward, retain the integer specializations, prove coefficient compatibility and preservation of the same principal-relation span, and descend to rational Chow with identity/composition and tensor naturality. Identify the rational isomorphism's forward and inverse representative formulas with actual closed pushforward and open restriction. | PROVED; FULL BUILD, 560 AXIOM REPORTS, TWENTY REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP58 | Actual function fields, divisor-point embedding and signed orders under open immersions | GENERALIZE / PRESERVE | Generalize the existing generic-stalk/function-field construction to integral open immersions and retain the old isomorphism specializations. Use actual stalk isomorphisms to embed divisor points with exact open-image range, then preserve the signed local coefficient using target local Noetherianity. | PROVED; FULL BUILD, 572 AXIOM REPORTS, TWENTY REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP59 | Actual open support restriction, reduced closure and principal-divisor cycles | IDENTIFY / ASSEMBLE | Prove inverse support identities for nonempty actual ideal-comap restriction and ambient reduced closure, preserve chain codimension, and evaluate the existing finite-cycle restriction at the closure coefficient. Combine this with the actual local-order transport to restrict principal-divisor cycles, deriving source local Noetherianity and compactness from the target. | PROVED; FULL BUILD, 584 AXIOM REPORTS, TWENTY REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+| SP60 | Supplied dimension-function restriction, homogeneous cycles and the actual carrier square | RESTRICT / COMPARE | Restrict the dimension function by the actual open point map, proving both laws, and preserve the existing homogeneous cycle modules over any semiring. Prove the Cartesian open-restriction/closed-pushforward square for an actual integral carrier, including empty inverse images, without introducing principal-relation or Chow descent hypotheses. | PROVED; FULL BUILD, 599 AXIOM REPORTS, TWENTY REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -1058,6 +1059,50 @@ resolves. Historical SP18--SP58 validation blocks and the pre-SP59
 verification prefix remain byte-identical. No manuscript status/gap
 commentary, project axiom, bibliography entry, submission-wrapper change
 or dependency-pin change was introduced. Diff checks pass.
+
+SP60 validation: the full `lake build` passes all 3143 jobs, with only
+the two existing intentional `Challenge.lean` sorry warnings.
+`OpenClosedBaseChange.lean` passes its targeted 2380-job build without
+warnings, and `OpenGrading.lean` passes its 2383-job build without
+warnings. The fifteen newly public endpoints comprise thirteen
+open-grading declarations, the existing Cartesian inclusion equation
+now exposed from `OpenSupport.lean`, and one actual finite-cycle
+base-change theorem. The existing isomorphism homogeneity signature
+is retained and compiles as a specialization of the general theorem.
+
+The focused replay with the verification file's original four imports
+passes all fifteen new axiom reports and twenty regressions without
+warnings. The tests cover literal dimension-function values, both laws,
+identity/composition, agreement with closed restriction for isomorphisms,
+both support-degree formulas, negative degrees, actual homogeneous
+representatives, empty sources, trivial semirings, the actual inclusion
+equation without an open premise, the finite-cycle square, weighted
+generators and empty restricted carriers. On the genuine proper open
+`D(T)` in the affine line, every cycle pushed from the origin carrier
+restricts to zero. Tests also check that no ambient integral, Noetherian
+or source-compactness premise has been introduced.
+
+The full integrated `research/Verification.lean` replay passes without
+warnings: 707 declaration checks, 515 examples and all 599 selected
+axiom reports. The reports match their exact inventory with no missing,
+unexpected or duplicate report and no disallowed axiom. Of these, 597
+use exactly the standard three. The existing `polynomialDimensionBound`
+uses no axioms, and `genericFiber_isScalarTower_base` uses only `propext`
+and `Quot.sound`. The six primary proof-dependency checks and two
+supporting reports pass. Independent source and mathematical/manuscript
+parity reviews pass.
+
+The single PDF builds to 62 pages with a clean final log. The main
+statement on page 12, Proposition A.31 and its proof on pages 38--39,
+the new crosswalk row on page 52 and additional declarations on pages
+57--58 were visually inspected. The Unicode iota in the newly exposed
+inclusion API renders correctly while its literal Lean identifier is
+preserved. All fifteen new APIs occur exactly once in Appendix C; all
+81 manuscript labels are unique and every reference resolves.
+Historical SP18--SP59 validation blocks and the pre-SP60 verification
+prefix remain byte-identical. No manuscript status/gap commentary,
+project axiom, bibliography entry, submission-wrapper change or
+dependency-pin change was introduced. Diff checks pass.
 
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
@@ -2070,9 +2115,11 @@ coefficients, preserving representatives. SP57 proves naturality for the
 existing closed-pushforward and isomorphism operations. SP58 supplies
 integral open-immersion function-field and local-order transport. SP59
 compares actual supports with nonempty open restriction and reduced
-closure and proves the finite principal-cycle identity. The next bounded
-step is general-open grading and Cartesian compatibility with closed
-carrier inclusions, before ambient principal-relation and Chow descent.
+closure and proves the finite principal-cycle identity. SP60 supplies
+general-open grading and Cartesian compatibility with actual closed
+carrier inclusions. The next bounded step is ambient principal-generator
+restriction with both nonempty and empty branches, then graded relation
+preservation and Chow descent.
 
 ### Actual integral codimension and the existing shifted grading (SP54)
 
@@ -2491,19 +2538,96 @@ supports have zero coefficient on both sides by the codimension
 comparison. Integral \(U\) is nonempty; the empty restriction of an
 individual ambient carrier remains the separate zero branch.
 
-The next bounded checkpoint is restriction of an arbitrary supplied
-dimension function along an open immersion and preservation of the
-existing homogeneous cycle submodules, together with Cartesian
-compatibility of open restriction and actual closed carrier inclusions.
-These comparisons should transport the ambient principal generator
-\((\iota_W)_*\operatorname{div}_W(f)\), treating a nonempty restricted
-carrier by the new principal-cycle identity and an empty one by zero.
-Only after that generator comparison should the existing relation span
-and integer/rational Chow maps be descended. General open Chow descent
-is not yet claimed. Proper pushforward's norm comparison, flat/Gysin
-operations, general Chow convolution and prescribed target
-identification/realization/coverage remain separate, as recorded in
-`GAP_MAP.md` and `TARGET_BRIDGE.md`.
+SP60 below constructs restriction of an arbitrary supplied dimension
+function and proves preservation of the existing homogeneous cycle
+submodules. It also proves the actual open/closed carrier cycle square,
+including the empty inverse-image case. The next use is the ambient
+principal-generator identity before relation-span and quotient descent.
+
+### Open grading and the actual closed-carrier cycle square (SP60)
+
+Let \(j:U\hookrightarrow X\) be an open immersion, supply the existing
+dimension-function object \(\delta:X\to\mathbb Z\), and write
+\(\delta_U=\delta\circ j\). For an actual integral closed carrier
+\(Z\subseteq X\), let \(Z_U\) denote the subscheme of the actual
+comapped ideal; its existing canonical comparison identifies it with
+\(Z\times_X U\). Write \(j_Z:Z_U\to Z\) for the actual open
+support map and \(\iota_{Z_U}:Z_U\hookrightarrow U\) for the closed
+inclusion. The carrier \(Z_U\) may be empty.
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `openImmersion_covBy` | actual open point maps preserve immediate specialization | $x\mathbin{\lessdot}y\Rightarrow j(x)\mathbin{\lessdot}j(y)$ in the scheme specialization orders |
+| `DimensionFunction.comapOpenImmersion` | literal composition with the actual open point map, with both dimension-function laws proved | $\delta_U=\delta\circ j$ |
+| `DimensionFunction.comapOpenImmersion_apply` | unchanged pointwise values under the restriction constructor | $\delta_U(x)=\delta(j(x))$ |
+| `DimensionFunction.comapOpenImmersion_id` | identity restriction of the supplied dimension function | $\delta\circ\mathrm{id}=\delta$ as dimension-function objects |
+| `DimensionFunction.comapOpenImmersion_comp` | composition of actual restrictions | $(\delta\circ j)\circ k=\delta\circ(j\circ k)$ |
+| `DimensionFunction.comapOpenImmersion_eq_comapClosedImmersion` | open and closed restriction constructors agree when both apply | prose only; the same restricted $\delta$ for an open-and-closed immersion |
+| `supportDegree_openClosureSubscheme` | actual reduced closure preserves the corresponding support degree | $\deg_\delta\overline{j(W)}_{\mathrm{red}}=\deg_{\delta_U}W$ |
+| `supportDegree_openRestrictionSubscheme` | a nonempty restricted integral carrier retains its degree | $\deg_{\delta_U}(Z_U)=\deg_\delta Z$ when $Z_U\ne\varnothing$ |
+| `openRestriction_mem_cyclesOfDegree` | the already defined finite-cycle restriction preserves homogeneity | $j^*Z^\delta_{\mathrm{fin},m}(X;R)\subseteq Z^{\delta_U}_{\mathrm{fin},m}(U;R)$ |
+| `gradedOpenRestriction` | restriction of that same geometric cycle map to the existing degree submodules | $j^*:Z^\delta_{\mathrm{fin},m}(X;R)\to Z^{\delta_U}_{\mathrm{fin},m}(U;R)$ |
+| `gradedOpenRestriction_val` | the underlying finite cycle is unchanged by homogeneous packaging | prose only; the existing $j^*c$ |
+| `gradedOpenRestriction_id` | identity on the same homogeneous representatives | $(\mathrm{id}_X)^*=\mathrm{id}$ |
+| `gradedOpenRestriction_comp` | contravariant composition of the same graded restriction | $(j\circ k)^*=k^*j^*$ |
+| `openRestrictionSubschemeMap_subschemeι` | the existing actual carrier maps commute with their closed inclusions | $\iota_Z\circ j_Z=j\circ\iota_{Z_U}$ |
+| `openRestriction_closedImmersionPushforward_subscheme` | the actual Cartesian square commutes on all finite cycles | $j^*(\iota_Z)_*=(\iota_{Z_U})_*j_Z^*:Z_{\mathrm{fin}}(Z;R)\to Z_{\mathrm{fin}}(U;R)$ |
+
+The thirteen grading endpoints are in `Cycles/OpenGrading.lean`. The
+Cartesian inclusion equation is the existing proof in
+`Cycles/OpenSupport.lean`, now public rather than duplicated. The full
+cycle square is in `Cycles/OpenClosedBaseChange.lean`. Manuscript
+Proposition A.31, `prop:open-grading-base-change`, records the same
+grading and actual carrier square. The previous
+`openRestriction_iso_mem_cyclesOfDegree` signature continues to use the
+closed-restricted dimension function; its proof now specializes the
+general open theorem, using the definitional equality of the two
+restriction constructions.
+
+The actual open point map reflects specialization and has image stable
+under generization. Its image is therefore order-convex, and an immediate
+specialization inside the open stays immediate in the ambient scheme.
+This proves both strict monotonicity and the unit-step law for literal
+composition with \(j\); neither is supplied as a new hypothesis. No
+existence of an arbitrary ambient dimension function is asserted: the
+existing \(\delta\) is explicitly supplied. The support-degree identities
+follow from the actual generic-point formulas, and the reduced-closure
+coefficient formula then proves homogeneous membership. Identity and
+composition use the existing finite-cycle restriction laws and
+definitionally compatible restricted dimension functions.
+
+For the carrier square, the existing ideal-comap comparison and the
+fiber-product point-image formula show that each integral generator in
+\(Z\) has nonempty inverse image exactly when its actual closed image
+in \(X\) does. In the nonempty case, the Cartesian inclusion equation
+and generic-point identities identify the two actual integral supports;
+the point/support equivalence gives equality of their ideal-sheaf
+generators. In the empty case both cycle images are zero. Finite-support
+linearity proves the full semiring-linear square. It does not treat the
+open immersion as a closed pushforward or introduce a new pullback
+carrier model. The inclusion equation itself holds for any scheme
+morphism \(j\); the cycle square requires \(j\) open.
+
+All the new assertions allow arbitrary ambient schemes, without
+Noetherianity, quasi-compactness, ambient integrality, normality or a
+field base. The cycle assertions work over every semiring, including
+trivial coefficients. The carrier-square API retains its actual
+`IntegralClosedSubscheme X` input; it does not assert a general
+arbitrary-ideal base-change theorem. No nonemptiness premise on
+\(Z_U\), relation prescription or Chow map is introduced.
+
+The next bounded checkpoint applies this actual square to
+`ambientPrincipalDivisor`: for a nonempty restricted integral carrier,
+use SP59's actual function-field pullback and principal-cycle identity;
+for an empty carrier, prove the ambient generator restricts to zero.
+Retain the existing local Noetherianity and finite-cycle assembly
+hypotheses on the carrier. Combine that identity with the now-proved
+degree restriction to transport the graded principal generator, then
+its relation span, before descending the existing integer and rational
+Chow quotients. None of these open Chow maps is claimed in SP60.
+Proper pushforward's norm comparison, flat/Gysin operations, general
+Chow convolution and prescribed target identification/realization/coverage
+remain separate, as recorded in `GAP_MAP.md` and `TARGET_BRIDGE.md`.
 
 ## Objects deliberately assigned no independent notation
 

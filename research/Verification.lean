@@ -6184,3 +6184,215 @@ example (X Y : Scheme) [IsIntegral X] [IsIntegral Y]
   simpa only [supportCodimension_openClosureSubscheme] using hW
 
 end OpenSupportPrincipalDivisorRegressions
+
+-- SP60: supplied open grading and actual open/closed carrier base change.
+#check HodgeConjecture.SchemeCycles.openImmersion_covBy
+#check HodgeConjecture.SchemeCycles.DimensionFunction.comapOpenImmersion
+#check HodgeConjecture.SchemeCycles.DimensionFunction.comapOpenImmersion_apply
+#check HodgeConjecture.SchemeCycles.DimensionFunction.comapOpenImmersion_id
+#check HodgeConjecture.SchemeCycles.DimensionFunction.comapOpenImmersion_comp
+#check HodgeConjecture.SchemeCycles.DimensionFunction.comapOpenImmersion_eq_comapClosedImmersion
+#check HodgeConjecture.SchemeCycles.supportDegree_openClosureSubscheme
+#check HodgeConjecture.SchemeCycles.supportDegree_openRestrictionSubscheme
+#check HodgeConjecture.SchemeCycles.openRestriction_mem_cyclesOfDegree
+#check HodgeConjecture.SchemeCycles.gradedOpenRestriction
+#check HodgeConjecture.SchemeCycles.gradedOpenRestriction_val
+#check HodgeConjecture.SchemeCycles.gradedOpenRestriction_id
+#check HodgeConjecture.SchemeCycles.gradedOpenRestriction_comp
+#check HodgeConjecture.SchemeCycles.openRestrictionSubschemeMap_subschemeι
+#check HodgeConjecture.SchemeCycles.openRestriction_closedImmersionPushforward_subscheme
+
+#print axioms HodgeConjecture.SchemeCycles.openImmersion_covBy
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.comapOpenImmersion
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.comapOpenImmersion_apply
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.comapOpenImmersion_id
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.comapOpenImmersion_comp
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.comapOpenImmersion_eq_comapClosedImmersion
+#print axioms HodgeConjecture.SchemeCycles.supportDegree_openClosureSubscheme
+#print axioms HodgeConjecture.SchemeCycles.supportDegree_openRestrictionSubscheme
+#print axioms HodgeConjecture.SchemeCycles.openRestriction_mem_cyclesOfDegree
+#print axioms HodgeConjecture.SchemeCycles.gradedOpenRestriction
+#print axioms HodgeConjecture.SchemeCycles.gradedOpenRestriction_val
+#print axioms HodgeConjecture.SchemeCycles.gradedOpenRestriction_id
+#print axioms HodgeConjecture.SchemeCycles.gradedOpenRestriction_comp
+#print axioms HodgeConjecture.SchemeCycles.openRestrictionSubschemeMap_subschemeι
+#print axioms HodgeConjecture.SchemeCycles.openRestriction_closedImmersionPushforward_subscheme
+
+noncomputable section OpenGradingBaseChangeRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory
+open HodgeConjecture.SchemeCycles
+
+-- Restriction is the supplied dimension function composed with the actual point map.
+example (U X : Scheme) (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j]
+    (x : U) : δ.comapOpenImmersion j x = δ (j.base x) := by
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  fail_if_success
+    have : IsNoetherian X := inferInstance
+  fail_if_success
+    have : CompactSpace U := inferInstance
+  rfl
+
+-- Covers are transported in the actual scheme specialization order.
+example (U X : Scheme) (j : U ⟶ X) [IsOpenImmersion j] (x y : U) (h : x ⋖ y) :
+    j.base x ⋖ j.base y :=
+  openImmersion_covBy j h
+
+example (U X : Scheme) (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j]
+    (x y : U) (h : x < y) : δ.comapOpenImmersion j x < δ.comapOpenImmersion j y :=
+  (δ.comapOpenImmersion j).strictMono h
+
+example (U X : Scheme) (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j]
+    (x y : U) (h : x ⋖ y) : δ (j.base y) = δ (j.base x) + 1 :=
+  (δ.comapOpenImmersion j).map_covBy h
+
+example (X : Scheme) (δ : DimensionFunction X) :
+    δ.comapOpenImmersion (𝟙 X) = δ :=
+  DimensionFunction.comapOpenImmersion_id X δ
+
+example (V U X : Scheme) (δ : DimensionFunction X)
+    (i : V ⟶ U) (j : U ⟶ X) [IsOpenImmersion i] [IsOpenImmersion j] :
+    (δ.comapOpenImmersion j).comapOpenImmersion i =
+      δ.comapOpenImmersion (i ≫ j) :=
+  DimensionFunction.comapOpenImmersion_comp δ i j
+
+-- For an actual isomorphism, the old closed and new open grading are the same.
+example (U X : Scheme) (δ : DimensionFunction X) (e : U ≅ X) :
+    δ.comapOpenImmersion e.hom = δ.comapClosedImmersion e.hom :=
+  DimensionFunction.comapOpenImmersion_eq_comapClosedImmersion δ e.hom
+
+example (U X : Scheme) (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j]
+    (W : IntegralClosedSubscheme U) :
+    supportDegree δ (openClosureSubscheme j W) =
+      supportDegree (δ.comapOpenImmersion j) W :=
+  supportDegree_openClosureSubscheme δ j W
+
+example (U X : Scheme) (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j]
+    (Z : IntegralClosedSubscheme X) [Nonempty (Z.val.comap j).subscheme] :
+    supportDegree (δ.comapOpenImmersion j) (openRestrictionSubscheme j Z) =
+      supportDegree δ Z :=
+  supportDegree_openRestrictionSubscheme δ j Z
+
+-- Any integer degree is allowed, including negative degrees of a supplied dimension function.
+example (R : Type) [Semiring R] (U X : Scheme) (δ : DimensionFunction X)
+    (j : U ⟶ X) [IsOpenImmersion j] (c : Cycles X R)
+    (hc : c ∈ cyclesOfDegree R δ (-3)) :
+    openRestriction R j c ∈ cyclesOfDegree R (δ.comapOpenImmersion j) (-3) :=
+  openRestriction_mem_cyclesOfDegree R δ j (-3) c hc
+
+-- No new cycle carrier is introduced by the homogeneous restriction.
+example (R : Type) [Semiring R] (U X : Scheme) (δ : DimensionFunction X)
+    (j : U ⟶ X) [IsOpenImmersion j] (n : ℤ) (c : cyclesOfDegree R δ n) :
+    (gradedOpenRestriction R δ j n c).val = openRestriction R j c.val := by
+  fail_if_success
+    have : IsNoetherian X := inferInstance
+  exact gradedOpenRestriction_val R δ j n c
+
+example (R : Type) [Semiring R] (X : Scheme) (δ : DimensionFunction X) (n : ℤ) :
+    gradedOpenRestriction R δ (𝟙 X) n = LinearMap.id :=
+  gradedOpenRestriction_id R X δ n
+
+example (R : Type) [Semiring R] (V U X : Scheme) (δ : DimensionFunction X)
+    (i : V ⟶ U) (j : U ⟶ X) [IsOpenImmersion i] [IsOpenImmersion j]
+    (n : ℤ) (c : cyclesOfDegree R δ n) :
+    gradedOpenRestriction R (δ.comapOpenImmersion j) i n
+        (gradedOpenRestriction R δ j n c) =
+      gradedOpenRestriction R δ (i ≫ j) n c :=
+  LinearMap.congr_fun (gradedOpenRestriction_comp R δ i j n) c
+
+-- Actual empty sources impose no integral-source premise.
+example (R : Type) [Semiring R] (U X : Scheme) [IsEmpty U]
+    (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j]
+    (n : ℤ) (c : cyclesOfDegree R δ n) :
+    gradedOpenRestriction R δ j n c = 0 := by
+  apply Subtype.ext
+  ext W
+  exact isEmptyElim (ambientGenericPoint W)
+
+-- The coefficient layer permits trivial semirings as well.
+example (R : Type) [Semiring R] [Subsingleton R] (U X : Scheme)
+    (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j]
+    (n : ℤ) (c : cyclesOfDegree R δ n) :
+    gradedOpenRestriction R δ j n c = 0 :=
+  Subsingleton.elim _ _
+
+-- The actual inverse-image carrier square commutes even without an open premise.
+example (U X : Scheme) (j : U ⟶ X) (Z : IntegralClosedSubscheme X) :
+    openRestrictionSubschemeMap j Z ≫ Z.val.subschemeι =
+      (Z.val.comap j).subschemeι ≫ j := by
+  fail_if_success
+    have : IsOpenImmersion j := inferInstance
+  exact openRestrictionSubschemeMap_subschemeι j Z
+
+-- Base change is an identity of the existing raw cycle maps over any semiring.
+example (R : Type) [Semiring R] (U X : Scheme) (j : U ⟶ X) [IsOpenImmersion j]
+    (Z : IntegralClosedSubscheme X) :
+    (openRestriction R j).comp (closedImmersionPushforward R Z.val.subschemeι) =
+      (closedImmersionPushforward R (Z.val.comap j).subschemeι).comp
+        (openRestriction R (openRestrictionSubschemeMap j Z)) := by
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  fail_if_success
+    have : IsNoetherian X := inferInstance
+  fail_if_success
+    have : CompactSpace U := inferInstance
+  exact openRestriction_closedImmersionPushforward_subscheme j R Z
+
+-- Weighted actual generators retain their coefficient through the square.
+example (R : Type) [Semiring R] (U X : Scheme) (j : U ⟶ X) [IsOpenImmersion j]
+    (Z : IntegralClosedSubscheme X) (W : IntegralClosedSubscheme Z.val.subscheme) (r : R) :
+    openRestriction R j
+        (closedImmersionPushforward R Z.val.subschemeι (r • fundamentalCycle R W)) =
+      r • closedImmersionPushforward R (Z.val.comap j).subschemeι
+        (openRestrictionGenerator (openRestrictionSubschemeMap j Z) R W) := by
+  rw [← LinearMap.comp_apply,
+    openRestriction_closedImmersionPushforward_subscheme j R Z,
+    LinearMap.comp_apply, map_smul, map_smul, openRestriction_fundamentalCycle]
+
+-- An empty inverse-image carrier kills every cycle pushed from that carrier.
+example (R : Type) [Semiring R] (U X : Scheme) (j : U ⟶ X) [IsOpenImmersion j]
+    (Z : IntegralClosedSubscheme X) [IsEmpty (Z.val.comap j).subscheme]
+    (c : Cycles Z.val.subscheme R) :
+    openRestriction R j (closedImmersionPushforward R Z.val.subschemeι c) = 0 := by
+  have hzero : openRestriction R (openRestrictionSubschemeMap j Z) c = 0 := by
+    ext W
+    exact isEmptyElim (ambientGenericPoint W)
+  rw [← LinearMap.comp_apply,
+    openRestriction_closedImmersionPushforward_subscheme j R Z,
+    LinearMap.comp_apply, hzero, map_zero]
+
+-- D(T) is a genuine proper open: every cycle on the origin carrier disappears.
+example (k : Type) [Field k] (R : Type) [Semiring R]
+    (c : Cycles (pointSupport (Examples.affineLine k)
+      (Examples.affineLineOrigin k)).val.subscheme R) :
+    let U : (Examples.affineLine k).Opens :=
+      PrimeSpectrum.basicOpen (Polynomial.X : Polynomial k)
+    openRestriction R U.ι
+      (closedImmersionPushforward R
+        (pointSupport (Examples.affineLine k) (Examples.affineLineOrigin k)).val.subschemeι c) = 0 := by
+  let U : (Examples.affineLine k).Opens :=
+    PrimeSpectrum.basicOpen (Polynomial.X : Polynomial k)
+  let Z := pointSupport (Examples.affineLine k) (Examples.affineLineOrigin k)
+  have horigin : Examples.affineLineOrigin k ∉ U := by
+    change ¬ ((Polynomial.X : Polynomial k) ∉ RingHom.ker Polynomial.constantCoeff)
+    apply not_not.mpr
+    change (Polynomial.X : Polynomial k).coeff 0 = 0
+    exact Polynomial.coeff_X_zero
+  haveI : IsEmpty (Z.val.comap U.ι).subscheme := by
+    apply not_nonempty_iff.mp
+    intro h
+    obtain ⟨x, hx⟩ := (nonempty_openRestrictionSubscheme_iff U.ι Z).mp h
+    change U.ι.base x = ambientGenericPoint Z at hx
+    rw [show ambientGenericPoint Z = Examples.affineLineOrigin k from
+      ambientGenericPoint_pointSupport _ _] at hx
+    exact horigin (hx ▸ x.property)
+  have hzero : openRestriction R (openRestrictionSubschemeMap U.ι Z) c = 0 := by
+    ext W
+    exact isEmptyElim (ambientGenericPoint W)
+  change openRestriction R U.ι (closedImmersionPushforward R Z.val.subschemeι c) = 0
+  rw [← LinearMap.comp_apply,
+    openRestriction_closedImmersionPushforward_subscheme U.ι R Z,
+    LinearMap.comp_apply, hzero, map_zero]
+
+end OpenGradingBaseChangeRegressions

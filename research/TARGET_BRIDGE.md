@@ -693,15 +693,30 @@ be developed alongside that infrastructure.
    a specialization. Neither a new cycle module nor a closed-image
    operation on the open immersion is used.
 
-   **Next bounded obligation:** construct actual open restriction of
-   dimension functions and homogeneous cycles, and prove compatibility
-   with the Cartesian square of closed carrier inclusions. Use that
-   square and the principal-divisor identity to restrict actual
-   `ambientPrincipalDivisor` generators, with an explicit zero branch
-   for empty restricted carriers. The nonempty carrier receives its
-   function through its actual open support map. Principal-relation
-   preservation and integral/rational quotient descent follow only
-   after these comparisons. The target's actual
+   **Grading and closed-carrier square checkpoint (A11as / SP60):**
+   `OpenGrading.lean` constructs literal dimension-function restriction
+   along an open immersion, proving strictness and the immediate-step
+   condition from the actual specialization order. Both support degree
+   comparisons are proved, and existing open restriction preserves the
+   existing homogeneous cycle modules over every semiring. Its graded
+   linear map retains actual representatives and identity/composition.
+   The old isomorphism homogeneity theorem specializes it; open and
+   closed restrictions of the dimension function agree when both apply.
+   `OpenClosedBaseChange.lean` proves the raw finite-cycle square for
+   an actual integral closed carrier and its possibly empty ideal-comap
+   inverse image. Its proof compares actual generators, not an assumed
+   base-change operation. These constructions need no ambient integral,
+   Noetherian or compactness hypothesis.
+
+   **Next bounded obligation:** use the proved carrier square and
+   SP59's principal-divisor identity to restrict actual
+   `ambientPrincipalDivisor` generators. Treat empty restricted carriers
+   by zero; the nonempty carrier receives its function through the
+   actual support open map and its degree from SP60. Retain the existing
+   carrier and quotient finiteness hypotheses. Prove preservation of the
+   actual principal-relation span before integral/rational quotient
+   descent, with representative formulas for the resulting maps.
+   The target's actual
    rational Chow groups and their intersection/Betti structure still
    require a geometric identification.
    A pure-dimensional or componentwise extension is needed
