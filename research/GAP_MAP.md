@@ -1146,17 +1146,46 @@ zero. Linear extension proves the square over every semiring without
 ambient finiteness hypotheses. This square is stated on raw finite
 cycles, separately from the homogeneous restriction construction.
 
-**The next bounded goal is restriction of actual ambient principal
-generators.** Apply this proved square and SP59's principal-divisor
-identity to `ambientPrincipalDivisor`. In the nonempty branch, the
-function pulls back through the actual support open map, and SP60's
-degree comparison places the resulting carrier in the correct relation
-index. In the empty branch the cycle is zero and no function field is
-assigned to the empty scheme. Retain the existing carrier/quotient
-Noetherian and finite-assembly hypotheses. Then prove preservation of
-the generated principal-relation span before constructing integral and
-rational open Chow maps with actual representative formulas. Neither
-relation preservation nor quotient descent is supplied by SP60 alone.
+### Ambient principal generators and open relation preservation
+
+A11at / SP61 applies the actual carrier square and SP59's identity in
+`Cycles/PrincipalDivisorRestriction.lean`. For an actual integral closed
+carrier `W`, only its own local Noetherianity and quasi-compactness are
+assumed. In the nonempty branch,
+`openRestriction_ambientPrincipalDivisor_of_nonempty` identifies the
+restricted ambient principal divisor with the ambient principal divisor
+on the literal ideal-comap carrier. Its rational function is the unit
+pulled back through `functionFieldEquivOfOpenImmersion` of the existing
+`openRestrictionSubschemeMap`; the map is not inverted. The restricted
+carrier's integrality and finiteness are proved, and its scheme is
+definitionally the actual comap subscheme. No replacement carrier or
+function-field comparison is chosen. In the empty branch,
+`openRestriction_ambientPrincipalDivisor_of_isEmpty` proves that the
+cycle is zero, without assigning a function field to the empty scheme.
+Neither identity requires an integral or Noetherian ambient scheme.
+
+`Cycles/PrincipalRelationRestriction.lean` constructs
+`PrincipalRelationData.openRestriction` for a nonempty restricted
+carrier. SP60's support-degree equality preserves its degree `n + 1`.
+The carrier and rational-function projection formulas retain the literal
+geometry; this indexing construction needs no Noetherianity. For an
+open immersion into Noetherian `X`, `openImmersion_isNoetherian` derives
+Noetherianity of `U`, using both local Noetherianity and quasi-compactness
+of the open map. The two ambient identities then prove the nonempty
+and empty graded principal-generator formulas. Checking these generators
+proves `principalRelations_le_comap_openRestriction`, and linearity
+proves `rationallyEquivalent_openRestriction` for the existing predicate.
+No relation-preservation or quotient-descent hypothesis is introduced.
+
+**The next bounded goal is actual open Chow quotient descent.** Use
+the proved integral relation-span inclusion to construct the integral
+open Chow map, with its actual representative formula and identity/
+composition laws. Establish coefficient-extension compatibility of
+the existing open cycle maps and preservation of the rational relation
+span, then descend the rational map and prove its integral-to-rational
+and tensor comparison squares. Keep the existing Noetherian hypotheses.
+SP61 proves relation preservation, not these quotient maps, localization
+exactness or general flat pullback.
 
 Comparison with the prescribed target rational Chow groups and its
 intersection/Betti structure remains a separate geometric identification.

@@ -37,8 +37,10 @@ import HodgeConjecture.Cycles.CycleDegree
 import HodgeConjecture.Cycles.OpenGrading
 import HodgeConjecture.Cycles.PrincipalDivisorDegree
 import HodgeConjecture.Cycles.PrincipalDivisorImage
+import HodgeConjecture.Cycles.PrincipalDivisorRestriction
 import HodgeConjecture.Cycles.GradedPushforward
 import HodgeConjecture.Cycles.PrincipalRelations
+import HodgeConjecture.Cycles.PrincipalRelationRestriction
 import HodgeConjecture.Cycles.ChowPushforward
 import HodgeConjecture.Cycles.ChowIsomorphism
 import HodgeConjecture.Cycles.SupportDimension

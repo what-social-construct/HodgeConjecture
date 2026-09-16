@@ -68,7 +68,7 @@ same PDF. No proof-status change follows from this editorial reorganization.
 
 ## Canonical semantic object and TeX registry
 
-### Construction and input checkpoints (SP17--SP60)
+### Construction and input checkpoints (SP17--SP61)
 
 | ID | Object or overlap | Disposition | Required action | Status |
 | --- | --- | --- | --- | --- |
@@ -116,6 +116,7 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP58 | Actual function fields, divisor-point embedding and signed orders under open immersions | GENERALIZE / PRESERVE | Generalize the existing generic-stalk/function-field construction to integral open immersions and retain the old isomorphism specializations. Use actual stalk isomorphisms to embed divisor points with exact open-image range, then preserve the signed local coefficient using target local Noetherianity. | PROVED; FULL BUILD, 572 AXIOM REPORTS, TWENTY REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP59 | Actual open support restriction, reduced closure and principal-divisor cycles | IDENTIFY / ASSEMBLE | Prove inverse support identities for nonempty actual ideal-comap restriction and ambient reduced closure, preserve chain codimension, and evaluate the existing finite-cycle restriction at the closure coefficient. Combine this with the actual local-order transport to restrict principal-divisor cycles, deriving source local Noetherianity and compactness from the target. | PROVED; FULL BUILD, 584 AXIOM REPORTS, TWENTY REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP60 | Supplied dimension-function restriction, homogeneous cycles and the actual carrier square | RESTRICT / COMPARE | Restrict the dimension function by the actual open point map, proving both laws, and preserve the existing homogeneous cycle modules over any semiring. Prove the Cartesian open-restriction/closed-pushforward square for an actual integral carrier, including empty inverse images, without introducing principal-relation or Chow descent hypotheses. | PROVED; FULL BUILD, 599 AXIOM REPORTS, TWENTY REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+| SP61 | Actual ambient principal-generator restriction and preservation of its relation span | TRANSPORT / PRESERVE | Apply the actual carrier square to the existing ambient principal divisor, using the actual function-field map on a nonempty restriction and zero for an empty carrier. Restrict degree-one-higher relation data without finiteness premises; under target-only Noetherianity identify the graded generators, preserve their span and preserve rational equivalence of integral cycles. | PROVED; FULL BUILD, 609 AXIOM REPORTS, SIXTEEN REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -1103,6 +1104,49 @@ Historical SP18--SP59 validation blocks and the pre-SP60 verification
 prefix remain byte-identical. No manuscript status/gap commentary,
 project axiom, bibliography entry, submission-wrapper change or
 dependency-pin change was introduced. Diff checks pass.
+
+SP61 validation: the full `lake build` passes all 3145 jobs, with only
+the two existing intentional `Challenge.lean` sorry warnings.
+`PrincipalDivisorRestriction.lean` passes its targeted 2388-job build
+and `PrincipalRelationRestriction.lean` passes its 2395-job build,
+both without warnings. The ten new public endpoints comprise two
+actual ambient principal-divisor identities and eight declarations
+for source Noetherianity, actual relation-data restriction, its literal
+projections, graded generator identities, relation-span preservation
+and rational-equivalence preservation.
+
+The focused replay with the verification file's original four imports
+passes all ten new axiom reports and sixteen regressions without
+warnings. Tests cover both ambient identities with carrier-only
+finiteness, source Noetherianity derived without integrality, relation
+data without ambient finiteness, literal carrier and function projections,
+the degree-one-higher condition and negative degrees, both graded
+generator branches, relation-span preservation, negative multiples,
+rational-equivalence preservation and unit-one data. An empty open
+annihilates every relation generator. On the genuine proper open `D(T)`
+in the affine line, the ambient principal divisor of every function
+on the origin carrier restricts to zero. No function field or artificial
+relation datum is assigned to an empty restricted carrier.
+
+The full integrated `research/Verification.lean` replay passes without
+warnings: 717 declaration checks, 531 examples and all 609 selected
+axiom reports. The reports match their exact inventory with no missing,
+unexpected or duplicate report and no disallowed axiom. Of these, 607
+use exactly the standard three. The existing `polynomialDimensionBound`
+uses no axioms, and `genericFiber_isScalarTower_base` uses only `propext`
+and `Quot.sound`. The six primary proof-dependency checks and two
+supporting reports pass. Independent source and mathematical/manuscript
+parity reviews pass.
+
+The single PDF builds to 64 pages with a clean final log. The main
+statement on page 13, Proposition A.32 and its proof on pages 39--40,
+the new crosswalk row on page 54 and additional declarations on page 59
+were visually inspected. All ten new APIs occur exactly once in
+Appendix C; all 82 manuscript labels are unique and every reference
+resolves. Historical SP18--SP60 validation blocks and the pre-SP61
+verification prefix remain byte-identical. No manuscript status/gap
+commentary, project axiom, bibliography entry, submission-wrapper change
+or dependency-pin change was introduced. Diff checks pass.
 
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
@@ -2117,9 +2161,10 @@ integral open-immersion function-field and local-order transport. SP59
 compares actual supports with nonempty open restriction and reduced
 closure and proves the finite principal-cycle identity. SP60 supplies
 general-open grading and Cartesian compatibility with actual closed
-carrier inclusions. The next bounded step is ambient principal-generator
-restriction with both nonempty and empty branches, then graded relation
-preservation and Chow descent.
+carrier inclusions. SP61 transports the ambient principal generator in
+both nonempty and empty branches and preserves the graded relation span.
+The next bounded step is the actual integral and rational Chow quotient
+maps with representative, functoriality and coefficient comparisons.
 
 ### Actual integral codimension and the existing shifted grading (SP54)
 
@@ -2541,8 +2586,9 @@ individual ambient carrier remains the separate zero branch.
 SP60 below constructs restriction of an arbitrary supplied dimension
 function and proves preservation of the existing homogeneous cycle
 submodules. It also proves the actual open/closed carrier cycle square,
-including the empty inverse-image case. The next use is the ambient
-principal-generator identity before relation-span and quotient descent.
+including the empty inverse-image case. SP61 uses that square for the
+ambient principal-generator identity and relation-span preservation;
+the quotient maps remain the subsequent step.
 
 ### Open grading and the actual closed-carrier cycle square (SP60)
 
@@ -2616,18 +2662,88 @@ trivial coefficients. The carrier-square API retains its actual
 arbitrary-ideal base-change theorem. No nonemptiness premise on
 \(Z_U\), relation prescription or Chow map is introduced.
 
-The next bounded checkpoint applies this actual square to
-`ambientPrincipalDivisor`: for a nonempty restricted integral carrier,
-use SP59's actual function-field pullback and principal-cycle identity;
-for an empty carrier, prove the ambient generator restricts to zero.
-Retain the existing local Noetherianity and finite-cycle assembly
-hypotheses on the carrier. Combine that identity with the now-proved
-degree restriction to transport the graded principal generator, then
-its relation span, before descending the existing integer and rational
-Chow quotients. None of these open Chow maps is claimed in SP60.
-Proper pushforward's norm comparison, flat/Gysin operations, general
-Chow convolution and prescribed target identification/realization/coverage
-remain separate, as recorded in `GAP_MAP.md` and `TARGET_BRIDGE.md`.
+SP61 below applies the actual square to `ambientPrincipalDivisor`,
+retaining the nonempty function-field branch and the empty zero branch.
+It transports the graded generator and proves relation-span preservation.
+These results prepare, but do not define, the existing integer and
+rational Chow quotients' open restriction maps.
+
+### Ambient principal-generator restriction and relation preservation (SP61)
+
+Let \(j:U\hookrightarrow X\) be an open immersion. For an actual
+integral closed carrier \(W\subseteq X\), retain the actual comapped
+carrier \(W_U\), its open morphism \(j_W:W_U\to W\), and its
+closed inclusion into \(U\). The raw ambient principal-divisor
+identities assume only local Noetherianity and quasi-compactness of
+\(W\), not of \(U\) or \(X\). For relation data, supply the existing
+dimension function \(\delta\), write \(\delta_U=\delta\circ j\),
+and retain degree \(m\in\mathbb Z\). The additional `IsNoetherian X`
+premise is used only at the existing graded principal-relation and
+relation-span layer, where Noetherianity of \(U\) is proved from it.
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `openRestriction_ambientPrincipalDivisor_of_nonempty` | the actual ambient principal divisor restricts to the actual nonempty carrier's principal divisor | $j^*((\iota_W)_*\operatorname{div}_W(f))=(\iota_{W_U})_*\operatorname{div}_{W_U}(j_W^*f)$ |
+| `openRestriction_ambientPrincipalDivisor_of_isEmpty` | an empty inverse-image carrier contributes zero | $j^*((\iota_W)_*\operatorname{div}_W(f))=0$ when $W_U=\varnothing$ |
+| `openImmersion_isNoetherian` | derive source Noetherianity from the actual open immersion and target Noetherianity | prose only; $X$ Noetherian implies $U$ Noetherian |
+| `PrincipalRelationData.openRestriction` | restrict the existing degree-one-higher datum on a nonempty carrier, with no Noetherian premise | $(W,f)\mapsto(W_U,j_W^*f)$ with $\deg_{\delta_U}W_U=m+1$ |
+| `PrincipalRelationData.openRestriction_carrier` | retain the literal ideal-comap integral carrier | prose only; the same $W_U$ |
+| `PrincipalRelationData.openRestriction_function` | retain the actual forward contravariant function-field map | prose only; the literal $j_W^*f\in k(W_U)^\times$ |
+| `gradedOpenRestriction_principalRelation_of_nonempty` | the existing graded map sends the nonempty generator to its actual restricted generator | prose only; the preceding nonempty ambient principal-divisor identity inside the degree-$m$ homogeneous module |
+| `gradedOpenRestriction_principalRelation_of_isEmpty` | the empty carrier gives the zero homogeneous cycle | prose only; the preceding empty ambient principal-divisor identity inside the degree-$m$ homogeneous module |
+| `principalRelations_le_comap_openRestriction` | preservation of the span is a consequence of the proved generator identities | $j^*\mathcal R_m^\delta(X)\subseteq\mathcal R_m^{\delta_U}(U)$ |
+| `rationallyEquivalent_openRestriction` | the existing rational-equivalence predicate on integral cycles is preserved | $c\sim_{\mathrm{rat}}e\Rightarrow j^*c\sim_{\mathrm{rat}}j^*e$ for $c,e\in Z^\delta_{\mathrm{fin},m}(X;\mathbb Z)$ |
+
+The two ambient identities are in
+`Cycles/PrincipalDivisorRestriction.lean`; the eight remaining endpoints
+are in `Cycles/PrincipalRelationRestriction.lean`. Manuscript Proposition
+A.32, `prop:open-principal-relations`, retains these same hypothesis
+levels. All generators, carriers, function fields, dimension functions
+and finite-cycle modules are the existing objects. This checkpoint
+does not define an open map on either Chow quotient.
+
+For the nonempty ambient identity, apply SP60's actual cycle square to
+the principal divisor on \(W\), then SP59's principal-divisor identity
+to \(j_W\). The restricted integral carrier is literally the subscheme
+of the comapped ideal, so its function field needs no comparison with a
+replacement carrier. Its integrality, local Noetherianity and compactness
+are installed explicitly from the existing carrier construction and
+actual open map. The function is the forward `Units.map` of the actual
+contravariant function-field equivalence. In the empty branch, there are
+no integral closed supports on the empty carrier and its finite-cycle
+module is zero. No function field or principal-relation datum is assigned
+to that empty scheme.
+
+For a nonempty relation datum, the already proved support-degree formula
+retains degree \(m+1\). Both its carrier and function projections are
+definitionally the announced actual constructions; this dependent-pair
+operation needs no Noetherian or compactness premise. When \(X\) is
+Noetherian, the existing closed-carrier inheritance supplies the
+principal-divisor finiteness hypotheses. The actual open map supplies
+source local Noetherianity and compactness, packaged as the proved
+`openImmersion_isNoetherian` theorem, not a new assumption or global
+instance. Passing to the existing homogeneous subtypes turns the two
+ambient equalities into graded generator equalities.
+
+The relation-span proof tests each original principal generator and
+splits on nonemptiness of its actual inverse image. The nonempty image
+is an existing target generator, and the empty image is zero. Linear
+span preservation therefore follows without a relation-preservation
+input. Applying it to \(c-e\) proves preservation of the existing
+rational-equivalence predicate. Here rational equivalence still concerns
+integer cycles; it is not a claim that the rational-coefficient quotient
+map has already been constructed.
+
+The next bounded checkpoint descends the actual graded open maps to the
+existing integral and rational Chow quotients. Preserve the literal cycle
+representatives, prove identity and contravariant composition, and prove
+coefficient-cast and full tensor-comparison compatibility. Do not infer
+injectivity of general Chow rationalization or cancel it in these
+comparisons. Localization and its kernel/image statement come after the
+quotient maps and require their own proof. Proper pushforward's norm
+comparison, flat/Gysin operations, general Chow convolution and prescribed
+target identification/realization/coverage remain separate, as recorded
+in `GAP_MAP.md` and `TARGET_BRIDGE.md`.
 
 ## Objects deliberately assigned no independent notation
 

@@ -708,14 +708,26 @@ be developed alongside that infrastructure.
    base-change operation. These constructions need no ambient integral,
    Noetherian or compactness hypothesis.
 
-   **Next bounded obligation:** use the proved carrier square and
-   SP59's principal-divisor identity to restrict actual
-   `ambientPrincipalDivisor` generators. Treat empty restricted carriers
-   by zero; the nonempty carrier receives its function through the
-   actual support open map and its degree from SP60. Retain the existing
-   carrier and quotient finiteness hypotheses. Prove preservation of the
-   actual principal-relation span before integral/rational quotient
-   descent, with representative formulas for the resulting maps.
+   **Ambient generators and relation preservation (A11at / SP61):**
+   `PrincipalDivisorRestriction.lean` proves the nonempty ambient
+   principal-divisor restriction formula with the actual support
+   function-field pullback, and the zero formula for an empty restricted
+   carrier. Only local Noetherianity and quasi-compactness of the carrier
+   are assumed; ambient finiteness and integrality are unnecessary.
+   `PrincipalRelationRestriction.lean` restricts nonempty relation data
+   with the same actual carrier, pulled-back unit and degree `n + 1`.
+   This data construction needs no Noetherian premise. With Noetherian
+   target, source Noetherianity is derived; the genuine graded relation
+   generator restricts to its nonempty counterpart or to zero. The
+   resulting span inclusion and preservation of the existing rational-
+   equivalence predicate are proved, not supplied as inputs.
+
+   **Next bounded obligation:** descend this proved integral relation
+   inclusion to the existing Chow quotient with actual representative
+   and identity/composition formulas. Prove open restriction commutes
+   with coefficient extension, preserve the rational relation span and
+   descend the rational map with its integral-to-rational and tensor
+   comparison squares. Retain the existing Noetherian hypotheses.
    The target's actual
    rational Chow groups and their intersection/Betti structure still
    require a geometric identification.
@@ -725,8 +737,9 @@ be developed alongside that infrastructure.
    Noetherian premise is retained; the general scalar-extension comparison
    is now proved independently of the earlier split-case adapter.
    General proper pushforward still needs its norm
-   compatibility; arbitrary open restriction and flat/Gysin operations
-   need their own principal-relation comparisons and quotient descent.
+   compatibility; open quotient descent and localization exactness
+   remain to be constructed, and general flat/Gysin operations need
+   their own principal-relation comparisons and quotient descent.
    Absolute
    relations may use larger-dimensional supports outside the relative
    product, so no injectivity on Chow follows from the closed inclusion.

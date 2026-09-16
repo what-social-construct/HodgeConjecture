@@ -6396,3 +6396,213 @@ example (k : Type) [Field k] (R : Type) [Semiring R]
     LinearMap.comp_apply, hzero, map_zero]
 
 end OpenGradingBaseChangeRegressions
+
+-- SP61: actual open restriction of ambient principal divisors and principal relations.
+#check HodgeConjecture.SchemeCycles.openRestriction_ambientPrincipalDivisor_of_nonempty
+#check HodgeConjecture.SchemeCycles.openRestriction_ambientPrincipalDivisor_of_isEmpty
+#check HodgeConjecture.SchemeCycles.openImmersion_isNoetherian
+#check HodgeConjecture.SchemeCycles.PrincipalRelationData.openRestriction
+#check HodgeConjecture.SchemeCycles.PrincipalRelationData.openRestriction_carrier
+#check HodgeConjecture.SchemeCycles.PrincipalRelationData.openRestriction_function
+#check HodgeConjecture.SchemeCycles.gradedOpenRestriction_principalRelation_of_nonempty
+#check HodgeConjecture.SchemeCycles.gradedOpenRestriction_principalRelation_of_isEmpty
+#check HodgeConjecture.SchemeCycles.principalRelations_le_comap_openRestriction
+#check HodgeConjecture.SchemeCycles.rationallyEquivalent_openRestriction
+
+#print axioms HodgeConjecture.SchemeCycles.openRestriction_ambientPrincipalDivisor_of_nonempty
+#print axioms HodgeConjecture.SchemeCycles.openRestriction_ambientPrincipalDivisor_of_isEmpty
+#print axioms HodgeConjecture.SchemeCycles.openImmersion_isNoetherian
+#print axioms HodgeConjecture.SchemeCycles.PrincipalRelationData.openRestriction
+#print axioms HodgeConjecture.SchemeCycles.PrincipalRelationData.openRestriction_carrier
+#print axioms HodgeConjecture.SchemeCycles.PrincipalRelationData.openRestriction_function
+#print axioms HodgeConjecture.SchemeCycles.gradedOpenRestriction_principalRelation_of_nonempty
+#print axioms HodgeConjecture.SchemeCycles.gradedOpenRestriction_principalRelation_of_isEmpty
+#print axioms HodgeConjecture.SchemeCycles.principalRelations_le_comap_openRestriction
+#print axioms HodgeConjecture.SchemeCycles.rationallyEquivalent_openRestriction
+
+noncomputable section OpenPrincipalRelationRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory
+open HodgeConjecture.SchemeCycles
+
+-- Ambient principal-divisor transport needs finiteness only on the actual carrier.
+example (U X : Scheme) (j : U ⟶ X) [IsOpenImmersion j]
+    (W : IntegralClosedSubscheme X)
+    [IsLocallyNoetherian W.val.subscheme] [CompactSpace W.val.subscheme]
+    [Nonempty (W.val.comap j).subscheme] :
+    letI := W.property
+    let WU := openRestrictionSubscheme j W
+    letI : IsIntegral (W.val.comap j).subscheme := WU.property
+    letI : IsLocallyNoetherian WU.val.subscheme :=
+      isLocallyNoetherian_of_isOpenImmersion (openRestrictionSubschemeMap j W)
+    letI : CompactSpace WU.val.subscheme :=
+      QuasiCompact.compactSpace_of_compactSpace (openRestrictionSubschemeMap j W)
+    ∀ f : W.val.subscheme.functionFieldˣ,
+      openRestriction ℤ j (ambientPrincipalDivisor W f) =
+        ambientPrincipalDivisor WU
+          (Units.map (functionFieldEquivOfOpenImmersion
+            (openRestrictionSubschemeMap j W)).toMonoidHom f) := by
+  fail_if_success
+    have : IsNoetherian X := inferInstance
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  exact openRestriction_ambientPrincipalDivisor_of_nonempty j W
+
+-- There is no function-field datum on the empty inverse-image carrier.
+example (U X : Scheme) (j : U ⟶ X) [IsOpenImmersion j]
+    (W : IntegralClosedSubscheme X)
+    [IsLocallyNoetherian W.val.subscheme] [CompactSpace W.val.subscheme]
+    [IsEmpty (W.val.comap j).subscheme] :
+    letI := W.property
+    ∀ f : W.val.subscheme.functionFieldˣ,
+      openRestriction ℤ j (ambientPrincipalDivisor W f) = 0 := by
+  fail_if_success
+    have : IsNoetherian X := inferInstance
+  exact openRestriction_ambientPrincipalDivisor_of_isEmpty j W
+
+-- Source Noetherianity is proved from the target, without source integrality.
+example (U X : Scheme) [IsNoetherian X] (j : U ⟶ X) [IsOpenImmersion j] :
+    IsNoetherian U := by
+  fail_if_success
+    have : IsIntegral U := inferInstance
+  exact openImmersion_isNoetherian j
+
+-- Relation data itself has no ambient Noetherian or integral premise.
+example (U X : Scheme) (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j]
+    (n : ℤ) (d : PrincipalRelationData δ n)
+    [Nonempty (d.1.val.val.comap j).subscheme] :
+    Nonempty (PrincipalRelationData (δ.comapOpenImmersion j) n) := by
+  fail_if_success
+    have : IsNoetherian X := inferInstance
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  exact ⟨d.openRestriction δ j n⟩
+
+-- The carrier is the literal ideal-sheaf comap, not a chosen replacement.
+example (U X : Scheme) (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j]
+    (n : ℤ) (d : PrincipalRelationData δ n)
+    [Nonempty (d.1.val.val.comap j).subscheme] :
+    (d.openRestriction δ j n).1.val.val = d.1.val.val.comap j := rfl
+
+-- The function travels in the forward direction of the contravariant field equivalence.
+example (U X : Scheme) (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j]
+    (n : ℤ) (d : PrincipalRelationData δ n)
+    [Nonempty (d.1.val.val.comap j).subscheme] :
+    letI := d.1.val.property
+    letI : IsIntegral (d.1.val.val.comap j).subscheme :=
+      (openRestrictionSubscheme j d.1.val).property
+    (d.openRestriction δ j n).2 =
+      Units.map (functionFieldEquivOfOpenImmersion
+        (openRestrictionSubschemeMap j d.1.val)).toMonoidHom d.2 :=
+  PrincipalRelationData.openRestriction_function δ j n d
+
+-- A relation in degree n still uses a carrier of degree n+1.
+example (U X : Scheme) (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j]
+    (n : ℤ) (d : PrincipalRelationData δ n)
+    [Nonempty (d.1.val.val.comap j).subscheme] :
+    supportDegree (δ.comapOpenImmersion j) (d.openRestriction δ j n).1.val = n + 1 :=
+  (d.openRestriction δ j n).1.property
+
+example (U X : Scheme) (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j]
+    (d : PrincipalRelationData δ (-3))
+    [Nonempty (d.1.val.val.comap j).subscheme] :
+    supportDegree (δ.comapOpenImmersion j) (d.openRestriction δ j (-3)).1.val = -2 := by
+  simpa using (d.openRestriction δ j (-3)).1.property
+
+example (U X : Scheme) [IsNoetherian X]
+    (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j]
+    (n : ℤ) (d : PrincipalRelationData δ n)
+    [Nonempty (d.1.val.val.comap j).subscheme] :
+    letI := openImmersion_isNoetherian j
+    gradedOpenRestriction ℤ δ j n (principalRelation δ n d) =
+      principalRelation (δ.comapOpenImmersion j) n (d.openRestriction δ j n) :=
+  gradedOpenRestriction_principalRelation_of_nonempty δ j n d
+
+example (U X : Scheme) [IsNoetherian X]
+    (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j]
+    (n : ℤ) (d : PrincipalRelationData δ n)
+    [IsEmpty (d.1.val.val.comap j).subscheme] :
+    gradedOpenRestriction ℤ δ j n (principalRelation δ n d) = 0 :=
+  gradedOpenRestriction_principalRelation_of_isEmpty δ j n d
+
+-- The relation-span inclusion is derived, rather than supplied as a hypothesis.
+example (U X : Scheme) [IsNoetherian X]
+    (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j] (n : ℤ) :
+    letI := openImmersion_isNoetherian j
+    principalRelations δ n ≤ (principalRelations (δ.comapOpenImmersion j) n).comap
+      (gradedOpenRestriction ℤ δ j n) :=
+  principalRelations_le_comap_openRestriction δ j n
+
+-- Negative multiples of genuine relations remain relations after restriction.
+example (U X : Scheme) [IsNoetherian X]
+    (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j]
+    (n : ℤ) (d : PrincipalRelationData δ n) :
+    letI := openImmersion_isNoetherian j
+    gradedOpenRestriction ℤ δ j n ((-2 : ℤ) • principalRelation δ n d) ∈
+      principalRelations (δ.comapOpenImmersion j) n := by
+  letI := openImmersion_isNoetherian j
+  exact principalRelations_le_comap_openRestriction δ j n
+    ((principalRelations δ n).smul_mem (-2) (principalRelation_mem δ n d))
+
+-- This is preservation of the existing relation predicate, without constructing a quotient map.
+example (U X : Scheme) [IsNoetherian X]
+    (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j]
+    (n : ℤ) (c e : cyclesOfDegree ℤ δ n) (h : RationallyEquivalent δ n c e) :
+    letI := openImmersion_isNoetherian j
+    RationallyEquivalent (δ.comapOpenImmersion j) n
+      (gradedOpenRestriction ℤ δ j n c) (gradedOpenRestriction ℤ δ j n e) :=
+  rationallyEquivalent_openRestriction δ j n h
+
+-- Unit-one data remains unit-one data under the actual field map.
+example (U X : Scheme) (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j]
+    (n : ℤ) (d : PrincipalRelationData δ n)
+    [Nonempty (d.1.val.val.comap j).subscheme] :
+    letI := d.1.val.property
+    letI : IsIntegral (d.1.val.val.comap j).subscheme :=
+      (openRestrictionSubscheme j d.1.val).property
+    d.2 = 1 → (d.openRestriction δ j n).2 = 1 := by
+  letI := d.1.val.property
+  letI : IsIntegral (d.1.val.val.comap j).subscheme :=
+    (openRestrictionSubscheme j d.1.val).property
+  intro h
+  rw [PrincipalRelationData.openRestriction_function, h, map_one]
+
+-- An actually empty open annihilates every relation generator.
+example (U X : Scheme) [IsEmpty U] [IsNoetherian X]
+    (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j]
+    (n : ℤ) (d : PrincipalRelationData δ n) :
+    gradedOpenRestriction ℤ δ j n (principalRelation δ n d) = 0 := by
+  letI : IsEmpty (d.1.val.val.comap j).subscheme :=
+    Function.isEmpty (d.1.val.val.comap j).subschemeι.base
+  exact gradedOpenRestriction_principalRelation_of_isEmpty δ j n d
+
+-- On the genuine proper open D(T), the origin carrier has the empty branch for every function.
+example (k : Type) [Field k] :
+    let U : (Examples.affineLine k).Opens :=
+      PrimeSpectrum.basicOpen (Polynomial.X : Polynomial k)
+    let W := pointSupport (Examples.affineLine k) (Examples.affineLineOrigin k)
+    letI := W.property
+    ∀ f : W.val.subscheme.functionFieldˣ,
+      openRestriction ℤ U.ι (ambientPrincipalDivisor W f) = 0 := by
+  dsimp only
+  let U : (Examples.affineLine k).Opens :=
+    PrimeSpectrum.basicOpen (Polynomial.X : Polynomial k)
+  let W := pointSupport (Examples.affineLine k) (Examples.affineLineOrigin k)
+  letI := W.property
+  intro f
+  have horigin : Examples.affineLineOrigin k ∉ U := by
+    change ¬ ((Polynomial.X : Polynomial k) ∉ RingHom.ker Polynomial.constantCoeff)
+    apply not_not.mpr
+    change (Polynomial.X : Polynomial k).coeff 0 = 0
+    exact Polynomial.coeff_X_zero
+  haveI : IsEmpty (W.val.comap U.ι).subscheme := by
+    apply not_nonempty_iff.mp
+    intro h
+    obtain ⟨x, hx⟩ := (nonempty_openRestrictionSubscheme_iff U.ι W).mp h
+    change U.ι.base x = ambientGenericPoint W at hx
+    rw [show ambientGenericPoint W = Examples.affineLineOrigin k from
+      ambientGenericPoint_pointSupport _ _] at hx
+    exact horigin (hx ▸ x.property)
+  exact openRestriction_ambientPrincipalDivisor_of_isEmpty U.ι W f
+
+end OpenPrincipalRelationRegressions
