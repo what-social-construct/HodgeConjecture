@@ -3,14 +3,18 @@
 The single current manuscript is:
 
 - [`main.tex`](main.tex), *Galois Correspondences and the Hodge Conjecture*.
-- [`main.pdf`](main.pdf), the compiled author-review candidate.
+- [`main.pdf`](main.pdf), the compiled manuscript.
 
-It follows the dependency-ordered components reflected by the active Lean
-modules, from the precise abstract rational Hodge target through graph projectors, collision and finite-etale
-correspondences, marked normal-closure sheets, the codimension-one boundary
-endpoint, compactified projector interfaces, and the exact conditional
-coverage gap. It is a formalization report and does not claim a new case of
-the Hodge conjecture.
+The six main sections follow the rational Hodge target and graph-projector
+equivalence, collision and marked Galois projectors, the boundary mechanism,
+compactified graph calculus, the split geometric realization, and residual
+realization and coverage. Three appendices retain the detailed graph/cycle/
+dimension proofs, split computations, and the centralized Lean declaration
+crosswalk with source inputs. These all build into the same PDF.
+
+The theorem hypotheses stay in the manuscript; working proof-status and gap
+records are maintained in [`research/GAP_MAP.md`](../research/GAP_MAP.md) and
+the [semantic-parity queue](../research/working/0005-semantic-parity-cleanup.md).
 
 The earlier Paper I and Paper II sources and PDFs are preserved in
 [`research/archive/manuscripts/`](../research/archive/manuscripts/README.md).

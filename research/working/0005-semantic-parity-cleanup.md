@@ -20,6 +20,17 @@ The single active manuscript is `paper/main.tex`, producing `paper/main.pdf`.
 The former Paper I/Paper II sources and PDFs are preserved in
 `research/archive/manuscripts/` and are excluded from release build gates.
 
+Editorial record (SP54): at the user's request, manuscript status labels,
+disclaimer prose and deferred-work commentary have been removed. Theorem
+hypotheses remain explicit. Proof-status, gap and release records remain in
+the research documents, including this queue. The single manuscript now has
+six main sections and three technical appendices: graph/cycle/dimension
+foundations, detailed split computations, and the centralized Lean/source
+crosswalk. The main text packages graph calculus, cycle/Chow infrastructure
+and split geometric realization, retaining the multiplicative-rigidity
+corollary. Detailed mathematical statements and proofs are preserved in the
+same PDF. No proof-status change follows from this editorial reorganization.
+
 ## Dispositions
 
 - **CANONICAL**: the unique active representation of a mathematical object.
@@ -57,7 +68,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 
 ## Canonical semantic object and TeX registry
 
-### Construction and input checkpoints (SP17--SP53)
+### Construction and input checkpoints (SP17--SP54)
 
 | ID | Object or overlap | Disposition | Required action | Status |
 | --- | --- | --- | --- | --- |
@@ -98,6 +109,7 @@ The former Paper I/Paper II sources and PDFs are preserved in
 | SP51 | Pointwise residue degrees and affine-chart value agreement | PROVE / COMPARE | Use one actual affine-cover preimage to prove finite structural residue degree on a general locally finite-type scheme. Compare each existing affine-chart value with its ambient residue degree, and compare two chart values at equal actual ambient images. | PROVED; FULL BUILD, 487 AXIOM REPORTS, TEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP52 | Global structural residue-degree dimension function | CONSTRUCT / COMPARE | Put specialization pairs in a common actual affine open, transfer strictness and the cover law, and construct the global function. Prove nonnegativity, equality with the existing affine object and value compatibility under arbitrary open immersions. Keep global height/carrier dimension and target codimension comparison separate. | PROVED; FULL BUILD, 493 AXIOM REPORTS, FOURTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 | SP53 | Global point height and actual integral-carrier dimension | IDENTIFY / COMPARE | Bound height above by nonnegative strict grading and below by one actual affine chart. Identify the global function with finite height and actual point-closure dimension; derive carrier-degree and fundamental-cycle criteria and qualified open-height invariance. Keep integral codimension conversion separate. | PROVED; FULL BUILD, 500 AXIOM REPORTS, FOURTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
+| SP54 | Actual integral chain codimension and the existing d-minus-n grading | IDENTIFY / REINDEX | Prove finite ambient dimension and coheight, then derive codimension plus degree from the existing cover law. Identify support, fundamental-cycle and full-cycle degree d-minus-n criteria with actual codimension n. Reuse the existing grading and retain principal-relation data reindexing as the next step. | PROVED; FULL BUILD, 509 AXIOM REPORTS, SIXTEEN REGRESSIONS, DEPENDENCY AUDIT, AND SINGLE-PDF CHECKS PASS |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -813,6 +825,45 @@ The checkpoint introduces no new grading, carrier, scalar action,
 cycle module, Chow quotient or projector. The next bounded theorem is
 finite chain codimension plus support degree equals generic degree for
 actual integral schemes, before the intended target reindexing.
+
+SP54 checks recorded (2026-09-15): the nine-endpoint leaf and full
+3132-job Lean build pass, with only the two existing `Challenge`
+warnings. The six primary proof-dependency assertions and two supporting
+reports pass. The independent leaf audit passes nine public axiom
+reports and nine regressions; the exact-original-four-import replay
+passes nine checks and sixteen regressions without warnings or errors.
+Every new axiom report contains exactly `propext`, `Classical.choice`
+and `Quot.sound`. The updated verification inventory is 509 axiom
+reports, 617 declaration checks and 399 examples. Earlier verification
+content and imports are unchanged. The focused tests cover actual
+coheight and stalk parity, finite-value recovery, all three shifted
+grading criteria, integer subtraction when n exceeds d, trivial
+coefficients, generic and prime-divisor supports, the actual affine-line
+origin and the retained integral premise. Mathematical and
+cross-document parity reviews pass. The full integrated verification
+passes all 617 declaration checks and 399 examples without warnings or
+errors. All 509 selected axiom reports match the exact inventory, with
+no missing, unexpected or duplicate reports and no unpermitted axioms.
+The existing `polynomialDimensionBound` is axiom-free;
+`genericFiber_isScalarTower_base` uses only `propext` and `Quot.sound`;
+the other 507 reports use exactly the standard three.
+The reorganized single PDF builds to 56 pages with a clean final log,
+including no undefined references, warnings or overfull/underfull boxes.
+The main argument finishes on page 17; detailed foundations, split
+computations and the declaration/source crosswalk follow in the same PDF.
+The abstract, graph package and proof, infrastructure package, split
+realization, rigidity, coverage/conclusion, new Proposition A.25, crosswalk
+and source inputs were visually checked on pages 1, 9, 11, 13, 16, 17,
+33, 42 and 52. All 62 pre-checkpoint labels and all 495 distinct original
+literal `leanpath` strings survive; the final manuscript has 75 unique
+labels and no missing references. The 46 detailed statements, including
+SP54, are retained through relocation, with only a punctuation correction
+after the editorial cleanup; four main-text summary/rigidity statements
+bring the total to 50. Independent mathematical review confirms the
+separate construction, detection, extension, action and coverage premises.
+Existing sources 0A21 and 02IZ were checked for the integral numerical
+formula. No source axiom, bibliography or dependency-pin change was made;
+the submission wrappers are unchanged. Diff checks pass.
 
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
@@ -1813,17 +1864,74 @@ retained for the fundamental-cycle converse. No new scalar action,
 dimension function, carrier, cycle module, Chow quotient or projector
 is introduced.
 
-The next bounded goal is the integral codimension/degree formula. For
-actual integral \(X\), put \(d=\delta_{X/k}(\eta_X)\) and prove
-finite actual chain codimension and
-\(\operatorname{codim}_X W+\deg_{\delta_{X/k}}W=d\).
-The generic-point height comparison gives finite integral ambient
-dimension, enabling induction on coheight using the existing unit-step
-law. Then reindex codimension \(p\) as degree \(d-p\). A later
-reducible extension must use actual pure-dimensional geometry or
+SP54 below proves the integral codimension/degree comparison and
+identifies codimension \(n\) with the existing degree \(d-n\)
+submodule. The next bounded step is to reindex the existing
+principal-relation data while retaining its actual carriers and
+function-field units.
+
+### Actual integral codimension and the existing shifted grading (SP54)
+
+Let \(X\) be integral and let \(p:X\to\operatorname{Spec}k\) be
+locally of finite type over a field. Retain the existing notation
+\(\delta=\delta_{X/k}\), \(d=\delta(\eta_X)\),
+\(\operatorname{coht}_X(x)\), and
+\(\operatorname{codim}_X W=\operatorname{codim}(|W|,X)\).
+Codimension still means the actual coheight of the irreducible closed
+support. It is not defined as a dimension difference.
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `integral_topologicalKrullDim_eq_ofLocallyOfFiniteType` | finite actual ambient dimension from the generic structural value | $\dim X=\delta(\eta_X)=d$ in the full extended dimension type |
+| `point_coheight_ne_top_of_integral_locallyOfFiniteType` | actual point coheight is finite | $\operatorname{coht}_X(x)<\infty$ |
+| `point_coheight_add_dimension_of_integral_locallyOfFiniteType` | actual coheight measures the drop from the generic value | $\operatorname{coht}_X(x)+\delta(x)=d$ |
+| `supportCodimension_ne_top_of_integral_locallyOfFiniteType` | the existing integral support has finite chain codimension | $\operatorname{codim}_X W<\infty$ |
+| `supportCodimension_add_supportDegree_of_integral_locallyOfFiniteType` | existing chain codimension plus existing support degree | $\operatorname{codim}_X W+\deg_\delta W=d$ |
+| `supportCodimension_add_dimension_of_integral_locallyOfFiniteType` | actual carrier and ambient dimensions in the extended dimension type | $\operatorname{codim}_X W+\dim W=\dim X$ |
+| `supportDegree_eq_sub_iff_supportCodimension_eq_of_integral_locallyOfFiniteType` | degree detects actual codimension for every natural n | $\deg_\delta W=d-n\iff\operatorname{codim}_X W=n$ |
+| `fundamentalCycle_mem_sub_iff_supportCodimension_eq_of_integral_locallyOfFiniteType` | coefficient-one homogeneity detects actual codimension | $[W]\in Z^\delta_{\mathrm{fin},d-n}(X;R)\iff\operatorname{codim}_X W=n$, for nontrivial $R$ |
+| `mem_cyclesOfDegree_sub_iff_supportCodimension_of_integral_locallyOfFiniteType` | the existing homogeneous submodule consists of finite codimension-n cycles | $c\in Z^\delta_{\mathrm{fin},d-n}(X;R)\iff\forall W,\ c(W)\ne0\Rightarrow\operatorname{codim}_X W=n$ |
+
+All nine endpoints are in `Cycles/IntegralCodimension.lean`.
+SP53 identifies generic height with finite ambient dimension, which
+bounds actual point coheight. Induction on that finite coheight uses
+an actual successor of maximal available coheight; its maximality
+bound proves the successor is a cover. The already constructed
+dimension function's unit-step law then gives the additive formula.
+No chain-length or subtraction formula is assumed as an input.
+The existing support/stalk comparison identifies the same chain
+codimension with the dimension of the ambient local ring at the
+support's generic point. SP53's carrier comparison gives the equality
+in the full extended dimension type.
+
+The integer subtraction \(d-n\) is used for every \(n\in\mathbb N\);
+no premise \(n\le d\) is added. When \(n>d\), a nonzero fundamental
+cycle satisfies neither side of its displayed equivalence. The full
+finite-cycle criterion works over any semiring, including trivial
+coefficients; the fundamental-cycle converse retains `Nontrivial R`.
+Affineness, quasi-compactness and Noetherianity are not additional
+premises, but integrality of \(X\) is retained. The proof introduces
+no new dimension function, codimension, carrier, cycle module or
+Chow quotient.
+
+The next bounded implementation is an equivalence reindexing
+`PrincipalRelationData δ (d - (n + 1))` by the same actual
+codimension-\(n\) carriers \(W\) and the same units
+\(f\in k(W)^\times\): its existing carrier condition is
+\(\deg_\delta W=(d-(n+1))+1=d-n\).
+This geometric indexing type needs no Noetherian premise. Next prove
+the top-degree index `PrincipalRelationData δ d` empty, since its
+carriers would have degree \(d+1\). Under the current `IsNoetherian X`
+premise for the actual relation map and span, this should give
+`principalRelations δ d = ⊥`. These are queued consequences, not
+additional SP54 declarations. Reuse the existing principal divisors,
+relations and quotient; do not introduce another quotient or rational
+coefficient extension at this step.
+
+A reducible extension still needs actual pure-dimensional geometry or
 componentwise grading; smoothness alone does not supply one uniform
-dimension. The current quotient's Noetherian premise, general rational
-coefficient extension and target realization remain separate obligations.
+dimension. The general rational coefficient comparison and target
+realization remain separate obligations.
 
 ## Objects deliberately assigned no independent notation
 

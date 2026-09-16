@@ -4951,3 +4951,182 @@ example (k : Type) [Field k] (X : Scheme)
     (point_height_ne_top_of_locallyOfFiniteType k X p (ambientGenericPoint W)))
 
 end FieldSupportDimensionRegressions
+
+-- SP54: actual integral codimension, ambient dimension and the existing d-minus-n grading.
+#check HodgeConjecture.SchemeCycles.integral_topologicalKrullDim_eq_ofLocallyOfFiniteType
+#check HodgeConjecture.SchemeCycles.point_coheight_ne_top_of_integral_locallyOfFiniteType
+#check HodgeConjecture.SchemeCycles.point_coheight_add_dimension_of_integral_locallyOfFiniteType
+#check HodgeConjecture.SchemeCycles.supportCodimension_ne_top_of_integral_locallyOfFiniteType
+#check HodgeConjecture.SchemeCycles.supportCodimension_add_supportDegree_of_integral_locallyOfFiniteType
+#check HodgeConjecture.SchemeCycles.supportCodimension_add_dimension_of_integral_locallyOfFiniteType
+#check HodgeConjecture.SchemeCycles.supportDegree_eq_sub_iff_supportCodimension_eq_of_integral_locallyOfFiniteType
+#check HodgeConjecture.SchemeCycles.fundamentalCycle_mem_sub_iff_supportCodimension_eq_of_integral_locallyOfFiniteType
+#check HodgeConjecture.SchemeCycles.mem_cyclesOfDegree_sub_iff_supportCodimension_of_integral_locallyOfFiniteType
+
+#print axioms HodgeConjecture.SchemeCycles.integral_topologicalKrullDim_eq_ofLocallyOfFiniteType
+#print axioms HodgeConjecture.SchemeCycles.point_coheight_ne_top_of_integral_locallyOfFiniteType
+#print axioms HodgeConjecture.SchemeCycles.point_coheight_add_dimension_of_integral_locallyOfFiniteType
+#print axioms HodgeConjecture.SchemeCycles.supportCodimension_ne_top_of_integral_locallyOfFiniteType
+#print axioms HodgeConjecture.SchemeCycles.supportCodimension_add_supportDegree_of_integral_locallyOfFiniteType
+#print axioms HodgeConjecture.SchemeCycles.supportCodimension_add_dimension_of_integral_locallyOfFiniteType
+#print axioms HodgeConjecture.SchemeCycles.supportDegree_eq_sub_iff_supportCodimension_eq_of_integral_locallyOfFiniteType
+#print axioms HodgeConjecture.SchemeCycles.fundamentalCycle_mem_sub_iff_supportCodimension_eq_of_integral_locallyOfFiniteType
+#print axioms HodgeConjecture.SchemeCycles.mem_cyclesOfDegree_sub_iff_supportCodimension_of_integral_locallyOfFiniteType
+
+noncomputable section IntegralCodimensionRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory TopologicalSpace
+open HodgeConjecture.SchemeCycles
+
+-- Integral locally finite-type schemes need no affine or quasi-compact hypothesis here.
+example (k : Type) [Field k] (X : Scheme) [IsIntegral X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] :
+    topologicalKrullDim X < ⊤ := by
+  fail_if_success
+    have : IsAffine X := inferInstance
+  fail_if_success
+    have : CompactSpace X := inferInstance
+  fail_if_success
+    have : IsNoetherian X := inferInstance
+  rw [integral_topologicalKrullDim_eq_ofLocallyOfFiniteType k X p]
+  exact WithBot.coe_lt_coe.mpr (ENat.coe_lt_top _)
+
+example (k : Type) [Field k] (X : Scheme) [IsIntegral X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] (x : X) :
+    Order.coheight x ≠ ⊤ :=
+  point_coheight_ne_top_of_integral_locallyOfFiniteType k X p x
+
+-- Actual coheight, not a newly defined dimension difference, measures the degree drop.
+example (k : Type) [Field k] (X : Scheme) [IsIntegral X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] (x : X) :
+    ((Order.coheight x).toNat : ℤ) + DimensionFunction.ofLocallyOfFiniteType k X p x =
+      DimensionFunction.ofLocallyOfFiniteType k X p (genericPoint X) :=
+  point_coheight_add_dimension_of_integral_locallyOfFiniteType k X p x
+
+-- Conversion from the actual chain coheight to a natural number loses no information.
+example (k : Type) [Field k] (X : Scheme) [IsIntegral X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] (x : X) :
+    ((Order.coheight x).toNat : ℕ∞) = Order.coheight x :=
+  ENat.coe_toNat (point_coheight_ne_top_of_integral_locallyOfFiniteType k X p x)
+
+-- The ambient stalk is the already identified actual chain-codimension object.
+example (k : Type) [Field k] (X : Scheme) [IsIntegral X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (W : IntegralClosedSubscheme X) :
+    ringKrullDim (X.presheaf.stalk (ambientGenericPoint W)) +
+        topologicalKrullDim W.val.subscheme = topologicalKrullDim X := by
+  rw [← supportCodimension_eq_stalkDim]
+  exact supportCodimension_add_dimension_of_integral_locallyOfFiniteType k X p W
+
+example (k : Type) [Field k] (X : Scheme) [IsIntegral X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (W : IntegralClosedSubscheme X) :
+    (supportCodimension W : WithBot ℕ∞) + topologicalKrullDim W.val.subscheme =
+      topologicalKrullDim X :=
+  supportCodimension_add_dimension_of_integral_locallyOfFiniteType k X p W
+
+example (k : Type) [Field k] (X : Scheme) [IsIntegral X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (W : IntegralClosedSubscheme X) (n : ℕ) :
+    supportDegree (DimensionFunction.ofLocallyOfFiniteType k X p) W =
+        DimensionFunction.ofLocallyOfFiniteType k X p (genericPoint X) - (n : ℤ) ↔
+      supportCodimension W = (n : ℕ∞) :=
+  supportDegree_eq_sub_iff_supportCodimension_eq_of_integral_locallyOfFiniteType k X p W n
+
+example (k : Type) [Field k] (X : Scheme) [IsIntegral X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (R : Type) [Semiring R] [Nontrivial R] (W : IntegralClosedSubscheme X) (n : ℕ) :
+    fundamentalCycle R W ∈ cyclesOfDegree R (DimensionFunction.ofLocallyOfFiniteType k X p)
+        (DimensionFunction.ofLocallyOfFiniteType k X p (genericPoint X) - (n : ℤ)) ↔
+      supportCodimension W = (n : ℕ∞) :=
+  fundamentalCycle_mem_sub_iff_supportCodimension_eq_of_integral_locallyOfFiniteType k X p R W n
+
+-- The full-cycle test does not require nontrivial coefficients.
+example (k : Type) [Field k] (X : Scheme) [IsIntegral X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (R : Type) [Semiring R] (c : Cycles X R) (n : ℕ) :
+    c ∈ cyclesOfDegree R (DimensionFunction.ofLocallyOfFiniteType k X p)
+        (DimensionFunction.ofLocallyOfFiniteType k X p (genericPoint X) - (n : ℤ)) ↔
+      ∀ W : IntegralClosedSubscheme X, c W ≠ 0 → supportCodimension W = (n : ℕ∞) :=
+  mem_cyclesOfDegree_sub_iff_supportCodimension_of_integral_locallyOfFiniteType k X p R n c
+
+-- The shifted degree is an integer: n greater than d does not truncate to degree zero.
+example (k : Type) [Field k] (X : Scheme) [IsIntegral X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (R : Type) [Semiring R] [Nontrivial R] (W : IntegralClosedSubscheme X) (n : ℕ)
+    (hn : DimensionFunction.ofLocallyOfFiniteType k X p (genericPoint X) < (n : ℤ)) :
+    fundamentalCycle R W ∉ cyclesOfDegree R (DimensionFunction.ofLocallyOfFiniteType k X p)
+      (DimensionFunction.ofLocallyOfFiniteType k X p (genericPoint X) - (n : ℤ)) := by
+  intro h
+  have hdeg := (fundamentalCycle_mem_cyclesOfDegree_iff R
+    (DimensionFunction.ofLocallyOfFiniteType k X p) _ W).mp h
+  have hnon := DimensionFunction.ofLocallyOfFiniteType_nonneg k X p (ambientGenericPoint W)
+  change DimensionFunction.ofLocallyOfFiniteType k X p (ambientGenericPoint W) = _ at hdeg
+  omega
+
+-- Trivial coefficients have zero fundamental cycles at every shifted degree.
+example (k : Type) [Field k] (X : Scheme) [IsIntegral X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (W : IntegralClosedSubscheme X) (n : ℕ) :
+    fundamentalCycle (PUnit : Type) W ∈
+      cyclesOfDegree (PUnit : Type) (DimensionFunction.ofLocallyOfFiniteType k X p)
+        (DimensionFunction.ofLocallyOfFiniteType k X p (genericPoint X) - (n : ℤ)) := by
+  fail_if_success
+    have : Nontrivial (PUnit : Type) := inferInstance
+  have hz : fundamentalCycle (PUnit : Type) W = 0 := Subsingleton.elim _ _
+  rw [hz]
+  exact Submodule.zero_mem _
+
+-- The generic support has actual chain codimension zero.
+example (X : Scheme) [IsIntegral X] :
+    supportCodimension (pointSupport X (genericPoint X)) = 0 := by
+  rw [supportCodimension, integralSupport_eq_pointClosure, pointClosure_coheight,
+    ambientGenericPoint_pointSupport]
+  apply Order.coheight_eq_zero.mpr
+  intro y _
+  exact Scheme.le_iff_specializes.mpr (genericPoint_specializes y)
+
+-- The old prime-divisor subtype is detected in degree d - 1.
+example (k : Type) [Field k] (X : Scheme) [IsIntegral X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] (Z : PrimeDivisor X) :
+    supportDegree (DimensionFunction.ofLocallyOfFiniteType k X p) Z.val =
+      DimensionFunction.ofLocallyOfFiniteType k X p (genericPoint X) - 1 := by
+  simpa only [Nat.cast_one] using
+    (supportDegree_eq_sub_iff_supportCodimension_eq_of_integral_locallyOfFiniteType k X p Z.val 1).mpr Z.property
+
+-- The actual affine-line origin has codimension one.
+example (k : Type) [Field k] :
+    supportCodimension (pointSupport (Examples.affineLine k) (Examples.affineLineOrigin k)) = 1 := by
+  let p := Spec.map (CommRingCat.ofHom (algebraMap k (Polynomial k)))
+  letI : LocallyOfFiniteType p :=
+    (HasRingHomProperty.Spec_iff (P := @LocallyOfFiniteType)).mpr
+      (RingHom.finiteType_algebraMap.mpr inferInstance)
+  apply (supportDegree_eq_sub_iff_supportCodimension_eq_of_integral_locallyOfFiniteType k (Examples.affineLine k) p
+    (pointSupport (Examples.affineLine k) (Examples.affineLineOrigin k)) 1).mp
+  rw [supportDegree, ambientGenericPoint_pointSupport,
+    DimensionFunction.ofLocallyOfFiniteType_eq_pointHeight,
+    DimensionFunction.ofLocallyOfFiniteType_eq_pointHeight]
+  change Examples.affineLineDimensionFunction k (Examples.affineLineOrigin k) =
+    Examples.affineLineDimensionFunction k (genericPoint (Examples.affineLine k)) - (1 : ℤ)
+  rw [Examples.affineLineDimensionFunction_origin, Examples.affineLineDimensionFunction_genericPoint]
+  norm_num
+
+-- The actual support codimension recovers from its finite value and adds to the existing degree.
+example (k : Type) [Field k] (X : Scheme) [IsIntegral X]
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p]
+    (W : IntegralClosedSubscheme X) :
+    ((supportCodimension W).toNat : ℕ∞) = supportCodimension W ∧
+      ((supportCodimension W).toNat : ℤ) +
+          supportDegree (DimensionFunction.ofLocallyOfFiniteType k X p) W =
+        DimensionFunction.ofLocallyOfFiniteType k X p (genericPoint X) :=
+  ⟨ENat.coe_toNat (supportCodimension_ne_top_of_integral_locallyOfFiniteType k X p W),
+    supportCodimension_add_supportDegree_of_integral_locallyOfFiniteType k X p W⟩
+
+-- Integrality is a genuine premise of the uniform ambient shift, not inferred from locally finite type.
+example (k : Type) [Field k] (X : Scheme)
+    (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] : True := by
+  fail_if_success
+    have h := integral_topologicalKrullDim_eq_ofLocallyOfFiniteType k X p
+  trivial
+
+end IntegralCodimensionRegressions

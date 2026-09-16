@@ -931,21 +931,46 @@ degree \(n\) exactly when \(\dim W=n\). Actual open immersions over
 the field preserve point height in this locally finite-type setting;
 no unrestricted assertion about arbitrary schemes is made.
 
-**The next bounded goal is the integral codimension/degree formula.**
-First take actual integral \(X\) and put \(d=\delta_{X/k}(\eta_X)\).
-Prove finite actual chain codimension and
+### Integral chain codimension and the target degree convention
+
+A11am / SP54 proves the integral comparison in
+`Cycles/IntegralCodimension.lean`. For actual integral \(X\), put
+\(d=\delta_{X/k}(\eta_X)=\dim X\). Ambient dimension, point coheight
+and actual support codimension are finite, without affineness,
+quasi-compactness or Noetherianity as inputs. The proved formulas are
 \[
  \operatorname{codim}_X W+\deg_{\delta_{X/k}}W=d,
+ \qquad
+ \operatorname{codim}_X W+\dim W=\dim X.
 \]
-then identify codimension \(p\) with degree \(d-p\). The generic-point
-height comparison makes the integral scheme finite-dimensional. Finite
-point coheight and the already proved unit-step law give a route by
-induction on coheight, without a new catenarity or uniform-chain input.
-This formula and the corresponding reindexing remain to be proved.
+Codimension remains the existing supremum of lengths of chains of
+irreducible closed supersets, not a newly defined dimension difference.
+The generic-point height comparison gives finite ambient dimension.
+Induction on finite coheight reaches the generic point at zero and uses
+the existing unit-step law at a proved cover for the successor step.
+No catenarity or uniform-chain theorem is an input. The geometric sum
+equality is retained in the full extended dimension type.
+
+For every \(n\in\mathbb N\), support degree \(d-n\) is equivalent
+to actual codimension \(n\); the subtraction is in \(\mathbb Z\),
+with no premise \(n\leq d\). The existing degree-\(d-n\) submodule
+is exactly the finite cycles whose nonzero coefficients have that
+codimension. Nontrivial coefficients are needed only for the
+coefficient-one fundamental-cycle converse.
+
+**The next bounded goal is to reindex the existing principal-relation
+data by actual codimension.** `PrincipalRelationData` in degree
+\(d-(n+1)\) uses carriers of degree \(d-n\). Construct its literal
+equivalence with codimension-\(n\) carriers and units in those same
+actual function fields, preserving each carrier and rational function.
+For top cycle degree \(d\), prove the relation-data type empty because
+it would require carrier degree \(d+1\); then identify the existing
+principal-relation submodule with zero under its current Noetherian
+premise. These data and quotient comparisons are not part of SP54.
 An extension to reducible schemes must use an actual pure-dimensional
 hypothesis or componentwise grading; even smooth schemes may have
 components of different dimensions. The existing finite-cycle quotient's
-Noetherian premise is not removed by these pointwise comparisons.
+Noetherian premise is not removed by the codimension formulas.
 Rational coefficient extension of this general
 integral quotient and comparison with the target's rational Chow groups
 also remain; the earlier finite-split scalar-extension theorem is not

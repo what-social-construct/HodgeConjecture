@@ -599,14 +599,28 @@ be developed alongside that infrastructure.
    to dimension \(n\) for nontrivial coefficients. Actual open immersions
    preserve point height in this locally finite-type field setting.
 
-   **Next bounded obligation:** start with actual integral \(X\), set
-   \(d=\delta_{X/k}(\eta_X)\), and prove finite chain codimension and
-   \(\operatorname{codim}_X W+\deg_{\delta_{X/k}}W=d\).
-   The generic-point height comparison gives finite integral ambient
-   dimension; induction on finite coheight using the existing unit-step
-   law provides a route without a supplied uniform-chain theorem.
-   Then identify codimension \(p\) with degree \(d-p\) in the existing
-   cycle grading. A pure-dimensional or componentwise extension is needed
+   **Integral codimension checkpoint (A11am / SP54):**
+   `IntegralCodimension.lean` proves finite integral ambient dimension,
+   point coheight and actual support codimension, and
+   \(\operatorname{codim}_X W+\deg_{\delta_{X/k}}W=d\), where
+   \(d=\delta_{X/k}(\eta_X)=\dim X\). It also proves the full
+   extended equality \(\operatorname{codim}_X W+\dim W=\dim X\).
+   Finite-coheight induction uses the existing unit-step law, not a
+   supplied uniform-chain theorem. The degree-\(d-n\) submodule is
+   exactly finite cycles with nonzero coefficients on actual
+   codimension-\(n\) carriers. Subtraction is in the integers, without
+   an assumed \(n\leq d\); the fundamental-cycle converse retains
+   nontrivial coefficients. No new carrier or cycle module is introduced.
+
+   **Next bounded obligation:** reindex existing `PrincipalRelationData`
+   in degree \(d-(n+1)\) by actual codimension-\(n\) carriers with
+   units in their unchanged function fields. Preserve the carrier and
+   function in both directions. Prove that the relation data for top
+   degree \(d\) are empty (carrier degree \(d+1\) is impossible),
+   then that the existing relation submodule is zero under its current
+   Noetherian premise. This is a comparison inside the existing quotient
+   construction, not a new Chow model.
+   A pure-dimensional or componentwise extension is needed
    for reducible targets; smoothness alone does not make all connected
    components have the same dimension. The current integral quotient's
    Noetherian premise is retained. Construct rational coefficient extension of this

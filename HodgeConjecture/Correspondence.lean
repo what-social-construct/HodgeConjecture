@@ -73,6 +73,7 @@ import HodgeConjecture.Cycles.AffineSchemeResidueDegree
 import HodgeConjecture.Cycles.ChartResidueDegree
 import HodgeConjecture.Cycles.FieldDimensionFunction
 import HodgeConjecture.Cycles.FieldSupportDimension
+import HodgeConjecture.Cycles.IntegralCodimension
 import HodgeConjecture.Correspondence.TransposeAlgebra
 import HodgeConjecture.Correspondence.ProjectorDefect
 import HodgeConjecture.Correspondence.ProjectorLift
@@ -197,6 +198,10 @@ Chow/cohomological realization:
     point height and reduced point-closure dimension, actual integral
     carrier degrees and fundamental-cycle homogeneity, and point-height
     invariance under open immersions in the locally finite-type field setting.
+45. the actual integral codimension formula: finite chain codimension plus
+    carrier dimension equals ambient dimension, with degree d-n detecting
+    actual codimension n on supports, fundamental cycles and all finite
+    cycles in the existing homogeneous submodule.
 
 The free span algebra is not identified with a Chow ring. General proper
 cycle extraction, flat/Gysin operations and their rational-equivalence
@@ -212,6 +217,9 @@ finiteness and affine-chart value agreement in a general locally finite-type
 ambient scheme are also proved. Common-chart specialization and cover-law
 transfer now construct the global field-induced dimension function.
 Its values are now identified with actual point height and carrier
-dimension, without a global dimension bound. Target codimension grading
-in the intended integral or pure-dimensional geometry remains separate.
+dimension, without a global dimension bound. On integral schemes, actual
+chain codimension now gives the degree d-n convention in the existing
+cycle module. Reindexing the existing principal-relation data, extending
+to pure-dimensional or componentwise targets, and rational Chow comparison
+remain separate steps.
 -/
