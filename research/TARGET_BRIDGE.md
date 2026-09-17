@@ -21,10 +21,12 @@ is distinct from showing that the construction generates every Hodge class.
 Galois actions, projectors and compactification are construction mechanisms
 to introduce when the chosen geometry needs them.
 
-No abelian variety, family or class has been selected. The universal target
-in section 1 is unchanged. This section controls the work order; section 6
-records the construction history and detailed dependencies, not a competing queue.
-All checkpoints below are **planned**, unless explicitly marked completed.
+The candidate comparison below is assessed; its recommended elliptic seed
+and finite-etale-covered class are proposals, not an implemented geometric
+instance. The universal target in section 1 is unchanged. This section
+controls the work order; section 6 records construction history and detailed
+dependencies, not a competing queue. Implementation checkpoints below are
+**planned**, unless explicitly marked completed.
 
 **Completed baseline:** SP63 proves surjectivity of actual raw/graded cycle
 restriction and integral/rational Chow restriction. The full build,
@@ -32,52 +34,156 @@ restriction and integral/rational Chow restriction. The full build,
 The four new declarations use only the standard three logical axioms.
 The existing target equivalence and finite split model are retained.
 
-### G0. Compare concrete Chow--Betti constructions before choosing a family
+### G0. Candidate comparison and the Galois-closure proposal
 
 Keep the following three outcomes distinct: a formalization of a known
 geometric case; a projector-extension/realization theorem; and a new
 class-generation theorem. Success at the first two is not automatically
 the third. Keep one manuscript; these are proof scopes, not separate papers.
 
-| Candidate | First precise target to investigate | Role and main missing comparison |
+Comparison assessed on 2026-09-17. The user's Galois-closure suggestion is
+retained as a candidate construction, not a requirement on every route.
+Cycle-map targets below use untwisted rational Betti degree `2p`; the
+corresponding class line has Tate type `Q(-p)` when packaged as a Hodge morphism.
+
+| Candidate | Cycles and intended Betti image | Priority and first missing geometric bridge |
 | --- | --- | --- |
-| A. A fixed complex elliptic curve, with powers considered only after the first case | Actual codimension-one Chow classes, independently defined rational `(1,1)` classes, and their cycle map | Positive-dimensional target/model test. Construct explicit cycles, the scheme-to-Betti comparison and its image; this is initially a known-case formalization. Tate-block detection is needed only if the marked route is used. |
-| B. A universal elliptic family over a modular curve, with specified level and fiber power | A specified smooth projective Kuga--Sato compactification `X`, codimension `p`, explicit Chow classes/correspondences and their Betti images | Determine which rational `(p,p)` classes the available cycles generate. Assess Scholl's character projector by its actual cohomological image and relevance to this target; retain the projector/boundary test when it supplies a needed comparison. |
-| C. A higher-dimensional Abelian-type Kuga family | A specified Chow-motivic factor and its intermediate extension | Deferred comparison candidate, only if A/B do not exercise a needed obligation. Fix the family, factor and source hypotheses before commissioning the larger motivic infrastructure. |
+| Projective line, `p=1` | Point divisors and their degree; a minimal positive-dimensional normalization test | Calibration only. Actual `Proj` exists; its polynomial specialization, charts, divisor calculation and genuine `H_B^2` comparison still need construction. It does not supply the elliptic-cover family. |
+| A. Pointed elliptic curve `E/C`, `p=1` | Point divisors; the first comparison is `cl(D) = deg(D) cl([0])`, with `cl([0])` generating the independently computed `H_B^2(E,Q)` | Recommended seed. Build the actual proper curve and chart/point identifications, then principal-degree zero and the positive-degree Betti comparison. Do not identify `CH^1(E)_Q` itself with `Q`. |
+| Powers `E^n` and abelian varieties isogenous to them, `0 <= p <= n` | Products of divisor classes, including endomorphism-graph contributions when needed; these generate the rational Hodge classes | Recommended upstairs class after the seed. `E^2,p=1` tests factors and graph divisors; higher powers need actual intersection/cup compatibility and the divisor-generation theorem. |
+| Smooth projective targets finite-etale-covered by that upstairs class | Degree-normalized pushforwards of products of upstairs divisors | Recommended family-level proposal, detailed below. Genuine finite-cover Chow pushforward and Betti trace are missing; Galois closure adds a stable deck-group presentation. |
+| B. Kuga--Sato compactification and Scholl's signed projector | The cuspidal factor lies in degree `k+1` and has only types `(k+1,0)` and `(0,k+1)` for fiber power `k >= 1` | Later projector/boundary test. This factor has no nonzero rational `(p,p)` classes, so it is not the first nonzero class-generation target. This says nothing comparable about every other factor of the whole variety. |
 
-For A, the codimension-one source is the cycle/Chern-class discussion in
-[Deligne, *The Hodge Conjecture*, section 2(iii)](https://www.claymath.org/wp-content/uploads/2022/06/hodge.pdf).
-For B, [Scholl, *Motives for modular forms*, sections 1.0--1.2,
-Theorem 1.2.1](https://www.dpmms.cam.ac.uk/~ajs1005/preprints/mf.pdf) identifies
-the character-projector image with parabolic cohomology; section 1.2.2
-specifies its Chow motive. The later individual-newform statement in
-Theorem 1.2.4 uses homological motives, not the same Chow assertion.
+The seed uses the divisor/Chern-class comparison in
+[Deligne, section 2(iii)](https://www.claymath.org/wp-content/uploads/2022/06/hodge.pdf).
+The known upstairs coverage result is stated in
+[Milne, *Shimura varieties and moduli*, proof of Theorem 9.17, Step 1,
+printed p. 519](https://www.jmilne.org/math/xnotes/svhIP.pdf): Hodge classes
+on powers of an elliptic curve are generated by divisor classes. Passing
+to an isogenous abelian variety uses the rational cohomology isomorphism
+and compatibility with divisor pullback. This is not a result for arbitrary
+abelian varieties or all products of arbitrary curves.
 
-For B/C, [Wildeshaus, *Intermediate extension of Chow motives of Abelian
-type*, Theorems 0.1(d) and 0.2](https://arxiv.org/pdf/1211.5327) provides
-extension of an existing Chow idempotent and realization compatibility in
-its specified Kuga/Shimura setting. Its perverse intermediate-extension
-target needs a proved comparison to our intended ordinary cohomology/Tate
-block. It does not construct a projector for an arbitrary Hodge class.
+For B, [Scholl, Theorem 1.2.1 and section 1.2.2](https://www.dpmms.cam.ac.uk/~ajs1005/preprints/mf.pdf)
+identifies the selected Chow factor with parabolic cohomology.
+[Zucker, section 12, Proposition 12.5 and Lemmas 12.14--12.15](https://www.math.stonybrook.edu/~cschnell/mat690/Zucker.pdf)
+gives its Hodge types. The absence of a diagonal component is the deduction
+used in the table; a Tate twist shifts both indices equally and does not
+change this conclusion. Products or other factors require a new target
+comparison. Scholl's individual-newform decomposition in Theorem 1.2.4
+uses homological motives, not a proved decomposition modulo rational equivalence.
 
-The pinned Mathlib supplies Weierstrass equations and projective point/group
-APIs (`EllipticCurve/Weierstrass.lean`, `Projective/Basic.lean`,
-`Projective/Point.lean`). Those APIs are not already the required
-scheme-level Chow--Betti model. The repository's concrete combined model
-remains finite split degree zero. Candidate cost must include these bridges,
-not just the availability of a type named elliptic curve.
+Higher-dimensional Abelian-type Kuga families (candidate C) remain
+deferred. [Wildeshaus, Theorems 0.1(d) and 0.2](https://arxiv.org/pdf/1211.5327)
+extends an existing Chow idempotent and compares intermediate-extension
+realizations in its specified setting; it does not supply arbitrary
+Hodge-class generation.
 
-**G0 deliverable:** a short comparison for A and B, with C deferred, stating
-the actual schemes/base/field, codimension and Tate twist, independently
-specified Hodge subspace, explicit geometric cycles and their Betti classes,
-source hypotheses, existing Lean APIs, missing APIs, and first unproved
-equality. State exactly which classes the proposed construction is meant
-to generate and which geometric property of `X` enables it. Check that the
-selected Hodge-class space is nonzero; if a projector is used, identify its
-image and Hodge types separately. Rank by the explicit cycle-class
-construction, coverage argument and verified dependencies; do not
-promise a new Hodge case or a completion date. End with a recommendation and
-a recorded family/target choice, not an implicit change to universal coverage.
+#### A class stable under finite etale Galois closure
+
+Fix a complex elliptic curve `E`. Consider smooth projective connected `X`
+admitting a finite etale surjection `f:A -> X`, where `A` is an abelian
+variety isogenous to `E^n`, `n >= 1`. This is a geometric membership
+condition, not an assumption that the desired Hodge classes are algebraic.
+All statements in this paragraph concern classical geometry; their Lean
+instances are not yet constructed.
+
+By [Stacks, Tag 03SF](https://stacks.math.columbia.edu/tag/03SF), a connected
+finite etale Galois cover `g:Z -> X` can dominate `A -> X`. The induced
+`Z -> A` is finite etale. Choosing a point over the origin makes it an
+isogeny of abelian varieties, by
+[Milne, *Abelian Varieties*, Remark 15.3, printed p. 28](https://www.jmilne.org/math/xnotes/AVs.pdf).
+Thus `Z` remains isogenous to `E^n`: this is the closure-stability deduction.
+For a minimal Galois closure, identify its function field with the normal
+closure of `C(A)/C(X)`; do not identify a field closure with the global
+scheme construction without that comparison.
+
+A construction of members starts with a finite free group action on `A`
+and forms `X=A/G`; the quotient/torsor existence is covered by
+[Stacks, Tag 07S7](https://stacks.math.columbia.edu/tag/07S7).
+Smoothness and projectivity of the intended quotient must be established
+in its geometric implementation. A small proposed example uses `A=E^2`
+and a nonzero `t in E[2]`, with involution `(x,y) -> (x+t,-y)`.
+Its square is the identity and a fixed point would force `t=0`, so the
+action is free. This example is already Galois; it tests a nontranslation
+action, not a nontrivial passage to Galois closure.
+
+If the target is itself abelian, a connected finite etale cover is already
+an isogeny and Galois; its translation deck action is trivial on rational
+Betti cohomology. The broader quotient class is therefore the useful
+setting for the later deck-action comparison. Do not impose that the full
+deck group fixes the chosen origin on `Z`. Branched or merely generically
+finite covers do not have the same closure-stability argument.
+
+#### The class-generation mechanism is trace descent
+
+Let `d=deg(f)>0` and fix a rational Hodge class `alpha` on `X` in degree
+`2p`. Pullback preserves its Hodge type. The proved classical upstairs
+coverage result supplies a product-of-divisors combination `z` with
+`cl_A(z)=f^*alpha`. Then the proposed construction downstairs is
+
+\[
+ z_X=\frac1d f_*z,\qquad
+ \operatorname{cl}_X(z_X)
+   =\frac1d f_*\operatorname{cl}_A(z)
+   =\frac1d f_*f^*\alpha=\alpha.
+\]
+
+The precise consumers are cycle-class compatibility with proper pushforward
+and the Betti degree/trace identity. The cohomological projection formula
+and cycle compatibility are recorded in
+[Stacks, Tag 0FHA, Lemma 45.9.1 and condition (C)(b)](https://stacks.math.columbia.edu/tag/0FHA).
+[Tag 02RH](https://stacks.math.columbia.edu/tag/02RH) is the finite-locally-free
+degree identity on **cycles**; it is not itself a Betti realization theorem.
+The displayed argument is a deduction from the genuine geometric laws,
+not a completed Lean instance obtained by citing them.
+
+Neither Galois closure nor a projector is needed for this descent identity.
+After closure, the deck average can express invariant descent, with its
+geometric action proved separately. Algebraicity comes from the upstairs
+divisor-generation theorem, not from the averaging identity. The resulting
+classes are pushforwards of products upstairs: do not conclude divisor
+generation on `X`, injectivity of its cycle map, or generation of its entire
+Chow group. This provides a controlled known-case family, not a reduction
+of the universal target to that family.
+
+#### Lean feasibility and the next bounded construction
+
+The audit uses Lean 4.24.0 and the pinned Mathlib revision
+`f897ebcf72cd16f89ab4577d0c826cd14afaafc7`; no dependency changes are proposed.
+
+| Available construction | Missing comparison needed by this proposal |
+| --- | --- |
+| `WeierstrassCurve.Affine.CoordinateRing` and `quotientXYIdealEquiv` in Mathlib's `EllipticCurve/Affine/Point.lean`; projective point/group APIs | Actual proper elliptic **scheme**, affine-chart and point-at-infinity identifications, and comparison of the ring fraction field with the scheme function field |
+| Actual `Proj`, `Proj.basicOpenIsoSpec`, and properness in `ProjectiveSpectrum/Scheme.lean`, `ProjectiveSpectrum/Basic.lean` and `ProjectiveSpectrum/Proper.lean` | Specialization to the chosen homogeneous equation and proof of its curve properties; these do not follow from the point/group API |
+| Existing actual graded cycles, principal relations and rational Chow quotient | Numerical degree of a divisor on a proper curve and degree zero of principal divisors; existing support-degree theorems concern dimension grading instead |
+| Mathlib singular chain/homology functors; the project's actual finite-split singular `H^0` cycle comparison | Complex point topology/analytic comparison, genuine positive-degree Betti cohomology and the point-class/Hodge normalization; these were not found as ready-made adapters in the pinned sources |
+| Field `IntermediateField.normalClosure`; affine normalization and deck-action maps in `Boundary/Normalization/` | Global finite etale Galois closure and its comparison to the field closure, plus the abelian/isogeny stability theorem |
+| Closed-immersion Chow pushforward; finite-discrete `H^0` transfer; conditional `RationalDegreeTransfer` | Finite-cover Chow pushforward with norm compatibility, and positive-degree Betti transfer with the actual cycle-class square and degree law |
+
+**Recommendation, pending adoption:** use `E,p=1` as the seed, then test
+`E^2,p=1`, and build toward the finite-etale-covered class above. A concrete
+seed proposal is the projective Weierstrass cubic
+`y^2 z = x^3 - x z^2`, with its origin `[0:1:0]`; this fixes a model for
+implementation without changing the eventual class of eligible targets.
+This seed has complex multiplication: the automorphism
+`[i]:(x,y) -> (-x,i*y)` supplies an additional graph divisor for the `E^2`
+test. Do not use a factors-plus-diagonal-only list for this chosen model.
+
+The next bounded **geometry** checkpoint is the actual projective curve,
+its affine-coordinate-ring chart and origin as a closed point/support.
+Require literal scheme maps/isomorphisms. Separate this from the subsequent
+principal-degree-zero and `cl(D)=deg(D)cl([0])` checkpoints. The latter
+requires independently constructed `H_B^2` and Hodge data, not a renamed
+copy of `Q`. If the projective curve adapter first needs calibration, use
+the `P^1` two-chart construction and the actual identity
+`div(t)=[0]-[infinity]`; record that detour explicitly.
+
+The family-level track then proves the displayed trace-descent laws and
+upstairs generation. Global Galois closure is a separately scoped cover
+checkpoint, not a prerequisite for trace descent. Do not treat finite-cover
+norm descent or all positive-degree Betti theory as one small checkpoint,
+and do not introduce a new abstract package merely to store these missing laws.
 
 ### G1. Fix a target and a non-circular construction before expanding APIs
 
@@ -197,9 +303,11 @@ provide variable-class coverage.
 - Review new objects against the parity registry before adding wrappers.
   Promote a proved checkpoint only after the appropriate build, focused
   regressions, dependency/axiom checks and Lean--TeX comparison.
-- **Next action:** complete G0's Chow--Betti-first A/B comparison and record the
-  choice. **Next Lean checkpoint:** L1, if continuing the bounded localization
-  stream in parallel. No new geometric family is selected by this plan.
+- **Next action:** adopt or refine G0's elliptic-seed/finite-etale-covered
+  recommendation, then begin G1's actual curve/chart/point construction.
+  L1 remains the next checkpoint of the separate bounded localization
+  stream, only if continued in parallel for a named consumer. No new
+  geometric family is implemented or universal reduction asserted here.
 
 ## 1. Fix the target before choosing a cover
 
@@ -1006,8 +1114,9 @@ the dated checkpoints below document how the existing objects were built.
    existing endpoint using constructed data, with no hypothesis that is
    merely the desired class-generation or realization conclusion renamed.
 
-The operative next action is G0's Chow--Betti-first comparison in section 0,
-with a non-circular construction proposal at G1. L1 is the next bounded
+The operative next action is the recommended actual curve/chart/point
+construction following G0's comparison in section 0 and its G1 design gate.
+L1 is the next bounded
 Lean checkpoint for the ongoing localization stream, not a universal
 prerequisite for every geometric route. Actual integral/rational Chow
 quotients and their surjective open maps are constructed; the general

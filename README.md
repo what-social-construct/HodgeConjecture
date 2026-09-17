@@ -472,6 +472,10 @@ The abstract states the conjecture and the proposed route directly; the
 [Chow--Betti-first plan](research/TARGET_BRIDGE.md#0-operative-plan-chow-to-betti-first)
 organizes the next geometric work around which varieties and codimensions
 the construction covers, and records its acceptance criteria.
+Its [candidate comparison](research/TARGET_BRIDGE.md#g0-candidate-comparison-and-the-galois-closure-proposal)
+recommends an elliptic seed and assesses a class stable under finite etale
+Galois closure, with cycle generation supplied by upstairs divisors and
+degree-normalized descent. These are planned geometric instances.
 
 `paper/main.pdf` is the single current manuscript PDF. The earlier drafts
 and their sources are preserved in the

@@ -34,16 +34,28 @@ images and the property of the variety supporting the generation argument.
 Galois actions and projectors are mechanisms to use when needed, not
 prerequisites for a direct cycle-class construction.
 
-No family is selected: compare a fixed complex elliptic curve with a
-specified Kuga--Sato compactification from that Chow--Betti perspective.
-Defer the larger Abelian-type Kuga setting unless
-the comparison identifies a needed obligation that the first candidates
-do not exercise. Fix the actual target, source hypotheses and first
-unproved geometric comparison before expanding the infrastructure.
+The [candidate comparison](TARGET_BRIDGE.md#g0-candidate-comparison-and-the-galois-closure-proposal)
+now recommends an elliptic `p=1` seed, then `E^2` and the class of smooth
+projective targets finite-etale-covered by abelian varieties isogenous to
+`E^n`. This remains a proposal, not a constructed Lean family. Its connected
+finite etale Galois closure stays in the upstairs isogeny class. The actual
+generation mechanism is degree-normalized cycle pushforward; Galois
+closure supplies optional deck-group structure, not class generation by
+itself. Kuga--Sato remains a later projector test: Scholl's selected
+cuspidal factor has no nonzero diagonal Hodge classes. The source checks,
+deductions and exact scope are recorded in the linked comparison.
 
-In the existing Lean stream, the next bounded checkpoint is L1's actual
-closed-complement cycle kernel/image comparison. It can run alongside
-family selection; additive localization is not a prerequisite for every
+The recommended next geometry checkpoint is an actual projective elliptic
+scheme with its affine chart and distinguished closed point. Its genuine
+positive-degree Betti comparison and the family's finite-cover Chow/Betti
+trace laws are separate missing constructions. Existing support-degree
+lemmas are not the numerical degree-zero theorem for principal divisors,
+and existing field normal closure is not a global finite etale cover adapter.
+
+In the separate localization stream, the next bounded checkpoint is L1's
+actual closed-complement cycle kernel/image comparison. It can run alongside
+the selected geometry when it has a named consumer; additive localization
+is not a prerequisite for every
 direct geometric projector construction. L2 and L3 then address relation
 lifting and quotient exactness. None of these checkpoints replaces the
 prescribed-class action/generation argument or supplies a reduction from
@@ -1789,8 +1801,8 @@ that paper.  This is a plausible route to a publishable conditional or
 special-case theorem if the intended family and the repository's abstract
 Chow model are identified with that setting; it is not a general discharge of
 `CompactifiedSubgroupProjectorExtension` or of the equality with `e.operator`.
-The G0 candidate comparison in the operative plan decides whether this
-branch is needed for the first positive-dimensional application.
+The G0 comparison currently defers this branch in favor of an elliptic
+Chow--Betti seed and the finite-etale-covered candidate class.
 
 For the near-term Lean architecture, the source-backed interface should ask
 first for the implication
