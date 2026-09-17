@@ -1206,15 +1206,35 @@ surjectivity of the existing class map, not by cancelling rationalization
 or assuming that torsion survives. These quotient results retain the
 target-only Noetherian premise.
 
-**The next bounded goal is surjectivity of actual open restriction.**
-Lift each integral support in the open through its existing reduced
-ambient closure and use the proved support-degree comparison to lift
-homogeneous finite cycles. Then deduce integral and rational Chow
-restriction surjectivity from their representative formulas and the
-existing class-map surjectivity. After that, construct the actual
-closed-complement support/kernel/image comparison and prove localization
-exactness separately. SP62 supplies the quotient maps and naturality,
-not surjectivity, a localization sequence or general flat pullback.
+### Surjectivity by reduced closure of cycle supports
+
+A11av / SP63 proves `openRestriction_surjective` and
+`gradedOpenRestriction_surjective` in
+`Cycles/OpenRestrictionSurjectivity.lean`. The cycle lift is the finite
+linear combination of fundamental cycles of the existing reduced ambient
+closures. The actual ideal-comap identity proves that restriction recovers
+each generator, and the existing support-degree comparison shows that the
+lift preserves the supplied grading. These statements hold over any
+semiring, without Noetherianity, ambient integrality or compactness.
+They also include empty opens and trivial coefficient semirings.
+
+`chowOpenRestriction_surjective` and
+`rationalChowOpenRestriction_surjective` choose an existing homogeneous
+cycle representative of an open Chow class, lift it, and apply SP62's
+literal representative formulas. Only the target scheme is assumed
+Noetherian; source Noetherianity is derived. No new quotient, relation
+or surjectivity hypothesis is introduced. The closure lift is kept private
+at the cycle layer: its preservation of rational equivalence is neither
+assumed nor asserted, and it is not descended as a Chow right inverse.
+
+**The next bounded goal is the closed-complement cycle kernel/image
+comparison.** Identify the integral supports disjoint from the open with
+the actual closed-complement supports, and compare their finite cycles
+and homogeneous submodules under the existing closed pushforward.
+Quotient-level localization exactness then requires its own
+principal-relation lifting argument. SP63 proves surjectivity, not the
+remaining kernel/image equality, a localization sequence or general
+flat pullback.
 
 Comparison with the prescribed target rational Chow groups and its
 intersection/Betti structure remains a separate geometric identification.

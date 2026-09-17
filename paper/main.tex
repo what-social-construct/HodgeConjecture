@@ -1015,7 +1015,7 @@ Distinct degrees intersect in zero. Closed immersions preserve the
 grading for the restricted dimension function.
 For an open immersion \(j:U\hookrightarrow X\), the literal
 restriction \(\delta_U=\delta\circ j\) is a dimension function, and
-the existing cycle restriction induces functorial maps
+the existing cycle restriction induces surjective functorial maps
 \[
  j^*:Z^\delta_{\mathrm{fin},m}(X;R)
        \longrightarrow Z^{\delta_U}_{\mathrm{fin},m}(U;R).
@@ -1059,7 +1059,7 @@ descends to the existing quotient by
        \longrightarrow\operatorname{CH}_m^{\delta\circ j}(U),
  \qquad j^*[z]=[j^*z],
 \]
-and respects identity and contravariant composition.
+and is surjective and respects identity and contravariant composition.
 A closed immersion \(i:X\hookrightarrow Y\) of Noetherian schemes,
 with \(\delta_X=\delta_Y\circ i\), induces
 \[
@@ -1080,8 +1080,8 @@ of these same principal relations gives
  \qquad q\otimes[z]\longmapsto[qz_{\mathbf Q}],
 \]
 where \(z_{\mathbf Q}\) is the coefficientwise image of \(z\).
-Open restriction likewise descends to the rational quotients with
-the same representative formula and functoriality. It commutes with
+Open restriction likewise descends to a surjective map on the rational
+quotients with the same representative formula and functoriality. It commutes with
 the tensor comparison and the integral-to-rational class maps.
 Closed pushforward on these rational quotients preserves the same
 representatives, respects identity and composition, and commutes
@@ -1149,8 +1149,11 @@ pushforward and its compatibility with coefficient extension.
 For open restriction, the nonempty and empty generator identities
 give quotient descent, and the same coefficient comparison proves
 the rationalization squares.
+Reduced ambient closure lifts every integral support in the open
+scheme, preserving its degree; finite sums give cycle lifts, and
+class representatives give surjectivity on both Chow quotients.
 The detailed statements and proofs are
-Propositions~\ref{prop:scheme-local-order}--\ref{prop:open-chow-restriction}.
+Propositions~\ref{prop:scheme-local-order}--\ref{prop:open-restriction-surjective}.
 \end{proof}
 
 For smooth projective schemes over a fixed field \(k\), composition of rational Chow
@@ -3404,6 +3407,49 @@ Every tensor is a sum of pure tensors; linearity and the formula
 \(q\otimes[z]\mapsto[qz_{\mathbf Q}]\) prove the full tensor square.
 \end{proof}
 
+\begin{proposition}[Surjectivity of open restriction]
+\label{prop:open-restriction-surjective}
+Let \(j:U\hookrightarrow X\) be an open immersion of schemes and
+let \(R\) be a semiring. The existing finite-cycle restriction
+\[
+ j^*:Z_{\mathrm{fin}}(X;R)\longrightarrow Z_{\mathrm{fin}}(U;R)
+\]
+is surjective. For every dimension function \(\delta\) on \(X\)
+and every \(m\in\mathbf Z\), the graded restriction
+\[
+ j^*:Z^\delta_{\mathrm{fin},m}(X;R)
+       \longrightarrow Z^{\delta\circ j}_{\mathrm{fin},m}(U;R)
+\]
+is likewise surjective. If \(X\) is Noetherian, then both
+\[
+\begin{aligned}
+ j^*&:\operatorname{CH}_m^\delta(X)
+       \longrightarrow\operatorname{CH}_m^{\delta\circ j}(U),\\
+ j^*&:\operatorname{CH}_m^\delta(X;\mathbf Q)
+       \longrightarrow\operatorname{CH}_m^{\delta\circ j}(U;\mathbf Q)
+\end{aligned}
+\]
+are surjective as well.
+\end{proposition}
+
+\begin{proof}
+For each integral closed support \(W\subseteq U\), let
+\(\overline W\subseteq X\) be the reduced closure of its actual
+image. Proposition~\ref{prop:open-principal-divisor} identifies
+its inverse image with \(W\), so \(j^*[\overline W]=[W]\).
+Consequently, a finite cycle \(\sum_W a_W[W]\) lifts to
+\(\sum_W a_W[\overline W]\) with the same coefficients.
+Proposition~\ref{prop:open-grading-base-change} gives
+\(\deg_\delta\overline W=\deg_{\delta\circ j}W\), so this lift
+also preserves any prescribed homogeneous degree.
+When \(X\) is Noetherian, so is \(U\). Choose a cycle representative
+of a class on \(U\), lift that homogeneous cycle with coefficients
+in \(\mathbf Z\) or \(\mathbf Q\), and take its class on \(X\).
+The representative formulas of
+Proposition~\ref{prop:open-chow-restriction} show that this class
+restricts to the prescribed class.
+\end{proof}
+
 \section{Detailed split geometric computations}
 \label{app:split-computations}
 
@@ -4401,6 +4447,16 @@ Actual representatives, contravariant functoriality and tensor comparison
 (Proposition~\ref{prop:open-chow-restriction})\newline
 \leanpath{Cycles/ChowOpenRestriction.lean}\newline
 \leanpath{Cycles/CoefficientRestriction.lean}\newline
+\leanpath{Cycles/RationalChowOpenRestriction.lean}\\
+Surjectivity of cycle and Chow restriction &
+\leanpath{openRestriction_surjective}\newline
+\leanpath{gradedOpenRestriction_surjective}\newline
+\leanpath{chowOpenRestriction_surjective}\newline
+\leanpath{rationalChowOpenRestriction_surjective}\newline
+Reduced support closure and actual class representatives
+(Proposition~\ref{prop:open-restriction-surjective})\newline
+\leanpath{Cycles/OpenRestrictionSurjectivity.lean}\newline
+\leanpath{Cycles/ChowOpenRestriction.lean}\newline
 \leanpath{Cycles/RationalChowOpenRestriction.lean}\\
 Compactified graph route &
 \leanpath{groupAlgebraProjectorExtension}\newline

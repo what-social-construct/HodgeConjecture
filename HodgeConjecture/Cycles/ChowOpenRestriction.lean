@@ -1,4 +1,5 @@
 import HodgeConjecture.Cycles.PrincipalRelationRestriction
+import HodgeConjecture.Cycles.OpenRestrictionSurjectivity
 
 /-!
 # Actual open restriction on the integral Chow quotient
@@ -7,7 +8,8 @@ The existing graded open cycle map preserves actual principal relations.
 It therefore descends to the existing quotient, with the same cycle
 representatives. Identity and contravariant composition are inherited
 from the proved cycle laws. Only the target scheme is assumed Noetherian;
-the open source and intermediate schemes inherit that property.
+the open source and intermediate schemes inherit that property. Every
+class on the open lifts by taking reduced closures of a cycle representative.
 -/
 
 set_option autoImplicit false
@@ -39,6 +41,18 @@ theorem chowOpenRestriction_classMap {U X : Scheme.{u}} [IsNoetherian X]
     letI := openImmersion_isNoetherian j
     chowOpenRestriction δ j n (classMap δ n c) =
       classMap (δ.comapOpenImmersion j) n (gradedOpenRestriction ℤ δ j n c) := rfl
+
+/-- Every Chow class on the open has a lift: choose a homogeneous cycle
+representative and lift its supports through their reduced ambient closures. -/
+theorem chowOpenRestriction_surjective {U X : Scheme.{u}} [IsNoetherian X]
+    (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j] (n : ℤ) :
+    letI := openImmersion_isNoetherian j
+    Function.Surjective (chowOpenRestriction δ j n) := by
+  letI := openImmersion_isNoetherian j
+  intro z
+  obtain ⟨c, rfl⟩ := classMap_surjective (δ.comapOpenImmersion j) n z
+  obtain ⟨b, rfl⟩ := gradedOpenRestriction_surjective ℤ δ j n c
+  exact ⟨classMap δ n b, chowOpenRestriction_classMap δ j n b⟩
 
 /-- Identity on the quotient follows from identity on the actual cycles. -/
 theorem chowOpenRestriction_id (X : Scheme.{u}) [IsNoetherian X]

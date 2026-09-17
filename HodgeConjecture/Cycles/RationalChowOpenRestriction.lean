@@ -11,6 +11,7 @@ the actual cycle representatives, identity and contravariant composition.
 It agrees with scalar extension of the integral Chow restriction through
 the representative-preserving tensor equivalences. Only the target is
 assumed Noetherian; source Noetherianity is derived from the open immersion.
+Every rational class on the open lifts through a homogeneous cycle representative.
 -/
 
 set_option autoImplicit false
@@ -69,6 +70,19 @@ theorem rationalChowOpenRestriction_classMap
     rationalChowOpenRestriction δ j n (rationalClassMap δ n c) =
       rationalClassMap (δ.comapOpenImmersion j) n
         (gradedOpenRestriction ℚ δ j n c) := rfl
+
+/-- Every rational Chow class on the open lifts through an actual homogeneous
+rational cycle and its reduced ambient support closures. -/
+theorem rationalChowOpenRestriction_surjective
+    {U X : Scheme.{u}} [IsNoetherian X]
+    (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j] (n : ℤ) :
+    letI := openImmersion_isNoetherian j
+    Function.Surjective (rationalChowOpenRestriction δ j n) := by
+  letI := openImmersion_isNoetherian j
+  intro z
+  obtain ⟨c, rfl⟩ := rationalClassMap_surjective (δ.comapOpenImmersion j) n z
+  obtain ⟨b, rfl⟩ := gradedOpenRestriction_surjective ℚ δ j n c
+  exact ⟨rationalClassMap δ n b, rationalChowOpenRestriction_classMap δ j n b⟩
 
 /-- The quotient map for the actual identity immersion is the identity. -/
 theorem rationalChowOpenRestriction_id (X : Scheme.{u}) [IsNoetherian X]

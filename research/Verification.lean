@@ -6829,3 +6829,174 @@ example (U X : Scheme) [IsEmpty U] [IsIntegral X] [IsNoetherian X]
   simp [c, fundamentalCycle] at hcoeff
 
 end ChowOpenRestrictionRegressions
+
+-- SP63: surjectivity of the existing cycle and Chow open restriction maps.
+#check HodgeConjecture.SchemeCycles.openRestriction_surjective
+#check HodgeConjecture.SchemeCycles.gradedOpenRestriction_surjective
+#check HodgeConjecture.SchemeCycles.chowOpenRestriction_surjective
+#check HodgeConjecture.SchemeCycles.rationalChowOpenRestriction_surjective
+
+#print axioms HodgeConjecture.SchemeCycles.openRestriction_surjective
+#print axioms HodgeConjecture.SchemeCycles.gradedOpenRestriction_surjective
+#print axioms HodgeConjecture.SchemeCycles.chowOpenRestriction_surjective
+#print axioms HodgeConjecture.SchemeCycles.rationalChowOpenRestriction_surjective
+
+noncomputable section OpenRestrictionSurjectivityRegressions
+
+open HodgeConjecture AlgebraicGeometry CategoryTheory
+open HodgeConjecture.SchemeCycles
+
+-- Actual finite cycles lift over every semiring, with no ambient finiteness hypotheses.
+example (R : Type*) [Semiring R] (U X : Scheme)
+    (j : U ⟶ X) [IsOpenImmersion j] (c : Cycles U R) :
+    ∃ b : Cycles X R, openRestriction R j b = c := by
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  fail_if_success
+    have : IsNoetherian X := inferInstance
+  exact openRestriction_surjective R j c
+
+-- The lifted degree is the same supplied integer, for the literal restricted grading.
+example (R : Type*) [Semiring R] (U X : Scheme) (δ : DimensionFunction X)
+    (j : U ⟶ X) [IsOpenImmersion j] (n : ℤ)
+    (c : cyclesOfDegree R (δ.comapOpenImmersion j) n) :
+    ∃ b : cyclesOfDegree R δ n, gradedOpenRestriction R δ j n b = c := by
+  fail_if_success
+    have : CompactSpace X := inferInstance
+  fail_if_success
+    have : IsLocallyNoetherian U := inferInstance
+  exact gradedOpenRestriction_surjective R δ j n c
+
+-- The support lift is the actual reduced ambient closure, not a newly chosen carrier.
+example (R : Type*) [Semiring R] (U X : Scheme)
+    (j : U ⟶ X) [IsOpenImmersion j] (W : IntegralClosedSubscheme U) :
+    openRestriction R j (fundamentalCycle R (openClosureSubscheme j W)) =
+      fundamentalCycle R W :=
+  openRestriction_fundamentalCycle_of_comap_eq j R (openClosureSubscheme j W) W
+    (openClosureSubscheme_comap j W)
+
+-- The same literal closure is homogeneous; this statement introduces no quotient-level lift.
+example (R : Type*) [Semiring R] (U X : Scheme) (δ : DimensionFunction X)
+    (j : U ⟶ X) [IsOpenImmersion j] (n : ℤ) (W : IntegralClosedSubscheme U)
+    (hW : supportDegree (δ.comapOpenImmersion j) W = n) :
+    fundamentalCycle R (openClosureSubscheme j W) ∈ cyclesOfDegree R δ n ∧
+      openRestriction R j (fundamentalCycle R (openClosureSubscheme j W)) =
+        fundamentalCycle R W := by
+  constructor
+  · exact fundamentalCycle_mem_cyclesOfDegree R δ n (openClosureSubscheme j W)
+      ((supportDegree_openClosureSubscheme δ j W).trans hW)
+  · exact openRestriction_fundamentalCycle_of_comap_eq j R
+      (openClosureSubscheme j W) W (openClosureSubscheme_comap j W)
+
+-- An arbitrary homogeneous cycle has a raw representative with the identical degree.
+example (R : Type*) [Semiring R] (U X : Scheme) (δ : DimensionFunction X)
+    (j : U ⟶ X) [IsOpenImmersion j] (n : ℤ) (c : Cycles U R)
+    (hc : c ∈ cyclesOfDegree R (δ.comapOpenImmersion j) n) :
+    ∃ b : Cycles X R, b ∈ cyclesOfDegree R δ n ∧ openRestriction R j b = c := by
+  obtain ⟨b, hb⟩ := gradedOpenRestriction_surjective R δ j n ⟨c, hc⟩
+  exact ⟨b.val, b.property, congrArg Subtype.val hb⟩
+
+example (R : Type*) [Semiring R] (X : Scheme) (δ : DimensionFunction X) (n : ℤ) :
+    Function.Surjective (openRestriction R (𝟙 X)) ∧
+      Function.Surjective (gradedOpenRestriction R δ (𝟙 X) n) :=
+  ⟨openRestriction_surjective R (𝟙 X),
+    gradedOpenRestriction_surjective R δ (𝟙 X) n⟩
+
+-- Surjectivity is stable under the actual contravariant raw composition.
+example (R : Type*) [Semiring R] (V U X : Scheme)
+    (i : V ⟶ U) (j : U ⟶ X) [IsOpenImmersion i] [IsOpenImmersion j] :
+    Function.Surjective ((openRestriction R i).comp (openRestriction R j)) :=
+  (openRestriction_surjective R i).comp (openRestriction_surjective R j)
+
+example (R : Type*) [Semiring R] (V U X : Scheme) (δ : DimensionFunction X)
+    (i : V ⟶ U) (j : U ⟶ X) [IsOpenImmersion i] [IsOpenImmersion j] (n : ℤ) :
+    Function.Surjective
+      ((gradedOpenRestriction R (δ.comapOpenImmersion j) i n).comp
+        (gradedOpenRestriction R δ j n)) :=
+  (gradedOpenRestriction_surjective R (δ.comapOpenImmersion j) i n).comp
+    (gradedOpenRestriction_surjective R δ j n)
+
+-- At quotient level only target Noetherianity is supplied; source Noetherianity is derived.
+example (U X : Scheme) [IsNoetherian X] (δ : DimensionFunction X)
+    (j : U ⟶ X) [IsOpenImmersion j] (n : ℤ) :
+    letI := openImmersion_isNoetherian j
+    Function.Surjective (chowOpenRestriction δ j n) := by
+  fail_if_success
+    have : IsIntegral X := inferInstance
+  exact chowOpenRestriction_surjective δ j n
+
+-- Every integral target class lifts through an actual homogeneous ambient cycle.
+example (U X : Scheme) [IsNoetherian X] (δ : DimensionFunction X)
+    (j : U ⟶ X) [IsOpenImmersion j] (n : ℤ) :
+    letI := openImmersion_isNoetherian j
+    ∀ z : ChowGroup (δ.comapOpenImmersion j) n,
+      ∃ b : cyclesOfDegree ℤ δ n, chowOpenRestriction δ j n (classMap δ n b) = z := by
+  letI := openImmersion_isNoetherian j
+  intro z
+  obtain ⟨a, ha⟩ := chowOpenRestriction_surjective δ j n z
+  obtain ⟨b, rfl⟩ := classMap_surjective δ n a
+  exact ⟨b, ha⟩
+
+example (U X : Scheme) [IsNoetherian X] (δ : DimensionFunction X)
+    (j : U ⟶ X) [IsOpenImmersion j] (n : ℤ) :
+    letI := openImmersion_isNoetherian j
+    Function.Surjective (rationalChowOpenRestriction δ j n) := by
+  fail_if_success
+    have : IsIntegral U := inferInstance
+  exact rationalChowOpenRestriction_surjective δ j n
+
+-- Rational representative lifting uses the existing rational quotient, not cancellation of a cast.
+example (U X : Scheme) [IsNoetherian X] (δ : DimensionFunction X)
+    (j : U ⟶ X) [IsOpenImmersion j] (n : ℤ) :
+    letI := openImmersion_isNoetherian j
+    ∀ z : RationalChowGroup (δ.comapOpenImmersion j) n,
+      ∃ b : cyclesOfDegree ℚ δ n,
+        rationalChowOpenRestriction δ j n (rationalClassMap δ n b) = z := by
+  letI := openImmersion_isNoetherian j
+  intro z
+  obtain ⟨a, ha⟩ := rationalChowOpenRestriction_surjective δ j n z
+  obtain ⟨b, rfl⟩ := rationalClassMap_surjective δ n a
+  exact ⟨b, ha⟩
+
+example (V U X : Scheme) [IsNoetherian X] (δ : DimensionFunction X)
+    (i : V ⟶ U) (j : U ⟶ X) [IsOpenImmersion i] [IsOpenImmersion j] (n : ℤ) :
+    letI := openImmersion_isNoetherian j
+    letI := openImmersion_isNoetherian i
+    Function.Surjective
+      ((chowOpenRestriction (δ.comapOpenImmersion j) i n).comp
+        (chowOpenRestriction δ j n)) := by
+  letI := openImmersion_isNoetherian j
+  letI := openImmersion_isNoetherian i
+  exact (chowOpenRestriction_surjective (δ.comapOpenImmersion j) i n).comp
+    (chowOpenRestriction_surjective δ j n)
+
+example (V U X : Scheme) [IsNoetherian X] (δ : DimensionFunction X)
+    (i : V ⟶ U) (j : U ⟶ X) [IsOpenImmersion i] [IsOpenImmersion j] (n : ℤ) :
+    letI := openImmersion_isNoetherian j
+    letI := openImmersion_isNoetherian i
+    Function.Surjective
+      ((rationalChowOpenRestriction (δ.comapOpenImmersion j) i n).comp
+        (rationalChowOpenRestriction δ j n)) := by
+  letI := openImmersion_isNoetherian j
+  letI := openImmersion_isNoetherian i
+  exact (rationalChowOpenRestriction_surjective (δ.comapOpenImmersion j) i n).comp
+    (rationalChowOpenRestriction_surjective δ j n)
+
+-- Empty opens have the actual zero-cycle lift in every integer degree.
+example (R : Type*) [Semiring R] (U X : Scheme) [IsEmpty U] (δ : DimensionFunction X)
+    (j : U ⟶ X) [IsOpenImmersion j] (n : ℤ)
+    (c : cyclesOfDegree R (δ.comapOpenImmersion j) n) :
+    gradedOpenRestriction R δ j n 0 = c := by
+  rw [map_zero]
+  apply Subtype.ext
+  ext W
+  exact isEmptyElim (ambientGenericPoint W)
+
+-- Trivial coefficients are allowed, independently of nonemptiness or the sign of the degree.
+example (R : Type*) [Semiring R] [Subsingleton R] (U X : Scheme)
+    (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j] (n : ℤ)
+    (c : cyclesOfDegree R (δ.comapOpenImmersion j) n) :
+    gradedOpenRestriction R δ j n 0 = c := by
+  exact Subsingleton.elim _ _
+
+end OpenRestrictionSurjectivityRegressions

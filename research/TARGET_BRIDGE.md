@@ -736,11 +736,26 @@ be developed alongside that infrastructure.
    `chowRationalize` is used, and the quotient maps retain target
    Noetherianity as an explicit hypothesis.
 
-   **Next bounded obligation:** lift actual homogeneous cycles through
-   the existing reduced open closure to prove graded restriction
-   surjectivity, then deduce integral/rational Chow surjectivity on
-   representatives. The actual closed-complement support/kernel/image
-   statement and localization exactness require separate proofs.
+   **Open restriction surjectivity (A11av / SP63):**
+   `OpenRestrictionSurjectivity.lean` lifts finite cycles through reduced
+   ambient support closures. The actual ideal-comap identity proves a
+   cycle-level right inverse; the support-degree identity makes the lift
+   homogeneous. Raw and graded restriction are thus surjective over every
+   semiring without finiteness hypotheses. The integral and rational Chow
+   maps are surjective by choosing and lifting actual homogeneous cycle
+   representatives, with only target Noetherianity assumed. The private
+   closure lift is not a Chow map: preservation of rational equivalence
+   by that lift is not supplied or used.
+
+   **Next bounded obligation:** prove the actual closed-complement
+   support/kernel/image comparison on finite and homogeneous cycles.
+   Construct the reduced closed complement using the existing vanishing
+   ideal of the complement of `Set.range j.base`. Compare closed-image
+   supports with ambient generic points outside this range, and use the
+   existing open coefficient formula to identify the restriction kernel.
+   The graded comparison uses the actual restricted dimension functions.
+   Quotient localization exactness additionally needs a principal-relation
+   lifting argument and remains a separate proof.
    The target's actual
    rational Chow groups and their intersection/Betti structure still
    require a geometric identification.
@@ -750,8 +765,7 @@ be developed alongside that infrastructure.
    Noetherian premise is retained; the general scalar-extension comparison
    is now proved independently of the earlier split-case adapter.
    General proper pushforward still needs its norm
-   compatibility; open restriction surjectivity and localization
-   exactness remain to be proved, and general flat/Gysin operations need
+   compatibility; localization exactness remains to be proved, and general flat/Gysin operations need
    their own principal-relation comparisons and quotient descent.
    Absolute
    relations may use larger-dimensional supports outside the relative

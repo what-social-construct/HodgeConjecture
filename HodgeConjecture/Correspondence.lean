@@ -35,6 +35,7 @@ import HodgeConjecture.Cycles.DimensionFunction
 import HodgeConjecture.Cycles.DimensionFunctionRestriction
 import HodgeConjecture.Cycles.CycleDegree
 import HodgeConjecture.Cycles.OpenGrading
+import HodgeConjecture.Cycles.OpenRestrictionSurjectivity
 import HodgeConjecture.Cycles.PrincipalDivisorDegree
 import HodgeConjecture.Cycles.PrincipalDivisorImage
 import HodgeConjecture.Cycles.PrincipalDivisorRestriction

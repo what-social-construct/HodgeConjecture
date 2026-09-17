@@ -68,7 +68,7 @@ same PDF. No proof-status change follows from this editorial reorganization.
 
 ## Canonical semantic object and TeX registry
 
-### Construction and input checkpoints (SP17--SP62)
+### Construction and input checkpoints (SP17--SP63)
 
 | ID | Object or overlap | Disposition | Required action | Status |
 | --- | --- | --- | --- | --- |
@@ -118,6 +118,7 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP60 | Supplied dimension-function restriction, homogeneous cycles and the actual carrier square | RESTRICT / COMPARE | Restrict the dimension function by the actual open point map, proving both laws, and preserve the existing homogeneous cycle modules over any semiring. Prove the Cartesian open-restriction/closed-pushforward square for an actual integral carrier, including empty inverse images, without introducing principal-relation or Chow descent hypotheses. | PROVED; FULL BUILD, 599 AXIOM REPORTS, TWENTY REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP61 | Actual ambient principal-generator restriction and preservation of its relation span | TRANSPORT / PRESERVE | Apply the actual carrier square to the existing ambient principal divisor, using the actual function-field map on a nonempty restriction and zero for an empty carrier. Restrict degree-one-higher relation data without finiteness premises; under target-only Noetherianity identify the graded generators, preserve their span and preserve rational equivalence of integral cycles. | PROVED; FULL BUILD, 609 AXIOM REPORTS, SIXTEEN REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP62 | Integral and rational Chow open restriction with coefficient and tensor compatibility | DESCEND / COMPARE | Descend the existing actual graded open restriction to both existing Chow quotients, preserving cycle representatives, identity and contravariant composition. Prove raw and graded coefficient compatibility without finiteness premises, and the full tensor square with only target Noetherianity at the quotient layer. | PROVED; FULL BUILD, 622 AXIOM REPORTS, EIGHTEEN REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+| SP63 | Surjectivity of the existing raw, graded and Chow open restrictions | LIFT / DESCEND | Lift each actual integral open support through its reduced ambient closure and preserve the supplied degree, over every semiring. Lift integral and rational Chow classes through actual homogeneous representatives under target-only Noetherianity. Keep the closure lift at cycle level; no Chow closure operation or localization exactness is asserted. | PROVED; FULL BUILD, FOUR FOCUSED AXIOM REPORTS, SIXTEEN REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS; INTEGRATED VERIFICATION PENDING |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -2212,8 +2213,10 @@ carrier inclusions. SP61 transports the ambient principal generator in
 both nonempty and empty branches and preserves the graded relation span.
 SP62 descends to the actual integral and rational Chow quotient maps,
 with representative, functoriality, coefficient and tensor comparisons.
-The next bounded step is graded cycle surjectivity via actual reduced
-closure, followed by surjectivity of these quotient maps.
+SP63 proves raw and graded cycle surjectivity via actual reduced closure,
+then surjectivity of these quotient maps through their representatives.
+The next bounded step is the actual closed-complement image/kernel
+comparison, followed by the relation-lifting argument for localization.
 
 ### Actual integral codimension and the existing shifted grading (SP54)
 
@@ -2843,16 +2846,85 @@ torsion may be killed by coefficient extension. No new Chow quotient,
 cycle carrier, dimension function or independent comparison symbol is
 introduced.
 
-The next bounded checkpoint proves surjectivity of the existing graded
-cycle restriction by extending each actual integral support to its
-reduced ambient closure and preserving its degree. Surjectivity of the
-integral and rational Chow restriction maps then follows from their
-representative formulas. The actual closed-complement image/kernel
-identification and localization exactness require later proofs; they do
-not follow just from the maps or the planned surjectivity. Proper
+SP63 below proves surjectivity of the existing raw and graded cycle
+restrictions by extending each actual integral support to its reduced
+ambient closure and preserving its degree. Surjectivity of the integral
+and rational Chow restriction maps follows through their representative
+formulas. The actual closed-complement image/kernel identification and
+localization exactness require later proofs; they do not follow just
+from these surjectivity assertions. Proper
 pushforward's norm comparison, flat/Gysin operations, general Chow
 convolution and prescribed target identification/realization/coverage
 remain separate, as recorded in `GAP_MAP.md` and `TARGET_BRIDGE.md`.
+
+### Surjectivity of the existing open restrictions (SP63 / A11av)
+
+Let \(j:U\hookrightarrow X\) be an open immersion, let
+\(\delta\) be a supplied dimension function on \(X\), and retain
+\(\delta_U=\delta\circ j\). The degree \(m\) is any integer.
+The maps below are the existing finite-cycle and Chow restriction maps.
+
+| Lean object | Mathematical role | Canonical TeX notation |
+| --- | --- | --- |
+| `openRestriction_surjective` | lift every actual finite cycle, over an arbitrary semiring | $j^*:Z_{\mathrm{fin}}(X;R)\twoheadrightarrow Z_{\mathrm{fin}}(U;R)$ |
+| `gradedOpenRestriction_surjective` | lift in the same supplied degree, without ambient finiteness premises | $j^*:Z_{\mathrm{fin},m}^{\delta}(X;R)\twoheadrightarrow Z_{\mathrm{fin},m}^{\delta_U}(U;R)$ |
+| `chowOpenRestriction_surjective` | lift every integral Chow class through an actual homogeneous cycle representative | $j^*:\operatorname{CH}_m^\delta(X)\twoheadrightarrow\operatorname{CH}_m^{\delta_U}(U)$ |
+| `rationalChowOpenRestriction_surjective` | lift every rational Chow class through the existing rational cycle quotient | $j^*:\operatorname{CH}_m^\delta(X;\mathbf Q)\twoheadrightarrow\operatorname{CH}_m^{\delta_U}(U;\mathbf Q)$ |
+
+The first two endpoints are in `Cycles/OpenRestrictionSurjectivity.lean`.
+The quotient endpoints extend `Cycles/ChowOpenRestriction.lean` and
+`Cycles/RationalChowOpenRestriction.lean`, respectively. Raw and graded
+surjectivity require only an actual open immersion and a semiring of
+coefficients, including trivial coefficients. No Noetherianity,
+compactness, integrality, nonemptiness or field base is supplied.
+For the two quotient endpoints only the target `IsNoetherian X` is a
+premise; source Noetherianity is derived with the existing
+`openImmersion_isNoetherian` theorem.
+
+For each actual integral closed support \(W\subset U\), its reduced
+ambient closure \(\overline W\subset X\) has ideal-comap exactly
+\(W\). The private linear combination of these fundamental cycles
+therefore gives a right inverse of the existing finite-cycle restriction.
+The existing support-degree identity
+\(\deg_\delta\overline W=\deg_{\delta_U}W\) and the supported
+span description of the homogeneous submodule show that the same cycle
+lift preserves degree. This is an actual construction, not a supplied
+lifting or surjectivity hypothesis.
+
+To lift a Chow class, choose a homogeneous cycle representative using
+the existing class-map surjectivity and apply the graded cycle theorem.
+The existing restriction/class-map formula identifies its restricted
+class with the original class. The rational proof uses the rational
+class map directly; it does not cancel Chow rationalization or assume
+that rationalization is injective. Reduced closure is not asserted to
+preserve principal relations, and no closure operation on Chow classes
+is defined. No new cycle carrier, homogeneous module, quotient or
+comparison symbol is introduced.
+
+The next bounded step is the closed-complement image/kernel comparison
+on the existing finite cycles. Localization exactness on the quotients
+also needs a proved lifting argument for principal relations. These
+remain separate from surjectivity, and from general proper, flat or
+Gysin operations, convolution, and prescribed target realization.
+
+SP63 focused validation (September 17, 2026): the replay using exactly
+the verification file's original four imports passes all four new
+declaration checks, four axiom reports and sixteen regressions without
+warnings or errors. Each new report uses exactly `propext`,
+`Classical.choice` and `Quot.sound`. The tests cover arbitrary-semiring
+and same-degree lifting without ambient finiteness, literal reduced
+closure recovery, raw and graded identity/composition, target-only
+Noetherian quotient surjectivity, actual integral/rational cycle
+representatives, quotient composition, empty opens and trivial
+coefficients. The current inventory is 626 reports, 734 declaration
+checks and 565 examples; the integrated replay is pending.
+The pre-SP63 6831-line verification prefix and historical SP18--SP62
+validation record are byte-identical. The full 3149-job build passes
+with only the two existing intentional `Challenge.lean` warnings;
+the six primary and two supporting dependency checks pass. The single
+66-page PDF builds with a clean log; root visual inspection covers
+Proposition A.34 on page 41 and its API map on page 55. All 84 labels
+are unique and all references resolve.
 
 ## Objects deliberately assigned no independent notation
 
