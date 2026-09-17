@@ -8,8 +8,8 @@ and identifies the minimal prescribed-class construction. This longer map
 records the component-level evidence. The standalone matrix diagnostic is
 [benched](bench/README.md), not a premise or obstruction in that route.
 
-The marked realization spine follows one chosen algebraic projector `Π`
-for each prescribed class and detects its cycle `D(Π)`.
+When used, the marked realization spine follows one chosen algebraic
+projector `Π` for each prescribed class and detects its cycle `D(Π)`.
 Residual surjectivity belongs to the current cancellation proof for the
 chosen projector's entire action. The named Galois replacement belongs
 to the reverse coverage equivalence and gives another witness for the same
@@ -25,10 +25,18 @@ assembly is formal.
 
 ## Current work order
 
-Follow the [operative plan](TARGET_BRIDGE.md#0-operative-plan-compare-geometry-first-keep-infrastructure-bounded).
-No family is selected: first compare a fixed complex elliptic curve as a
-positive-dimensional Chow--Betti test with a specified Kuga--Sato family as
-a projector/boundary test. Defer the larger Abelian-type Kuga setting unless
+Follow the [Chow--Betti-first plan](TARGET_BRIDGE.md#0-operative-plan-chow-to-betti-first).
+Start from the actual cycle map and the independently defined Hodge
+subspace, then ask: **for which varieties `X`, and which codimensions `p`,
+does our geometric construction generate the rational Hodge classes?**
+The candidate comparison must name explicit geometric cycles, their Betti
+images and the property of the variety supporting the generation argument.
+Galois actions and projectors are mechanisms to use when needed, not
+prerequisites for a direct cycle-class construction.
+
+No family is selected: compare a fixed complex elliptic curve with a
+specified Kuga--Sato compactification from that Chow--Betti perspective.
+Defer the larger Abelian-type Kuga setting unless
 the comparison identifies a needed obligation that the first candidates
 do not exercise. Fix the actual target, source hypotheses and first
 unproved geometric comparison before expanding the infrastructure.
@@ -56,11 +64,14 @@ roles:
 | Finite split geometry | Actual Chow, degree-zero Betti/Hodge data, and the marked action comparison for the canonical generated class | Non-split/positive-dimensional realization or arbitrary-class Galois coverage |
 | Selected source-input packages | Conditional cover/action extension and boundary-image defects | Their geometric instantiation, multiplicative restriction, or defect vanishing |
 
-For a genuine Chow/Betti model, the intended remaining route is to construct
-an actual correspondence with the action prescribed by a given Hodge class,
-then use geometric lower-left detection to recover its Chow representative.
-The abstract target equivalences expose this requirement; they do not solve
-it. The generic class-dependent construction and the full geometric model
+For a genuine Chow/Betti model, the primary construction target is an
+actual cycle whose Betti class is the prescribed Hodge class. The marked
+correspondence route can achieve this through geometric lower-left
+detection. Alternatively, a constructed Chow-valued map `r_CH` with
+`θ = cl ∘ r_CH` and proved `θ(a_H) = α` supplies `r_CH(a_H)` directly;
+no projector argument is then needed for that class conclusion. These maps
+must come from geometry, not an assumed representative of `α`.
+The generic class-dependent construction and the full geometric model
 remain open. The surjective multiplicative residual route is constrained to
 the negative unit and does not by itself provide arbitrary-class coverage.
 
@@ -1277,7 +1288,7 @@ linear, not a claimed Chow algebra map. Open restriction need not preserve
 absolute Krull dimension; finite étaleness alone does not imply reducedness.
 The auxiliary cover base and carrier still need a separate geometric
 comparison with the prescribed Hodge target, and class generation remains
-open. See the [operative plan](TARGET_BRIDGE.md#0-operative-plan-compare-geometry-first-keep-infrastructure-bounded)
+open. See the [operative plan](TARGET_BRIDGE.md#0-operative-plan-chow-to-betti-first)
 and [construction inventory](TARGET_BRIDGE.md#6-construction-inventory-and-detailed-dependencies).
 
 ### Geometric model still to be instantiated
@@ -1545,8 +1556,8 @@ separately named strong replacement predicate
 That predicate asserts existence replacement; it does not produce or relate
 a particular factorization map.
 
-The remaining Galois-to-Hodge arrow is therefore a geometrically constructed
-Chow-motivic map
+A stronger possible motivic formulation of the Galois-to-Hodge comparison
+is a geometrically constructed Chow-motivic map
 
 ```text
 θ_α : E_α(-p) → h(X)
@@ -1563,6 +1574,10 @@ strong additional sufficient hypothesis used to identify the action on all
 of `ℚ × H`, rather than only on the image of the sheet realization.  The
 abstract class-dependent witness also does not yet bundle an actual finite
 cover or normal-closure datum.
+The minimal class-generation goal does not require this full motivic
+formulation: a geometric Chow-valued map `r_CH`, with `θ = cl ∘ r_CH`
+and proved `θ(a_H) = α`, already supplies the desired cycle. Additional
+action comparisons are needed only for the chosen-projector conclusion.
 
 The subgroup-average branch remains distinct.  Under the obvious blockwise
 action on `ℚ(-p) ⊕ H`, its matrix is `diag(1, Av_D)`.  It can be used only

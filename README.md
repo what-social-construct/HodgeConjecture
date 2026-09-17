@@ -339,11 +339,15 @@ their explicit premises remain unchanged. See the
 [input checkpoint](research/working/0016-source-input-packages.md) and
 [submission handoff](research/working/PALOMAR_FIXED_RING_HANDOFF.md).
 
-Beyond the canonical split example, the missing step is geometric:
-construct a Chow-motivic residual map carrying
-\(q-1\) to a desired Hodge class and prove compatibility with compactification
-and realization—precisely the map, compactified extension package, and square
-assumed by the conditional endpoint.  An arbitrary rational linear map is
+Beyond the canonical split example, the primary geometric task is to
+construct cycles and prove that their Betti classes generate the intended
+Hodge subspace. In the optional marked route, construct a geometric
+Chow-valued residual map whose cycle-class composite carries \(q-1\) to the
+prescribed class. A chosen-projector conclusion additionally requires an
+idempotent Chow correspondence with the prescribed action; an extension-based
+implementation also retains its extension package and compatibility square.
+A compatible Chow-motivic construction is one stronger possible route.
+An arbitrary rational linear map is
 insufficient, and a map built from an already known Chow representative would
 be circular.  Surjectivity is also a strong sufficient hypothesis: it is what
 upgrades equality on the realized sheet module to equality on the whole
@@ -465,8 +469,9 @@ Hecke projectors, the marked-sheet block form, the codimension-one boundary
 endpoint, the compactification fork, and the exact conditional realization
 gap.  Fixed-ring localization and source inputs are supporting appendices.
 The abstract states the conjecture and the proposed route directly; the
-[geometry-first plan](research/TARGET_BRIDGE.md#0-operative-plan-compare-geometry-first-keep-infrastructure-bounded)
-records the next geometric work and its acceptance criteria.
+[Chow--Betti-first plan](research/TARGET_BRIDGE.md#0-operative-plan-chow-to-betti-first)
+organizes the next geometric work around which varieties and codimensions
+the construction covers, and records its acceptance criteria.
 
 `paper/main.pdf` is the single current manuscript PDF. The earlier drafts
 and their sources are preserved in the

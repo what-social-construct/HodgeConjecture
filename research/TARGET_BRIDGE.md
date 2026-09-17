@@ -4,13 +4,26 @@ Assessed: 2026-09-17. This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
 
-## 0. Operative plan: compare geometry first, keep infrastructure bounded
+## 0. Operative plan: Chow to Betti first
 
-Planning decision (2026-09-17): no abelian variety, family or class has been
-selected. Compare concrete candidates before selecting the first
-positive-dimensional application. The universal target in section 1 is
-unchanged. This section controls the work order; section 6 records the
-construction history and detailed dependencies, not a competing queue.
+Planning decision (2026-09-17): start from the actual Chow--Betti cycle map,
+then ask:
+
+> For which varieties \(X\), and which codimensions \(p\), does our
+> geometric construction generate the rational Hodge classes?
+
+The organizing data are
+\(\operatorname{cl}_X^p:\mathrm{CH}^p(X)_{\mathbb Q}\to
+H_B^{2p}(X,\mathbb Q)\), with Hodge membership specified independently.
+Compare candidates by the algebraic cycles we can construct and their image
+under this map. Establishing the map and its compatibility
+is distinct from showing that the construction generates every Hodge class.
+Galois actions, projectors and compactification are construction mechanisms
+to introduce when the chosen geometry needs them.
+
+No abelian variety, family or class has been selected. The universal target
+in section 1 is unchanged. This section controls the work order; section 6
+records the construction history and detailed dependencies, not a competing queue.
 All checkpoints below are **planned**, unless explicitly marked completed.
 
 **Completed baseline:** SP63 proves surjectivity of actual raw/graded cycle
@@ -19,7 +32,7 @@ restriction and integral/rational Chow restriction. The full build,
 The four new declarations use only the standard three logical axioms.
 The existing target equivalence and finite split model are retained.
 
-### G0. Compare two concrete candidates before choosing a family
+### G0. Compare concrete Chow--Betti constructions before choosing a family
 
 Keep the following three outcomes distinct: a formalization of a known
 geometric case; a projector-extension/realization theorem; and a new
@@ -28,12 +41,12 @@ the third. Keep one manuscript; these are proof scopes, not separate papers.
 
 | Candidate | First precise target to investigate | Role and main missing comparison |
 | --- | --- | --- |
-| A. A fixed complex elliptic curve, with powers considered only after the first case | Actual codimension-one Chow classes, independently defined rational `(1,1)` classes, and their cycle map | Positive-dimensional target/model test. Build the scheme-to-Betti comparison and the Tate-block detection law; this is initially a known-case formalization. |
-| B. A universal elliptic family over a modular curve, with specified level and fiber power | Scholl's finite-group character projector on a smooth projective Kuga--Sato compactification, with its specified cohomological image | Positive-dimensional projector/boundary test closely aligned with the group-algebra spine. Identify the actual graph-to-Chow map and Betti action; do not replace its target by an arbitrary Hodge-class graph projector. |
+| A. A fixed complex elliptic curve, with powers considered only after the first case | Actual codimension-one Chow classes, independently defined rational `(1,1)` classes, and their cycle map | Positive-dimensional target/model test. Construct explicit cycles, the scheme-to-Betti comparison and its image; this is initially a known-case formalization. Tate-block detection is needed only if the marked route is used. |
+| B. A universal elliptic family over a modular curve, with specified level and fiber power | A specified smooth projective Kuga--Sato compactification `X`, codimension `p`, explicit Chow classes/correspondences and their Betti images | Determine which rational `(p,p)` classes the available cycles generate. Assess Scholl's character projector by its actual cohomological image and relevance to this target; retain the projector/boundary test when it supplies a needed comparison. |
 | C. A higher-dimensional Abelian-type Kuga family | A specified Chow-motivic factor and its intermediate extension | Deferred comparison candidate, only if A/B do not exercise a needed obligation. Fix the family, factor and source hypotheses before commissioning the larger motivic infrastructure. |
 
 For A, the codimension-one source is the cycle/Chern-class discussion in
-[Deligne, *The Hodge Conjecture*, section 1(iii)](https://www.claymath.org/wp-content/uploads/2022/06/hodge.pdf).
+[Deligne, *The Hodge Conjecture*, section 2(iii)](https://www.claymath.org/wp-content/uploads/2022/06/hodge.pdf).
 For B, [Scholl, *Motives for modular forms*, sections 1.0--1.2,
 Theorem 1.2.1](https://www.dpmms.cam.ac.uk/~ajs1005/preprints/mf.pdf) identifies
 the character-projector image with parabolic cohomology; section 1.2.2
@@ -55,20 +68,24 @@ remains finite split degree zero. Candidate cost must include these bridges,
 not just the availability of a type named elliptic curve.
 
 **G0 deliverable:** a short comparison for A and B, with C deferred, stating
-the actual schemes/base/field, degree and Tate twist, independently specified
-cohomological target, geometric correspondences, source hypotheses, existing
-Lean APIs, missing APIs, and first unproved equality. Check that the selected
-class space or projector image is nonzero and identify its Hodge types.
-Rank by relevance to the chosen theorem and verified dependencies; do not
+the actual schemes/base/field, codimension and Tate twist, independently
+specified Hodge subspace, explicit geometric cycles and their Betti classes,
+source hypotheses, existing Lean APIs, missing APIs, and first unproved
+equality. State exactly which classes the proposed construction is meant
+to generate and which geometric property of `X` enables it. Check that the
+selected Hodge-class space is nonzero; if a projector is used, identify its
+image and Hodge types separately. Rank by the explicit cycle-class
+construction, coverage argument and verified dependencies; do not
 promise a new Hodge case or a completion date. End with a recommendation and
 a recorded family/target choice, not an implicit change to universal coverage.
 
 ### G1. Fix a target and a non-circular construction before expanding APIs
 
-For the selected candidate, distinguish its auxiliary cover/family from the
-prescribed target `X`. Specify the maps between them, their degrees,
-properness, variance and cohomological action. Name the actual Chow groups,
-correspondence algebra and cycle map; define Hodge membership independently.
+If the selected construction uses an auxiliary cover/family, distinguish it
+from the prescribed target `X`. Specify the maps between them, their degrees,
+properness, variance and cohomological action where needed. Name the actual
+Chow groups, Betti groups and cycle map; define Hodge membership independently.
+Specify a correspondence algebra only if the chosen construction uses it.
 State whether the checkpoint proves a known case, a selected projector's
 action, or generation on a named Hodge subspace.
 
@@ -79,8 +96,19 @@ equations `θ(a_H) = α` and the action square. Defining the target action to be
 the constructed action, choosing a cycle representative of `α` as an input,
 or simply supplying an arbitrary `α`-dependent linear map does not pass.
 
-Candidate B should first use the existing arbitrary group-algebra-idempotent
-route (`Correspondence/GroupAlgebraProjector.lean`), not silently identify a
+For a marked construction, prefer a geometrically constructed linear map
+`r_CH : E_H → CH^p(X)_ℚ`, followed by `θ = cl ∘ r_CH`. If a Betti-side map
+is constructed independently, prove that it agrees with this composite.
+Then `θ(a_H) = α` supplies the actual representative `r_CH(a_H)`.
+Constructing such a map for an arbitrary supplied `θ` is not automatic;
+the coverage equation must still be proved. Keep `E_H` optional if a direct
+geometric cycle construction suffices. Reuse `RationalHodgeCycleClassModel`;
+this ordering requires neither a new abstract package nor a full motivic
+category before the first example.
+
+When using Scholl's projector for B, use the existing arbitrary
+group-algebra-idempotent route (`Correspondence/GroupAlgebraProjector.lean`),
+not silently identify a
 character projector with a subgroup average. An automorphism-group action
 is not by itself a finite étale Galois cover. If the marked Galois route is
 required, construct and compare its actual cover/torsor and selector data.
@@ -112,14 +140,17 @@ correspondence restriction, and boundary support is not defect vanishing.
 
 ### G2--G4. Construct only what the selected geometry needs
 
-**G2: actual realization and operations.** Construct the selected
-Chow--Betti model, action and required Tate-block detection/comparison.
-Prove only the proper/flat/intersection/composition laws needed by the G1
+**G2: actual cycle map and operations.** Construct the selected Chow--Betti
+model: define the Betti class of actual cycles, prove it kills the existing
+principal relations, descend to the existing Chow quotient, and prove its
+image lies in the independently specified Hodge subspace. Add a
+correspondence action or Tate-block detection only if the chosen route uses
+it. Prove only the proper/flat/intersection/composition laws needed by the G1
 diagram. Use the existing quotient and grading; any new operation must have
 a named consumer. A graph-generated subalgebra result must not be presented
 as a map on the full finite-étale span algebra without the additional proof.
 
-**G3: chosen projector and extension, when needed.** Compare three possible
+**G3: optional chosen-projector and extension branch.** Compare three possible
 mechanisms for the selected family, rather than require all three:
 
 - construct the required Chow correspondence/projector directly;
@@ -134,7 +165,8 @@ appropriately weaker existing interface when sufficient. Cover extension,
 deck-action extension and Chow-projector extension remain separate tasks.
 Construct the desired action on the independently fixed target.
 
-**G4: class coverage, then any generalization.** Prove that the geometric
+**G4: class coverage, then any generalization.** A direct cycle construction
+can reach this checkpoint without G3. Prove that the geometric
 construction works for each class in the selected Hodge subspace. A
 universal conclusion additionally needs all codimensions and all smooth
 projective complex targets, or a proved reduction covering them. No
@@ -165,7 +197,7 @@ provide variable-class coverage.
 - Review new objects against the parity registry before adding wrappers.
   Promote a proved checkpoint only after the appropriate build, focused
   regressions, dependency/axiom checks and Lean--TeX comparison.
-- **Next action:** complete G0's concrete A/B comparison and record the
+- **Next action:** complete G0's Chow--Betti-first A/B comparison and record the
   choice. **Next Lean checkpoint:** L1, if continuing the bounded localization
   stream in parallel. No new geometric family is selected by this plan.
 
@@ -342,10 +374,12 @@ geometric instances of the obligations in the table above.
 
 ## 6. Construction inventory and detailed dependencies
 
-Keep the existing target equivalence fixed. Work toward its geometric
-instance, with one chosen projector for each prescribed class. The
-closed-graph/restriction checkpoint is constructed at scheme level, and
-integral graph generators now have finite-cycle and open-restriction maps.
+Keep the existing target equivalence fixed. The correspondence route below
+works toward its geometric instance, with one chosen projector for each
+prescribed class; a direct Chow--Betti class construction need not use that
+route. The closed-graph/restriction checkpoint is constructed at scheme
+level, and integral graph generators now have finite-cycle and
+open-restriction maps.
 Their composition intersection and image are identified as actual schemes;
 integral fundamental multiplicity is computed over the ambient stalk.
 The class-generation theorem is a separate mathematical obligation and must
@@ -944,7 +978,8 @@ the dated checkpoints below document how the existing objects were built.
    The supportwise outer pushforward is proved; an ambient projection map
    on all cycles is not supplied merely by separatedness.
 
-3. **Connect the auxiliary geometry to the prescribed Hodge target.** Fix
+3. **For the optional projector route, connect the auxiliary geometry to
+   the prescribed Hodge target.** Fix
    \((X,p,\alpha)\) independently of the cover. Graph correspondences on
    \(\bar Y\) do not automatically act on
    \(\mathbb Q(-p)\oplus H^{2p}(X,\mathbb Q)\). Name the actual geometric
@@ -971,7 +1006,7 @@ the dated checkpoints below document how the existing objects were built.
    existing endpoint using constructed data, with no hypothesis that is
    merely the desired class-generation or realization conclusion renamed.
 
-The operative next action is G0's concrete-family comparison in section 0,
+The operative next action is G0's Chow--Betti-first comparison in section 0,
 with a non-circular construction proposal at G1. L1 is the next bounded
 Lean checkpoint for the ongoing localization stream, not a universal
 prerequisite for every geometric route. Actual integral/rational Chow
