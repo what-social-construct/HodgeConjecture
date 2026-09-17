@@ -118,7 +118,7 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP60 | Supplied dimension-function restriction, homogeneous cycles and the actual carrier square | RESTRICT / COMPARE | Restrict the dimension function by the actual open point map, proving both laws, and preserve the existing homogeneous cycle modules over any semiring. Prove the Cartesian open-restriction/closed-pushforward square for an actual integral carrier, including empty inverse images, without introducing principal-relation or Chow descent hypotheses. | PROVED; FULL BUILD, 599 AXIOM REPORTS, TWENTY REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP61 | Actual ambient principal-generator restriction and preservation of its relation span | TRANSPORT / PRESERVE | Apply the actual carrier square to the existing ambient principal divisor, using the actual function-field map on a nonempty restriction and zero for an empty carrier. Restrict degree-one-higher relation data without finiteness premises; under target-only Noetherianity identify the graded generators, preserve their span and preserve rational equivalence of integral cycles. | PROVED; FULL BUILD, 609 AXIOM REPORTS, SIXTEEN REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP62 | Integral and rational Chow open restriction with coefficient and tensor compatibility | DESCEND / COMPARE | Descend the existing actual graded open restriction to both existing Chow quotients, preserving cycle representatives, identity and contravariant composition. Prove raw and graded coefficient compatibility without finiteness premises, and the full tensor square with only target Noetherianity at the quotient layer. | PROVED; FULL BUILD, 622 AXIOM REPORTS, EIGHTEEN REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
-| SP63 | Surjectivity of the existing raw, graded and Chow open restrictions | LIFT / DESCEND | Lift each actual integral open support through its reduced ambient closure and preserve the supplied degree, over every semiring. Lift integral and rational Chow classes through actual homogeneous representatives under target-only Noetherianity. Keep the closure lift at cycle level; no Chow closure operation or localization exactness is asserted. | PROVED; FULL BUILD, FOUR FOCUSED AXIOM REPORTS, SIXTEEN REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS; INTEGRATED VERIFICATION PENDING |
+| SP63 | Surjectivity of the existing raw, graded and Chow open restrictions | LIFT / DESCEND | Lift each actual integral open support through its reduced ambient closure and preserve the supplied degree, over every semiring. Lift integral and rational Chow classes through actual homogeneous representatives under target-only Noetherianity. Keep the closure lift at cycle level; no Chow closure operation or localization exactness is asserted. | PROVED; FULL BUILD, INTEGRATED VERIFICATION (626 AXIOM REPORTS, 734 CHECKS, 565 EXAMPLES), SIXTEEN FOCUSED REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -2907,7 +2907,7 @@ also needs a proved lifting argument for principal relations. These
 remain separate from surjectivity, and from general proper, flat or
 Gysin operations, convolution, and prescribed target realization.
 
-SP63 focused validation (September 17, 2026): the replay using exactly
+SP63 validation (September 17, 2026): the focused replay using exactly
 the verification file's original four imports passes all four new
 declaration checks, four axiom reports and sixteen regressions without
 warnings or errors. Each new report uses exactly `propext`,
@@ -2916,8 +2916,15 @@ and same-degree lifting without ambient finiteness, literal reduced
 closure recovery, raw and graded identity/composition, target-only
 Noetherian quotient surjectivity, actual integral/rational cycle
 representatives, quotient composition, empty opens and trivial
-coefficients. The current inventory is 626 reports, 734 declaration
-checks and 565 examples; the integrated replay is pending.
+coefficients. The full integrated `research/Verification.lean` replay
+completes with exit code zero, without warnings or errors: 626 axiom
+reports, 734 declaration checks and 565 examples. The 626 unique reports
+match the expected inventory exactly, with no missing, extra or duplicate
+entries and no disallowed axioms. Of these, 624 use exactly the standard
+three axioms. The two unchanged historical exceptions are
+`HodgeConjecture.SchemeCycles.polynomialDimensionBound` (no axioms) and
+`HodgeConjecture.CommutativeAlgebra.genericFiber_isScalarTower_base`
+(`propext` and `Quot.sound`).
 The pre-SP63 6831-line verification prefix and historical SP18--SP62
 validation record are byte-identical. The full 3149-job build passes
 with only the two existing intentional `Challenge.lean` warnings;

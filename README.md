@@ -465,7 +465,7 @@ Hecke projectors, the marked-sheet block form, the codimension-one boundary
 endpoint, the compactification fork, and the exact conditional realization
 gap.  Fixed-ring localization and source inputs are supporting appendices.
 The abstract states the conjecture and the proposed route directly; the
-[construction-first plan](research/TARGET_BRIDGE.md#6-construction-first-plan)
+[geometry-first plan](research/TARGET_BRIDGE.md#0-operative-plan-compare-geometry-first-keep-infrastructure-bounded)
 records the next geometric work and its acceptance criteria.
 
 `paper/main.pdf` is the single current manuscript PDF. The earlier drafts

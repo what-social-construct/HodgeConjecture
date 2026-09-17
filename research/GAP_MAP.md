@@ -1,6 +1,6 @@
 # Current gap map
 
-Last audited: 2026-09-14.
+Last reviewed: 2026-09-17 (work order and completed SP63 validation).
 
 Start with [the target and equivalence sketch](TARGET_BRIDGE.md): it fixes
 the geometric statement, separates the two directions of the proved bridge,
@@ -23,6 +23,24 @@ named exactly, proved arrows are separated from parameterized arrows, and a
 geometric interface is not treated as a theorem merely because later record
 assembly is formal.
 
+## Current work order
+
+Follow the [operative plan](TARGET_BRIDGE.md#0-operative-plan-compare-geometry-first-keep-infrastructure-bounded).
+No family is selected: first compare a fixed complex elliptic curve as a
+positive-dimensional Chow--Betti test with a specified Kuga--Sato family as
+a projector/boundary test. Defer the larger Abelian-type Kuga setting unless
+the comparison identifies a needed obligation that the first candidates
+do not exercise. Fix the actual target, source hypotheses and first
+unproved geometric comparison before expanding the infrastructure.
+
+In the existing Lean stream, the next bounded checkpoint is L1's actual
+closed-complement cycle kernel/image comparison. It can run alongside
+family selection; additive localization is not a prerequisite for every
+direct geometric projector construction. L2 and L3 then address relation
+lifting and quotient exactness. None of these checkpoints replaces the
+prescribed-class action/generation argument or supplies a reduction from
+the full Hodge conjecture to abelian varieties.
+
 ## Current proof roles
 
 There is no completed general Hodge proof spine whose missing geometry can
@@ -32,7 +50,7 @@ roles:
 | Component | What is established | What it does not establish |
 | --- | --- | --- |
 | Local normalization and inertia | Selected fixed-ring descent from explicit unramifiedness; conditional codimension-one separation | General compactification or Chow-projector existence |
-| Correspondence mechanisms | Span and group/Hecke algebra identities; projector consequences of supplied graph maps | The required geometric graph maps and their action on a prescribed class |
+| Correspondence mechanisms | Span and group/Hecke algebra identities; projector consequences of supplied graph maps | The general graph-to-Chow algebra maps and their action on a prescribed class |
 | Graph geometry and integral cycles | Actual graph intersection/image, generic multiplicity one, relative graph-slice cycle pull–push with degree-one outer image, and open restriction for a supplied finite étale extension | General component multiplicities, absolute Chow intersection/convolution/descent, or a target cohomological action |
 | Block, shear, and one-idempotent calculations | Coordinate identities and faithful reformulations of one operator square | Algebraicity of the vector used to define that operator |
 | Finite split geometry | Actual Chow, degree-zero Betti/Hodge data, and the marked action comparison for the canonical generated class | Non-split/positive-dimensional realization or arbitrary-class Galois coverage |
@@ -1227,8 +1245,9 @@ or surjectivity hypothesis is introduced. The closure lift is kept private
 at the cycle layer: its preservation of rational equivalence is neither
 assumed nor asserted, and it is not descended as a Chow right inverse.
 
-**The next bounded goal is the closed-complement cycle kernel/image
-comparison.** Identify the integral supports disjoint from the open with
+**The next bounded Lean checkpoint in the localization stream is the
+closed-complement cycle kernel/image comparison (L1).** Identify the
+integral supports disjoint from the open with
 the actual closed-complement supports, and compare their finite cycles
 and homogeneous submodules under the existing closed pushforward.
 Quotient-level localization exactness then requires its own
@@ -1258,7 +1277,8 @@ linear, not a claimed Chow algebra map. Open restriction need not preserve
 absolute Krull dimension; finite étaleness alone does not imply reducedness.
 The auxiliary cover base and carrier still need a separate geometric
 comparison with the prescribed Hodge target, and class generation remains
-open. See the updated [construction plan](TARGET_BRIDGE.md#6-construction-first-plan).
+open. See the [operative plan](TARGET_BRIDGE.md#0-operative-plan-compare-geometry-first-keep-infrastructure-bounded)
+and [construction inventory](TARGET_BRIDGE.md#6-construction-inventory-and-detailed-dependencies).
 
 ### Geometric model still to be instantiated
 
@@ -1754,6 +1774,8 @@ that paper.  This is a plausible route to a publishable conditional or
 special-case theorem if the intended family and the repository's abstract
 Chow model are identified with that setting; it is not a general discharge of
 `CompactifiedSubgroupProjectorExtension` or of the equality with `e.operator`.
+The G0 candidate comparison in the operative plan decides whether this
+branch is needed for the first positive-dimensional application.
 
 For the near-term Lean architecture, the source-backed interface should ask
 first for the implication

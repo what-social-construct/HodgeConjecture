@@ -1,8 +1,173 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-09-14. This is the current target-first sketch, not a second
+Assessed: 2026-09-17. This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
+
+## 0. Operative plan: compare geometry first, keep infrastructure bounded
+
+Planning decision (2026-09-17): no abelian variety, family or class has been
+selected. Compare concrete candidates before selecting the first
+positive-dimensional application. The universal target in section 1 is
+unchanged. This section controls the work order; section 6 records the
+construction history and detailed dependencies, not a competing queue.
+All checkpoints below are **planned**, unless explicitly marked completed.
+
+**Completed baseline:** SP63 proves surjectivity of actual raw/graded cycle
+restriction and integral/rational Chow restriction. The full build,
+734 declaration checks, 565 examples and 626 selected axiom reports pass.
+The four new declarations use only the standard three logical axioms.
+The existing target equivalence and finite split model are retained.
+
+### G0. Compare two concrete candidates before choosing a family
+
+Keep the following three outcomes distinct: a formalization of a known
+geometric case; a projector-extension/realization theorem; and a new
+class-generation theorem. Success at the first two is not automatically
+the third. Keep one manuscript; these are proof scopes, not separate papers.
+
+| Candidate | First precise target to investigate | Role and main missing comparison |
+| --- | --- | --- |
+| A. A fixed complex elliptic curve, with powers considered only after the first case | Actual codimension-one Chow classes, independently defined rational `(1,1)` classes, and their cycle map | Positive-dimensional target/model test. Build the scheme-to-Betti comparison and the Tate-block detection law; this is initially a known-case formalization. |
+| B. A universal elliptic family over a modular curve, with specified level and fiber power | Scholl's finite-group character projector on a smooth projective Kuga--Sato compactification, with its specified cohomological image | Positive-dimensional projector/boundary test closely aligned with the group-algebra spine. Identify the actual graph-to-Chow map and Betti action; do not replace its target by an arbitrary Hodge-class graph projector. |
+| C. A higher-dimensional Abelian-type Kuga family | A specified Chow-motivic factor and its intermediate extension | Deferred comparison candidate, only if A/B do not exercise a needed obligation. Fix the family, factor and source hypotheses before commissioning the larger motivic infrastructure. |
+
+For A, the codimension-one source is the cycle/Chern-class discussion in
+[Deligne, *The Hodge Conjecture*, section 1(iii)](https://www.claymath.org/wp-content/uploads/2022/06/hodge.pdf).
+For B, [Scholl, *Motives for modular forms*, sections 1.0--1.2,
+Theorem 1.2.1](https://www.dpmms.cam.ac.uk/~ajs1005/preprints/mf.pdf) identifies
+the character-projector image with parabolic cohomology; section 1.2.2
+specifies its Chow motive. The later individual-newform statement in
+Theorem 1.2.4 uses homological motives, not the same Chow assertion.
+
+For B/C, [Wildeshaus, *Intermediate extension of Chow motives of Abelian
+type*, Theorems 0.1(d) and 0.2](https://arxiv.org/pdf/1211.5327) provides
+extension of an existing Chow idempotent and realization compatibility in
+its specified Kuga/Shimura setting. Its perverse intermediate-extension
+target needs a proved comparison to our intended ordinary cohomology/Tate
+block. It does not construct a projector for an arbitrary Hodge class.
+
+The pinned Mathlib supplies Weierstrass equations and projective point/group
+APIs (`EllipticCurve/Weierstrass.lean`, `Projective/Basic.lean`,
+`Projective/Point.lean`). Those APIs are not already the required
+scheme-level Chow--Betti model. The repository's concrete combined model
+remains finite split degree zero. Candidate cost must include these bridges,
+not just the availability of a type named elliptic curve.
+
+**G0 deliverable:** a short comparison for A and B, with C deferred, stating
+the actual schemes/base/field, degree and Tate twist, independently specified
+cohomological target, geometric correspondences, source hypotheses, existing
+Lean APIs, missing APIs, and first unproved equality. Check that the selected
+class space or projector image is nonzero and identify its Hodge types.
+Rank by relevance to the chosen theorem and verified dependencies; do not
+promise a new Hodge case or a completion date. End with a recommendation and
+a recorded family/target choice, not an implicit change to universal coverage.
+
+### G1. Fix a target and a non-circular construction before expanding APIs
+
+For the selected candidate, distinguish its auxiliary cover/family from the
+prescribed target `X`. Specify the maps between them, their degrees,
+properness, variance and cohomological action. Name the actual Chow groups,
+correspondence algebra and cycle map; define Hodge membership independently.
+State whether the checkpoint proves a known case, a selected projector's
+action, or generation on a named Hodge subspace.
+
+For a prescribed-class claim, fix `(X,p,α)` before choosing geometric data.
+Write either a direct construction of a cycle with class `α`, or a geometric
+construction of the comparison in section 3, identifying the still-unproved
+equations `θ(a_H) = α` and the action square. Defining the target action to be
+the constructed action, choosing a cycle representative of `α` as an input,
+or simply supplying an arbitrary `α`-dependent linear map does not pass.
+
+Candidate B should first use the existing arbitrary group-algebra-idempotent
+route (`Correspondence/GroupAlgebraProjector.lean`), not silently identify a
+character projector with a subgroup average. An automorphism-group action
+is not by itself a finite étale Galois cover. If the marked Galois route is
+required, construct and compare its actual cover/torsor and selector data.
+
+**G1 acceptance:** one geometric diagram with typed maps, one precise target
+statement, its source-hypothesis checklist, and a finite list of missing
+lemmas with named consumers. A projector-image theorem alone does not pass
+the separate arbitrary-Hodge-class generation gate.
+
+### L1--L3. Bounded additive-localization stream
+
+The next Lean checkpoint in the existing stream is L1. This stream can run
+alongside G0/G1, but is a prerequisite for the selected application only if
+that application's boundary-lifting argument uses it. Do not make general
+localization a prerequisite for an independently constructed Chow projector.
+The file names below are **prospective**, not existing implementations.
+
+| Checkpoint | Exact result and reuse | Acceptance boundary |
+| --- | --- | --- |
+| L1. `Cycles/OpenClosedLocalization.lean` | Construct the reduced closed complement `i:Z → X` of `j:U → X`; prove `range(i_*) = ker(j^*)` on the existing raw and homogeneous cycles, using actual support/generic-point and coefficient identities. | Any coefficient semiring; canonical restrictions of the supplied dimension function; no Noetherian premise. Include empty/full opens, trivial coefficients and nonreduced ambient schemes. A complementary-pair lemma must be instantiated by the actual complement. |
+| L2. `Cycles/PrincipalRelationLifting.lean` | Extend an open principal-relation carrier by reduced closure and its function by the inverse of the actual open function-field equivalence. Prove integral and rational relation-span image equalities using SP61 and coefficient compatibility. | Keep carrier degree `m+1`, exact function-field variance and representative identities. Data lifting needs no ambient finiteness; actual relation spans retain target Noetherianity. The lifted divisor may acquire boundary terms: this is not a relation-preserving closure section. |
+| L3. `Cycles/ChowLocalization.lean` | Correct a cycle representative by a lifted principal relation, apply L1, and descend to integral/rational quotient kernel=image; reuse SP63 surjectivity. | Prove the right-exact sequence on the actual existing maps. Derive finiteness of the open and closed sources from the Noetherian target. Do not assume rationalization injective or closed Chow pushforward injective. |
+
+After L3, stop generic expansion until G1 identifies the next consumer.
+An adapter to `Inputs/ChowLocalization.lean` is appropriate only for these
+exact maps and an identified use; do not add a blanket source instance or
+another abstract quotient. Additive exactness is not multiplicativity of
+correspondence restriction, and boundary support is not defect vanishing.
+
+### G2--G4. Construct only what the selected geometry needs
+
+**G2: actual realization and operations.** Construct the selected
+Chow--Betti model, action and required Tate-block detection/comparison.
+Prove only the proper/flat/intersection/composition laws needed by the G1
+diagram. Use the existing quotient and grading; any new operation must have
+a named consumer. A graph-generated subalgebra result must not be presented
+as a map on the full finite-étale span algebra without the additional proof.
+
+**G3: chosen projector and extension, when needed.** Compare three possible
+mechanisms for the selected family, rather than require all three:
+
+- construct the required Chow correspondence/projector directly;
+- apply the precisely matched Abelian-type extension result to an existing
+  Chow idempotent, with its realization comparison;
+- use raw Chow lifting and separately prove a correction or vanishing of
+  its idempotence defect.
+
+Neither extension existence nor a cited realization theorem supplies the
+inertia if-and-only-if in `CompactifiedSubgroupProjectorExtension`. Use an
+appropriately weaker existing interface when sufficient. Cover extension,
+deck-action extension and Chow-projector extension remain separate tasks.
+Construct the desired action on the independently fixed target.
+
+**G4: class coverage, then any generalization.** Prove that the geometric
+construction works for each class in the selected Hodge subspace. A
+universal conclusion additionally needs all codimensions and all smooth
+projective complex targets, or a proved reduction covering them. No
+reduction to Abelian-type geometry is currently available in this repository.
+The stronger reverse Galois equivalence retains its separate replacement
+or factorization obligation; it is not required for the forward implication.
+
+Keep the minimal endpoint minimal: lower-left class extraction needs
+detection and the marked action/class equations, not residual surjectivity
+or idempotence. Those stronger conditions serve the full chosen-projector
+conclusion. Do not force the residual map to be multiplicative: the proved
+`MultiplicativeResidualRigidity` result forces its generated class to `-1`
+when it is multiplicative and surjective, so that specialization cannot
+provide variable-class coverage.
+
+### Working and release rules
+
+- Keep current planning and unresolved comparisons here and in `GAP_MAP.md`,
+  not as editorial gap/status paragraphs in the manuscript. Reuse the one
+  manuscript and existing notation; do not create a second active plan.
+- Distinguish a cited mathematical theorem from its Lean implementation.
+  Exact literature input packages stay explicit in the consuming theorem
+  signatures until proved. No project axioms, `sorry` or `native_decide` in
+  proved endpoints; preserve the intentional Challenge placeholders.
+- Before implementation, record each candidate's first unsupported arrow.
+  If an input merely restates class generation or the required action,
+  return to G1 rather than count packaging as proof progress.
+- Review new objects against the parity registry before adding wrappers.
+  Promote a proved checkpoint only after the appropriate build, focused
+  regressions, dependency/axiom checks and Lean--TeX comparison.
+- **Next action:** complete G0's concrete A/B comparison and record the
+  choice. **Next Lean checkpoint:** L1, if continuing the bounded localization
+  stream in parallel. No new geometric family is selected by this plan.
 
 ## 1. Fix the target before choosing a cover
 
@@ -137,7 +302,7 @@ is the requested cycle; no further operator argument is necessary.
 | Genuine target and block detection | Constructed for finite split degree zero | Construct the general geometric model, correspondence action, and detection law; construct the encoding for the full equivalence |
 | Class-dependent geometric generation | Canonical marked example gives \(-\operatorname{cl}[Z_I]\) | For a prescribed Hodge \(\alpha\), build genuine data and prove \(\theta(a_H)=\alpha\), without assuming its algebraicity |
 | Geometric action comparison | Constructed for that finite split example | Prove the displayed action square for the newly constructed data |
-| Extension, when the chosen construction needs a boundary | Local fixed-ring results and conditional input consumers; actual closed-graph and integral-cycle restriction for a supplied finite étale extension | Instantiate the relevant purity/gluing maps. Next construct dimension-controlled Chow composition/descent and general component cycles; for the stronger projector route, construct the graph algebra maps, or correct a raw closure and prove its idempotence |
+| Extension, when the chosen construction needs a boundary | Local fixed-ring results and conditional input consumers; actual graph/cycle geometry and surjective integral/rational Chow restriction | Follow G1/G3 for the selected family: prove the needed extension and action comparisons. L1--L3 supply additive localization for a boundary-lifting route; direct graph projectors or a matched motivic extension can use a different dependency path. |
 | All-class and universal quantifiers | Abstract schemas only beyond the finite case | Make the construction work for every prescribed class in every intended geometric model |
 
 The finite split target itself has graph lifts for every degree-zero class;
@@ -158,7 +323,7 @@ data. Their converses require named replacement/factorization hypotheses.
 Those hypotheses are not needed for the forward Hodge implication and are
 not part of the basic graph-projector equivalence.
 
-## 5. Bench and next checkpoint
+## 5. Bench and earlier validation
 
 The standalone matrix-restriction diagnostic is preserved on the
 [object bench](bench/README.md), outside active imports and manuscript claims.
@@ -175,7 +340,7 @@ its supplied restriction law; the auxiliary bench source also checks
 separately. These checks concern the statements and their placement, not
 geometric instances of the obligations in the table above.
 
-## 6. Construction-first plan
+## 6. Construction inventory and detailed dependencies
 
 Keep the existing target equivalence fixed. Work toward its geometric
 instance, with one chosen projector for each prescribed class. The
@@ -185,6 +350,8 @@ Their composition intersection and image are identified as actual schemes;
 integral fundamental multiplicity is computed over the ambient stalk.
 The class-generation theorem is a separate mathematical obligation and must
 be developed alongside that infrastructure.
+The operative next actions and family-selection gate are in section 0;
+the dated checkpoints below document how the existing objects were built.
 
 1. **Closed graph subschemes and open restriction: scheme-level checkpoint
    constructed.** For a separated structural morphism,
@@ -227,11 +394,11 @@ be developed alongside that infrastructure.
    cover is integral because it is open in the integral extended cover.
    These are cycle-level statements, not a Chow algebra or its realization.
 
-   **Next:** establish the dimension and cycle-theoretic hypotheses needed
-   for the selected relative correspondence theory, pass to rational
-   equivalence, and prove diagonal,
-   composition, and restriction compatibility using the geometric
-   operations. Specify the admissible relative or support-controlled
+   **Remaining correspondence-layer obligation:** the general dimension
+   functions, actual integral/rational Chow quotients and open maps are now
+   constructed below. For the theory selected at G1, prove diagonal,
+   composition, and multiplicative restriction compatibility using its
+   required geometric operations. Specify the admissible relative or support-controlled
    algebra on which restriction is multiplicative; do not assume this for
    every absolute correspondence. Aim to instantiate
    `CompactifiedDeckGraphComparison` in
@@ -244,9 +411,10 @@ be developed alongside that infrastructure.
    be realized, separately assess raw closure and defect correction;
    boundary support alone is insufficient.
 
-   Keep the current cycle layer ungraded: an open subset need not preserve
-   absolute Krull dimension. Matching a dimension grading requires its own
-   geometric hypotheses. Graphs with nonintegral carriers also need actual
+   Retain the raw cycle module beneath the constructed homogeneous
+   submodules for a supplied dimension function. An open subset need not
+   preserve absolute Krull dimension; the proved grading uses the literal
+   restricted function instead. Graphs with nonintegral carriers also need actual
    component cycles and multiplicities, not an assumed coefficient-one
    formula. In particular, finite étaleness alone does not make the base or
    cover reduced. The cycle-restriction proof introduces neither a Chow
@@ -803,9 +971,10 @@ be developed alongside that infrastructure.
    existing endpoint using constructed data, with no hypothesis that is
    merely the desired class-generation or realization conclusion renamed.
 
-The immediate work item is step 2's dimension-controlled relative
-Chow/composition interface, together with a written candidate for the
-comparison in step 3. The graph-intersection and integral-cycle constructions
-do not yet construct Chow classes, convolution, or a cohomological action,
-and do not by themselves prove that arbitrary Hodge classes come from
-those graphs.
+The operative next action is G0's concrete-family comparison in section 0,
+with a non-circular construction proposal at G1. L1 is the next bounded
+Lean checkpoint for the ongoing localization stream, not a universal
+prerequisite for every geometric route. Actual integral/rational Chow
+quotients and their surjective open maps are constructed; the general
+graph-to-Chow algebra, target action and class coverage remain the distinct
+obligations recorded above.
