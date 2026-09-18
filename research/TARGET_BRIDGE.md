@@ -77,10 +77,10 @@ the genuine trace dual `T^vee_B`, with a uniform denominator
 `d T^vee_B <= T`. The geometric step is then to prove
 `s R_I <= T^vee_B` for every section, with `s != 0`;
 membership for finitely many secant coefficients does not suffice.
-Establish any boundary pole witness showing `R_I != T`, and the comparison
-to the existing `ConjugateBoundarySeparation` condition, from the actual
-geometry. Neither a trace-dual bound nor normality alone proves that
-uniform landing. These are boundary/cover obligations; they do not assert
+B3 below constructs the boundary pole witness at a removed height-one
+prime and the implication from uniform landing to the existing
+`ConjugateBoundarySeparation` condition. Neither a trace-dual bound nor
+normality alone proves that uniform landing. These are boundary/cover obligations; they do not assert
 convolution-defect vanishing or construct representatives of prescribed
 Hodge classes. The Chow--Betti target and its class-generation obligation
 remain unchanged.
@@ -188,14 +188,83 @@ The consumers are `boundarySectionSubalgebra_eq_bot_of_mem_traceDual_colon`,
 `normalizationTraceDual_colon_eq_bot_of_boundarySectionSubalgebra_ne_bot`;
 the middle formulation quantifies the actual `BoundarySectionRing C I`.
 
-**Next bounded checkpoint (B3):** examine the actual geometry needed for
-uniform landing `s R_I <= T^vee_B` with `s != 0`, a pole witness for
-`R_I != T`, and their precise comparison with
-`ConjugateBoundarySeparation`. None follows merely from the trace-dual
-denominator or from controlling finitely many secant coefficients.
 The two displayed consequences do not assert a nonzero transporter exists.
-This is a boundary/cover checkpoint; the Chow--Betti class-generation
-obligation remains separate.
+B3 supplies the pole witness and separation comparison; B4 remains the
+independent geometric uniform-landing obligation.
+
+### B3. Actual boundary poles and the separation criterion
+
+Proved as A11az / SP67: the full build, twelve focused regressions and
+enforced standard-axiom checks for all nine new declarations pass, together
+with the appended umbrella-export checks, fresh unchanged dependency audit
+and 69-page single-manuscript checks. The generic results are in
+[`SectionLocalization.lean`](../HodgeConjecture/Boundary/Normalization/SectionLocalization.lean)
+and
+[`HeightOneBoundaryPole.lean`](../HodgeConjecture/Boundary/Normalization/HeightOneBoundaryPole.lean).
+`mem_affineSectionSubalgebra_of_localFractions` glues compatible local
+fraction presentations into a genuine section with the prescribed image
+under `eta_V`. `mem_affineSectionSubalgebra_of_ideal_pow_mul` applies this
+to a rational function `z` satisfying `J^n z <= T` on a nonempty
+`V` contained in `D(J)`.
+
+For a Noetherian domain `T`, a nonzero ideal `J` and a height-one prime
+`p` containing it, `exists_heightOne_boundary_denominator` constructs
+\[
+ 0\ne f\in J,\qquad t\notin\mathfrak p,\qquad
+ tJ^n\subseteq(f).
+\]
+In the one-dimensional local domain `T_p`, every nonzero prime is maximal,
+so the localized `J` lies in the radical of `(f)`. Finite generation
+supplies a power containment and then one denominator `t` outside `p`.
+Consequently `z=t/f` is an actual section on `V`; if `z` were in `T`,
+then `t` would lie in `p`. This proves
+`affineSectionSubalgebra_ne_bot_of_heightOne`, with no normality, trace
+condition or independently supplied pole. The pinned Mathlib proof uses
+the dimension bound and prime-ideal radical description directly.
+
+[`BoundaryPole.lean`](../HodgeConjecture/Boundary/Normalization/BoundaryPole.lean)
+specializes to the existing `J_fm(I)`, `U_I`, `eta_I` and `R_I`.
+Noetherian `B` and `C`'s supplied finite normalization model imply
+Noetherianity of `T`. For each nontrivial `I`,
+`boundarySectionSubalgebra_ne_bot_of_heightOne` gives
+\[
+ J_{\mathrm{fm}}(I)\subseteq\mathfrak p,\quad
+ \operatorname{ht}(\mathfrak p)=1
+ \quad\Longrightarrow\quad R_I\ne T.
+\]
+`conjugateBoundarySeparation_of_boundarySectionSubalgebra_eq_bot` therefore
+derives separation whenever all these actual section algebras equal the
+base. These two results need no perfect-field hypothesis.
+
+At such a height-one boundary prime, with perfect `K`,
+`boundarySection_tracePoleWitness` applies B2 to obtain, for every
+`s != 0`, an actual section whose image multiplied by `s` is outside
+`T^vee_B`. `normalizationTraceDual_colon_eq_bot_of_heightOne`
+expresses the same obstruction through the existing colon. Finally,
+`conjugateBoundarySeparation_of_traceLanding` proves
+\[
+ \bigl(\forall I\ne 1,\ \exists s\in T\setminus\{0\},\quad
+ sR_I\subseteq T^\vee_B\bigr)
+ \quad\Longrightarrow\quad
+ \operatorname{ConjugateBoundarySeparation}(C).
+\]
+The formal premise quantifies every actual `BoundarySectionRing C I`
+element. No candidate ideal, replacement carrier or additional pole
+hypothesis is added.
+
+### B4. Independent geometric uniform landing
+
+The next bounded checkpoint is to establish the premise of that last
+implication from identified geometric properties: for each nontrivial
+`I`, construct a nonzero `s` and prove `s eta_I(z)` belongs to `T^vee_B`
+for **every** actual boundary section `z`. A finite coefficient denominator
+does not control the full section algebra. Naming a candidate ideal proves
+neither its nonvanishing nor its containment in `(T^vee_B:R_I)`.
+Any proposed geometric condition must be justified independently of the
+desired separation conclusion. The pole construction proves the obstruction
+when a height-one prime is removed; it does not assert landing universally.
+This is a boundary/cover obligation, separate from Chow--Betti
+class generation or convolution-defect vanishing.
 
 ### G0. Smooth projective setting and candidate constructions
 
@@ -641,11 +710,12 @@ provide variable-class coverage.
 - Review new objects against the parity registry before adding wrappers.
   Promote a proved checkpoint only after the appropriate build, focused
   regressions, dependency/axiom checks and Lean--TeX comparison.
-- **Next action:** following B0's generic bounded-overring criterion,
-  B1's actual section algebra and B2's trace-dual denominator, examine B3's
-  uniform geometric trace landing, pole witness and
-  separation comparison as explicit obligations to prove, not
-  assumed conclusions. Preserve PB0 and the abelian examples as optional
+- **Next action:** following B0's bounded-overring criterion, B1's actual
+  section algebra, B2's trace-dual denominator and B3's constructed pole
+  and separation implication, establish B4's independent geometric uniform
+  landing for every actual section and every nontrivial subgroup. Do not
+  replace that assertion by a named candidate ideal or a finite coefficient
+  bound. Preserve PB0 and the abelian examples as optional
   deferred work, with the general smooth-projective target unchanged.
   L1 remains the next checkpoint of the separate bounded localization
   stream, only if continued in parallel for a named consumer. No new
@@ -1457,9 +1527,10 @@ the dated checkpoints below document how the existing objects were built.
    merely the desired class-generation or realization conclusion renamed.
 
 The operative next action after B0's bounded-overring criterion, B1's
-actual boundary-section algebra and B2's trace-dual denominator is B3's
-geometric uniform landing/pole/separation analysis. These remain separate
-obligations. The projective-bundle recipe, its PB0 chart, and the
+actual boundary-section algebra, B2's trace-dual denominator and B3's
+constructed pole/separation implication is B4's independent geometric
+uniform landing for every actual section and every nontrivial subgroup.
+The projective-bundle recipe, its PB0 chart, and the
 elliptic curve/chart/point construction are optional deferred examples;
 their detailed analyses are preserved above.
 L1 is the next bounded

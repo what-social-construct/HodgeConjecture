@@ -513,9 +513,29 @@ SP66 passes the full build, fourteen focused regressions in
 [`NormalizationTraceBoundVerification.lean`](research/NormalizationTraceBoundVerification.lean),
 and enforced standard-axiom checks for all eleven new declarations.
 The unchanged dependency audit and updated single-manuscript PDF checks pass.
-Next examine the geometric uniform landing/pole/separation comparison.
-Landing must control every actual section; neither a nonzero landing
-multiplier nor Hodge-class generation follows from the denominator bound.
+The boundary-pole checkpoint constructs the geometric pole and separation comparison in
+[`SectionLocalization.lean`](HodgeConjecture/Boundary/Normalization/SectionLocalization.lean),
+[`HeightOneBoundaryPole.lean`](HodgeConjecture/Boundary/Normalization/HeightOneBoundaryPole.lean)
+and
+[`BoundaryPole.lean`](HodgeConjecture/Boundary/Normalization/BoundaryPole.lean).
+For a nonzero ideal `J` of a Noetherian domain and a height-one prime
+containing it, a fraction `t/f` is constructed as an actual section on
+every nonempty open `V` contained in `D(J)`, but lies outside the base
+ring. The fixed--moving specialization therefore gives `R_I != T` at
+such a prime. Over a perfect `K`, every nonzero proposed trace multiplier
+then fails on some actual boundary section, and the existing trace-dual
+colon is zero. Conversely, a nonzero uniform landing multiplier for each
+nontrivial subgroup implies `ConjugateBoundarySeparation`.
+SP67 passes the full build, twelve focused regressions in
+[`BoundaryPoleVerification.lean`](research/BoundaryPoleVerification.lean),
+and enforced standard-axiom checks for all nine new declarations. The fresh
+dependency audit, appended umbrella-export checks and updated 69-page
+single-manuscript PDF checks pass.
+Next establish B4's independent geometric uniform landing: for each
+nontrivial `I`, construct `s != 0` with `s R_I <= T^vee_B` for **every**
+actual section. Naming a candidate ideal or bounding finitely many
+coefficients does not supply this multiplier. The pole construction does
+not establish Hodge-class generation.
 
 `paper/main.pdf` is the single current manuscript PDF. The earlier drafts
 and their sources are preserved in the

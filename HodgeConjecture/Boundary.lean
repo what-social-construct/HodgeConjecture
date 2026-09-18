@@ -13,6 +13,9 @@ import HodgeConjecture.Boundary.Normalization.AffineSections
 import HodgeConjecture.Boundary.Normalization.BoundarySections
 import HodgeConjecture.Boundary.Normalization.TraceDualBound
 import HodgeConjecture.Boundary.Normalization.NormalizationTraceBound
+import HodgeConjecture.Boundary.Normalization.SectionLocalization
+import HodgeConjecture.Boundary.Normalization.HeightOneBoundaryPole
+import HodgeConjecture.Boundary.Normalization.BoundaryPole
 import HodgeConjecture.Boundary.Normalization.DeckAction
 import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
 import HodgeConjecture.Boundary.Normalization.ConjugateNormalization

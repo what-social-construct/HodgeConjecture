@@ -717,6 +717,41 @@ The colon-ideal assertion follows by applying the same argument to any
 of its nonzero elements.
 \end{proof}
 
+\begin{proposition}[Regularity from ideal-power denominators]
+\label{prop:ideal-power-section}
+Let \(T\) be a domain with fraction field \(F\), let \(J\subseteq T\)
+be an ideal, and let \(V\) be a nonempty open contained in
+\(D(J)=\Spec T\setminus V(J)\). If \(z\in F\) satisfies
+\(J^n z\subseteq T\) for some \(n\ge0\), then \(z\in R_V\).
+\end{proposition}
+
+\begin{proof}
+At each \(\mathfrak q\in V\), choose \(f\in J\setminus\mathfrak q\).
+Then \(f^n z\in T\), so \(z\) has a local fraction presentation with
+denominator outside \(\mathfrak q\). The presentations agree in \(F\),
+and their cross-multiplication identities give a section of the structure
+sheaf on \(V\). Its generic germ is \(z\).
+\end{proof}
+
+\begin{proposition}[A section with a height-one boundary pole]
+\label{prop:height-one-boundary-pole}
+Let \(T\) be a Noetherian domain, \(F=\Frac(T)\), and \(0\ne J\subseteq T\).
+If a height-one prime \(\mathfrak p\) contains \(J\), then every nonempty
+open \(V\subseteq D(J)\) has \(R_V\ne T\).
+\end{proposition}
+
+\begin{proof}
+Choose \(0\ne f\in J\). In the one-dimensional local domain
+\(T_{\mathfrak p}\), the radical of \((f)\) is the maximal ideal.
+Thus \((JT_{\mathfrak p})^n\subseteq(f)T_{\mathfrak p}\) for some \(n\).
+Finite generation of \(J^n\) clears this localized containment: there is
+\(t\notin\mathfrak p\) such that \(tJ^n\subseteq(f)\).
+For \(z=t/f\), we have \(J^n z\subseteq T\), so
+Proposition~\ref{prop:ideal-power-section} supplies an actual section with
+generic germ \(z\). If \(z=a\in T\), then \(t=af\in\mathfrak p\),
+a contradiction.
+\end{proof}
+
 Conjugate-boundary separation is the condition
 
 \[
@@ -725,6 +760,42 @@ Conjugate-boundary separation is the condition
   I\neq1,\ \operatorname{ht}(Q)=1
   \Longrightarrow J_{\mathrm{fm}}(I)\nsubseteq Q.
 \]
+
+\begin{corollary}[Boundary poles and separation]
+\label{cor:boundary-poles-separation}
+Assume \(B\) is Noetherian and \(T=\widetilde B_N\) is finite as a
+\(B\)-module. If \(I\ne1\) and a height-one prime contains
+\(J_{\mathrm{fm}}(I)\), then \(R_I\ne T\). Consequently,
+\[
+  \bigl(\forall I\ne1,\ R_I=T\bigr)
+    \quad\Longrightarrow\quad\operatorname{Sep}_{\partial}(\mathcal C).
+\]
+If \(K\) is perfect and such a height-one prime exists, then
+\[
+  (T^\vee_B:R_I)=0,\qquad
+  \forall\,0\ne s\in T,\quad
+  \exists a\in\Gamma(U_I,\mathcal O),\quad s\eta_I(a)\notin T^\vee_B.
+\]
+In particular, under these base hypotheses,
+\[
+  \Bigl(\forall I\ne1,\ \exists\,0\ne s_I\in T,\quad
+    s_I\eta_I\bigl(\Gamma(U_I,\mathcal O)\bigr)\subseteq T^\vee_B\Bigr)
+  \quad\Longrightarrow\quad\operatorname{Sep}_{\partial}(\mathcal C).
+\]
+\end{corollary}
+
+\begin{proof}
+The given finite model makes \(T\) Noetherian.
+For \(I\ne1\), Proposition~\ref{prop:boundary-section-algebra} shows
+that \(J_{\mathrm{fm}}(I)\ne0\) and \(U_I\ne\varnothing\).
+Proposition~\ref{prop:height-one-boundary-pole} therefore gives \(R_I\ne T\)
+at every height-one boundary prime. This proves the first implication.
+When \(K\) is perfect, Corollary~\ref{cor:boundary-trace-landing} gives
+the zero colon. If a nonzero \(s\) sent every actual section into
+\(T^\vee_B\), the same corollary would instead give \(R_I=T\).
+Thus the displayed section witness exists, and uniform landing for all
+nontrivial subgroups excludes every height-one fixed--moving boundary prime.
+\end{proof}
 
 Let \(\mathscr D\) be the normalization/inertia diagram, let
 \(\operatorname{Ctr}(\mathscr D)\) identify its centers with the canonical
@@ -4344,6 +4415,14 @@ Uniform boundary trace landing &
 \leanpath{boundarySectionSubalgebra_eq_bot_of_trace_landing}\newline
 \leanpath{normalizationTraceDual_colon_eq_bot_of_boundarySectionSubalgebra_ne_bot}\newline
 \leanpath{Boundary/Normalization/NormalizationTraceBound.lean}\\
+Height-one boundary poles &
+\leanpath{affineSectionSubalgebra_ne_bot_of_heightOne}\newline
+\leanpath{boundarySection_tracePoleWitness}\newline
+\leanpath{Boundary/Normalization/HeightOneBoundaryPole.lean}\newline
+\leanpath{Boundary/Normalization/BoundaryPole.lean}\\
+Trace landing to boundary separation &
+\leanpath{conjugateBoundarySeparation_of_traceLanding}\newline
+\leanpath{Boundary/Normalization/BoundaryPole.lean}\\
 Subgroup extension &
 \leanpath{CompactifiedSubgroupProjectorExtension}\newline
 \leanpath{Boundary/GaloisProjectorExtension.lean}\\
@@ -4920,6 +4999,18 @@ principal table, grouped by mathematical layer.
 \leanpath{boundarySectionSubalgebra_eq_bot_of_mem_traceDual_colon};
 \leanpath{boundarySectionSubalgebra_eq_bot_of_trace_landing};
 \leanpath{normalizationTraceDual_colon_eq_bot_of_boundarySectionSubalgebra_ne_bot};
+\normsrc{SectionLocalization.lean};
+\normsrc{HeightOneBoundaryPole.lean};
+\normsrc{BoundaryPole.lean};
+\leanpath{mem_affineSectionSubalgebra_of_localFractions};
+\leanpath{mem_affineSectionSubalgebra_of_ideal_pow_mul};
+\leanpath{exists_heightOne_boundary_denominator};
+\leanpath{affineSectionSubalgebra_ne_bot_of_heightOne};
+\leanpath{boundarySectionSubalgebra_ne_bot_of_heightOne};
+\leanpath{conjugateBoundarySeparation_of_boundarySectionSubalgebra_eq_bot};
+\leanpath{boundarySection_tracePoleWitness};
+\leanpath{normalizationTraceDual_colon_eq_bot_of_heightOne};
+\leanpath{conjugateBoundarySeparation_of_traceLanding};
 \leanpath{subalgebra_eq_bot_of_nonzero_mul_mem_base};
 \leanpath{subalgebra_eq_bot_of_mem_colon};
 \leanpath{colon_eq_bot_of_subalgebra_ne_bot};

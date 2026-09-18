@@ -122,6 +122,60 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP64 | Normal-Noetherian bounded overrings and their existing-colon transporter | ADAPT / PROVE | Embed a uniformly bounded overring in the base module, derive finiteness and integrality, and use normality. Compose two nonzero bounds through `Submodule.colon`; a proper overring has zero transporter into a bounded stage. | PROVED; FULL BUILD, SIX FOCUSED REGRESSIONS, STANDARD-AXIOM ALLOWLIST, INTEGRATED VERIFICATION, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP65 | Actual affine sections and the fixed--moving boundary-section algebra in the specified field | CONSTRUCT / IDENTIFY | Use the existing generic germ and fraction-field equivalence for an injective algebra map, its range equivalence, constants, restriction, antitonicity and full-open image. Specialize to the same normalization and boundary ideal; prove nonemptiness from a nontrivial subgroup's faithful action. | PROVED; FULL BUILD, SIXTEEN FOCUSED REGRESSIONS, STANDARD-AXIOM ALLOWLIST, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP66 | Genuine normalization trace dual, common denominator and actual-section colon consumers | REUSE / BOUND / APPLY | Reuse Mathlib's trace-dual submodule, contain it in an integral generic basis's finite trace-dual span, and clear that span by one nonzero normalization element. Specialize to the existing normal closure; apply B0 conditionally to B1's actual sections without duplicating carriers or assuming geometric landing. | PROVED; FULL BUILD, FOURTEEN FOCUSED REGRESSIONS, STANDARD-AXIOM ALLOWLIST, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+| SP67 | Actual height-one boundary poles and the uniform-landing separation implication | GLUE / CONSTRUCT / COMPARE | Glue local fractions into actual sections; clear the height-one localized ideal containment to construct a fraction outside the base. Specialize to the same fixed--moving boundary, derive the trace-pole witness and zero colon, and prove separation from explicitly supplied nonzero uniform landing for every subgroup. | PROVED; FULL BUILD, TWELVE FOCUSED REGRESSIONS, STANDARD-AXIOM ALLOWLIST, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+
+SP67 (2026-09-18): **actual boundary poles / separation criterion**.
+`Boundary/Normalization/SectionLocalization.lean` glues pointwise local
+fractions into an actual section with its prescribed rational-function
+image. The ideal-power criterion applies this to `z` with `J^n z <= T`
+on a nonempty `V` contained in `D(J)`. It reuses the existing `eta_V`
+and `R_V`; no section carrier or comparison hypothesis is introduced.
+
+`Boundary/Normalization/HeightOneBoundaryPole.lean` constructs
+`0 != f in J`, `t` outside `p`, and `t J^n <= (f)` for a height-one prime
+`p` containing nonzero `J` in a Noetherian domain. The resulting `t/f`
+belongs to `R_V` but not to `T`. The proof adapts the sibling's argument
+to pinned dimension/prime/radical APIs without introducing a normality
+assumption. Localization-denominator clearing is a private helper, not a
+second public algebraic object.
+
+`Boundary/Normalization/BoundaryPole.lean` specializes to `J_fm(I)`,
+`U_I`, `eta_I` and `R_I`. Noetherianity of the base and the supplied finite
+normalization model imply `R_I != T` whenever a height-one prime contains
+the fixed--moving ideal. With perfect `K`, B2 gives an actual section
+defeating every nonzero proposed trace multiplier, and the existing colon
+`(T^vee_B:R_I)` is zero. The separation implication consumes the explicit
+premise `forall I != bottom, exists s != 0, s R_I <= T^vee_B`, quantified
+over all actual boundary sections. No separately supplied pole witness,
+candidate ideal or replacement transporter is added.
+
+Validation: `lake build` passes (3157 jobs; only the two unchanged expected
+`Challenge.lean` placeholder warnings are reported). All twelve examples
+in `research/BoundaryPoleVerification.lean` pass without errors or warnings,
+and its enforced axiom allowlist verifies all nine new public declarations;
+each uses only `propext`, `Classical.choice` and `Quot.sound`. The unchanged
+`research/ProofDependencies.lean` was freshly run and passes its six primary
+dependency-boundary assertions and two supporting reports. The single
+manuscript builds to 69 pages (765141 bytes), with a clean final LaTeX log.
+Propositions, section transition, crosswalk and declaration inventory were
+visually checked on pages 9--11, 53 and 62. Independent final Lean--TeX
+review passes; all nine names appear in the manuscript, inventory and
+focused suite.
+
+The historical verification inventory is preserved byte-for-byte as a
+prefix, with nine declaration checks and nine axiom reports appended
+(778 checks, 565 examples and 670 reports in the file). The appended SP67
+block passes standalone with `import HodgeConjecture`, verifying all nine
+umbrella exports and standard-axiom reports. The full historical inventory
+was not rerun for SP67. Historical SP66 and earlier validation blocks below
+remain unchanged, not relabeled as SP67 runs.
+
+Next B4 must independently construct a nonzero geometric uniform-landing
+multiplier for every nontrivial subgroup and prove landing of **every**
+section. A finite coefficient denominator or a named candidate ideal
+cannot substitute for this implication. The constructed pole and
+conditional separation comparison are boundary results, not Hodge-class
+generation or convolution-defect vanishing.
 
 SP66 (2026-09-18): **normalization trace dual / uniform denominator**.
 `Boundary/Normalization/TraceDualBound.lean` uses the existing
@@ -1456,6 +1510,14 @@ nonnormal base. One nonzero `d : T` clears the entire trace dual. The
 transporter from actual sections into it is the existing colon
 `(T^vee_B:R_I)` with `R_I.toSubmodule`, not a newly defined ideal or
 an identification with the fixed--moving boundary ideal.
+
+SP67 adds no canonical carrier or ideal. Its local witness uses
+`0 != f in J`, `t` outside `p`, `t J^n <= (f)`, and `z=t/f` on a nonempty
+`V` contained in `D(J)`. In the boundary specialization the same notation
+remains `U_I`, `eta_I`, `R_I` and `T^vee_B`. The nine public declarations
+are propositions and receive **prose only** notation. The zero-colon
+statement concerns `(T^vee_B:R_I)`, not the fixed--moving ideal itself or
+the correspondence idempotence defect.
 
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |

@@ -1,8 +1,8 @@
 # Current gap map
 
-Last reviewed: 2026-09-18 (normalization trace dual and uniform denominator,
-SP66; full build, focused regressions, axiom allowlist, dependency audit and
-single-PDF checks pass).
+Last reviewed: 2026-09-18 (actual height-one boundary poles and the
+conditional separation criterion, SP67; full build, twelve focused
+regressions, nine standard-axiom checks, dependency and single-PDF checks pass).
 
 Start with [the target and equivalence sketch](TARGET_BRIDGE.md): it fixes
 the geometric statement, separates the two directions of the proved bridge,
@@ -148,12 +148,42 @@ build, fourteen focused regressions, and enforced standard-axiom checks
 for all eleven new declarations. The unchanged dependency audit and the
 68-page single-manuscript PDF checks pass.
 
-Next examine B3's geometric landing/pole/separation comparison.
-Uniform trace landing of **every** section is the separate geometric
-implication to establish; a bound on finitely many coefficients does not
-replace it. A geometric pole witness and comparison with the existing
-`ConjugateBoundarySeparation` endpoint also require proofs. This route
-targets the cover/boundary construction, not Hodge-class generation or
+B3 now constructs the pole and comparison in
+[`SectionLocalization.lean`](../HodgeConjecture/Boundary/Normalization/SectionLocalization.lean),
+[`HeightOneBoundaryPole.lean`](../HodgeConjecture/Boundary/Normalization/HeightOneBoundaryPole.lean)
+and
+[`BoundaryPole.lean`](../HodgeConjecture/Boundary/Normalization/BoundaryPole.lean).
+Pointwise local fractions are glued into an actual structure-sheaf section;
+clearing a rational function by a power of `J` supplies those local
+fractions on a nonempty open `V` contained in `D(J)`. If `T` is a
+Noetherian domain and a height-one prime `p` contains `J != 0`, localized
+dimension one and finite generation produce `f != 0` in `J`, `t` outside
+`p`, and `t J^n <= (f)`. Hence `z=t/f` is a genuine section image, whereas
+`z` in `T` would force `t` into `p`. No normality, trace-landing premise
+or supplied pole is used in this generic construction.
+
+For the existing normalization, Noetherian `B` and the supplied finite
+model make `T` Noetherian, so a height-one prime containing `J_fm(I)`
+forces `R_I != T`. With perfect `K`, B2 then constructs a failing actual
+section for every nonzero proposed trace multiplier and proves
+`(T^vee_B:R_I)=0` at that prime. The implemented
+`conjugateBoundarySeparation_of_traceLanding` proves the exact endpoint
+from `forall I != bottom, exists s != 0, s R_I <= T^vee_B`, with landing
+quantified over actual `BoundarySectionRing C I` elements. No extra
+transporter ideal, section carrier or pole hypothesis is introduced.
+SP67 passes the full build, twelve focused regressions, an enforced
+standard-axiom allowlist for all nine new declarations, the appended
+umbrella-export checks and the freshly run unchanged dependency audit.
+The 69-page single manuscript passes its build and visual checks. The full
+historical verification inventory was not rerun.
+
+**Next: B4's independent geometric uniform landing.** Construct such an
+`s` for each nontrivial subgroup and prove its action on **every** section;
+a bound on finitely many coefficients does not replace this assertion.
+Naming a candidate ideal does not prove it is nonzero or contained in the
+existing colon. The pole and conditional separation comparison are now
+implemented, but do not themselves prove landing. This route targets the
+cover/boundary construction, not Hodge-class generation or
 convolution-defect vanishing by itself.
 
 In the separate localization stream, the next bounded checkpoint is L1's

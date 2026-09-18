@@ -19,6 +19,56 @@ graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
 Last source check: 2026-09-15.
 
+### Direct geometric adaptation: actual boundary poles (SP67, 2026-09-18)
+
+`Boundary/Normalization/SectionLocalization.lean`,
+`Boundary/Normalization/HeightOneBoundaryPole.lean` and
+`Boundary/Normalization/BoundaryPole.lean` duplicate and adapt the arguments
+of the sibling `collision-ideals/CollisionIdeals/Planar/Research/` files
+`BoundarySectionLocalization.lean`, `HeightOneBoundaryPole.lean` and
+`BoundaryPoleWitness.lean`. The finite-generation clearing step from
+`LocalizationDenominator.lean` is a private helper here. No sibling module,
+Jacobian endpoint or source axiom is imported.
+
+Local fraction presentations construct a section directly in Mathlib's
+structure sheaf. The sibling's newer `LocalizedModule` implementation is
+adapted to the pinned `IsLocalization.mk'` construction in
+`Localization.AtPrime`; `IsLocalization.map_units` and
+`IsLocalization.mk'_spec` verify compatibility by cross multiplication.
+The existing generic-germ algebra map identifies the resulting rational
+function. An ideal-power denominator provides these presentations on `V` contained in
+`D(J)`. At a height-one prime containing `J != 0`, local dimension one
+puts the localized ideal in the radical of a nonzero principal ideal.
+Finite generation first supplies an ideal power and then one denominator
+outside the prime. The resulting `t/f` is an actual section outside the
+base, not a supplied geometric-pole hypothesis.
+
+The pinned Mathlib lacks the sibling's
+`Mathlib.RingTheory.KrullDimension.LocalRing` and
+`ringKrullDim_eq_one_iff_of_isLocalRing_isDomain`. The adapted proof uses
+`IsLocalization.AtPrime.ringKrullDim_eq_height`,
+`Ring.krullDimLE_one_iff_of_noZeroDivisors`,
+`IsLocalRing.eq_maximalIdeal` and `Ideal.radical_eq_sInf`, followed by
+`Ideal.exists_pow_le_of_le_radical_of_fg`. It does not add normality or a
+DVR hypothesis to repair that API mismatch. The generic construction
+assumes a Noetherian domain; the normalization specialization derives
+Noetherianity from `B` and the supplied finite model. Perfect `K` is needed
+only when invoking B2's trace-dual denominator for the trace-pole and
+uniform-landing separation statements.
+
+The existing `Submodule.colon`, `normalizationTraceDual` and actual
+boundary-section carrier are retained. The pointwise trace-pole witness is
+proved, and uniform landing for every nontrivial subgroup is an explicit
+premise of the separation implication. The independent geometric landing
+construction remains B4; neither a candidate ideal's name nor a finite
+coefficient bound proves this premise. The full build, twelve focused
+regressions and enforced standard-axiom checks for all nine declarations
+pass. The appended umbrella-export checks, fresh unchanged dependency
+audit, independent Lean--TeX review and 69-page single-PDF build and visual
+checks also pass. Earlier checkpoint validation records below remain
+historical evidence, not new test runs; the full historical inventory was
+not rerun.
+
 ### Direct algebraic adaptation: normalization trace dual (SP66, 2026-09-18)
 
 `Boundary/Normalization/TraceDualBound.lean` and

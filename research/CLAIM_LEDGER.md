@@ -17,6 +17,60 @@ Status vocabulary:
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
 
+## Actual boundary-pole checkpoint (A11az / SP67)
+
+Status: `FORMAL`. The full build, twelve focused regressions and enforced
+standard-axiom checks for all nine new declarations pass. The appended
+umbrella-export checks, fresh unchanged dependency audit, independent
+Lean--TeX review and updated single-PDF checks also pass. These results
+construct an actual pole and prove a conditional separation criterion,
+rather than assume a pole witness or geometric landing.
+
+For a Noetherian domain `T`, a nonzero ideal `J`, and a height-one prime
+`p` containing `J`, choose `f != 0` in `J`. The dimension-one localization
+and finite generation give `t` outside `p` and `n` with `t J^n <= (f)`.
+Thus `t/f` has local integral fraction presentations on every nonempty
+`V` contained in `D(J)`. These presentations are glued into an actual
+structure-sheaf section and identified under the existing `eta_V` map.
+Its image is outside `T`, because membership in `T` would force `t` into
+`p`. Normality, perfectness, trace landing and a supplied pole are not
+hypotheses of this generic construction.
+
+For `NormalizedCover C`, Noetherian `B` and the supplied finite
+normalization model make `T` Noetherian. Every height-one prime containing
+`J_fm(I)` for a nontrivial `I` therefore forces `R_I != T`. If every such
+section algebra instead equals `T`, the existing
+`ConjugateBoundarySeparation C` follows. With the additional perfect-field
+hypothesis on `K`, B2 implies that every nonzero trace multiplier fails
+on some actual boundary section, and `(T^vee_B:R_I)=0` at a removed
+height-one prime. Consequently the hypothesis
+`forall I != bottom, exists s != 0, s R_I <= T^vee_B` implies separation.
+The uniform-landing statement remains an explicit hypothesis of this
+last implication, not an asserted geometric construction.
+
+Witnesses, all in namespace `NormalizationInertia`:
+
+- `Boundary/Normalization/SectionLocalization.lean`:
+  `mem_affineSectionSubalgebra_of_localFractions` and
+  `mem_affineSectionSubalgebra_of_ideal_pow_mul`.
+- `Boundary/Normalization/HeightOneBoundaryPole.lean`:
+  `exists_heightOne_boundary_denominator` and
+  `affineSectionSubalgebra_ne_bot_of_heightOne`.
+- `Boundary/Normalization/BoundaryPole.lean`:
+  `boundarySectionSubalgebra_ne_bot_of_heightOne`,
+  `conjugateBoundarySeparation_of_boundarySectionSubalgebra_eq_bot`,
+  `boundarySection_tracePoleWitness`,
+  `normalizationTraceDual_colon_eq_bot_of_heightOne`, and
+  `conjugateBoundarySeparation_of_traceLanding`.
+
+These nine public results reuse the existing section image, trace dual,
+fixed--moving ideal and colon; the finite-generation denominator helper is
+private. B4 remains to construct a nonzero geometric uniform multiplier
+and prove landing of every section for every nontrivial subgroup. Naming a
+candidate ideal or bounding finitely many coefficients does not discharge
+that premise. No Hodge-class generation or convolution-defect vanishing
+follows from this checkpoint alone.
+
 ## Normalization trace-dual checkpoint (A11ay / SP66)
 
 Status: `FORMAL`. The full build, fourteen focused regressions and enforced
@@ -55,9 +109,9 @@ Witnesses in `Boundary/Normalization/TraceDualBound.lean`, namespace
 `normalizationTraceDual_colon_eq_bot_of_boundarySectionSubalgebra_ne_bot`.
 
 This proves boundedness and its conditional overring consequences, not
-existence of a nonzero uniform geometric multiplier. A boundary pole witness
-and comparison to `ConjugateBoundarySeparation` remain geometric
-obligations. A bound on finitely many coefficients cannot replace landing
+existence of a nonzero uniform geometric multiplier. The boundary pole
+witness and comparison to `ConjugateBoundarySeparation` are the subsequent
+SP67 construction above. A bound on finitely many coefficients cannot replace landing
 of every section; none of these results establishes Hodge-class generation.
 
 ## Actual boundary-section checkpoint (A11ax / SP65)
@@ -95,9 +149,9 @@ Witnesses in `Boundary/Normalization/AffineSections.lean`, namespace
 
 This constructs the actual overring used by the boundary route. It assumes
 neither boundary separation nor trace landing and proves neither. The
-genuine trace dual and its denominator are the subsequent SP66 construction;
-a nonzero uniform transporter and the geometric pole/separation implication
-remain separate obligations.
+genuine trace dual and its denominator are the subsequent SP66 construction,
+and the pole/separation implication is the SP67 construction above. A
+nonzero uniform transporter remains the separate B4 obligation.
 The underlying section module is the existing `.toSubmodule`, with no
 second section-module definition. No new source hypothesis or project axiom
 is introduced, and no Hodge-class generation is asserted.
