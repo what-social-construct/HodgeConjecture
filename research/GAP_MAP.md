@@ -1,8 +1,8 @@
 # Current gap map
 
-Last reviewed: 2026-09-18 (actual height-one boundary poles and the
-conditional separation criterion, SP67; full build, twelve focused
-regressions, nine standard-axiom checks, dependency and single-PDF checks pass).
+Last reviewed: 2026-09-18 (fixed--moving regular-pair criterion, SP68;
+full build, ten new focused regressions, three standard-axiom checks,
+boundary-pole regression rerun, dependency and single-PDF checks pass).
 
 Start with [the target and equivalence sketch](TARGET_BRIDGE.md): it fixes
 the geometric statement, separates the two directions of the proved bridge,
@@ -177,14 +177,48 @@ umbrella-export checks and the freshly run unchanged dependency audit.
 The 69-page single manuscript passes its build and visual checks. The full
 historical verification inventory was not rerun.
 
-**Next: B4's independent geometric uniform landing.** Construct such an
-`s` for each nontrivial subgroup and prove its action on **every** section;
-a bound on finitely many coefficients does not replace this assertion.
-Naming a candidate ideal does not prove it is nonzero or contained in the
-existing colon. The pole and conditional separation comparison are now
-implemented, but do not themselves prove landing. This route targets the
-cover/boundary construction, not Hodge-class generation or
-convolution-defect vanishing by itself.
+B4a / SP68 adds a direct commutative-algebra sufficient condition in
+[`RegularPairBoundary.lean`](../HodgeConjecture/Boundary/Normalization/RegularPairBoundary.lean).
+The refined `exists_heightOne_boundary_denominator_of_ne_zero` fixes any
+specified `f != 0`, without requiring `f in J`, before constructing `t`
+outside `p` and `t J^n <= (f)`; the previous theorem is retained as a
+wrapper. If additionally `f,g in J` and `g` acts injectively on `T/(f)`,
+the relation `t g^n in (f)` forces
+`t in (f)`, contradicting `t` outside `p`. Hence
+`not_le_heightOne_of_regularPair` excludes every height-one prime containing
+`J`. This only assumes a Noetherian domain, not normality or trace data.
+
+For each nontrivial subgroup, use the existing summands of `J_fm(I)`:
+choose `0 != f_I in fixedLocusIdeal I` and
+`g_I in movingBoundaryIdeal (pulledBackConjugateBoundaryIdeal C) I`, with
+`g_I` acting injectively on `T/(f_I)`. Under Noetherian `B` and the supplied
+finite normalization model,
+`conjugateBoundarySeparation_of_fixedMoving_regularPairs` then proves the
+existing separation condition. Perfectness is not needed. The unit-ideal
+case is allowed; these injectivity witnesses are not a claim of a full
+regular sequence with nonzero final quotient. No new ideal, section carrier,
+projector or input package is introduced. SP68 passes the full build,
+ten new focused regressions and three enforced standard-axiom checks.
+The previous boundary-pole suite was freshly rerun after the refinement:
+its twelve examples and nine-declaration allowlist pass. The appended
+three umbrella-export checks and axiom reports, fresh unchanged dependency
+audit, independent Lean--TeX review and 70-page single-PDF checks pass.
+The historical inventory prefix is preserved; that entire suite was not rerun.
+
+This separated-summand condition is sufficient, not an equivalence or a
+necessary condition for separation. It can fail when `J_mov(I)=0` while
+the proper ideal `J_fix(I)` already has codimension at least two.
+
+**Next: test and construct regular pairs for identified geometry.** Seek
+`f_I,g_I` in the separate summands and prove quotient injectivity where
+applicable. No such pairs are supplied yet. The generic criterion permits
+both elements in `J_fm(I)` without a separated-summand requirement.
+Independent geometric uniform landing remains B4's alternative: construct
+a nonzero `s` and prove its action on **every** section. A finite coefficient bound
+or a candidate ideal's name supplies neither premise. The new criterion
+does not solve that landing problem. Both routes concern the cover/boundary
+construction, not Hodge-class generation or convolution-defect vanishing
+by themselves.
 
 In the separate localization stream, the next bounded checkpoint is L1's
 actual closed-complement cycle kernel/image comparison. It can run alongside

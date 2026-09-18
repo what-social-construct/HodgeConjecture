@@ -19,6 +19,70 @@ graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
 Last source check: 2026-09-15.
 
+### Direct algebraic criterion and sibling landing audit (SP68, 2026-09-18)
+
+`Boundary/Normalization/HeightOneBoundaryPole.lean` refines its existing
+construction to any specified nonzero `f`, without requiring `f in J`, through
+`exists_heightOne_boundary_denominator_of_ne_zero`; the former existential
+theorem is retained as a wrapper. In
+`Boundary/Normalization/RegularPairBoundary.lean`,
+`not_le_heightOne_of_regularPair` uses that result and Mathlib's existing
+`IsSMulRegular` quotient-module API. For `f,g in J` with `f != 0`, if `g`
+acts injectively modulo `f`, so does `g^n`. The relation `t g^n in (f)` then
+forces `t in (f)`,
+contradicting the constructed denominator's avoidance of the height-one
+prime. This is a local proof in the current repository, with a Noetherian
+domain as hypothesis; normality and trace theory are not needed.
+
+The normalization consumer
+`conjugateBoundarySeparation_of_fixedMoving_regularPairs` uses the existing
+fixed-locus and moving-boundary summands, Noetherian `B`, and the supplied
+finite normalization model. Separated-summand pairs are a sufficient
+condition, not a necessary or equivalent reformulation of separation;
+the generic theorem also accepts both elements in the combined ideal.
+Its pair witnesses are explicit hypotheses,
+not a new input package, axiom or copied vanishing theorem. The quotient
+injectivity condition is the non-zero-divisor part of
+[Stacks, Definition 10.68.1, Tag 00LF](https://stacks.math.columbia.edu/tag/00LF).
+That reference is terminology only: this criterion permits `(f,g)=T`
+(even a unit `f`), whereas a regular sequence in the cited definition also
+requires a nonzero final quotient. The theorem is proved directly and
+does not assume the source definition as a literature premise.
+SP68 passes the full build, ten focused regressions and enforced
+standard-axiom checks for all three new declarations. The previous
+boundary-pole suite was freshly rerun after the refinement: all twelve
+examples and nine-declaration allowlist checks pass. The appended
+umbrella-export checks, fresh unchanged dependency audit, independent
+Lean--TeX review and 70-page single-manuscript build and visual checks
+pass. The historical verification inventory prefix is preserved; the
+entire inventory was not rerun.
+
+The sibling sources were checked for an independent all-section landing
+argument. In `collision-ideals/CollisionIdeals/Planar/Research/`:
+
+- `SecantFrameTraceLanding.lean:36`,
+  `boundarySeparation_of_secantFrameTraceLanding`, explicitly assumes the
+  containment giving landing for every actual boundary section. Its later
+  vanishing consumer retains that hypothesis.
+- `SecantFrameCandidate.lean:195`,
+  `evaluatedSecantFrameDenominatorIdeal_ne_bot`, proves nonvanishing by
+  clearing the finite family of evaluated secant/frame coefficients.
+- `FiniteDenominatorCounterexample.lean:102`,
+  `polynomial_finiteClearing_not_uniformLanding`, proves that the finite
+  clearing statement does not imply uniform landing on the generated
+  overring. This is a polynomial negative control, not a Keller example.
+
+The archived manuscript
+`manuscript-archive/secant-projectors-and-boundary-inertia-for-planar-keller-maps.tex:3395--3446`
+likewise records uniform secant-frame landing as an equivalent separation
+target in its Hartogs setup, not an independently proved landing theorem.
+The current sibling `paper/paper2.tex` instead treats generic-degree-two
+Keller rigidity; it supplies no general Hodge boundary-transfer result.
+No sibling module, all-section landing hypothesis or Keller rigidity is
+imported here. This audit motivates the direct regular-pair construction
+target; it does not disprove or solve the alternative geometric landing
+problem.
+
 ### Direct geometric adaptation: actual boundary poles (SP67, 2026-09-18)
 
 `Boundary/Normalization/SectionLocalization.lean`,

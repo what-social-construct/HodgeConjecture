@@ -17,6 +17,62 @@ Status vocabulary:
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
 
+## Fixed--moving regular-pair checkpoint (A11ba / SP68)
+
+Status: `FORMAL`. The full build, ten focused regressions and enforced
+standard-axiom checks for all three new declarations pass. The previous
+boundary-pole suite was freshly rerun after the refinement; its twelve
+examples and nine-declaration allowlist pass. The appended umbrella-export
+checks, fresh unchanged dependency audit, independent Lean--TeX review
+and 70-page single-PDF checks also pass. Three direct theorems refine the
+denominator construction and give a sufficient condition for the existing
+boundary-separation endpoint. They do not construct geometric regular
+pairs or establish uniform trace landing.
+
+For a Noetherian domain `T`, a height-one prime `p` containing `J`, and any
+specified `f != 0`, the refined denominator theorem constructs
+`t` outside `p` and `n` with `t J^n <= (f)`. The earlier existential
+theorem is preserved as a wrapper, not a parallel proof. The refinement
+does not require `f in J`. For the separation criterion, require `f in J`;
+if also `g in J` acts injectively on `T/(f)`, multiplication by `g^n`
+is also injective;
+`t g^n in (f)` therefore forces `t in (f)`, contradicting `t` outside
+`p`. Thus an ideal containing such a pair is contained in no height-one
+prime. No normality, perfectness or trace condition is used. The unit-ideal
+case is permitted: a nonzero final quotient is not required, so the
+criterion is not a claim of a full regular sequence in that convention.
+
+For `NormalizedCover C`, Noetherian `B` and the supplied finite model make
+the existing normalization ring `T` Noetherian. For every nontrivial `I`,
+the explicit premise supplies `0 != f_I in J_fix(I)` and
+`g_I in J_mov(I)`, with `g_I` acting injectively on `T/(f_I)`.
+Their membership in the two existing summands gives membership in
+`J_fm(I)`, and the generic criterion proves
+`ConjugateBoundarySeparation C`. Perfectness of `K` is not required.
+
+Witnesses, in namespace `NormalizationInertia`:
+
+- `Boundary/Normalization/HeightOneBoundaryPole.lean`:
+  `exists_heightOne_boundary_denominator_of_ne_zero`.
+- `Boundary/Normalization/RegularPairBoundary.lean`:
+  `not_le_heightOne_of_regularPair` and
+  `conjugateBoundarySeparation_of_fixedMoving_regularPairs`.
+
+No ideal, quotient carrier, input package or projector is added.
+`f_I,g_I` denote supplied witnesses rather than newly defined canonical
+objects. Separated-summand pairs are sufficient, not a necessary or
+equivalent reformulation of separation; the condition can fail when
+`J_mov(I)=0` while the proper fixed-locus ideal already has codimension
+at least two. The generic theorem also accepts both elements in `J_fm(I)`.
+The next geometric step is to test this criterion on identified geometry,
+construct these elements where applicable, and prove quotient injectivity
+for every nontrivial subgroup. The already proved nonzero fixed-locus
+ideal does not supply a compatible moving element.
+Independent all-section uniform landing remains B4's alternative, not a
+premise solved by this criterion. Neither boundary separation for actual
+geometric data, convolution-defect vanishing nor Hodge-class generation
+has been derived from newly constructed pairs here.
+
 ## Actual boundary-pole checkpoint (A11az / SP67)
 
 Status: `FORMAL`. The full build, twelve focused regressions and enforced

@@ -80,7 +80,9 @@ membership for finitely many secant coefficients does not suffice.
 B3 below constructs the boundary pole witness at a removed height-one
 prime and the implication from uniform landing to the existing
 `ConjugateBoundarySeparation` condition. Neither a trace-dual bound nor
-normality alone proves that uniform landing. These are boundary/cover obligations; they do not assert
+normality alone proves that uniform landing. B4a adds the direct alternative
+of constructing fixed--moving regular pairs; it does not establish landing.
+These are boundary/cover obligations; they do not assert
 convolution-defect vanishing or construct representatives of prescribed
 Hodge classes. The Chow--Betti target and its class-generation obligation
 remain unchanged.
@@ -254,8 +256,8 @@ hypothesis is added.
 
 ### B4. Independent geometric uniform landing
 
-The next bounded checkpoint is to establish the premise of that last
-implication from identified geometric properties: for each nontrivial
+One remaining route is to establish the premise of that last implication
+from identified geometric properties: for each nontrivial
 `I`, construct a nonzero `s` and prove `s eta_I(z)` belongs to `T^vee_B`
 for **every** actual boundary section `z`. A finite coefficient denominator
 does not control the full section algebra. Naming a candidate ideal proves
@@ -265,6 +267,70 @@ desired separation conclusion. The pole construction proves the obstruction
 when a height-one prime is removed; it does not assert landing universally.
 This is a boundary/cover obligation, separate from Chow--Betti
 class generation or convolution-defect vanishing.
+
+### B4a. Fixed--moving regular pairs
+
+A11ba / SP68 provides a proved direct sufficient condition for separation.
+The full build, ten focused regressions and three enforced standard-axiom
+checks pass. The preceding boundary-pole suite was freshly rerun after
+the refactor: its twelve examples and nine-declaration allowlist pass.
+The appended umbrella-export checks, fresh unchanged dependency audit,
+independent Lean--TeX review and 70-page single-PDF checks pass. The full
+historical verification inventory was not rerun. The prescribed-element refinement
+`exists_heightOne_boundary_denominator_of_ne_zero` in
+[`HeightOneBoundaryPole.lean`](../HodgeConjecture/Boundary/Normalization/HeightOneBoundaryPole.lean)
+starts with any chosen `f != 0`, with no `f in J` premise, keeping the conclusion
+`t` outside `p` and `t J^n <= (f)` for a height-one `p` containing `J`.
+The previous existential theorem remains a wrapper with the same statement.
+
+In [`RegularPairBoundary.lean`](../HodgeConjecture/Boundary/Normalization/RegularPairBoundary.lean),
+`not_le_heightOne_of_regularPair` assumes a Noetherian domain `T`,
+`f,g in J`, `f != 0`, and
+`IsSMulRegular (T / Ideal.span {f}) g`. This is exactly injectivity of
+multiplication by `g` on `T/(f)`. The denominator construction would give
+`t g^n in (f)` at a containing height-one prime; injectivity of multiplication
+by `g^n` forces `t in (f)`, contradicting `t` outside that prime. Thus
+\[
+ 0\ne f\in J,\quad g\in J,\quad
+ g:T/(f)\longrightarrow T/(f)\text{ injective}
+ \quad\Longrightarrow\quad
+ J\not\subseteq\mathfrak p\quad(\operatorname{ht}\mathfrak p=1).
+\]
+The criterion permits `(f,g)=T`, including a unit `f`; it is not the full
+regular-sequence convention that additionally requires a nonzero final
+quotient. No normality, perfect field, trace dual, or supplied section
+landing is a hypothesis of this generic argument.
+
+Specialize to the existing normalization `T=tilde B_N` and choose
+\[
+ 0\ne f_I\in J_{\mathrm{fix}}(I),\qquad
+ g_I\in J_{\mathrm{mov}}(I),\qquad
+ g_I:T/(f_I)\longrightarrow T/(f_I)\text{ injective},
+\]
+where `J_fix(I)` and `J_mov(I)` are the existing fixed-locus and
+moving-boundary summands of `J_fm(I)`, respectively. In Lean these are
+`fixedLocusIdeal I` and
+`movingBoundaryIdeal (pulledBackConjugateBoundaryIdeal C) I`.
+`conjugateBoundarySeparation_of_fixedMoving_regularPairs` consumes these
+explicit witnesses for every nontrivial `I`. Noetherian `B` and the
+supplied finite normalization model give Noetherian `T`; perfectness and
+trace data are not required. The notation `f_I,g_I` is for local witnesses,
+not a new canonical pair, ideal, input package or projector.
+
+The separated-summand condition is sufficient, not an equivalent or
+necessary reformulation of separation. It can fail when `J_mov(I)=0`
+even though the proper fixed-locus ideal already has codimension at least
+two. The generic theorem also accepts both elements in `J_fm(I)` without
+requiring one from each summand.
+
+**Immediate geometric checkpoint:** test this criterion on identified
+cover/boundary geometry; construct these elements and prove quotient
+injectivity where applicable. The existing proof that the fixed-locus
+ideal is nonzero supplies a possible first-element existence statement,
+but does not construct a compatible regular moving element. No actual
+pairs are produced by this checkpoint. B4's independent all-section
+uniform landing remains an alternative, not a solved premise or a
+consequence of this sufficient criterion alone.
 
 ### G0. Smooth projective setting and candidate constructions
 
@@ -710,12 +776,14 @@ provide variable-class coverage.
 - Review new objects against the parity registry before adding wrappers.
   Promote a proved checkpoint only after the appropriate build, focused
   regressions, dependency/axiom checks and Lean--TeX comparison.
-- **Next action:** following B0's bounded-overring criterion, B1's actual
-  section algebra, B2's trace-dual denominator and B3's constructed pole
-  and separation implication, establish B4's independent geometric uniform
-  landing for every actual section and every nontrivial subgroup. Do not
-  replace that assertion by a named candidate ideal or a finite coefficient
-  bound. Preserve PB0 and the abelian examples as optional
+- **Next action:** test B4a's sufficient criterion on identified geometry:
+  seek `f_I` in the existing fixed-locus ideal and `g_I` in the
+  moving-boundary ideal, with multiplication by `g_I` injective on
+  `T/(f_I)`, for every nontrivial subgroup. General pairs in `J_fm(I)`
+  and B4's independent geometric uniform landing remain alternatives;
+  neither landing nor actual regular pairs follow from
+  a named candidate ideal or a finite coefficient bound. Preserve PB0 and
+  the abelian examples as optional
   deferred work, with the general smooth-projective target unchanged.
   L1 remains the next checkpoint of the separate bounded localization
   stream, only if continued in parallel for a named consumer. No new
@@ -1526,10 +1594,12 @@ the dated checkpoints below document how the existing objects were built.
    existing endpoint using constructed data, with no hypothesis that is
    merely the desired class-generation or realization conclusion renamed.
 
-The operative next action after B0's bounded-overring criterion, B1's
-actual boundary-section algebra, B2's trace-dual denominator and B3's
-constructed pole/separation implication is B4's independent geometric
-uniform landing for every actual section and every nontrivial subgroup.
+The operative next action after B4a's regular-pair criterion is to test
+and construct fixed--moving witnesses `f_I,g_I` for identified geometry,
+with quotient injectivity for every nontrivial subgroup. General pairs in
+`J_fm(I)` and B4's independent geometric uniform landing for every actual
+section remain alternative routes;
+neither the pairs nor that landing have been constructed.
 The projective-bundle recipe, its PB0 chart, and the
 elliptic curve/chart/point construction are optional deferred examples;
 their detailed analyses are preserved above.

@@ -752,6 +752,28 @@ generic germ \(z\). If \(z=a\in T\), then \(t=af\in\mathfrak p\),
 a contradiction.
 \end{proof}
 
+\begin{proposition}[Quotient regularity excludes a height-one boundary]
+\label{prop:regular-pair-boundary}
+Let \(T\) be a Noetherian domain, let \(J\subseteq T\) be an ideal,
+and suppose \(f,g\in J\), \(f\ne0\), and multiplication by \(g\)
+on \(T/(f)\) is injective. Then no height-one prime contains \(J\).
+\end{proposition}
+
+\begin{proof}
+Suppose \(J\subseteq\mathfrak p\) with
+\(\operatorname{ht}(\mathfrak p)=1\). For the specified \(f\), the
+denominator construction in the proof of
+Proposition~\ref{prop:height-one-boundary-pole} gives
+\(t\notin\mathfrak p\) and \(n\ge0\) with \(tJ^n\subseteq(f)\).
+Since \(g^n\in J^n\), we have \(tg^n\in(f)\). Multiplication by
+\(g^n\) on \(T/(f)\) is injective, so \(t\in(f)\subseteq\mathfrak p\),
+a contradiction.
+\end{proof}
+
+These are the injectivity conditions for a two-element regular sequence
+\cite{StacksRegularSequenceDefinition}; the criterion also allows
+\((f,g)=T\).
+
 Conjugate-boundary separation is the condition
 
 \[
@@ -795,6 +817,24 @@ the zero colon. If a nonzero \(s\) sent every actual section into
 \(T^\vee_B\), the same corollary would instead give \(R_I=T\).
 Thus the displayed section witness exists, and uniform landing for all
 nontrivial subgroups excludes every height-one fixed--moving boundary prime.
+\end{proof}
+
+\begin{corollary}[Fixed--moving regular pairs]
+\label{cor:fixed-moving-regular-pairs}
+Assume \(B\) is Noetherian and \(T=\widetilde B_N\) is finite as a
+\(B\)-module. Suppose that for every \(I\ne1\) there are
+\[
+  0\ne f_I\in J_{\mathrm{fix}}(I),\qquad
+  g_I\in J_{\mathrm{mov}}(I)
+\]
+such that multiplication by \(g_I\) on \(T/(f_I)\) is injective.
+Then \(\operatorname{Sep}_{\partial}(\mathcal C)\) holds.
+\end{corollary}
+
+\begin{proof}
+The finite model makes \(T\) Noetherian. Both \(f_I\) and \(g_I\)
+belong to \(J_{\mathrm{fm}}(I)=J_{\mathrm{fix}}(I)+J_{\mathrm{mov}}(I)\).
+Apply Proposition~\ref{prop:regular-pair-boundary} for each \(I\ne1\).
 \end{proof}
 
 Let \(\mathscr D\) be the normalization/inertia diagram, let
@@ -4423,6 +4463,10 @@ Height-one boundary poles &
 Trace landing to boundary separation &
 \leanpath{conjugateBoundarySeparation_of_traceLanding}\newline
 \leanpath{Boundary/Normalization/BoundaryPole.lean}\\
+Fixed--moving regular pairs &
+\leanpath{not_le_heightOne_of_regularPair}\newline
+\leanpath{conjugateBoundarySeparation_of_fixedMoving_regularPairs}\newline
+\leanpath{Boundary/Normalization/RegularPairBoundary.lean}\\
 Subgroup extension &
 \leanpath{CompactifiedSubgroupProjectorExtension}\newline
 \leanpath{Boundary/GaloisProjectorExtension.lean}\\
@@ -5011,6 +5055,10 @@ principal table, grouped by mathematical layer.
 \leanpath{boundarySection_tracePoleWitness};
 \leanpath{normalizationTraceDual_colon_eq_bot_of_heightOne};
 \leanpath{conjugateBoundarySeparation_of_traceLanding};
+\normsrc{RegularPairBoundary.lean};
+\leanpath{exists_heightOne_boundary_denominator_of_ne_zero};
+\leanpath{not_le_heightOne_of_regularPair};
+\leanpath{conjugateBoundarySeparation_of_fixedMoving_regularPairs};
 \leanpath{subalgebra_eq_bot_of_nonzero_mul_mem_base};
 \leanpath{subalgebra_eq_bot_of_mem_colon};
 \leanpath{colon_eq_bot_of_subalgebra_ne_bot};

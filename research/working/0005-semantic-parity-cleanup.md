@@ -123,6 +123,70 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP65 | Actual affine sections and the fixed--moving boundary-section algebra in the specified field | CONSTRUCT / IDENTIFY | Use the existing generic germ and fraction-field equivalence for an injective algebra map, its range equivalence, constants, restriction, antitonicity and full-open image. Specialize to the same normalization and boundary ideal; prove nonemptiness from a nontrivial subgroup's faithful action. | PROVED; FULL BUILD, SIXTEEN FOCUSED REGRESSIONS, STANDARD-AXIOM ALLOWLIST, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP66 | Genuine normalization trace dual, common denominator and actual-section colon consumers | REUSE / BOUND / APPLY | Reuse Mathlib's trace-dual submodule, contain it in an integral generic basis's finite trace-dual span, and clear that span by one nonzero normalization element. Specialize to the existing normal closure; apply B0 conditionally to B1's actual sections without duplicating carriers or assuming geometric landing. | PROVED; FULL BUILD, FOURTEEN FOCUSED REGRESSIONS, STANDARD-AXIOM ALLOWLIST, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP67 | Actual height-one boundary poles and the uniform-landing separation implication | GLUE / CONSTRUCT / COMPARE | Glue local fractions into actual sections; clear the height-one localized ideal containment to construct a fraction outside the base. Specialize to the same fixed--moving boundary, derive the trace-pole witness and zero colon, and prove separation from explicitly supplied nonzero uniform landing for every subgroup. | PROVED; FULL BUILD, TWELVE FOCUSED REGRESSIONS, STANDARD-AXIOM ALLOWLIST, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+| SP68 | Prescribed first element and the fixed--moving regular-pair separation criterion | REFINE / CANCEL / APPLY | Preserve the existing height-one denominator theorem as a wrapper around a fixed-element refinement. Cancel a regular moving element on the existing quotient by a nonzero fixed element; use the same two boundary-ideal summands to exclude containing height-one primes. | PROVED; FULL BUILD, TEN FOCUSED REGRESSIONS, STANDARD-AXIOM ALLOWLIST, BOUNDARY-POLE RERUN, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+
+SP68 (2026-09-18): **fixed--moving regular pairs / direct separation criterion**.
+`Boundary/Normalization/HeightOneBoundaryPole.lean` refines its denominator
+construction to any specified `f != 0`, without requiring `f in J`, in
+`exists_heightOne_boundary_denominator_of_ne_zero`; the existing existential
+statement becomes a wrapper with its public type unchanged.
+
+`Boundary/Normalization/RegularPairBoundary.lean` proves
+`not_le_heightOne_of_regularPair`: if `f,g in J`, `f != 0`, and `g` acts
+injectively on the existing quotient `T/(f)`, no height-one prime contains
+`J`. Otherwise
+the fixed-element denominator gives `t g^n in (f)` with `t` outside the
+prime; cancellation of `g^n` modulo `f` puts `t` in that prime. Only a
+Noetherian domain is needed, not normality, perfectness or trace data.
+The criterion allows `(f,g)=T`; it does not require a nonzero final
+quotient as a full regular sequence would.
+
+`conjugateBoundarySeparation_of_fixedMoving_regularPairs` specializes to
+`0 != f_I in J_fix(I)` and `g_I in J_mov(I)` with this quotient
+injectivity, for every nontrivial subgroup. Noetherian `B` and the existing
+finite normalization model supply Noetherian `T`. It reuses
+`J_fm(I)=J_fix(I)+J_mov(I)` and the existing separation proposition,
+without a new carrier, ideal, input package or projector. Its pair premise
+is explicit; no actual geometric pair or uniform trace multiplier is
+constructed.
+
+Validation: `lake build` passes (3161 jobs; only the two unchanged expected
+`Challenge.lean` placeholder warnings). All ten examples in
+`research/RegularPairBoundaryVerification.lean` pass without errors or
+warnings, and its enforced allowlist accepts only `propext`,
+`Classical.choice` and `Quot.sound` for all three new declarations.
+After the denominator refactor, `research/BoundaryPoleVerification.lean`
+was freshly rerun: its twelve examples and nine-declaration standard-axiom
+allowlist pass without errors or warnings. The unchanged
+`research/ProofDependencies.lean` was also freshly run and passes its six
+primary dependency-boundary assertions and two supporting reports.
+
+The single manuscript builds to 70 pages (767370 bytes), with a clean
+final LaTeX log. Statements and transition, crosswalk, declaration inventory
+and bibliography were visually checked on pages 9--11, 54, 63 and 70.
+Independent Lean--TeX reviews pass; all three new names appear in the
+manuscript, verification inventory and focused suite.
+
+The historical verification inventory is preserved byte-for-byte as a
+prefix, with three declaration checks and three axiom reports appended
+(781 checks, 565 examples and 673 reports in the file). The appended SP68
+block passes standalone with `import HodgeConjecture`, verifying all three
+umbrella exports and standard-axiom reports. The full historical inventory
+was not rerun. Historical SP67 and earlier validation blocks below remain
+unchanged, not relabeled as new runs; the separate boundary-pole rerun is
+recorded explicitly above.
+
+Next test the sufficient criterion on identified geometry, construct
+`f_I,g_I` where applicable, and prove quotient injectivity. Separated
+fixed/moving witnesses are not necessary for separation; the condition
+can fail when the moving ideal is zero and the proper fixed ideal already
+has codimension at least two. The nonzero fixed-locus ideal alone does
+not supply a compatible moving element. The generic theorem with both
+elements in `J_fm(I)` and B4's independent all-section uniform landing remain
+alternatives, not solved premises. The sibling landing endpoint assumes that landing,
+and its finite coefficient denominator does not establish it. These are
+boundary criteria, separate from Hodge-class generation and
+convolution-defect vanishing.
 
 SP67 (2026-09-18): **actual boundary poles / separation criterion**.
 `Boundary/Normalization/SectionLocalization.lean` glues pointwise local
@@ -1518,6 +1582,14 @@ remains `U_I`, `eta_I`, `R_I` and `T^vee_B`. The nine public declarations
 are propositions and receive **prose only** notation. The zero-colon
 statement concerns `(T^vee_B:R_I)`, not the fixed--moving ideal itself or
 the correspondence idempotence defect.
+
+SP68 retains the existing notation `J_fix(I)`, `J_mov(I)` and `J_fm(I)`.
+The local witnesses are `0 != f_I in J_fix(I)` and `g_I in J_mov(I)`,
+with multiplication by `g_I` injective on the existing quotient `T/(f_I)`.
+No canonical pair or new quotient carrier is defined. The three public
+theorems receive **prose only** notation. The denominator refinement's
+`f,t,n` have the same local meaning as SP67; its previous existential
+theorem remains a wrapper, not a duplicate proof or object.
 
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |

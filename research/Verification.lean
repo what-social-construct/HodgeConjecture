@@ -7112,3 +7112,15 @@ Focused regressions and an enforced axiom allowlist are in
 #print axioms HodgeConjecture.NormalizationInertia.boundarySection_tracePoleWitness
 #print axioms HodgeConjecture.NormalizationInertia.normalizationTraceDual_colon_eq_bot_of_heightOne
 #print axioms HodgeConjecture.NormalizationInertia.conjugateBoundarySeparation_of_traceLanding
+
+/-! SP68: fixed-first-element denominators and the fixed--moving regular-pair criterion.
+Focused regressions and an enforced axiom allowlist are in
+`research/RegularPairBoundaryVerification.lean`. -/
+
+#check HodgeConjecture.NormalizationInertia.exists_heightOne_boundary_denominator_of_ne_zero
+#check HodgeConjecture.NormalizationInertia.not_le_heightOne_of_regularPair
+#check HodgeConjecture.NormalizationInertia.conjugateBoundarySeparation_of_fixedMoving_regularPairs
+
+#print axioms HodgeConjecture.NormalizationInertia.exists_heightOne_boundary_denominator_of_ne_zero
+#print axioms HodgeConjecture.NormalizationInertia.not_le_heightOne_of_regularPair
+#print axioms HodgeConjecture.NormalizationInertia.conjugateBoundarySeparation_of_fixedMoving_regularPairs

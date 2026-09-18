@@ -531,11 +531,36 @@ SP67 passes the full build, twelve focused regressions in
 and enforced standard-axiom checks for all nine new declarations. The fresh
 dependency audit, appended umbrella-export checks and updated 69-page
 single-manuscript PDF checks pass.
-Next establish B4's independent geometric uniform landing: for each
-nontrivial `I`, construct `s != 0` with `s R_I <= T^vee_B` for **every**
-actual section. Naming a candidate ideal or bounding finitely many
-coefficients does not supply this multiplier. The pole construction does
-not establish Hodge-class generation.
+The regular-pair checkpoint adds a direct sufficient condition in
+[`RegularPairBoundary.lean`](HodgeConjecture/Boundary/Normalization/RegularPairBoundary.lean).
+In a Noetherian domain, if `f,g` belong to `J`, `f != 0`, and multiplication
+by `g` is injective on `T/(f)`, no height-one prime contains `J`. The
+height-one denominator theorem now permits any prescribed `f != 0`,
+without requiring `f in J`; its previous
+existential statement is retained as a wrapper. For the normalization,
+choose nonzero `f_I` in the existing fixed-locus ideal and `g_I` in the existing
+moving-boundary ideal, with this quotient-injectivity property. Such pairs
+for every nontrivial `I` imply `ConjugateBoundarySeparation`, without
+perfectness or trace data. The unit-ideal case is allowed; no full regular
+sequence with nonzero final quotient is asserted. SP68 passes the full
+build, ten focused regressions in
+[`RegularPairBoundaryVerification.lean`](research/RegularPairBoundaryVerification.lean)
+and enforced standard-axiom checks for all three new declarations. The
+previous twelve boundary-pole regressions and their nine-declaration
+allowlist were freshly rerun after the denominator refactor and pass.
+The appended umbrella-export checks, fresh unchanged dependency audit,
+independent Lean--TeX review and 70-page single-manuscript checks pass.
+
+Next test this sufficient condition on identified geometry: construct
+`f_I,g_I` and prove quotient injectivity where applicable. Separated
+fixed/moving witnesses are not necessary for separation. A pair with both
+elements in `J_fm(I)` via the generic theorem, or B4's independent geometric
+uniform landing, remains an alternative: for
+each nontrivial `I`, construct `s != 0` with `s R_I <= T^vee_B` for
+**every** actual section. Neither actual regular pairs nor such a multiplier
+have been constructed. Naming a candidate ideal or bounding finitely many
+coefficients does not supply either condition. These are boundary criteria,
+not Hodge-class generation.
 
 `paper/main.pdf` is the single current manuscript PDF. The earlier drafts
 and their sources are preserved in the
