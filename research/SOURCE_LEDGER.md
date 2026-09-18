@@ -17,8 +17,42 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source check: 2026-09-18 (SP69 sources below; earlier records retain
+Last source check: 2026-09-18 (SP70 local normalization/full-visibility proofs;
+SP69 sources below; earlier records retain
 their original validation scope).
+
+### Finite affine normalization and full visibility (SP70, 2026-09-18)
+
+The selected branch uses direct local Lean algebra and the existing
+normal-closure sheet-action results. Supplied finite normal affine
+algebras with the marked fraction fields identify with the existing
+normalizations; finiteness and etaleness are transported through these
+identifications in `Boundary/Normalization/FiniteAffineCover.lean`.
+The identification uses `IsIntegralClosure` and integrality; finiteness
+is transported with `Module.Finite.equiv`, and etaleness with
+`Algebra.Etale.of_equiv`. The finite normal constructor itself does not
+require etaleness. Surjectivity of the visible open gives empty conjugate
+boundaries, and over perfect `K` the existing core-free action supplies
+a moved sheet for each nontrivial subgroup. The moving and combined
+boundary ideals are then top, proving separation directly in
+`Boundary/Normalization/FullVisibleBoundary.lean`. The sheet argument
+uses `intermediateFixingSubgroup_normalCore_eq_bot`,
+`exists_sheet_moved_of_normalCore_eq_bot` and
+`inertiaInvisibleAt_conjugateSheet_iff`; no regular-pair theorem is used.
+
+No literature conclusion is introduced as an axiom or an input package.
+The construction still requires the actual normal affine algebras and
+marked normal-closure field data. It does not formalize the global
+existence of a finite etale Galois refinement, deduce normality from
+etaleness in general, or glue the affine models over a smooth projective
+base. The single manuscript records the same affine identification and
+full-visible separation, with the same hypotheses. The 71-page PDF build,
+warning scan, visual checks and independent Lean--TeX review pass. The
+full build, twenty focused regressions, enforced standard-axiom audits
+for all seventeen new declarations and fresh unchanged dependency audit
+pass. The central inventory's historical prefix is preserved; only the
+seventeen new declaration checks and reports are appended, and the
+historical suite was not rerun in full.
 
 ### Geometric-input audit and algebra controls (SP69, 2026-09-18)
 

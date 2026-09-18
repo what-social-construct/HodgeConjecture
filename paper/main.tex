@@ -501,6 +501,35 @@ and use the canonical normalization notation
   Y_N=\Spec(\widetilde B_N).
 \]
 
+\begin{proposition}[Finite normal affine models]
+\label{prop:finite-normal-affine-model}
+Let \(A\) be a normal domain, finite as a \(B\)-module, with
+fraction field \(L\) and compatible structure maps. The canonical map
+\[
+  \nu_A:\widetilde B_L\longrightarrow A
+\]
+is an isomorphism of \(B\)-algebras. Its induced morphism
+\(j_A:\Spec A\to Y_L\) is an isomorphism over \(\Spec B\), and
+\(\widetilde B_L\) is finite over \(B\). If \(A\) is also an
+\'{e}tale \(B\)-algebra, then so is \(\widetilde B_L\).
+
+If a second finite normal \(B\)-algebra \(S\) has fraction field
+\(N\), again with compatible structure maps, the same construction
+identifies \(S\) with \(\widetilde B_N\).
+Together with \(\mathcal N\), these identifications construct the
+finite normalized cover with visible model \(U=\Spec A\) and
+marked map \(j_A\).
+\end{proposition}
+
+\begin{proof}
+An element of \(L\) integral over \(B\) is integral over \(A\),
+so normality places it in \(A\). Conversely, module-finiteness makes
+every element of \(A\) integral over \(B\). The two maps are inverse
+and preserve the \(B\)-algebra structure. Finiteness and \'{e}taleness
+transport across this isomorphism. Applying \(\Spec\) gives the
+asserted isomorphism over the base; the same argument applies to \(S\).
+\end{proof}
+
 The group \(G=\mathcal N.\mathit{galoisGroup}\), the subgroup
 \(H=\mathcal N.\mathit{intermediateFixingSubgroup}\), and the canonical deck
 action on \(Y_N\) are all constructed from the same datum.  Normality keeps the conjugate embeddings inside the same field \(N\).
@@ -782,6 +811,29 @@ Conjugate-boundary separation is the condition
   I\neq1,\ \operatorname{ht}(Q)=1
   \Longrightarrow J_{\mathrm{fm}}(I)\nsubseteq Q.
 \]
+
+\begin{proposition}[Full visibility and the boundary ideals]
+\label{prop:full-visible-boundary}
+Assume \(K\) is perfect and the marked open immersion
+\(j:U\to Y_L\) is surjective. Then every \(\partial_g\) is empty
+and \(J_g=\widetilde B_N\). For every nontrivial \(I\leq G\),
+\[
+  J_{\mathrm{mov}}(I)=J_{\mathrm{fm}}(I)=\widetilde B_N.
+\]
+In particular, \(\operatorname{Sep}_{\partial}(\mathcal C)\) holds.
+This applies to the cover constructed in
+Proposition~\ref{prop:finite-normal-affine-model}.
+\end{proposition}
+
+\begin{proof}
+Surjectivity makes each pulled-back visible locus all of \(Y_N\).
+The vanishing ideal of its empty complement is the unit ideal.
+Because \(N\) is the normal closure of the marked extension, the
+action on \(G/H\) is faithful. Every nontrivial subgroup \(I\)
+therefore moves some sheet, so the sum defining \(J_{\mathrm{mov}}(I)\)
+contains a unit-ideal summand. The combined ideal is consequently the
+unit ideal as well, and is contained in no prime.
+\end{proof}
 
 \begin{corollary}[Boundary poles and separation]
 \label{cor:boundary-poles-separation}
@@ -4422,6 +4474,17 @@ Marked source algebra split &
 Normal-closure augmentation square &
 \leanpath{normalClosureBaseSheetAugmentation_comp_tensorGenericSheetsEquiv}\newline
 \leanpath{Boundary/Normalization/SelectorComparison.lean}\\
+Finite normal affine models &
+\leanpath{normalizationIntermediateEquiv}\newline
+\leanpath{normalizedCoverOfFiniteNormalAffineModels}\newline
+\leanpath{Boundary/Normalization/FiniteAffineCover.lean}\\
+Full-visible boundary ideals &
+\leanpath{movingBoundaryIdeal_eq_top_of_surjective}\newline
+\leanpath{conjugateBoundarySeparation_of_surjective}\newline
+\leanpath{Boundary/Normalization/FullVisibleBoundary.lean}\\
+Constructed affine-cover separation &
+\leanpath{conjugateBoundarySeparation_normalizedCoverOfFiniteNormalAffineModels}\newline
+\leanpath{Boundary/Normalization/FiniteAffineCover.lean}\\
 Marked block normal form &
 \leanpath{decomposition_conj_multiplication}\newline
 \leanpath{Boundary/Sheets/MarkedBlockProjector.lean}\\
@@ -5006,6 +5069,25 @@ principal table, grouped by mathematical layer.
 \normsrc{InvariantIntermediate.lean};
 \normsrc{ConjugateNormalization.lean};
 \normsrc{ConjugateBoundary.lean};
+\normsrc{FiniteAffineCover.lean};
+\leanpath{normalizationToIntermediate_surjective};
+\leanpath{normalizationIntermediateEquiv};
+\leanpath{normalizationIntermediateEquiv_toAlgHom};
+\leanpath{intermediateNormalizationIso};
+\leanpath{intermediateNormalizationIso_hom};
+\leanpath{intermediateToNormalization_isIso};
+\leanpath{intermediateToNormalization_base_surjective};
+\leanpath{normalizedCoordinateRing_etale};
+\leanpath{normalizedCoordinateRing_finite};
+\leanpath{normalizedCoverOfFiniteNormalAffineModels};
+\leanpath{conjugateBoundarySeparation_normalizedCoverOfFiniteNormalAffineModels};
+\normsrc{FullVisibleBoundary.lean};
+\leanpath{pulledBackConjugateVisibleOpen_eq_univ_of_surjective};
+\leanpath{pulledBackConjugateBoundary_eq_empty_of_surjective};
+\leanpath{pulledBackConjugateBoundaryIdeal_eq_top_of_surjective};
+\leanpath{movingBoundaryIdeal_eq_top_of_surjective};
+\leanpath{fixedMovingBoundaryIdeal_eq_top_of_surjective};
+\leanpath{conjugateBoundarySeparation_of_surjective};
 \normsrc{BoundedOverring.lean};
 \normsrc{AffineSections.lean};
 \normsrc{BoundarySections.lean};

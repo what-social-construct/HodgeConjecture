@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-18 (SP69 geometry-input scope; earlier checkpoint
+Last audited: 2026-09-18 (SP70 finite-affine/full-visible route; earlier checkpoint
 validation records are retained with their original scope).
 
 Status vocabulary:
@@ -17,6 +17,62 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Finite-affine normalization and full visibility (A11bb / SP70)
+
+Status: `FORMAL`. The selected branch starts
+with actual finite normal affine algebras and compatible marked fraction
+fields. It identifies the canonical normalization map with an equivalence,
+transports the finite models and etaleness, and constructs the existing
+`NormalizedCover` with the whole intermediate model visible. For any
+surjective visible open and perfect base field, empty conjugate boundaries
+and the core-free sheet action make `J_mov(I)=J_fm(I)=top` for every
+nontrivial subgroup. Separation follows directly, with no Noetherian,
+regular-pair or uniform-landing hypothesis in that implication.
+
+This is an affine construction from supplied rings and normal-closure
+field data, not an existence theorem for global smooth-projective covers
+or their Galois closures. General etale-to-normality, chart gluing and
+Chow--Betti generation are not established by it. No new ideal, input
+bundle, projector or axiom is introduced. The single manuscript has
+matching finite-normal-affine and full-visible-boundary propositions,
+with the same hypotheses. Its 71-page PDF (771887 bytes) passes the build,
+warning scan, visual checks and independent Lean--TeX review. The full
+build passes (3163 jobs; only the two expected unchanged Challenge
+placeholder warnings). Twenty focused regressions and enforced
+standard-axiom audits for all seventeen new declarations pass without
+warnings. The fresh unchanged dependency audit passes its six endpoint
+contracts and two support reports. The centralized inventory now has 798
+checks, 565 examples and 690 reports, with only seventeen new checks and
+reports appended; its historical prefix was preserved and not rerun in full.
+
+Witnesses:
+
+- `Boundary/Normalization/FiniteAffineCover.lean`, namespace
+  `CollisionFoundations`: `normalizationToIntermediate_surjective`,
+  `normalizationIntermediateEquiv` and its `toAlgHom` formula,
+  `intermediateNormalizationIso` and its `hom` formula,
+  `intermediateToNormalization_isIso`,
+  `intermediateToNormalization_base_surjective`,
+  `normalizedCoordinateRing_finite` and `normalizedCoordinateRing_etale`.
+  Normality is supplied as `IsIntegralClosure A A E` for the general
+  integral-algebra identification; the finite cover specialization uses
+  integrally closed rings with chosen fraction fields.
+- In namespace `NormalizationInertia`,
+  `normalizedCoverOfFiniteNormalAffineModels` constructs the cover from
+  supplied finite normal `A,S` and `NormalClosureData K L N`. Etaleness is
+  not required for this constructor; the separate transport theorem
+  preserves it when supplied.
+  `conjugateBoundarySeparation_normalizedCoverOfFiniteNormalAffineModels`
+  proves separation for this constructed cover over perfect `K`.
+- `Boundary/Normalization/FullVisibleBoundary.lean`, namespace
+  `NormalizationInertia`:
+  `pulledBackConjugateVisibleOpen_eq_univ_of_surjective`,
+  `pulledBackConjugateBoundary_eq_empty_of_surjective`,
+  `pulledBackConjugateBoundaryIdeal_eq_top_of_surjective`,
+  `movingBoundaryIdeal_eq_top_of_surjective`,
+  `fixedMovingBoundaryIdeal_eq_top_of_surjective` and
+  `conjugateBoundarySeparation_of_surjective`.
 
 ## Geometric-pair input audit (SP69)
 

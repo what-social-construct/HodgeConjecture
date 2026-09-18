@@ -1,8 +1,9 @@
 # Current gap map
 
-Last reviewed: 2026-09-18 (geometric-pair input audit, SP69;
-eight research-only algebra diagnostics and standard-axiom checks pass,
-as does the full build; active library and single manuscript unchanged).
+Last reviewed: 2026-09-18 (SP70 finite-affine/full-visible construction;
+full build, twenty focused regressions, seventeen standard-axiom audits,
+fresh dependency audit and single-PDF checks pass; earlier checkpoint
+validation records retain their original scope).
 
 Start with [the target and equivalence sketch](TARGET_BRIDGE.md): it fixes
 the geometric statement, separates the two directions of the proved bridge,
@@ -213,7 +214,7 @@ codimension at least two; no realization of those arbitrary ideals as
 
 **SP69: the geometry must supply more than the current package.** The
 [geometric-pair input audit](working/0018-geometric-pair-input-audit.md)
-finds no instantiated `NormalizedCover` in the active library. The package
+found no instantiated `NormalizedCover` in the active library at SP69. The package
 supplies finite normalization models and a marked open immersion, not
 full visibility or quotient regularity. In the characteristic-zero model
 `x=t^2` with visible open `D(t)`, the visible map is etale while the
@@ -235,18 +236,34 @@ proved theorem or a supplied geometric witness. The unchanged historical
 verification inventory was not rerun, and the unchanged manuscript/PDF
 was not rebuilt for this research checkpoint.
 
-**Next: select and construct actual cover geometry.** A finite etale
-smooth-projective cover with full-visible affine normalization is one
-option: surjective `j.base` makes all conjugate boundaries empty; the
-existing core-free normal-closure action then gives `J_mov(I)=top` and
-allows `g_I=1`. That implication is not implemented at SP69 and full
-visibility is not an existing assumption. For a genuinely nonempty
-boundary, instead establish quotient regularity for a geometrically
-chosen `f_I`, or B4's independent nonzero multiplier controlling
-**every** actual section. Do not add another conditional wrapper before
-identifying this input. The active library and manuscript/PDF are
-unchanged; neither route supplies Hodge-class generation or
-convolution-defect vanishing by itself.
+**SP70: finite affine models and the full-visible branch.** The user
+selected the finite etale route first. Construct the existing
+`NormalizedCover` from supplied finite normal affine algebras with the
+marked fraction fields, by proving that the canonical normalization map
+is an equivalence and transporting finiteness. Use the whole intermediate
+model as the visible scheme, with etaleness transported from its affine
+algebra. Surjective `j.base` makes every conjugate boundary empty; over
+perfect `K`, the existing core-free sheet action makes
+`J_mov(I)=J_fm(I)=top` for nontrivial `I`, so separation follows directly.
+There is no need to choose a regular pair or prove uniform trace landing
+for this branch. The single manuscript has matching propositions;
+its 71-page PDF build, warning scan, visual checks and independent
+Lean--TeX review pass. The full Lean build passes (3163 jobs), with only
+the two expected unchanged Challenge placeholder warnings. Twenty focused
+regressions and enforced standard-axiom audits for all seventeen new
+declarations pass without warnings, as does the fresh unchanged
+dependency audit. The centralized inventory has 798 checks, 565 examples
+and 690 reports after appending seventeen checks and reports; its unchanged
+historical prefix was not rerun in full.
+
+**Next geometric obligation:** obtain these actual finite normal affine
+models and their marked field data from an identified smooth-projective
+finite etale cover and Galois refinement, then establish compatibility
+across charts. Neither a global cover nor a Galois-closure construction
+is supplied by the affine bridge. Normality is an explicit algebraic
+hypothesis here, not newly deduced from etaleness. The main target is
+unchanged. Nonempty-boundary geometry remains an alternative if needed;
+Chow--Betti generation and convolution compatibility remain separate.
 
 In the separate localization stream, the next bounded checkpoint is L1's
 actual closed-complement cycle kernel/image comparison. It can run alongside

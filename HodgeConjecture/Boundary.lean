@@ -17,6 +17,8 @@ import HodgeConjecture.Boundary.Normalization.SectionLocalization
 import HodgeConjecture.Boundary.Normalization.HeightOneBoundaryPole
 import HodgeConjecture.Boundary.Normalization.BoundaryPole
 import HodgeConjecture.Boundary.Normalization.RegularPairBoundary
+import HodgeConjecture.Boundary.Normalization.FullVisibleBoundary
+import HodgeConjecture.Boundary.Normalization.FiniteAffineCover
 import HodgeConjecture.Boundary.Normalization.DeckAction
 import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
 import HodgeConjecture.Boundary.Normalization.ConjugateNormalization
@@ -53,6 +55,12 @@ cycles and their rational weighted sums.
 The bounded-overring lemma is the commutative-algebra input for a separate
 boundary-section/trace-landing construction. It uses the existing colon
 ideal and does not supply uniform geometric landing or boundary separation.
+
+Actual finite normal affine algebras construct the normalization models through
+the canonical algebra and scheme isomorphisms. Their full visibility makes
+the existing moving and fixed--moving boundary ideals the unit ideal for
+nontrivial subgroups, yielding separation without a regular-pair hypothesis.
+Étaleness transports across the same algebra identification.
 
 The broad normalization-purity/global-triviality prototype is preserved in
 `research/archive/legacy-lean/`, not as an importable library module.

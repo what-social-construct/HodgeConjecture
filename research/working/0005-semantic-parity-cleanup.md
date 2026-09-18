@@ -125,6 +125,67 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP67 | Actual height-one boundary poles and the uniform-landing separation implication | GLUE / CONSTRUCT / COMPARE | Glue local fractions into actual sections; clear the height-one localized ideal containment to construct a fraction outside the base. Specialize to the same fixed--moving boundary, derive the trace-pole witness and zero colon, and prove separation from explicitly supplied nonzero uniform landing for every subgroup. | PROVED; FULL BUILD, TWELVE FOCUSED REGRESSIONS, STANDARD-AXIOM ALLOWLIST, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP68 | Prescribed first element and the fixed--moving regular-pair separation criterion | REFINE / CANCEL / APPLY | Preserve the existing height-one denominator theorem as a wrapper around a fixed-element refinement. Cancel a regular moving element on the existing quotient by a nonzero fixed element; use the same two boundary-ideal summands to exclude containing height-one primes. | PROVED; FULL BUILD, TEN FOCUSED REGRESSIONS, STANDARD-AXIOM ALLOWLIST, BOUNDARY-POLE RERUN, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP69 | Actual geometric-input audit and research-only regular-pair controls | AUDIT / TEST SCOPE | Distinguish supplied normalized-cover data from constructed geometry. Record the etale-visible quadratic boundary obstruction and the unimplemented full-visible option; test good and bad first-element choices on separate algebraic ideals. | RESEARCH ONLY; EIGHT ALGEBRA DIAGNOSTICS, EIGHT STANDARD-AXIOM AUDITS AND FULL BUILD PASS; ACTIVE LIBRARY AND MANUSCRIPT UNCHANGED |
+| SP70 | Finite normal affine models and full-visible boundary separation | IDENTIFY / CONSTRUCT / SEPARATE | Identify supplied finite normal affine algebras with the existing normalization rings, transport finite models and etaleness, and construct the existing normalized cover. Empty conjugate boundaries and the core-free sheet action give unit moving/combined ideals and direct separation. | PROVED; FULL BUILD, TWENTY FOCUSED REGRESSIONS, SEVENTEEN STANDARD-AXIOM AUDITS, FRESH DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+
+SP70 (2026-09-18): **finite affine normalization / full-visible separation**.
+The user selected finite etale covers over the whole smooth projective
+base as the first geometric branch. The bounded affine implementation
+starts with supplied finite normal algebras, compatible fraction fields
+and marked `NormalClosureData`. It proves the canonical normalization map
+is an equivalence, transports the finite models and etaleness, and builds
+the existing `NormalizedCover` with the whole intermediate model visible.
+It does not add a parallel cover package, ideal or projector.
+
+For any surjective visible open, the pulled-back conjugate boundaries are
+empty and their ideals top. Over perfect `K`, core-freeness gives a moved
+sheet for each nontrivial subgroup; consequently `J_mov(I)=J_fm(I)=top`
+and boundary separation follows directly. No Noetherian, regular-pair or
+uniform-landing premise is needed for this implication.
+
+The production witnesses are in
+`Boundary/Normalization/FiniteAffineCover.lean` and
+`Boundary/Normalization/FullVisibleBoundary.lean`. In the former,
+`normalizationIntermediateEquiv` identifies the existing canonical
+`normalizationToIntermediate`, and `intermediateNormalizationIso`
+identifies the existing `intermediateToNormalization`.
+`normalizedCoverOfFiniteNormalAffineModels` constructs the cover;
+`conjugateBoundarySeparation_normalizedCoverOfFiniteNormalAffineModels`
+composes its proved full visibility with the latter file's
+`conjugateBoundarySeparation_of_surjective`. The constructor requires
+finite normal algebras, not etaleness; `normalizedCoordinateRing_etale`
+separately transports etaleness when given. All existing boundary-ideal
+notation is retained. Manuscript notation: `A,S` are the actual finite
+normal rings and `L,N` their chosen fraction fields;
+`\nu_A:\widetilde B_L\to A` denotes `normalizationIntermediateEquiv`,
+whose underlying map is the existing `normalizationToIntermediate`;
+`j_A:\operatorname{Spec}A\to Y_L` denotes
+`intermediateNormalizationIso.hom`, the existing
+`intermediateToNormalization`. These are proved isomorphisms, not
+replacement objects, and no new ideal or projector is introduced.
+
+The full Lean build passes (3163 jobs), with only the two expected
+unchanged Challenge placeholder warnings.
+`lake env lean research/FiniteAffineCoverVerification.lean` passes
+without warnings: twenty focused regressions and enforced standard-axiom
+audits for all seventeen new declarations. The only permitted axioms are
+`propext`, `Classical.choice` and `Quot.sound`; no project axiom is added.
+Its umbrella import checks public availability. The fresh unchanged
+`research/ProofDependencies.lean` audit passes all six endpoint contracts
+and its two supporting reports. The centralized inventory now contains
+798 checks, 565 examples and 690 reports, with only seventeen checks and
+seventeen reports appended. Its historical prefix is unchanged, and the
+entire historical suite was not rerun.
+
+The single PDF build passes (71 pages,
+771887 bytes), with no undefined-reference, overfull or underfull
+warnings. Final PDF pages 7, 10, 11, 53, 54 and 63 pass visual inspection;
+independent Lean--TeX review passes, including the compatible structure
+maps for `S`. A global smooth-projective
+finite etale cover and Galois refinement, general etale-to-normality,
+agreement across affine charts and Chow--Betti generation remain separate
+geometric tasks. The main target is unchanged; the single manuscript has
+matching propositions with the same hypotheses. Historical
+SP69, SP68 and earlier queue blocks below are preserved unchanged.
 
 SP69 (2026-09-18): **geometric-pair input audit / algebra controls**.
 The current package supplies finite normalization models and an open

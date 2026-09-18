@@ -551,9 +551,9 @@ allowlist were freshly rerun after the denominator refactor and pass.
 The appended umbrella-export checks, fresh unchanged dependency audit,
 independent Lean--TeX review and 70-page single-manuscript checks pass.
 
-The next geometry audit, SP69, is recorded in
+The SP69 geometry audit is recorded in
 [the geometric-pair input audit](research/working/0018-geometric-pair-input-audit.md).
-No instantiated `NormalizedCover` was found in the active library; its
+At that checkpoint no instantiated `NormalizedCover` was found in the active library; its
 finite models and marked open are supplied data. Those hypotheses do not
 force regular pairs: the characteristic-zero cover `x=t^2` with marked
 open `D(t)` has an etale visible map but
@@ -568,14 +568,32 @@ enforced standard-axiom checks pass; the full library build also passes.
 These diagnostics do not identify `A,M` with an actual cover's
 fixed/moving ideals.
 
-Next select and construct the actual cover geometry: a finite etale
-smooth-projective cover with full-visible affine normalization, or a
-genuinely nonempty-boundary construction. Full visibility would give
-`J_mov=top` and allow `g=1`, but this subclass is not implemented or
-silently assumed. A nonempty boundary instead needs an independently
-justified quotient-regularity or all-section trace-landing argument.
 No production declaration or manuscript/PDF changes belong to SP69;
 Hodge-class generation remains a separate obligation.
+
+The user selected the finite etale/full-visible branch for SP70. The
+bounded construction identifies supplied finite normal affine algebras
+with their existing normalization rings, transports their finite models,
+and builds the existing `NormalizedCover` with the whole intermediate
+model visible in
+[`FiniteAffineCover.lean`](HodgeConjecture/Boundary/Normalization/FiniteAffineCover.lean).
+Etaleness, when supplied for the affine algebra, transports separately.
+For a surjective visible open, every conjugate boundary
+is empty. Over perfect `K`, the core-free sheet action then makes
+`J_mov(I)=J_fm(I)=top` for every nontrivial `I`, giving boundary separation
+directly in
+[`FullVisibleBoundary.lean`](HodgeConjecture/Boundary/Normalization/FullVisibleBoundary.lean),
+without regular-pair or uniform-landing hypotheses.
+The full build, twenty focused regressions and enforced standard-axiom
+audits of all seventeen new declarations pass, as does the fresh unchanged
+dependency audit. The centralized inventory now has 798 checks, 565
+examples and 690 reports; its historical prefix is unchanged and was not
+rerun in full. This affine bridge does not
+construct a global smooth-projective cover, its Galois closure, or the
+required Chow--Betti classes. The main target is unchanged; the single
+manuscript records the affine identification and full-visible separation
+with the same explicit hypotheses. Its 71-page PDF build, warning scan,
+visual checks and independent Lean--TeX review pass.
 
 `paper/main.pdf` is the single current manuscript PDF. The earlier drafts
 and their sources are preserved in the

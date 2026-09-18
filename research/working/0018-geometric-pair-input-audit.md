@@ -150,3 +150,47 @@ full-visible condition must not be silently added to the general route.
 The next design choice has been requested from the user. Until that choice
 is settled, do not replace the construction with another assumed regular
 pair, associated-prime avoidance assertion, or uniform landing package.
+
+## 6. SP70 follow-up: finite etale/full-visible route selected
+
+The user selected the first option: begin with finite etale covers over
+the whole smooth projective base, and reconsider nonempty-boundary
+geometry only if needed. The SP69 audit above is retained as its dated
+record; its then-open design choice is now settled.
+
+The bounded affine checkpoint constructs the existing `NormalizedCover`
+from actual finite normal affine algebras with compatible marked fraction
+fields and supplied `NormalClosureData`. The canonical normalization map
+is identified with an equivalence, carrying finiteness and etaleness to
+the existing normalization models. The constructor
+`normalizedCoverOfFiniteNormalAffineModels` in `FiniteAffineCover.lean`
+requires finite normal rings, not etaleness; the separate
+`normalizedCoordinateRing_etale` preserves etaleness when given.
+The whole intermediate model is
+visible. For any surjective visible open, all conjugate boundaries are
+empty; over perfect `K`, the core-free action makes
+`J_mov(I)=J_fm(I)=top` for each nontrivial subgroup and proves separation
+directly via `conjugateBoundarySeparation_of_surjective` in
+`FullVisibleBoundary.lean`. No regular-pair detour or additional ideal is
+needed.
+
+Full visibility and boundary separation alone do not imply etaleness or
+unramifiedness: the separate etale hypothesis is still needed for the
+intended finite etale application.
+
+The full build passes (3163 jobs; only the two expected unchanged
+Challenge placeholder warnings). Twenty focused regressions and enforced
+standard-axiom audits for all seventeen new declarations pass without
+warnings. The fresh unchanged dependency audit passes its six endpoint
+contracts and two support reports. The central inventory has 798 checks,
+565 examples and 690 reports after appending seventeen checks and reports;
+the unchanged historical prefix was not rerun in full.
+
+This does not construct a global smooth-projective finite etale cover or
+its Galois closure, deduce
+normality from etaleness in general, or glue the affine data. Those
+geometric inputs and the separate Chow--Betti generation problem remain
+visible in the current gap map. The single manuscript has matching
+affine-identification and full-visible-separation propositions. Its
+71-page PDF build, warning scan, visual checks and independent Lean--TeX
+review pass.

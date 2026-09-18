@@ -358,19 +358,52 @@ that an arbitrary nonzero `f` will work. No general avoidance theorem is
 newly formalized by SP69; exact sources are in the
 [source ledger](SOURCE_LEDGER.md#geometric-input-audit-and-algebra-controls-sp69-2026-09-18).
 
-**Immediate choice:** select an actual finite etale smooth-projective
-cover with full-visible affine normalization, or a genuinely
-nonempty-boundary construction. In the first case, surjectivity of
-`j.base` makes every conjugate boundary empty. The existing core-free
-normal-closure action over perfect `K` then gives `J_mov(I)=top` for
-nontrivial `I`, so any nonzero fixed-locus element pairs with `g_I=1`.
-This positive subclass is a mathematical option, not an implemented
-theorem or an assumption to add silently. In the second case, construct
-quotient-regularity witnesses from identified geometry, or independently
-establish B4's uniform landing for every actual section. The main
-smooth-projective target is unchanged; neither option supplies its
-class-generation obligation. SP69 changes research records only, not
-the active library, manuscript or PDF.
+At SP69 the choice between full-visible finite etale geometry and a
+genuinely nonempty-boundary construction was unresolved. The user has
+now selected the first branch; SP69 itself changed research records only,
+not the active library, manuscript or PDF.
+
+### B4c. Finite affine models and full-visible separation
+
+SP70 implements the selected affine bridge. Start with actual finite
+normal algebras and compatible marked fraction fields, including supplied
+`NormalClosureData`. Prove that the canonical normalization map is an
+equivalence, transport finiteness and etaleness, and construct the existing
+`NormalizedCover` with the entire intermediate normalization visible.
+This supplies an affine constructor, rather than only a consumer of
+assumed normalized-cover data. The constructor is
+`normalizedCoverOfFiniteNormalAffineModels` in
+[`FiniteAffineCover.lean`](../HodgeConjecture/Boundary/Normalization/FiniteAffineCover.lean).
+Its finite normal `A,S` hypotheses suffice without etaleness;
+`normalizedCoordinateRing_etale` separately transports etaleness when
+given for the affine algebra.
+
+For a surjective visible open, every conjugate boundary is empty. Over
+perfect `K`, the existing core-free sheet action ensures a moved sheet
+for each nontrivial subgroup, giving `J_mov(I)=J_fm(I)=top`. Boundary
+separation follows directly, without a regular pair, Noetherian base or
+uniform-landing hypothesis, through
+`conjugateBoundarySeparation_of_surjective` in
+[`FullVisibleBoundary.lean`](../HodgeConjecture/Boundary/Normalization/FullVisibleBoundary.lean).
+The direct consumer
+`conjugateBoundarySeparation_normalizedCoverOfFiniteNormalAffineModels`
+applies this to the constructed affine cover.
+The full build, twenty focused regressions, enforced standard-axiom
+audits of all seventeen new declarations and the fresh unchanged
+dependency audit pass. The centralized inventory now records 798 checks,
+565 examples and 690 reports after appending seventeen checks and
+reports; its unchanged historical prefix was not rerun in full.
+
+The next geometric obligation is to obtain the supplied finite normal
+affine algebras and marked fields from an identified finite etale cover
+of a smooth projective base and its Galois refinement, with agreement
+across affine charts. This checkpoint does not construct that global
+cover, prove a general etale-to-normality theorem, or supply the
+Chow--Betti classes. Nonempty-boundary geometry remains a possible
+alternative. The main smooth-projective target is unchanged, and the
+manuscript now states the two affine/full-visible propositions with their
+exact hypotheses. Its 71-page PDF build, warning scan, visual checks and
+independent Lean--TeX review pass.
 
 ### G0. Smooth projective setting and candidate constructions
 
@@ -816,14 +849,13 @@ provide variable-class coverage.
 - Review new objects against the parity registry before adding wrappers.
   Promote a proved checkpoint only after the appropriate build, focused
   regressions, dependency/axiom checks and Lean--TeX comparison.
-- **Next action:** select and construct the actual geometry after B4b's
-  audit: a finite etale smooth-projective cover with full-visible affine
-  normalization, or a genuinely nonempty-boundary construction. Do not
-  infer either from the current `NormalizedCover` package. The latter
-  route requires geometrically justified quotient regularity or B4's
-  independent all-section uniform landing, not another conditional
-  wrapper. Preserve PB0 and the abelian examples as optional
-  deferred work, with the general smooth-projective target unchanged.
+- **Next action:** use B4c's proved finite-affine/full-visible constructor
+  by obtaining its actual finite normal rings and marked fields from
+  identified global finite etale cover geometry and proving
+  chart compatibility. Full visibility is constructed on this branch,
+  not added to every `NormalizedCover`. Retain nonempty-boundary geometry
+  as an alternative if needed. Preserve PB0 and the abelian examples as
+  optional deferred work, with the general smooth-projective target unchanged.
   L1 remains the next checkpoint of the separate bounded localization
   stream, only if continued in parallel for a named consumer. No new
   geometric family is implemented or universal reduction asserted here.
@@ -1633,12 +1665,13 @@ the dated checkpoints below document how the existing objects were built.
    existing endpoint using constructed data, with no hypothesis that is
    merely the desired class-generation or realization conclusion renamed.
 
-The operative next action after B4b's input audit is to select and
-construct actual cover geometry: the full-visible finite-etale option or
-a genuinely nonempty-boundary construction. The former is not silently
-assumed, while the latter must supply quotient regularity or independent
-all-section uniform landing. The research algebra controls supply neither
-a normalized-cover instance nor its geometric witnesses.
+The operative action after B4c's proved finite-affine/full-visible
+construction is to derive its affine inputs from identified global finite
+etale cover geometry. Normality and
+marked normal-closure fields remain explicit inputs at the affine layer;
+neither a global Galois refinement nor gluing is supplied by the research
+algebra controls. A genuinely nonempty-boundary route remains an
+alternative requiring its own quotient regularity or all-section landing.
 The projective-bundle recipe, its PB0 chart, and the
 elliptic curve/chart/point construction are optional deferred examples;
 their detailed analyses are preserved above.
