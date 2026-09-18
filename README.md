@@ -651,12 +651,33 @@ three enforced standard-axiom audits pass, as do the fresh SP72 rerun
 (eighteen regressions and eleven audits) and unchanged dependency audit.
 The central inventory now has 823 checks, 565 examples and 715 reports;
 its historical prefix is unchanged and was not rerun in full.
-Next construct marked
-normal-closure field data from this actual finite separable extension.
 This does not discharge downstream `PerfectField K` inputs or construct
 a global Galois refinement. Normal stalks from smoothness, chart gluing
 and Chow--Betti generation remain separate tasks.
 The 73-page PDF passes its build, warning scan and visual checks.
+
+SP74 constructs the existing marked `NormalClosureData` from a finite
+field extension in
+[`NormalClosureConstruction.lean`](HodgeConjecture/Boundary/Normalization/NormalClosureConstruction.lean),
+using `IntermediateField.normalClosure K L (AlgebraicClosure L)` and
+preserving the canonical upstairs embedding. For any supplied marked
+normal closure, separability of `L/K` gives separability and Galoisness
+of the normal closure without a perfect-base-field assumption.
+[`FunctionFieldNormalClosure.lean`](HodgeConjecture/Boundary/Normalization/FunctionFieldNormalClosure.lean)
+applies this to the actual finite generic extension, and scheme formal
+unramifiedness supplies its Galois conclusion through SP73. The full
+build, twenty-two focused regressions and seven enforced standard-axiom
+audits pass, as do the fresh SP73 rerun (sixteen regressions and three
+audits) and unchanged dependency audit. The central inventory now has
+830 checks, 565 examples and 722 reports; its historical prefix is
+unchanged and was not rerun in full. Next connect this extension-specific
+Galois result to the
+existing fixed-field, core-free and selector consumers, replacing
+avoidable perfectness assumptions. Their signatures are unchanged in
+SP74; a scheme-level Galois refinement, gluing and Chow--Betti generation
+are not constructed by this field-level bridge.
+The updated 74-page PDF passes its build, warning scan, visual checks
+and independent core/scheme/manuscript review.
 
 `paper/main.pdf` is the single current manuscript PDF. The earlier drafts
 and their sources are preserved in the

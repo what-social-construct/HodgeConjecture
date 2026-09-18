@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-18 (SP73 actual generic separability; earlier checkpoint
+Last audited: 2026-09-18 (SP74 marked normal-closure construction; earlier checkpoint
 validation records are retained with their original scope).
 
 Status vocabulary:
@@ -17,6 +17,50 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Constructed marked normal closure and Galois bridge (A11bf / SP74)
+
+Status: `FORMAL`. A finite extension `L/K` constructs the
+existing `NormalClosureData K L N`, with
+`N=IntermediateField.normalClosure K L (AlgebraicClosure L)`. Its marked
+embedding, viewed in the ambient algebraic closure, equals the original
+`algebraMap L (AlgebraicClosure L)`. This constructor does not require
+separability or perfectness.
+
+For any supplied `D : NormalClosureData K L N`, the hypothesis
+`Algebra.IsSeparable K L` gives `Algebra.IsSeparable K N`, then `IsGalois K N`.
+This is not limited to the newly constructed datum and does not require
+`PerfectField K`. The actual finite generic extension of a finite dominant
+morphism of integral schemes therefore constructs marked normal-closure
+data; scheme formal unramifiedness additionally makes that closure Galois
+via SP73. Finite etale morphisms are a specialization.
+
+Witnesses:
+
+- `Boundary/Normalization/NormalClosureConstruction.lean`, namespace
+  `CollisionFoundations.NormalClosureData`: `ofAlgebraicClosure`,
+  `ofAlgebraicClosure_embedding_apply`, `isSeparable`,
+  `isGalois_of_isSeparable`.
+- `Boundary/Normalization/FunctionFieldNormalClosure.lean`, namespace
+  `CollisionFoundations`: `functionFieldNormalClosureData`,
+  `functionFieldNormalClosureData_embedding_apply`,
+  `functionFieldNormalClosure_isGalois`.
+
+The existing package and Mathlib intermediate-field carrier are reused;
+no parallel normal-closure package or source axiom is introduced. No
+existing `PerfectField K` consumer signature is refactored here. Next
+connect the new Galois result to the fixed-field, core-free and selector
+consumers. A scheme-level Galois refinement, normal stalks from smoothness,
+normalization gluing and Chow--Betti generation remain separate tasks.
+The 74-page PDF (785530 bytes) passes its build, warning scan, visual
+checks and independent core/scheme/manuscript review. The full build
+passes (3179 jobs; only the two expected unchanged Challenge placeholder
+warnings). Twenty-two focused regressions and seven enforced
+standard-axiom audits pass. The fresh SP73 rerun passes sixteen regressions
+and three audits; the fresh unchanged dependency audit passes six endpoint
+contracts and two support reports. The central inventory now has 830
+checks, 565 examples and 722 reports, with seven checks and reports
+appended; its historical prefix is unchanged and was not rerun in full.
 
 ## Separability of the actual generic extension (A11be / SP73)
 
@@ -40,8 +84,8 @@ The three witnesses, in `CollisionFoundations` and
 `functionFieldMapOfDominant_isSeparable`.
 
 These are properties of the existing `kappa_p` algebra, not a replacement
-field map, a new cover package or a source axiom. Next construct marked
-normal-closure field data from this finite separable extension. The
+field map, a new cover package or a source axiom. SP74 above constructs
+marked normal-closure field data from this finite extension. The
 existing downstream `PerfectField K` hypotheses remain distinct and
 undischarged; actual global Galois refinement, normal stalks from smooth
 geometry, gluing and Chow--Betti generation remain separate tasks.
@@ -88,8 +132,8 @@ Witnesses:
   `functionFieldMapOfDominant_finiteDimensional`.
 
 SP72 establishes the finite extension; SP73 above derives its separability
-from scheme formal unramifiedness. Marked normal-closure field data are
-still to be constructed.
+from scheme formal unramifiedness, and SP74 constructs its marked
+normal-closure field data.
 Global finite etale Galois refinement, normal stalks
 from smoothness, chart gluing and Chow--Betti generation remain separate.
 No new field carrier, geometric input package, projector or source axiom
@@ -143,8 +187,9 @@ Witnesses:
 
 No abstract cover package or substitute function field is introduced.
 Normal stalks from smooth geometry, an actual global Galois refinement,
-marked generic extension/normal-closure data and chart gluing remain
-unproved here. The actual Chow--Betti class-generation obligation and the
+and chart gluing remain unproved here. The generic extension and marked
+normal-closure field layer, open at SP71, are supplied by SP72--SP74 above.
+The actual Chow--Betti class-generation obligation and the
 main smooth-projective target are unchanged. The manuscript states the
 chart result with its exact hypotheses. Its 72-page PDF (775350 bytes)
 passes the build, warning scan, visual checks and independent Lean--TeX

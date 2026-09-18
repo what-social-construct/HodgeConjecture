@@ -1,9 +1,10 @@
 # Current gap map
 
-Last reviewed: 2026-09-18 (SP73 separability of the actual generic
-extension; full build, sixteen focused regressions, three standard-axiom
-audits, SP72 rerun, fresh dependency audit and single-PDF checks pass;
-earlier checkpoint validation records retain their original scope).
+Last reviewed: 2026-09-18 (SP74 marked normal closure of the actual
+finite extension; full build, twenty-two focused regressions, seven
+standard-axiom audits, SP73 rerun, fresh dependency audit, single-PDF
+checks and independent review pass; earlier checkpoint validation
+records retain their original scope).
 
 Start with [the target and equivalence sketch](TARGET_BRIDGE.md): it fixes
 the geometric statement, separates the two directions of the proved bridge,
@@ -324,9 +325,37 @@ audits pass. The central inventory now has 823 checks, 565 examples and
 715 reports after appending three checks and reports; its historical
 prefix is unchanged and was not rerun in full.
 
-**Next bounded bridge:** construct marked normal-closure field data from
-this actual finite separable extension. Separability of this extension
-does not discharge downstream `PerfectField K` hypotheses.
+**SP74: construct the marked finite normal closure.**
+[`NormalClosureConstruction.lean`](../HodgeConjecture/Boundary/Normalization/NormalClosureConstruction.lean)
+constructs the existing `NormalClosureData K L N` from `FiniteDimensional K L`,
+with `N=IntermediateField.normalClosure K L (AlgebraicClosure L)`.
+Its marking is the original inclusion of `L` into that algebraic closure,
+as proved by the embedding formula. Independently of this particular
+construction, any supplied normal-closure datum of a separable `L/K`
+gives separability of `N/K` and hence `IsGalois K N`; perfectness of `K`
+is not required.
+[`FunctionFieldNormalClosure.lean`](../HodgeConjecture/Boundary/Normalization/FunctionFieldNormalClosure.lean)
+constructs this datum for the actual generic embedding of a finite
+dominant morphism of integral schemes. Formal unramifiedness of the
+morphism supplies separability and Galoisness, so finite etale morphisms
+qualify. The full build passes (3179 jobs; only the two expected unchanged
+Challenge warnings), as do the fresh SP73 rerun (sixteen regressions and
+three enforced audits) and unchanged dependency audit (six endpoint
+contracts and two support reports). The 74-page PDF build, warning scan,
+visual checks and independent core/scheme/manuscript review pass;
+twenty-two focused SP74 regressions and seven enforced standard-axiom
+audits also pass. The central inventory now has 830 checks, 565 examples
+and 722 reports after appending seven checks and reports; its historical
+prefix is unchanged and was not rerun in full.
+
+**Next bounded bridge:** use the new extension-specific Galois fact in
+the existing fixed-field, core-free and selector consumers, replacing
+avoidable `PerfectField K` premises. Those consumers' signatures have
+not been changed in SP74, and the result does not prove `K` perfect.
+The next-proof audit separates extension-separability hypotheses for
+fixed-field/selector comparisons from potential removal of both
+perfectness and separability in core-freeness and full-visible boundary
+consumers; that stronger removal is not proved in this checkpoint.
 An actual finite etale Galois refinement, normal stalks from the intended
 smooth geometry and chart gluing remain separate geometric tasks. The
 function-field tower and SP71's equality over `X` are not a gluing theorem.

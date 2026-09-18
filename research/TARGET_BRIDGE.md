@@ -434,9 +434,9 @@ eleven checks and reports; the unchanged historical prefix was not
 rerun in full.
 
 The remaining geometric input is normality of stalks from the intended
-smooth geometry, together with an actual global Galois refinement and
-its marked generic extension/normal-closure data. B4e below supplies the
-actual finite generic extension. Deriving normal stalks from smoothness
+smooth geometry, together with an actual global Galois refinement.
+B4e--B4g below supply the actual finite generic extension and its marked
+normal-closure field data. Deriving normal stalks from smoothness
 remains a larger foundational task. Agreement over the
 base on one chart is not yet a gluing theorem. No new cover package or
 function field replaces the existing objects. The target and separate
@@ -504,12 +504,56 @@ The central inventory has 823 checks, 565 examples and 715 reports,
 with three checks and reports appended; its historical prefix is
 unchanged and was not rerun in full.
 
-Next construct marked normal-closure field data from this actual finite
-separable extension. This does not discharge existing downstream
+SP74 below constructs marked normal-closure field data from this actual
+finite extension. This does not discharge existing downstream
 `PerfectField K` hypotheses. Global finite etale Galois refinement,
 normal stalks from smooth geometry, gluing and Chow--Betti generation
 remain separate; no field carrier, map or cover package is replaced.
 The 73-page PDF build, warning scan and visual checks pass.
+
+### B4g. Construct the marked normal closure and its Galois structure
+
+SP74 constructs the existing datum in
+[`NormalClosureConstruction.lean`](../HodgeConjecture/Boundary/Normalization/NormalClosureConstruction.lean).
+`NormalClosureData.ofAlgebraicClosure K L` needs only a finite field
+extension. It uses the existing intermediate field
+`N=IntermediateField.normalClosure K L (AlgebraicClosure L)` and marks
+the canonical `L` inclusion. `ofAlgebraicClosure_embedding_apply` proves
+that this is the original embedding when viewed in the ambient algebraic
+closure. No parallel datum or carrier alias is introduced.
+
+For any supplied `D : NormalClosureData K L N`, `D.isSeparable` derives
+separability of `N/K` from `Algebra.IsSeparable K L`, and
+`D.isGalois_of_isSeparable` combines that with normality. Neither requires
+`PerfectField K`. In
+[`FunctionFieldNormalClosure.lean`](../HodgeConjecture/Boundary/Normalization/FunctionFieldNormalClosure.lean),
+`functionFieldNormalClosureData` applies the construction to the actual
+finite generic-stalk extension. Its embedding formula preserves the
+canonical upstairs-field marking; `functionFieldNormalClosure_isGalois`
+uses SP73 under scheme formal unramifiedness. Finite etale morphisms
+therefore qualify. The full build, twenty-two focused regressions and
+seven enforced standard-axiom audits pass. The fresh SP73 rerun passes
+sixteen regressions and three audits; the fresh unchanged dependency
+audit passes six endpoint contracts and two support reports. The central
+inventory has 830 checks, 565 examples and 722 reports, with seven checks
+and reports appended; its historical prefix is unchanged and was not
+rerun in full.
+
+Next connect these extension-specific Galois results to the existing
+fixed-field, core-free and selector consumers, replacing avoidable
+perfectness assumptions. Their current signatures remain unchanged in
+SP74. A scheme-level Galois refinement, normal stalks from smoothness,
+normalization gluing and Chow--Betti generation remain separate.
+
+The inspected next refactor distinguishes two cases: the fixed-field and
+selector/tensor comparisons should use `Algebra.IsSeparable K L`; the
+core-free `normalCore_eq_bot` proof appears to need only the existing
+normality and finiteness of the normal closure, with no separability or
+perfectness premise. Audit removal entirely there and in its full-visible
+boundary consumers instead of uniformly substituting separability.
+These are next-proof obligations, not SP74 signature changes.
+The 74-page PDF build, warning scan, visual checks and independent
+core/scheme/manuscript review pass.
 
 ### G0. Smooth projective setting and candidate constructions
 
@@ -955,10 +999,12 @@ provide variable-class coverage.
 - Review new objects against the parity registry before adding wrappers.
   Promote a proved checkpoint only after the appropriate build, focused
   regressions, dependency/axiom checks and Lean--TeX comparison.
-- **Next action:** construct the marked
-  normal-closure field data from the actual finite separable extension
-  supplied by B4e--B4f. Keep downstream `PerfectField K` hypotheses
-  distinct. Normal stalks from
+- **Next action:** connect B4g's extension-specific Galois result to the
+  existing fixed-field, core-free and selector consumers, replacing
+  avoidable `PerfectField K` premises: use extension separability where
+  needed, but audit complete removal for core-freeness and its full-visible
+  boundary consumers. SP74 constructs the marked datum
+  but leaves those consumer signatures unchanged. Normal stalks from
   smooth geometry, global finite etale Galois refinement and chart gluing
   remain separate tasks. B4d already derives the finite/etale affine rings
   from a supplied finite morphism and proves the normalization
@@ -1775,12 +1821,15 @@ the dated checkpoints below document how the existing objects were built.
    existing endpoint using constructed data, with no hypothesis that is
    merely the desired class-generation or realization conclusion renamed.
 
-The operative action after B4e--B4f's actual finite separable extension
-is to construct its marked normal-closure field data. Separability from
-scheme formal unramifiedness does not itself prove perfectness of the
-base field for other consumers.
+The operative action after B4g's constructed marked normal closure is to
+connect its extension-specific Galois result to the existing fixed-field,
+core-free and selector consumers, replacing avoidable perfectness
+assumptions. The inspected core-free proof may require no separability
+replacement; fixed-field and selector/tensor comparisons need the actual
+extension's separability. Those signatures are unchanged at SP74; the base field is
+not thereby proved perfect.
 Deriving normal stalks from smooth geometry, the global finite etale
-Galois refinement, marked normal-closure data and gluing remain separate.
+Galois refinement and gluing remain separate.
 Finiteness and etaleness of the actual
 inverse-image section algebra now follow from the scheme morphism; the
 normalization identification uses the existing upstairs function field

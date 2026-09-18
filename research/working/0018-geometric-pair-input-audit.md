@@ -310,3 +310,44 @@ extension does not prove perfectness of the base field. Actual global
 Galois refinement, normal stalks from smooth geometry, gluing and
 Chow--Betti generation remain separate. All preceding audit text is
 preserved unchanged.
+
+## 10. SP74 follow-up: construct the marked finite normal closure
+
+`NormalClosureConstruction.lean` constructs the existing
+`NormalClosureData K L N` for every finite field extension `L/K`, using
+`N=IntermediateField.normalClosure K L (AlgebraicClosure L)`. The marked
+embedding retains the canonical inclusion of `L` in its algebraic
+closure. The constructor does not require separability or perfectness.
+For any supplied marked normal closure, separability of `L/K` gives
+separability and Galoisness of `N/K`, without a perfect-base-field input.
+
+`FunctionFieldNormalClosure.lean` applies this to the actual generic-stalk
+extension of a finite dominant morphism of integral schemes. Its marking
+formula is the original upstairs-field inclusion. Scheme formal
+unramifiedness supplies separability through SP73, hence Galoisness of
+the constructed normal closure; finite etale morphisms qualify.
+The same package and Mathlib intermediate-field carrier are reused.
+
+The 74-page PDF build, warning scan, visual checks and independent
+core/scheme/manuscript review pass. The full build passes (3179 jobs;
+only the two expected unchanged Challenge placeholder warnings).
+Twenty-two focused regressions and seven enforced standard-axiom audits
+pass. The fresh SP73 rerun passes sixteen regressions and three audits;
+the fresh unchanged dependency audit passes six endpoint contracts and
+two support reports. The central inventory now has 830 checks, 565
+examples and 722 reports after seven checks and reports are appended;
+its historical prefix is unchanged and was not rerun in full.
+
+Next connect this extension-specific Galois
+result to existing fixed-field, core-free and selector consumers,
+replacing avoidable perfectness assumptions. Their signatures have
+not been refactored in SP74, and perfectness of the base field is not
+proved. The next-proof audit suggests extension separability for the
+fixed-field and selector/tensor comparisons, but no separability premise
+for core-freeness itself; removal in that proof and its full-visible
+boundary consumers is not yet implemented. Actual scheme-level Galois
+refinement, normal stalks from
+smoothness, normalization gluing and Chow--Betti generation remain
+separate. The manuscript uses the existing `\mathcal N` with the
+canonical marking; its Stacks citations are attribution, not source
+axioms. All preceding audit text is preserved unchanged.

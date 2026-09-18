@@ -7232,3 +7232,23 @@ Focused regressions and an enforced axiom allowlist are in
 #print axioms HodgeConjecture.CollisionFoundations.functionFieldMapOfDominant_formallyUnramified_of_affine
 #print axioms HodgeConjecture.CollisionFoundations.functionFieldMapOfDominant_formallyUnramified
 #print axioms HodgeConjecture.CollisionFoundations.functionFieldMapOfDominant_isSeparable
+
+/-! SP74: the constructed marked normal closure of the actual generic extension.
+Focused regressions and an enforced axiom allowlist are in
+`research/FunctionFieldNormalClosureVerification.lean`. -/
+
+#check HodgeConjecture.CollisionFoundations.NormalClosureData.ofAlgebraicClosure
+#check HodgeConjecture.CollisionFoundations.NormalClosureData.ofAlgebraicClosure_embedding_apply
+#check HodgeConjecture.CollisionFoundations.NormalClosureData.isSeparable
+#check HodgeConjecture.CollisionFoundations.NormalClosureData.isGalois_of_isSeparable
+#check HodgeConjecture.CollisionFoundations.functionFieldNormalClosureData
+#check HodgeConjecture.CollisionFoundations.functionFieldNormalClosureData_embedding_apply
+#check HodgeConjecture.CollisionFoundations.functionFieldNormalClosure_isGalois
+
+#print axioms HodgeConjecture.CollisionFoundations.NormalClosureData.ofAlgebraicClosure
+#print axioms HodgeConjecture.CollisionFoundations.NormalClosureData.ofAlgebraicClosure_embedding_apply
+#print axioms HodgeConjecture.CollisionFoundations.NormalClosureData.isSeparable
+#print axioms HodgeConjecture.CollisionFoundations.NormalClosureData.isGalois_of_isSeparable
+#print axioms HodgeConjecture.CollisionFoundations.functionFieldNormalClosureData
+#print axioms HodgeConjecture.CollisionFoundations.functionFieldNormalClosureData_embedding_apply
+#print axioms HodgeConjecture.CollisionFoundations.functionFieldNormalClosure_isGalois

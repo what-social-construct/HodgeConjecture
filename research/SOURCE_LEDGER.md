@@ -17,9 +17,58 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source check: 2026-09-18 (SP73 actual generic separability;
+Last source check: 2026-09-18 (SP74 marked normal-closure construction;
 earlier source records retain
 their original validation scope).
+
+### Constructed marked normal closure and Galois bridge (SP74, 2026-09-18)
+
+`NormalClosureConstruction.lean` uses Mathlib's
+`IntermediateField.normalClosure` inside `AlgebraicClosure L`. The
+canonical `L` inclusion supplies the marked embedding; the existing
+normal-closure and finite-dimensional instances populate the existing
+`NormalClosureData` fields. Its embedding formula is the original
+upstairs-to-algebraic-closure map, not an untracked choice of embedding.
+
+The manuscript attributes normal-closure existence to
+[Stacks, Lemma 9.16.3, Tag 09DT](https://stacks.math.columbia.edu/tag/09DT):
+for a finite extension, a minimal finite normal overfield exists, with
+uniqueness up to the marked extension isomorphism. For containment in an
+already chosen algebraic normal ambient field, it cites
+[Stacks, Lemma 9.16.5(1), Tag 0BMG](https://stacks.math.columbia.edu/tag/0BMG):
+a finite intermediate extension lies in a finite normal intermediate
+extension. Here the ambient field is `AlgebraicClosure L`, algebraic
+and normal over `K` because `L/K` is finite. These are mathematical
+attributions, not Lean source axioms; the constructor uses checked
+Mathlib normal-closure instances. The cited proofs are not repeated in
+the manuscript.
+
+For an arbitrary supplied marked normal closure `D`, every embedded
+copy of a separable `L/K` lies in `separableClosure K N`.
+`normalClosure_le_iff` and the normal-closure top identity therefore make
+`N/K` separable. Combining this with `D.normal` proves Galoisness.
+These direct proofs assume separability of this extension, not perfectness
+of every algebraic extension of `K`.
+
+`FunctionFieldNormalClosure.lean` uses SP72's actual generic-stalk algebra
+and finite-dimensionality to construct the marked datum, preserving its
+canonical embedding into the upstairs function field's algebraic closure.
+SP73's separability theorem supplies Galoisness under scheme formal
+unramifiedness; etaleness is a sufficient specialization. No literature
+axiom, parallel package or replacement generic map is introduced.
+
+The old perfect-field-based fixed-field, core-free and selector consumer
+signatures remain unchanged. Connecting the local-separability Galois
+result to those consumers is next; no perfectness theorem or scheme-level
+Galois refinement is asserted. Normal stalks, gluing and Chow--Betti
+generation remain separate. The 74-page PDF build, warning scan, visual
+checks and independent core/scheme/manuscript review pass. The full
+build, twenty-two focused regressions, seven enforced standard-axiom
+audits, the fresh SP73 rerun (sixteen regressions and three audits), and
+the fresh unchanged dependency audit (six endpoint contracts and two
+support reports) pass. The central inventory has 830 checks, 565 examples
+and 722 reports after seven checks and reports are appended; its preserved
+historical prefix was not rerun in full.
 
 ### Separability of the actual generic extension (SP73, 2026-09-18)
 
@@ -41,8 +90,8 @@ requires finite. Scheme etaleness is a sufficient specialization,
 not an added premise of the general theorem. No normality, perfectness,
 characteristic-zero or literature axiom is used.
 
-Marked normal-closure data and the actual global Galois refinement are
-still to be constructed. Separability of this particular extension does
+SP74 above constructs marked normal-closure field data; the actual global
+Galois refinement remains separate. Separability of this particular extension does
 not imply or discharge the existing downstream perfect-base-field
 hypotheses. Normal stalks from smoothness, gluing and Chow--Betti generation
 remain separate. The 73-page PDF build, warning scan and visual checks
@@ -75,7 +124,7 @@ the downstairs function field. The global theorem selects an affine
 neighborhood of the generic point, without requiring a supplied chart.
 
 No normality, etaleness or Noetherianity is used in SP72. Marked normal-closure
-field data must next be constructed from this actual finite extension.
+field data, still open at SP72, are constructed in SP74 above.
 Its separability input, still open at SP72, is derived in SP73 above;
 no global Galois refinement, normal-stalk theorem, gluing or Chow--Betti
 generation is concluded here. The manuscript follows the exact same

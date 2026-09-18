@@ -22,6 +22,7 @@ import HodgeConjecture.Boundary.Normalization.FiniteAffineCover
 import HodgeConjecture.Boundary.Normalization.FiniteAffineChart
 import HodgeConjecture.Boundary.Normalization.FiniteFunctionField
 import HodgeConjecture.Boundary.Normalization.SeparableFunctionField
+import HodgeConjecture.Boundary.Normalization.FunctionFieldNormalClosure
 import HodgeConjecture.Boundary.Normalization.DeckAction
 import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
 import HodgeConjecture.Boundary.Normalization.ConjugateNormalization
@@ -78,6 +79,10 @@ extension, without any normality or étaleness premise.
 Formal unramifiedness passes to the actual function-field extension for an
 affine morphism. In the finite case it proves separability; scheme étaleness
 supplies the formal-unramifiedness premise without a perfect-field assumption.
+The resulting finite extension constructs the existing marked normal-closure
+datum inside the algebraic closure of the upstairs field. Separability of the
+marked extension gives separability and Galoisness of its normal closure,
+again without a perfect-base-field premise.
 
 The broad normalization-purity/global-triviality prototype is preserved in
 `research/archive/legacy-lean/`, not as an importable library module.

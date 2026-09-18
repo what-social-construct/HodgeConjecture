@@ -129,6 +129,75 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP71 | Actual whole inverse-image affine rings and normalization over the original base | DERIVE / IDENTIFY / COMMUTE | Derive finite and etale section algebras from a finite etale scheme morphism. For an integral source and nonempty chart, use the actual function field and explicit normal stalks to identify the whole inverse-image open with its normalization, prove the structural equality over the original base, and derive finite/etale normalization. | PROVED; FULL BUILD, EIGHTEEN FOCUSED REGRESSIONS, ELEVEN STANDARD-AXIOM AUDITS, SP70 RERUN, FRESH DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP72 | Actual dominant function-field map and finite generic extension | CONSTRUCT / COMMUTE / LOCALIZE | Construct the generic-stalk map with germ, identity and composition laws; identify its open-immersion specialization. Derive section scalar towers and finite-dimensionality from the actual finite affine algebra, with a global endpoint choosing its chart internally. | PROVED; FULL BUILD, EIGHTEEN FOCUSED REGRESSIONS, ELEVEN STANDARD-AXIOM AUDITS, SP71 RERUN, FRESH DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP73 | Formal unramifiedness and separability of the actual generic extension | LOCALIZE / COMPOSE / APPLY | Transfer formal unramifiedness from an actual dominant affine scheme morphism to its existing function-field algebra. For finite morphisms, use SP72 finite-dimensionality to prove separability; finite etale morphisms are a specialization. | PROVED; FULL BUILD, SIXTEEN FOCUSED REGRESSIONS, THREE STANDARD-AXIOM AUDITS, SP72 RERUN, FRESH DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+| SP74 | Constructed marked normal closure and extension-specific Galois bridge | CONSTRUCT / PRESERVE / TRANSFER | Build the existing normal-closure datum inside the upstairs algebraic closure, preserving its canonical marking. Transfer separability to any marked normal closure and apply the Galois consequence to the actual finite generic extension. | PROVED; FULL BUILD, TWENTY-TWO FOCUSED REGRESSIONS, SEVEN STANDARD-AXIOM AUDITS, SP73 RERUN, FRESH DEPENDENCY AUDIT, SINGLE-PDF CHECKS AND INDEPENDENT REVIEW PASS |
+
+SP74 (2026-09-18): **constructed marked normal closure / Galois bridge**.
+`NormalClosureConstruction.lean` constructs the existing
+`NormalClosureData K L N` from a finite field extension, with
+`N=IntermediateField.normalClosure K L (AlgebraicClosure L)`.
+The marked embedding, viewed in the algebraic closure, is proved equal
+to the original upstairs-field inclusion. The constructor itself does
+not require separability or perfectness. For any supplied marked normal
+closure of separable `L/K`, the new generic theorems prove separability
+and Galoisness of `N/K` without `PerfectField K`.
+
+`FunctionFieldNormalClosure.lean` constructs this datum from the actual
+generic-stalk extension of a finite dominant morphism of integral
+schemes. The embedding formula preserves the canonical marking; scheme
+formal unramifiedness supplies separability by SP73 and hence makes
+the constructed finite normal closure Galois. Finite etale morphisms
+are a specialization.
+
+The seven public declarations are `NormalClosureData.ofAlgebraicClosure`,
+`NormalClosureData.ofAlgebraicClosure_embedding_apply`,
+`NormalClosureData.isSeparable`, `NormalClosureData.isGalois_of_isSeparable`,
+`functionFieldNormalClosureData`,
+`functionFieldNormalClosureData_embedding_apply` and
+`functionFieldNormalClosure_isGalois`.
+
+Notation parity: retain the existing `\mathcal N=(K,L,N,\iota)` and put
+`N=\bigvee_{\sigma:L\to_K\overline L}\sigma(L)\subseteq\overline L`,
+the existing Mathlib normal-closure intermediate field. The ambient
+inclusions `j_N,j_L` satisfy `j_N\circ\iota=j_L`, the embedding formula.
+For schemes, `K=K(X)`, `L=K(Y)` and the `K` action is the existing
+`\kappa_p`. No new carrier alias, normal-closure package, generic map,
+ideal or projector is introduced. Manuscript Proposition
+`prop:constructed-normal-closure` uses this same notation.
+
+The manuscript cites Stacks 09DT for normal-closure existence and
+0BMG(1) for finite normal containment in the chosen algebraic normal
+ambient field; the [source ledger](../SOURCE_LEDGER.md) records the
+exact match. These citations are attribution, not added Lean axioms.
+The full build passes (3179 jobs), with only the two expected unchanged
+Challenge placeholder warnings.
+`lake env lean research/FunctionFieldNormalClosureVerification.lean`
+passes through the boundary umbrella: twenty-two regressions and seven
+enforced axiom
+allowlists, permitting only `propext`, `Classical.choice` and `Quot.sound`.
+The fresh SP73 rerun passes sixteen
+regressions and three enforced standard-axiom audits; the fresh unchanged
+dependency audit passes six endpoint contracts and two support reports.
+The central inventory now has 830 checks, 565 examples and 722 reports,
+with seven checks and seven reports appended. Its historical prefix is
+preserved byte-for-byte; the entire historical suite was not rerun.
+The single PDF build passes (74 pages, 785530 bytes), with no warning,
+overfull, underfull, undefined-reference or multiply-defined-label
+diagnostics. Final pages 6, 8, 9, 56, 57, 66, 67, 72 and 73 pass visual
+inspection, including Proposition 3.5, the crosswalk, registry and new
+bibliography entries. Independent core/scheme/manuscript review passes.
+
+Next connect the local-separability Galois
+result to the existing fixed-field, core-free and selector consumers,
+replacing avoidable perfectness assumptions. No old `PerfectField K`
+consumer signature is changed in SP74. The inspected next proof uses
+extension separability for fixed-field and selector/tensor comparisons;
+core-freeness appears to need only existing normality and finiteness,
+so audit removal of both perfectness and separability there and in the
+full-visible boundary consumers. That removal is not yet proved.
+Scheme-level Galois refinement,
+normal stalks, normalization gluing and Chow--Betti generation remain
+separate. Historical SP73 and earlier queue blocks below are preserved
+unchanged.
 
 SP73 (2026-09-18): **actual generic formal unramifiedness / separability**.
 `Boundary/Normalization/SeparableFunctionField.lean` implements the

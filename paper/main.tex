@@ -484,8 +484,10 @@ constructed from actual point cycles.
 Let \(B\) be a domain with \(K=\Frac(B)\), and supply a marked
 normal-closure datum \(\mathcal N=(K,L,N,\iota)\).  This datum already
 contains the normal-closure witness and the finiteness of \(L/K\) and
-\(N/K\).  Over a perfect base field---in particular in characteristic
-zero---it therefore gives \(N/K\) as a finite Galois extension.  Write the derived group and
+\(N/K\).  When \(L/K\) is separable, it gives \(N/K\) as a finite
+Galois extension, by Proposition~\ref{prop:constructed-normal-closure}.
+This includes the case of a perfect base field, in particular
+characteristic zero. Write the derived group and
 fixing subgroup as
 
 \[
@@ -650,6 +652,49 @@ For finite \(p\), Proposition~\ref{prop:finite-function-field}
 makes this field extension finite-dimensional, hence of finite
 type. A formally unramified field extension of finite type is
 separable. Finally, an \'{e}tale morphism is formally unramified.
+\end{proof}
+
+\begin{proposition}[Constructing the marked normal closure]
+\label{prop:constructed-normal-closure}
+Let \(L/K\) be a finite field extension and choose an algebraic
+closure \(\overline L\) of \(L\), with its induced \(K\)-algebra
+structure. The compositum
+\[
+  N=\bigvee_{\sigma:L\hookrightarrow_K\overline L}\sigma(L)
+    \ \subseteq\ \overline L
+\]
+is a finite normal closure of \(L/K\). The canonical inclusion
+\(j_L:L\to\overline L\) factors through a marked embedding
+\(\iota:L\to N\), satisfying
+\[
+  j_N\circ\iota=j_L,
+  \qquad j_N:N\hookrightarrow\overline L.
+\]
+Thus this construction supplies the datum
+\(\mathcal N=(K,L,N,\iota)\).
+If \(L/K\) is separable, then every normal closure of \(L/K\)
+is separable over \(K\), and the constructed \(N/K\) is finite
+Galois.
+
+For a finite dominant morphism \(p:Y\to X\) of integral schemes,
+take \(K=K(X)\), \(L=K(Y)\), with scalar map \(\kappa_p\).
+This constructs the marked normal-closure datum of the actual
+function-field extension. If \(p\) is formally unramified, in
+particular if it is \'{e}tale, this normal closure is Galois.
+\end{proposition}
+
+\begin{proof}
+The normal-closure construction and its finiteness and normality are
+standard~\cite{StacksNormalClosureExistence,StacksFiniteNormalClosure}.
+The canonical inclusion \(j_L\) is one of the embeddings defining
+the compositum, so it factors through \(N\) with the displayed
+equality. If \(L/K\) is separable, every conjugate image of \(L\)
+is separable over \(K\). Their compositum is therefore separable;
+the same argument applies to any normal closure, since those images
+generate it. Normality and separability give Galoisness.
+For the scheme specialization, finiteness follows from
+Proposition~\ref{prop:finite-function-field}, and formal unramifiedness
+gives separability by Proposition~\ref{prop:separable-function-field}.
 \end{proof}
 
 The group \(G=\mathcal N.\mathit{galoisGroup}\), the subgroup
@@ -4623,6 +4668,15 @@ Separable generic extension through \(\kappa_p\) &
 \leanpath{functionFieldMapOfDominant_formallyUnramified}\newline
 \leanpath{functionFieldMapOfDominant_isSeparable}\newline
 \leanpath{Boundary/Normalization/SeparableFunctionField.lean}\\
+Constructed marked normal closure \(\mathcal N\) &
+\leanpath{NormalClosureData.ofAlgebraicClosure}\newline
+\leanpath{functionFieldNormalClosureData}\newline
+\leanpath{functionFieldNormalClosure_isGalois}\newline
+\leanpath{Boundary/Normalization/FunctionFieldNormalClosure.lean}\\
+Galoisness from the marked extension &
+\leanpath{NormalClosureData.isSeparable}\newline
+\leanpath{NormalClosureData.isGalois_of_isSeparable}\newline
+\leanpath{Boundary/Normalization/NormalClosureConstruction.lean}\\
 Full-visible boundary ideals &
 \leanpath{movingBoundaryIdeal_eq_top_of_surjective}\newline
 \leanpath{conjugateBoundarySeparation_of_surjective}\newline
@@ -5245,6 +5299,15 @@ principal table, grouped by mathematical layer.
 \leanpath{functionFieldMapOfDominant_formallyUnramified_of_affine};
 \leanpath{functionFieldMapOfDominant_formallyUnramified};
 \leanpath{functionFieldMapOfDominant_isSeparable};
+\normsrc{NormalClosureConstruction.lean};
+\leanpath{NormalClosureData.ofAlgebraicClosure};
+\leanpath{NormalClosureData.ofAlgebraicClosure_embedding_apply};
+\leanpath{NormalClosureData.isSeparable};
+\leanpath{NormalClosureData.isGalois_of_isSeparable};
+\normsrc{FunctionFieldNormalClosure.lean};
+\leanpath{functionFieldNormalClosureData};
+\leanpath{functionFieldNormalClosureData_embedding_apply};
+\leanpath{functionFieldNormalClosure_isGalois};
 \normsrc{FiniteAffineCover.lean};
 \leanpath{normalizationToIntermediate_surjective};
 \leanpath{normalizationIntermediateEquiv};
