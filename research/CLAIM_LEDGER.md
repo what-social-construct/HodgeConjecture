@@ -1,6 +1,7 @@
 # Claim ledger
 
-Last audited: 2026-09-15.
+Last audited: 2026-09-18 (SP69 geometry-input scope; earlier checkpoint
+validation records are retained with their original scope).
 
 Status vocabulary:
 
@@ -16,6 +17,42 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Geometric-pair input audit (SP69)
+
+Status: `OPEN` for geometric witness construction. The
+[audit](working/0018-geometric-pair-input-audit.md) checks what the existing
+package actually supplies; it adds no production declaration, source
+axiom, manuscript theorem or PDF revision. Research-only algebra
+diagnostics in `RegularPairGeometryControls.lean` pass: eight named
+theorems and eight enforced standard-axiom audits, with no warnings.
+The full library build also passes (3161 jobs; only the two existing
+Challenge placeholder warnings). The unchanged historical verification
+inventory was not rerun, and the unchanged manuscript/PDF was not rebuilt.
+
+No instantiated `NormalizedCover` was found in the active library. Its
+normal-closure datum does give a core-free intermediate fixing subgroup
+over perfect `K`, but its marked open need not be surjective. The
+characteristic-zero example `x=t^2`, `U=D(t)` has an etale visible map
+and `J_fix=J_mov=J_fm=(t)`, so the supplied package cannot imply the
+regular-pair premise in general. This is audited mathematics, not a Lean
+construction of that cover. It does not contradict the conditional SP68
+theorem or any Hodge target.
+
+The separate algebra controls use `A=(x), M=(y)` in `Q[y][x]`:
+`f=x,g=y` is a positive control, whereas `f=xy` admits no regular
+`g in M`. These ideals are not identified with geometric fixed/moving
+ideals. Associated-prime avoidance is analyzed as a possible tool for
+choosing `f,g`; no general avoidance theorem or geometric application is
+newly proved here.
+
+Next choose and construct the actual geometry. Full-visible affine
+normalization for a finite etale smooth-projective cover would make
+`J_mov=top` and permit `g=1`; that subclass is not yet implemented.
+A genuinely nonempty-boundary construction instead needs independent
+quotient-regularity or all-section trace-landing input. Neither option
+has been chosen by this checkpoint, and neither yields Hodge-class
+generation on its own.
 
 ## Fixed--moving regular-pair checkpoint (A11ba / SP68)
 
@@ -61,9 +98,11 @@ Witnesses, in namespace `NormalizationInertia`:
 No ideal, quotient carrier, input package or projector is added.
 `f_I,g_I` denote supplied witnesses rather than newly defined canonical
 objects. Separated-summand pairs are sufficient, not a necessary or
-equivalent reformulation of separation; the condition can fail when
-`J_mov(I)=0` while the proper fixed-locus ideal already has codimension
-at least two. The generic theorem also accepts both elements in `J_fm(I)`.
+equivalent reformulation of the generic ideal criterion. Arbitrary
+algebraic ideals with zero moving summand and proper fixed summand of
+codimension at least two demonstrate that distinction; no normalized-cover
+realization of that example is claimed. The generic theorem also accepts
+both elements in `J_fm(I)`.
 The next geometric step is to test this criterion on identified geometry,
 construct these elements where applicable, and prove quotient injectivity
 for every nontrivial subgroup. The already proved nonzero fixed-locus

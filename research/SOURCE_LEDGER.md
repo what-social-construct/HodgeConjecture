@@ -17,7 +17,55 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source check: 2026-09-15.
+Last source check: 2026-09-18 (SP69 sources below; earlier records retain
+their original validation scope).
+
+### Geometric-input audit and algebra controls (SP69, 2026-09-18)
+
+The [input audit](working/0018-geometric-pair-input-audit.md) separates
+three scopes: current Lean package facts, elementary geometric examples
+not instantiated in Lean, and research-only commutative-algebra controls.
+No new source hypothesis, axiom, production declaration or manuscript
+statement is introduced. All eight named diagnostics in
+`RegularPairGeometryControls.lean` and their enforced standard-axiom
+audits pass without warnings; the full library build passes as well.
+The unchanged historical inventory and manuscript/PDF were not rerun
+or rebuilt for this audit.
+
+For the characteristic-zero map `k[x] -> k[t,t^-1]`, `x -> t^2`, write
+the target as `k[x][t]_t/(t^2-x)`. The defining polynomial is monic and
+its derivative `2t` is invertible. Thus
+[Stacks, Definition 10.144.1, Tag 00UB](https://stacks.math.columbia.edu/tag/00UB)
+identifies the presentation as standard etale, and
+[Stacks, Lemma 10.144.2(1), Tag 00UC](https://stacks.math.columbia.edu/tag/00UC)
+implies the visible map is etale. These exact sources justify only that
+visible-map assertion. The boundary and ideal calculations
+`J_fix=J_mov=J_fm=(t)` are the audit's elementary calculation for the
+involution `t -> -t`; neither source constructs a Lean `NormalizedCover`
+or establishes separation.
+
+For a chosen `f` in a Noetherian ring `T`, multiplication by `g` on
+`T/(f)` is injective exactly when `g` avoids its associated primes.
+Finiteness of those primes follows from Lemma 10.63.5; their union is
+the set of zero divisors by Lemma 10.63.9, both in
+[Stacks, Section 10.63, Tag 00L9](https://stacks.math.columbia.edu/tag/00L9).
+Combining those statements with
+[Stacks, Lemma 10.15.2, Tag 00DS](https://stacks.math.columbia.edu/tag/00DS)
+gives the mathematical existence test: the moving ideal must be
+contained in none of these finitely many primes. This is a derived
+source/API analysis, not a new Lean theorem or a proof of that avoidance
+for the geometric moving ideal. The positive and bad-first-element
+controls in `Q[y][x]` only test the algebraic distinction.
+
+The full-visible option uses local results rather than a new literature
+input: `NormalClosureData.intermediateFixingSubgroup_normalCore_eq_bot`
+and `exists_sheet_moved_of_normalCore_eq_bot` give a moved sheet over
+perfect `K`; surjective `j.base` would make all pulled-back boundaries
+empty and their ideals top. Pairing a nonzero fixed-locus element with
+`1` is then possible. No surjectivity hypothesis is in `NormalizedCover`,
+and this positive subclass has not been implemented at SP69. The next
+step is to select and construct actual geometry, not to cite the desired
+avoidance or landing conclusion as though it followed from these sources.
 
 ### Direct algebraic criterion and sibling landing audit (SP68, 2026-09-18)
 

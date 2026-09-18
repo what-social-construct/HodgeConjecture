@@ -124,6 +124,52 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP66 | Genuine normalization trace dual, common denominator and actual-section colon consumers | REUSE / BOUND / APPLY | Reuse Mathlib's trace-dual submodule, contain it in an integral generic basis's finite trace-dual span, and clear that span by one nonzero normalization element. Specialize to the existing normal closure; apply B0 conditionally to B1's actual sections without duplicating carriers or assuming geometric landing. | PROVED; FULL BUILD, FOURTEEN FOCUSED REGRESSIONS, STANDARD-AXIOM ALLOWLIST, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP67 | Actual height-one boundary poles and the uniform-landing separation implication | GLUE / CONSTRUCT / COMPARE | Glue local fractions into actual sections; clear the height-one localized ideal containment to construct a fraction outside the base. Specialize to the same fixed--moving boundary, derive the trace-pole witness and zero colon, and prove separation from explicitly supplied nonzero uniform landing for every subgroup. | PROVED; FULL BUILD, TWELVE FOCUSED REGRESSIONS, STANDARD-AXIOM ALLOWLIST, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP68 | Prescribed first element and the fixed--moving regular-pair separation criterion | REFINE / CANCEL / APPLY | Preserve the existing height-one denominator theorem as a wrapper around a fixed-element refinement. Cancel a regular moving element on the existing quotient by a nonzero fixed element; use the same two boundary-ideal summands to exclude containing height-one primes. | PROVED; FULL BUILD, TEN FOCUSED REGRESSIONS, STANDARD-AXIOM ALLOWLIST, BOUNDARY-POLE RERUN, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+| SP69 | Actual geometric-input audit and research-only regular-pair controls | AUDIT / TEST SCOPE | Distinguish supplied normalized-cover data from constructed geometry. Record the etale-visible quadratic boundary obstruction and the unimplemented full-visible option; test good and bad first-element choices on separate algebraic ideals. | RESEARCH ONLY; EIGHT ALGEBRA DIAGNOSTICS, EIGHT STANDARD-AXIOM AUDITS AND FULL BUILD PASS; ACTIVE LIBRARY AND MANUSCRIPT UNCHANGED |
+
+SP69 (2026-09-18): **geometric-pair input audit / algebra controls**.
+The current package supplies finite normalization models and an open
+immersion; no instantiated `NormalizedCover` was found in the active
+library. The [input audit](0018-geometric-pair-input-audit.md) checks the
+characteristic-zero model `x=t^2`, `U=D(t)`: the visible map is etale but
+the nontrivial subgroup has `J_fix=J_mov=J_fm=(t)`. This is a mathematical
+example, not a Lean-formalized normalized cover or a Hodge counterexample.
+
+`research/RegularPairGeometryControls.lean` contains research-only
+commutative-algebra diagnostics. In `Q[y][x]`, `A=(x), M=(y)` admit
+`f=x,g=y`; choosing `f=xy` instead admits no regular `g in M`. The
+generic domain obstruction uses `a != 0`, a nonunit `b`, and the nonzero
+class of `a` killed by each `g in (b)` modulo `ab`. These test ideals
+are not asserted to be the fixed/moving ideals of any normalized cover.
+
+Validation: `lake env lean research/RegularPairGeometryControls.lean`
+passes without warnings. Its eight named diagnostic theorems are
+`not_regular_of_mem_radical`, `not_regular_of_mem_factor`,
+`constant_regular_mod_X`, `coordinate_pair_regular`,
+`coordinate_sum_not_le_heightOne`, `coordinate_sum_ne_top`,
+`product_choice_mem_fixed` and `product_choice_no_regular_moving`.
+The enforced audits for all eight accept only `propext`,
+`Classical.choice` and `Quot.sound`. A fresh `lake build` passes
+(3161 jobs; only the two unchanged expected Challenge placeholder
+warnings). No production declarations, library exports,
+verification-inventory entries or project axioms are added. The production
+inventory remains 781 checks, 565 examples and 673 reports; that unchanged
+inventory was not independently rerun. The main manuscript and PDF are
+unchanged and were not rebuilt for this research audit.
+
+Associated-prime avoidance is a source/API analysis, not a newly proved
+general theorem. Full-visible affine normalization would give
+`J_mov(I)=top` and allow `g_I=1`, using the already proved core-free
+normal-closure action; that positive subclass is not implemented or
+assumed here. The next action is to choose and construct actual geometry:
+a finite etale smooth-projective cover with full-visible normalization,
+or a genuinely nonempty-boundary construction with independent
+quotient-regularity or all-section landing input.
+
+Scope correction for the earlier discussion: a zero moving summand
+together with a proper fixed summand of codimension at least two is an
+arbitrary-ideal algebra example only, not a known realized normalized
+cover. Historical SP68 and earlier queue blocks below are preserved
+unchanged; their validation results are not relabeled as SP69 runs.
 
 SP68 (2026-09-18): **fixed--moving regular pairs / direct separation criterion**.
 `Boundary/Normalization/HeightOneBoundaryPole.lean` refines its denominator

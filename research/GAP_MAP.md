@@ -1,8 +1,8 @@
 # Current gap map
 
-Last reviewed: 2026-09-18 (fixed--moving regular-pair criterion, SP68;
-full build, ten new focused regressions, three standard-axiom checks,
-boundary-pole regression rerun, dependency and single-PDF checks pass).
+Last reviewed: 2026-09-18 (geometric-pair input audit, SP69;
+eight research-only algebra diagnostics and standard-axiom checks pass,
+as does the full build; active library and single manuscript unchanged).
 
 Start with [the target and equivalence sketch](TARGET_BRIDGE.md): it fixes
 the geometric statement, separates the two directions of the proved bridge,
@@ -206,19 +206,47 @@ audit, independent Lean--TeX review and 70-page single-PDF checks pass.
 The historical inventory prefix is preserved; that entire suite was not rerun.
 
 This separated-summand condition is sufficient, not an equivalence or a
-necessary condition for separation. It can fail when `J_mov(I)=0` while
-the proper ideal `J_fix(I)` already has codimension at least two.
+necessary condition for the generic ideal criterion. An algebra-only
+example takes a zero moving summand and a proper fixed summand of
+codimension at least two; no realization of those arbitrary ideals as
+`J_fix(I),J_mov(I)` of a normalized cover is asserted.
 
-**Next: test and construct regular pairs for identified geometry.** Seek
-`f_I,g_I` in the separate summands and prove quotient injectivity where
-applicable. No such pairs are supplied yet. The generic criterion permits
-both elements in `J_fm(I)` without a separated-summand requirement.
-Independent geometric uniform landing remains B4's alternative: construct
-a nonzero `s` and prove its action on **every** section. A finite coefficient bound
-or a candidate ideal's name supplies neither premise. The new criterion
-does not solve that landing problem. Both routes concern the cover/boundary
-construction, not Hodge-class generation or convolution-defect vanishing
-by themselves.
+**SP69: the geometry must supply more than the current package.** The
+[geometric-pair input audit](working/0018-geometric-pair-input-audit.md)
+finds no instantiated `NormalizedCover` in the active library. The package
+supplies finite normalization models and a marked open immersion, not
+full visibility or quotient regularity. In the characteristic-zero model
+`x=t^2` with visible open `D(t)`, the visible map is etale while the
+nontrivial subgroup has `J_fix=J_mov=J_fm=(t)`. The height-one boundary
+therefore remains. This is a mathematical audit of the package's scope,
+not a Lean-formalized geometric instance or a Hodge counterexample.
+
+The research-only
+[`RegularPairGeometryControls.lean`](RegularPairGeometryControls.lean)
+tests separate algebraic controls in `Q[y][x]`: `A=(x), M=(y)` admit the
+pair `f=x,g=y`, but the bad choice `f=xy` admits no regular `g in M`.
+The generic obstruction is cancellation in a domain: for `a != 0` and a
+nonunit `b`, every `g in (b)` kills the nonzero class of `a` modulo `ab`.
+All eight diagnostic theorems and their enforced standard-axiom checks
+pass without warnings; the full build passes with only the two existing
+Challenge placeholder warnings. The controls do not construct boundary
+ideals. Associated-prime avoidance is a source/API analysis, not another
+proved theorem or a supplied geometric witness. The unchanged historical
+verification inventory was not rerun, and the unchanged manuscript/PDF
+was not rebuilt for this research checkpoint.
+
+**Next: select and construct actual cover geometry.** A finite etale
+smooth-projective cover with full-visible affine normalization is one
+option: surjective `j.base` makes all conjugate boundaries empty; the
+existing core-free normal-closure action then gives `J_mov(I)=top` and
+allows `g_I=1`. That implication is not implemented at SP69 and full
+visibility is not an existing assumption. For a genuinely nonempty
+boundary, instead establish quotient regularity for a geometrically
+chosen `f_I`, or B4's independent nonzero multiplier controlling
+**every** actual section. Do not add another conditional wrapper before
+identifying this input. The active library and manuscript/PDF are
+unchanged; neither route supplies Hodge-class generation or
+convolution-defect vanishing by itself.
 
 In the separate localization stream, the next bounded checkpoint is L1's
 actual closed-complement cycle kernel/image comparison. It can run alongside

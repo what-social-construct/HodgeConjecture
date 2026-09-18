@@ -17,6 +17,10 @@ manuscript. Do not combine old checkpoint descriptions into a proof plan.
 - `0017-proof-spine-and-archive.md` records the checked declaration
   dependencies, physical archival, and the supporting role of the retained
   block/coordinate calculations. It is an audit, not a new Hodge proof.
+- `0018-geometric-pair-input-audit.md` records the missing actual normalized
+  cover, a deleted-ramification boundary model, and standalone algebraic
+  controls for choosing a regular pair. It separates the available criteria
+  from the next geometric design choice; the manuscript is unchanged.
 - `PALOMAR_FIXED_RING_HANDOFF.md` records the separate submission boundary.
 - `../bench/` holds the standalone matrix-restriction diagnostic outside
   active imports; this is not an obstruction in the intended target route.

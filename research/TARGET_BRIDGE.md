@@ -318,19 +318,59 @@ trace data are not required. The notation `f_I,g_I` is for local witnesses,
 not a new canonical pair, ideal, input package or projector.
 
 The separated-summand condition is sufficient, not an equivalent or
-necessary reformulation of separation. It can fail when `J_mov(I)=0`
-even though the proper fixed-locus ideal already has codimension at least
-two. The generic theorem also accepts both elements in `J_fm(I)` without
-requiring one from each summand.
+necessary reformulation of the generic ideal criterion. For arbitrary
+algebraic ideals it can fail when the moving summand is zero and the
+proper fixed summand already has codimension at least two; no realization
+of that example by an actual normalized cover is asserted. The generic
+theorem also accepts both elements in `J_fm(I)` without requiring one
+from each summand.
 
-**Immediate geometric checkpoint:** test this criterion on identified
-cover/boundary geometry; construct these elements and prove quotient
-injectivity where applicable. The existing proof that the fixed-locus
-ideal is nonzero supplies a possible first-element existence statement,
-but does not construct a compatible regular moving element. No actual
-pairs are produced by this checkpoint. B4's independent all-section
-uniform landing remains an alternative, not a solved premise or a
-consequence of this sufficient criterion alone.
+### B4b. Geometry-input audit and algebra controls
+
+SP69 records the [geometric-pair input audit](working/0018-geometric-pair-input-audit.md)
+before adding another conditional consumer. No instantiated
+`NormalizedCover` was found in the active library. Its supplied fields
+give normal-closure data, finite normalization models and a marked open
+immersion. They do not give full visibility or a compatible regular
+moving element. This distinction is substantive: in characteristic zero,
+the degree-two model `x=t^2` with visible open `D(t)` has an etale visible
+map but `J_fix=J_mov=J_fm=(t)`, leaving a height-one boundary. This is an
+audited mathematical example, not a Lean-formalized normalization instance.
+
+The research-only
+[`RegularPairGeometryControls.lean`](RegularPairGeometryControls.lean)
+tests the first-element choice in `Q[y][x]`. With `A=(x), M=(y)`,
+`f=x,g=y` works. With the same ideals, `f=xy` leaves no regular `g in M`:
+the nonzero class of `x` modulo `xy` is killed by every multiple of `y`.
+The generic domain obstruction uses `a != 0`, a nonunit `b`, and
+`g in (b)` modulo `ab`. All eight named diagnostics and their enforced
+standard-axiom audits pass without warnings, as does the full library
+build with only its two existing Challenge placeholder warnings. These
+controls do not identify `A,M` with the fixed/moving ideals of any cover.
+The unchanged historical inventory was not rerun; the unchanged
+manuscript/PDF was not rebuilt for this research checkpoint.
+
+Associated-prime avoidance is the relevant source/API analysis for a
+chosen `f`: in a Noetherian ring, seek an element of the moving ideal
+outside the finite union of associated primes of `T/(f)`. This criterion
+does not prove that the geometric moving ideal avoids those primes, nor
+that an arbitrary nonzero `f` will work. No general avoidance theorem is
+newly formalized by SP69; exact sources are in the
+[source ledger](SOURCE_LEDGER.md#geometric-input-audit-and-algebra-controls-sp69-2026-09-18).
+
+**Immediate choice:** select an actual finite etale smooth-projective
+cover with full-visible affine normalization, or a genuinely
+nonempty-boundary construction. In the first case, surjectivity of
+`j.base` makes every conjugate boundary empty. The existing core-free
+normal-closure action over perfect `K` then gives `J_mov(I)=top` for
+nontrivial `I`, so any nonzero fixed-locus element pairs with `g_I=1`.
+This positive subclass is a mathematical option, not an implemented
+theorem or an assumption to add silently. In the second case, construct
+quotient-regularity witnesses from identified geometry, or independently
+establish B4's uniform landing for every actual section. The main
+smooth-projective target is unchanged; neither option supplies its
+class-generation obligation. SP69 changes research records only, not
+the active library, manuscript or PDF.
 
 ### G0. Smooth projective setting and candidate constructions
 
@@ -776,14 +816,13 @@ provide variable-class coverage.
 - Review new objects against the parity registry before adding wrappers.
   Promote a proved checkpoint only after the appropriate build, focused
   regressions, dependency/axiom checks and Lean--TeX comparison.
-- **Next action:** test B4a's sufficient criterion on identified geometry:
-  seek `f_I` in the existing fixed-locus ideal and `g_I` in the
-  moving-boundary ideal, with multiplication by `g_I` injective on
-  `T/(f_I)`, for every nontrivial subgroup. General pairs in `J_fm(I)`
-  and B4's independent geometric uniform landing remain alternatives;
-  neither landing nor actual regular pairs follow from
-  a named candidate ideal or a finite coefficient bound. Preserve PB0 and
-  the abelian examples as optional
+- **Next action:** select and construct the actual geometry after B4b's
+  audit: a finite etale smooth-projective cover with full-visible affine
+  normalization, or a genuinely nonempty-boundary construction. Do not
+  infer either from the current `NormalizedCover` package. The latter
+  route requires geometrically justified quotient regularity or B4's
+  independent all-section uniform landing, not another conditional
+  wrapper. Preserve PB0 and the abelian examples as optional
   deferred work, with the general smooth-projective target unchanged.
   L1 remains the next checkpoint of the separate bounded localization
   stream, only if continued in parallel for a named consumer. No new
@@ -1594,12 +1633,12 @@ the dated checkpoints below document how the existing objects were built.
    existing endpoint using constructed data, with no hypothesis that is
    merely the desired class-generation or realization conclusion renamed.
 
-The operative next action after B4a's regular-pair criterion is to test
-and construct fixed--moving witnesses `f_I,g_I` for identified geometry,
-with quotient injectivity for every nontrivial subgroup. General pairs in
-`J_fm(I)` and B4's independent geometric uniform landing for every actual
-section remain alternative routes;
-neither the pairs nor that landing have been constructed.
+The operative next action after B4b's input audit is to select and
+construct actual cover geometry: the full-visible finite-etale option or
+a genuinely nonempty-boundary construction. The former is not silently
+assumed, while the latter must supply quotient regularity or independent
+all-section uniform landing. The research algebra controls supply neither
+a normalized-cover instance nor its geometric witnesses.
 The projective-bundle recipe, its PB0 chart, and the
 elliptic curve/chart/point construction are optional deferred examples;
 their detailed analyses are preserved above.

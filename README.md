@@ -551,16 +551,31 @@ allowlist were freshly rerun after the denominator refactor and pass.
 The appended umbrella-export checks, fresh unchanged dependency audit,
 independent Lean--TeX review and 70-page single-manuscript checks pass.
 
-Next test this sufficient condition on identified geometry: construct
-`f_I,g_I` and prove quotient injectivity where applicable. Separated
-fixed/moving witnesses are not necessary for separation. A pair with both
-elements in `J_fm(I)` via the generic theorem, or B4's independent geometric
-uniform landing, remains an alternative: for
-each nontrivial `I`, construct `s != 0` with `s R_I <= T^vee_B` for
-**every** actual section. Neither actual regular pairs nor such a multiplier
-have been constructed. Naming a candidate ideal or bounding finitely many
-coefficients does not supply either condition. These are boundary criteria,
-not Hodge-class generation.
+The next geometry audit, SP69, is recorded in
+[the geometric-pair input audit](research/working/0018-geometric-pair-input-audit.md).
+No instantiated `NormalizedCover` was found in the active library; its
+finite models and marked open are supplied data. Those hypotheses do not
+force regular pairs: the characteristic-zero cover `x=t^2` with marked
+open `D(t)` has an etale visible map but
+`J_fix=J_mov=J_fm=(t)`. This is an audited mathematical example, not a Lean
+instance of the normalization package.
+
+The research-only [algebra controls](research/RegularPairGeometryControls.lean)
+test the choice of first element: for `A=(x), M=(y)` in `Q[y][x]`, the
+pair `x,y` works, while choosing `f=xy` prevents every `g in M` from
+acting injectively modulo `f`. All eight diagnostic theorems and their
+enforced standard-axiom checks pass; the full library build also passes.
+These diagnostics do not identify `A,M` with an actual cover's
+fixed/moving ideals.
+
+Next select and construct the actual cover geometry: a finite etale
+smooth-projective cover with full-visible affine normalization, or a
+genuinely nonempty-boundary construction. Full visibility would give
+`J_mov=top` and allow `g=1`, but this subclass is not implemented or
+silently assumed. A nonempty boundary instead needs an independently
+justified quotient-regularity or all-section trace-landing argument.
+No production declaration or manuscript/PDF changes belong to SP69;
+Hodge-class generation remains a separate obligation.
 
 `paper/main.pdf` is the single current manuscript PDF. The earlier drafts
 and their sources are preserved in the
