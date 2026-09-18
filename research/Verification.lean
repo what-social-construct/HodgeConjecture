@@ -7000,3 +7000,15 @@ example (R : Type*) [Semiring R] [Subsingleton R] (U X : Scheme)
   exact Subsingleton.elim _ _
 
 end OpenRestrictionSurjectivityRegressions
+
+/-! SP64: normal-Noetherian bounded overrings and the existing colon ideal.
+Focused regressions and an enforced axiom allowlist are in
+`research/BoundedOverringVerification.lean`. -/
+
+#check HodgeConjecture.NormalizationInertia.subalgebra_eq_bot_of_nonzero_mul_mem_base
+#check HodgeConjecture.NormalizationInertia.subalgebra_eq_bot_of_mem_colon
+#check HodgeConjecture.NormalizationInertia.colon_eq_bot_of_subalgebra_ne_bot
+
+#print axioms HodgeConjecture.NormalizationInertia.subalgebra_eq_bot_of_nonzero_mul_mem_base
+#print axioms HodgeConjecture.NormalizationInertia.subalgebra_eq_bot_of_mem_colon
+#print axioms HodgeConjecture.NormalizationInertia.colon_eq_bot_of_subalgebra_ne_bot

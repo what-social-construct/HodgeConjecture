@@ -17,6 +17,30 @@ Status vocabulary:
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
 
+## Bounded-overring checkpoint (A11aw / SP64)
+
+Status: `FORMAL`. The full build and six focused regressions pass; the
+enforced axiom allowlist accepts only `propext`, `Classical.choice` and
+`Quot.sound` for all three declarations.
+
+For a normal Noetherian domain `T` with fraction field `N`, a `T`-subalgebra
+`R` of `N` admitting one nonzero `a : T` with `a R` contained in the base
+equals the base subalgebra (`R = ⊥`, not the zero ring). Multiplication
+embeds `R` into a Noetherian module, so `R` is finite and integral; normality
+then concludes. No finiteness or integrality of `R` is assumed.
+
+If a submodule `M` has a uniform nonzero denominator `d`, a nonzero member
+of the existing ideal `M.colon R.toSubmodule` supplies such a bound using
+`d*s`. Consequently a proper overring has zero transporter into `M`.
+There is no converse for arbitrary `M`, and no new transporter definition.
+
+Witnesses in `Boundary/Normalization/BoundedOverring.lean`, namespace
+`NormalizationInertia`: `subalgebra_eq_bot_of_nonzero_mul_mem_base`,
+`subalgebra_eq_bot_of_mem_colon`, `colon_eq_bot_of_subalgebra_ne_bot`.
+This is a generic algebraic input, not an instantiation of actual boundary
+sections, trace duality, uniform geometric landing, boundary separation,
+projector-defect vanishing or Hodge-class generation.
+
 ## Candidate A: finite-etale correspondence and projector calculus
 
 This is currently the strongest self-contained publication unit. Its safest

@@ -36,6 +36,67 @@ restriction and integral/rational Chow restriction. The full build,
 The four new declarations use only the standard three logical axioms.
 The existing target equivalence and finite split model are retained.
 
+### B0. Boundary-section algebra and uniform trace landing
+
+The immediate checkpoint returns to the existing ideal/defect route. Keep
+the candidate analyses below as optional examples, rather than selecting
+PB0 or an abelian family as the next implementation. The first bounded
+algebraic statement is
+
+\[
+ T\subseteq R\subseteq F=\operatorname{Frac}(T),\qquad
+ T\text{ normal Noetherian},\qquad
+ 0\ne a\in T,\quad aR\subseteq T
+ \quad\Longrightarrow\quad R=T.
+\]
+
+Multiplication by `a` embeds `R` into the Noetherian `T`-module `T`, so
+`R` is finite as a module; its algebra structure gives integrality, and
+normality gives equality. Multiplicative closure of `R` is essential.
+The self-contained adaptation is in
+[`Boundary/Normalization/BoundedOverring.lean`](../HodgeConjecture/Boundary/Normalization/BoundedOverring.lean),
+under `HodgeConjecture.NormalizationInertia`:
+
+- `subalgebra_eq_bot_of_nonzero_mul_mem_base` proves that implication.
+- `subalgebra_eq_bot_of_mem_colon` applies it to an existing submodule
+  `M` with `0 != d in T`, `d M <= T`, and a nonzero scalar in
+  `M.colon R.toSubmodule`: `s R <= M` gives `d s R <= T`.
+- `colon_eq_bot_of_subalgebra_ne_bot` proves that this same transporter
+  ideal is zero when `R` is a proper overring and `M` has that uniform
+  denominator.
+
+Lean's `R = bottom` means the base algebra inside `F`, not the zero ring.
+Use the existing `Submodule.colon`; no second transporter object or
+geometric input axiom is introduced. B0's generic algebra checkpoint is
+proved: the full build and six focused regressions pass, and an enforced
+allowlist checks that the three theorems use only `propext`,
+`Classical.choice` and `Quot.sound`.
+
+The next constructions are the **actual** boundary-section algebra
+`R_C` inside the appropriate fraction field and the genuine trace dual
+`T^vee`, with its proved uniform denominator `d T^vee <= T`. The geometric
+step is then to prove `s R_C <= T^vee` for every section, with `s != 0`;
+membership for finitely many secant coefficients does not suffice.
+Establish any boundary pole witness showing `R_C != T`, and the comparison
+to the existing `ConjugateBoundarySeparation` condition, from the actual
+geometry. Neither a trace-dual bound nor normality alone proves that
+uniform landing. These are boundary/cover obligations; they do not assert
+convolution-defect vanishing or construct representatives of prescribed
+Hodge classes. The Chow--Betti target and its class-generation obligation
+remain unchanged.
+
+**Next bounded checkpoint (B1):** construct the algebra map from actual
+sections on a nonempty open of `Spec T` to the specified fraction field.
+Compose Mathlib's existing `germToFunctionField` with the canonical
+fraction-field algebra equivalence, prove injectivity, and take its
+`AlgHom.range` as the section subalgebra. This first constructor needs only
+a domain and its fraction field, not normality or Noetherianity. Then
+specialize the open to the complement of the existing fixed--moving ideal,
+proving nonemptiness from the nontrivial subgroup's faithful action.
+Reuse the existing generic-stalk/function-field objects and the normalization
+fraction-field construction already used in `Normalization/LocalizationBridge.lean`;
+do not add a second function field or assume a section-algebra comparison.
+
 ### G0. Smooth projective setting and candidate constructions
 
 Keep the following three outcomes distinct: a formalization of a known
@@ -54,6 +115,7 @@ corresponding class line has Tate type `Q(-p)` when packaged as a Hodge morphism
 | Candidate | Cycles and intended Betti image | Priority and first missing geometric bridge |
 | --- | --- | --- |
 | Smooth projective `X`, with an optional connected finite etale cover `f:Y -> X` | Explicit cycles on `X`, or cycles on `Y` representing `f^*` of the prescribed Hodge classes | Main setting. Identify geometric hypotheses and calculate the cycle-class image; smoothness, projectivity and existence of a cover alone do not prove generation. |
+| Upstairs projective bundle `Y=P_S(V)` over a smooth projective base of dimension at most two | Powers of the relative hyperplane class applied to pullbacks of fundamental classes, divisors and points on `S` | Optional deferred non-abelian example. Its classical generation and closure-stability deductions are preserved below; PB0's polynomial chart is its first Lean target if resumed, not the current work order. This does not restrict the main target to such covers. |
 | Projective line, `p=1` | Point divisors and their degree; a minimal positive-dimensional normalization test | Calibration only. Actual `Proj` exists; its polynomial specialization, charts, divisor calculation and genuine `H_B^2` comparison still need construction. It does not supply the elliptic-cover family. |
 | A. Pointed elliptic curve `E/C`, `p=1` | Point divisors; the first comparison is `cl(D) = deg(D) cl([0])`, with `cl([0])` generating the independently computed `H_B^2(E,Q)` | Optional seed for the abelian-covered example. Build the actual proper curve and chart/point identifications, then principal-degree zero and the positive-degree Betti comparison. Do not identify `CH^1(E)_Q` itself with `Q`. |
 | Powers `E^n` and abelian varieties isogenous to them, `0 <= p <= n` | Products of divisor classes, including endomorphism-graph contributions when needed; these generate the rational Hodge classes | Optional known-generation example. `E^2,p=1` tests factors and graph divisors; higher powers need actual intersection/cup compatibility and the divisor-generation theorem. |
@@ -177,23 +239,19 @@ Neither this descent nor averaging proves injectivity of the cycle map or
 generation of the entire Chow group. The example does not supply a
 reduction of all smooth projective targets to that subclass.
 
-#### Next checkpoint: which geometric properties produce the upstairs cycles?
+#### Assessed checkpoint: geometric properties behind upstairs generation
 
-Compare concrete geometric mechanisms before selecting an implementation.
-For each proposal, record the property of `X` or `Y`, the actual cycles it
-constructs, and the independent calculation of their Betti image:
+The comparison below records a concrete non-abelian example alongside the
+other candidates, without changing the main smooth-projective target or
+the immediate boundary-ideal checkpoint. These are geometric mechanisms,
+not alternative definitions of Hodge membership.
 
-- **Explicit divisors and their intersections:** which geometric description
-  supplies the divisors, and which part of `f^*Hdg^p(X)` do their products
-  span? The elliptic-power example is one test, not the general premise.
-- **Explicit algebraic correspondences from understood sources:** identify
-  the source varieties, their constructed cycles, the correspondence cycles
-  and their degrees; then calculate whether their images cover the required
-  pullback subspace. An abstract linear splitting does not supply these cycles.
-- **Stability under the chosen cover construction:** if Galois closure is
-  used, determine whether the selected cycle construction and its comparison
-  pull back to `Z`; separate this from the automatic smooth-projective
-  property and from optional deck-action compatibility.
+| Property or proposed mechanism | Cycle recipe and independent image calculation | Decision |
+| --- | --- | --- |
+| Finite etale cover, normality or a Galois action alone | Pullback, transfer and averaging transport classes but do not supply their algebraic representatives | Retain as supporting operations, not a generation criterion. |
+| Upstairs isogenous to a power of one elliptic curve | Divisor products; the cited elliptic-power Hodge theorem calculates their image | Keep the optional abelian-covered example. Do not extend the theorem to arbitrary abelian varieties. |
+| Upstairs is a projective bundle over a smooth projective curve or surface | Relative hyperplane powers applied to cycles from the base; the Hodge-compatible bundle formula computes every coefficient | Keep as an optional deferred example. Low-dimensional base cycles are known independently, and the bundle presentation survives finite etale covers; implementation is not the immediate checkpoint. |
+| Algebraic correspondences from other understood sources | Push--pull actual source cycles along explicitly constructed correspondences | Retain as a generalization. An abstract splitting or the label "Abelian type" supplies neither the correspondence cycles nor the required image calculation. |
 
 The acceptance target is that the Betti image of the explicitly constructed
 cycles contains `f^*Hdg^p(X)`. This is the equation to **prove**, not a
@@ -203,13 +261,94 @@ to algebraicity downstairs, using pullback and normalized pushforward.
 Thus packaging that existence condition does not resolve the construction.
 For a direct route, make the same comparison on `X` without an auxiliary cover.
 
-**Deliverable:** one candidate geometric property with a named cycle recipe,
-its precise range of `(X,p)`, the first unproved Betti-image comparison,
-and the first bounded geometric lemma needed for it. Apply G1 to that
-proposal; do not automatically start an elliptic-curve implementation or
-add a new abstract generation package.
+The optional projective-bundle construction, its exact scope and its first
+implementation lemma follow. This preserves the comparison/design work,
+not a completed Lean geometric instantiation or a selected next task.
 
-#### Lean feasibility and the next bounded construction
+#### Optional deferred construction: projective bundles over low-dimensional bases
+
+Fix a smooth projective connected complex variety `X`. Supply a connected
+finite etale surjection `f:Y -> X` of degree `d>0` and a projective-bundle
+presentation `pi:Y=P_S(V) -> S`, where `S` is smooth projective connected,
+`s=dim(S)<=2`, and `V` is locally free of rank `r>=1`.
+The diagram and its different relative dimensions are
+
+\[
+ X\ \xleftarrow{\ f\ }\ Y=\mathbf P_S(\mathcal V)
+   \ \xrightarrow{\ \pi\ }\ S,
+ \qquad \dim X=\dim Y=s+r-1.
+\]
+
+The finite etale map `f` has relative dimension zero; `pi` is smooth
+projective of relative dimension `r-1`. It is not another finite cover.
+Use the quotient convention
+`P_S(V)=Proj_S(Sym V)`, with `pi^*V ->> O_Y(1)`, as in
+[Stacks, Tag 01OA](https://stacks.math.columbia.edu/tag/01OA).
+Write `xi_CH` for the first Chern class operation of `O_Y(1)` on Chow
+groups, and `xi_B=c_1^B(O_Y(1))` for its Betti class of type `(1,1)`.
+
+**Precise classical conclusion:** for every `0<=p<=s+r-1`, every rational
+Hodge class on `X` is represented by the degree-normalized pushforward of
+a sum of `xi_CH^j` applied to pullbacks of cycles on `S`. The following
+is a deduction from the cited classical results, not a new Hodge case.
+
+For `J_p={j : 0<=j<r and 0<=p-j<=s}`, the bundle formula gives a unique
+decomposition, respecting Hodge types,
+
+\[
+ f^*\alpha=\sum_{j\in J_p}\xi_B^j\cup\pi^*\beta_j,
+ \qquad \beta_j\in\operatorname{Hdg}^{p-j}(S).
+\]
+
+The Chow formula is [Stacks, Tag 02TX](https://stacks.math.columbia.edu/tag/02TX).
+The same algebraic correspondences induce the motivic isomorphism in
+[Tag 0FGQ](https://stacks.math.columbia.edu/tag/0FGQ); its Betti realization
+gives the displayed decomposition. As Hodge structures, the summands of
+`H_B^{2p}(Y)` are `H_B^{2(p-j)}(S)(-j)`. Thus the coefficients have type
+`(p-j,p-j)`; an arbitrary rational vector-space splitting would not suffice.
+
+The base representatives do not assume the desired conclusion for `X`:
+in codimension zero use rational multiples of `[S]`; in codimension one
+use divisors by [Lefschetz (1,1), Deligne section 2(iii)](https://www.claymath.org/wp-content/uploads/2022/06/hodge.pdf);
+and, when `s=2`, in codimension two use rational multiples of a closed
+point, whose class generates top rational cohomology. These exhaust the
+nonzero base codimensions. Choose such `z_j` with `cl_S(z_j)=beta_j` and set
+
+\[
+ z_Y=\sum_{j\in J_p}\xi_{\mathrm{CH}}^j\cap\pi^*z_j,
+ \qquad z_X=\frac1d f_*z_Y.
+\]
+
+The construction's comparison to prove in Lean is
+
+\[
+ \operatorname{cl}_Y(\xi_{\mathrm{CH}}^j\cap\pi^*z_j)
+   =\xi_B^j\cup\pi^*\operatorname{cl}_S(z_j).
+\]
+
+Together with the independently computed decomposition and the trace
+square above, this gives `cl_X(z_X)=alpha`. Only flat pullback and iteration
+of this line-bundle Chern operation are needed for the upstairs recipe;
+a full correspondence algebra, new projector, or injectivity of the Chow
+bundle map is not required for the forward class-generation argument.
+For a higher-dimensional base the same decomposition remains valid, but
+its coefficient classes require another generation argument.
+
+**Galois-closure stability.** By
+[Stacks, Tag 0BUM, Proposition 58.15.2](https://stacks.math.columbia.edu/tag/0BUM)
+and the simple connectedness of projective-space fibers
+([SGA 1, Expose XI, Proposition 1.1](https://arxiv.org/pdf/math/0206203)),
+`pi_1^et(Y) -> pi_1^et(S)` is an isomorphism. Hence each connected finite
+etale `Z -> Y` is `Y x_S S' -> Y` for a connected finite etale `S' -> S`.
+Applying this to a Galois closure of `Y -> X` gives
+`Z = P_{S'}(V|_{S'})`, with `S'` smooth projective of the same dimension.
+This is a deduction from cover equivalence and bundle base change.
+It does not say that `X` is itself a projective bundle, or that the full
+deck group over `X` preserves the chosen fibration or hyperplane class.
+Those equivariance statements require separate proofs if consumed; trace
+descent of the constructed cycles does not require them.
+
+#### Lean feasibility for optional examples
 
 The audit uses Lean 4.24.0 and the pinned Mathlib revision
 `f897ebcf72cd16f89ab4577d0c826cd14afaafc7`; no dependency changes are proposed.
@@ -222,6 +361,42 @@ The audit uses Lean 4.24.0 and the pinned Mathlib revision
 | Mathlib singular chain/homology functors; the project's actual finite-split singular `H^0` cycle comparison | Complex point topology/analytic comparison, genuine positive-degree Betti cohomology and the point-class/Hodge normalization; these were not found as ready-made adapters in the pinned sources |
 | Field `IntermediateField.normalClosure`; affine normalization and deck-action maps in `Boundary/Normalization/` | Global finite etale Galois closure and its comparison to the field closure; abelian/isogeny stability is an additional obligation only for that optional example |
 | Closed-immersion Chow pushforward; finite-discrete `H^0` transfer; conditional `RationalDegreeTransfer` | Finite-cover Chow pushforward with norm compatibility, and positive-degree Betti transfer with the actual cycle-class square and degree law |
+
+#### PB0. Optional deferred scheme checkpoint
+
+The pinned audit found no ready relative `Proj`, `P_S(V)`, scheme-level
+`O(1)`/Chern operation, or projective-bundle Betti adapter. Do not introduce
+a structure whose fields simply assume those comparisons. If this example
+is resumed, start with the local geometry of a trivial rank-two bundle over
+an affine base:
+
+\[
+ \bigl(R[X_0,X_1]_{X_0}\bigr)_0\ \cong_R\ R[T],
+ \qquad X_1/X_0\longmapsto T.
+\]
+
+**First bounded lemma:** construct this algebra equivalence for an arbitrary
+commutative ring `R`, using the total-degree grading, and prove its values
+on constants and `X_1/X_0`. Prove both inverse identities, rather than
+supplying a ring isomorphism as an input. Compose it with the existing
+`Proj.basicOpenIsoSpec` to identify the literal scheme chart
+`D_+(X_0)` with `Spec R[T]`, including the structural map to `Spec R`.
+The degree-zero ring's identification with `R` must be explicit.
+
+Use `MvPolynomial.homogeneousSubmodule`, `MvPolynomial.gradedAlgebra`
+in Mathlib's `RingTheory/MvPolynomial/Homogeneous.lean`, and
+`HomogeneousLocalization.Away`/`Away.mk` in
+`RingTheory/GradedAlgebra/HomogeneousLocalization.lean`. The chart consumer
+is the projection of the trivial projective-line bundle; later consumers
+are its local hyperplane equation, overlap maps, and gluing for nontrivial
+bundles. This is not a reintroduction of an elliptic-curve seed.
+
+The separate later obligations are actual bundle gluing and `O(1)`,
+flat Chow pullback and its Chern operation, the positive-degree Betti/Hodge
+bundle comparison and base classes, and finite-cover trace compatibility.
+Finite etale cover equivalence is needed only for the Galois branch.
+Keep literature inputs explicit at use sites until implemented; this
+checkpoint adds no Lean assumptions or declarations.
 
 **Optional worked-example sequence, if selected:** use `E,p=1`
 as the seed, then test `E^2,p=1`, and build toward the abelian-covered
@@ -366,10 +541,12 @@ provide variable-class coverage.
 - Review new objects against the parity registry before adding wrappers.
   Promote a proved checkpoint only after the appropriate build, focused
   regressions, dependency/axiom checks and Lean--TeX comparison.
-- **Next action:** compare the geometric properties and explicit cycle
-  recipes in G0, then select one proposal for G1's diagram and first bounded
-  lemma. Keep smooth projective varieties as the main setting and the
-  abelian-covered construction as an optional worked example.
+- **Next action:** following B0's proved generic bounded-overring and
+  existing-colon formulations, construct the actual boundary-section algebra and
+  trace-dual denominator bound. Keep uniform trace landing and its
+  geometric separation comparison as explicit obligations to prove, not
+  assumed conclusions. Preserve PB0 and the abelian examples as optional
+  deferred work, with the general smooth-projective target unchanged.
   L1 remains the next checkpoint of the separate bounded localization
   stream, only if continued in parallel for a named consumer. No new
   geometric family is implemented or universal reduction asserted here.
@@ -1179,9 +1356,12 @@ the dated checkpoints below document how the existing objects were built.
    existing endpoint using constructed data, with no hypothesis that is
    merely the desired class-generation or realization conclusion renamed.
 
-The operative next action is G0's comparison of geometric properties and
-upstairs cycle recipes in section 0, followed by the G1 design gate for a
-selected proposal. The elliptic curve/chart/point construction is optional.
+The operative next action after B0's proved bounded-overring checkpoint
+is the actual boundary-section algebra, followed by the trace-dual construction. The
+uniform geometric landing and boundary-separation comparison remain
+separate obligations. The projective-bundle recipe, its PB0 chart, and the
+elliptic curve/chart/point construction are optional deferred examples;
+their detailed analyses are preserved above.
 L1 is the next bounded
 Lean checkpoint for the ongoing localization stream, not a universal
 prerequisite for every geometric route. Actual integral/rational Chow

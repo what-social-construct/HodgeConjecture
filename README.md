@@ -474,11 +474,20 @@ organizes the next geometric work around which varieties and codimensions
 the construction covers, and records its acceptance criteria.
 Its [candidate comparison](research/TARGET_BRIDGE.md#g0-smooth-projective-setting-and-candidate-constructions)
 keeps smooth projective varieties as the main setting and abelian-covered
-targets as an optional worked subclass. The next question is which geometric
-properties supply explicit cycles representing the pulled-back Hodge classes
-upstairs. Galois closure and degree-normalized descent are construction
-tools, not substitutes for that generation argument. The optional
-elliptic-power example and its geometric Lean instances remain to be built.
+targets as an optional worked subclass. Projective bundles over curves or
+surfaces and their polynomial-chart checkpoint remain optional deferred
+examples; their detailed generation and Galois-closure analysis is preserved
+in the plan. The immediate checkpoint returns to the
+[boundary-section ideal route](research/TARGET_BRIDGE.md#b0-boundary-section-algebra-and-uniform-trace-landing).
+The self-contained
+[`BoundedOverring.lean`](HodgeConjecture/Boundary/Normalization/BoundedOverring.lean)
+proves the generic normal-Noetherian bounded-overring implication and its
+formulation using the existing `Submodule.colon`; the full build and six
+focused regressions pass, and all three theorems use only the permitted
+standard axioms. The next geometric constructions are the actual
+boundary-section algebra and a genuine uniformly bounded trace dual.
+Uniform landing of all boundary sections remains a separate implication
+to prove; none of these algebraic steps asserts Hodge-class generation.
 
 `paper/main.pdf` is the single current manuscript PDF. The earlier drafts
 and their sources are preserved in the

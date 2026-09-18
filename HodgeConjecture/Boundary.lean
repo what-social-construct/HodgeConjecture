@@ -8,6 +8,7 @@ import HodgeConjecture.Boundary.GraphCycleRestriction
 import HodgeConjecture.Boundary.HeightOneDifferent
 import HodgeConjecture.Boundary.NoetherDifferentRamification
 import HodgeConjecture.Boundary.ProjectorClosureDefect
+import HodgeConjecture.Boundary.Normalization.BoundedOverring
 import HodgeConjecture.Boundary.Normalization.DeckAction
 import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
 import HodgeConjecture.Boundary.Normalization.ConjugateNormalization
@@ -40,6 +41,10 @@ the commuting augmentation/tensor-diagonal square. For an actual finite
 to the graph of its restriction, with equality of the defining ideal sheaves.
 For an integral extended cover, this also gives restriction of actual graph
 cycles and their rational weighted sums.
+
+The bounded-overring lemma is the commutative-algebra input for a separate
+boundary-section/trace-landing construction. It uses the existing colon
+ideal and does not supply uniform geometric landing or boundary separation.
 
 The broad normalization-purity/global-triviality prototype is preserved in
 `research/archive/legacy-lean/`, not as an importable library module.

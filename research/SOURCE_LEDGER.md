@@ -19,6 +19,24 @@ graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
 Last source check: 2026-09-15.
 
+### Direct algebraic adaptation: bounded overrings (SP64, 2026-09-17)
+
+`Boundary/Normalization/BoundedOverring.lean` adapts the proof of
+`subalgebra_eq_bot_of_nonzero_mul_mem_base` from the sibling
+`collision-ideals/CollisionIdeals/Planar/Research/MonogenicLanding.lean`.
+The Hodge file is self-contained with Mathlib imports only. The mathematical
+inputs are `Module.Finite.of_injective`, `IsIntegral.of_finite` and
+`IsIntegrallyClosed.isIntegral_iff`; the transporter is Mathlib's existing
+`Submodule.colon`. Normality, Noetherianity, the same fraction field, and
+nonzero uniform multipliers are explicit hypotheses. The product multiplier
+and proper-overring zero-colon consequence are proved locally.
+
+This is direct-proof provenance, not a literature axiom or a copied
+Jacobian vanishing endpoint. No affine-plane finite-etale rigidity, global
+purity axiom, secant landing hypothesis or actual trace-dual realization is
+imported. The full build and focused verification pass, and all three
+declarations use only the permitted standard logical axioms.
+
 Status vocabulary in this file distinguishes finding a source from proving
 the bridge to the project's interface:
 

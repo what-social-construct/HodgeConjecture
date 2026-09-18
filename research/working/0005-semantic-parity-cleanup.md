@@ -119,6 +119,28 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP61 | Actual ambient principal-generator restriction and preservation of its relation span | TRANSPORT / PRESERVE | Apply the actual carrier square to the existing ambient principal divisor, using the actual function-field map on a nonempty restriction and zero for an empty carrier. Restrict degree-one-higher relation data without finiteness premises; under target-only Noetherianity identify the graded generators, preserve their span and preserve rational equivalence of integral cycles. | PROVED; FULL BUILD, 609 AXIOM REPORTS, SIXTEEN REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP62 | Integral and rational Chow open restriction with coefficient and tensor compatibility | DESCEND / COMPARE | Descend the existing actual graded open restriction to both existing Chow quotients, preserving cycle representatives, identity and contravariant composition. Prove raw and graded coefficient compatibility without finiteness premises, and the full tensor square with only target Noetherianity at the quotient layer. | PROVED; FULL BUILD, 622 AXIOM REPORTS, EIGHTEEN REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP63 | Surjectivity of the existing raw, graded and Chow open restrictions | LIFT / DESCEND | Lift each actual integral open support through its reduced ambient closure and preserve the supplied degree, over every semiring. Lift integral and rational Chow classes through actual homogeneous representatives under target-only Noetherianity. Keep the closure lift at cycle level; no Chow closure operation or localization exactness is asserted. | PROVED; FULL BUILD, INTEGRATED VERIFICATION (626 AXIOM REPORTS, 734 CHECKS, 565 EXAMPLES), SIXTEEN FOCUSED REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+| SP64 | Normal-Noetherian bounded overrings and their existing-colon transporter | ADAPT / PROVE | Embed a uniformly bounded overring in the base module, derive finiteness and integrality, and use normality. Compose two nonzero bounds through `Submodule.colon`; a proper overring has zero transporter into a bounded stage. | PROVED; FULL BUILD, SIX FOCUSED REGRESSIONS, STANDARD-AXIOM ALLOWLIST, INTEGRATED VERIFICATION, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+
+SP64 (2026-09-17): **bounded overrings / uniform landing algebra**.
+The generic normal-Noetherian overring criterion is duplicated and adapted
+in `Boundary/Normalization/BoundedOverring.lean`. Two consumers reuse
+`Submodule.colon`: a nonzero multiplier landing an overring in a uniformly
+bounded stage forces equality with the base; a proper overring consequently
+has zero transporter. There is no new ideal carrier, section algebra,
+trace-dual object, geometric hypothesis package, or external input instance.
+The existing boundary endpoint is the intended later consumer; no artificial
+proof dependency on the new module has been added to it.
+
+Validation (2026-09-17): full build (3150 jobs), six focused examples and
+an enforced standard-axiom allowlist pass. Integrated verification reaches
+all 737 declaration checks, 565 examples and 629 axiom reports without an
+error or unexpected axiom. The original 7002-line verification prefix is
+byte-for-byte preserved; historical SP63 counts above are unchanged. The
+existing six-endpoint dependency audit and two support reports pass.
+The single 66-page PDF compiles without layout/reference warnings; rendered
+pages 7, 8, 51 and 59 were inspected. Independent Lean/mathematical/TeX
+review passes. Manuscript Proposition `prop:bounded-overring` states the
+same hypotheses and both consequences, without editorial status prose.
 
 SP18 validation: full Lean build, declaration/axiom verification, single-PDF
 build, and independent mathematical/parity review passed. Detailed scope and
@@ -1317,6 +1339,16 @@ Diff checks pass.
 | `GeometricSplitPoints.additiveCoefficientRealization` / `additivePalomarTargetSquare` | the existing coefficient action and target square descended through the proved additive quotient | induced action only; no duplicate marked-comparison object or independent notation |
 
 ### Fields, normalizations, and boundary geometry
+
+SP64's local algebra notation is `T` for a normal Noetherian domain,
+`F = Frac(T)` for the field (the Lean parameter is `N`), `R` for its
+`T`-subalgebra, and `M` for a bounded `T`-submodule. Nonzero multipliers
+are `a`, or `d` and `s` with `a = ds`. The existing
+`M.colon R.toSubmodule` is written `(M:R)`. These are local theorem
+parameters, not new canonical geometric objects; `R = ⊥` means `R = T`
+under the embedding. All three new declarations are propositions, with
+no separate notation. Do not identify this colon ideal with the collision
+ideal, the marked residual ideal, or the correspondence idempotence defect.
 
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |

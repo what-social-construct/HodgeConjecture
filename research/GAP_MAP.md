@@ -1,6 +1,7 @@
 # Current gap map
 
-Last reviewed: 2026-09-17 (work order and completed SP63 validation).
+Last reviewed: 2026-09-17 (boundary-ideal work order; completed SP63
+validation retained; bounded-overring module, full build and focused checks pass).
 
 Start with [the target and equivalence sketch](TARGET_BRIDGE.md): it fixes
 the geometric statement, separates the two directions of the proved bridge,
@@ -52,20 +53,58 @@ sequence, not the main work order. Kuga--Sato remains a later projector
 test: Scholl's selected cuspidal factor has no nonzero diagonal Hodge
 classes. Sources and the precise scope are in the linked comparison.
 
-The next checkpoint compares geometric properties that supply explicit
-upstairs cycles: divisors/intersections or algebraic correspondences from
-understood sources, together with their independently calculated Betti
-images. Select one cycle recipe, its range of `(X,p)`, and its first missing
-geometric lemma before expanding APIs. Do not use the desired cycle-map
-coverage itself as the proposed geometric property.
-Positive-degree Betti comparison and finite-cover Chow/Betti trace remain
-separate missing constructions. For the optional curve example, existing
-support-degree lemmas are not numerical principal-degree zero; existing
-field normal closure is not a global finite etale cover adapter.
+The candidate comparison also records
+[projective bundles over bases of dimension at most two](TARGET_BRIDGE.md#optional-deferred-construction-projective-bundles-over-low-dimensional-bases)
+as an optional deferred non-abelian example: `X <- Y=P_S(V) -> S`, with the
+left map finite etale and the right map a projective bundle. The relative
+hyperplane operation applied to pulled-back fundamental classes, divisors
+and points gives the explicit upstairs recipe. The Hodge-compatible bundle
+formula computes its image; normalized trace gives the downstairs class.
+This is a classical known-case deduction, not a new Lean instance or a
+reduction of arbitrary `X` to this geometry.
+
+The upstairs projective-bundle presentation survives Galois closure by
+finite etale base change `S' -> S`. The full deck group over `X` is not
+automatically compatible with this presentation. Sources, precise
+codimension bounds, typed maps and the cycle-class equation are recorded
+in the linked construction.
+
+If that example is resumed,
+[PB0's actual standard chart](TARGET_BRIDGE.md#pb0-optional-deferred-scheme-checkpoint)
+is its first bounded implementation: construct `(R[X_0,X_1]_{X_0})_0`
+as `R[T]`, with constants and structural map compatibility, then compose
+with `Proj.basicOpenIsoSpec`.
+Relative bundle gluing, `O(1)`/Chow operations, positive-degree Betti/Hodge
+comparison and finite-cover trace are separate missing constructions.
+Existing field normal closure is not a global finite etale cover adapter.
+
+The immediate work instead follows the existing
+[boundary-section ideal route](TARGET_BRIDGE.md#b0-boundary-section-algebra-and-uniform-trace-landing).
+The first checkpoint is the normal-Noetherian implication
+`T <= R <= Frac(T)`, `0 != a in T`, `a R <= T` implies `R = T`,
+adapted self-containedly in
+[`Boundary/Normalization/BoundedOverring.lean`](../HodgeConjecture/Boundary/Normalization/BoundedOverring.lean).
+Its namespace is `HodgeConjecture.NormalizationInertia`; the three endpoints
+are `subalgebra_eq_bot_of_nonzero_mul_mem_base`,
+`subalgebra_eq_bot_of_mem_colon`, and
+`colon_eq_bot_of_subalgebra_ne_bot`. Here `R = bottom` means equality to
+the base algebra, not the zero ring. The transporter is the existing
+`Submodule.colon`, not a new ideal object. The full build and six focused
+regressions pass. An enforced axiom allowlist verifies that all three
+theorems use only `propext`, `Classical.choice` and `Quot.sound`.
+
+Next construct the actual boundary-section algebra inside the relevant
+fraction field and the genuine trace dual with a proved uniform denominator.
+Uniform trace landing of **every** section is the separate geometric
+implication to establish; a bound on finitely many coefficients does not
+replace it. A geometric pole witness and comparison with the existing
+`ConjugateBoundarySeparation` endpoint also require proofs. This route
+targets the cover/boundary construction, not Hodge-class generation or
+convolution-defect vanishing by itself.
 
 In the separate localization stream, the next bounded checkpoint is L1's
 actual closed-complement cycle kernel/image comparison. It can run alongside
-the selected geometry when it has a named consumer; additive localization
+the boundary-section construction when it has a named consumer; additive localization
 is not a prerequisite for every
 direct geometric projector construction. L2 and L3 then address relation
 lifting and quotient exactness. None of these checkpoints replaces the

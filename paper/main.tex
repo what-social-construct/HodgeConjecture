@@ -549,6 +549,33 @@ is what places every conjugate embedding in the common field \(N\); the
 commutativity of the displayed square is then the fact that the base-sheet
 embedding equals the marked embedding, independently of the chosen coset representative.
 
+The following algebraic criterion controls uniformly bounded section
+algebras inside a normalization's fraction field.
+
+\begin{proposition}[Uniformly bounded overrings]
+\label{prop:bounded-overring}
+Let \(T\) be a normal Noetherian domain, let \(F=\Frac(T)\), and let
+\(T\subseteq R\subseteq F\) be a \(T\)-subalgebra. If some
+\(0\ne a\in T\) satisfies \(aR\subseteq T\), then \(R=T\).
+
+More generally, let \(M\subseteq F\) be a \(T\)-submodule with
+\(dM\subseteq T\) for some \(0\ne d\in T\). For the colon ideal
+\[
+  (M:R)=\{s\in T:sR\subseteq M\},
+\]
+any nonzero member forces \(R=T\). Consequently, if \(R\ne T\),
+then \((M:R)=0\).
+\end{proposition}
+
+\begin{proof}
+Multiplication by \(a\) embeds \(R\) into \(T\) as a \(T\)-module.
+Since \(T\) is Noetherian, \(R\) is module-finite over \(T\), hence
+integral over \(T\). Normality and \(R\subseteq\Frac(T)\) give
+\(R=T\). In the second assertion, a nonzero \(s\in(M:R)\) gives
+\(dsR\subseteq dM\subseteq T\), so the first assertion applies with
+\(a=ds\ne0\).
+\end{proof}
+
 The fixed normalization is canonically
 
 \[
@@ -4184,6 +4211,11 @@ Shared block core &
 Conjugate-boundary endpoint &
 \leanpath{noCodimensionOneRamification_of_conjugateBoundarySeparation}\newline
 \leanpath{Boundary/Normalization/ConjugateBoundary.lean}\\
+Uniformly bounded overrings &
+\leanpath{subalgebra_eq_bot_of_nonzero_mul_mem_base}\newline
+\leanpath{subalgebra_eq_bot_of_mem_colon}\newline
+\leanpath{colon_eq_bot_of_subalgebra_ne_bot}\newline
+\leanpath{Boundary/Normalization/BoundedOverring.lean}\\
 Subgroup extension &
 \leanpath{CompactifiedSubgroupProjectorExtension}\newline
 \leanpath{Boundary/GaloisProjectorExtension.lean}\\
@@ -4723,6 +4755,10 @@ principal table, grouped by mathematical layer.
 \normsrc{InvariantIntermediate.lean};
 \normsrc{ConjugateNormalization.lean};
 \normsrc{ConjugateBoundary.lean};
+\normsrc{BoundedOverring.lean};
+\leanpath{subalgebra_eq_bot_of_nonzero_mul_mem_base};
+\leanpath{subalgebra_eq_bot_of_mem_colon};
+\leanpath{colon_eq_bot_of_subalgebra_ne_bot};
 \leanpath{ConjugateBoundarySeparation};
 \leanpath{normalClosureNormalizationSchemeIso_hom_comp_toBase};
 \normsrc{SelectorComparison.lean};
