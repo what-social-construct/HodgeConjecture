@@ -711,7 +711,7 @@ turning that condition into an actual compactified correspondence
 idempotent.
 -/
 theorem compactifiedSubgroupProjectorExtension_nonempty_of_formallyUnramified
-    [PerfectField K] [IsNoetherianRing B]
+    [IsNoetherianRing B]
     (D : Diagram C)
     (R : D.ConjugateRamificationRealization)
     (hFormal :
@@ -760,7 +760,7 @@ The same normalization hypotheses produce an extended algebraic projector
 lift under every rational action of the compactified correspondence algebra.
 -/
 theorem compactifiedSubgroupProjectorLift_nonempty_of_formallyUnramified
-    [PerfectField K] [IsNoetherianRing B]
+    [IsNoetherianRing B]
     (D : Diagram C)
     (R : D.ConjugateRamificationRealization)
     (hFormal :

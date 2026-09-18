@@ -135,10 +135,10 @@ def fixedFieldNormalizationEquivFixedRing
       refine ⟨⟨z, hzIntegral⟩, ?_⟩
       rfl⟩
 
-/-- For a marked finite extension, its intermediate normalization is the
+/-- For a marked finite separable extension, its intermediate normalization is the
 fixed ring of the subgroup fixing the marked copy of `L`. -/
 def intermediateNormalizationEquivFixedRing
-    [PerfectField K]
+    [Algebra.IsSeparable K L]
     (D : CollisionFoundations.NormalClosureData K L N) :
     IntermediateNormalizationRing (B := B) (L := L) ≃ₐ[B]
       FixedSubgroupNormalizationRing
@@ -151,7 +151,7 @@ def intermediateNormalizationEquivFixedRing
 
 @[simp]
 theorem intermediateNormalizationEquivFixedRing_coe
-    [PerfectField K]
+    [Algebra.IsSeparable K L]
     (D : CollisionFoundations.NormalClosureData K L N)
     (x : IntermediateNormalizationRing (B := B) (L := L)) :
     (((intermediateNormalizationEquivFixedRing (B := B) D x :

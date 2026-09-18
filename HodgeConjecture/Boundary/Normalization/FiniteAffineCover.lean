@@ -150,7 +150,6 @@ omit [IsFractionRing B K] in
 /-- The actual finite normal affine models give boundary separation because
 their canonical visible-open morphism is an isomorphism. -/
 theorem conjugateBoundarySeparation_normalizedCoverOfFiniteNormalAffineModels
-    [PerfectField K]
     (D : CollisionFoundations.NormalClosureData K L N) :
     ConjugateBoundarySeparation
       (normalizedCoverOfFiniteNormalAffineModels

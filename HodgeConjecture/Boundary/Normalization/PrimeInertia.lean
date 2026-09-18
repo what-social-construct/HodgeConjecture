@@ -206,18 +206,18 @@ abbrev NormalizationPrimeInertiaFixedRingUnramifiedAt
     (S := NormalClosureNormalizationRing (B := B) (N := N))
     (normalizationPrimeInertiaGroup (B := B) (K := K) Q) Q
 
-/-- For marked finite normal-closure data over a perfect fraction field, an
+/-- For marked finite normal-closure data with a separable marked extension, an
 affine base integrally closed in that fraction field is canonically equivalent
 to the full invariant ring of the normal-closure normalization.  This records
 the base-identification needed to apply the literal `S^G → S^I` statement of
 Tag `0BST` over `B`. -/
 def baseEquivFullInvariantNormalizationRing
-    [PerfectField K] [IsIntegrallyClosed B]
+    [Algebra.IsSeparable K L] [IsIntegrallyClosed B]
     (D : CollisionFoundations.NormalClosureData K L N) :
     B ≃ₐ[B]
       FullInvariantNormalizationRing (B := B) (K := K) (N := N) := by
   letI : FiniteDimensional K N := D.finiteNormal
-  letI : IsGalois K N := D.isGalois
+  letI : IsGalois K N := D.isGalois_of_isSeparable
   let eFixed :
       IntermediateField.fixedField
           (⊤ : Subgroup D.galoisGroup) ≃ₐ[K] K :=

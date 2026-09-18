@@ -8,7 +8,8 @@ If the marked open contains the whole intermediate normalization, every
 pulled-back conjugate boundary is empty. The faithful sheet action of the
 normal closure then makes the moving-boundary ideal the unit ideal for
 every nontrivial subgroup. This gives conjugate-boundary separation directly,
-without a regular pair or a Noetherian hypothesis.
+without a regular pair, a Noetherian hypothesis, or separability of the
+marked extension.
 -/
 
 set_option autoImplicit false
@@ -63,7 +64,6 @@ omit [IsFractionRing B K] in
 /-- In a fully visible normal closure, every nontrivial subgroup moves a
 sheet whose boundary ideal is the unit ideal. -/
 theorem movingBoundaryIdeal_eq_top_of_surjective
-    [PerfectField K]
     (hVisible : Function.Surjective j.base)
     (I : Subgroup C.GaloisGroup) (hI : I ≠ ⊥) :
     movingBoundaryIdeal (pulledBackConjugateBoundaryIdeal C) I = ⊤ := by
@@ -89,7 +89,6 @@ omit [IsFractionRing B K] in
 /-- Full visibility makes the existing fixed--moving ideal the unit ideal
 for every nontrivial subgroup. -/
 theorem fixedMovingBoundaryIdeal_eq_top_of_surjective
-    [PerfectField K]
     (hVisible : Function.Surjective j.base)
     (I : Subgroup C.GaloisGroup) (hI : I ≠ ⊥) :
     fixedMovingBoundaryIdeal C I = ⊤ := by
@@ -100,7 +99,6 @@ omit [IsFractionRing B K] in
 /-- Full visibility establishes conjugate-boundary separation directly:
 the unit fixed--moving ideal lies in no prime. -/
 theorem conjugateBoundarySeparation_of_surjective
-    [PerfectField K]
     (hVisible : Function.Surjective j.base) :
     ConjugateBoundarySeparation C := by
   intro I hI p _ hle

@@ -2,6 +2,7 @@ import Mathlib.Algebra.Group.Subgroup.Pointwise
 import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.FieldTheory.Normal.Closure
 import Mathlib.FieldTheory.Perfect
+import Mathlib.FieldTheory.SeparableClosure
 
 /-!
 # Marked normal closures
@@ -74,29 +75,54 @@ theorem finiteGaloisGroup
   letI : FiniteDimensional K N := D.finiteNormal
   infer_instance
 
-/-- Over a perfect base field, the supplied finite normal closure is already
-a finite Galois extension.  Downstream sheet and realization layers should
-reuse this theorem rather than ask for a second normality or Galois
-hypothesis. -/
+/-- A marked normal closure of a separable extension is separable over the
+base field. -/
+theorem isSeparable [Algebra.IsSeparable K L] (D : NormalClosureData K L N) :
+    Algebra.IsSeparable K N := by
+  letI : FiniteDimensional K L := D.finiteIntermediate
+  letI : IsNormalClosure K L N := D.normalClosure
+  have hNormalClosure : IntermediateField.normalClosure K L N = ⊤ :=
+    (Algebra.IsAlgebraic.isNormalClosure_iff
+      (F := K) (K := L) (L := N)).mp inferInstance |>.2
+  have hle : IntermediateField.normalClosure K L N ≤ separableClosure K N := by
+    rw [normalClosure_le_iff]
+    intro f
+    letI : Algebra.IsSeparable K f.fieldRange :=
+      AlgEquiv.Algebra.isSeparable (AlgEquiv.ofInjectiveField f)
+    exact le_separableClosure K N f.fieldRange
+  apply (separableClosure.eq_top_iff K N).mp
+  apply top_unique
+  rw [← hNormalClosure]
+  exact hle
+
+/-- A marked normal closure of a separable extension is Galois; perfectness
+of the base field is not required. -/
+theorem isGalois_of_isSeparable [Algebra.IsSeparable K L]
+    (D : NormalClosureData K L N) : IsGalois K N := by
+  letI : Algebra.IsSeparable K N := D.isSeparable
+  letI : Normal K N := D.normal
+  exact IsGalois.mk
+
+/-- Compatibility specialization over a perfect base field. The downstream
+proofs use extension-specific separability through `isGalois_of_isSeparable`. -/
 theorem isGalois
     [PerfectField K]
     (D : NormalClosureData K L N) :
     IsGalois K N := by
-  letI : FiniteDimensional K N := D.finiteNormal
-  letI : Normal K N := D.normal
-  letI : Algebra.IsSeparable K N :=
+  letI : FiniteDimensional K L := D.finiteIntermediate
+  letI : Algebra.IsSeparable K L :=
     Algebra.IsAlgebraic.isSeparable_of_perfectField
-  exact IsGalois.mk
+  exact D.isGalois_of_isSeparable
 
 /-- The fixed field of the distinguished fixing subgroup is the marked copy of `L`. -/
 theorem fixedField_intermediateFixingSubgroup
-    [PerfectField K]
+    [Algebra.IsSeparable K L]
     (D : NormalClosureData K L N) :
     IntermediateField.fixedField
         D.intermediateFixingSubgroup =
       D.intermediateField := by
   letI : FiniteDimensional K N := D.finiteNormal
-  letI : IsGalois K N := D.isGalois
+  letI : IsGalois K N := D.isGalois_of_isSeparable
   exact IsGalois.fixedField_fixingSubgroup D.intermediateField
 
 /--
@@ -105,7 +131,6 @@ action of `Gal(N/K)` on its conjugate sheets is faithful. Equivalently,
 the subgroup fixing `L` is core-free.
 -/
 theorem intermediateFixingSubgroup_normalCore_eq_bot
-    [PerfectField K]
     (D : NormalClosureData K L N) :
     D.intermediateFixingSubgroup.normalCore = ⊥ := by
   letI : FiniteDimensional K L := D.finiteIntermediate

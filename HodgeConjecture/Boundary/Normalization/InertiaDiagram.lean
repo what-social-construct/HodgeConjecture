@@ -377,7 +377,6 @@ theorem conjugateCenter_mapsToBase
 omit [IsFractionRing B K] in
 /-- Nontrivial valuation inertia produces a sheet of relative index greater than one. -/
 theorem exists_one_lt_inertiaIndex
-    [PerfectField K]
     (E : RamifiedCodimensionOnePoint (B := B) (N := N)) :
     ∃ q : D.sheetClasses E,
       1 < D.inertiaIndex E q := by
@@ -404,7 +403,6 @@ theorem exists_one_lt_inertiaIndex
 omit [IsFractionRing B K] in
 /-- Boundary containment and no hidden inertia exclude all ramified height-one points. -/
 theorem ramifiedCodimensionOnePoint_isEmpty
-    [PerfectField K]
     (hBoundary : D.RamifiedConjugateCentersInBoundary)
     (hNoHidden : D.NoHiddenInertia) :
     IsEmpty (RamifiedCodimensionOnePoint (B := B) (N := N)) := by
@@ -417,7 +415,6 @@ theorem ramifiedCodimensionOnePoint_isEmpty
 omit [IsFractionRing B K] in
 /-- The local conclusion consumed by purity: every height-one point is unramified. -/
 theorem noCodimensionOneRamification
-    [PerfectField K]
     (hBoundary : D.RamifiedConjugateCentersInBoundary)
     (hNoHidden : D.NoHiddenInertia) :
     NoCodimensionOneRamification (B := B) (N := N) :=

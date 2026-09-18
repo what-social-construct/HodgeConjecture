@@ -130,6 +130,72 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP72 | Actual dominant function-field map and finite generic extension | CONSTRUCT / COMMUTE / LOCALIZE | Construct the generic-stalk map with germ, identity and composition laws; identify its open-immersion specialization. Derive section scalar towers and finite-dimensionality from the actual finite affine algebra, with a global endpoint choosing its chart internally. | PROVED; FULL BUILD, EIGHTEEN FOCUSED REGRESSIONS, ELEVEN STANDARD-AXIOM AUDITS, SP71 RERUN, FRESH DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP73 | Formal unramifiedness and separability of the actual generic extension | LOCALIZE / COMPOSE / APPLY | Transfer formal unramifiedness from an actual dominant affine scheme morphism to its existing function-field algebra. For finite morphisms, use SP72 finite-dimensionality to prove separability; finite etale morphisms are a specialization. | PROVED; FULL BUILD, SIXTEEN FOCUSED REGRESSIONS, THREE STANDARD-AXIOM AUDITS, SP72 RERUN, FRESH DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP74 | Constructed marked normal closure and extension-specific Galois bridge | CONSTRUCT / PRESERVE / TRANSFER | Build the existing normal-closure datum inside the upstairs algebraic closure, preserving its canonical marking. Transfer separability to any marked normal closure and apply the Galois consequence to the actual finite generic extension. | PROVED; FULL BUILD, TWENTY-TWO FOCUSED REGRESSIONS, SEVEN STANDARD-AXIOM AUDITS, SP73 RERUN, FRESH DEPENDENCY AUDIT, SINGLE-PDF CHECKS AND INDEPENDENT REVIEW PASS |
+| SP75 | Local-separability consumer generalization and core-free hypothesis cleanup | GENERALIZE / MOVE / REUSE | Replace fourteen perfect-field premises by extension separability; remove twelve without replacement. Move the two existing separability/Galois helpers to the core, retaining one perfect-field compatibility wrapper and all other geometric inputs. | PROVED / VALIDATED |
+
+SP75 (2026-09-18): **local separability / consumer hypothesis cleanup**.
+The existing declarations now state the hypotheses actually used. No
+new library declarations, aliases, packages, carriers, maps, projectors or source
+axioms are introduced. Twenty-six signatures are generalized, two
+existing helpers are moved and one compatibility-wrapper proof is changed.
+
+Fourteen declarations now have explicit `[Algebra.IsSeparable K L]`:
+
+- `NormalClosureData.fixedField_intermediateFixingSubgroup`;
+- `intermediateNormalizationEquivFixedRing` and its `coe` formula;
+- `baseEquivFullInvariantNormalizationRing`;
+- `NormalClosureData.normalClosureTensorToGenericSheets_bijective`,
+  `.normalClosureTensorGenericSheetsEquiv` and
+  `.normalClosureBaseSheetAugmentation_comp_tensorGenericSheetsEquiv`;
+- the four denominator/landing/colon consumers in
+  `NormalizationTraceBound.lean`, and the three trace-pole/trace-colon/
+  trace-landing consumers in `BoundaryPole.lean`.
+
+Twelve declarations lose `PerfectField K` with no separability replacement:
+`intermediateFixingSubgroup_normalCore_eq_bot`; the three full-visible
+unit-ideal/separation results; the finite-affine-cover separation result;
+the three inertia-diagram consequences; the two sheet-extension and two
+Galois-projector-extension consequences. Other finiteness, normality,
+Noetherianity, formal-unramifiedness, ramification-realization and purity
+hypotheses remain exactly where required. In particular, removal of a
+field hypothesis is not a construction of those geometric inputs.
+
+`NormalClosureData.isSeparable` and `.isGalois_of_isSeparable` move from
+`NormalClosureConstruction.lean` into `NormalClosure.lean` under the same
+names. The sole library `[PerfectField K]` compatibility wrapper is the
+existing `.isGalois`, which derives separability of the finite marked
+extension and delegates to `.isGalois_of_isSeparable`. The trace denominator
+uses `.isSeparable` directly. These 26 generalized signatures, two moved
+helpers and one wrapper are the 29 declarations selected for fresh audits.
+
+Notation parity is unchanged: `\mathcal N=(K,L,N,\iota)`, `\kappa_p`,
+the fixed-field/sheet comparison maps, `J_{\mathrm{fix}}`,
+`J_{\mathrm{mov}}`, `J_{\mathrm{fm}}`, `T^\vee_B` and the existing
+projector all denote the same objects. This checkpoint changes hypothesis
+placement and module ownership, not their definitions or TeX identities.
+
+Validation: `NormalClosureConsumersVerification.lean` passes 24 examples
+and 29 enforced standard-three axiom audits. The updated trace and pole
+suites pass 14/11 and 12/9, and fresh SP74 and finite-affine-cover suites
+pass 22/7 and 20/17. The central inventory has 859 checks, 565 examples
+and 751 reports after appending 29 checks and reports; its historical
+prefix is byte-identical and was not rerun in full. The 74-page PDF
+(785575 bytes) passes its build and clean warning/box/reference scan;
+visual checks of pages 9--13, 57 and 66--67 and independent Lean--TeX
+review pass. The full build passes (3179 jobs; only the two existing
+Challenge placeholder warnings). The fresh unchanged dependency audit
+passes six endpoint contracts and two support reports.
+
+The next bounded theorem should derive
+`Module.Finite B (integralClosure B N)` over normal Noetherian affine `B`
+from the constructed finite separable `N/K`, replacing the separately
+supplied second finite normal algebra `S`. The inspected Mathlib
+`IsIntegralClosure.finite` has no dimension-one or Dedekind premise despite
+its file location; this specialization is not yet implemented. Normality
+of `B` remains explicit. Etaleness of that `N`-model, overlap compatibility,
+normalization gluing and the actual global Galois scheme refinement follow
+as separate tasks, as do normal stalks from smoothness and Chow--Betti
+generation. Historical SP74 and earlier queue blocks below are preserved
+unchanged.
 
 SP74 (2026-09-18): **constructed marked normal closure / Galois bridge**.
 `NormalClosureConstruction.lean` constructs the existing

@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-18 (SP74 marked normal-closure construction; earlier checkpoint
+Last audited: 2026-09-18 (SP75 local-separability consumer generalization; earlier checkpoint
 validation records are retained with their original scope).
 
 Status vocabulary:
@@ -17,6 +17,45 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Local separability and consumer hypothesis cleanup (A11bg / SP75)
+
+Status: `FORMAL`. Fourteen existing signatures replace
+`PerfectField K` with explicit `Algebra.IsSeparable K L`: one fixed-field
+identification, two intermediate-invariant comparisons, one full-invariant
+base equivalence, three selector/tensor comparisons and seven trace/pole
+results. Core-freeness and eleven full-visible/inertia/sheet/projector
+consumers drop perfectness with no separability replacement. Their other
+normalization, formal-unramifiedness and purity hypotheses are unchanged.
+
+The existing `NormalClosureData.isSeparable` and
+`.isGalois_of_isSeparable` move to `NormalClosure.lean` with unchanged
+names. The old `.isGalois [PerfectField K]` is retained as the sole
+perfect-field compatibility wrapper and delegates via separability of
+the finite marked extension. These are 26 signature generalizations,
+two moved declarations and one wrapper-proof change; no new library declaration,
+alias, package, field carrier, map, projector or source axiom is added.
+
+The new consumer suite passes 24 regressions and 29 enforced
+standard-axiom audits; the trace and pole suites pass 14/11 and 12/9.
+Fresh SP74 and finite-affine-cover reruns pass 22/7 and 20/17. The
+central inventory has 859 checks, 565 examples and 751 reports after
+appending 29 checks and reports; its historical prefix is unchanged
+and was not rerun in full. The 74-page PDF (785575 bytes) passes its
+build, warning scan and visual checks, and independent Lean--TeX review
+passes. The full build passes (3179 jobs; only the two existing Challenge
+placeholder warnings). The fresh unchanged dependency audit passes six
+endpoint contracts and two support reports.
+
+Next derive finiteness of the actual `integralClosure B N` for normal
+Noetherian affine `B`, using the constructed finite separable normal
+closure, instead of supplying a second finite normal algebra `S`.
+The inspected Mathlib theorem `IsIntegralClosure.finite` has the needed
+normal-Noetherian/fraction-field/scalar-tower hypotheses without a
+dimension-one or Dedekind assumption. This specialization is not yet
+implemented. Normality of `B` remains explicit; etaleness of the resulting
+`N`-model, overlap compatibility, gluing, global Galois refinement and
+Chow--Betti generation remain separate.
 
 ## Constructed marked normal closure and Galois bridge (A11bf / SP74)
 
@@ -39,18 +78,18 @@ Witnesses:
 
 - `Boundary/Normalization/NormalClosureConstruction.lean`, namespace
   `CollisionFoundations.NormalClosureData`: `ofAlgebraicClosure`,
-  `ofAlgebraicClosure_embedding_apply`, `isSeparable`,
-  `isGalois_of_isSeparable`.
+  `ofAlgebraicClosure_embedding_apply`. The existing `isSeparable` and
+  `isGalois_of_isSeparable`, introduced at SP74, now reside in
+  `Boundary/Normalization/NormalClosure.lean` after SP75's move.
 - `Boundary/Normalization/FunctionFieldNormalClosure.lean`, namespace
   `CollisionFoundations`: `functionFieldNormalClosureData`,
   `functionFieldNormalClosureData_embedding_apply`,
   `functionFieldNormalClosure_isGalois`.
 
 The existing package and Mathlib intermediate-field carrier are reused;
-no parallel normal-closure package or source axiom is introduced. No
-existing `PerfectField K` consumer signature is refactored here. Next
-connect the new Galois result to the fixed-field, core-free and selector
-consumers. A scheme-level Galois refinement, normal stalks from smoothness,
+no parallel normal-closure package or source axiom is introduced. SP74
+did not refactor existing consumer signatures; SP75 above implements
+that generalization. A scheme-level Galois refinement, normal stalks from smoothness,
 normalization gluing and Chow--Betti generation remain separate tasks.
 The 74-page PDF (785530 bytes) passes its build, warning scan, visual
 checks and independent core/scheme/manuscript review. The full build
@@ -85,9 +124,9 @@ The three witnesses, in `CollisionFoundations` and
 
 These are properties of the existing `kappa_p` algebra, not a replacement
 field map, a new cover package or a source axiom. SP74 above constructs
-marked normal-closure field data from this finite extension. The
-existing downstream `PerfectField K` hypotheses remain distinct and
-undischarged; actual global Galois refinement, normal stalks from smooth
+marked normal-closure field data from this finite extension. SP73 did
+not discharge the downstream `PerfectField K` hypotheses; SP75 above
+generalizes those consumers. Actual global Galois refinement, normal stalks from smooth
 geometry, gluing and Chow--Betti generation remain separate tasks.
 The manuscript's generic-separability proposition states the same
 hypotheses and uses the same `kappa_p`. Its 73-page PDF (781158 bytes)
@@ -533,9 +572,9 @@ conjecture.
 | A6 | FORMAL | For a finite group, the normalized graph average and its complement are convolution idempotents. | `averagingProjector_isIdempotent`, `complementaryAveragingProjector_isIdempotent` in `FiniteGroupProjector.lean` |
 | A7 | FORMAL | For a finite subgroup, the normalized Hecke corner is constructed, `e_H[g]e_H` depends only on the double coset, and idempotents in the corner map to correspondence idempotents. | `SubgroupHeckeAlgebra`, `heckeElement_eq_of_rel`, `doubleCosetOperator`, `heckeCorrespondence_isIdempotent` in `HeckeProjector.lean` |
 | A8 | CONDITIONAL | For a finite group and a finite-etale cover, given an explicit torsor comparison and a `FiniteEtaleAlgebraModel`, the collision class is the finite sum of graph classes, its normalized class realizes the averaging projector, and that normalized class is convolution-idempotent. The model is an algebra realization of the finite-etale free correspondence algebra and assumes additivity only for finite coproducts; it does not range over arbitrary spans. | `FiniteEtaleAlgebraModel` in `HodgeConjecture/Correspondence/FiniteEtaleModel.lean`; `GaloisCollisionDecomposition`, `classOf_collision_eq_sum_graph`, `averagingProjector_realizes_normalizedCollisionClass`, and `normalizedCollisionClass_isIdempotent` in `GaloisCollision.lean` |
-| A9 | FORMAL | `NormalClosureData` already supplies the normal-closure witness and finite-dimensionality of `L/K` and `N/K`.  It derives normality, and over a perfect base field (hence in characteristic zero) derives `IsGalois K N`; no duplicate normality or Galois hypothesis is required.  Normality keeps conjugate embeddings inside the same `N` and one Galois group; it does not make that group abelian.  The finite `galoisGroup`, `intermediateFixingSubgroup`, and canonical action by deck transformations on the affine integral-closure normalization are available to the marked-sheet and graph-projector layers; the final class-dependent witness still does not construct or bundle this geometric input.  Each deck map lies over the affine base because the automorphism fixes `K` and hence the `B`-scalars through the scalar tower, not because `G` commutes.  Pointwise sheet multiplication is separately commutative, while the group/convolution and Chow-correspondence algebras may be noncommutative.  Despite the API name `FiniteDeckAction`, this does not assert that the normalization map is finite étale; those properties remain separate inputs. | `NormalClosureData.normal`, `.finiteGaloisGroup`, `.isGalois`, `.galoisGroup`, and `.intermediateFixingSubgroup` in `Boundary/Normalization/NormalClosure.lean`; `NormalizationInertia.normalClosureNormalizationRingEquiv`, `normalClosureNormalizationSchemeIso_hom_comp_toBase`, `normalClosureDeckTransformation`, and `normalClosureFiniteDeckAction` in `Boundary/Normalization/DeckAction.lean` |
-| A10 | FORMAL | For a subgroup `H` of `Gal(N/K)`, the integral closure of `B` in the fixed field `N^H` is canonically equivalent, as a `B`-algebra, to the `H`-fixed subalgebra of the integral closure of `B` in `N`. For a marked normal closure over a perfect base field, this identifies the marked intermediate normalization with the fixed ring of its intermediate fixing subgroup. No purity or unramifiedness is used. | `NormalizationInertia.fixedFieldNormalizationEquivFixedRing` and `intermediateNormalizationEquivFixedRing` in `Boundary/Normalization/InvariantIntermediate.lean` |
-| A11 | FORMAL | A marked normal closure defines algebra maps from `L ⊗[K] L` and `N ⊗[K] L` to functions on `G/H`.  Base-sheet evaluation is an algebra homomorphism, and its composite with `normalClosureTensorToGenericSheets` is exactly the tensor-diagonal algebra map `N ⊗[K] L → N`.  Under formal unramifiedness and essential finite type, the diagonal element maps exactly to the characteristic function of the marked base sheet and is itself idempotent. Over a perfect base field, the normal-closure sheet map is an `N`-algebra equivalence and satisfies the same augmentation square. | `NormalClosureData.normalClosureBaseSheetAugmentation_comp_tensorToGenericSheets`, `collisionToGenericSheets_elem_eq_baseSheetSelector`, `sheetDeltaTensor_maps_to_selector`, `normalClosureTensorGenericSheetsEquiv`, `normalClosureBaseSheetAugmentation_comp_tensorGenericSheetsEquiv`, and `formallyUnramifiedElem_isIdempotent` in `Boundary/Normalization/SelectorComparison.lean` |
+| A9 | FORMAL | `NormalClosureData` already supplies the normal-closure witness and finite-dimensionality of `L/K` and `N/K`.  It derives normality, and from `Algebra.IsSeparable K L` derives `IsGalois K N`; no duplicate normality or Galois hypothesis is required.  Normality keeps conjugate embeddings inside the same `N` and one Galois group; it does not make that group abelian.  The finite `galoisGroup`, `intermediateFixingSubgroup`, and canonical action by deck transformations on the affine integral-closure normalization are available to the marked-sheet and graph-projector layers; the final class-dependent witness still does not construct or bundle this geometric input.  Each deck map lies over the affine base because the automorphism fixes `K` and hence the `B`-scalars through the scalar tower, not because `G` commutes.  Pointwise sheet multiplication is separately commutative, while the group/convolution and Chow-correspondence algebras may be noncommutative.  Despite the API name `FiniteDeckAction`, this does not assert that the normalization map is finite étale; those properties remain separate inputs. | `NormalClosureData.normal`, `.finiteGaloisGroup`, `.isGalois_of_isSeparable` (with `.isGalois` retained as the perfect-field compatibility wrapper), `.galoisGroup`, and `.intermediateFixingSubgroup` in `Boundary/Normalization/NormalClosure.lean`; `NormalizationInertia.normalClosureNormalizationRingEquiv`, `normalClosureNormalizationSchemeIso_hom_comp_toBase`, `normalClosureDeckTransformation`, and `normalClosureFiniteDeckAction` in `Boundary/Normalization/DeckAction.lean` |
+| A10 | FORMAL | For a subgroup `H` of `Gal(N/K)`, the integral closure of `B` in the fixed field `N^H` is canonically equivalent, as a `B`-algebra, to the `H`-fixed subalgebra of the integral closure of `B` in `N`. For a marked normal closure with `Algebra.IsSeparable K L`, this identifies the marked intermediate normalization with the fixed ring of its intermediate fixing subgroup. No purity or unramifiedness is used. | `NormalizationInertia.fixedFieldNormalizationEquivFixedRing` and `intermediateNormalizationEquivFixedRing` in `Boundary/Normalization/InvariantIntermediate.lean` |
+| A11 | FORMAL | A marked normal closure defines algebra maps from `L ⊗[K] L` and `N ⊗[K] L` to functions on `G/H`.  Base-sheet evaluation is an algebra homomorphism, and its composite with `normalClosureTensorToGenericSheets` is exactly the tensor-diagonal algebra map `N ⊗[K] L → N`.  Under formal unramifiedness and essential finite type, the diagonal element maps exactly to the characteristic function of the marked base sheet and is itself idempotent. For separable `L/K`, the normal-closure sheet map is an `N`-algebra equivalence and satisfies the same augmentation square. | `NormalClosureData.normalClosureBaseSheetAugmentation_comp_tensorToGenericSheets`, `collisionToGenericSheets_elem_eq_baseSheetSelector`, `sheetDeltaTensor_maps_to_selector`, `normalClosureTensorGenericSheetsEquiv`, `normalClosureBaseSheetAugmentation_comp_tensorGenericSheetsEquiv`, and `formallyUnramifiedElem_isIdempotent` in `Boundary/Normalization/SelectorComparison.lean` |
 | A11b | FORMAL | For the pointwise sheet algebra `A_H = ℚ^(G/H)`, base-sheet evaluation is an augmentation algebra map and its kernel is the augmentation ideal `E_H = (1 - q_H)`.  Giving that ideal the internal unit `1-q_H` produces the residual corner and a genuine algebra equivalence `A_H ≃ₐ[ℚ] ℚ × E_H^corner`, carrying `q_H` to `(1,0)` and `1-q_H` to `(0,1)`.  The source regular action is multiplicative.  After forgetting the corner unit, multiplication by `q_H` is `diag(1,0)` in the underlying selector coordinates and is the graph operator of `q_H - 1` in the separate constant-unit linear coordinates; the linear coordinate changes differ by an explicit lower shear.  Any rational linear map from the underlying module of `E_H` carries this graph operator to the canonical Tate graph projector of the resulting class.  The auxiliary direct-only sheet linearization is not an algebra map and is not part of the active realization route. | `MarkedAugmentedAlgebra.augmentationIdeal_eq_span_one_sub_selector`, `.regularAction`, and the generic block identities are in `LinearAlgebra/MarkedAugmentedAlgebra.lean`; `ResidualCorner` and `selectorAlgebraDecomposition` are in `LinearAlgebra/MarkedAugmentedAlgebraDecomposition.lean`; their sheet specializations are in `Boundary/Sheets/MarkedBlockProjector.lean`; generic and sheet realization naturality are in `Realization/Chow/MarkedAugmentedRealization.lean` and `GaloisMarkedBlock.lean`. |
 | A11c | FORMAL | The universal one-idempotent algebra `U = ℚ × ℚ` maps canonically by algebra homomorphisms to every associative rational algebra containing a chosen idempotent.  Restriction of a compactified projector is therefore an equality of algebra-map composites out of `U`.  A selector action square is equivalently a morphism between the two induced `U`-representations, and every algebraic projector lift has a realization square stated as equality of algebra-homomorphism composites.  This construction requires no algebra map from the full pointwise sheet algebra to `ℚ[G]`. | `UniversalIdempotentAlgebra.mapOfIdempotent` and `.comp_mapOfIdempotent` in `LinearAlgebra/UniversalIdempotentAlgebra.lean`; `UniversalIdempotentAlgebra.RepresentationMorphism` in `Realization/Chow/IdempotentRepresentation.lean`; `AlgebraProjectorExtension.restriction_comp_compactifiedIdempotentMap` in `Boundary/GaloisProjectorExtension.lean`; `AlgebraicProjectorLift.realization_idempotentMap_square` in `Correspondence/ProjectorLift.lean` |
 | A11d | FORMAL | For finite `I`, `Spec(k^I)` is finite, étale, and proper over `Spec k`; each point inclusion defines a finite-étale span whose self-pullback proves its free span basis class idempotent. Separately, in the two-point rational matrix coefficient model, `Π=E₀₀`, residual evaluation `θ(0,b)=b`, and constant-unit coordinates `(a,b)↦(a,b−a)` give `θ(q−1)=−1`, surjectivity, `ρ(Π)=P₋₁`, a constructed marked comparison and projector lift, and the Palomar target square. A11f now connects the actual scheme-span source to this matrix model; A11j constructs the finite-split geometric Chow composition. | `SplitPointGeometry.pointSpan_comp_self_iso` and `.pointProjector_isIdempotent` in `Correspondence/Examples/SplitPoints.lean`; `SplitPointCorrespondence.realization_firstPointProjector`, `.markedComparison`, `.projectorLift`, and `.palomarTargetSquare` in `Realization/Chow/Examples/SplitPoints.lean`. |
@@ -585,7 +624,7 @@ conjecture.
 | A11av | FORMAL | For an open immersion of arbitrary schemes, every finite cycle over any semiring lifts by taking the actual reduced ambient closures of its integral supports with unchanged coefficients. The actual ideal-comap identities prove that restriction recovers the original cycle. The proved support-degree comparison makes this lift homogeneous for the supplied dimension function and its literal restriction, so the existing raw and graded restriction maps are surjective. No ambient integrality, Noetherianity, quasi-compactness, field-base or nonempty-source hypothesis is needed at cycle level. For a Noetherian target, the source is derived Noetherian; choosing an actual homogeneous cycle representative and lifting it proves surjectivity of both the existing integral and rational Chow restriction maps. Closure is used to lift cycles and is not asserted to preserve rational equivalence or define a Chow right inverse. No new cycle or quotient carrier is introduced. The next bounded step is the actual closed-complement support/kernel/image comparison; localization exactness requires that additional argument. General proper/flat/Gysin laws, geometric target identification and reducible/componentwise conventions remain separate. | `openRestriction_surjective`, `gradedOpenRestriction_surjective` in `Cycles/OpenRestrictionSurjectivity.lean`; `chowOpenRestriction_surjective` in `Cycles/ChowOpenRestriction.lean`; `rationalChowOpenRestriction_surjective` in `Cycles/RationalChowOpenRestriction.lean`. |
 | A12 | CONDITIONAL | Given the exact local input that the selected prime of the inertia fixed ring is unramified, containment `I ≤ H` implies unramifiedness of the selected prime in the `H`-fixed ring. The basic theorem imposes Dedekind only on the selected localization. For a finite group and a height-one prime, invariant-theoretic going down preserves height one; normality and Noetherianity therefore make that localization a DVR. The normal-closure endpoint composes this with the formal valuation-to-prime-inertia comparison and remains based over the literal full invariant ring `S^G`; it does not silently replace `S^G` by `B`. The former global-Dedekind theorem remains as a wrapper. This controls one selected branch, not the entire `G/H` cover, and Tag `0BST` remains an explicit premise. | `NormalizationInertia.InertiaFixedRingUnramifiedAt` in `Inputs/FixedInertia.lean`; `fixedPointsLocalRingHom`, `fixedPointsLocalRingHom_injective`, and `fixedRing_isUnramifiedAt_of_inertia_le_localized` in `Boundary/Normalization/FixedRingUnramified.lean`; `fixedPoints_primeHeight_under_eq_one` and `fixedRing_isUnramifiedAt_of_inertia_le_of_primeHeight_eq_one` in `Boundary/Normalization/FixedRingLocalization.lean`; `normalizationFixedRing_isUnramifiedAt_of_primeInertia_le` and `Diagram.fixedRing_isUnramifiedAt_of_valuationInertia_le` in `Boundary/Normalization/PrimeInertiaDescent.lean` |
 | A13 | FORMAL | Rational pull and push maps satisfying `push ∘ pull = d · id`, with nonzero integral degree `d`, define an idempotent normalized pull--push operator. The theorem proves the algebraic transfer calculation but does not construct Chow groups or the geometric pull/push maps. | `normalizedPullPush_isIdempotent` and `RationalDegreeTransfer.normalizedProjector_isIdempotent` in `Realization/Chow/TransferProjector.lean` |
-| A14 | FORMAL | Ring-theoretic prime inertia is realized as the stabilizer kernel of the residue action. A selected prime is the unique prime above its contraction to its own inertia-fixed ring; this needs only finiteness of the acting group. For every centered valuation in a normalization diagram, valuation inertia acts trivially modulo the center and is contained in prime inertia. For marked finite normal-closure data over a perfect fraction field, an affine base integrally closed in that field is equivalent to the full invariant normalization ring. | `primeInertiaSubgroup`, `eq_of_under_primeInertiaSubgroup_eq`, `mem_primeInertiaSubgroup_iff`, `baseEquivFullInvariantNormalizationRing`, `Diagram.valuationInertia_sub_centerPrime`, and `Diagram.valuationInertia_le_normalizationPrimeInertiaGroup` in `Boundary/Normalization/PrimeInertia.lean` |
+| A14 | FORMAL | Ring-theoretic prime inertia is realized as the stabilizer kernel of the residue action. A selected prime is the unique prime above its contraction to its own inertia-fixed ring; this needs only finiteness of the acting group. For every centered valuation in a normalization diagram, valuation inertia acts trivially modulo the center and is contained in prime inertia. For marked finite normal-closure data with separable `L/K`, an affine base integrally closed in that field is equivalent to the full invariant normalization ring. | `primeInertiaSubgroup`, `eq_of_under_primeInertiaSubgroup_eq`, `mem_primeInertiaSubgroup_iff`, `baseEquivFullInvariantNormalizationRing`, `Diagram.valuationInertia_sub_centerPrime`, and `Diagram.valuationInertia_le_normalizationPrimeInertiaGroup` in `Boundary/Normalization/PrimeInertia.lean` |
 | A15 | FORMAL | Compatible localization data supply the reverse containment from prime inertia to valuation inertia. For a normalization diagram over a Noetherian affine base, those data follow from the supplied finite normalization, height-one center, and centered discrete valuation: the height-one localization is a valuation ring and maximality in the common fraction field identifies it with the centered valuation ring. Hence `I_val ≤ H` implies the prime-inertia containment `I_Q ≤ H` required by the fixed-ring descent. Combining this with the independent Jacobian-inherited forward containment gives equality, but equality is not a dependency of the main endpoint. Without Noetherianity or direct localization data, the reverse comparison remains conditional. | `ValuationLocalizationAt.primeInertia_le_valuationInertia`, `Diagram.hasValuationLocalizationAt_of_isNoetherianRing`, and `Diagram.normalizationPrimeInertia_le_of_valuationInertia_le_of_isNoetherianRing` in `Boundary/Normalization/LocalizationBridge.lean`; equality is the optional `Diagram.valuationInertia_eq_normalizationPrimeInertiaGroup_of_isNoetherianRing` |
 
 ## Candidate B: collision decomposition

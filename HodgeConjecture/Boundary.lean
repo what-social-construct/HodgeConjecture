@@ -83,6 +83,10 @@ The resulting finite extension constructs the existing marked normal-closure
 datum inside the algebraic closure of the upstairs field. Separability of the
 marked extension gives separability and Galoisness of its normal closure,
 again without a perfect-base-field premise.
+Fixed-field, tensor-sheet and trace-dual consumers use that same extension's
+separability. Core-freeness, full-visible separation and their inertia/extension
+consequences require neither separability nor perfectness; their geometric
+and source-input hypotheses remain explicit.
 
 The broad normalization-purity/global-triviality prototype is preserved in
 `research/archive/legacy-lean/`, not as an importable library module.

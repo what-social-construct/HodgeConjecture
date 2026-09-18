@@ -8,6 +8,7 @@ The generic trace-dual denominator is tested without Noetherianity or
 module-finiteness of the normalization. Boundary landing and properness
 remain explicit hypotheses in their respective tests. All eleven new
 public declarations have an enforced standard-axiom allowlist.
+The SP75 boundary tests use separability of the marked extension directly.
 -/
 
 open AlgebraicGeometry CategoryTheory HodgeConjecture
@@ -114,12 +115,12 @@ example [IsNoetherianRing B] : IsNoetherianRing T₀ :=
 -- No normality of B, Noetherianity, or perfectness is needed for normality of T₀.
 example : IsIntegrallyClosed T₀ := normalization_isIntegrallyClosed C
 
-example [PerfectField K] : ∃ d : T₀, d ≠ 0 ∧
+example [Algebra.IsSeparable K L] : ∃ d : T₀, d ≠ 0 ∧
     ∀ z ∈ normalizationTraceDual C,
       (d : N) * z ∈ Set.range (algebraMap T₀ N) :=
   exists_nonzero_normalizationTraceDual_denominator C
 
-variable [PerfectField K] [IsNoetherianRing B]
+variable [Algebra.IsSeparable K L] [IsNoetherianRing B]
 variable (I : Subgroup C.GaloisGroup) (hI : I ≠ ⊥)
 
 example (s : T₀) (hs : s ≠ 0)

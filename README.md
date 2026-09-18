@@ -414,9 +414,10 @@ projector.
 `NormalClosureData` already packages the normal-closure witness and the
 finiteness of both `L/K` and `N/K`; downstream normality and finite-group
 instances are therefore derived from this datum rather than imposed as new
-mathematical hypotheses.  Over a perfect base field (in particular in the
-characteristic-zero setting), `NormalClosureData.isGalois` derives
-`IsGalois K N`.  The resulting `galoisGroup`,
+mathematical hypotheses. Separability of `L/K` gives `IsGalois K N`
+through `NormalClosureData.isGalois_of_isSeparable`; the old `isGalois`
+name is retained as a perfect-base-field compatibility specialization.
+The resulting `galoisGroup`,
 `intermediateFixingSubgroup`, and canonical normalization deck action feed
 the marked-sheet layer directly.  Normality is used to keep all conjugate
 embeddings inside the same field `N`, hence under one Galois group; it does
@@ -426,13 +427,13 @@ the scalar tower, not because the group commutes.  The pointwise sheet
 algebra is separately commutative, while the group algebra and the full Chow
 correspondence algebra may be noncommutative.  For this marked normal closure, the
 intermediate normalization is identified formally with the subgroup-fixed
-normalization ring.  Using
+normalization ring when `L/K` is separable. Using
 chosen quotient representatives, the collision tensor algebra also has an
 evaluation map to functions on `G/H`, and its separability element is proved
 to map to the marked singleton-sheet selector.  The multiplicative diagram is
 also explicit: base-sheet augmentation composed with
 `normalClosureTensorToGenericSheets` equals the tensor-diagonal algebra map
-`normalClosureTensorDiagonal`.  Over a perfect base field,
+`normalClosureTensorDiagonal`. For separable `L/K`,
 the normal-closure base change `N ⊗[K] L` is further proved equivalent to the
 full sheet-function algebra.  At a boundary prime, the Stacks fixed-inertia
 unramified theorem remains one explicit source input.  Lean now constructs
@@ -505,7 +506,7 @@ reuses
 `T^vee_B = {z in N : Tr_{N/K}(zT) subset B}`. An integral generic basis and
 its trace-dual basis give one nonzero denominator for the entire submodule,
 without Noetherianity, normality of `B` or a free normalization hypothesis.
-For the existing normal closure over a perfect `K`,
+For the existing normal closure of a separable `L/K`,
 `normalizationTraceDual C` is this same object. Under the additional
 Noetherian-base hypothesis, a nonzero member of the existing colon
 `(T^vee_B:R_I)` forces `R_I=T`; a proper `R_I` instead has zero colon.
@@ -522,7 +523,7 @@ For a nonzero ideal `J` of a Noetherian domain and a height-one prime
 containing it, a fraction `t/f` is constructed as an actual section on
 every nonempty open `V` contained in `D(J)`, but lies outside the base
 ring. The fixed--moving specialization therefore gives `R_I != T` at
-such a prime. Over a perfect `K`, every nonzero proposed trace multiplier
+such a prime. With separable `L/K`, every nonzero proposed trace multiplier
 then fails on some actual boundary section, and the existing trace-dual
 colon is zero. Conversely, a nonzero uniform landing multiplier for each
 nontrivial subgroup implies `ConjugateBoundarySeparation`.
@@ -579,7 +580,7 @@ model visible in
 [`FiniteAffineCover.lean`](HodgeConjecture/Boundary/Normalization/FiniteAffineCover.lean).
 Etaleness, when supplied for the affine algebra, transports separately.
 For a surjective visible open, every conjugate boundary
-is empty. Over perfect `K`, the core-free sheet action then makes
+is empty. The core-free sheet action, without a separability assumption, makes
 `J_mov(I)=J_fm(I)=top` for every nontrivial `I`, giving boundary separation
 directly in
 [`FullVisibleBoundary.lean`](HodgeConjecture/Boundary/Normalization/FullVisibleBoundary.lean),
@@ -651,7 +652,8 @@ three enforced standard-axiom audits pass, as do the fresh SP72 rerun
 (eighteen regressions and eleven audits) and unchanged dependency audit.
 The central inventory now has 823 checks, 565 examples and 715 reports;
 its historical prefix is unchanged and was not rerun in full.
-This does not discharge downstream `PerfectField K` inputs or construct
+SP73 alone did not discharge the downstream `PerfectField K` inputs;
+SP75 below generalizes those consumers. It does not construct
 a global Galois refinement. Normal stalks from smoothness, chart gluing
 and Chow--Betti generation remain separate tasks.
 The 73-page PDF passes its build, warning scan and visual checks.
@@ -670,14 +672,37 @@ build, twenty-two focused regressions and seven enforced standard-axiom
 audits pass, as do the fresh SP73 rerun (sixteen regressions and three
 audits) and unchanged dependency audit. The central inventory now has
 830 checks, 565 examples and 722 reports; its historical prefix is
-unchanged and was not rerun in full. Next connect this extension-specific
-Galois result to the
-existing fixed-field, core-free and selector consumers, replacing
-avoidable perfectness assumptions. Their signatures are unchanged in
-SP74; a scheme-level Galois refinement, gluing and Chow--Betti generation
+unchanged and was not rerun in full. SP75 below connects this result to
+the existing consumers. A scheme-level Galois refinement, gluing and Chow--Betti generation
 are not constructed by this field-level bridge.
 The updated 74-page PDF passes its build, warning scan, visual checks
 and independent core/scheme/manuscript review.
+
+SP75 aligns the existing consumer hypotheses with their proofs. Fourteen
+fixed-field, invariant-ring, selector/tensor and trace/pole declarations
+now assume only `Algebra.IsSeparable K L`. Core-freeness and eleven
+full-visible/inertia/sheet/projector consumers need neither perfectness
+nor separability. The two separability/Galois lemmas move into
+[`NormalClosure.lean`](HodgeConjecture/Boundary/Normalization/NormalClosure.lean)
+under their existing names; `NormalClosureData.isGalois` is the sole
+perfect-field compatibility wrapper. No production declarations, maps, packages or
+projectors are added. The new consumer suite passes 24 regressions and
+29 enforced standard-axiom audits; the updated trace and pole suites
+pass 14/11 and 12/9 respectively. Fresh SP74 and finite-affine-cover
+reruns pass 22/7 and 20/17. The central inventory has 859 checks,
+565 examples and 751 reports after appending 29 checks and reports;
+its historical prefix is unchanged and was not rerun in full. The
+74-page PDF (785575 bytes) passes its build, warning scan and visual
+checks; independent Lean--TeX review passes. The full build passes
+(3179 jobs; only the two existing Challenge placeholder warnings).
+The fresh unchanged dependency audit passes six endpoint contracts and
+two support reports. Next derive finiteness of
+the actual `integralClosure B N` over a normal Noetherian affine base,
+using the constructed finite separable normal closure rather than a
+separately supplied second algebra `S`. The inspected Mathlib finiteness
+theorem needs no dimension-one hypothesis. Normality of `B` stays
+explicit; etaleness, overlap compatibility, gluing, the global finite
+etale Galois refinement and Chow--Betti generation remain subsequent tasks.
 
 `paper/main.pdf` is the single current manuscript PDF. The earlier drafts
 and their sources are preserved in the
@@ -779,8 +804,9 @@ Those advertised fixed-ring statements do not prove Tag `0BST` or global
   the collision-to-sheet-selector comparison, visible-unramifiedness lemmas,
   and the normalization–inertia diagram.
   The marked normal-closure record itself supplies normality and finiteness;
-  over a perfect/characteristic-zero base its derived Galois structure,
-  fixing subgroup, and canonical deck action are reused by these layers.
+  separability of `L/K` gives its derived Galois structure. Core-freeness,
+  the fixing subgroup and canonical deck action do not need perfectness
+  or separability. These same objects are reused by the downstream layers.
   The local fixed-inertia theorem and every global cover-extension or gluing
   input remain explicit assumptions.
 - [`Boundary`](HodgeConjecture/Boundary) contains the collision different,
@@ -974,13 +1000,13 @@ The project also formalizes:
 - chosen-representative maps from `L ⊗[K] L` and `N ⊗[K] L` to functions on
   the Galois sheets, with the formal-unramified diagonal element mapped
   exactly to the marked singleton-sheet selector, and the latter map promoted
-  to an algebra equivalence over a perfect base field;
+  to an algebra equivalence for separable `L/K`;
 - the ring-theoretic prime-inertia subgroup at a normalization prime, the
   inclusion of centered valuation inertia into it, equality of the two
   inertia groups at height one over a Noetherian base via localization, and
   identification of the full invariant normalization ring with the affine
-  base for marked finite normal-closure data under explicit perfectness and
-  integrally closedness hypotheses;
+  base for marked finite normal-closure data under explicit separability
+  of `L/K` and integrally closedness of the base ring;
 - descent of selected-prime unramifiedness from the inertia fixed ring to
   the `H`-fixed ring when `I ≤ H`, conditional only on the explicitly named
   fixed-inertia source input and the stated finiteness hypotheses, with the

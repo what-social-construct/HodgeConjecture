@@ -8,6 +8,7 @@ Local fractions yield actual sections, and a removed height-one prime
 constructs the pole used by the trace obstruction. The generic construction
 does not assume normality. All nine new public declarations have an enforced
 standard-axiom allowlist.
+The SP75 trace tests use separability of the marked extension directly.
 -/
 
 open AlgebraicGeometry CategoryTheory HodgeConjecture
@@ -124,7 +125,7 @@ example (hSections : ∀ (I : Subgroup C.GaloisGroup) (hI : I ≠ ⊥),
     ConjugateBoundarySeparation C :=
   conjugateBoundarySeparation_of_boundarySectionSubalgebra_eq_bot C hSections
 
-variable [PerfectField K]
+variable [Algebra.IsSeparable K L]
 
 -- For every proposed nonzero multiplier, a failing actual section is constructed.
 example (I : Subgroup C.GaloisGroup) (hI : I ≠ ⊥)

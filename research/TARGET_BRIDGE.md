@@ -167,8 +167,8 @@ The argument assumes neither Noetherianity nor normality of `B`, and it
 does not assume that the normalization is free as a `B`-module.
 
 For the existing `NormalizedCover C`, take `T = tilde B_N` and use the
-existing normal closure's finite extension. Over a perfect `K`,
-`C.normalClosure.isGalois` supplies separability. The alias
+existing normal closure's finite extension. From `Algebra.IsSeparable K L`,
+`C.normalClosure.isSeparable` supplies separability of `N/K` directly. The alias
 `normalizationTraceDual C` denotes precisely this same Mathlib submodule
 `T^vee_B`. The existing fraction-field comparison supplies `Frac(T) = N`;
 no extra field, transporter or geometric-input package is introduced.
@@ -238,7 +238,7 @@ Noetherianity of `T`. For each nontrivial `I`,
 derives separation whenever all these actual section algebras equal the
 base. These two results need no perfect-field hypothesis.
 
-At such a height-one boundary prime, with perfect `K`,
+At such a height-one boundary prime, with separable `L/K`,
 `boundarySection_tracePoleWitness` applies B2 to obtain, for every
 `s != 0`, an actual section whose image multiplied by `s` is outside
 `T^vee_B`. `normalizationTraceDual_colon_eq_bot_of_heightOne`
@@ -378,8 +378,8 @@ Its finite normal `A,S` hypotheses suffice without etaleness;
 `normalizedCoordinateRing_etale` separately transports etaleness when
 given for the affine algebra.
 
-For a surjective visible open, every conjugate boundary is empty. Over
-perfect `K`, the existing core-free sheet action ensures a moved sheet
+For a surjective visible open, every conjugate boundary is empty. Without
+perfectness or separability, the existing core-free sheet action ensures a moved sheet
 for each nontrivial subgroup, giving `J_mov(I)=J_fm(I)=top`. Boundary
 separation follows directly, without a regular pair, Noetherian base or
 uniform-landing hypothesis, through
@@ -505,8 +505,8 @@ with three checks and reports appended; its historical prefix is
 unchanged and was not rerun in full.
 
 SP74 below constructs marked normal-closure field data from this actual
-finite extension. This does not discharge existing downstream
-`PerfectField K` hypotheses. Global finite etale Galois refinement,
+finite extension; SP75 then generalizes the downstream hypotheses.
+Global finite etale Galois refinement,
 normal stalks from smooth geometry, gluing and Chow--Betti generation
 remain separate; no field carrier, map or cover package is replaced.
 The 73-page PDF build, warning scan and visual checks pass.
@@ -539,21 +539,57 @@ inventory has 830 checks, 565 examples and 722 reports, with seven checks
 and reports appended; its historical prefix is unchanged and was not
 rerun in full.
 
-Next connect these extension-specific Galois results to the existing
-fixed-field, core-free and selector consumers, replacing avoidable
-perfectness assumptions. Their current signatures remain unchanged in
-SP74. A scheme-level Galois refinement, normal stalks from smoothness,
+SP74 leaves the existing consumer signatures unchanged; SP75 below
+connects these extension-specific Galois results and removes unnecessary
+perfectness assumptions. A scheme-level Galois refinement, normal stalks from smoothness,
 normalization gluing and Chow--Betti generation remain separate.
 
-The inspected next refactor distinguishes two cases: the fixed-field and
-selector/tensor comparisons should use `Algebra.IsSeparable K L`; the
-core-free `normalCore_eq_bot` proof appears to need only the existing
-normality and finiteness of the normal closure, with no separability or
-perfectness premise. Audit removal entirely there and in its full-visible
-boundary consumers instead of uniformly substituting separability.
-These are next-proof obligations, not SP74 signature changes.
+The SP74 audit distinguished extension-separability hypotheses from
+possible complete removal in core-freeness. B4h records the implemented
+refactor; no such signature changes belonged to SP74 itself.
 The 74-page PDF build, warning scan, visual checks and independent
 core/scheme/manuscript review pass.
+
+### B4h. Consume local separability and remove unnecessary hypotheses
+
+SP75 generalizes 26 existing signatures, without introducing library declarations
+or parallel interfaces. Fourteen fixed-field, invariant-ring,
+selector/tensor and trace/pole results now state
+`[Algebra.IsSeparable K L]` explicitly. The trace denominator obtains
+separability of `N/K` directly from the normal-closure datum.
+Core-freeness needs neither separability nor perfectness; eleven
+full-visible, inertia, sheet-extension and projector-extension consumers
+therefore lose their perfect-field binders with no replacement.
+Their other geometric hypotheses remain unchanged.
+
+`NormalClosureData.isSeparable` and `.isGalois_of_isSeparable` move into
+`NormalClosure.lean` under the same names. The existing `.isGalois`
+retains `[PerfectField K]` as the sole compatibility wrapper, deriving
+separability of `L/K` through its existing finite-dimensional field data
+and delegating to the extension-specific theorem. No new carrier,
+normal-closure package, map, projector or source axiom is introduced.
+The new consumer suite passes 24 regressions and 29 enforced
+standard-axiom audits; the updated trace and pole suites pass 14/11
+and 12/9. Fresh SP74 and finite-affine-cover reruns pass 22/7 and
+20/17. The central inventory has 859 checks, 565 examples and 751
+reports after appending 29 checks and reports; its historical prefix
+is unchanged and was not rerun in full. The 74-page PDF (785575 bytes)
+passes its build, warning scan and visual checks, and independent
+Lean--TeX review passes. The full build passes (3179 jobs; only the two
+existing Challenge placeholder warnings). The fresh unchanged dependency
+audit passes six endpoint contracts and two support reports.
+
+The next bounded bridge is finiteness of the actual `integralClosure B N`
+over an explicitly normal Noetherian affine `B`, using the constructed
+finite separable normal closure instead of an independently supplied
+second finite normal algebra `S`. The inspected Mathlib
+`IsIntegralClosure.finite` in `RingTheory/DedekindDomain/IntegralClosure.lean`
+requires normality, Noetherianity, the fraction-field/scalar-tower data
+and finite separability, but no dimension-one or Dedekind hypothesis.
+This specialization is not yet implemented. Normality of `B` remains
+explicit; etaleness of the `N`-model, overlaps, gluing and the actual
+global finite etale Galois refinement are later obligations. Normal
+stalks from smooth geometry and Chow--Betti generation remain separate.
 
 ### G0. Smooth projective setting and candidate constructions
 
@@ -999,12 +1035,10 @@ provide variable-class coverage.
 - Review new objects against the parity registry before adding wrappers.
   Promote a proved checkpoint only after the appropriate build, focused
   regressions, dependency/axiom checks and Lean--TeX comparison.
-- **Next action:** connect B4g's extension-specific Galois result to the
-  existing fixed-field, core-free and selector consumers, replacing
-  avoidable `PerfectField K` premises: use extension separability where
-  needed, but audit complete removal for core-freeness and its full-visible
-  boundary consumers. SP74 constructs the marked datum
-  but leaves those consumer signatures unchanged. Normal stalks from
+- **Next action:** specialize `IsIntegralClosure.finite` to B4g's actual
+  finite separable `N/K` over normal Noetherian affine `B`, deriving
+  finiteness of `integralClosure B N` rather than supplying a second
+  finite normal algebra. B4h supplies the generalized consumers. Normal stalks from
   smooth geometry, global finite etale Galois refinement and chart gluing
   remain separate tasks. B4d already derives the finite/etale affine rings
   from a supplied finite morphism and proves the normalization
@@ -1821,13 +1855,14 @@ the dated checkpoints below document how the existing objects were built.
    existing endpoint using constructed data, with no hypothesis that is
    merely the desired class-generation or realization conclusion renamed.
 
-The operative action after B4g's constructed marked normal closure is to
-connect its extension-specific Galois result to the existing fixed-field,
-core-free and selector consumers, replacing avoidable perfectness
-assumptions. The inspected core-free proof may require no separability
-replacement; fixed-field and selector/tensor comparisons need the actual
-extension's separability. Those signatures are unchanged at SP74; the base field is
-not thereby proved perfect.
+The operative action after B4h's consumer generalization is to derive
+finiteness of the actual `integralClosure B N` over a normal Noetherian
+affine base, using the constructed finite separable normal closure.
+Normality of the base stays explicit; etaleness of the `N`-model,
+overlaps, gluing and the global Galois refinement remain subsequent.
+The existing
+fixed-field, selector and trace consumers now use extension separability;
+core-freeness and its full-visible/inertia/extension consumers need none.
 Deriving normal stalks from smooth geometry, the global finite etale
 Galois refinement and gluing remain separate.
 Finiteness and etaleness of the actual

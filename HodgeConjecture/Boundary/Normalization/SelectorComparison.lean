@@ -16,7 +16,7 @@ supplied by formal unramifiedness maps to the characteristic function of the
 marked base sheet.
 
 This constructs the comparison morphism needed by the selector architecture.
-For a perfect base field, the normal-closure base change is also proved
+For a separable marked extension, the normal-closure base change is also proved
 equivalent to the split algebra of functions on the sheets.  The selector
 comparison itself uses only formal unramifiedness and essential finite type,
 not that stronger equivalence.
@@ -251,8 +251,8 @@ theorem NormalClosureData.collisionToGenericSheets_elem_eq_baseSheetSelector
     simp [HodgeConjecture.genericSheetSelector, hs]
 
 /-- The chosen-representative normal-closure base-change evaluation morphism
-`N ⊗[K] L → functions(G/H, N)`.  It is upgraded to an equivalence below under
-the perfect-field hypothesis. -/
+`N ⊗[K] L → functions(G/H, N)`. It is upgraded to an equivalence below when
+the marked extension is separable. -/
 def NormalClosureData.normalClosureTensorToGenericSheets
     (D : NormalClosureData K L N) :
     N ⊗[K] L →ₐ[N]
@@ -431,15 +431,13 @@ theorem NormalClosureData.normalClosureTensorToGenericSheets_surjective
 
 end
 
-/-- Over a perfect base field, normal-closure evaluation is bijective. -/
+/-- For a separable marked extension, normal-closure evaluation is bijective. -/
 theorem NormalClosureData.normalClosureTensorToGenericSheets_bijective
-    [PerfectField K]
+    [Algebra.IsSeparable K L]
     (D : NormalClosureData K L N) :
     Function.Bijective D.normalClosureTensorToGenericSheets := by
   letI : FiniteDimensional K L := D.finiteIntermediate
   letI : FiniteDimensional K N := D.finiteNormal
-  letI : Algebra.IsSeparable K L :=
-    Algebra.IsAlgebraic.isSeparable_of_perfectField
   letI : Algebra.FormallyUnramified K L :=
     Algebra.FormallyUnramified.of_isSeparable K L
   letI : Finite D.galoisGroup := D.finiteGaloisGroup
@@ -474,10 +472,10 @@ theorem NormalClosureData.normalClosureTensorToGenericSheets_bijective
       hdim).mpr hlinSurj
   exact ⟨hlinInj, hsurj⟩
 
-/-- The normal-closure tensor product splits as the algebra of functions on
-the Galois sheets. -/
+/-- For a separable marked extension, the normal-closure tensor product splits
+as the algebra of functions on the Galois sheets. -/
 noncomputable def NormalClosureData.normalClosureTensorGenericSheetsEquiv
-    [PerfectField K]
+    [Algebra.IsSeparable K L]
     (D : NormalClosureData K L N) :
     N ⊗[K] L ≃ₐ[N]
       HodgeConjecture.GenericSheetAlgebra N
@@ -485,11 +483,11 @@ noncomputable def NormalClosureData.normalClosureTensorGenericSheetsEquiv
   AlgEquiv.ofBijective D.normalClosureTensorToGenericSheets
     D.normalClosureTensorToGenericSheets_bijective
 
-/-- Through the Galois-sheet algebra equivalence, base-sheet augmentation is
-exactly the tensor diagonal morphism.  This is the equivalence form of the
-multiplicative base-sheet square above. -/
+/-- For a separable marked extension, base-sheet augmentation through the
+Galois-sheet algebra equivalence is exactly the tensor diagonal morphism.
+This is the equivalence form of the multiplicative base-sheet square above. -/
 theorem NormalClosureData.normalClosureBaseSheetAugmentation_comp_tensorGenericSheetsEquiv
-    [PerfectField K]
+    [Algebra.IsSeparable K L]
     (D : NormalClosureData K L N) :
     D.normalClosureBaseSheetAugmentation.comp
         D.normalClosureTensorGenericSheetsEquiv.toAlgHom =

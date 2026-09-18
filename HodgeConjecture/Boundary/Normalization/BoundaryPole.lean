@@ -5,8 +5,9 @@ import HodgeConjecture.Boundary.Normalization.NormalizationTraceBound
 # Actual boundary poles and the separation criterion
 
 A height-one prime containing the fixed--moving ideal yields a genuine
-section outside the normalization ring. The trace-dual bound then proves
-that every nonzero multiplier fails on some actual boundary section.
+section outside the normalization ring. If the intermediate extension is
+separable, the trace-dual bound then proves that every nonzero multiplier
+fails on some actual boundary section.
 
 Consequently, uniform landing for every nontrivial subgroup implies the
 existing conjugate-boundary separation condition. Uniform landing remains
@@ -71,7 +72,7 @@ theorem conjugateBoundarySeparation_of_boundarySectionSubalgebra_eq_bot
 
 /-- Every nonzero proposed trace multiplier fails on an actual regular
 section when the boundary contains a height-one prime. -/
-theorem boundarySection_tracePoleWitness [PerfectField K]
+theorem boundarySection_tracePoleWitness [Algebra.IsSeparable K L]
     (I : Subgroup C.GaloisGroup) (hI : I ≠ ⊥)
     (p : PrimeSpectrum T₀) (hp : p.asIdeal.primeHeight = 1)
     (hJp : fixedMovingBoundaryIdeal C I ≤ p.asIdeal)
@@ -87,7 +88,7 @@ theorem boundarySection_tracePoleWitness [PerfectField K]
 
 /-- A height-one boundary prime forces the existing trace transporter
 of the actual section algebra to be zero. -/
-theorem normalizationTraceDual_colon_eq_bot_of_heightOne [PerfectField K]
+theorem normalizationTraceDual_colon_eq_bot_of_heightOne [Algebra.IsSeparable K L]
     (I : Subgroup C.GaloisGroup) (hI : I ≠ ⊥)
     (p : PrimeSpectrum T₀) (hp : p.asIdeal.primeHeight = 1)
     (hJp : fixedMovingBoundaryIdeal C I ≤ p.asIdeal) :
@@ -98,7 +99,7 @@ theorem normalizationTraceDual_colon_eq_bot_of_heightOne [PerfectField K]
 
 /-- A proved nonzero uniform trace multiplier for each nontrivial subgroup
 is sufficient for the existing conjugate-boundary separation endpoint. -/
-theorem conjugateBoundarySeparation_of_traceLanding [PerfectField K]
+theorem conjugateBoundarySeparation_of_traceLanding [Algebra.IsSeparable K L]
     (hLanding : ∀ (I : Subgroup C.GaloisGroup) (hI : I ≠ ⊥),
       ∃ s : T₀, s ≠ 0 ∧ ∀ z : BoundarySectionRing C I,
         (s : N) * boundarySectionsToNormalClosure C I hI z ∈

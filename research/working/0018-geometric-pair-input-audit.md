@@ -351,3 +351,43 @@ smoothness, normalization gluing and Chow--Betti generation remain
 separate. The manuscript uses the existing `\mathcal N` with the
 canonical marking; its Stacks citations are attribution, not source
 axioms. All preceding audit text is preserved unchanged.
+
+## 11. SP75 follow-up: local-separability consumer generalization
+
+Fourteen fixed-field, invariant-ring, selector/tensor and trace/pole
+declarations now use explicit `Algebra.IsSeparable K L`, rather than a
+perfect base field. Core-freeness needs neither separability nor
+perfectness; eleven full-visible, inertia, sheet and projector consumers
+also lose their perfect-field binders without replacement. All other
+geometric hypotheses are retained.
+
+The existing `NormalClosureData.isSeparable` and
+`.isGalois_of_isSeparable` move to `NormalClosure.lean` under their
+unchanged names. The existing `.isGalois [PerfectField K]` remains as the
+sole perfect-field compatibility wrapper, delegating through separability
+of the finite marked extension. No library declaration, package, field carrier,
+map, ideal, projector or source axiom is added: there are 26 signature
+generalizations, two moved helpers and one wrapper-proof change.
+
+Validation: the new consumer suite passes 24 examples and 29 enforced
+standard-three axiom audits; the trace and pole suites pass 14/11 and
+12/9. Fresh SP74 and finite-affine-cover suites pass 22/7 and 20/17.
+The central inventory has 859 checks, 565 examples and 751 reports
+after appending 29 checks and reports; its historical prefix is
+byte-identical and was not rerun in full. The 74-page PDF (785575 bytes)
+passes its build, warning/box/reference scan, visual checks of pages
+9--13, 57 and 66--67, and independent Lean--TeX review. The full build
+passes (3179 jobs; only the two existing Challenge placeholder warnings).
+The fresh unchanged dependency audit passes six endpoint contracts and
+two support reports.
+
+Next derive finiteness of the actual
+`integralClosure B N` from the constructed finite separable normal
+closure over normal Noetherian affine `B`, instead of supplying a second
+finite normal algebra `S`. Mathlib's inspected `IsIntegralClosure.finite`
+needs no dimension-one or Dedekind hypothesis; its specialization is
+not yet implemented. Normality of `B` remains explicit. Etaleness of
+the resulting `N`-model, overlap compatibility, gluing and the global
+finite etale Galois refinement remain subsequent geometric tasks.
+Normal stalks from smoothness and Chow--Betti generation remain separate.
+All earlier audit text is preserved unchanged.

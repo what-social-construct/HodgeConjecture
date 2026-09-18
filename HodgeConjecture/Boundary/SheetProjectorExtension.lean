@@ -379,7 +379,7 @@ type of ramified height-one points; therefore every selected partition
 satisfies the codimension-one saturation condition.
 -/
 theorem forall_inertiaSaturated_of_formallyUnramified
-    [PerfectField K] [IsNoetherianRing B]
+    [IsNoetherianRing B]
     (D : Diagram C)
     (R : D.ConjugateRamificationRealization)
     (hFormal :
@@ -446,7 +446,7 @@ Combining the normalization theorem with the explicit selector-purity input
 produces an actual global idempotent extension.
 -/
 theorem globalSheetSelectorExtension_of_formallyUnramified
-    [PerfectField K] [IsNoetherianRing B]
+    [IsNoetherianRing B]
     (A : Type t) [CommRing A]
     (Λ : Type w) [CommRing Λ]
     (D : Diagram C)

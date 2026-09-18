@@ -6,9 +6,10 @@ import HodgeConjecture.Boundary.Normalization.TraceDualBound
 # The normalization trace dual and actual boundary-section landing
 
 The trace dual is Mathlib's existing `Submodule.traceDual` of the unit
-order, not a second trace-integral carrier. A perfect base field makes the
-given finite normal closure separable, so the generic denominator theorem
-supplies one nonzero denominator for the entire trace dual.
+order, not a second trace-integral carrier. Separability of the intermediate
+extension makes its finite normal closure separable, so the generic
+denominator theorem supplies one nonzero denominator for the entire trace
+dual.
 
 Under Noetherianity of the base, a nonzero uniform multiplier sending all
 actual boundary sections into this dual forces their image to be the base
@@ -77,20 +78,20 @@ theorem normalization_isIntegrallyClosed : IsIntegrallyClosed T₀ := by
 
 omit [IsScalarTower B K L] in
 /-- One nonzero normalization element clears the whole trace dual.
-Perfectness supplies separability through the existing Galois theorem. -/
-theorem exists_nonzero_normalizationTraceDual_denominator [PerfectField K] :
+Separability passes from the intermediate extension to its normal closure. -/
+theorem exists_nonzero_normalizationTraceDual_denominator [Algebra.IsSeparable K L] :
     ∃ d : T₀, d ≠ 0 ∧ ∀ z ∈ normalizationTraceDual C,
       (d : N) * z ∈ Set.range (algebraMap T₀ N) := by
   letI : IsDomain B := (IsFractionRing.injective B K).isDomain
   letI : FiniteDimensional K N := C.normalClosure.finiteNormal
-  letI : IsGalois K N := C.normalClosure.isGalois
+  letI : Algebra.IsSeparable K N := C.normalClosure.isSeparable
   letI : IsFractionRing T₀ N := normalization_isFractionRing C
   exact exists_nonzero_traceDual_unit_denominator B K T₀ N
 
 /-- A nonzero element of the existing trace-dual colon ideal forces the
 actual boundary-section algebra to equal the embedded normalization. -/
 theorem boundarySectionSubalgebra_eq_bot_of_mem_traceDual_colon
-    [PerfectField K] [IsNoetherianRing B]
+    [Algebra.IsSeparable K L] [IsNoetherianRing B]
     (I : Subgroup C.GaloisGroup) (hI : I ≠ ⊥)
     (s : T₀) (hs : s ≠ 0)
     (hLanding : s ∈ (normalizationTraceDual C).colon
@@ -107,7 +108,7 @@ theorem boundarySectionSubalgebra_eq_bot_of_mem_traceDual_colon
 /-- The same criterion expressed on every actual regular section, before
 passing to its image in the normal-closure field. -/
 theorem boundarySectionSubalgebra_eq_bot_of_trace_landing
-    [PerfectField K] [IsNoetherianRing B]
+    [Algebra.IsSeparable K L] [IsNoetherianRing B]
     (I : Subgroup C.GaloisGroup) (hI : I ≠ ⊥)
     (s : T₀) (hs : s ≠ 0)
     (hLanding : ∀ z : BoundarySectionRing C I,
@@ -123,7 +124,7 @@ theorem boundarySectionSubalgebra_eq_bot_of_trace_landing
 /-- A proper boundary-section overring has zero transporter into the
 normalization trace dual. Properness remains an explicit geometric premise. -/
 theorem normalizationTraceDual_colon_eq_bot_of_boundarySectionSubalgebra_ne_bot
-    [PerfectField K] [IsNoetherianRing B]
+    [Algebra.IsSeparable K L] [IsNoetherianRing B]
     (I : Subgroup C.GaloisGroup) (hI : I ≠ ⊥)
     (hProper : boundarySectionSubalgebra C I hI ≠ ⊥) :
     (normalizationTraceDual C).colon

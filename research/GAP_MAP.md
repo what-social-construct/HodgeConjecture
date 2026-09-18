@@ -1,10 +1,8 @@
 # Current gap map
 
-Last reviewed: 2026-09-18 (SP74 marked normal closure of the actual
-finite extension; full build, twenty-two focused regressions, seven
-standard-axiom audits, SP73 rerun, fresh dependency audit, single-PDF
-checks and independent review pass; earlier checkpoint validation
-records retain their original scope).
+Last reviewed: 2026-09-18 (SP75 local-separability and hypothesis cleanup;
+validation complete; earlier checkpoint validation records retain their
+original scope).
 
 Start with [the target and equivalence sketch](TARGET_BRIDGE.md): it fixes
 the geometric statement, separates the two directions of the proved bridge,
@@ -136,8 +134,8 @@ normalization, is needed for this bound. In particular the argument does
 not assert `T <= T^vee_B` for a nonnormal `B`.
 
 For the same `NormalizedCover C`, `normalizationTraceDual C` is an alias
-for that existing submodule. Over perfect `K`, the supplied normal closure
-is finite Galois, and the existing fraction-field comparison gives the
+for that existing submodule. With separable `L/K`, the supplied normal closure
+is finite separable, and the existing fraction-field comparison gives the
 uniform normalization denominator. Under the additional Noetherian-base
 hypothesis, the finite normalization model makes `T` Noetherian; its
 integral-closure construction supplies normality. B0 then implies that a
@@ -166,7 +164,7 @@ or supplied pole is used in this generic construction.
 
 For the existing normalization, Noetherian `B` and the supplied finite
 model make `T` Noetherian, so a height-one prime containing `J_fm(I)`
-forces `R_I != T`. With perfect `K`, B2 then constructs a failing actual
+forces `R_I != T`. With separable `L/K`, B2 then constructs a failing actual
 section for every nonzero proposed trace multiplier and proves
 `(T^vee_B:R_I)=0` at that prime. The implemented
 `conjugateBoundarySeparation_of_traceLanding` proves the exact endpoint
@@ -243,8 +241,8 @@ selected the finite etale route first. Construct the existing
 marked fraction fields, by proving that the canonical normalization map
 is an equivalence and transporting finiteness. Use the whole intermediate
 model as the visible scheme, with etaleness transported from its affine
-algebra. Surjective `j.base` makes every conjugate boundary empty; over
-perfect `K`, the existing core-free sheet action makes
+algebra. Surjective `j.base` makes every conjugate boundary empty; without
+perfectness or separability, the existing core-free sheet action makes
 `J_mov(I)=J_fm(I)=top` for nontrivial `I`, so separation follows directly.
 There is no need to choose a regular pair or prove uniform trace landing
 for this branch. The single manuscript has matching propositions;
@@ -348,16 +346,40 @@ audits also pass. The central inventory now has 830 checks, 565 examples
 and 722 reports after appending seven checks and reports; its historical
 prefix is unchanged and was not rerun in full.
 
-**Next bounded bridge:** use the new extension-specific Galois fact in
-the existing fixed-field, core-free and selector consumers, replacing
-avoidable `PerfectField K` premises. Those consumers' signatures have
-not been changed in SP74, and the result does not prove `K` perfect.
-The next-proof audit separates extension-separability hypotheses for
-fixed-field/selector comparisons from potential removal of both
-perfectness and separability in core-freeness and full-visible boundary
-consumers; that stronger removal is not proved in this checkpoint.
-An actual finite etale Galois refinement, normal stalks from the intended
-smooth geometry and chart gluing remain separate geometric tasks. The
+**SP75: consume local separability and remove unnecessary assumptions.**
+Fourteen fixed-field, invariant-ring, selector/tensor and trace/pole
+declarations now use explicit `Algebra.IsSeparable K L`. Core-freeness
+and eleven full-visible/inertia/sheet/projector consumers lose their
+perfect-field hypotheses without any separability replacement. The two
+SP74 generic separability/Galois lemmas move, with unchanged names, into
+`NormalClosure.lean`; `NormalClosureData.isGalois` remains the sole
+perfect-field compatibility wrapper. Its proof delegates to the local
+separability result. These are 26 signature generalizations, two moved
+declarations and one wrapper-proof change, not new library declarations,
+objects or axioms.
+All other geometric hypotheses, including formal unramifiedness, finite
+models and purity inputs where present, are retained. The new consumer
+suite passes 24 regressions and 29 enforced standard-axiom audits;
+the trace and pole suites pass 14/11 and 12/9. Fresh SP74 and
+finite-affine-cover reruns pass 22/7 and 20/17. The central inventory
+has 859 checks, 565 examples and 751 reports after appending 29 checks
+and reports; its historical prefix is unchanged and was not rerun in
+full. The 74-page PDF (785575 bytes) passes its build, warning scan and
+visual checks, and independent Lean--TeX review passes. The full build
+passes (3179 jobs; only the two existing Challenge placeholder warnings).
+The fresh unchanged dependency audit passes six endpoint contracts and
+two support reports.
+
+**Next bounded bridge:** derive `Module.Finite B (integralClosure B N)`
+from the constructed finite separable normal closure over an explicitly
+normal Noetherian affine `B`, replacing the independently supplied second
+finite normal algebra `S`. The inspected Mathlib
+`IsIntegralClosure.finite` requires no dimension-one or Dedekind premise,
+despite its file location; its specialization is not yet implemented.
+Normality of `B` remains explicit. Etaleness of the resulting `N`-model,
+overlap compatibility, gluing and actual global Galois refinement follow
+as separate geometric obligations. Normal stalks from smooth geometry
+remain separate. The
 function-field tower and SP71's equality over `X` are not a gluing theorem.
 The main target is unchanged. Nonempty-boundary geometry remains an
 alternative if needed; Chow--Betti generation and convolution compatibility
@@ -2153,8 +2175,9 @@ cover record again would therefore add no theorem.
 In particular, `NormalClosureData` itself packages `IsNormalClosure K L N`,
 `FiniteDimensional K L`, and `FiniteDimensional K N`.  It derives normality
 from the normal-closure witness and finiteness of its Galois group from the
-finite-dimensional field data; `NormalClosureData.isGalois` derives
-`IsGalois K N` over a perfect base field (hence in characteristic zero).
+finite-dimensional field data; `NormalClosureData.isGalois_of_isSeparable`
+derives `IsGalois K N` from `Algebra.IsSeparable K L`. The old `isGalois`
+name remains a perfect-field compatibility specialization.
 No second normality or Galois hypothesis belongs in the sheet spine.  The
 derived `galoisGroup` and `intermediateFixingSubgroup` index `G/H`, while
 `normalClosureFiniteDeckAction` supplies the canonical deck action on the
@@ -2172,7 +2195,7 @@ N ⊗[K] L  --normalClosureTensorToGenericSheets-->  N^(G/H)
 
 and proves
 `normalClosureBaseSheetAugmentation_comp_tensorToGenericSheets`, i.e. that
-the two composites are equal.  Under perfectness the top arrow is upgraded
+the two composites are equal. For separable `L/K` the top arrow is upgraded
 to an algebra equivalence, with the same augmentation square.  This is the
 honest multiplicative normal-closure bridge; it does not create a map from
 the pointwise sheet algebra to `ℚ[G]`.
@@ -2236,7 +2259,7 @@ collisionToGenericSheets :
 is defined using chosen quotient representatives and sends
 `Algebra.FormallyUnramified.elem K L` exactly to the singleton
 base-sheet selector.  This proves the projector comparison without assuming
-tensor splitting.  Separately, under `PerfectField K`, Lean proves that the
+tensor splitting. Separately, under `Algebra.IsSeparable K L`, Lean proves that the
 base-changed evaluation map `N ⊗[K] L → (G / H → N)` is bijective and packages
 it as `normalClosureTensorGenericSheetsEquiv`.  Base-sheet evaluation is an
 algebra homomorphism, and
@@ -2272,7 +2295,7 @@ on `FullInvariantNormalizationRing = S^G`.  The proposition
 formal-unramifiedness conclusion still consumed by Lean.  Tag `0BST` proves
 the stronger statement that `S^G → S^(I_Q)` is étale at the exact contraction
 `q_I = Q ∩ S^(I_Q)`, but that theorem is not in Mathlib.  For the marked finite
-normal closure, when the fraction field is perfect and the affine base is
+normal closure, when `L/K` is separable and the affine base is
 integrally closed in it,
 `baseEquivFullInvariantNormalizationRing` formally identifies that source
 ring with `B`; without these hypotheses the source is generally the

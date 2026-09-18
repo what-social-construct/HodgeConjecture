@@ -733,7 +733,7 @@ commutes:
 \[
   \epsilon_H^N\circ\sigma_{\mathcal N}=\delta_\iota.
 \]
-If \(K\) is perfect, then \(\sigma_{\mathcal N}\) is an equivalence of
+If \(L/K\) is separable, then \(\sigma_{\mathcal N}\) is an equivalence of
 \(N\)-algebras.  Thus the first projection of the split Galois-sheet algebra
 is exactly the marked tensor-diagonal morphism.
 \end{theorem}
@@ -805,7 +805,7 @@ The fixed normalization is canonically
   \simeq_B(\widetilde B_N)^J
 \]
 
-for every subgroup \(J\leq G\); under the marked perfect-field hypotheses,
+for every subgroup \(J\leq G\); when \(L/K\) is separable,
 \(\widetilde B_L\simeq_B(\widetilde B_N)^H\).
 
 Each \(g\in G\) gives a conjugate embedding \(\iota_g:L\hookrightarrow N\)
@@ -889,7 +889,7 @@ element of \(T^\vee_B\).
 \begin{corollary}[Uniform trace landing for boundary sections]
 \label{cor:boundary-trace-landing}
 In the normalization setup above, assume \(B\) is Noetherian,
-\(T\) is finite as a \(B\)-module, \(K\) is perfect, and \(I\ne1\).
+\(T\) is finite as a \(B\)-module, \(L/K\) is separable, and \(I\ne1\).
 If \(0\ne s\in T\) satisfies
 \[
   s\,\eta_I\bigl(\Gamma(U_I,\mathcal O)\bigr)\subseteq T^\vee_B,
@@ -902,7 +902,8 @@ colon ideal \((T^\vee_B:R_I)\) forces this equality. In particular,
 \end{corollary}
 
 \begin{proof}
-The finite normal closure over the perfect field \(K\) is separable.
+Separability of \(L/K\) gives separability of its normal closure \(N/K\)
+by Proposition~\ref{prop:constructed-normal-closure}.
 Its integral closure \(T\) is normal, and the given finite normalization
 model over the Noetherian ring \(B\) makes \(T\) Noetherian.
 Proposition~\ref{prop:normalization-trace-bound} supplies
@@ -981,7 +982,7 @@ Conjugate-boundary separation is the condition
 
 \begin{proposition}[Full visibility and the boundary ideals]
 \label{prop:full-visible-boundary}
-Assume \(K\) is perfect and the marked open immersion
+Assume the marked open immersion
 \(j:U\to Y_L\) is surjective. Then every \(\partial_g\) is empty
 and \(J_g=\widetilde B_N\). For every nontrivial \(I\leq G\),
 \[
@@ -1011,13 +1012,13 @@ Assume \(B\) is Noetherian and \(T=\widetilde B_N\) is finite as a
   \bigl(\forall I\ne1,\ R_I=T\bigr)
     \quad\Longrightarrow\quad\operatorname{Sep}_{\partial}(\mathcal C).
 \]
-If \(K\) is perfect and such a height-one prime exists, then
+If \(L/K\) is separable and such a height-one prime exists, then
 \[
   (T^\vee_B:R_I)=0,\qquad
   \forall\,0\ne s\in T,\quad
   \exists a\in\Gamma(U_I,\mathcal O),\quad s\eta_I(a)\notin T^\vee_B.
 \]
-In particular, under these base hypotheses,
+In particular, under these hypotheses,
 \[
   \Bigl(\forall I\ne1,\ \exists\,0\ne s_I\in T,\quad
     s_I\eta_I\bigl(\Gamma(U_I,\mathcal O)\bigr)\subseteq T^\vee_B\Bigr)
@@ -1031,7 +1032,7 @@ For \(I\ne1\), Proposition~\ref{prop:boundary-section-algebra} shows
 that \(J_{\mathrm{fm}}(I)\ne0\) and \(U_I\ne\varnothing\).
 Proposition~\ref{prop:height-one-boundary-pole} therefore gives \(R_I\ne T\)
 at every height-one boundary prime. This proves the first implication.
-When \(K\) is perfect, Corollary~\ref{cor:boundary-trace-landing} gives
+When \(L/K\) is separable, Corollary~\ref{cor:boundary-trace-landing} gives
 the zero colon. If a nonzero \(s\) sent every actual section into
 \(T^\vee_B\), the same corollary would instead give \(R_I=T\).
 Thus the displayed section witness exists, and uniform landing for all
@@ -1104,9 +1105,11 @@ The generic normal-closure evaluation has the following form.  The cosets
 \]
 
 For a formally unramified, essentially finite-type extension, the chosen
-diagonal element maps to the base selector \(q_H\).  Under the stated
-perfectness and rank hypotheses, the normal-closure base change is an
-equivalence \(N\otimes_KL\simeq (G/H\to N)\).  This identifies the generic normal-closure base change.
+diagonal element maps to the base selector \(q_H\). When \(L/K\) is
+separable, the normal-closure base change is an equivalence
+\(N\otimes_KL\simeq (G/H\to N)\). Here the equality
+\(\lvert G/H\rvert=[L:K]\) follows from separability and the
+identification of sheets with embeddings.
 
 \section{Compactified graph projectors}
 \label{sec:compactification}
@@ -4676,7 +4679,7 @@ Constructed marked normal closure \(\mathcal N\) &
 Galoisness from the marked extension &
 \leanpath{NormalClosureData.isSeparable}\newline
 \leanpath{NormalClosureData.isGalois_of_isSeparable}\newline
-\leanpath{Boundary/Normalization/NormalClosureConstruction.lean}\\
+\leanpath{Boundary/Normalization/NormalClosure.lean}\\
 Full-visible boundary ideals &
 \leanpath{movingBoundaryIdeal_eq_top_of_surjective}\newline
 \leanpath{conjugateBoundarySeparation_of_surjective}\newline
@@ -5264,6 +5267,8 @@ principal table, grouped by mathematical layer.
 \paragraph{Normal closure, conjugate boundaries, and codimension one.}
 \leanpath{NormalClosureData.isGalois};
 \normsrc{NormalClosure.lean};
+\leanpath{NormalClosureData.isSeparable};
+\leanpath{NormalClosureData.isGalois_of_isSeparable};
 \normsrc{DeckAction.lean};
 \normsrc{InvariantIntermediate.lean};
 \normsrc{ConjugateNormalization.lean};
@@ -5302,8 +5307,6 @@ principal table, grouped by mathematical layer.
 \normsrc{NormalClosureConstruction.lean};
 \leanpath{NormalClosureData.ofAlgebraicClosure};
 \leanpath{NormalClosureData.ofAlgebraicClosure_embedding_apply};
-\leanpath{NormalClosureData.isSeparable};
-\leanpath{NormalClosureData.isGalois_of_isSeparable};
 \normsrc{FunctionFieldNormalClosure.lean};
 \leanpath{functionFieldNormalClosureData};
 \leanpath{functionFieldNormalClosureData_embedding_apply};
