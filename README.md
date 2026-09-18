@@ -496,10 +496,26 @@ normality and Noetherianity are not assumptions of the section embedding.
 SP65 passes the full build, sixteen focused regressions in
 [`BoundarySectionsVerification.lean`](research/BoundarySectionsVerification.lean),
 and an enforced standard-axiom allowlist for all twenty-one new declarations.
-The next bounded construction is
-the genuine normalization trace dual and its uniform denominator bound.
-Uniform landing of all boundary sections remains a separate implication
-to prove; none of these algebraic steps asserts Hodge-class generation.
+The trace-dual checkpoint in
+[`TraceDualBound.lean`](HodgeConjecture/Boundary/Normalization/TraceDualBound.lean)
+and
+[`NormalizationTraceBound.lean`](HodgeConjecture/Boundary/Normalization/NormalizationTraceBound.lean)
+reuses
+`Submodule.traceDual B K (1 : Submodule T N)` for
+`T^vee_B = {z in N : Tr_{N/K}(zT) subset B}`. An integral generic basis and
+its trace-dual basis give one nonzero denominator for the entire submodule,
+without Noetherianity, normality of `B` or a free normalization hypothesis.
+For the existing normal closure over a perfect `K`,
+`normalizationTraceDual C` is this same object. Under the additional
+Noetherian-base hypothesis, a nonzero member of the existing colon
+`(T^vee_B:R_I)` forces `R_I=T`; a proper `R_I` instead has zero colon.
+SP66 passes the full build, fourteen focused regressions in
+[`NormalizationTraceBoundVerification.lean`](research/NormalizationTraceBoundVerification.lean),
+and enforced standard-axiom checks for all eleven new declarations.
+The unchanged dependency audit and updated single-manuscript PDF checks pass.
+Next examine the geometric uniform landing/pole/separation comparison.
+Landing must control every actual section; neither a nonzero landing
+multiplier nor Hodge-class generation follows from the denominator bound.
 
 `paper/main.pdf` is the single current manuscript PDF. The earlier drafts
 and their sources are preserved in the

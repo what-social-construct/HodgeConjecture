@@ -1,7 +1,8 @@
 # Current gap map
 
-Last reviewed: 2026-09-17 (actual boundary-section construction, SP65;
-full build, focused regressions, axiom allowlist, dependency audit and PDF checks pass).
+Last reviewed: 2026-09-18 (normalization trace dual and uniform denominator,
+SP66; full build, focused regressions, axiom allowlist, dependency audit and
+single-PDF checks pass).
 
 Start with [the target and equivalence sketch](TARGET_BRIDGE.md): it fixes
 the geometric statement, separates the two directions of the proved bridge,
@@ -117,8 +118,37 @@ has nonzero fixed-locus ideal, hence this open is nonempty. The actual
 into the existing `N`; its range is `boundarySectionSubalgebra`. The
 underlying module is the existing `.toSubmodule`, not a second carrier.
 
-Next construct the genuine normalization trace dual with a proved uniform
-denominator.
+The trace-dual checkpoint in
+[`TraceDualBound.lean`](../HodgeConjecture/Boundary/Normalization/TraceDualBound.lean)
+and
+[`NormalizationTraceBound.lean`](../HodgeConjecture/Boundary/Normalization/NormalizationTraceBound.lean)
+uses the existing Mathlib
+`Submodule.traceDual B K (1 : Submodule T N)`:
+`T^vee_B = {z in N : Tr_{N/K}(zT) subset B}`. The base of trace-integrality
+is explicitly `B`, not the normalization `T`. A finite separable extension
+provides an integral generic basis and its trace-dual basis. The entire
+trace dual lies in the finite `T`-span of the latter, so clearing the finitely
+many basis denominators gives one nonzero `d : T` with `d T^vee_B <= T`.
+Neither Noetherianity nor normality of `B`, nor finite freeness of the
+normalization, is needed for this bound. In particular the argument does
+not assert `T <= T^vee_B` for a nonnormal `B`.
+
+For the same `NormalizedCover C`, `normalizationTraceDual C` is an alias
+for that existing submodule. Over perfect `K`, the supplied normal closure
+is finite Galois, and the existing fraction-field comparison gives the
+uniform normalization denominator. Under the additional Noetherian-base
+hypothesis, the finite normalization model makes `T` Noetherian; its
+integral-closure construction supplies normality. B0 then implies that a
+nonzero member of `(T^vee_B:R_I)` forces the actual section algebra to equal
+the base. Equivalently, a proper `R_I` has zero such colon ideal. The
+trace landing formulation quantifies every actual section on `U_I`.
+These are conditional consumers of the proved denominator, not an existence
+theorem for a nonzero geometric landing multiplier. SP66 passes the full
+build, fourteen focused regressions, and enforced standard-axiom checks
+for all eleven new declarations. The unchanged dependency audit and the
+68-page single-manuscript PDF checks pass.
+
+Next examine B3's geometric landing/pole/separation comparison.
 Uniform trace landing of **every** section is the separate geometric
 implication to establish; a bound on finitely many coefficients does not
 replace it. A geometric pole witness and comparison with the existing

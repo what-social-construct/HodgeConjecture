@@ -663,6 +663,60 @@ Proposition~\ref{prop:affine-section-algebra} gives the remaining
 statements, including compatibility with base elements.
 \end{proof}
 
+\begin{proposition}[Uniform denominator for the normalization trace dual]
+\label{prop:normalization-trace-bound}
+Let \(B\) be a domain, \(K=\Frac(B)\), and \(N/K\) a finite separable
+extension. Put \(T=\operatorname{IntCl}_B(N)\) and define the
+\(T\)-submodule
+\[
+  T^\vee_B
+    =\{z\in N:\operatorname{Tr}_{N/K}(zt)\in B
+                      \text{ for every }t\in T\}.
+\]
+There exists \(0\ne d\in T\) such that \(dT^\vee_B\subseteq T\).
+\end{proposition}
+
+\begin{proof}
+Choose a \(K\)-basis \(b_1,\dots,b_m\) of \(N\) whose entries are
+integral over \(B\), hence lie in \(T\). Separability makes the trace
+pairing nondegenerate; let \(b_1^\vee,\dots,b_m^\vee\) be its dual basis.
+For \(z\in T^\vee_B\),
+\[
+  z=\sum_{i=1}^m\operatorname{Tr}_{N/K}(zb_i)b_i^\vee
+    \in\sum_{i=1}^m T b_i^\vee.
+\]
+Since \(N=\Frac(T)\), a common nonzero denominator \(d\in T\)
+clears the finitely many \(b_i^\vee\), and therefore clears every
+element of \(T^\vee_B\).
+\end{proof}
+
+\begin{corollary}[Uniform trace landing for boundary sections]
+\label{cor:boundary-trace-landing}
+In the normalization setup above, assume \(B\) is Noetherian,
+\(T\) is finite as a \(B\)-module, \(K\) is perfect, and \(I\ne1\).
+If \(0\ne s\in T\) satisfies
+\[
+  s\,\eta_I\bigl(\Gamma(U_I,\mathcal O)\bigr)\subseteq T^\vee_B,
+\]
+then \(R_I=T\). Equivalently, every nonzero element of the existing
+colon ideal \((T^\vee_B:R_I)\) forces this equality. In particular,
+\[
+  R_I\ne T\quad\Longrightarrow\quad(T^\vee_B:R_I)=0.
+\]
+\end{corollary}
+
+\begin{proof}
+The finite normal closure over the perfect field \(K\) is separable.
+Its integral closure \(T\) is normal, and the given finite normalization
+model over the Noetherian ring \(B\) makes \(T\) Noetherian.
+Proposition~\ref{prop:normalization-trace-bound} supplies
+\(0\ne d\in T\) with \(dT^\vee_B\subseteq T\).
+The hypothesis then gives \(dsR_I\subseteq T\), so
+Proposition~\ref{prop:bounded-overring} yields \(R_I=T\).
+The colon-ideal assertion follows by applying the same argument to any
+of its nonzero elements.
+\end{proof}
+
 Conjugate-boundary separation is the condition
 
 \[
@@ -4281,6 +4335,15 @@ Fixed--moving boundary sections &
 \leanpath{boundarySectionsToNormalClosure_injective}\newline
 \leanpath{boundarySectionsEquivSubalgebra}\newline
 \leanpath{Boundary/Normalization/BoundarySections.lean}\\
+Normalization trace-dual bound &
+\leanpath{exists_nonzero_traceDual_unit_denominator}\newline
+\leanpath{exists_nonzero_normalizationTraceDual_denominator}\newline
+\leanpath{Boundary/Normalization/TraceDualBound.lean}\newline
+\leanpath{Boundary/Normalization/NormalizationTraceBound.lean}\\
+Uniform boundary trace landing &
+\leanpath{boundarySectionSubalgebra_eq_bot_of_trace_landing}\newline
+\leanpath{normalizationTraceDual_colon_eq_bot_of_boundarySectionSubalgebra_ne_bot}\newline
+\leanpath{Boundary/Normalization/NormalizationTraceBound.lean}\\
 Subgroup extension &
 \leanpath{CompactifiedSubgroupProjectorExtension}\newline
 \leanpath{Boundary/GaloisProjectorExtension.lean}\\
@@ -4844,6 +4907,19 @@ principal table, grouped by mathematical layer.
 \leanpath{boundarySectionsEquivSubalgebra};
 \leanpath{mem_boundarySectionSubalgebra_iff};
 \leanpath{normalization_mem_boundarySectionSubalgebra};
+\normsrc{TraceDualBound.lean};
+\normsrc{NormalizationTraceBound.lean};
+\leanpath{mem_traceDual_unit_iff};
+\leanpath{traceDual_unit_le_span_traceDual};
+\leanpath{exists_nonzero_traceDual_unit_denominator};
+\leanpath{normalizationTraceDual};
+\leanpath{mem_normalizationTraceDual_iff};
+\leanpath{normalization_isNoetherianRing};
+\leanpath{normalization_isIntegrallyClosed};
+\leanpath{exists_nonzero_normalizationTraceDual_denominator};
+\leanpath{boundarySectionSubalgebra_eq_bot_of_mem_traceDual_colon};
+\leanpath{boundarySectionSubalgebra_eq_bot_of_trace_landing};
+\leanpath{normalizationTraceDual_colon_eq_bot_of_boundarySectionSubalgebra_ne_bot};
 \leanpath{subalgebra_eq_bot_of_nonzero_mul_mem_base};
 \leanpath{subalgebra_eq_bot_of_mem_colon};
 \leanpath{colon_eq_bot_of_subalgebra_ne_bot};

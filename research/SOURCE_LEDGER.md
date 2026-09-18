@@ -19,6 +19,42 @@ graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
 Last source check: 2026-09-15.
 
+### Direct algebraic adaptation: normalization trace dual (SP66, 2026-09-18)
+
+`Boundary/Normalization/TraceDualBound.lean` and
+`Boundary/Normalization/NormalizationTraceBound.lean` adapt the finite
+trace-dual-span denominator argument from the sibling
+`collision-ideals/CollisionIdeals/Planar/Research/NormalizationTraceBound.lean`.
+No sibling module is imported. The Hodge construction directly reuses
+Mathlib's `Submodule.traceDual B K (1 : Submodule T N)` rather than copying
+the sibling's `TraceIntegralSubmodule` carrier. The normalization alias
+`normalizationTraceDual C` has the same underlying Mathlib submodule.
+
+The pinned Mathlib provides an integral generic basis through
+`FiniteDimensional.exists_is_basis_integral` and a trace-dual basis through
+`(Algebra.traceForm K N).dualBasis` using
+`traceForm_nondegenerate`. It does not provide the newer sibling
+API `b.traceDual`; the local proof adapts to the actual pinned bilinear-form
+API. `IsLocalization.exist_integer_multiples_of_finite` supplies a common
+denominator for that finite basis, which then clears its entire `T`-span.
+The hypotheses are explicit: the two fraction-field structures, integral
+closure, and finite separability. No normality of `B`, Noetherianity or
+free normalization hypothesis is introduced for the denominator theorem.
+
+The `NormalizedCover` specialization reuses the existing fraction field,
+the supplied finite normal closure and its derived Galois structure over
+a perfect base field. Noetherianity is introduced only for the subsequent
+bounded-overring consumers; the normalization's supplied module finiteness
+and its actual integral closure then discharge B0's hypotheses. The
+transporter remains `Submodule.colon`. No nonzero geometric landing
+multiplier, affine-plane rigidity, global purity or defect-vanishing premise
+is imported. The full build and fourteen focused regressions pass. All
+eleven new declarations pass an enforced allowlist containing only
+`propext`, `Classical.choice` and `Quot.sound`. The unchanged dependency
+audit, independent Lean--TeX review and updated single-PDF checks pass.
+Completed SP65/SP64 validation blocks below remain historical evidence
+for those checkpoints.
+
 ### Direct geometric adaptation: actual affine and boundary sections (SP65, 2026-09-17)
 
 `Boundary/Normalization/AffineSections.lean` and `BoundarySections.lean`

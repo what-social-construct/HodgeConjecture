@@ -121,6 +121,54 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP63 | Surjectivity of the existing raw, graded and Chow open restrictions | LIFT / DESCEND | Lift each actual integral open support through its reduced ambient closure and preserve the supplied degree, over every semiring. Lift integral and rational Chow classes through actual homogeneous representatives under target-only Noetherianity. Keep the closure lift at cycle level; no Chow closure operation or localization exactness is asserted. | PROVED; FULL BUILD, INTEGRATED VERIFICATION (626 AXIOM REPORTS, 734 CHECKS, 565 EXAMPLES), SIXTEEN FOCUSED REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP64 | Normal-Noetherian bounded overrings and their existing-colon transporter | ADAPT / PROVE | Embed a uniformly bounded overring in the base module, derive finiteness and integrality, and use normality. Compose two nonzero bounds through `Submodule.colon`; a proper overring has zero transporter into a bounded stage. | PROVED; FULL BUILD, SIX FOCUSED REGRESSIONS, STANDARD-AXIOM ALLOWLIST, INTEGRATED VERIFICATION, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP65 | Actual affine sections and the fixed--moving boundary-section algebra in the specified field | CONSTRUCT / IDENTIFY | Use the existing generic germ and fraction-field equivalence for an injective algebra map, its range equivalence, constants, restriction, antitonicity and full-open image. Specialize to the same normalization and boundary ideal; prove nonemptiness from a nontrivial subgroup's faithful action. | PROVED; FULL BUILD, SIXTEEN FOCUSED REGRESSIONS, STANDARD-AXIOM ALLOWLIST, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+| SP66 | Genuine normalization trace dual, common denominator and actual-section colon consumers | REUSE / BOUND / APPLY | Reuse Mathlib's trace-dual submodule, contain it in an integral generic basis's finite trace-dual span, and clear that span by one nonzero normalization element. Specialize to the existing normal closure; apply B0 conditionally to B1's actual sections without duplicating carriers or assuming geometric landing. | PROVED; FULL BUILD, FOURTEEN FOCUSED REGRESSIONS, STANDARD-AXIOM ALLOWLIST, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+
+SP66 (2026-09-18): **normalization trace dual / uniform denominator**.
+`Boundary/Normalization/TraceDualBound.lean` uses the existing
+`Submodule.traceDual B K (1 : Submodule T N)`. The notation is
+`T^vee_B = {z in N : Tr_{N/K}(zT) subset B}`; the trace-integrality base
+is `B`, not `T`. An integral generic basis and its trace-dual basis bound
+the entire submodule by a finite `T`-span. Clearing those basis denominators
+gives one nonzero `d : T` with `d T^vee_B <= T`. This needs no
+Noetherianity, normality of `B` or finite freeness of the normalization,
+and does not assert `T <= T^vee_B` over a nonnormal `B`.
+
+`Boundary/Normalization/NormalizationTraceBound.lean` specializes the
+same submodule to `NormalizedCover C` as `normalizationTraceDual C`.
+Finite normal closure over a perfect `K` supplies separability, and B1's
+actual fraction-field comparison supplies the other denominator premise.
+Under the additional Noetherian-base hypothesis, the supplied finite
+normalization model and its integral-closure construction discharge B0's
+Noetherianity and normality assumptions. A nonzero member of the existing
+colon `(T^vee_B:R_I)` therefore forces the actual section algebra to be the
+base. Conversely a proper section algebra has zero such colon. The
+uniform landing formulation quantifies actual sections of `U_I`, not a
+new section carrier or merely a finite coefficient family.
+
+Validation: `lake build` passes (3154 jobs; only the unchanged expected
+`Challenge.lean` placeholders are reported). All fourteen regressions in
+`research/NormalizationTraceBoundVerification.lean` pass without warnings,
+and its enforced axiom allowlist verifies all eleven new public declarations;
+each uses only `propext`, `Classical.choice` and `Quot.sound`. The unchanged
+`research/ProofDependencies.lean` passes its six primary dependency-boundary
+assertions and two supporting reports. The single manuscript builds to
+68 pages with no LaTeX warnings or overfull/underfull boxes. Propositions,
+section transition, crosswalk and declaration inventory were visually
+checked on pages 8--10, 52 and 61. Independent Lean--TeX review passes,
+with module-finiteness of `T` over `B` explicit in the conditional corollary.
+
+The historical verification inventory is preserved byte-for-byte as a
+prefix, with eleven declaration checks and eleven axiom reports appended
+(769 checks, 565 examples and 661 reports in the file). The appended SP66
+block passes standalone with `import HodgeConjecture`, verifying the umbrella
+exports, all eleven declaration checks and all eleven standard-axiom reports.
+The full historical inventory was not rerun for SP66. Historical SP65
+and SP64 validation blocks below remain unchanged.
+
+B3 next examines geometric uniform landing, a pole witness and the
+comparison to `ConjugateBoundarySeparation`. The new denominator and colon
+consequences do not supply a nonzero geometric multiplier or prove
+Hodge-class generation.
 
 SP65 (2026-09-17): **actual sections / specified fraction field**.
 `Boundary/Normalization/AffineSections.lean` constructs
@@ -1401,6 +1449,14 @@ existing `N`, and `R_I = image(eta_I)`. The image is the section algebra,
 not an independently supplied realization. The module in the later colon
 ideal is simply `R_I.toSubmodule`.
 
+SP66 reuses the existing trace dual, denoted
+`T^vee_B = {z in N : Tr_{N/K}(zT) subset B}`. The subscript records the
+base of trace-integrality; no inclusion `T <= T^vee_B` is assumed for a
+nonnormal base. One nonzero `d : T` clears the entire trace dual. The
+transporter from actual sections into it is the existing colon
+`(T^vee_B:R_I)` with `R_I.toSubmodule`, not a newly defined ideal or
+an identification with the fixed--moving boundary ideal.
+
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
 | `affineSectionsToFractionField` | actual generic germ on a nonempty open of the affine spectrum, expressed in the specified fraction field | $\eta_V:\Gamma(V,\mathcal O)\hookrightarrow F$ |
@@ -1409,6 +1465,8 @@ ideal is simply `R_I.toSubmodule`.
 | `BoundarySectionRing` | actual structure-sheaf sections on the boundary complement | $\Gamma(U_I,\mathcal O)$ |
 | `boundarySectionsToNormalClosure` | specialization of the generic-germ algebra embedding | $\eta_I:\Gamma(U_I,\mathcal O)\hookrightarrow N$ |
 | `boundarySectionSubalgebra` / `boundarySectionsEquivSubalgebra` | section overring in the same normal-closure field and canonical image equivalence | $R_I=\operatorname{im}\eta_I$, $\Gamma(U_I,\mathcal O)\simeq_{\widetilde B_N}R_I$ |
+| `Submodule.traceDual B K (1 : Submodule T N)` / `normalizationTraceDual C` | existing trace-dual submodule and its normalization specialization | $T^\vee_B=\{z\in N:\operatorname{Tr}_{N/K}(zT)\subseteq B\}$ |
+| existing trace-dual colon of `boundarySectionSubalgebra.toSubmodule` | scalar multipliers sending every actual boundary section into the trace dual | $(T^\vee_B:R_I)$ |
 | base ring parameter | affine base | $B$ |
 | fraction field parameter | fraction field of the base | $K=\operatorname{Frac}(B)$ |
 | marked intermediate field | selected finite extension | $L/K$ |

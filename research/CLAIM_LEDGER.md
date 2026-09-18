@@ -17,6 +17,49 @@ Status vocabulary:
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
 
+## Normalization trace-dual checkpoint (A11ay / SP66)
+
+Status: `FORMAL`. The full build, fourteen focused regressions and enforced
+standard-axiom checks for all eleven new declarations pass. For a finite separable
+extension `N/K`, where `K = Frac(B)` and `T` is the integral closure of
+`B` in `N` with `Frac(T) = N`, the existing Mathlib submodule
+`Submodule.traceDual B K (1 : Submodule T N)` is denoted `T^vee_B`.
+It consists of those `z` for which `Tr_{N/K}(zt)` lies in the image of `B`
+for every `t : T`. An integral generic basis bounds it by the finite
+`T`-span of the trace-dual basis. One nonzero `d : T` therefore clears the
+entire submodule: `d T^vee_B <= T`. No Noetherianity, normality of `B`,
+or finite freeness of `T` over `B` is assumed. In particular `T <= T^vee_B`
+is not asserted over a nonnormal base.
+
+`normalizationTraceDual C` is an alias for this same carrier, specialized
+to the existing `NormalizedCover`. The normal closure supplies finiteness
+and, over perfect `K`, separability; the existing normalization
+fraction-field comparison then supplies the denominator bound.
+Under `[IsNoetherianRing B]`, the supplied finite normalization model also
+makes `T` Noetherian, and its integral closure is integrally closed.
+B0 thus proves
+`0 != s in (T^vee_B:R_I) => R_I=T`, including a formulation quantifying
+all actual boundary sections. If `R_I != T`, the colon ideal is zero.
+The colon is Mathlib's existing `Submodule.colon`, not a new transporter.
+
+Witnesses in `Boundary/Normalization/TraceDualBound.lean`, namespace
+`NormalizationInertia`: `mem_traceDual_unit_iff`,
+`traceDual_unit_le_span_traceDual`, and
+`exists_nonzero_traceDual_unit_denominator`. Witnesses in
+`Boundary/Normalization/NormalizationTraceBound.lean`:
+`normalizationTraceDual`, `mem_normalizationTraceDual_iff`,
+`normalization_isNoetherianRing`, `normalization_isIntegrallyClosed`,
+`exists_nonzero_normalizationTraceDual_denominator`,
+`boundarySectionSubalgebra_eq_bot_of_mem_traceDual_colon`,
+`boundarySectionSubalgebra_eq_bot_of_trace_landing`, and
+`normalizationTraceDual_colon_eq_bot_of_boundarySectionSubalgebra_ne_bot`.
+
+This proves boundedness and its conditional overring consequences, not
+existence of a nonzero uniform geometric multiplier. A boundary pole witness
+and comparison to `ConjugateBoundarySeparation` remain geometric
+obligations. A bound on finitely many coefficients cannot replace landing
+of every section; none of these results establishes Hodge-class generation.
+
 ## Actual boundary-section checkpoint (A11ax / SP65)
 
 Status: `FORMAL`. The full build, sixteen focused regressions and enforced
@@ -52,8 +95,9 @@ Witnesses in `Boundary/Normalization/AffineSections.lean`, namespace
 
 This constructs the actual overring used by the boundary route. It assumes
 neither boundary separation nor trace landing and proves neither. The
-genuine trace dual, its uniform denominator, a nonzero uniform transporter,
-and the geometric pole/separation implication remain separate constructions.
+genuine trace dual and its denominator are the subsequent SP66 construction;
+a nonzero uniform transporter and the geometric pole/separation implication
+remain separate obligations.
 The underlying section module is the existing `.toSubmodule`, with no
 second section-module definition. No new source hypothesis or project axiom
 is introduced, and no Hodge-class generation is asserted.

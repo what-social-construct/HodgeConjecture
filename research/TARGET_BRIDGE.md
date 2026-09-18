@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-09-17. This is the current target-first sketch, not a second
+Assessed: 2026-09-18. This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
 
@@ -72,10 +72,10 @@ proved: the full build and six focused regressions pass, and an enforced
 allowlist checks that the three theorems use only `propext`,
 `Classical.choice` and `Quot.sound`.
 
-The actual boundary-section algebra is constructed in B1 below. The next
-construction is the genuine trace dual `T^vee`, with its proved uniform
-denominator `d T^vee <= T`. The geometric step is then to prove
-`s R_I <= T^vee` for every section, with `s != 0`;
+The actual boundary-section algebra is constructed in B1 below. B2 constructs
+the genuine trace dual `T^vee_B`, with a uniform denominator
+`d T^vee_B <= T`. The geometric step is then to prove
+`s R_I <= T^vee_B` for every section, with `s != 0`;
 membership for finitely many secant coefficients does not suffice.
 Establish any boundary pole witness showing `R_I != T`, and the comparison
 to the existing `ConjugateBoundarySeparation` condition, from the actual
@@ -130,11 +130,72 @@ the actual specialization. Use `R_I.toSubmodule` for the underlying
 module rather than defining another section carrier. No separation,
 uniform trace landing or boundary-pole hypothesis is needed for this map.
 
-**Next bounded checkpoint (B2):** construct the genuine normalization trace
-dual and prove its uniform denominator bound. Then the geometric uniform
-landing, pole witness and comparison to `ConjugateBoundarySeparation`
-remain distinct implications to prove. B1 constructs the actual algebra
-to which B0 can later apply; it does not assert its equality with the base.
+The section algebra constructed in B1 is the actual algebra used by B2's
+conditional application of B0; the section embedding alone does not assert
+its equality with the base.
+
+### B2. Genuine trace dual and a uniform denominator
+
+Proved as A11ay / SP66: the full build, fourteen focused regressions and
+enforced standard-axiom checks for all eleven new declarations pass. For
+`K = Frac(B)`, a finite separable extension `N/K`, and the integral closure
+`T` of `B` in `N` with `Frac(T) = N`, use the existing Mathlib submodule
+\[
+ T^\vee_B
+ =\{z\in N:\operatorname{Tr}_{N/K}(zt)\in B\text{ for every }t\in T\}
+ =\operatorname{traceDual}_{B,K}(T).
+\]
+In Lean this is `Submodule.traceDual B K (1 : Submodule T N)`, not a
+second trace-integrality module. Its membership uses the image of `B` in
+`K`; it does not silently replace `B` by its normalization.
+The generic results are in
+[`TraceDualBound.lean`](../HodgeConjecture/Boundary/Normalization/TraceDualBound.lean):
+`mem_traceDual_unit_iff`, `traceDual_unit_le_span_traceDual` and
+`exists_nonzero_traceDual_unit_denominator`.
+
+An integral `K`-basis of `N` has a trace-dual basis by separability. The
+trace-integrality condition puts every element of `T^vee_B` in the finite
+`T`-span of that dual basis. Clearing its finitely many denominators in
+`Frac(T)` yields one element `0 != d in T` such that
+\[
+ dT^\vee_B\subseteq T.
+\]
+This bounds the entire trace dual, not only a specified coefficient family.
+The argument assumes neither Noetherianity nor normality of `B`, and it
+does not assume that the normalization is free as a `B`-module.
+
+For the existing `NormalizedCover C`, take `T = tilde B_N` and use the
+existing normal closure's finite extension. Over a perfect `K`,
+`C.normalClosure.isGalois` supplies separability. The alias
+`normalizationTraceDual C` denotes precisely this same Mathlib submodule
+`T^vee_B`. The existing fraction-field comparison supplies `Frac(T) = N`;
+no extra field, transporter or geometric-input package is introduced.
+The specialization is
+[`NormalizationTraceBound.lean`](../HodgeConjecture/Boundary/Normalization/NormalizationTraceBound.lean),
+with denominator theorem `exists_nonzero_normalizationTraceDual_denominator`.
+
+Under the additional `[IsNoetherianRing B]` hypothesis, the supplied finite
+normalization model makes `T` Noetherian, and `T` is integrally closed in
+`N`. B0 therefore applies to B1's actual boundary algebra:
+\[
+ 0\ne s\in(T^\vee_B:R_I)\Longrightarrow R_I=T,
+ \qquad R_I\ne T\Longrightarrow(T^\vee_B:R_I)=0.
+\]
+Here `(T^vee_B:R_I)` remains the existing
+`Submodule.colon` of the trace dual and `R_I.toSubmodule`.
+The consumers are `boundarySectionSubalgebra_eq_bot_of_mem_traceDual_colon`,
+`boundarySectionSubalgebra_eq_bot_of_trace_landing` and
+`normalizationTraceDual_colon_eq_bot_of_boundarySectionSubalgebra_ne_bot`;
+the middle formulation quantifies the actual `BoundarySectionRing C I`.
+
+**Next bounded checkpoint (B3):** examine the actual geometry needed for
+uniform landing `s R_I <= T^vee_B` with `s != 0`, a pole witness for
+`R_I != T`, and their precise comparison with
+`ConjugateBoundarySeparation`. None follows merely from the trace-dual
+denominator or from controlling finitely many secant coefficients.
+The two displayed consequences do not assert a nonzero transporter exists.
+This is a boundary/cover checkpoint; the Chow--Betti class-generation
+obligation remains separate.
 
 ### G0. Smooth projective setting and candidate constructions
 
@@ -580,11 +641,10 @@ provide variable-class coverage.
 - Review new objects against the parity registry before adding wrappers.
   Promote a proved checkpoint only after the appropriate build, focused
   regressions, dependency/axiom checks and Lean--TeX comparison.
-- **Next action:** following B0's proved generic bounded-overring and
-  existing-colon formulations and B1's actual section-algebra construction,
-  construct the genuine normalization trace dual and its uniform denominator
-  bound. Keep uniform trace landing and its
-  geometric separation comparison as explicit obligations to prove, not
+- **Next action:** following B0's generic bounded-overring criterion,
+  B1's actual section algebra and B2's trace-dual denominator, examine B3's
+  uniform geometric trace landing, pole witness and
+  separation comparison as explicit obligations to prove, not
   assumed conclusions. Preserve PB0 and the abelian examples as optional
   deferred work, with the general smooth-projective target unchanged.
   L1 remains the next checkpoint of the separate bounded localization
@@ -1396,10 +1456,10 @@ the dated checkpoints below document how the existing objects were built.
    existing endpoint using constructed data, with no hypothesis that is
    merely the desired class-generation or realization conclusion renamed.
 
-The operative next action after B0's proved bounded-overring checkpoint
-and B1's actual boundary-section algebra is the trace-dual construction. The
-uniform geometric landing and boundary-separation comparison remain
-separate obligations. The projective-bundle recipe, its PB0 chart, and the
+The operative next action after B0's bounded-overring criterion, B1's
+actual boundary-section algebra and B2's trace-dual denominator is B3's
+geometric uniform landing/pole/separation analysis. These remain separate
+obligations. The projective-bundle recipe, its PB0 chart, and the
 elliptic curve/chart/point construction are optional deferred examples;
 their detailed analyses are preserved above.
 L1 is the next bounded
