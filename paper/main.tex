@@ -578,6 +578,51 @@ and formally unramified, hence \'{e}tale. This structure transports
 across the same algebra isomorphism.
 \end{proof}
 
+\begin{proposition}[The induced finite function-field extension]
+\label{prop:finite-function-field}
+Let \(p:Y\to X\) be a dominant morphism of integral schemes. The
+map on generic-point stalks gives a canonical field embedding
+\[
+  \kappa_p:K(X)\longrightarrow K(Y).
+\]
+For every nonempty open \(U\subseteq X\), its inverse image
+\(V=p^{-1}(U)\) is nonempty. Writing \(\rho_{X,U}\) and
+\(\rho_{Y,V}\) for the generic germs, the square
+\[
+\begin{CD}
+\Gamma(U,\mathcal O_X) @>{p^*}>> \Gamma(V,\mathcal O_Y)\\
+@V{\rho_{X,U}}VV @VV{\rho_{Y,V}}V\\
+K(X) @>{\kappa_p}>> K(Y)
+\end{CD}
+\]
+commutes. These embeddings satisfy
+\(\kappa_{\mathrm{id}_X}=\mathrm{id}_{K(X)}\) and
+\(\kappa_{p\circ q}=\kappa_q\circ\kappa_p\) for a dominant
+\(q:Z\to Y\) with \(Z\) integral. For an open immersion,
+\(\kappa_p\) is the map of the canonical function-field isomorphism.
+If \(p\) is finite, then \(K(Y)\) is finite-dimensional over
+\(K(X)\) through \(\kappa_p\).
+\end{proposition}
+
+\begin{proof}
+Dominance sends the generic point of \(Y\) to that of \(X\).
+The corresponding stalk map defines \(\kappa_p\), which is injective
+because it is a homomorphism of fields. Naturality of germs gives the
+square; functoriality of stalk maps gives the identity and composition
+laws and the open-immersion comparison.
+
+When \(p\) is finite, choose an affine neighbourhood \(U\) of the
+generic point of \(X\). Its whole inverse image is nonempty and
+affine. With \(B_U,A_U\) as in
+Proposition~\ref{prop:finite-affine-chart}, the square identifies the
+two scalar maps from \(B_U\) to \(K(Y)\); in particular
+\(B_U\to A_U\) is injective. The finite \(B_U\)-algebra \(A_U\)
+localizes to a finite-dimensional domain over
+\(K(X)=\Frac(B_U)\), hence to a field. Its fraction field is
+\(\Frac(A_U)=K(Y)\). This proves the asserted finite-dimensionality
+for the actual generic-stalk embedding.
+\end{proof}
+
 The group \(G=\mathcal N.\mathit{galoisGroup}\), the subgroup
 \(H=\mathcal N.\mathit{intermediateFixingSubgroup}\), and the canonical deck
 action on \(Y_N\) are all constructed from the same datum.  Normality keeps the conjugate embeddings inside the same field \(N\).
@@ -4536,6 +4581,14 @@ Whole affine inverse image \(\nu_{p,U}\) over \(X\) &
 \leanpath{finiteAffinePreimageNormalizationIso}\newline
 \leanpath{finiteAffinePreimageNormalizationIso_hom_comp_toBase}\newline
 \leanpath{Boundary/Normalization/FiniteAffineChart.lean}\\
+Generic field embedding \(\kappa_p\) &
+\leanpath{functionFieldMapOfDominant}\newline
+\leanpath{functionFieldMapOfDominant_germ}\newline
+\leanpath{Cycles/FunctionFieldMap.lean}\\
+Finite extension of actual function fields &
+\leanpath{functionFieldMapOfDominant_sectionScalarTower}\newline
+\leanpath{functionFieldMapOfDominant_finiteDimensional}\newline
+\leanpath{Boundary/Normalization/FiniteFunctionField.lean}\\
 Full-visible boundary ideals &
 \leanpath{movingBoundaryIdeal_eq_top_of_surjective}\newline
 \leanpath{conjugateBoundarySeparation_of_surjective}\newline
@@ -5141,6 +5194,19 @@ principal table, grouped by mathematical layer.
 \leanpath{finiteAffinePreimageNormalizationIso_hom_comp_toBase};
 \leanpath{finiteAffinePreimage_normalization_finite};
 \leanpath{finiteAffinePreimage_normalization_etale};
+\leanpath{HodgeConjecture/Cycles/FunctionFieldMap.lean};
+\leanpath{nonempty_preimage_of_isDominant};
+\leanpath{genericPoint_eq_of_isDominant};
+\leanpath{functionFieldMapOfDominant};
+\leanpath{functionFieldMapOfDominant_injective};
+\leanpath{functionFieldMapOfDominant_germ};
+\leanpath{functionFieldMapOfDominant_eq_openImmersion};
+\leanpath{functionFieldMapOfDominant_id};
+\leanpath{functionFieldMapOfDominant_comp};
+\normsrc{FiniteFunctionField.lean};
+\leanpath{functionFieldMapOfDominant_sectionScalarTower};
+\leanpath{functionFieldMapOfDominant_finiteDimensional_of_affine};
+\leanpath{functionFieldMapOfDominant_finiteDimensional};
 \normsrc{FiniteAffineCover.lean};
 \leanpath{normalizationToIntermediate_surjective};
 \leanpath{normalizationIntermediateEquiv};

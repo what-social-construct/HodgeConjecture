@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-18 (SP71 actual finite-morphism affine charts; earlier checkpoint
+Last audited: 2026-09-18 (SP72 actual dominant function fields; earlier checkpoint
 validation records are retained with their original scope).
 
 Status vocabulary:
@@ -17,6 +17,56 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Actual dominant function fields and finite extension (A11bd / SP72)
+
+Status: `FORMAL`. A dominant morphism of integral schemes gives
+the actual generic-stalk map `K(X) -> K(Y)`, not a chosen fraction-field
+replacement. Its injectivity, germ square on every nonempty base open,
+identity and contravariant composition laws are proved; on an open
+immersion it equals the existing function-field isomorphism. The
+nonempty-preimage lemma needs only dominance; generic-point preservation
+needs irreducible source and target, not integrality.
+
+The germ square proves the section scalar tower for every nonempty base
+open. For a finite dominant morphism of integral schemes, the actual
+finite affine section algebra and the existing fraction-field structures
+give finite-dimensionality of `K(Y)` over `K(X)` for this exact field map.
+The final global theorem chooses a nonempty affine chart internally.
+There is no normality, etaleness, Noetherianity, supplied-chart or
+independently postulated extension premise.
+
+Witnesses:
+
+- `Cycles/FunctionFieldMap.lean`, namespace `SchemeCycles`:
+  `nonempty_preimage_of_isDominant`, `genericPoint_eq_of_isDominant`,
+  `functionFieldMapOfDominant`, `functionFieldMapOfDominant_injective`,
+  `functionFieldMapOfDominant_germ`,
+  `functionFieldMapOfDominant_eq_openImmersion`,
+  `functionFieldMapOfDominant_id`, `functionFieldMapOfDominant_comp`.
+- `Boundary/Normalization/FiniteFunctionField.lean`, namespace
+  `CollisionFoundations`: `functionFieldMapOfDominant_sectionScalarTower`,
+  `functionFieldMapOfDominant_finiteDimensional_of_affine`,
+  `functionFieldMapOfDominant_finiteDimensional`.
+
+Next construct the marked normal-closure field data from this actual
+finite extension and establish separability for the Galois conclusion.
+Neither scheme etaleness nor the intended complex scalar structure has
+yet been used to derive `Algebra.IsSeparable K(X) K(Y)` here.
+Global finite etale Galois refinement, normal stalks
+from smoothness, chart gluing and Chow--Betti generation remain separate.
+No new field carrier, geometric input package, projector or source axiom
+is introduced. The manuscript uses the same map and hypotheses;
+its 72-page PDF (778658 bytes) passes the build, warning scan, visual
+checks and independent core/manuscript review. The full build passes
+(3176 jobs; only the two expected unchanged Challenge placeholder
+warnings). Eighteen focused regressions and eleven enforced standard-axiom
+audits pass without warnings. The fresh SP71 rerun passes eighteen
+regressions and eleven audits; the fresh unchanged dependency audit
+passes six endpoint contracts and two support reports. The central
+inventory now has 820 checks, 565 examples and 712 reports, with eleven
+checks and reports appended. Its historical prefix is unchanged and
+was not rerun in full.
 
 ## Actual finite-morphism affine charts (A11bc / SP71)
 

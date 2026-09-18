@@ -19,6 +19,7 @@ import HodgeConjecture.Cycles.IsomorphismTransport
 import HodgeConjecture.Cycles.LocalOrder
 import HodgeConjecture.Cycles.LocalOrderTransport
 import HodgeConjecture.Cycles.FunctionFieldTransport
+import HodgeConjecture.Cycles.FunctionFieldMap
 import HodgeConjecture.Cycles.SchemeLocalOrder
 import HodgeConjecture.Cycles.Examples.LocalOrder
 import HodgeConjecture.Cycles.PointSupport

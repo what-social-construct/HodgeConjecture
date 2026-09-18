@@ -435,16 +435,63 @@ rerun in full.
 
 The remaining geometric input is normality of stalks from the intended
 smooth geometry, together with an actual global Galois refinement and
-its marked generic extension/normal-closure data. The next bounded step
-is the canonical `K(X) -> K(Y)` for a dominant finite morphism of integral
-schemes and its finite-dimensionality from the actual affine section algebra, supplying
-the generic extension layer. Deriving normal stalks from smoothness
+its marked generic extension/normal-closure data. B4e below supplies the
+actual finite generic extension. Deriving normal stalks from smoothness
 remains a larger foundational task. Agreement over the
 base on one chart is not yet a gluing theorem. No new cover package or
 function field replaces the existing objects. The target and separate
 Chow--Betti generation obligation are unchanged; the manuscript gives
 the chart proposition with these exact hypotheses. Its 72-page PDF build,
 warning scan, visual checks and independent Lean--TeX review pass.
+
+### B4e. The actual dominant function-field map and finite extension
+
+SP72 constructs `functionFieldMapOfDominant` in
+[`Cycles/FunctionFieldMap.lean`](../HodgeConjecture/Cycles/FunctionFieldMap.lean).
+For a dominant morphism `p:Y -> X` of integral schemes, the map
+`kappa_p:K(X) -> K(Y)` is the actual generic-stalk map. It is injective,
+commutes with the actual section germs on every nonempty base open,
+respects identity and contravariant composition, and agrees with the
+existing open-immersion isomorphism. The preceding nonempty-preimage
+lemma uses only dominance; generic-point preservation uses irreducibility.
+
+[`FiniteFunctionField.lean`](../HodgeConjecture/Boundary/Normalization/FiniteFunctionField.lean)
+derives the scalar tower on every nonempty open from the same germ square.
+For finite `p`, the actual finite whole-inverse-image section algebra
+localizes to give `FiniteDimensional K(X) K(Y)` for this exact map.
+`functionFieldMapOfDominant_finiteDimensional` selects a nonempty affine
+chart internally. No normality, etaleness, Noetherianity or independent
+field-extension hypothesis is required. The full build, eighteen focused
+regressions and eleven enforced standard-axiom audits pass. The fresh
+SP71 rerun passes eighteen regressions and eleven audits; the fresh
+unchanged dependency audit passes six endpoint contracts and two support
+reports. The central inventory has 820 checks, 565 examples and 712
+reports after appending eleven checks and reports; its historical prefix
+is unchanged and was not rerun in full.
+
+Next construct the marked normal-closure field data from this actual
+finite extension and establish separability for the Galois conclusion.
+The finite-dimensional theorem does not derive separability from scheme
+etaleness or characteristic zero/perfectness of the intended complex
+scalar structure. Actual
+global finite etale Galois refinement, normal stalks from smoothness and
+gluing remain separate. This field bridge supplies no new field carrier,
+cover package or Chow--Betti class-generation conclusion. The manuscript
+states the same generic map, germ square and finite-dimensionality.
+Its 72-page PDF build, warning scan, visual checks and independent
+core/manuscript review pass.
+
+**Next API route, inspected but not implemented:** prioritize separability
+directly from the finite etale chart. For `B=B_U`, `A=A_U`, `K=K(X)` and
+`L=K(Y)`, `Algebra.FormallyUnramified.of_isLocalization` makes `A -> L`
+formally unramified; `comp` with the etale `B -> A`, then `of_comp` along
+the proved scalar tower `B -> K -> L`, gives formal unramifiedness over
+`K`. `Algebra.FormallyUnramified.isSeparable` in Mathlib's
+`Unramified/Field.lean` then applies with essential finite type supplied
+by SP72's finite-dimensionality. This is a source/API plan, not a newly
+proved separability theorem. It avoids requiring characteristic zero
+for this extension; it does not discharge downstream `PerfectField K`
+hypotheses, which are stronger than separability of this one extension.
 
 ### G0. Smooth projective setting and candidate constructions
 
@@ -890,12 +937,13 @@ provide variable-class coverage.
 - Review new objects against the parity registry before adding wrappers.
   Promote a proved checkpoint only after the appropriate build, focused
   regressions, dependency/axiom checks and Lean--TeX comparison.
-- **Next action:** construct the canonical `K(X) -> K(Y)` for a dominant
-  finite morphism of integral
-  schemes and prove finite-dimensionality from the actual section algebra. This feeds the
-  marked generic extension/normal-closure layer. Normal stalks from smooth
-  geometry, global finite etale Galois refinement and chart gluing remain
-  separate tasks. B4d already derives the finite/etale affine rings
+- **Next action:** construct the marked
+  normal-closure field data from its actual finite generic extension and
+  establish separability for the Galois conclusion through the inspected
+  etale/localization route, rather than inferring it from finiteness.
+  Keep downstream `PerfectField K` hypotheses distinct. Normal stalks from
+  smooth geometry, global finite etale Galois refinement and chart gluing
+  remain separate tasks. B4d already derives the finite/etale affine rings
   from a supplied finite morphism and proves the normalization
   identification over the original base. Full visibility is constructed on this branch,
   not added to every `NormalizedCover`. Retain nonempty-boundary geometry
@@ -1710,10 +1758,11 @@ the dated checkpoints below document how the existing objects were built.
    existing endpoint using constructed data, with no hypothesis that is
    merely the desired class-generation or realization conclusion renamed.
 
-The operative action after B4d's actual finite-morphism chart construction
-is to construct the canonical `K(X) -> K(Y)` for a dominant finite
-morphism of integral schemes and prove finite-dimensionality from the
-actual section algebra.
+The operative action after B4e's actual finite generic-extension
+construction is to construct its marked normal-closure field data and
+establish separability for the Galois conclusion through the inspected
+scheme-etale/localization route. This does not itself prove perfectness
+of the base field for other consumers.
 Deriving normal stalks from smooth geometry, the global finite etale
 Galois refinement, marked normal-closure data and gluing remain separate.
 Finiteness and etaleness of the actual

@@ -20,6 +20,7 @@ import HodgeConjecture.Boundary.Normalization.RegularPairBoundary
 import HodgeConjecture.Boundary.Normalization.FullVisibleBoundary
 import HodgeConjecture.Boundary.Normalization.FiniteAffineCover
 import HodgeConjecture.Boundary.Normalization.FiniteAffineChart
+import HodgeConjecture.Boundary.Normalization.FiniteFunctionField
 import HodgeConjecture.Boundary.Normalization.DeckAction
 import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
 import HodgeConjecture.Boundary.Normalization.ConjugateNormalization
@@ -68,6 +69,11 @@ supplies the actual finite section algebra, and scheme étaleness supplies
 its étale algebra structure. On integral nonempty charts, explicit normal
 stalks identify this model with normalization in the upstairs function field,
 with the structural equality over the original base scheme.
+
+For a dominant morphism of integral schemes, the actual generic-stalk map
+commutes with pullback of sections. For a finite morphism, localizing the
+finite affine algebra proves finite-dimensionality of that same function-field
+extension, without any normality or étaleness premise.
 
 The broad normalization-purity/global-triviality prototype is preserved in
 `research/archive/legacy-lean/`, not as an importable library module.

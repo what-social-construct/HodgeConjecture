@@ -617,12 +617,34 @@ examples and 701 reports; its historical prefix is unchanged and was not
 rerun in full. Normal stalks from the intended smooth geometry,
 the actual Galois refinement and marked field data, chart gluing and
 Chow--Betti generation remain separate geometric tasks. No new cover
-package is introduced; the manuscript follows the same hypotheses. The
-next bounded bridge is the canonical map `K(X) -> K(Y)` for a dominant
-finite morphism of integral schemes and its finite-dimensionality from
-these actual affine section algebras, feeding the marked normal-closure data.
+package is introduced; the manuscript follows the same hypotheses.
 The 72-page manuscript PDF passes its build, warning scan, visual checks
 and independent Lean--TeX review.
+
+SP72 supplies the canonical map `kappa_p:K(X) -> K(Y)` for an actual
+dominant morphism of integral schemes in
+[`FunctionFieldMap.lean`](HodgeConjecture/Cycles/FunctionFieldMap.lean).
+It is the generic-stalk map, is injective, commutes with section germs,
+respects identity and composition, and agrees with the existing
+open-immersion isomorphism. In
+[`FiniteFunctionField.lean`](HodgeConjecture/Boundary/Normalization/FiniteFunctionField.lean),
+the same map gives compatible scalar towers on every nonempty open.
+For a finite dominant morphism its field extension is finite-dimensional,
+using the actual finite affine section algebra; the final theorem needs
+no supplied chart, normality, etaleness or Noetherianity. The full build,
+eighteen focused regressions and eleven enforced standard-axiom audits
+pass. The SP71 suite was freshly rerun and passes its eighteen regressions
+and eleven audits; the fresh unchanged dependency audit also passes.
+The central inventory now has 820 checks, 565 examples and 712 reports;
+its historical prefix is unchanged and was not rerun in full.
+Next construct marked normal-closure field data from this actual
+finite extension and establish the separability needed for its Galois
+conclusion. Separability has not yet been derived from scheme etaleness
+or the intended complex scalar structure. Global Galois refinement,
+normal stalks from smoothness,
+gluing and Chow--Betti generation remain separate tasks.
+The updated 72-page PDF passes its build, warning scan, visual checks
+and independent core/manuscript review.
 
 `paper/main.pdf` is the single current manuscript PDF. The earlier drafts
 and their sources are preserved in the

@@ -17,9 +17,55 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source check: 2026-09-18 (SP71 actual finite-morphism affine charts;
+Last source check: 2026-09-18 (SP72 actual dominant function fields;
 earlier source records retain
 their original validation scope).
+
+### Actual dominant function fields and finite extension (SP72, 2026-09-18)
+
+These are direct Lean proofs, with no newly postulated literature input.
+`Cycles/FunctionFieldMap.lean` uses dense range to obtain nonempty inverse
+images and preservation of the generic point. The map is the actual
+generic-stalk map after the canonical stalk identification.
+`Scheme.stalkMap_germ` supplies its section-germ square; stalk-map
+composition proves contravariant functoriality. Its open-immersion
+specialization is the already existing `functionFieldIsoOfOpenImmersion`,
+not a second field carrier or a separately assumed comparison.
+
+`Boundary/Normalization/FiniteFunctionField.lean` turns that square into
+`IsScalarTower` on every nonempty base open. On a nonempty affine chart,
+SP71's `finiteAffinePreimage_moduleFinite` gives the finite section
+algebra, and `functionField_isFractionRing_of_isAffineOpen` identifies
+both actual function fields as fraction fields. Injectivity through the
+actual generic map yields the faithful section action. Mathlib's
+`Module.Finite.of_isLocalization` then proves finite-dimensionality over
+the downstairs function field. The global theorem selects an affine
+neighborhood of the generic point, without requiring a supplied chart.
+
+No normality, etaleness or Noetherianity is used. Marked normal-closure
+field data must next be constructed from this actual finite extension,
+and the Galois conclusion needs separability. Neither the scheme-etale
+route nor characteristic zero/perfectness from the intended complex
+scalar structure has been connected to that separability input here;
+no global Galois refinement, normal-stalk theorem, gluing or Chow--Betti
+generation is concluded here. The manuscript follows the exact same
+maps and hypotheses. Its 72-page PDF build, warning scan, visual checks
+and independent core/manuscript review pass. The full build, eighteen
+focused regressions, eleven enforced standard-axiom audits, the fresh
+SP71 rerun (eighteen regressions and eleven audits) and the fresh unchanged
+dependency audit (six endpoint contracts and two support reports) pass.
+The central inventory has 820 checks, 565 examples and 712 reports, with
+eleven checks and reports appended; its historical prefix is unchanged
+and was not rerun in full.
+
+The next inspected API route, not yet implemented, uses
+`Algebra.FormallyUnramified.of_isLocalization`, `comp` and `of_comp` to
+pass from the actual etale affine section algebra to formal
+unramifiedness of `K(X) -> K(Y)`, then
+`Algebra.FormallyUnramified.isSeparable` in `Unramified/Field.lean`.
+SP72 finite-dimensionality supplies the essential-finite-type premise.
+This is a plan for separability of this extension, not a proof that the
+base field is perfect or a replacement for downstream perfectness inputs.
 
 ### Actual finite-morphism affine charts (SP71, 2026-09-18)
 

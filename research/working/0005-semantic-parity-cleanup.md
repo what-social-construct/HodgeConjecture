@@ -127,6 +127,73 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP69 | Actual geometric-input audit and research-only regular-pair controls | AUDIT / TEST SCOPE | Distinguish supplied normalized-cover data from constructed geometry. Record the etale-visible quadratic boundary obstruction and the unimplemented full-visible option; test good and bad first-element choices on separate algebraic ideals. | RESEARCH ONLY; EIGHT ALGEBRA DIAGNOSTICS, EIGHT STANDARD-AXIOM AUDITS AND FULL BUILD PASS; ACTIVE LIBRARY AND MANUSCRIPT UNCHANGED |
 | SP70 | Finite normal affine models and full-visible boundary separation | IDENTIFY / CONSTRUCT / SEPARATE | Identify supplied finite normal affine algebras with the existing normalization rings, transport finite models and etaleness, and construct the existing normalized cover. Empty conjugate boundaries and the core-free sheet action give unit moving/combined ideals and direct separation. | PROVED; FULL BUILD, TWENTY FOCUSED REGRESSIONS, SEVENTEEN STANDARD-AXIOM AUDITS, FRESH DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP71 | Actual whole inverse-image affine rings and normalization over the original base | DERIVE / IDENTIFY / COMMUTE | Derive finite and etale section algebras from a finite etale scheme morphism. For an integral source and nonempty chart, use the actual function field and explicit normal stalks to identify the whole inverse-image open with its normalization, prove the structural equality over the original base, and derive finite/etale normalization. | PROVED; FULL BUILD, EIGHTEEN FOCUSED REGRESSIONS, ELEVEN STANDARD-AXIOM AUDITS, SP70 RERUN, FRESH DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+| SP72 | Actual dominant function-field map and finite generic extension | CONSTRUCT / COMMUTE / LOCALIZE | Construct the generic-stalk map with germ, identity and composition laws; identify its open-immersion specialization. Derive section scalar towers and finite-dimensionality from the actual finite affine algebra, with a global endpoint choosing its chart internally. | PROVED; FULL BUILD, EIGHTEEN FOCUSED REGRESSIONS, ELEVEN STANDARD-AXIOM AUDITS, SP71 RERUN, FRESH DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+
+SP72 (2026-09-18): **actual dominant function fields / finite extension**.
+`Cycles/FunctionFieldMap.lean` constructs the actual generic-stalk map
+for a dominant morphism of integral schemes. Nonempty inverse images
+need only dominance, and generic-point preservation needs only
+irreducibility. The field map is injective, commutes with section germs
+on every nonempty base open, satisfies identity and contravariant
+composition, and equals the existing open-immersion isomorphism.
+
+`Boundary/Normalization/FiniteFunctionField.lean` uses that germ square
+to derive section scalar towers on all nonempty opens. For finite `p`,
+the actual finite affine section algebra localizes to the finite extension
+of the actual function fields. The global theorem chooses a nonempty
+affine chart internally. No normality, etaleness, Noetherianity,
+separately supplied chart or independent extension premise is added.
+
+The eleven new public declarations are
+`nonempty_preimage_of_isDominant`, `genericPoint_eq_of_isDominant`,
+`functionFieldMapOfDominant`, `functionFieldMapOfDominant_injective`,
+`functionFieldMapOfDominant_germ`,
+`functionFieldMapOfDominant_eq_openImmersion`,
+`functionFieldMapOfDominant_id`, `functionFieldMapOfDominant_comp`,
+`functionFieldMapOfDominant_sectionScalarTower`,
+`functionFieldMapOfDominant_finiteDimensional_of_affine` and
+`functionFieldMapOfDominant_finiteDimensional`.
+
+Notation parity: `\kappa_p:K(X)\to K(Y)` denotes the actual
+`functionFieldMapOfDominant p`; `\rho_{X,U}` and `\rho_{Y,V}` denote
+the existing `germToFunctionField` maps, with `V=p^{-1}U`.
+The germ theorem is `\kappa_p\circ\rho_{X,U}=\rho_{Y,V}\circ p^*`.
+The SP71 section-ring notation `B_U,A_U` and actual pullback `p^*`
+are retained. The finite-dimensional result uses the algebra induced by
+this exact `\kappa_p`, not a separately chosen field embedding. No new
+field carrier, cover package, ideal or projector is introduced.
+
+The full build passes (3176 jobs), with only the two expected unchanged
+Challenge placeholder warnings.
+`lake env lean research/FiniteFunctionFieldVerification.lean` passes
+without warnings: eighteen focused regressions and eleven enforced
+axiom allowlists permitting only `propext`, `Classical.choice` and
+`Quot.sound`. The fresh SP71 rerun,
+`lake env lean research/FiniteAffineChartVerification.lean`, passes its
+eighteen regressions and eleven enforced audits without warnings.
+The fresh unchanged `research/ProofDependencies.lean` audit passes all
+six endpoint contracts and two support reports. The central inventory
+now has 820 checks, 565 examples and 712 reports, with eleven checks and
+eleven reports appended. Its historical prefix is preserved byte-for-byte;
+the entire historical suite was not rerun.
+
+The single PDF build passes (72 pages, 778658 bytes), with no warning,
+overfull, underfull, undefined-reference or multiply-defined-label
+diagnostics. Final pages 7, 8, 54, 55, 64 and 65 pass visual inspection;
+independent core/manuscript review passes.
+
+Next construct marked normal-closure field data
+from this actual finite extension and establish separability for the
+Galois conclusion. Separability has not yet been derived from scheme
+etaleness or characteristic zero/perfectness of the intended complex
+scalar structure. The next priority is the inspected, unimplemented
+etale/localization route through `FormallyUnramified` and its field
+separability theorem; this does not prove downstream `PerfectField K`
+hypotheses. Actual global finite etale Galois
+refinement, normal stalks from smooth geometry, gluing and Chow--Betti
+generation remain separate tasks. The manuscript states the map, germ
+square and finite-dimensionality with the same hypotheses. Historical
+SP71 and earlier queue blocks below are preserved unchanged.
 
 SP71 (2026-09-18): **actual finite-morphism affine charts**.
 `AffineEtaleAlgebra.lean` proves smoothness of the actual ring map on

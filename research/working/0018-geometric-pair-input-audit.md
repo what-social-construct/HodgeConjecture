@@ -234,3 +234,45 @@ a larger foundational task. The manuscript
 states the chart result with its exact hypotheses. The earlier SP69 and
 SP70 audit records above are retained unchanged. The 72-page PDF build,
 warning scan, visual checks and independent Lean--TeX review pass.
+
+## 8. SP72 follow-up: the actual finite generic extension
+
+`Cycles/FunctionFieldMap.lean` constructs the actual generic-stalk map
+`kappa_p:K(X) -> K(Y)` for a dominant morphism of integral schemes.
+Nonempty inverse images use only dominance; preservation of the generic
+point uses irreducibility. The field map is injective, commutes with
+section germs on every nonempty base open, satisfies identity and
+contravariant composition, and agrees with the existing open-immersion
+isomorphism. No chosen fraction-field carrier replaces either scheme's
+actual function field.
+
+`Boundary/Normalization/FiniteFunctionField.lean` turns the germ square
+into the actual section scalar tower. For finite `p`, the finite whole
+inverse-image affine section algebra localizes to prove finite-dimensionality
+for this exact field map. The global endpoint chooses its nonempty affine
+chart internally. Normality, etaleness, Noetherianity and a separately
+supplied extension are not required.
+
+The 72-page PDF build, warning scan, visual checks and independent
+core/manuscript review pass. The full build passes (3176 jobs; only the
+two expected unchanged Challenge placeholder warnings). Eighteen focused
+regressions and eleven enforced standard-axiom audits pass without
+warnings. The fresh SP71 rerun passes eighteen regressions and eleven
+audits; the fresh unchanged dependency audit passes six endpoint
+contracts and two support reports. The central inventory now has 820
+checks, 565 examples and 712 reports, with eleven checks and reports
+appended. Its historical prefix is unchanged and was not rerun in full.
+
+Next construct marked normal-closure field data
+from this actual finite extension and establish separability for the
+Galois conclusion. Finiteness alone is not this separability input; the
+scheme-etale route and characteristic zero/perfectness from the intended
+complex scalar structure have not yet been connected to it.
+The inspected `FormallyUnramified` localization/composition route is the
+next priority, not a proved result here; separability of this extension
+does not supply downstream perfectness of the base field.
+Actual global Galois refinement, normal stalks from smoothness, gluing
+and Chow--Betti generation remain separate. The manuscript uses
+`\kappa_p`, the same generic germs and the same scalar square; no new
+input package or source axiom is introduced. All earlier audit text is
+preserved unchanged.

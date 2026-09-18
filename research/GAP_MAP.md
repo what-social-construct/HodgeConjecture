@@ -1,9 +1,9 @@
 # Current gap map
 
-Last reviewed: 2026-09-18 (SP71 actual finite-morphism affine charts;
-full build, eighteen focused regressions, eleven standard-axiom audits,
-SP70 rerun, fresh dependency audit and single-PDF checks pass; earlier
-checkpoint validation records retain their original scope).
+Last reviewed: 2026-09-18 (SP72 actual dominant function-field map and
+finite extension; full build, eighteen focused regressions, eleven
+standard-axiom audits, SP71 rerun, fresh dependency audit and single-PDF
+checks pass; earlier checkpoint validation records retain their original scope).
 
 Start with [the target and equivalence sketch](TARGET_BRIDGE.md): it fixes
 the geometric statement, separates the two directions of the proved bridge,
@@ -281,19 +281,44 @@ two support reports. The central inventory now has 809 checks, 565
 examples and 701 reports after appending eleven checks and reports;
 its unchanged historical prefix was not rerun in full.
 
-**Next bounded bridge:** for a dominant finite morphism of integral
-schemes, construct the canonical `K(X) -> K(Y)` and prove finite-dimensionality from the actual
-section algebra. This supplies the generic-extension layer needed by
-`NormalClosureData`; it is prior to choosing that datum abstractly.
-Normal stalks from the intended smooth geometry remain a larger
-foundational task. The actual finite etale Galois refinement and
-compatibility across charts also remain open. SP71 derives the chart
-algebra from a
-supplied finite morphism; it does not construct that global refinement
-or deduce normal stalks from smoothness. Its equality over `X` is not a
-gluing theorem. The main target is unchanged. Nonempty-boundary geometry
-remains an alternative if needed; Chow--Betti generation and convolution
-compatibility remain separate.
+**SP72: the actual generic extension.**
+[`FunctionFieldMap.lean`](../HodgeConjecture/Cycles/FunctionFieldMap.lean)
+constructs `functionFieldMapOfDominant` from the actual generic stalks of
+integral schemes. It is injective, commutes with section germs on every
+nonempty base open, satisfies identity and contravariant composition,
+and equals the existing open-immersion isomorphism where applicable.
+Nonempty inverse images use only dominance; generic-point preservation
+uses irreducibility rather than integrality.
+[`FiniteFunctionField.lean`](../HodgeConjecture/Boundary/Normalization/FiniteFunctionField.lean)
+derives the scalar tower on every nonempty open. For a finite dominant
+morphism the actual finite section algebra localizes to a finite extension
+of the existing function fields. The global endpoint chooses a nonempty
+affine chart internally, with no normality, etaleness, Noetherianity or
+separately supplied field-extension premise. The 72-page PDF build,
+warning scan, visual checks and independent core/manuscript review pass;
+the full build passes (3176 jobs; only the two expected unchanged Challenge
+warnings). Eighteen focused regressions and eleven enforced standard-axiom
+audits pass without warnings. The fresh SP71 rerun passes eighteen
+regressions and eleven audits; the fresh unchanged dependency audit
+passes six endpoint contracts and two support reports. The central
+inventory has 820 checks, 565 examples and 712 reports after appending
+eleven checks and reports; its historical prefix is unchanged and was
+not rerun in full.
+
+**Next bounded bridge:** construct marked normal-closure field data from
+this actual finite extension and establish separability for the Galois
+conclusion. Finiteness alone is not that separability input; it has not
+yet been derived from scheme etaleness or from the intended complex
+scalar structure through characteristic zero/perfectness.
+Prioritize the inspected etale/localization route in B4e of the target
+sketch; it is not implemented, and separability of one extension does
+not discharge downstream `PerfectField K` hypotheses.
+An actual finite etale Galois refinement, normal stalks from the intended
+smooth geometry and chart gluing remain separate geometric tasks. The
+function-field tower and SP71's equality over `X` are not a gluing theorem.
+The main target is unchanged. Nonempty-boundary geometry remains an
+alternative if needed; Chow--Betti generation and convolution compatibility
+remain separate.
 
 In the separate localization stream, the next bounded checkpoint is L1's
 actual closed-complement cycle kernel/image comparison. It can run alongside
