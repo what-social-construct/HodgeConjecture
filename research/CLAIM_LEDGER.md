@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-18 (SP70 finite-affine/full-visible route; earlier checkpoint
+Last audited: 2026-09-18 (SP71 actual finite-morphism affine charts; earlier checkpoint
 validation records are retained with their original scope).
 
 Status vocabulary:
@@ -17,6 +17,59 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Actual finite-morphism affine charts (A11bc / SP71)
+
+Status: `FORMAL`. For any scheme smooth morphism, the actual
+coordinate map on compatible affine source and target charts is smooth;
+for an etale morphism, that map defines an etale algebra. The affine
+global-sections specialization is also proved. For a finite morphism
+`p:Y -> X` and affine `U`, its whole inverse image is affine and its actual
+section ring `A_U` is finite over `B_U=Gamma(X,U)`; it is etale when `p`
+is etale. This finite/etale algebra layer does not require an integral
+source, nonempty inverse image or normal stalks.
+
+For integral `Y` and a nonempty affine inverse image, normality of its
+actual stalks implies that `A_U` is integrally closed. The existing
+`Y.functionField` is its fraction field. The canonical affine presentation
+and SP70 normalization map therefore give an isomorphism from the actual
+open subscheme to the normalization in that field. Here integral closure
+is over the image of the actual `B_U -> Y.functionField` map; injectivity
+is not an added premise. Its hom formula and
+structural equality over the original `X` are proved; the normalization
+is finite and, if `p` is etale, etale over `B_U`.
+
+Witnesses:
+
+- `Boundary/Normalization/AffineEtaleAlgebra.lean`, namespace
+  `CollisionFoundations`: `affine_appLE_smooth`, `affine_appLE_etale`,
+  `affine_appTop_etale`.
+- `Boundary/Normalization/AffineNormality.lean`, namespace
+  `NormalizationInertia`: `affineSections_isIntegrallyClosed_of_stalks`.
+- `Boundary/Normalization/FiniteAffineChart.lean`, namespace
+  `CollisionFoundations`: `finiteAffinePreimage_moduleFinite`,
+  `finiteAffinePreimage_etale`, `finiteAffinePreimageNormalizationIso`,
+  `finiteAffinePreimageNormalizationIso_hom`,
+  `finiteAffinePreimageNormalizationIso_hom_comp_toBase`,
+  `finiteAffinePreimage_normalization_finite` and
+  `finiteAffinePreimage_normalization_etale`.
+
+No abstract cover package or substitute function field is introduced.
+Normal stalks from smooth geometry, an actual global Galois refinement,
+marked generic extension/normal-closure data and chart gluing remain
+unproved here. The actual Chow--Betti class-generation obligation and the
+main smooth-projective target are unchanged. The manuscript states the
+chart result with its exact hypotheses. Its 72-page PDF (775350 bytes)
+passes the build, warning scan, visual checks and independent Lean--TeX
+review. The full build passes (3174 jobs; only the two expected unchanged
+Challenge placeholder warnings). Eighteen focused regressions and
+enforced standard-axiom audits for all eleven new declarations pass
+without warnings. The SP70 suite was freshly rerun: twenty regressions
+and seventeen audits pass. The fresh unchanged dependency audit passes
+six endpoint contracts and two support reports. The central inventory
+now has 809 checks, 565 examples and 701 reports, with only eleven checks
+and reports appended; its historical prefix is unchanged and was not
+rerun in full.
 
 ## Finite-affine normalization and full visibility (A11bb / SP70)
 

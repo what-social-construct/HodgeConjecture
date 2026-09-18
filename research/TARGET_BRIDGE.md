@@ -394,16 +394,57 @@ dependency audit pass. The centralized inventory now records 798 checks,
 565 examples and 690 reports after appending seventeen checks and
 reports; its unchanged historical prefix was not rerun in full.
 
-The next geometric obligation is to obtain the supplied finite normal
-affine algebras and marked fields from an identified finite etale cover
-of a smooth projective base and its Galois refinement, with agreement
-across affine charts. This checkpoint does not construct that global
-cover, prove a general etale-to-normality theorem, or supply the
-Chow--Betti classes. Nonempty-boundary geometry remains a possible
-alternative. The main smooth-projective target is unchanged, and the
-manuscript now states the two affine/full-visible propositions with their
-exact hypotheses. Its 71-page PDF build, warning scan, visual checks and
-independent Lean--TeX review pass.
+SP70 does not construct a global finite etale cover or Galois refinement,
+prove a general etale-to-normality theorem, or supply Chow--Betti classes.
+The main smooth-projective target is unchanged. Its two manuscript
+propositions have the exact affine/full-visible hypotheses; the 71-page
+PDF build, warning scan, visual checks and independent Lean--TeX review
+pass. B4d below derives the affine data from a supplied finite morphism.
+
+### B4d. Actual finite-morphism affine charts
+
+SP71 starts with a finite scheme morphism `p:Y -> X` and affine open `U`
+of `X`. Use its whole inverse image and actual rings
+`B_U=Gamma(X,U)`, `A_U=Gamma(Y,p^-1 U)`, with the scalar map `p.app U`.
+`finiteAffinePreimage_moduleFinite` proves the finite algebra, and
+`finiteAffinePreimage_etale` derives etaleness from `IsEtale p`.
+Neither requires integrality, nonemptiness or normality. The underlying
+general smooth/etale affine-chart results are proved in
+[`AffineEtaleAlgebra.lean`](../HodgeConjecture/Boundary/Normalization/AffineEtaleAlgebra.lean).
+
+For integral `Y` and nonempty inverse image, explicit integral closedness
+of the actual stalks gives normality of `A_U` through
+`affineSections_isIntegrallyClosed_of_stalks` in
+[`AffineNormality.lean`](../HodgeConjecture/Boundary/Normalization/AffineNormality.lean).
+The existing `Y.functionField` is its fraction field, so
+`finiteAffinePreimageNormalizationIso` in
+[`FiniteAffineChart.lean`](../HodgeConjecture/Boundary/Normalization/FiniteAffineChart.lean)
+identifies the actual open subscheme with the normalization. Its hom is
+the canonical affine presentation followed by SP70's existing map, and
+`finiteAffinePreimageNormalizationIso_hom_comp_toBase` proves equality
+of the structural maps all the way to the original `X`. The normalization
+is the integral closure over the image of the actual `B_U` scalar map;
+injectivity is not assumed. It is finite and is etale whenever `p` is
+etale. The full build, eighteen focused regressions and eleven enforced
+standard-axiom audits pass. The SP70 suite was freshly rerun with twenty
+regressions and seventeen audits, and the unchanged dependency audit
+passes six endpoint contracts and two support reports. The central
+inventory has 809 checks, 565 examples and 701 reports after appending
+eleven checks and reports; the unchanged historical prefix was not
+rerun in full.
+
+The remaining geometric input is normality of stalks from the intended
+smooth geometry, together with an actual global Galois refinement and
+its marked generic extension/normal-closure data. The next bounded step
+is the canonical `K(X) -> K(Y)` for a dominant finite morphism of integral
+schemes and its finite-dimensionality from the actual affine section algebra, supplying
+the generic extension layer. Deriving normal stalks from smoothness
+remains a larger foundational task. Agreement over the
+base on one chart is not yet a gluing theorem. No new cover package or
+function field replaces the existing objects. The target and separate
+Chow--Betti generation obligation are unchanged; the manuscript gives
+the chart proposition with these exact hypotheses. Its 72-page PDF build,
+warning scan, visual checks and independent Lean--TeX review pass.
 
 ### G0. Smooth projective setting and candidate constructions
 
@@ -849,10 +890,14 @@ provide variable-class coverage.
 - Review new objects against the parity registry before adding wrappers.
   Promote a proved checkpoint only after the appropriate build, focused
   regressions, dependency/axiom checks and Lean--TeX comparison.
-- **Next action:** use B4c's proved finite-affine/full-visible constructor
-  by obtaining its actual finite normal rings and marked fields from
-  identified global finite etale cover geometry and proving
-  chart compatibility. Full visibility is constructed on this branch,
+- **Next action:** construct the canonical `K(X) -> K(Y)` for a dominant
+  finite morphism of integral
+  schemes and prove finite-dimensionality from the actual section algebra. This feeds the
+  marked generic extension/normal-closure layer. Normal stalks from smooth
+  geometry, global finite etale Galois refinement and chart gluing remain
+  separate tasks. B4d already derives the finite/etale affine rings
+  from a supplied finite morphism and proves the normalization
+  identification over the original base. Full visibility is constructed on this branch,
   not added to every `NormalizedCover`. Retain nonempty-boundary geometry
   as an alternative if needed. Preserve PB0 and the abelian examples as
   optional deferred work, with the general smooth-projective target unchanged.
@@ -1665,12 +1710,16 @@ the dated checkpoints below document how the existing objects were built.
    existing endpoint using constructed data, with no hypothesis that is
    merely the desired class-generation or realization conclusion renamed.
 
-The operative action after B4c's proved finite-affine/full-visible
-construction is to derive its affine inputs from identified global finite
-etale cover geometry. Normality and
-marked normal-closure fields remain explicit inputs at the affine layer;
-neither a global Galois refinement nor gluing is supplied by the research
-algebra controls. A genuinely nonempty-boundary route remains an
+The operative action after B4d's actual finite-morphism chart construction
+is to construct the canonical `K(X) -> K(Y)` for a dominant finite
+morphism of integral schemes and prove finite-dimensionality from the
+actual section algebra.
+Deriving normal stalks from smooth geometry, the global finite etale
+Galois refinement, marked normal-closure data and gluing remain separate.
+Finiteness and etaleness of the actual
+inverse-image section algebra now follow from the scheme morphism; the
+normalization identification uses the existing upstairs function field
+and commutes over the original base. A genuinely nonempty-boundary route remains an
 alternative requiring its own quotient regularity or all-section landing.
 The projective-bundle recipe, its PB0 chart, and the
 elliptic curve/chart/point construction are optional deferred examples;

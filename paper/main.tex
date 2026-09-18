@@ -530,6 +530,54 @@ transport across this isomorphism. Applying \(\Spec\) gives the
 asserted isomorphism over the base; the same argument applies to \(S\).
 \end{proof}
 
+\begin{proposition}[Whole affine inverse images]
+\label{prop:finite-affine-chart}
+Let \(p:Y\to X\) be a finite morphism, let \(U\subseteq X\) be
+affine, and set
+\[
+  V=p^{-1}(U),\qquad B_U=\Gamma(U,\mathcal O_X),\qquad
+  A_U=\Gamma(V,\mathcal O_Y).
+\]
+Then \(V\) is affine and \(A_U\) is finite over \(B_U\), with
+structure map \(p^*:B_U\to A_U\). Suppose further that \(Y\) is
+integral, \(V\ne\varnothing\), and every local ring
+\(\mathcal O_{Y,y}\), \(y\in V\), is integrally closed. The generic
+germ identifies \(K(Y)\) with the fraction field of \(A_U\), and
+the composite \(B_U\xrightarrow{p^*}A_U\to K(Y)\) gives its
+\(B_U\)-algebra structure. Here \(\operatorname{IntCl}_{B_U}K(Y)\)
+denotes the elements integral over the image of this composite.
+There is a canonical isomorphism
+\[
+  \nu_{p,U}:V\xrightarrow{\ \sim\ }
+  \Spec\bigl(\operatorname{IntCl}_{B_U}K(Y)\bigr).
+\]
+Writing \(q_U\) for the structural map of this normalization model
+to \(\Spec B_U\), and \(\iota_U:\Spec B_U\to X\) for the affine
+chart, the isomorphism satisfies
+\[
+  \iota_U\circ q_U\circ\nu_{p,U}=p|_V.
+\]
+The normalization algebra is finite over \(B_U\). If \(p\) is
+also \'{e}tale, then both \(A_U\) and
+\(\operatorname{IntCl}_{B_U}K(Y)\) are \'{e}tale over \(B_U\).
+\end{proposition}
+
+\begin{proof}
+Finiteness gives affineness of the whole inverse image and finiteness
+of its section algebra. The local rings of an affine scheme are the
+prime localizations of its section ring; integral closedness at the
+maximal ideals therefore makes \(A_U\) integrally closed. The generic
+germ on the nonempty affine open supplies its fraction field.
+The integral-closure argument of
+Proposition~\ref{prop:finite-normal-affine-model} identifies the
+normalization algebra with \(A_U\). Composing its spectrum
+isomorphism with the canonical affine presentation of \(V\) gives
+\(\nu_{p,U}\); functoriality of the section map proves the equality
+over \(X\). For an \'{e}tale morphism, the affine section map is smooth
+and formally unramified, hence \'{e}tale. This structure transports
+across the same algebra isomorphism.
+\end{proof}
+
 The group \(G=\mathcal N.\mathit{galoisGroup}\), the subgroup
 \(H=\mathcal N.\mathit{intermediateFixingSubgroup}\), and the canonical deck
 action on \(Y_N\) are all constructed from the same datum.  Normality keeps the conjugate embeddings inside the same field \(N\).
@@ -4478,6 +4526,16 @@ Finite normal affine models &
 \leanpath{normalizationIntermediateEquiv}\newline
 \leanpath{normalizedCoverOfFiniteNormalAffineModels}\newline
 \leanpath{Boundary/Normalization/FiniteAffineCover.lean}\\
+\'{E}tale affine section algebras &
+\leanpath{affine_appLE_etale}\newline
+\leanpath{Boundary/Normalization/AffineEtaleAlgebra.lean}\\
+Normal affine sections from stalks &
+\leanpath{affineSections_isIntegrallyClosed_of_stalks}\newline
+\leanpath{Boundary/Normalization/AffineNormality.lean}\\
+Whole affine inverse image \(\nu_{p,U}\) over \(X\) &
+\leanpath{finiteAffinePreimageNormalizationIso}\newline
+\leanpath{finiteAffinePreimageNormalizationIso_hom_comp_toBase}\newline
+\leanpath{Boundary/Normalization/FiniteAffineChart.lean}\\
 Full-visible boundary ideals &
 \leanpath{movingBoundaryIdeal_eq_top_of_surjective}\newline
 \leanpath{conjugateBoundarySeparation_of_surjective}\newline
@@ -5069,6 +5127,20 @@ principal table, grouped by mathematical layer.
 \normsrc{InvariantIntermediate.lean};
 \normsrc{ConjugateNormalization.lean};
 \normsrc{ConjugateBoundary.lean};
+\normsrc{AffineEtaleAlgebra.lean};
+\leanpath{affine_appLE_smooth};
+\leanpath{affine_appLE_etale};
+\leanpath{affine_appTop_etale};
+\normsrc{AffineNormality.lean};
+\leanpath{affineSections_isIntegrallyClosed_of_stalks};
+\normsrc{FiniteAffineChart.lean};
+\leanpath{finiteAffinePreimage_moduleFinite};
+\leanpath{finiteAffinePreimage_etale};
+\leanpath{finiteAffinePreimageNormalizationIso};
+\leanpath{finiteAffinePreimageNormalizationIso_hom};
+\leanpath{finiteAffinePreimageNormalizationIso_hom_comp_toBase};
+\leanpath{finiteAffinePreimage_normalization_finite};
+\leanpath{finiteAffinePreimage_normalization_etale};
 \normsrc{FiniteAffineCover.lean};
 \leanpath{normalizationToIntermediate_surjective};
 \leanpath{normalizationIntermediateEquiv};

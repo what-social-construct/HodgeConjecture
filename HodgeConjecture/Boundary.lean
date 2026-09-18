@@ -19,6 +19,7 @@ import HodgeConjecture.Boundary.Normalization.BoundaryPole
 import HodgeConjecture.Boundary.Normalization.RegularPairBoundary
 import HodgeConjecture.Boundary.Normalization.FullVisibleBoundary
 import HodgeConjecture.Boundary.Normalization.FiniteAffineCover
+import HodgeConjecture.Boundary.Normalization.FiniteAffineChart
 import HodgeConjecture.Boundary.Normalization.DeckAction
 import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
 import HodgeConjecture.Boundary.Normalization.ConjugateNormalization
@@ -61,6 +62,12 @@ the canonical algebra and scheme isomorphisms. Their full visibility makes
 the existing moving and fixed--moving boundary ideals the unit ideal for
 nontrivial subgroups, yielding separation without a regular-pair hypothesis.
 Étaleness transports across the same algebra identification.
+
+For a finite scheme morphism, the whole inverse image of an affine chart
+supplies the actual finite section algebra, and scheme étaleness supplies
+its étale algebra structure. On integral nonempty charts, explicit normal
+stalks identify this model with normalization in the upstairs function field,
+with the structural equality over the original base scheme.
 
 The broad normalization-purity/global-triviality prototype is preserved in
 `research/archive/legacy-lean/`, not as an importable library module.

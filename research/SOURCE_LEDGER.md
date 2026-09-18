@@ -17,9 +17,46 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source check: 2026-09-18 (SP70 local normalization/full-visibility proofs;
-SP69 sources below; earlier records retain
+Last source check: 2026-09-18 (SP71 actual finite-morphism affine charts;
+earlier source records retain
 their original validation scope).
+
+### Actual finite-morphism affine charts (SP71, 2026-09-18)
+
+This checkpoint uses direct Lean proofs against existing Mathlib APIs,
+not a newly assumed literature input. `AffineEtaleAlgebra.lean` derives
+`affine_appLE_smooth` from the scheme-level locally standard smooth
+presentations, then target-locality of `RingHom.Smooth`. Together with
+the existing affine formal-unramifiedness theorem and
+`Algebra.FormallyEtale.of_unramified_and_smooth`, it proves etaleness of
+the actual affine chart algebra and its global-sections specialization.
+
+`AffineNormality.lean` uses `IsAffineOpen.isLocalization_stalk'` and
+`IsIntegrallyClosed.of_isLocalization_maximal`: normality of the actual
+stalks on a nonempty affine open of an integral scheme implies normality
+of its section ring. This does not derive the stalk input from smoothness.
+
+`FiniteAffineChart.lean` gets the finite section algebra from
+`IsFinite.finite_app`, the affine inverse image from `hU.preimage p`, and
+its actual fraction field from
+`functionField_isFractionRing_of_isAffineOpen`. It applies the proved
+normal-sections lemma and SP70 normalization identification. The equality
+over the original scheme `X` uses `Spec_map_appLE_fromSpec` and the
+canonical affine presentation, rather than postulating a compatibility
+square. Finiteness and etaleness then transport to the normalization.
+
+There is no new source axiom, geometric input bundle, cover carrier or
+function-field replacement. Smooth-to-normal-stalks, construction of the
+actual global Galois refinement and its marked generic field data,
+gluing, and Chow--Betti generation remain separate. The manuscript
+follows the same hypotheses. Its 72-page PDF build, warning scan, visual
+checks and independent Lean--TeX review pass. The full build, eighteen
+focused regressions, eleven enforced standard-axiom audits, the fresh
+SP70 rerun (twenty regressions and seventeen audits) and the unchanged
+dependency audit (six endpoint contracts and two support reports) pass.
+The central inventory has 809 checks, 565 examples and 701 reports after
+eleven checks and reports are appended; the preserved historical prefix
+was not rerun in full.
 
 ### Finite affine normalization and full visibility (SP70, 2026-09-18)
 

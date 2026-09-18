@@ -595,6 +595,35 @@ manuscript records the affine identification and full-visible separation
 with the same explicit hypotheses. Its 71-page PDF build, warning scan,
 visual checks and independent Lean--TeX review pass.
 
+SP71 connects that affine bridge to an actual finite morphism
+`p : Y -> X`. For affine `U` in `X`, take the existing section rings
+`B_U=Gamma(X,U)` and `A_U=Gamma(Y,p^-1 U)`, using the whole inverse image.
+Finiteness of `A_U` follows from `p`; if `p` is etale, its actual section
+map is an etale algebra map. These results do not require integral `Y`
+or normal stalks. For integral `Y` and nonempty inverse image, explicit
+normality of the actual stalks gives normal `A_U`, whose fraction field
+is the existing `Y.functionField`. The resulting canonical isomorphism
+from the open subscheme to the normalization commutes with the original
+map to `X`, not merely an abstract coordinate-ring identification.
+See [`FiniteAffineChart.lean`](HodgeConjecture/Boundary/Normalization/FiniteAffineChart.lean),
+supported by
+[`AffineEtaleAlgebra.lean`](HodgeConjecture/Boundary/Normalization/AffineEtaleAlgebra.lean)
+and [`AffineNormality.lean`](HodgeConjecture/Boundary/Normalization/AffineNormality.lean).
+The full build, eighteen focused regressions and eleven enforced
+standard-axiom audits pass. The SP70 suite was freshly rerun and passes
+its twenty regressions and seventeen audits, as does the unchanged
+dependency audit. The centralized inventory now has 809 checks, 565
+examples and 701 reports; its historical prefix is unchanged and was not
+rerun in full. Normal stalks from the intended smooth geometry,
+the actual Galois refinement and marked field data, chart gluing and
+Chow--Betti generation remain separate geometric tasks. No new cover
+package is introduced; the manuscript follows the same hypotheses. The
+next bounded bridge is the canonical map `K(X) -> K(Y)` for a dominant
+finite morphism of integral schemes and its finite-dimensionality from
+these actual affine section algebras, feeding the marked normal-closure data.
+The 72-page manuscript PDF passes its build, warning scan, visual checks
+and independent Lean--TeX review.
+
 `paper/main.pdf` is the single current manuscript PDF. The earlier drafts
 and their sources are preserved in the
 [manuscript archive](research/archive/manuscripts/README.md), outside the

@@ -1,9 +1,9 @@
 # Current gap map
 
-Last reviewed: 2026-09-18 (SP70 finite-affine/full-visible construction;
-full build, twenty focused regressions, seventeen standard-axiom audits,
-fresh dependency audit and single-PDF checks pass; earlier checkpoint
-validation records retain their original scope).
+Last reviewed: 2026-09-18 (SP71 actual finite-morphism affine charts;
+full build, eighteen focused regressions, eleven standard-axiom audits,
+SP70 rerun, fresh dependency audit and single-PDF checks pass; earlier
+checkpoint validation records retain their original scope).
 
 Start with [the target and equivalence sketch](TARGET_BRIDGE.md): it fixes
 the geometric statement, separates the two directions of the proved bridge,
@@ -256,14 +256,44 @@ dependency audit. The centralized inventory has 798 checks, 565 examples
 and 690 reports after appending seventeen checks and reports; its unchanged
 historical prefix was not rerun in full.
 
-**Next geometric obligation:** obtain these actual finite normal affine
-models and their marked field data from an identified smooth-projective
-finite etale cover and Galois refinement, then establish compatibility
-across charts. Neither a global cover nor a Galois-closure construction
-is supplied by the affine bridge. Normality is an explicit algebraic
-hypothesis here, not newly deduced from etaleness. The main target is
-unchanged. Nonempty-boundary geometry remains an alternative if needed;
-Chow--Betti generation and convolution compatibility remain separate.
+**SP71: the actual whole inverse-image affine chart.** For a finite
+morphism `p:Y -> X` and affine open `U`,
+[`FiniteAffineChart.lean`](../HodgeConjecture/Boundary/Normalization/FiniteAffineChart.lean)
+uses `B_U=Gamma(X,U)` and `A_U=Gamma(Y,p^-1 U)` with their actual section
+map. It derives finiteness of `A_U`, and etaleness when `p` is etale,
+without normality, integrality or nonemptiness assumptions.
+[`AffineEtaleAlgebra.lean`](../HodgeConjecture/Boundary/Normalization/AffineEtaleAlgebra.lean)
+also proves the general affine smooth/etale chart bridge. For integral
+`Y` and a nonempty inverse image,
+[`AffineNormality.lean`](../HodgeConjecture/Boundary/Normalization/AffineNormality.lean)
+derives normality of `A_U` from explicit normality of its actual stalks.
+Using the actual `Y.functionField`, the whole inverse-image open subscheme
+is canonically isomorphic to the normalization of `B_U`, with the
+structural equality proved over the original `X`. The normalization is
+finite and, when `p` is etale, etale. No new ring, field or cover package
+replaces these objects. The 72-page PDF build, warning scan, visual checks
+and independent Lean--TeX review pass. The full build passes (3174 jobs;
+only the two expected unchanged Challenge warnings). Eighteen focused
+regressions and eleven enforced standard-axiom audits pass without
+warnings. The SP70 rerun passes twenty regressions and seventeen audits;
+the fresh unchanged dependency audit passes six endpoint contracts and
+two support reports. The central inventory now has 809 checks, 565
+examples and 701 reports after appending eleven checks and reports;
+its unchanged historical prefix was not rerun in full.
+
+**Next bounded bridge:** for a dominant finite morphism of integral
+schemes, construct the canonical `K(X) -> K(Y)` and prove finite-dimensionality from the actual
+section algebra. This supplies the generic-extension layer needed by
+`NormalClosureData`; it is prior to choosing that datum abstractly.
+Normal stalks from the intended smooth geometry remain a larger
+foundational task. The actual finite etale Galois refinement and
+compatibility across charts also remain open. SP71 derives the chart
+algebra from a
+supplied finite morphism; it does not construct that global refinement
+or deduce normal stalks from smoothness. Its equality over `X` is not a
+gluing theorem. The main target is unchanged. Nonempty-boundary geometry
+remains an alternative if needed; Chow--Betti generation and convolution
+compatibility remain separate.
 
 In the separate localization stream, the next bounded checkpoint is L1's
 actual closed-complement cycle kernel/image comparison. It can run alongside

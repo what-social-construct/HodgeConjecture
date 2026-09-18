@@ -194,3 +194,43 @@ visible in the current gap map. The single manuscript has matching
 affine-identification and full-visible-separation propositions. Its
 71-page PDF build, warning scan, visual checks and independent Lean--TeX
 review pass.
+
+## 7. SP71 follow-up: actual finite-morphism affine charts
+
+The affine input is now derived from a supplied finite scheme morphism
+`p:Y -> X` and affine open `U`: use the whole inverse image and the
+existing section rings `B_U=Gamma(X,U)`, `A_U=Gamma(Y,p^-1 U)`.
+`FiniteAffineChart.lean` proves `A_U` finite over `B_U`, and etale when
+the morphism is etale. This algebra layer needs neither integrality,
+nonemptiness nor normality. `AffineEtaleAlgebra.lean` supplies the general
+scheme-smooth/etale to affine-algebra bridge.
+
+For integral `Y` and nonempty inverse image, normality of the actual
+stalks on that open gives normality of `A_U` by `AffineNormality.lean`.
+The existing `Y.functionField` is its fraction field. The resulting
+`finiteAffinePreimageNormalizationIso` identifies the actual open
+subscheme with the normalization; its structural equality is proved over
+the original `X`, and the normalization is finite and, when `p` is etale,
+etale. No ring, field or cover package is replaced.
+
+The full build passes (3174 jobs; only the two expected unchanged
+Challenge placeholder warnings). Eighteen focused regressions and
+enforced standard-axiom audits for all eleven new declarations pass
+without warnings. The SP70 suite was freshly rerun and passes its twenty
+regressions and seventeen audits; the fresh unchanged dependency audit
+passes six endpoint contracts and two support reports. The central
+inventory now has 809 checks, 565 examples and 701 reports after appending
+eleven checks and reports; its historical prefix is unchanged and was not
+rerun in full.
+
+Normal stalks have not been derived from the
+intended smooth geometry; a global finite etale Galois refinement,
+marked generic extension/normal-closure data, chart gluing and the
+separate Chow--Betti class-generation problem remain. Next construct
+the canonical `K(X) -> K(Y)` for a dominant finite morphism of integral
+schemes and prove finite-dimensionality from the actual section algebra, to supply the
+generic extension layer; deriving normal stalks from smoothness remains
+a larger foundational task. The manuscript
+states the chart result with its exact hypotheses. The earlier SP69 and
+SP70 audit records above are retained unchanged. The 72-page PDF build,
+warning scan, visual checks and independent Lean--TeX review pass.

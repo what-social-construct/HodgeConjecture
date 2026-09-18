@@ -126,6 +126,80 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP68 | Prescribed first element and the fixed--moving regular-pair separation criterion | REFINE / CANCEL / APPLY | Preserve the existing height-one denominator theorem as a wrapper around a fixed-element refinement. Cancel a regular moving element on the existing quotient by a nonzero fixed element; use the same two boundary-ideal summands to exclude containing height-one primes. | PROVED; FULL BUILD, TEN FOCUSED REGRESSIONS, STANDARD-AXIOM ALLOWLIST, BOUNDARY-POLE RERUN, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP69 | Actual geometric-input audit and research-only regular-pair controls | AUDIT / TEST SCOPE | Distinguish supplied normalized-cover data from constructed geometry. Record the etale-visible quadratic boundary obstruction and the unimplemented full-visible option; test good and bad first-element choices on separate algebraic ideals. | RESEARCH ONLY; EIGHT ALGEBRA DIAGNOSTICS, EIGHT STANDARD-AXIOM AUDITS AND FULL BUILD PASS; ACTIVE LIBRARY AND MANUSCRIPT UNCHANGED |
 | SP70 | Finite normal affine models and full-visible boundary separation | IDENTIFY / CONSTRUCT / SEPARATE | Identify supplied finite normal affine algebras with the existing normalization rings, transport finite models and etaleness, and construct the existing normalized cover. Empty conjugate boundaries and the core-free sheet action give unit moving/combined ideals and direct separation. | PROVED; FULL BUILD, TWENTY FOCUSED REGRESSIONS, SEVENTEEN STANDARD-AXIOM AUDITS, FRESH DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+| SP71 | Actual whole inverse-image affine rings and normalization over the original base | DERIVE / IDENTIFY / COMMUTE | Derive finite and etale section algebras from a finite etale scheme morphism. For an integral source and nonempty chart, use the actual function field and explicit normal stalks to identify the whole inverse-image open with its normalization, prove the structural equality over the original base, and derive finite/etale normalization. | PROVED; FULL BUILD, EIGHTEEN FOCUSED REGRESSIONS, ELEVEN STANDARD-AXIOM AUDITS, SP70 RERUN, FRESH DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+
+SP71 (2026-09-18): **actual finite-morphism affine charts**.
+`AffineEtaleAlgebra.lean` proves smoothness of the actual ring map on
+compatible affine charts of a smooth morphism, then etaleness on affine
+charts of an etale morphism and on global sections of affine schemes.
+`AffineNormality.lean` derives normal affine sections from normality of
+the actual stalks on a nonempty affine open of an integral scheme.
+
+`FiniteAffineChart.lean` starts with a finite morphism `p:Y -> X` and
+affine `U`. Its whole inverse image is affine; its existing section ring
+is finite over the existing section ring of `U`, and etale when `p` is
+etale. No integrality, nonemptiness or normality is required for this
+finite/etale algebra layer. For integral `Y` and a nonempty inverse image,
+explicit normal stalks supply normality of the section ring. Its fraction
+field is the existing `Y.functionField`. The canonical isomorphism to
+normalization is proved to commute over the original `X`; finiteness and
+etaleness transport to the normalization. No replacement ring, field,
+cover package, ideal or projector is introduced.
+
+The eleven new public declarations are `affine_appLE_smooth`,
+`affine_appLE_etale`, `affine_appTop_etale`,
+`affineSections_isIntegrallyClosed_of_stalks`,
+`finiteAffinePreimage_moduleFinite`, `finiteAffinePreimage_etale`,
+`finiteAffinePreimageNormalizationIso`,
+`finiteAffinePreimageNormalizationIso_hom`,
+`finiteAffinePreimageNormalizationIso_hom_comp_toBase`,
+`finiteAffinePreimage_normalization_finite` and
+`finiteAffinePreimage_normalization_etale`.
+
+Notation parity: `B_U=\Gamma(X,U)` and
+`A_U=\Gamma(Y,p^{-1}U)` are existing section rings; `K(Y)` denotes
+`Y.functionField`. The scalar map `p^*` is the actual `p.app U`, and its
+composite with the generic germ gives the map to `K(Y)`.
+`\nu_{p,U}` denotes `finiteAffinePreimageNormalizationIso`, from
+`V=p^{-1}U` to `\operatorname{Spec}(\operatorname{IntCl}_{B_U}K(Y))`.
+This integral closure is over the image of the actual scalar map;
+injectivity of that map is not assumed. `q_U` denotes
+`normalizedModelToBase`, and `\iota_U` denotes `hU.fromSpec`.
+The `hom_comp_toBase` theorem is
+`\iota_U\circ q_U\circ\nu_{p,U}=p|_V` over the original `X`.
+The established fixed/moving ideal notation is unchanged.
+
+The full build passes (3174 jobs), with only the two expected unchanged
+Challenge placeholder warnings. `lake env lean
+research/FiniteAffineChartVerification.lean` passes without warnings:
+eighteen focused regressions and enforced axiom allowlists for all eleven
+new declarations, permitting only `propext`, `Classical.choice` and
+`Quot.sound`. The fresh SP70 rerun,
+`lake env lean research/FiniteAffineCoverVerification.lean`, passes its
+twenty regressions and seventeen enforced audits without warnings.
+The fresh unchanged `research/ProofDependencies.lean` audit passes its
+six endpoint contracts and two support reports. The central inventory
+now contains 809 checks, 565 examples and 701 reports, with eleven checks
+and eleven reports appended. The historical prefix is preserved
+byte-for-byte; the entire historical suite was not rerun.
+
+The single PDF build passes (72 pages, 775350 bytes), with a clean
+undefined-reference, multiply-defined-label, overfull and underfull
+warning scan. Final pages 7, 8, 54 and 64 pass visual inspection;
+independent Lean--TeX review passes after clarifying the scalar composite
+and integral closure over its image.
+
+Normal stalks from the intended smooth geometry,
+an actual global Galois refinement and marked generic extension/normal
+closure data, chart gluing, and Chow--Betti generation remain separate
+tasks. Next construct the canonical `K(X) -> K(Y)` for a dominant finite
+morphism of integral schemes and prove finite-dimensionality from the
+actual section algebra, feeding the generic extension needed for
+`NormalClosureData`. Normal
+stalks from smoothness remain a larger foundational task. The manuscript
+gives the chart construction with its exact
+hypotheses, without an editorial gap paragraph. Historical SP70 and
+earlier queue blocks below are preserved unchanged.
 
 SP70 (2026-09-18): **finite affine normalization / full-visible separation**.
 The user selected finite etale covers over the whole smooth projective
