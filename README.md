@@ -637,14 +637,26 @@ pass. The SP71 suite was freshly rerun and passes its eighteen regressions
 and eleven audits; the fresh unchanged dependency audit also passes.
 The central inventory now has 820 checks, 565 examples and 712 reports;
 its historical prefix is unchanged and was not rerun in full.
-Next construct marked normal-closure field data from this actual
-finite extension and establish the separability needed for its Galois
-conclusion. Separability has not yet been derived from scheme etaleness
-or the intended complex scalar structure. Global Galois refinement,
-normal stalks from smoothness,
-gluing and Chow--Betti generation remain separate tasks.
 The updated 72-page PDF passes its build, warning scan, visual checks
 and independent core/manuscript review.
+
+SP73 proves separability for the same actual generic embedding in
+[`SeparableFunctionField.lean`](HodgeConjecture/Boundary/Normalization/SeparableFunctionField.lean).
+A dominant affine formally unramified morphism of integral schemes gives
+a formally unramified function-field algebra. If the morphism is finite,
+SP72's finite-dimensionality then gives separability. Finite etale
+morphisms qualify automatically; normality, perfectness and characteristic
+zero are not assumed. The full build, sixteen focused regressions and
+three enforced standard-axiom audits pass, as do the fresh SP72 rerun
+(eighteen regressions and eleven audits) and unchanged dependency audit.
+The central inventory now has 823 checks, 565 examples and 715 reports;
+its historical prefix is unchanged and was not rerun in full.
+Next construct marked
+normal-closure field data from this actual finite separable extension.
+This does not discharge downstream `PerfectField K` inputs or construct
+a global Galois refinement. Normal stalks from smoothness, chart gluing
+and Chow--Betti generation remain separate tasks.
+The 73-page PDF passes its build, warning scan and visual checks.
 
 `paper/main.pdf` is the single current manuscript PDF. The earlier drafts
 and their sources are preserved in the

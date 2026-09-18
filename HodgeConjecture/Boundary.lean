@@ -21,6 +21,7 @@ import HodgeConjecture.Boundary.Normalization.FullVisibleBoundary
 import HodgeConjecture.Boundary.Normalization.FiniteAffineCover
 import HodgeConjecture.Boundary.Normalization.FiniteAffineChart
 import HodgeConjecture.Boundary.Normalization.FiniteFunctionField
+import HodgeConjecture.Boundary.Normalization.SeparableFunctionField
 import HodgeConjecture.Boundary.Normalization.DeckAction
 import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
 import HodgeConjecture.Boundary.Normalization.ConjugateNormalization
@@ -74,6 +75,9 @@ For a dominant morphism of integral schemes, the actual generic-stalk map
 commutes with pullback of sections. For a finite morphism, localizing the
 finite affine algebra proves finite-dimensionality of that same function-field
 extension, without any normality or étaleness premise.
+Formal unramifiedness passes to the actual function-field extension for an
+affine morphism. In the finite case it proves separability; scheme étaleness
+supplies the formal-unramifiedness premise without a perfect-field assumption.
 
 The broad normalization-purity/global-triviality prototype is preserved in
 `research/archive/legacy-lean/`, not as an importable library module.

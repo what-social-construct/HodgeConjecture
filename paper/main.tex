@@ -623,6 +623,35 @@ localizes to a finite-dimensional domain over
 for the actual generic-stalk embedding.
 \end{proof}
 
+\begin{proposition}[Separability of the generic extension]
+\label{prop:separable-function-field}
+Let \(p:Y\to X\) be a dominant affine formally unramified morphism
+of integral schemes. Through the canonical embedding \(\kappa_p\),
+the field \(K(Y)\) is formally unramified over \(K(X)\).
+If \(p\) is finite, then \(K(Y)/K(X)\) is a finite separable
+extension. In particular, this conclusion holds for a finite
+dominant \'{e}tale morphism of integral schemes.
+\end{proposition}
+
+\begin{proof}
+Choose a nonempty affine open \(U\subseteq X\) and put
+\(V=p^{-1}(U)\), \(B_U=\Gamma(U,\mathcal O_X)\), and
+\(A_U=\Gamma(V,\mathcal O_Y)\). Since \(p\) is affine and
+dominant, \(V\) is affine and nonempty. Formal unramifiedness of
+\(p\) gives formal unramifiedness of \(B_U\to A_U\).
+The localization \(A_U\to\Frac(A_U)=K(Y)\) is formally
+unramified, so their composite \(B_U\to K(Y)\) is formally
+unramified. The germ square of
+Proposition~\ref{prop:finite-function-field} identifies this
+composite with \(B_U\to K(X)\xrightarrow{\kappa_p}K(Y)\).
+Formal unramifiedness of a composite implies formal unramifiedness
+over the intermediate algebra, giving the first assertion.
+For finite \(p\), Proposition~\ref{prop:finite-function-field}
+makes this field extension finite-dimensional, hence of finite
+type. A formally unramified field extension of finite type is
+separable. Finally, an \'{e}tale morphism is formally unramified.
+\end{proof}
+
 The group \(G=\mathcal N.\mathit{galoisGroup}\), the subgroup
 \(H=\mathcal N.\mathit{intermediateFixingSubgroup}\), and the canonical deck
 action on \(Y_N\) are all constructed from the same datum.  Normality keeps the conjugate embeddings inside the same field \(N\).
@@ -4525,6 +4554,7 @@ The coefficient action factors through
 isomorphism; the same Palomar square holds for the quotient image of
 \(\pi_0^{\mathrm{sp}}\).
 
+\clearpage
 \section{Lean declaration map and source inputs}
 \label{sec:lean-map}
 \label{app:lean-map}
@@ -4589,6 +4619,10 @@ Finite extension of actual function fields &
 \leanpath{functionFieldMapOfDominant_sectionScalarTower}\newline
 \leanpath{functionFieldMapOfDominant_finiteDimensional}\newline
 \leanpath{Boundary/Normalization/FiniteFunctionField.lean}\\
+Separable generic extension through \(\kappa_p\) &
+\leanpath{functionFieldMapOfDominant_formallyUnramified}\newline
+\leanpath{functionFieldMapOfDominant_isSeparable}\newline
+\leanpath{Boundary/Normalization/SeparableFunctionField.lean}\\
 Full-visible boundary ideals &
 \leanpath{movingBoundaryIdeal_eq_top_of_surjective}\newline
 \leanpath{conjugateBoundarySeparation_of_surjective}\newline
@@ -5207,6 +5241,10 @@ principal table, grouped by mathematical layer.
 \leanpath{functionFieldMapOfDominant_sectionScalarTower};
 \leanpath{functionFieldMapOfDominant_finiteDimensional_of_affine};
 \leanpath{functionFieldMapOfDominant_finiteDimensional};
+\normsrc{SeparableFunctionField.lean};
+\leanpath{functionFieldMapOfDominant_formallyUnramified_of_affine};
+\leanpath{functionFieldMapOfDominant_formallyUnramified};
+\leanpath{functionFieldMapOfDominant_isSeparable};
 \normsrc{FiniteAffineCover.lean};
 \leanpath{normalizationToIntermediate_surjective};
 \leanpath{normalizationIntermediateEquiv};

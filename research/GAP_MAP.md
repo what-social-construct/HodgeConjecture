@@ -1,9 +1,9 @@
 # Current gap map
 
-Last reviewed: 2026-09-18 (SP72 actual dominant function-field map and
-finite extension; full build, eighteen focused regressions, eleven
-standard-axiom audits, SP71 rerun, fresh dependency audit and single-PDF
-checks pass; earlier checkpoint validation records retain their original scope).
+Last reviewed: 2026-09-18 (SP73 separability of the actual generic
+extension; full build, sixteen focused regressions, three standard-axiom
+audits, SP72 rerun, fresh dependency audit and single-PDF checks pass;
+earlier checkpoint validation records retain their original scope).
 
 Start with [the target and equivalence sketch](TARGET_BRIDGE.md): it fixes
 the geometric statement, separates the two directions of the proved bridge,
@@ -305,14 +305,28 @@ inventory has 820 checks, 565 examples and 712 reports after appending
 eleven checks and reports; its historical prefix is unchanged and was
 not rerun in full.
 
+**SP73: separability for the same actual embedding.**
+[`SeparableFunctionField.lean`](../HodgeConjecture/Boundary/Normalization/SeparableFunctionField.lean)
+implements the localization route. A dominant affine formally unramified
+morphism of integral schemes induces a formally unramified algebra on
+the actual function fields. The chart theorem uses a nonempty affine
+base open; the global theorem chooses one internally. For finite `p`,
+SP72 supplies finite-dimensionality and hence essential finite type, so
+the same algebra is separable. Etaleness supplies scheme formal
+unramifiedness automatically. No normality, perfectness or characteristic
+zero is required. The full build passes (3177 jobs), with only the two
+expected unchanged Challenge warnings. The fresh SP72 rerun passes
+eighteen examples and eleven enforced standard-axiom audits, and the
+fresh unchanged dependency audit passes six endpoint contracts and two
+support reports. The 73-page PDF build, warning scan and visual checks
+pass. Sixteen focused SP73 regressions and three enforced standard-axiom
+audits pass. The central inventory now has 823 checks, 565 examples and
+715 reports after appending three checks and reports; its historical
+prefix is unchanged and was not rerun in full.
+
 **Next bounded bridge:** construct marked normal-closure field data from
-this actual finite extension and establish separability for the Galois
-conclusion. Finiteness alone is not that separability input; it has not
-yet been derived from scheme etaleness or from the intended complex
-scalar structure through characteristic zero/perfectness.
-Prioritize the inspected etale/localization route in B4e of the target
-sketch; it is not implemented, and separability of one extension does
-not discharge downstream `PerfectField K` hypotheses.
+this actual finite separable extension. Separability of this extension
+does not discharge downstream `PerfectField K` hypotheses.
 An actual finite etale Galois refinement, normal stalks from the intended
 smooth geometry and chart gluing remain separate geometric tasks. The
 function-field tower and SP71's equality over `X` are not a gluing theorem.

@@ -469,11 +469,8 @@ reports. The central inventory has 820 checks, 565 examples and 712
 reports after appending eleven checks and reports; its historical prefix
 is unchanged and was not rerun in full.
 
-Next construct the marked normal-closure field data from this actual
-finite extension and establish separability for the Galois conclusion.
-The finite-dimensional theorem does not derive separability from scheme
-etaleness or characteristic zero/perfectness of the intended complex
-scalar structure. Actual
+The finite-dimensional theorem alone does not give separability; B4f
+below supplies it from scheme formal unramifiedness. Actual
 global finite etale Galois refinement, normal stalks from smoothness and
 gluing remain separate. This field bridge supplies no new field carrier,
 cover package or Chow--Betti class-generation conclusion. The manuscript
@@ -481,17 +478,38 @@ states the same generic map, germ square and finite-dimensionality.
 Its 72-page PDF build, warning scan, visual checks and independent
 core/manuscript review pass.
 
-**Next API route, inspected but not implemented:** prioritize separability
-directly from the finite etale chart. For `B=B_U`, `A=A_U`, `K=K(X)` and
-`L=K(Y)`, `Algebra.FormallyUnramified.of_isLocalization` makes `A -> L`
-formally unramified; `comp` with the etale `B -> A`, then `of_comp` along
-the proved scalar tower `B -> K -> L`, gives formal unramifiedness over
-`K`. `Algebra.FormallyUnramified.isSeparable` in Mathlib's
-`Unramified/Field.lean` then applies with essential finite type supplied
-by SP72's finite-dimensionality. This is a source/API plan, not a newly
-proved separability theorem. It avoids requiring characteristic zero
-for this extension; it does not discharge downstream `PerfectField K`
-hypotheses, which are stronger than separability of this one extension.
+### B4f. Separability from actual scheme formal unramifiedness
+
+SP73 implements the inspected localization route in
+[`SeparableFunctionField.lean`](../HodgeConjecture/Boundary/Normalization/SeparableFunctionField.lean).
+For a dominant affine formally unramified morphism `p:Y -> X` of integral
+schemes, `functionFieldMapOfDominant_formallyUnramified_of_affine`
+proves formal unramifiedness of the existing `kappa_p` algebra using a
+nonempty affine chart. `functionFieldMapOfDominant_formallyUnramified`
+chooses that chart internally; finiteness is not needed for either result.
+
+For `B=B_U`, `A=A_U`, `K=K(X)` and `L=K(Y)`, the actual section algebra
+`B -> A` is formally unramified. Localizing gives formal unramifiedness
+of `A -> L`; composition and `of_comp` through the proved scalar tower
+`B -> K -> L` give the property over `K`. If `p` is finite, SP72 supplies
+finite-dimensionality and essential finite type, and
+`functionFieldMapOfDominant_isSeparable` applies Mathlib's field theorem.
+Finite etale morphisms supply the scheme formal-unramifiedness hypothesis
+automatically. No normality, perfectness, characteristic zero or
+Noetherianity is assumed. The full build, sixteen focused regressions
+and three enforced standard-axiom audits pass. The fresh SP72 rerun
+passes eighteen regressions and eleven audits; the fresh unchanged
+dependency audit passes six endpoint contracts and two support reports.
+The central inventory has 823 checks, 565 examples and 715 reports,
+with three checks and reports appended; its historical prefix is
+unchanged and was not rerun in full.
+
+Next construct marked normal-closure field data from this actual finite
+separable extension. This does not discharge existing downstream
+`PerfectField K` hypotheses. Global finite etale Galois refinement,
+normal stalks from smooth geometry, gluing and Chow--Betti generation
+remain separate; no field carrier, map or cover package is replaced.
+The 73-page PDF build, warning scan and visual checks pass.
 
 ### G0. Smooth projective setting and candidate constructions
 
@@ -938,10 +956,9 @@ provide variable-class coverage.
   Promote a proved checkpoint only after the appropriate build, focused
   regressions, dependency/axiom checks and Lean--TeX comparison.
 - **Next action:** construct the marked
-  normal-closure field data from its actual finite generic extension and
-  establish separability for the Galois conclusion through the inspected
-  etale/localization route, rather than inferring it from finiteness.
-  Keep downstream `PerfectField K` hypotheses distinct. Normal stalks from
+  normal-closure field data from the actual finite separable extension
+  supplied by B4e--B4f. Keep downstream `PerfectField K` hypotheses
+  distinct. Normal stalks from
   smooth geometry, global finite etale Galois refinement and chart gluing
   remain separate tasks. B4d already derives the finite/etale affine rings
   from a supplied finite morphism and proves the normalization
@@ -1758,11 +1775,10 @@ the dated checkpoints below document how the existing objects were built.
    existing endpoint using constructed data, with no hypothesis that is
    merely the desired class-generation or realization conclusion renamed.
 
-The operative action after B4e's actual finite generic-extension
-construction is to construct its marked normal-closure field data and
-establish separability for the Galois conclusion through the inspected
-scheme-etale/localization route. This does not itself prove perfectness
-of the base field for other consumers.
+The operative action after B4e--B4f's actual finite separable extension
+is to construct its marked normal-closure field data. Separability from
+scheme formal unramifiedness does not itself prove perfectness of the
+base field for other consumers.
 Deriving normal stalks from smooth geometry, the global finite etale
 Galois refinement, marked normal-closure data and gluing remain separate.
 Finiteness and etaleness of the actual

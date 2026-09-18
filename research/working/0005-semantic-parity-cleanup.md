@@ -128,6 +128,59 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP70 | Finite normal affine models and full-visible boundary separation | IDENTIFY / CONSTRUCT / SEPARATE | Identify supplied finite normal affine algebras with the existing normalization rings, transport finite models and etaleness, and construct the existing normalized cover. Empty conjugate boundaries and the core-free sheet action give unit moving/combined ideals and direct separation. | PROVED; FULL BUILD, TWENTY FOCUSED REGRESSIONS, SEVENTEEN STANDARD-AXIOM AUDITS, FRESH DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP71 | Actual whole inverse-image affine rings and normalization over the original base | DERIVE / IDENTIFY / COMMUTE | Derive finite and etale section algebras from a finite etale scheme morphism. For an integral source and nonempty chart, use the actual function field and explicit normal stalks to identify the whole inverse-image open with its normalization, prove the structural equality over the original base, and derive finite/etale normalization. | PROVED; FULL BUILD, EIGHTEEN FOCUSED REGRESSIONS, ELEVEN STANDARD-AXIOM AUDITS, SP70 RERUN, FRESH DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP72 | Actual dominant function-field map and finite generic extension | CONSTRUCT / COMMUTE / LOCALIZE | Construct the generic-stalk map with germ, identity and composition laws; identify its open-immersion specialization. Derive section scalar towers and finite-dimensionality from the actual finite affine algebra, with a global endpoint choosing its chart internally. | PROVED; FULL BUILD, EIGHTEEN FOCUSED REGRESSIONS, ELEVEN STANDARD-AXIOM AUDITS, SP71 RERUN, FRESH DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+| SP73 | Formal unramifiedness and separability of the actual generic extension | LOCALIZE / COMPOSE / APPLY | Transfer formal unramifiedness from an actual dominant affine scheme morphism to its existing function-field algebra. For finite morphisms, use SP72 finite-dimensionality to prove separability; finite etale morphisms are a specialization. | PROVED; FULL BUILD, SIXTEEN FOCUSED REGRESSIONS, THREE STANDARD-AXIOM AUDITS, SP72 RERUN, FRESH DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+
+SP73 (2026-09-18): **actual generic formal unramifiedness / separability**.
+`Boundary/Normalization/SeparableFunctionField.lean` implements the
+previously inspected localization route. For a dominant affine formally
+unramified morphism of integral schemes, the actual section-algebra
+property passes to the upstairs fraction field, then through SP72's
+proved scalar tower to the downstairs function field. The affine-chart
+theorem accepts a nonempty affine base open, and the global theorem
+chooses one internally. Neither formal-unramifiedness theorem needs a
+finite morphism.
+
+For a finite dominant formally unramified morphism, SP72 gives
+finite-dimensionality, hence essential finite type. Mathlib's
+field-theoretic formal-unramifiedness theorem gives separability of the
+same actual `kappa_p` algebra. Finite etale morphisms satisfy the scheme
+formal-unramifiedness hypothesis automatically. No normality, perfectness,
+characteristic-zero or Noetherian premise is used.
+
+The three public declarations, in `CollisionFoundations`, are
+`functionFieldMapOfDominant_formallyUnramified_of_affine`,
+`functionFieldMapOfDominant_formallyUnramified` and
+`functionFieldMapOfDominant_isSeparable`.
+Notation parity: `\kappa_p:K(X)\to K(Y)` remains the same generic-stalk
+map; `B_U,A_U` and `\rho_{X,U},\rho_{Y,V}` remain the same section rings
+and generic germs. The new declarations prove properties of this existing
+algebra, not a second field embedding, field carrier, ideal, projector or
+input package. Manuscript Proposition `prop:separable-function-field`
+uses the same `\kappa_p` and distinguishes affine formal unramifiedness
+from finite separability.
+
+The full build passes (3177 jobs), with only the two expected unchanged
+Challenge placeholder warnings.
+`lake env lean research/SeparableFunctionFieldVerification.lean` passes:
+sixteen focused regressions and three enforced axiom allowlists,
+permitting only `propext`, `Classical.choice` and `Quot.sound`.
+The fresh SP72 rerun passes eighteen
+examples and eleven enforced standard-axiom audits. The fresh unchanged
+dependency audit passes six endpoint contracts and two support reports.
+The central inventory now has 823 checks, 565 examples and 715 reports,
+with three checks and three reports appended. Its historical prefix is
+preserved byte-for-byte; the entire historical suite was not rerun.
+The single PDF build passes (73 pages, 781158 bytes), with no warning,
+overfull, underfull, undefined-reference or multiply-defined-label
+diagnostics. Final pages 8, 9, 54, 55, 56, 65 and 66 pass visual inspection;
+Appendix C starts on a new page so its headings stay with the table.
+
+Next construct marked normal-closure field data
+from the actual finite separable extension. The existing downstream
+`PerfectField K` hypotheses remain undischarged. Actual global Galois
+refinement, normal stalks from smooth geometry, gluing and Chow--Betti
+generation remain separate tasks. Historical SP72 and earlier queue
+blocks below are preserved unchanged.
 
 SP72 (2026-09-18): **actual dominant function fields / finite extension**.
 `Cycles/FunctionFieldMap.lean` constructs the actual generic-stalk map

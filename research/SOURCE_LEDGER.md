@@ -17,9 +17,41 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source check: 2026-09-18 (SP72 actual dominant function fields;
+Last source check: 2026-09-18 (SP73 actual generic separability;
 earlier source records retain
 their original validation scope).
+
+### Separability of the actual generic extension (SP73, 2026-09-18)
+
+`Boundary/Normalization/SeparableFunctionField.lean` implements the
+previously inspected route with direct Lean proofs. Scheme formal
+unramifiedness supplies the actual affine section-algebra property through
+`FormallyUnramified.formallyUnramified_of_affine_subset`. The upstairs
+function field is the localization of the whole inverse-image section
+ring, so `Algebra.FormallyUnramified.of_isLocalization`, `comp` and
+`of_comp` carry that property to the actual `K(X) -> K(Y)` algebra.
+The last step uses SP72's proved scalar tower, not an independently
+postulated compatibility of field and section maps.
+
+For a finite morphism, SP72 finite-dimensionality supplies essential
+finite type. `Algebra.FormallyUnramified.isSeparable` from Mathlib's
+`Unramified/Field.lean` then proves separability. The formal-unramified
+endpoint only requires an affine morphism; the separability endpoint
+requires finite. Scheme etaleness is a sufficient specialization,
+not an added premise of the general theorem. No normality, perfectness,
+characteristic-zero or literature axiom is used.
+
+Marked normal-closure data and the actual global Galois refinement are
+still to be constructed. Separability of this particular extension does
+not imply or discharge the existing downstream perfect-base-field
+hypotheses. Normal stalks from smoothness, gluing and Chow--Betti generation
+remain separate. The 73-page PDF build, warning scan and visual checks
+pass. The full build, sixteen focused regressions, three enforced
+standard-axiom audits, the fresh SP72 rerun (eighteen regressions and
+eleven audits) and the fresh unchanged dependency audit (six endpoint
+contracts and two support reports) pass. The central inventory has 823
+checks, 565 examples and 715 reports after three checks and reports are
+appended; its preserved historical prefix was not rerun in full.
 
 ### Actual dominant function fields and finite extension (SP72, 2026-09-18)
 
@@ -42,11 +74,9 @@ actual generic map yields the faithful section action. Mathlib's
 the downstairs function field. The global theorem selects an affine
 neighborhood of the generic point, without requiring a supplied chart.
 
-No normality, etaleness or Noetherianity is used. Marked normal-closure
-field data must next be constructed from this actual finite extension,
-and the Galois conclusion needs separability. Neither the scheme-etale
-route nor characteristic zero/perfectness from the intended complex
-scalar structure has been connected to that separability input here;
+No normality, etaleness or Noetherianity is used in SP72. Marked normal-closure
+field data must next be constructed from this actual finite extension.
+Its separability input, still open at SP72, is derived in SP73 above;
 no global Galois refinement, normal-stalk theorem, gluing or Chow--Betti
 generation is concluded here. The manuscript follows the exact same
 maps and hypotheses. Its 72-page PDF build, warning scan, visual checks
@@ -58,13 +88,13 @@ The central inventory has 820 checks, 565 examples and 712 reports, with
 eleven checks and reports appended; its historical prefix is unchanged
 and was not rerun in full.
 
-The next inspected API route, not yet implemented, uses
+The API route inspected at SP72, now implemented in SP73 above, uses
 `Algebra.FormallyUnramified.of_isLocalization`, `comp` and `of_comp` to
 pass from the actual etale affine section algebra to formal
 unramifiedness of `K(X) -> K(Y)`, then
 `Algebra.FormallyUnramified.isSeparable` in `Unramified/Field.lean`.
 SP72 finite-dimensionality supplies the essential-finite-type premise.
-This is a plan for separability of this extension, not a proof that the
+This proves separability of this extension in SP73, not that the
 base field is perfect or a replacement for downstream perfectness inputs.
 
 ### Actual finite-morphism affine charts (SP71, 2026-09-18)

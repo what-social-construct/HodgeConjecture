@@ -7220,3 +7220,15 @@ Focused regressions and an enforced axiom allowlist are in
 #print axioms HodgeConjecture.CollisionFoundations.functionFieldMapOfDominant_sectionScalarTower
 #print axioms HodgeConjecture.CollisionFoundations.functionFieldMapOfDominant_finiteDimensional_of_affine
 #print axioms HodgeConjecture.CollisionFoundations.functionFieldMapOfDominant_finiteDimensional
+
+/-! SP73: separability of the actual finite formally unramified generic extension.
+Focused regressions and an enforced axiom allowlist are in
+`research/SeparableFunctionFieldVerification.lean`. -/
+
+#check HodgeConjecture.CollisionFoundations.functionFieldMapOfDominant_formallyUnramified_of_affine
+#check HodgeConjecture.CollisionFoundations.functionFieldMapOfDominant_formallyUnramified
+#check HodgeConjecture.CollisionFoundations.functionFieldMapOfDominant_isSeparable
+
+#print axioms HodgeConjecture.CollisionFoundations.functionFieldMapOfDominant_formallyUnramified_of_affine
+#print axioms HodgeConjecture.CollisionFoundations.functionFieldMapOfDominant_formallyUnramified
+#print axioms HodgeConjecture.CollisionFoundations.functionFieldMapOfDominant_isSeparable

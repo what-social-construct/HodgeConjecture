@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-18 (SP72 actual dominant function fields; earlier checkpoint
+Last audited: 2026-09-18 (SP73 actual generic separability; earlier checkpoint
 validation records are retained with their original scope).
 
 Status vocabulary:
@@ -17,6 +17,44 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Separability of the actual generic extension (A11be / SP73)
+
+Status: `FORMAL`. A dominant affine formally unramified
+morphism of integral schemes gives formal unramifiedness of the actual
+function-field algebra induced by `functionFieldMapOfDominant`. The
+affine-chart version accepts a nonempty affine base open; the global
+version chooses that chart internally. Finiteness is not required for
+this formal-unramifiedness result.
+
+For a finite dominant formally unramified morphism, SP72 supplies
+finite-dimensionality and therefore essential finite type; the actual
+field extension is separable. A finite etale morphism satisfies the
+scheme formal-unramifiedness hypothesis automatically. No normality,
+perfectness, characteristic-zero or Noetherian premise is added.
+
+The three witnesses, in `CollisionFoundations` and
+`Boundary/Normalization/SeparableFunctionField.lean`, are
+`functionFieldMapOfDominant_formallyUnramified_of_affine`,
+`functionFieldMapOfDominant_formallyUnramified` and
+`functionFieldMapOfDominant_isSeparable`.
+
+These are properties of the existing `kappa_p` algebra, not a replacement
+field map, a new cover package or a source axiom. Next construct marked
+normal-closure field data from this finite separable extension. The
+existing downstream `PerfectField K` hypotheses remain distinct and
+undischarged; actual global Galois refinement, normal stalks from smooth
+geometry, gluing and Chow--Betti generation remain separate tasks.
+The manuscript's generic-separability proposition states the same
+hypotheses and uses the same `kappa_p`. Its 73-page PDF (781158 bytes)
+passes the build, warning scan and visual checks. The full build passes
+(3177 jobs; only the two expected unchanged Challenge placeholder
+warnings). Sixteen focused regressions and three enforced standard-axiom
+audits pass. The fresh SP72 rerun passes eighteen regressions and eleven
+audits; the fresh unchanged dependency audit passes six endpoint
+contracts and two support reports. The central inventory now has 823
+checks, 565 examples and 715 reports, with three checks and reports
+appended; its historical prefix is unchanged and was not rerun in full.
 
 ## Actual dominant function fields and finite extension (A11bd / SP72)
 
@@ -49,10 +87,9 @@ Witnesses:
   `functionFieldMapOfDominant_finiteDimensional_of_affine`,
   `functionFieldMapOfDominant_finiteDimensional`.
 
-Next construct the marked normal-closure field data from this actual
-finite extension and establish separability for the Galois conclusion.
-Neither scheme etaleness nor the intended complex scalar structure has
-yet been used to derive `Algebra.IsSeparable K(X) K(Y)` here.
+SP72 establishes the finite extension; SP73 above derives its separability
+from scheme formal unramifiedness. Marked normal-closure field data are
+still to be constructed.
 Global finite etale Galois refinement, normal stalks
 from smoothness, chart gluing and Chow--Betti generation remain separate.
 No new field carrier, geometric input package, projector or source axiom

@@ -276,3 +276,37 @@ and Chow--Betti generation remain separate. The manuscript uses
 `\kappa_p`, the same generic germs and the same scalar square; no new
 input package or source axiom is introduced. All earlier audit text is
 preserved unchanged.
+
+## 9. SP73 follow-up: separability of the actual generic extension
+
+`Boundary/Normalization/SeparableFunctionField.lean` implements the
+localization route for the same actual `kappa_p:K(X) -> K(Y)`. A dominant
+affine formally unramified morphism of integral schemes gives formal
+unramifiedness of this field algebra. The affine-chart result accepts a
+nonempty affine base open; the global result chooses that chart internally.
+This layer does not need a finite morphism.
+
+For a finite dominant formally unramified morphism, the SP72
+finite-dimensionality theorem supplies essential finite type, and the
+existing Mathlib field theorem proves separability. Finite etale
+morphisms satisfy the formal-unramifiedness hypothesis automatically.
+No normality, perfectness, characteristic-zero or Noetherian hypothesis
+is added. No replacement map, field or cover package is introduced.
+
+The full build passes (3177 jobs; only the two expected unchanged
+Challenge placeholder warnings). Sixteen focused regressions and three
+enforced standard-axiom audits pass. The fresh SP72 rerun passes eighteen
+regressions and eleven audits; the fresh unchanged dependency audit
+passes six endpoint contracts and two support reports. The central
+inventory now has 823 checks, 565 examples and 715 reports after three
+checks and reports are appended; its historical prefix is unchanged and
+was not rerun in full. The 73-page PDF build, warning scan and visual
+checks pass.
+
+Next construct marked normal-closure field data
+from this actual finite separable extension. Existing downstream
+`PerfectField K` consumers remain undischarged: separability of this
+extension does not prove perfectness of the base field. Actual global
+Galois refinement, normal stalks from smooth geometry, gluing and
+Chow--Betti generation remain separate. All preceding audit text is
+preserved unchanged.
