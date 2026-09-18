@@ -9,6 +9,8 @@ import HodgeConjecture.Boundary.HeightOneDifferent
 import HodgeConjecture.Boundary.NoetherDifferentRamification
 import HodgeConjecture.Boundary.ProjectorClosureDefect
 import HodgeConjecture.Boundary.Normalization.BoundedOverring
+import HodgeConjecture.Boundary.Normalization.AffineSections
+import HodgeConjecture.Boundary.Normalization.BoundarySections
 import HodgeConjecture.Boundary.Normalization.DeckAction
 import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
 import HodgeConjecture.Boundary.Normalization.ConjugateNormalization

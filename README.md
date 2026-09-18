@@ -484,8 +484,20 @@ The self-contained
 proves the generic normal-Noetherian bounded-overring implication and its
 formulation using the existing `Submodule.colon`; the full build and six
 focused regressions pass, and all three theorems use only the permitted
-standard axioms. The next geometric constructions are the actual
-boundary-section algebra and a genuine uniformly bounded trace dual.
+standard axioms. The section-algebra checkpoint constructs actual sections as a
+subalgebra of the specified fraction field in
+[`AffineSections.lean`](HodgeConjecture/Boundary/Normalization/AffineSections.lean)
+and specializes it to the existing fixed--moving boundary complement in
+[`BoundarySections.lean`](HodgeConjecture/Boundary/Normalization/BoundarySections.lean).
+The generic-germ algebra map is injective, respects constants and
+restriction, and identifies the actual section ring with its image. A
+nontrivial normalization subgroup supplies nonemptiness of that complement;
+normality and Noetherianity are not assumptions of the section embedding.
+SP65 passes the full build, sixteen focused regressions in
+[`BoundarySectionsVerification.lean`](research/BoundarySectionsVerification.lean),
+and an enforced standard-axiom allowlist for all twenty-one new declarations.
+The next bounded construction is
+the genuine normalization trace dual and its uniform denominator bound.
 Uniform landing of all boundary sections remains a separate implication
 to prove; none of these algebraic steps asserts Hodge-class generation.
 

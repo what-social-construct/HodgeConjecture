@@ -576,6 +576,32 @@ integral over \(T\). Normality and \(R\subseteq\Frac(T)\) give
 \(a=ds\ne0\).
 \end{proof}
 
+\begin{proposition}[Actual affine section algebras]
+\label{prop:affine-section-algebra}
+Let \(T\) be a domain with fraction field \(F\). For every nonempty
+open \(V\subseteq\Spec T\), the generic germ gives an injective
+\(T\)-algebra homomorphism
+\[
+  \eta_V:\Gamma(V,\mathcal O)\longrightarrow F.
+\]
+Write \(R_V=\operatorname{im}(\eta_V)\subseteq F\). Then
+\(\Gamma(V,\mathcal O)\simeq_T R_V\), and \(\eta_V\) agrees with
+the given embedding of \(T\). If \(W\subseteq V\) is nonempty,
+\[
+  \eta_W(s|_W)=\eta_V(s),\qquad R_V\subseteq R_W.
+\]
+For the full open, \(R_{\Spec T}=T\).
+\end{proposition}
+
+\begin{proof}
+Compose the germ at the generic point of the integral scheme \(\Spec T\)
+with the canonical \(T\)-algebra identification of that stalk with
+\(F\). The germ is injective on every nonempty open. Constants and
+restriction commute with germs, giving the displayed identities and the
+inclusion of images. Injectivity gives the equivalence onto the image;
+\(\Gamma(\Spec T,\mathcal O)\simeq T\) gives the final assertion.
+\end{proof}
+
 The fixed normalization is canonically
 
 \[
@@ -607,6 +633,35 @@ For \(I\leq G\), define
   J_{\mathrm{fm}}(I)
     &=J_{\mathrm{fix}}(I)+J_{\mathrm{mov}}(I).
 \end{align*}
+
+\begin{proposition}[The boundary-section algebra]
+\label{prop:boundary-section-algebra}
+Put \(T=\widetilde B_N\). The given finite normal-closure datum
+identifies \(N\) as the fraction field of \(T\). If \(I\leq G\)
+is nontrivial, then \(J_{\mathrm{fix}}(I)\ne0\), and the open
+\[
+  U_I=\Spec T\setminus V(J_{\mathrm{fm}}(I))
+\]
+is nonempty. Consequently, the actual section ring has an injective
+\(T\)-algebra map and its canonical image presentation
+\[
+  \eta_I:\Gamma(U_I,\mathcal O)\hookrightarrow N,\qquad
+  R_I=\operatorname{im}(\eta_I),\qquad
+  \Gamma(U_I,\mathcal O)\simeq_T R_I.
+\]
+In particular, \(T\subseteq R_I\subseteq N\).
+\end{proposition}
+
+\begin{proof}
+The integral closure in a finite field extension has that extension as
+its fraction field. If \(J_{\mathrm{fix}}(I)=0\), every element of
+\(I\) fixes \(T\), hence fixes \(N=\Frac(T)\), so \(I=1\).
+Thus \(J_{\mathrm{fm}}(I)\), which contains
+\(J_{\mathrm{fix}}(I)\), is nonzero. The zero prime of the domain
+\(T\) therefore lies in \(U_I\).
+Proposition~\ref{prop:affine-section-algebra} gives the remaining
+statements, including compatibility with base elements.
+\end{proof}
 
 Conjugate-boundary separation is the condition
 
@@ -4216,6 +4271,16 @@ Uniformly bounded overrings &
 \leanpath{subalgebra_eq_bot_of_mem_colon}\newline
 \leanpath{colon_eq_bot_of_subalgebra_ne_bot}\newline
 \leanpath{Boundary/Normalization/BoundedOverring.lean}\\
+Actual sections in the fraction field &
+\leanpath{affineSectionsToFractionField}\newline
+\leanpath{affineSectionsToFractionField_restrict}\newline
+\leanpath{affineSectionsEquivSubalgebra}\newline
+\leanpath{Boundary/Normalization/AffineSections.lean}\\
+Fixed--moving boundary sections &
+\leanpath{fixedMovingBoundaryOpen_nonempty}\newline
+\leanpath{boundarySectionsToNormalClosure_injective}\newline
+\leanpath{boundarySectionsEquivSubalgebra}\newline
+\leanpath{Boundary/Normalization/BoundarySections.lean}\\
 Subgroup extension &
 \leanpath{CompactifiedSubgroupProjectorExtension}\newline
 \leanpath{Boundary/GaloisProjectorExtension.lean}\\
@@ -4756,6 +4821,29 @@ principal table, grouped by mathematical layer.
 \normsrc{ConjugateNormalization.lean};
 \normsrc{ConjugateBoundary.lean};
 \normsrc{BoundedOverring.lean};
+\normsrc{AffineSections.lean};
+\normsrc{BoundarySections.lean};
+\leanpath{affineSectionsToFractionField};
+\leanpath{affineSectionsToFractionField_injective};
+\leanpath{affineSectionsToFractionField_algebraMap};
+\leanpath{affineSectionsToFractionField_restrict};
+\leanpath{affineSectionSubalgebra};
+\leanpath{mem_affineSectionSubalgebra_iff};
+\leanpath{affineSectionsEquivSubalgebra};
+\leanpath{affineSectionsEquivSubalgebra_apply};
+\leanpath{affineSectionSubalgebra_anti};
+\leanpath{affineSectionSubalgebra_top};
+\leanpath{normalization_isFractionRing};
+\leanpath{fixedLocusIdeal_ne_bot};
+\leanpath{fixedMovingBoundaryOpen};
+\leanpath{fixedMovingBoundaryOpen_nonempty};
+\leanpath{BoundarySectionRing};
+\leanpath{boundarySectionsToNormalClosure};
+\leanpath{boundarySectionsToNormalClosure_injective};
+\leanpath{boundarySectionSubalgebra};
+\leanpath{boundarySectionsEquivSubalgebra};
+\leanpath{mem_boundarySectionSubalgebra_iff};
+\leanpath{normalization_mem_boundarySectionSubalgebra};
 \leanpath{subalgebra_eq_bot_of_nonzero_mul_mem_base};
 \leanpath{subalgebra_eq_bot_of_mem_colon};
 \leanpath{colon_eq_bot_of_subalgebra_ne_bot};

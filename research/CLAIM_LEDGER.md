@@ -17,6 +17,47 @@ Status vocabulary:
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
 
+## Actual boundary-section checkpoint (A11ax / SP65)
+
+Status: `FORMAL`. The full build, sixteen focused regressions and enforced
+standard-axiom checks for all twenty-one new declarations pass. For a domain `T`
+and a specified fraction field `F`, actual structure-sheaf sections on a
+nonempty open `V` of `Spec T` embed by an injective `T`-algebra map into
+`F`. Its range is canonically algebra-equivalent to the section ring.
+Constants and restrictions have the same rational function; shrinking the
+open enlarges the range, and the full-open range is the embedded base.
+Normality and Noetherianity are not needed. The construction uses Mathlib's
+existing section action, generic stalk and function field, not a replacement
+field or a supplied geometric comparison.
+
+For the existing `NormalizedCover C`, the normal-closure normalization ring
+`T` has the existing `N` as fraction field. A subgroup `I != bottom` has
+nonzero fixed-locus ideal, because an automorphism trivial on `T` is trivial
+on its fraction field. Hence the complement of the existing fixed--moving
+boundary ideal is nonempty. Its actual section ring embeds in `N`, and
+its image is the constructed `boundarySectionSubalgebra`.
+
+Witnesses in `Boundary/Normalization/AffineSections.lean`, namespace
+`NormalizationInertia`: `affineSectionsToFractionField`,
+`affineSectionsToFractionField_injective`,
+`affineSectionsToFractionField_algebraMap`,
+`affineSectionsToFractionField_restrict`, `affineSectionSubalgebra`,
+`affineSectionsEquivSubalgebra`, `affineSectionSubalgebra_anti`, and
+`affineSectionSubalgebra_top`. Witnesses in
+`Boundary/Normalization/BoundarySections.lean`: `normalization_isFractionRing`,
+`fixedMovingBoundaryOpen`, `fixedLocusIdeal_ne_bot`,
+`fixedMovingBoundaryOpen_nonempty`, `BoundarySectionRing`,
+`boundarySectionsToNormalClosure`, `boundarySectionsToNormalClosure_injective`,
+`boundarySectionSubalgebra`, and `boundarySectionsEquivSubalgebra`.
+
+This constructs the actual overring used by the boundary route. It assumes
+neither boundary separation nor trace landing and proves neither. The
+genuine trace dual, its uniform denominator, a nonzero uniform transporter,
+and the geometric pole/separation implication remain separate constructions.
+The underlying section module is the existing `.toSubmodule`, with no
+second section-module definition. No new source hypothesis or project axiom
+is introduced, and no Hodge-class generation is asserted.
+
 ## Bounded-overring checkpoint (A11aw / SP64)
 
 Status: `FORMAL`. The full build and six focused regressions pass; the

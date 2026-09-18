@@ -120,6 +120,49 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP62 | Integral and rational Chow open restriction with coefficient and tensor compatibility | DESCEND / COMPARE | Descend the existing actual graded open restriction to both existing Chow quotients, preserving cycle representatives, identity and contravariant composition. Prove raw and graded coefficient compatibility without finiteness premises, and the full tensor square with only target Noetherianity at the quotient layer. | PROVED; FULL BUILD, 622 AXIOM REPORTS, EIGHTEEN REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP63 | Surjectivity of the existing raw, graded and Chow open restrictions | LIFT / DESCEND | Lift each actual integral open support through its reduced ambient closure and preserve the supplied degree, over every semiring. Lift integral and rational Chow classes through actual homogeneous representatives under target-only Noetherianity. Keep the closure lift at cycle level; no Chow closure operation or localization exactness is asserted. | PROVED; FULL BUILD, INTEGRATED VERIFICATION (626 AXIOM REPORTS, 734 CHECKS, 565 EXAMPLES), SIXTEEN FOCUSED REGRESSIONS, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP64 | Normal-Noetherian bounded overrings and their existing-colon transporter | ADAPT / PROVE | Embed a uniformly bounded overring in the base module, derive finiteness and integrality, and use normality. Compose two nonzero bounds through `Submodule.colon`; a proper overring has zero transporter into a bounded stage. | PROVED; FULL BUILD, SIX FOCUSED REGRESSIONS, STANDARD-AXIOM ALLOWLIST, INTEGRATED VERIFICATION, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+| SP65 | Actual affine sections and the fixed--moving boundary-section algebra in the specified field | CONSTRUCT / IDENTIFY | Use the existing generic germ and fraction-field equivalence for an injective algebra map, its range equivalence, constants, restriction, antitonicity and full-open image. Specialize to the same normalization and boundary ideal; prove nonemptiness from a nontrivial subgroup's faithful action. | PROVED; FULL BUILD, SIXTEEN FOCUSED REGRESSIONS, STANDARD-AXIOM ALLOWLIST, DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
+
+SP65 (2026-09-17): **actual sections / specified fraction field**.
+`Boundary/Normalization/AffineSections.lean` constructs
+`affineSectionsToFractionField` as an injective algebra map from actual
+sections of a nonempty open of `Spec T`. Its range
+`affineSectionSubalgebra` is algebra-equivalent to the section ring;
+constants and sheaf restriction are compatible, smaller opens yield larger
+subalgebras, and the full-open image is the embedded base. It uses the
+existing `CommRingCat` carrier, section action and generic-stalk/function-field
+objects. Normality and Noetherianity are not required.
+
+`Boundary/Normalization/BoundarySections.lean` specializes to the existing
+`NormalizedCover C` and `fixedMovingBoundaryIdeal C I`. It proves that the
+existing normal-closure field `N` is the fraction field of the normalization
+ring. A nontrivial subgroup has nonzero fixed-locus ideal by faithfulness
+on that fraction field, making the boundary complement nonempty. The actual
+section algebra then embeds into `N` and is identified with its range.
+There is no new field, boundary ideal, section-comparison premise or
+section-module carrier; use `boundarySectionSubalgebra.toSubmodule`.
+
+Validation: `lake build` passes (3152 jobs; only the unchanged expected
+`Challenge.lean` placeholders are reported). All sixteen examples in
+`research/BoundarySectionsVerification.lean` pass without warnings, and its
+enforced axiom allowlist verifies all twenty-one new public declarations;
+each uses only `propext`, `Classical.choice` and `Quot.sound`.
+The unchanged `research/ProofDependencies.lean` passes its six primary
+dependency-boundary assertions and two supporting reports. The single
+manuscript builds to 67 pages with no LaTeX warnings or overfull/underfull
+boxes; propositions, section transition, crosswalk and declaration inventory
+were visually checked on pages 7--9, 51 and 60. Independent Lean--TeX review
+found no mathematical mismatch.
+
+The historical verification inventory is preserved byte-for-byte as a
+prefix, with twenty-one declaration checks and twenty-one axiom reports
+appended (758 checks, 565 examples and 650 reports in the file). That appended
+SP65 block passes standalone with `import HodgeConjecture`, verifying the
+umbrella exports and all twenty-one axiom reports. The full
+historical inventory was not rerun for SP65. The next bounded checkpoint is the
+genuine normalization trace dual and its uniform denominator. Uniform
+geometric trace landing, a boundary pole witness and the separation
+comparison remain separate obligations; neither projector-defect vanishing
+nor Hodge-class generation is asserted by this section embedding.
 
 SP64 (2026-09-17): **bounded overrings / uniform landing algebra**.
 The generic normal-Noetherian overring criterion is duplicated and adapted
@@ -1350,8 +1393,22 @@ under the embedding. All three new declarations are propositions, with
 no separate notation. Do not identify this colon ideal with the collision
 ideal, the marked residual ideal, or the correspondence idempotence defect.
 
+SP65's generic notation is `eta_V : Gamma(V,O) -> F` for the injective
+generic-germ algebra map and `R_V` for its image, on a nonempty open of
+`Spec T`. Specializing to the existing normalization fixes
+`T = tilde B_N`, `U_I = Spec T \\ V(J_fm(I))`, `eta_I` with codomain the
+existing `N`, and `R_I = image(eta_I)`. The image is the section algebra,
+not an independently supplied realization. The module in the later colon
+ideal is simply `R_I.toSubmodule`.
+
 | Lean object | Mathematical role | Canonical TeX notation |
 | --- | --- | --- |
+| `affineSectionsToFractionField` | actual generic germ on a nonempty open of the affine spectrum, expressed in the specified fraction field | $\eta_V:\Gamma(V,\mathcal O)\hookrightarrow F$ |
+| `affineSectionSubalgebra` / `affineSectionsEquivSubalgebra` | actual section image and its canonical algebra equivalence | $R_V=\operatorname{im}\eta_V$, $\Gamma(V,\mathcal O)\simeq_T R_V$ |
+| `fixedMovingBoundaryOpen` | complement of the existing fixed--moving boundary ideal | $U_I=\operatorname{Spec}\widetilde B_N\setminus V(J_{\mathrm{fm}}(I))$ |
+| `BoundarySectionRing` | actual structure-sheaf sections on the boundary complement | $\Gamma(U_I,\mathcal O)$ |
+| `boundarySectionsToNormalClosure` | specialization of the generic-germ algebra embedding | $\eta_I:\Gamma(U_I,\mathcal O)\hookrightarrow N$ |
+| `boundarySectionSubalgebra` / `boundarySectionsEquivSubalgebra` | section overring in the same normal-closure field and canonical image equivalence | $R_I=\operatorname{im}\eta_I$, $\Gamma(U_I,\mathcal O)\simeq_{\widetilde B_N}R_I$ |
 | base ring parameter | affine base | $B$ |
 | fraction field parameter | fraction field of the base | $K=\operatorname{Frac}(B)$ |
 | marked intermediate field | selected finite extension | $L/K$ |

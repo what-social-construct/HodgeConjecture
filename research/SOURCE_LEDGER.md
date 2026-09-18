@@ -19,6 +19,40 @@ graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
 Last source check: 2026-09-15.
 
+### Direct geometric adaptation: actual affine and boundary sections (SP65, 2026-09-17)
+
+`Boundary/Normalization/AffineSections.lean` and `BoundarySections.lean`
+adapt the actual generic-germ boundary-section construction from the sibling
+`collision-ideals/CollisionIdeals/Planar/Research/BoundarySections.lean` to
+this repository's pinned Mathlib and existing `NormalizedCover`. No sibling
+module is imported. The generic construction uses
+`Scheme.germToFunctionField`, `Scheme.germToFunctionField_injective`,
+`functionField_isFractionRing_of_affine`, `IsLocalization.algEquiv`, and
+the existing affine section algebra structure. It proves compatibility
+with constants and restriction, then takes `AlgHom.range` and
+`AlgEquiv.ofInjective`. The full-open comparison uses `Scheme.ΓSpecIso`.
+Only a domain, its specified fraction field and nonempty open are required;
+normality and Noetherianity are not section-map hypotheses.
+
+The normalization specialization uses
+`integralClosure.isFractionRing_of_finite_extension` and the already supplied
+normal closure's finite dimensionality to identify the existing `N` as
+the fraction field. `IsFractionRing.ringHom_ext` proves that the action on
+the normalization is faithful; a nontrivial subgroup therefore has nonzero
+fixed-locus ideal and nonempty fixed--moving boundary complement. Its actual
+section image is a `T`-subalgebra of `N`; the underlying module is the
+existing `.toSubmodule`. The Hodge adaptation introduces no extra section
+module carrier or global algebra instance.
+
+This is direct-proof provenance, not a literature hypothesis or a copied
+Jacobian vanishing theorem. Actual trace duality, its uniform denominator,
+uniform landing of every boundary section, and a pole/separation comparison
+are not consequences of this embedding. The full build and sixteen focused
+regressions pass; all twenty-one new declarations pass an enforced allowlist
+containing only `propext`, `Classical.choice` and `Quot.sound`. The unchanged
+dependency audit and the updated single-PDF checks also pass. SP64's completed
+full-inventory checks below remain historical evidence for SP64 only.
+
 ### Direct algebraic adaptation: bounded overrings (SP64, 2026-09-17)
 
 `Boundary/Normalization/BoundedOverring.lean` adapts the proof of

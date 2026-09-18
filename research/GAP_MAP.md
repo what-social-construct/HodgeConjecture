@@ -1,7 +1,7 @@
 # Current gap map
 
-Last reviewed: 2026-09-17 (boundary-ideal work order; completed SP63
-validation retained; bounded-overring module, full build and focused checks pass).
+Last reviewed: 2026-09-17 (actual boundary-section construction, SP65;
+full build, focused regressions, axiom allowlist, dependency audit and PDF checks pass).
 
 Start with [the target and equivalence sketch](TARGET_BRIDGE.md): it fixes
 the geometric statement, separates the two directions of the proved bridge,
@@ -93,8 +93,32 @@ the base algebra, not the zero ring. The transporter is the existing
 regressions pass. An enforced axiom allowlist verifies that all three
 theorems use only `propext`, `Classical.choice` and `Quot.sound`.
 
-Next construct the actual boundary-section algebra inside the relevant
-fraction field and the genuine trace dual with a proved uniform denominator.
+The next section-algebra constructor is now implemented in
+[`Boundary/Normalization/AffineSections.lean`](../HodgeConjecture/Boundary/Normalization/AffineSections.lean)
+and
+[`Boundary/Normalization/BoundarySections.lean`](../HodgeConjecture/Boundary/Normalization/BoundarySections.lean);
+The full build and sixteen focused regressions pass, with the standard-axiom
+allowlist enforced for all twenty-one new declarations. For a domain `T` and its specified fraction
+field `F`, the actual generic germ gives an injective `T`-algebra map
+`affineSectionsToFractionField` from every nonempty open of `Spec T`.
+Its range `affineSectionSubalgebra` is canonically equivalent to the
+section ring; constants and restriction commute with this map, smaller
+opens give larger subalgebras, and the full-open image is the base algebra.
+This uses the existing Mathlib section action and generic stalk, without
+normality, Noetherianity, a replacement function field or a supplied
+section comparison.
+
+For the same `NormalizedCover`, take `T` to be its normal-closure
+normalization ring and the open to be the complement of
+`fixedMovingBoundaryIdeal C I`. The proved fraction-field identification
+and faithful normalization action imply that a nontrivial subgroup `I`
+has nonzero fixed-locus ideal, hence this open is nonempty. The actual
+`boundarySectionsToNormalClosure` then embeds its structure-sheaf sections
+into the existing `N`; its range is `boundarySectionSubalgebra`. The
+underlying module is the existing `.toSubmodule`, not a second carrier.
+
+Next construct the genuine normalization trace dual with a proved uniform
+denominator.
 Uniform trace landing of **every** section is the separate geometric
 implication to establish; a bound on finitely many coefficients does not
 replace it. A geometric pole witness and comparison with the existing

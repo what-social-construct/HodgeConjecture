@@ -72,12 +72,12 @@ proved: the full build and six focused regressions pass, and an enforced
 allowlist checks that the three theorems use only `propext`,
 `Classical.choice` and `Quot.sound`.
 
-The next constructions are the **actual** boundary-section algebra
-`R_C` inside the appropriate fraction field and the genuine trace dual
-`T^vee`, with its proved uniform denominator `d T^vee <= T`. The geometric
-step is then to prove `s R_C <= T^vee` for every section, with `s != 0`;
+The actual boundary-section algebra is constructed in B1 below. The next
+construction is the genuine trace dual `T^vee`, with its proved uniform
+denominator `d T^vee <= T`. The geometric step is then to prove
+`s R_I <= T^vee` for every section, with `s != 0`;
 membership for finitely many secant coefficients does not suffice.
-Establish any boundary pole witness showing `R_C != T`, and the comparison
+Establish any boundary pole witness showing `R_I != T`, and the comparison
 to the existing `ConjugateBoundarySeparation` condition, from the actual
 geometry. Neither a trace-dual bound nor normality alone proves that
 uniform landing. These are boundary/cover obligations; they do not assert
@@ -85,17 +85,56 @@ convolution-defect vanishing or construct representatives of prescribed
 Hodge classes. The Chow--Betti target and its class-generation obligation
 remain unchanged.
 
-**Next bounded checkpoint (B1):** construct the algebra map from actual
-sections on a nonempty open of `Spec T` to the specified fraction field.
-Compose Mathlib's existing `germToFunctionField` with the canonical
-fraction-field algebra equivalence, prove injectivity, and take its
-`AlgHom.range` as the section subalgebra. This first constructor needs only
-a domain and its fraction field, not normality or Noetherianity. Then
-specialize the open to the complement of the existing fixed--moving ideal,
-proving nonemptiness from the nontrivial subgroup's faithful action.
-Reuse the existing generic-stalk/function-field objects and the normalization
-fraction-field construction already used in `Normalization/LocalizationBridge.lean`;
-do not add a second function field or assume a section-algebra comparison.
+### B1. Actual sections in the specified fraction field
+
+Proved as A11ax / SP65: the full build, sixteen focused regressions and
+standard-axiom allowlist for all twenty-one declarations pass. For a domain
+`T` and a specified fraction field `F`,
+[`AffineSections.lean`](../HodgeConjecture/Boundary/Normalization/AffineSections.lean)
+constructs
+\[
+ \eta_V:\Gamma(V,\mathcal O)\hookrightarrow F,
+ \qquad R_V=\operatorname{im}(\eta_V)
+ \qquad(\varnothing\ne V\subseteq\operatorname{Spec}T).
+\]
+`affineSectionsToFractionField` composes Mathlib's actual generic germ
+with the canonical fraction-field algebra equivalence; its compatibility
+with the existing `T`-action on sections makes it an `AlgHom`.
+`affineSectionsToFractionField_injective` proves injectivity, and
+`affineSectionsEquivSubalgebra` identifies the actual section ring with
+its range `affineSectionSubalgebra`. The map respects constants and
+restriction. `affineSectionSubalgebra_anti` proves that a smaller
+nonempty open `W <= V` has a larger section subalgebra `R_V <= R_W`
+in the common field;
+`affineSectionSubalgebra_top` identifies the full-open image with the
+base subalgebra. No normality or Noetherianity is required, and no second
+function field, global section-algebra instance or comparison premise is
+introduced.
+
+[`BoundarySections.lean`](../HodgeConjecture/Boundary/Normalization/BoundarySections.lean)
+specializes this map to the existing `NormalizedCover C`,
+\[
+ T=\widetilde B_N,\qquad
+ U_I=\operatorname{Spec}T\setminus V(J_{\mathrm{fm}}(I)),
+ \qquad \eta_I:\Gamma(U_I,\mathcal O)\hookrightarrow N,
+ \qquad R_I=\operatorname{im}(\eta_I).
+\]
+Here `J_fm(I)` is the existing `fixedMovingBoundaryIdeal C I`, not a new
+ideal. `normalization_isFractionRing` proves that the existing `N` is the
+fraction field of `T`. For `I != bottom`, `fixedLocusIdeal_ne_bot` derives
+nonzero fixed-locus ideal from faithfulness on that fraction field, and
+`fixedMovingBoundaryOpen_nonempty` proves the complement nonempty.
+`boundarySectionsToNormalClosure`, its injectivity theorem,
+`boundarySectionSubalgebra` and `boundarySectionsEquivSubalgebra` provide
+the actual specialization. Use `R_I.toSubmodule` for the underlying
+module rather than defining another section carrier. No separation,
+uniform trace landing or boundary-pole hypothesis is needed for this map.
+
+**Next bounded checkpoint (B2):** construct the genuine normalization trace
+dual and prove its uniform denominator bound. Then the geometric uniform
+landing, pole witness and comparison to `ConjugateBoundarySeparation`
+remain distinct implications to prove. B1 constructs the actual algebra
+to which B0 can later apply; it does not assert its equality with the base.
 
 ### G0. Smooth projective setting and candidate constructions
 
@@ -542,8 +581,9 @@ provide variable-class coverage.
   Promote a proved checkpoint only after the appropriate build, focused
   regressions, dependency/axiom checks and Lean--TeX comparison.
 - **Next action:** following B0's proved generic bounded-overring and
-  existing-colon formulations, construct the actual boundary-section algebra and
-  trace-dual denominator bound. Keep uniform trace landing and its
+  existing-colon formulations and B1's actual section-algebra construction,
+  construct the genuine normalization trace dual and its uniform denominator
+  bound. Keep uniform trace landing and its
   geometric separation comparison as explicit obligations to prove, not
   assumed conclusions. Preserve PB0 and the abelian examples as optional
   deferred work, with the general smooth-projective target unchanged.
@@ -1357,7 +1397,7 @@ the dated checkpoints below document how the existing objects were built.
    merely the desired class-generation or realization conclusion renamed.
 
 The operative next action after B0's proved bounded-overring checkpoint
-is the actual boundary-section algebra, followed by the trace-dual construction. The
+and B1's actual boundary-section algebra is the trace-dual construction. The
 uniform geometric landing and boundary-separation comparison remain
 separate obligations. The projective-bundle recipe, its PB0 chart, and the
 elliptic curve/chart/point construction are optional deferred examples;
