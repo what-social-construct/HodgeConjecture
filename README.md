@@ -770,10 +770,33 @@ reruns pass 28/17, 23/7 and 22/7, respectively: 98 examples and 44 enforced
 axiom audits across the four suites. The fresh unchanged dependency audit
 passes six primary endpoint contracts and two support reports.
 
-Next, under separability, realize the generic maximal quotient as a
-direct factor, extend/select that factor integrally, and prove its image
-normal and equal to this specific `N`-normalization. Neither the generic
-splitting nor the integral factor identification is yet formalized.
+SP79 selects the actual generic evaluation factor in
+[`NormalClosureFactor.lean`](HodgeConjecture/Boundary/Normalization/NormalClosureFactor.lean),
+using the generic reduced-Artinian construction in
+[`ReducedArtinianFactor.lean`](HodgeConjecture/CommutativeAlgebra/ReducedArtinianFactor.lean).
+Finiteness of `P_K` needs no separability; separability of `L/K` makes
+`P_K` etale and hence reduced Artinian. Its decomposition
+`Φ_m:P_K ≃_K N × Q_m` has first projection exactly `ev_K`, where `Q_m`
+is the product of the residue quotients at the other maximal ideals.
+The selected element `e_m=Φ_m⁻¹(1,0)` is idempotent, evaluates to one,
+annihilates exactly `ker(ev_K)`, and satisfies `ker(ev_K)=(1-e_m)`.
+Value one and annihilation of the kernel determine `e_m` uniquely.
+This is an algebra factor selector, not a new Chow projector or a
+unital algebra section `N -> P_K`. Both new leaves compile without
+warnings; the full build passes 3195 jobs with only the two existing
+Challenge warnings. The focused suite and four fresh neighbor suites
+pass 123 examples and 60 enforced standard-three axiom audits in total.
+The fresh unchanged dependency audit passes six primary endpoint
+contracts and two support reports.
+The 78-page PDF (819834 bytes) passes build, warning scan and visual
+review; independent mathematical and Lean--TeX review passes. The
+full validation record is in the SP79 parity-queue entry.
+
+Next prove the required integral-closedness of `P_B` inside `P_K`, descend
+this canonical generic idempotent, and identify the selected image with
+the specific `N`-normalization. Integrality of an idempotent alone does
+not prove that it lies in `P_B`; the integral factor identification
+is not yet formalized.
 Whole-chart etaleness, overlaps and gluing therefore remain to be proved.
 Base normality/Noetherianity and upstairs
 normal stalks remain explicit; the global finite etale Galois refinement

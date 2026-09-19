@@ -134,6 +134,73 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP76 | Finite normal-closure normalization and actual affine-preimage cover | DERIVE / CONSTRUCT / SEPARATE | Derive finiteness over a normal Noetherian base, eliminate the separately supplied second affine algebra, and construct the existing cover from the actual affine inverse image and marked generic extension. | PROVED / VALIDATED |
 | SP77 | Finite tensor source, marked field quotient and integral evaluation | CONSTRUCT / EVALUATE / COMPARE | Prove finite-index tensor finiteness/etaleness, evaluate onto the existing marked normal closure, identify the actual generic kernel quotient, and restrict the same embeddings to integral closures with exact factor/pure-tensor compatibility. Keep integral factor identification and whole-chart etaleness separate. | PROVED / VALIDATED |
 | SP78 | Canonical tensor base change and full evaluator homomorphism square | LOCALIZE / COMPARE / COMMUTE | Identify each localized integral closure with its algebraic ambient field, construct finite-index tensor base change, and prove the actual evaluator homomorphisms commute. Relocate the three existing evaluator helpers without duplication. | PROVED / VALIDATED |
+| SP79 | Selected generic evaluation factor and canonical idempotent | SPLIT / SELECT / CHARACTERIZE | Derive finite etale source structure under extension separability, split the actual evaluation kernel factor, identify its first projection with the existing evaluator, and characterize its selecting idempotent and complementary kernel ideal. | PROVED / VALIDATED |
+
+SP79 (2026-09-18): **selected generic evaluation factor / canonical idempotent**.
+`ReducedArtinianFactor.lean` constructs the factor selected by a surjective
+algebra map `f:P -> N` from a reduced Artinian algebra to a field. The
+maximal-ideal decomposition splits as `N × Π_{I ≠ ker(f)} P/I`; its
+first projection is exactly `f`, pointwise and as an algebra homomorphism.
+The inverse image `e` of `(1,0)` is idempotent, satisfies `f(e)=1`, and
+annihilates exactly `ker(f)`. The kernel is the principal ideal `(1-e)`.
+Value one and annihilation of the kernel characterize `e` uniquely;
+idempotence need not be assumed in the uniqueness theorem.
+
+`NormalClosureFactor.lean` proves the original `P_K` finite over `K`
+without separability, and etale under separability of `L/K`. It derives
+reduced Artinianness and applies the generic construction to the existing
+surjective `ev_K`. Thus `Φ_m:P_K ≃_K N × Q_m` selects the marked
+`N`, with `Q_m` the actual product of residue quotients at the other
+maximal ideals. The full identity `pr₁∘Φ_m=ev_K` is proved, and
+`e_m=Φ_m⁻¹(1,0)` has the canonical properties above. No new tensor
+carrier, source axiom, field marking or independently supplied splitting
+is introduced. No unital section `N -> P_K` or new Chow projector is
+asserted.
+
+Notation parity:
+
+| Lean object / group | Mathematical role | TeX notation |
+| --- | --- | --- |
+| `fieldQuotientProductEquiv` and its pointwise / homomorphism first-projection laws | generic selected field-quotient decomposition | prose only; the generic algebra lemma |
+| `fieldQuotientIdempotent` and its idempotence / map / annihilator / uniqueness laws; `fieldQuotient_ker_eq_span_one_sub` | generic selecting element and complementary principal kernel | prose only; `e` within the generic lemma |
+| `NormalClosureData.tensorSource_finite` / `.tensorSource_etale` | finite / separable-etale properties of the existing tensor source | existing \(P_K\) |
+| `.tensorEvaluationProductEquiv` / `.fst_comp_tensorEvaluationProductEquiv` | selected generic product equivalence and exact first projection | \(\Phi_{\mathfrak m}:P_K\simeq_K N\times Q_{\mathfrak m}\), \(Q_{\mathfrak m}=\prod_{I\ne\mathfrak m}P_K/I\), \(\operatorname{pr}_1\Phi_{\mathfrak m}=\operatorname{ev}_K\) |
+| `.tensorEvaluationIdempotent` / `_spec` / `_unique` | the canonical algebra-factor selector and its characterization | \(e_{\mathfrak m}=\Phi_{\mathfrak m}^{-1}(1,0)\), \(\mathfrak m=(1-e_{\mathfrak m})\) |
+
+Retain the existing `Σ`, `P_B`, `P_K`, `ev_B`, `ev_K`, `m`, `β_L`,
+`β_N` and `β_Σ`. The new algebra selector is not a second Chow-level
+projector. The checked standard source is Stacks Lemma 10.143.4, Tag
+00U3, for classification of etale algebras over a field. The selected
+factor, original evaluator comparison and idempotent laws are direct
+Lean proofs, not additional cited assumptions.
+
+The inventory is sixteen new APIs: nine generic and seven marked
+normal-closure declarations, all registered. Validation completed on
+2026-09-19 after the checkpoint began on 2026-09-18. The generic leaf
+build passes 1453 jobs and the specialization passes 2125 jobs, both
+without warnings. The full build passes 3195 jobs with only the two
+existing Challenge placeholder warnings. The focused suite passes
+25 examples and 16 enforced standard-three axiom audits; fresh SP78,
+SP77, SP76 and SP74 pass 25/13, 28/17, 23/7 and 22/7, respectively.
+Thus the five suites pass 123 examples and 60 enforced axiom audits.
+The fresh unchanged dependency audit passes six primary endpoint
+contracts and two support reports.
+
+The central inventory is 912 checks, 565 examples and 804 axiom reports
+after appending sixteen checks and reports; the historical prefix is
+byte-identical and was not rerun in full. The 78-page PDF (819834 bytes)
+passes its build and warning/box/reference scan. Visual review of pages
+11, 12, 59, 69, 70, 75 and 78 passes, as does independent mathematical
+and Lean--TeX review. The historical audit prefix and SP78-to-end queue
+suffix remain byte-identical. The checkpoint is proved and validated.
+
+Next prove the required integral-closedness of `P_B` inside `P_K`,
+descend the canonical generic idempotent, and identify the selected image
+with `IntCl_B(N)`. Integrality alone does not prove descent; `P_B`
+need not be a domain. Whole-chart etaleness, overlaps and gluing remain
+further geometric steps;
+Chow--Betti generation remains independent. Historical SP78 and earlier
+queue blocks below are preserved unchanged.
 
 SP78 (2026-09-18): **tensor base change / full evaluator square**.
 `PiTensorBaseChange.lean` constructs algebra equivalences for factorwise

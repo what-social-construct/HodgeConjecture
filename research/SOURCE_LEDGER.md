@@ -17,9 +17,50 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source check: 2026-09-18 (SP78 tensor base change and evaluator square;
+Last source check: 2026-09-18 (SP79 selected generic evaluation factor;
 earlier source records retain
 their original validation scope).
+
+### The selected generic evaluation factor (SP79, 2026-09-18)
+
+[Stacks, Lemma 10.143.4, Tag
+00U3](https://stacks.math.columbia.edu/tag/00U3) states that an algebra over
+a field is etale exactly when it is a finite product of finite separable
+field extensions. The primary page was checked. This citation supplies
+the standard classification underlying generic factor splitting; it does
+not identify the selected evaluation factor, extend its idempotent to
+an integral model, or prove whole-chart etaleness.
+
+The Lean implementation is direct, not a literature axiom or a new input
+package. `NormalClosureFactor.lean` obtains finite-dimensionality from
+the existing finite tensor theorem without separability, and etaleness
+from extension separability and the existing tensor-etaleness theorem.
+Mathlib then gives Artinianness and reducedness. In
+`ReducedArtinianFactor.lean`, `IsArtinianRing.equivPi` decomposes a
+reduced Artinian algebra by its actual maximal ideals. Splitting off
+`ker(f)` and using `Ideal.quotientKerAlgEquivOfSurjective` gives a product
+equivalence whose first component is the given surjection `f` itself.
+The selected idempotent is the inverse image of `(1,0)`; its
+idempotence, value, kernel-annihilation equivalence, complementary
+principal-kernel formula and uniqueness are proved directly.
+
+Applied to the existing marked tensor evaluation, these constructions
+give `Φ_m:P_K ≃_K N × Q_m` and `e_m=Φ_m⁻¹(1,0)`, with
+`pr₁∘Φ_m=ev_K` as algebra homomorphisms. No unital section from `N`
+to the full tensor product is asserted. There are nine generic and seven
+normal-closure APIs. Both leaves compile without warnings, the full
+3195-job build passes with only the two existing Challenge warnings,
+and the focused suite and four fresh neighbor suites pass 123 examples
+and 60 enforced standard-three axiom audits. The fresh unchanged
+dependency audit passes six primary endpoint contracts and two support
+reports; PDF and independent review pass. Validation completed on
+2026-09-19, following the 2026-09-18 source check;
+the SP79 parity-queue entry records detailed validation.
+
+Integral-closedness of `P_B` inside `P_K`, descent of this canonical
+idempotent and identification of the selected image with `IntCl_B(N)`,
+whole-chart etaleness and gluing remain distinct obligations, not
+consequences claimed for Tag 00U3.
 
 ### Tensor base change and the full evaluator square (SP78, 2026-09-18)
 
@@ -63,9 +104,9 @@ and 22/7, respectively: 98 examples and 44 enforced axiom audits across
 the four suites. The fresh unchanged dependency audit passes six primary
 endpoint contracts and two support reports.
 
-Generic direct-factor/
-idempotent splitting under separability, extension/selection of an
-integral factor, its normality and identification with `IntCl_B(N)`, and
+SP79 supplies generic direct-factor/idempotent splitting under
+separability. Integral extension of its canonical selecting idempotent,
+normality and identification of the selected image with `IntCl_B(N)`, and
 whole-chart etaleness/gluing remain to be proved.
 
 ### Finite tensor source and marked evaluations (SP77, 2026-09-18)
@@ -119,13 +160,13 @@ Fresh SP76 and SP74 reruns pass 23/7 and 22/7, respectively: 73 examples
 and 31 audits in these three suites. The fresh unchanged dependency audit
 passes six primary endpoint contracts and two support reports.
 
-The quotient over the fraction field does not yet identify a direct
-factor, even generically. SP78 above constructs the canonical comparison
+The quotient over the fraction field alone does not identify a direct
+factor. SP78 above constructs the canonical comparison
 `K⊗_B P_B ≃ P_K` and full evaluator homomorphism equality left open at
-SP77; the preceding validation figures retain their SP77 scope. Under
-separability, realize the generic maximal quotient as a direct factor/
-idempotent; that splitting is not yet formalized. Extension/selection of
-that factor over `B` and normality/equality of its integral image with
+SP77; the preceding validation figures retain their SP77 scope. SP79
+constructs the selected generic factor and canonical idempotent under
+separability. Extension of that idempotent over `B` and normality/equality
+of its integral image with
 `IntCl_B(N)` follow as distinct proof obligations. Whole-chart etaleness
 and subsequent overlap/gluing arguments are not consequences of the current
 pure-tensor identity alone. The existing

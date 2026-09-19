@@ -535,3 +535,48 @@ Neither generic splitting nor the integral identification is formalized
 by the present comparison. Overlaps, gluing and global Galois refinement
 remain later steps; normal stalks from smooth geometry and Chow--Betti
 generation remain separate. All earlier audit text is preserved unchanged.
+
+## 15. SP79 follow-up: the selected generic evaluation factor
+
+The existing field tensor now has a selected product factor for the
+actual marked evaluator. `NormalClosureFactor.lean` proves `P_K` finite
+without separability; extension separability makes `P_K` etale and hence
+reduced Artinian. `ReducedArtinianFactor.lean` splits the actual
+maximal-ideal product at `m=ker(ev_K)` and uses the already constructed
+quotient equivalence to identify that factor with `N`. It gives
+`Φ_m:P_K ≃_K N × Q_m`, where `Q_m=Π_{I ≠ m} P_K/I`, and proves
+`pr₁∘Φ_m=ev_K` as equality of algebra homomorphisms.
+
+The selected element `e_m=Φ_m⁻¹(1,0)` is idempotent, has value one
+under `ev_K`, annihilates exactly the evaluation kernel, and satisfies
+`m=(1-e_m)`. Value one and kernel annihilation characterize it uniquely,
+without assuming idempotence separately. No choice of field marking,
+surjectivity or splitting is inserted as a new input. These are
+statements about the existing algebra, not a unital section `N -> P_K`
+or a new Chow projector. The source classification is Stacks Lemma
+10.143.4, Tag 00U3, verified only for etale algebras over a field; the
+specific factor and evaluator compatibility are direct Lean proofs.
+
+The sixteen APIs comprise nine generic reduced-Artinian declarations
+and seven marked normal-closure declarations, all registered. Validation
+completed on 2026-09-19 after the checkpoint began on 2026-09-18. Both
+leaves compile without warnings; the full build passes 3195 jobs with
+only the two existing Challenge warnings. The focused suite and four
+fresh neighbor suites pass 123 examples and 60 enforced standard-three
+axiom audits. The fresh unchanged dependency audit passes six primary
+endpoint contracts and two support reports. The central inventory is
+912 checks, 565 examples and
+804 reports; its historical prefix is unchanged and was not rerun in
+full. The 78-page PDF (819834 bytes) passes build, warning scan and
+seven-page visual review; independent mathematical/Lean--TeX review
+passes. The SP79 parity-queue entry records detailed validation.
+
+The next bounded obligation is to prove the required integral-closedness
+of `P_B` inside `P_K`, descend this canonical generic idempotent, and
+identify the selected image with `IntCl_B(N)`. Its idempotent equation
+alone does not establish descent, and `P_B` need not be a domain.
+The generic product decomposition does not discharge
+that integral comparison or whole-chart etaleness. Overlap compatibility,
+gluing, the global finite etale Galois refinement and normal stalks from
+smooth geometry remain separate. Chow--Betti generation is unchanged.
+All earlier audit text is preserved unchanged.

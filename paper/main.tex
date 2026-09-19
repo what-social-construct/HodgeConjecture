@@ -864,6 +864,53 @@ Proposition~\ref{prop:normalization-tensor}. The tensor universal
 properties give equality of the homomorphisms.
 \end{proof}
 
+\begin{proposition}[The factor selected by tensor evaluation]
+\label{prop:normal-closure-factor}
+In the notation of Proposition~\ref{prop:normal-closure-tensor}, suppose
+\(L/K\) is separable. Then \(P_K\) is finite \'{e}tale over \(K\).
+Set
+\[
+  Q_{\mathfrak m}
+    =\prod_{\substack{\mathfrak q\in\operatorname{MaxSpec}(P_K)\\
+                       \mathfrak q\ne\mathfrak m}} P_K/\mathfrak q.
+\]
+There is a canonical \(K\)-algebra isomorphism
+\[
+  \Phi_{\mathfrak m}:P_K\xrightarrow{\ \sim\ }N\times Q_{\mathfrak m},
+  \qquad z\longmapsto
+      \bigl(\operatorname{ev}_K(z),([z]_{\mathfrak q})_{\mathfrak q\ne\mathfrak m}\bigr),
+  \qquad \operatorname{pr}_1\circ\Phi_{\mathfrak m}=\operatorname{ev}_K.
+\]
+The element \(e_{\mathfrak m}=\Phi_{\mathfrak m}^{-1}(1,0)\) satisfies
+\[
+  e_{\mathfrak m}^2=e_{\mathfrak m},\qquad
+  \operatorname{ev}_K(e_{\mathfrak m})=1,\qquad
+  e_{\mathfrak m}z=0\ \Longleftrightarrow\ z\in\mathfrak m,\qquad
+  \mathfrak m=(1-e_{\mathfrak m})P_K.
+\]
+It is uniquely determined by its value one under \(\operatorname{ev}_K\)
+and the condition that it annihilate \(\mathfrak m\).
+\end{proposition}
+
+\begin{proof}
+The finite separable extension \(L/K\) is \'{e}tale, and finite tensor
+products preserve finiteness and \'{e}taleness. The classification of
+\'{e}tale algebras over fields~\cite{StacksEtaleOverField} makes \(P_K\)
+reduced and Artinian. Its canonical residue-quotient decomposition,
+with the factor \(P_K/\mathfrak m\) identified with \(N\) by
+Proposition~\ref{prop:normal-closure-tensor}, gives \(\Phi_{\mathfrak m}\)
+and the projection identity.
+
+In product coordinates, multiplication by \(e_{\mathfrak m}\) sends
+\((n,q)\) to \((n,0)\). This proves idempotence, its evaluation and the
+kernel-annihilation equivalence. If \(z\in\mathfrak m\), then
+\(z=(1-e_{\mathfrak m})z\); conversely \(1-e_{\mathfrak m}\in\mathfrak m\),
+giving the ideal equality. For uniqueness, if \(e'\) has value one and
+annihilates \(\mathfrak m\), then
+\(e'(1-e_{\mathfrak m})=0\) and \(e_{\mathfrak m}(e'-1)=0\).
+Consequently \(e'=e'e_{\mathfrak m}=e_{\mathfrak m}\).
+\end{proof}
+
 The group \(G=\mathcal N.\mathit{galoisGroup}\), the subgroup
 \(H=\mathcal N.\mathit{intermediateFixingSubgroup}\), and the canonical deck
 action on \(Y_N\) are all constructed from the same datum.  Normality keeps the conjugate embeddings inside the same field \(N\).
@@ -4866,6 +4913,12 @@ Canonical base change \(\beta_L,\beta_\Sigma\) and evaluation square &
 \leanpath{NormalClosureData.normalizationTensorBaseChangeEquiv}\newline
 \leanpath{NormalClosureData.normalizationTensorEvaluation_baseChange}\newline
 \leanpath{Boundary/Normalization/NormalizationBaseChange.lean}\\
+Selected generic factor \(\Phi_{\mathfrak m},e_{\mathfrak m}\) &
+\leanpath{NormalClosureData.tensorSource_etale}\newline
+\leanpath{NormalClosureData.tensorEvaluationProductEquiv}\newline
+\leanpath{NormalClosureData.fst_comp_tensorEvaluationProductEquiv}\newline
+\leanpath{NormalClosureData.tensorEvaluationIdempotent_spec}\newline
+\leanpath{Boundary/Normalization/NormalClosureFactor.lean}\\
 Full-visible boundary ideals &
 \leanpath{movingBoundaryIdeal_eq_top_of_surjective}\newline
 \leanpath{conjugateBoundarySeparation_of_surjective}\newline
@@ -5540,6 +5593,24 @@ principal table, grouped by mathematical layer.
 \leanpath{NormalClosureData.normalizationTensorBaseChangeEquiv_tmul_singleAlgHom};
 \leanpath{NormalClosureData.normalizationTensorBaseChangeEquiv_tmul_tprod};
 \leanpath{NormalClosureData.normalizationTensorEvaluation_baseChange};
+\leanpath{CommutativeAlgebra/ReducedArtinianFactor.lean};
+\leanpath{fieldQuotientProductEquiv};
+\leanpath{fieldQuotientProductEquiv_fst};
+\leanpath{fst_comp_fieldQuotientProductEquiv};
+\leanpath{fieldQuotientIdempotent};
+\leanpath{fieldQuotientIdempotent_isIdempotentElem};
+\leanpath{fieldQuotientIdempotent_map};
+\leanpath{fieldQuotientIdempotent_mul_eq_zero_iff};
+\leanpath{fieldQuotientIdempotent_unique};
+\leanpath{fieldQuotient_ker_eq_span_one_sub};
+\normsrc{NormalClosureFactor.lean};
+\leanpath{NormalClosureData.tensorSource_finite};
+\leanpath{NormalClosureData.tensorSource_etale};
+\leanpath{NormalClosureData.tensorEvaluationProductEquiv};
+\leanpath{NormalClosureData.fst_comp_tensorEvaluationProductEquiv};
+\leanpath{NormalClosureData.tensorEvaluationIdempotent};
+\leanpath{NormalClosureData.tensorEvaluationIdempotent_spec};
+\leanpath{NormalClosureData.tensorEvaluationIdempotent_unique};
 \normsrc{FiniteAffineCover.lean};
 \leanpath{normalizationToIntermediate_surjective};
 \leanpath{normalizationIntermediateEquiv};

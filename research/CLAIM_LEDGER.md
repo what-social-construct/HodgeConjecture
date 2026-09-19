@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-18 (SP78 tensor base change and evaluator square; earlier checkpoint
+Last audited: 2026-09-19 (SP79 selected generic evaluation factor; earlier checkpoint
 validation records are retained with their original scope).
 
 Status vocabulary:
@@ -17,6 +17,54 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## The selected generic evaluation factor (A11bk / SP79)
+
+Status: `FORMAL`; checkpoint validated. For a reduced
+Artinian commutative algebra `P` and a surjective algebra map `f:P -> N`
+to a field, `ReducedArtinianFactor.lean` constructs
+`P ≃ N × Π_{I ≠ ker(f)} P/I` from the actual maximal-ideal decomposition.
+Its first projection is exactly `f`, both pointwise and as an algebra
+homomorphism. The inverse image `e` of `(1,0)` is idempotent, has `f(e)=1`,
+annihilates exactly the kernel, and satisfies `ker(f)=(1-e)`. Value one
+and annihilation of the kernel characterize `e` uniquely; the uniqueness
+statement does not assume idempotence as an extra premise.
+
+`NormalClosureFactor.lean` proves the existing source `P_K` finite over
+`K` without separability. Under `Algebra.IsSeparable K L`, it proves
+`P_K` etale, derives reduced Artinianness, and applies that construction
+to the already proved surjection `ev_K`. Thus
+`Φ_m:P_K ≃_K N × Q_m`, with `Q_m` the actual product of residue quotients
+away from `m=ker(ev_K)`, satisfies `pr₁∘Φ_m=ev_K`. The canonical
+selecting idempotent is `e_m=Φ_m⁻¹(1,0)` with the preceding properties.
+No replacement tensor carrier or marked field, chosen splitting input,
+literature axiom, unital section `N -> P_K` or new Chow projector is used.
+
+The sixteen new declarations are:
+
+- `ReducedArtinianFactor.lean`: `fieldQuotientProductEquiv`,
+  `_fst`, `fst_comp_fieldQuotientProductEquiv`,
+  `fieldQuotientIdempotent`, `_isIdempotentElem`, `_map`,
+  `_mul_eq_zero_iff`, `_unique`, and `fieldQuotient_ker_eq_span_one_sub`.
+- `NormalClosureFactor.lean`: `NormalClosureData.tensorSource_finite`,
+  `.tensorSource_etale`, `.tensorEvaluationProductEquiv`,
+  `.fst_comp_tensorEvaluationProductEquiv`, `.tensorEvaluationIdempotent`,
+  `.tensorEvaluationIdempotent_spec`, and `.tensorEvaluationIdempotent_unique`.
+
+Both new leaves compile without warnings; the full build passes 3195
+jobs with only the two existing Challenge warnings. The focused suite
+and four fresh neighbor suites pass 123 examples and 60 enforced
+standard-three axiom audits. The fresh unchanged dependency audit passes
+six primary endpoint contracts and two support reports. The PDF and
+independent mathematical/Lean--TeX reviews pass, with all sixteen APIs
+registered; detailed validation is in
+the SP79 parity-queue entry.
+
+The next obligation is to prove the required integral-closedness of
+`P_B` inside `P_K`, descend `e_m`, and identify the selected image with
+`IntCl_B(N)`. The idempotent equation alone does not prove this descent.
+Whole-chart etaleness, overlap compatibility, gluing and independent Chow--Betti
+generation remain separate.
 
 ## Tensor base change and the full evaluator square (A11bj / SP78)
 
@@ -70,8 +118,8 @@ enforced axiom audits across the four suites. The fresh unchanged
 dependency audit passes six primary endpoint contracts and two support
 reports.
 
-Next prove separable generic direct-factor/idempotent splitting of the
-actual maximal quotient; that splitting is not yet formalized. Integral
+SP79 above supplies the separable generic direct-factor/idempotent
+construction for the actual maximal quotient. Integral
 factor extension/selection, normality and identification of its image with
 `IntCl_B(N)`, whole-chart etaleness, overlaps and gluing remain separate.
 The Chow--Betti generation obligation is unchanged.
@@ -135,10 +183,9 @@ assert a scalar-extension/localization isomorphism between the integral
 and field tensor constructions.
 SP78 above implements the comparison `K⊗_B P_B ≃ P_K` and full evaluator
 homomorphism equality left open at this checkpoint; the preceding
-validation figures retain their SP77 scope. Separability must next be
-used to realize the generic maximal
-quotient as a direct factor/idempotent; that splitting is not yet
-formalized. Then extend/select the factor over the base, prove normality
+validation figures retain their SP77 scope. SP79 supplies the separable
+generic direct-factor/idempotent construction. Next extend the canonical
+idempotent over the base, prove normality
 of its integral image and identify it with `IntCl_B(N)`.
 Whole-chart etaleness, overlap compatibility, gluing and Chow--Betti
 generation remain separate; none is renamed as an input hypothesis here.

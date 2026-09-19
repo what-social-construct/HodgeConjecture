@@ -1,7 +1,7 @@
 # Current gap map
 
-Last reviewed: 2026-09-18 (SP78 tensor base change and evaluator square;
-validation complete; earlier checkpoint validation records retain their
+Last reviewed: 2026-09-19 (SP79 selected generic evaluation factor;
+validation complete; earlier checkpoint records retain their
 original scope).
 
 Start with [the target and equivalence sketch](TARGET_BRIDGE.md): it fixes
@@ -448,12 +448,40 @@ Fresh SP77, SP76 and SP74 reruns pass 28/17, 23/7 and 22/7, respectively:
 unchanged dependency audit passes six primary endpoint contracts and two
 support reports.
 
-**Next bounded bridge:** under separability, prove that the actual generic
-maximal quotient splits as a direct factor/idempotent; this splitting is
-not yet formalized. Subsequently extend/select that factor over `B`,
-prove normality of its integral image and identify it with the specific
-`N`-normalization, rather than supplying these goals as hypotheses. The
-generic quotient `P_K/m ≃ N` is not either direct-factor theorem.
+**SP79: the selected generic evaluation factor.**
+`ReducedArtinianFactor.lean` constructs the factor selected by any
+surjective algebra map from a reduced Artinian algebra to a field.
+`NormalClosureFactor.lean` specializes it to the existing `ev_K`:
+finiteness of `P_K` follows without separability, while separability of
+`L/K` makes `P_K` etale and hence reduced Artinian. The resulting
+`Φ_m:P_K ≃_K N × Q_m`, with `Q_m` the product over the other maximal
+ideals of their residue quotients, satisfies `pr₁∘Φ_m=ev_K` as algebra
+homomorphisms. The element `e_m=Φ_m⁻¹(1,0)` is idempotent and satisfies
+`ev_K(e_m)=1`, `e_m*x=0 ↔ ev_K(x)=0`, and `m=(1-e_m)`.
+Value one and kernel annihilation characterize it uniquely, without
+assuming idempotence separately. No selected factor, field map or
+surjectivity is supplied as a new hypothesis. There is no asserted
+unital section `N -> P_K` and no new Chow projector. Both leaves compile
+without warnings; the full build passes 3195 jobs with only the two
+existing Challenge warnings. The focused suite and four fresh neighbor
+suites pass 123 examples and 60 enforced standard-three axiom audits.
+The fresh unchanged dependency audit passes six primary endpoint
+contracts and two support reports. The PDF and independent
+mathematical/Lean--TeX reviews pass; see
+the SP79 parity-queue entry for the complete validation record.
+
+**Next bounded bridge:** prove the needed integral-closedness of `P_B`
+inside `P_K`, descend the canonical generic idempotent, and identify the
+selected image with the specific `N`-normalization, rather than supplying
+these goals as hypotheses. The equation `e_m²-e_m=0` proves integrality,
+not membership in `P_B`. This algebra need not be a domain, so
+the existing upstairs-domain generic-fiber helpers do not apply. A ready
+etale-to-flatness/normality bridge was not located in the pinned Mathlib;
+constructing the required bridge remains project work. Once an integral
+idempotent is proved to exist, its complementary-ideal quotient can be
+identified with localization away from that idempotent, providing a route
+to etaleness by localization and composition. The generic splitting does
+not yet provide that integral factor theorem.
 The proposed direct-factor route must still prove whole-chart
 etaleness; generic etaleness, finiteness and full-visible separation do
 not supply it. Then establish overlap compatibility and gluing to obtain

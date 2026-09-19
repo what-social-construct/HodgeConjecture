@@ -680,9 +680,9 @@ contracts and two support reports.
 
 SP78 in B4k below constructs the canonical base-change comparison and
 full evaluator square left open here; the preceding validation figures
-retain their SP77 scope. Under separability, next realize the generic maximal quotient
-as a direct factor/idempotent; that splitting is not yet formalized.
-Subsequently extend/select that factor integrally and identify its image
+retain their SP77 scope. SP79 in B4l constructs the selected generic
+factor and canonical idempotent under separability.
+Next extend that idempotent integrally and identify the selected image
 with the existing `T=IntCl_B(N)`. Normality of the integral image and its
 equality to the integral closure must be proved, not inserted as renamed
 hypotheses. The generic maximal-kernel quotient alone is not either
@@ -726,15 +726,59 @@ Fresh SP77, SP76 and SP74 reruns pass 28/17, 23/7 and 22/7, respectively:
 unchanged dependency audit passes six primary endpoint contracts and two
 support reports.
 
-The next bounded proof is separable generic direct-factor/idempotent
-splitting of the actual maximal quotient. Neither that splitting nor an
-integral direct-factor identification is yet formalized. Then extend/select
-the integral factor, prove its image normal and identify it with the
-existing `IntCl_B(N)`. Whole-chart etaleness, overlap compatibility and
-gluing remain further steps; Chow--Betti generation remains independent.
-The generic splitting should take the form `P_K ≃ N × Q`, or `eP_K ≃ N`
-with unit `e`. It does not provide a unital `K`-algebra section `N -> P_K`:
-the other factors need not admit a `K`-algebra map from `N`.
+SP79 in B4l supplies the separable generic direct-factor/idempotent
+construction. Its integral extension and identification with the existing
+`IntCl_B(N)` remain open. Whole-chart etaleness, overlap compatibility,
+gluing and independent Chow--Betti generation remain subsequent steps.
+
+### B4l. Select the actual generic evaluation factor
+
+`ReducedArtinianFactor.lean` constructs a specified field-quotient factor
+of a reduced Artinian algebra from the existing maximal-ideal product
+decomposition. For any surjective `f:P -> N`, the equivalence
+`P ≃ N × Π_{I ≠ ker(f)} P/I` has first projection exactly `f`.
+Its inverse image `e` of `(1,0)` satisfies `e²=e`, `f(e)=1`,
+`e*x=0 ↔ f(x)=0` and `ker(f)=(1-e)`. Value one and annihilation of
+the kernel determine it uniquely, without a separate idempotence premise.
+
+`NormalClosureFactor.lean` proves `P_K` finite without separability and
+etale under `Algebra.IsSeparable K L`. Reduced Artinianness follows;
+the existing surjectivity of `ev_K` then selects the actual marked field
+factor. Write `Q_m=Π_{I ≠ m} P_K/I`, `Φ_m:P_K ≃_K N × Q_m`, and
+`e_m=Φ_m⁻¹(1,0)`, where `m=ker(ev_K)`. The first-projection identity
+`pr₁∘Φ_m=ev_K` is equality of algebra homomorphisms, not a supplied
+compatibility condition. All carriers, the field marking and the
+evaluation remain unchanged. The sixteen APIs comprise nine generic
+and seven normal-closure declarations. Both leaves compile without
+warnings; the 3195-job full build passes. The focused suite and four
+fresh neighbor suites pass 123 examples and 60 enforced standard-three
+axiom audits. The fresh unchanged dependency audit passes six primary
+endpoint contracts and two support reports. The PDF and independent
+mathematical/Lean--TeX reviews pass; detailed validation is in the
+SP79 parity-queue entry.
+
+This is an algebra-factor selector, not a new Chow projector. It does
+not provide a unital `K`-algebra section `N -> P_K`: the other factors
+need not admit a `K`-algebra map from `N`. Stacks Lemma 10.143.4,
+Tag 00U3, is checked for the standard classification of etale
+field-algebras only; the selected factor and map comparisons are direct
+Lean proofs.
+
+The next bounded bridge first proves the required integral-closedness
+of `P_B` inside `P_K`, then descends this canonical generic idempotent
+and identifies the selected image with the existing `IntCl_B(N)`.
+Its idempotent equation proves integrality but not membership in `P_B`.
+The source need not be a domain, so upstairs-domain generic-fiber
+helpers do not directly apply; a ready etale-to-flatness/normality bridge
+was not located in the pinned Mathlib. These are proof obligations, not
+replacement hypotheses. Once an integral idempotent `E` is constructed,
+`P_B/(1-E)` can be compared with localization away from `E`, giving a
+route to etaleness by localization and composition. Identification with
+the existing normalization then requires its actual integral-closure
+properties. The field decomposition alone does not prove these integral
+statements or whole-chart etaleness. Overlaps, gluing,
+the global finite etale Galois refinement and the independent Chow--Betti
+generation problem remain separate.
 
 ### G0. Smooth projective setting and candidate constructions
 
@@ -1181,10 +1225,9 @@ provide variable-class coverage.
   Promote a proved checkpoint only after the appropriate build, focused
   regressions, dependency/axiom checks and Lean--TeX comparison.
 - **Next action:** after B4k's canonical tensor base-change comparison and
-  full evaluator square, use separability to prove generic direct-factor/
-  idempotent splitting of the actual maximal quotient; the quotient
-  identification does not already formalize that splitting. Next extend/
-  select the integral factor, prove its image normal and identify it with
+  full evaluator square and B4l's selected generic factor, prove the
+  needed integral-closedness of `P_B` inside `P_K`, descend the canonical
+  selecting idempotent, and identify its image with
   B4i's finite `N`-normalization. Then derive whole-chart etaleness and prove
   overlap compatibility and gluing. B4j constructs the finite etale tensor
   source and its actual integral/generic evaluations, with generic
@@ -2013,10 +2056,11 @@ etale tensor source and actual evaluations, proves generic surjectivity
 from normal-closure generation, and identifies the corresponding generic
 kernel quotient with `N`. B4k constructs the canonical localization/base-
 change comparison `K⊗_B P_B ≃ P_K` and proves equality of evaluator
-homomorphism composites. The immediate operative action is now to use
-separability for generic direct-factor/idempotent splitting, which is not yet formalized;
-subsequently extend/select the integral factor and prove its image normal
-and equal to the specific `N`-normalization. This must yield whole-chart
+homomorphism composites. B4l constructs the selected generic factor and
+its canonical idempotent under separability. The immediate operative
+action is now to prove the required integral-closedness of `P_B` inside
+`P_K`, descend that idempotent, and identify its image with the specific
+`N`-normalization. This must yield whole-chart
 etaleness, not just a generic statement; overlap compatibility and gluing
 follow. Finiteness and full-visible separation are proved without a
 separately supplied second affine algebra. Normality and Noetherianity of
