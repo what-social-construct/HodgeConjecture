@@ -792,15 +792,49 @@ The 78-page PDF (819834 bytes) passes build, warning scan and visual
 review; independent mathematical and Lean--TeX review passes. The
 full validation record is in the SP79 parity-queue entry.
 
-Next prove the required integral-closedness of `P_B` inside `P_K`, descend
-this canonical generic idempotent, and identify the selected image with
-the specific `N`-normalization. Integrality of an idempotent alone does
-not prove that it lies in `P_B`; the integral factor identification
-is not yet formalized.
-Whole-chart etaleness, overlaps and gluing therefore remain to be proved.
-Base normality/Noetherianity and upstairs
-normal stalks remain explicit; the global finite etale Galois refinement
-and Chow--Betti generation remain separate geometric tasks.
+SP80 proves the actual integral factor in
+[`NormalizationIntegralFactor.lean`](HodgeConjecture/Boundary/Normalization/NormalizationIntegralFactor.lean).
+Over normal `B`, the unramified separability tensor
+and integral field trace construct a `B`-linear section `r_B` of the
+existing `ev_B:P_B -> T`, where `T=IntCl_B(N)`. The source action law is
+`r_B(ev_B(s)*t)=s*r_B(t)`. SP78's evaluator square and the proved generic
+surjectivity supply the spanning condition used to prove `ev_B∘r_B=id`.
+Thus `E_m=r_B(1)` is an integral idempotent, has value one, and satisfies
+`ker(ev_B)=(1-E_m)`. The resulting quotient comparison
+`P_B/(1-E_m) ≃_B T` preserves the actual evaluator. Localization away
+from `E_m` supplies whole-ring etaleness, and the finite source supplies
+finiteness of `T`. The generic comparison identifies
+`β_Σ(1⊗E_m)=e_m` under separability.
+
+This construction uses an actual finite normal etale intermediate model
+with fraction field `L`; it assumes neither Noetherianity of `B` nor
+normality or flatness of the whole tensor source. It bypasses the proposed
+whole-source integral-closedness route without proving that stronger
+statement. No integral-evaluation surjectivity, selector, selected image,
+or second normalization model is supplied as an input. The generic
+trace-section and trace-contraction proofs are in
+[`UnramifiedIntegralFactor.lean`](HodgeConjecture/CommutativeAlgebra/UnramifiedIntegralFactor.lean)
+and [`SeparabilityTrace.lean`](HodgeConjecture/CommutativeAlgebra/SeparabilityTrace.lean).
+All 28 new APIs compile without warnings. The full build passes 3198
+jobs with only the two unchanged Challenge warnings. The focused suite
+and five fresh neighbor suites pass 153 examples and 88 enforced
+standard-three axiom audits; the unchanged dependency audit passes six
+primary contracts and two support reports. The central inventory is
+940 checks, 565 examples and 832 reports; its historical prefix is
+unchanged and was not rerun in full. The 79-page PDF (826296 bytes)
+passes its build, warning scan and eight-page visual review. Independent
+mathematical and Lean--TeX review pass. The SP80 parity-queue entry records
+the full validation details.
+
+The focused suite verifies the ring-level specialization to an actual
+finite etale affine inverse image, deriving both section-ring normality
+inputs from normal stalks without Noetherianity. The next geometric bridge
+is to integrate this result into a named actual affine normalized-cover
+constructor and its structural-map/finite-etale morphism endpoints, then
+prove overlap compatibility and glue the global Galois refinement.
+Normal stalks from smooth geometry and Chow--Betti generation remain
+separate tasks. The earlier affine-cover constructor retains its stronger
+base-normality/Noetherianity and upstairs-normal-stalk hypotheses.
 
 `paper/main.pdf` is the single current manuscript PDF. The earlier drafts
 and their sources are preserved in the

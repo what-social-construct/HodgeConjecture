@@ -31,6 +31,7 @@
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
@@ -909,6 +910,107 @@ giving the ideal equality. For uniqueness, if \(e'\) has value one and
 annihilates \(\mathfrak m\), then
 \(e'(1-e_{\mathfrak m})=0\) and \(e_{\mathfrak m}(e'-1)=0\).
 Consequently \(e'=e'e_{\mathfrak m}=e_{\mathfrak m}\).
+\end{proof}
+
+\begin{lemma}[Trace contraction of the separability tensor]
+\label{lem:separability-trace}
+Let \(F\) be a finite-dimensional commutative \(K\)-algebra. Define
+\[
+  c_F:F\otimes_K F\longrightarrow F,
+  \qquad c_F(a\otimes b)=a\operatorname{Tr}_{F/K}(b).
+\]
+If \(t\in F\otimes_K F\) satisfies
+\((1\otimes x)t=(x\otimes1)t\) for every \(x\in F\), then
+\(c_F(t)=\mu(t)\), where \(\mu\) is multiplication.
+If also \(\mu(t)=1\), then
+\[
+  c_F\bigl((1\otimes x)t\bigr)=x\qquad(x\in F).
+\]
+\end{lemma}
+
+\begin{proof}
+Write \(t=\sum_i a_i\otimes b_i\). For any \(K\)-linear functional
+\(\lambda:F\to K\), centrality identifies multiplication by
+\(\sum_i\lambda(a_i)b_i\) with
+\(x\mapsto\sum_i\lambda(xa_i)b_i\).
+Taking traces of these rank-one operators gives
+\(\lambda(c_F(t))=\lambda(\sum_i a_ib_i)\). Linear functionals
+separate points, proving the first equality. Centrality then moves
+\(x\) to the first factor, proving the second.
+\end{proof}
+
+\begin{proposition}[The integral normal-closure factor]
+\label{prop:normalization-integral-factor}
+Let \(B\) be a normal domain with fraction field \(K\), and let
+\(A\) be the finite normal intermediate affine model of
+Proposition~\ref{prop:finite-normal-affine-model}. Suppose \(A/B\)
+is \'{e}tale. There is a \(B\)-linear map
+\[
+  r_B:\widetilde B_N\longrightarrow P_B,
+  \qquad \operatorname{ev}_B\circ r_B=\operatorname{id},
+  \qquad r_B\bigl(\operatorname{ev}_B(s)n\bigr)=s\,r_B(n).
+\]
+Set \(E_{\mathfrak m}=r_B(1)\). Then
+\[
+  E_{\mathfrak m}^2=E_{\mathfrak m},\qquad
+  \operatorname{ev}_B(E_{\mathfrak m})=1,\qquad
+  E_{\mathfrak m}s=0\ \Longleftrightarrow\ \operatorname{ev}_B(s)=0,
+\]
+and evaluation induces an isomorphism
+\[
+  P_B/(1-E_{\mathfrak m})P_B\xrightarrow{\ \sim\ }\widetilde B_N,
+  \qquad [s]\longmapsto\operatorname{ev}_B(s).
+\]
+The algebra \(\widetilde B_N\) is finite \'{e}tale over \(B\).
+Under the separability hypothesis of
+Proposition~\ref{prop:normal-closure-factor}, the integral selector
+recovers the same generic selector:
+\[
+  \beta_\Sigma(1\otimes E_{\mathfrak m})=e_{\mathfrak m}.
+\]
+\end{proposition}
+
+\begin{proof}
+The source \(P_B\) is finite \'{e}tale by
+Proposition~\ref{prop:normalization-tensor}. Its unramified diagonal
+provides a separability tensor~\cite{StacksUnramifiedDiagonal}
+\[
+  \vartheta_B=\sum_i a_i\otimes b_i\in P_B\otimes_B P_B,
+  \qquad \mu(\vartheta_B)=1,
+  \qquad (1\otimes s)\vartheta_B=(s\otimes1)\vartheta_B.
+\]
+Normality of \(B\) makes the restriction of
+\(\operatorname{Tr}_{N/K}\) to \(\widetilde B_N\) a \(B\)-valued
+linear map \(\tau_N\). Define
+\[
+  r_B(n)=\sum_i a_i\,\tau_N\bigl(\operatorname{ev}_B(b_i)n\bigr).
+\]
+Centrality of \(\vartheta_B\) gives the displayed source-action
+identity. The base-change square and surjectivity of
+\(\operatorname{ev}_K\) show that the image of
+\(v_N\circ\operatorname{ev}_B\) spans \(N\) over \(K\).
+Thus the image of \(\vartheta_B\) in \(N\otimes_K N\) is central
+with product one. Lemma~\ref{lem:separability-trace} gives
+\(\operatorname{ev}_B(r_B(n))=n\).
+
+The source-action identity now reads
+\(E_{\mathfrak m}s=r_B(\operatorname{ev}_B(s))\).
+It proves idempotence and the kernel-annihilation equivalence.
+For every kernel element \(s\), one has
+\(s=(1-E_{\mathfrak m})s\), so
+\(\ker(\operatorname{ev}_B)=(1-E_{\mathfrak m})P_B\).
+The first isomorphism theorem gives the asserted comparison with the
+existing integral closure. This quotient is localization of \(P_B\)
+at \(E_{\mathfrak m}\); hence it is \'{e}tale over \(B\) by
+localization and composition~\cite{StacksEtaleStability}, and finite
+as a quotient of \(P_B\).
+
+Finally, scalar extension of
+\(E_{\mathfrak m}s=r_B(\operatorname{ev}_B(s))\), together with the
+evaluation square, shows that \(\beta_\Sigma(1\otimes E_{\mathfrak m})\)
+annihilates \(\ker(\operatorname{ev}_K)\) and evaluates to one.
+The uniqueness assertion of Proposition~\ref{prop:normal-closure-factor}
+identifies it with \(e_{\mathfrak m}\).
 \end{proof}
 
 The group \(G=\mathcal N.\mathit{galoisGroup}\), the subgroup
@@ -4919,6 +5021,13 @@ Selected generic factor \(\Phi_{\mathfrak m},e_{\mathfrak m}\) &
 \leanpath{NormalClosureData.fst_comp_tensorEvaluationProductEquiv}\newline
 \leanpath{NormalClosureData.tensorEvaluationIdempotent_spec}\newline
 \leanpath{Boundary/Normalization/NormalClosureFactor.lean}\\
+Integral trace section and selected normalization factor &
+\leanpath{NormalClosureData.normalizationTensorSection_rightInverse}\newline
+\leanpath{NormalClosureData.normalizationTensorIdempotent_spec}\newline
+\leanpath{NormalClosureData.normalizationTensorIdempotent_baseChange}\newline
+\leanpath{NormalClosureData.normalizationTensorQuotientEquiv}\newline
+\leanpath{NormalClosureData.normalization_etale_of_etaleModel}\newline
+\leanpath{Boundary/Normalization/NormalizationIntegralFactor.lean}\\
 Full-visible boundary ideals &
 \leanpath{movingBoundaryIdeal_eq_top_of_surjective}\newline
 \leanpath{conjugateBoundarySeparation_of_surjective}\newline
@@ -5611,6 +5720,37 @@ principal table, grouped by mathematical layer.
 \leanpath{NormalClosureData.tensorEvaluationIdempotent};
 \leanpath{NormalClosureData.tensorEvaluationIdempotent_spec};
 \leanpath{NormalClosureData.tensorEvaluationIdempotent_unique};
+\leanpath{NormalClosureData.normalizationTensorEvaluation_span};
+\leanpath{CommutativeAlgebra/SeparabilityTrace.lean};
+\leanpath{traceContraction};
+\leanpath{traceContraction_tmul};
+\leanpath{traceContraction_eq_lmul_of_central};
+\leanpath{traceContraction_eq_one_of_central};
+\leanpath{traceContraction_one_tmul_mul};
+\leanpath{CommutativeAlgebra/UnramifiedIntegralFactor.lean};
+\leanpath{unramifiedIntegralSection};
+\leanpath{unramifiedIntegralSection_mul};
+\leanpath{unramifiedIntegralSection_rightInverse};
+\leanpath{unramifiedIntegralEvaluation_surjective};
+\leanpath{unramifiedIntegralIdempotent};
+\leanpath{unramifiedIntegralIdempotent_map};
+\leanpath{unramifiedIntegralIdempotent_mul};
+\leanpath{unramifiedIntegralIdempotent_baseChange_mul};
+\leanpath{unramifiedIntegralIdempotent_isIdempotentElem};
+\leanpath{unramifiedIntegralIdempotent_mul_eq_zero_iff};
+\leanpath{unramifiedIntegralEvaluation_ker_eq_span_one_sub};
+\normsrc{NormalizationIntegralFactor.lean};
+\leanpath{NormalClosureData.normalizationTensorSection};
+\leanpath{NormalClosureData.normalizationTensorSection_mul};
+\leanpath{NormalClosureData.normalizationTensorSection_rightInverse};
+\leanpath{NormalClosureData.normalizationTensorEvaluation_surjective};
+\leanpath{NormalClosureData.normalizationTensorIdempotent};
+\leanpath{NormalClosureData.normalizationTensorIdempotent_spec};
+\leanpath{NormalClosureData.normalizationTensorIdempotent_baseChange};
+\leanpath{NormalClosureData.normalizationTensorQuotientEquiv};
+\leanpath{NormalClosureData.normalizationTensorQuotientEquiv_mk};
+\leanpath{NormalClosureData.normalization_finite_of_etaleModel};
+\leanpath{NormalClosureData.normalization_etale_of_etaleModel};
 \normsrc{FiniteAffineCover.lean};
 \leanpath{normalizationToIntermediate_surjective};
 \leanpath{normalizationIntermediateEquiv};

@@ -147,6 +147,45 @@ theorem normalizationTensorEvaluation_baseChange (D : NormalClosureData K L N) :
       AlgHom.id_apply, normalizedCoordinateRingBaseChangeEquiv_tmul, map_one, one_mul,
       normalizationTensorEvaluation_coe_singleAlgHom]
 
+/-- The image of the actual integral evaluation spans the marked normal
+closure over the original fraction field. This follows from the proved
+base-change square and generic surjectivity, without integral surjectivity. -/
+theorem normalizationTensorEvaluation_span (D : NormalClosureData K L N) :
+    Submodule.span K (Set.range fun x =>
+      ((D.normalizationTensorEvaluation (B := B) x : normalizedCoordinateRing B N) : N)) =
+      ⊤ := by
+  letI : FiniteDimensional K N := D.finiteNormal
+  let g : (K ⊗[B] (⨂[B] _ : L →ₐ[K] N, normalizedCoordinateRing B L)) →ₐ[K] N :=
+    D.tensorEvaluation.comp (D.normalizationTensorBaseChangeEquiv (B := B)).toAlgHom
+  have hg : Function.Surjective g :=
+    D.tensorEvaluation_surjective.comp D.normalizationTensorBaseChangeEquiv.surjective
+  have htmul (k : K) (x : ⨂[B] _ : L →ₐ[K] N, normalizedCoordinateRing B L) :
+      g (k ⊗ₜ[B] x) =
+        k • ((D.normalizationTensorEvaluation (B := B) x : normalizedCoordinateRing B N) : N) := by
+    change (D.tensorEvaluation.comp
+      (D.normalizationTensorBaseChangeEquiv (B := B)).toAlgHom) (k ⊗ₜ[B] x) = _
+    rw [D.normalizationTensorEvaluation_baseChange]
+    simp only [AlgHom.comp_apply, Algebra.TensorProduct.map_tmul, AlgHom.id_apply,
+      Algebra.smul_def]
+    exact normalizedCoordinateRingBaseChangeEquiv_tmul B K N k
+      (D.normalizationTensorEvaluation x)
+  apply top_unique
+  intro n hn
+  clear hn
+  obtain ⟨z, rfl⟩ := hg n
+  induction z using TensorProduct.induction_on with
+  | zero =>
+      have hzero : g (0 : K ⊗[B]
+          (⨂[B] _ : L →ₐ[K] N, normalizedCoordinateRing B L)) = (0 : N) :=
+        g.toRingHom.map_zero
+      exact hzero.symm ▸ Submodule.zero_mem _
+  | tmul k x =>
+      rw [htmul]
+      exact Submodule.smul_mem _ k (Submodule.subset_span ⟨x, rfl⟩)
+  | add x y hx hy =>
+      rw [map_add]
+      exact Submodule.add_mem _ hx hy
+
 end NormalClosureData
 
 end

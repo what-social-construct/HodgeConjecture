@@ -623,19 +623,16 @@ its historical prefix is unchanged and was not rerun in full. The
 checks; independent code and Lean--TeX reviews pass. The fresh unchanged
 dependency audit passes six endpoint contracts and two support reports.
 
-The next proposed bridge is to identify this specific normal-closure
-normalization `T=IntCl_B(N)` as a direct factor of a finite tensor
-construction from the actual finite etale algebra `A/B`, then use that
-identification to prove etaleness on the whole chart. The identification
-and whole-chart conclusion are not yet proved, and no pinned Mathlib
-theorem directly supplies this `T/B` etaleness. Localization to `N` and
-generic etaleness are available routes for generic calculations, not
-substitutes for the whole-chart comparison. Finiteness and full-visible
-separation alone do not imply etaleness. Overlap
-compatibility, gluing and the actual global finite etale Galois refinement
-follow as separate obligations. Base normality/Noetherianity and upstairs
-normal stalks remain explicit; deriving them from the intended smooth
-geometry and proving Chow--Betti generation remain separate tasks.
+The subsequent tensor construction in B4j--B4m addresses the specific
+normal-closure normalization `T=IntCl_B(N)` from the actual finite etale
+algebra `A/B`. B4m proves its integral factor and whole-ring
+finite-etale structure by a trace section; the checkpoint is validated.
+Finiteness and full-visible separation alone do not imply etaleness.
+Named affine-cover/morphism integration, overlap compatibility, gluing and the
+global finite etale Galois refinement remain separate obligations. The
+SP76 interfaces retain explicit base normality/Noetherianity and upstairs
+normal stalks; deriving the stalk inputs from smooth geometry and proving
+Chow--Betti generation remain separate tasks.
 
 ### B4j. Construct the finite tensor source and its marked evaluations
 
@@ -681,16 +678,14 @@ contracts and two support reports.
 SP78 in B4k below constructs the canonical base-change comparison and
 full evaluator square left open here; the preceding validation figures
 retain their SP77 scope. SP79 in B4l constructs the selected generic
-factor and canonical idempotent under separability.
-Next extend that idempotent integrally and identify the selected image
-with the existing `T=IntCl_B(N)`. Normality of the integral image and its
-equality to the integral closure must be proved, not inserted as renamed
-hypotheses. The generic maximal-kernel quotient alone is not either
-direct-factor identification, and source etaleness does not yet prove
-target etaleness. Whole-chart etaleness, overlaps, gluing and global
-finite etale Galois refinement
-remain subsequent steps. The independent Chow--Betti generation obligation
-is unchanged.
+factor and canonical idempotent under separability. SP80 in B4m proves
+the actual integral factor and whole-ring etaleness through a trace
+section; the checkpoint is validated. The integral selector, evaluation
+surjectivity and quotient comparison are constructed, not additional
+hypotheses. Named affine-cover/morphism integration, overlap
+compatibility, gluing and global finite etale Galois refinement remain
+subsequent steps. The independent Chow--Betti generation obligation is
+unchanged.
 
 ### B4k. Identify the tensor base change and full evaluator square
 
@@ -727,9 +722,10 @@ unchanged dependency audit passes six primary endpoint contracts and two
 support reports.
 
 SP79 in B4l supplies the separable generic direct-factor/idempotent
-construction. Its integral extension and identification with the existing
-`IntCl_B(N)` remain open. Whole-chart etaleness, overlap compatibility,
-gluing and independent Chow--Betti generation remain subsequent steps.
+construction. SP80 in B4m proves its integral comparison and the
+actual finite etale normalization via a trace section. Named
+affine-cover/morphism integration, overlap compatibility, gluing and
+independent Chow--Betti generation remain subsequent steps.
 
 ### B4l. Select the actual generic evaluation factor
 
@@ -764,21 +760,83 @@ Tag 00U3, is checked for the standard classification of etale
 field-algebras only; the selected factor and map comparisons are direct
 Lean proofs.
 
-The next bounded bridge first proves the required integral-closedness
-of `P_B` inside `P_K`, then descends this canonical generic idempotent
-and identifies the selected image with the existing `IntCl_B(N)`.
-Its idempotent equation proves integrality but not membership in `P_B`.
-The source need not be a domain, so upstairs-domain generic-fiber
-helpers do not directly apply; a ready etale-to-flatness/normality bridge
-was not located in the pinned Mathlib. These are proof obligations, not
-replacement hypotheses. Once an integral idempotent `E` is constructed,
-`P_B/(1-E)` can be compared with localization away from `E`, giving a
-route to etaleness by localization and composition. Identification with
-the existing normalization then requires its actual integral-closure
-properties. The field decomposition alone does not prove these integral
-statements or whole-chart etaleness. Overlaps, gluing,
-the global finite etale Galois refinement and the independent Chow--Betti
-generation problem remain separate.
+SP80 in B4m constructs an integral selector directly using the unramified
+separability tensor and integral trace. This bypasses the proposed proof
+that the whole `P_B` is integrally closed inside `P_K`; that stronger
+statement is not asserted. The idempotent equation alone would not
+establish membership in `P_B`. The field decomposition and this integral
+construction are compared through the existing `β_Σ`, with no new
+field marking or chosen factor.
+
+### B4m. Construct the actual integral factor by the trace section
+
+SP80 is proved and validated. Let `B` be a
+normal domain, `K` its specified fraction field, `N/K` finite, and
+`T=IntCl_B(N)`. For a formally unramified, essentially finite-type
+`B`-algebra `S` and an actual `B`-algebra map `f:S -> T`, the existing
+unramified separability tensor supplies an `S`-linear section
+`T -> S⊗_B T`. Contract its second factor by the integral trace `T -> B`.
+`UnramifiedIntegralFactor.lean` thereby constructs a `B`-linear map
+`r:T -> S` with `r(f(s)*t)=s*r(t)`.
+
+Assume the image of `S` in `N` spans `N` over `K`. Its separability
+tensor then centralizes both field factors. The direct contraction
+identity in `SeparabilityTrace.lean` shows `f(r(t))=t` for every `t∈T`.
+Thus the entire integral evaluation is surjective. Setting `E=r(1)`
+gives `E*s=r(f(s))`, `E²=E`, `f(E)=1`, `E*s=0 ↔ f(s)=0`, and
+`ker(f)=(1-E)`. This argument uses neither Noetherianity of `B`,
+normality or flatness of `S`, nor surjectivity as an input. The section
+is a linear map with the displayed source-action law, not an asserted
+unital algebra map.
+
+For the marked normal closure, `normalizationTensorEvaluation_span` in
+`NormalizationBaseChange.lean` derives the spanning condition from
+SP78's full evaluator square and the proved surjectivity of `ev_K`.
+An actual finite normal etale intermediate `B`-algebra `A`, with the
+specified fraction field `L` and compatible scalar towers, supplies the
+finite etale structure on the existing `P_B` from SP77. The specialization
+in `NormalizationIntegralFactor.lean` gives `r_B:T -> P_B`,
+`E_m=r_B(1)`, and an evaluation-preserving algebra equivalence
+`P_B/(1-E_m) ≃_B T`. Finiteness descends through this actual quotient.
+The same surjective evaluation and complementary-kernel formula identify
+`T` with localization of `P_B` away from `E_m`; etaleness follows by
+localization and composition. No second normalization model, separately
+supplied integral image, or generic-to-integral normality premise is used.
+
+Under `Algebra.IsSeparable K L`, comparison with the previously selected
+generic idempotent gives `β_Σ(1⊗E_m)=e_m`. The base-change map and both
+evaluators remain the existing ones. Separability is required for this
+comparison with SP79, not an additional premise of the integral section
+or whole-ring finite-etale conclusion.
+
+The exact standard source checked for this route is
+[Stacks, Lemma 10.151.4, Tag 02FL](https://stacks.math.columbia.edu/tag/02FL),
+for the unramified diagonal localization and separability tensor only.
+The trace contraction, actual section, integral factor and normalization
+identification are direct project proofs. Full-source normality remains
+unproved and unnecessary for this route. All 28 APIs compile without
+warnings. The full build passes 3198 jobs with only the two unchanged
+Challenge warnings. The focused suite and five fresh neighbor suites
+pass 153 examples and 88 enforced standard-three axiom audits. The
+unchanged dependency audit passes six primary contracts and two support
+reports. The 79-page PDF (826296 bytes), eight-page visual review and
+independent mathematical/Lean--TeX reviews pass. The central inventory
+is 940 checks, 565 examples and 832 reports; its historical prefix is
+unchanged and was not rerun in full. The SP80 parity-queue entry records
+the complete validation.
+
+The focused suite verifies the ring-level specialization to an actual
+finite dominant etale morphism and a nonempty affine base chart. Both
+section-ring normality inputs follow from normal stalks; the original
+function fields, structural maps and marked normal closure give the
+finite etale normalization without a Noetherianity premise. Next
+integrate this result into a named actual affine
+normalized-cover constructor and prove its structural-map and
+finite-etale morphism endpoints. Then prove overlap compatibility and
+glue the global finite etale Galois refinement. The earlier affine-cover
+interfaces retain their stronger base-normality/Noetherianity and
+upstairs-normal-stalk inputs. Deriving the stalk inputs from smooth
+geometry and the independent Chow--Betti generation problem remain separate.
 
 ### G0. Smooth projective setting and candidate constructions
 
@@ -1224,12 +1282,13 @@ provide variable-class coverage.
 - Review new objects against the parity registry before adding wrappers.
   Promote a proved checkpoint only after the appropriate build, focused
   regressions, dependency/axiom checks and Lean--TeX comparison.
-- **Next action:** after B4k's canonical tensor base-change comparison and
-  full evaluator square and B4l's selected generic factor, prove the
-  needed integral-closedness of `P_B` inside `P_K`, descend the canonical
-  selecting idempotent, and identify its image with
-  B4i's finite `N`-normalization. Then derive whole-chart etaleness and prove
-  overlap compatibility and gluing. B4j constructs the finite etale tensor
+- **Next action:** integrate B4m's verified scheme-chart ring specialization
+  into a named actual affine normalized-cover
+  constructor and structural-map/finite-etale morphism endpoints, then
+  prove overlap compatibility and gluing. The construction needs no
+  Noetherianity premise and bypasses the proposed whole-source
+  integral-closedness route; it does not establish that stronger result.
+  B4j constructs the finite etale tensor
   source and its actual integral/generic evaluations, with generic
   surjectivity and quotient identification proved from normal closure.
   B4i has removed the separately
@@ -2057,15 +2116,19 @@ from normal-closure generation, and identifies the corresponding generic
 kernel quotient with `N`. B4k constructs the canonical localization/base-
 change comparison `K⊗_B P_B ≃ P_K` and proves equality of evaluator
 homomorphism composites. B4l constructs the selected generic factor and
-its canonical idempotent under separability. The immediate operative
-action is now to prove the required integral-closedness of `P_B` inside
-`P_K`, descend that idempotent, and identify its image with the specific
-`N`-normalization. This must yield whole-chart
-etaleness, not just a generic statement; overlap compatibility and gluing
-follow. Finiteness and full-visible separation are proved without a
-separately supplied second affine algebra. Normality and Noetherianity of
-the base and upstairs normal stalks stay explicit; the global Galois
-refinement remains subsequent.
+its canonical idempotent under separability. B4m proves the actual
+integral section and selector, the evaluation-preserving quotient
+comparison with `IntCl_B(N)`, and its whole-ring finite-etale conclusion.
+The focused suite verifies the actual scheme-chart ring specialization
+without Noetherianity. The next action is to integrate it into a named
+actual affine normalized-cover
+constructor and structural-map/finite-etale morphism endpoints, then prove
+overlap compatibility and gluing. The trace-section route bypasses
+whole-source integral-closedness and needs no Noetherian-base premise.
+The earlier affine-cover interfaces retain their explicit base normality,
+Noetherianity and upstairs-normal-stalk inputs; the global Galois
+refinement remains subsequent. Finiteness and full-visible separation
+are already proved without a separately supplied second affine algebra.
 The existing
 fixed-field, selector and trace consumers now use extension separability;
 core-freeness and its full-visible/inertia/extension consumers need none.

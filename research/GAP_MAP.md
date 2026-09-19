@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-09-19 (SP79 selected generic evaluation factor;
+Last reviewed: 2026-09-19 (SP80 integral evaluation factor;
 validation complete; earlier checkpoint records retain their
 original scope).
 
@@ -470,24 +470,59 @@ contracts and two support reports. The PDF and independent
 mathematical/Lean--TeX reviews pass; see
 the SP79 parity-queue entry for the complete validation record.
 
-**Next bounded bridge:** prove the needed integral-closedness of `P_B`
-inside `P_K`, descend the canonical generic idempotent, and identify the
-selected image with the specific `N`-normalization, rather than supplying
-these goals as hypotheses. The equation `e_m²-e_m=0` proves integrality,
-not membership in `P_B`. This algebra need not be a domain, so
-the existing upstairs-domain generic-fiber helpers do not apply. A ready
-etale-to-flatness/normality bridge was not located in the pinned Mathlib;
-constructing the required bridge remains project work. Once an integral
-idempotent is proved to exist, its complementary-ideal quotient can be
-identified with localization away from that idempotent, providing a route
-to etaleness by localization and composition. The generic splitting does
-not yet provide that integral factor theorem.
-The proposed direct-factor route must still prove whole-chart
-etaleness; generic etaleness, finiteness and full-visible separation do
-not supply it. Then establish overlap compatibility and gluing to obtain
-the actual global finite etale Galois refinement. Normal stalks from smooth
-geometry remain separate. The function-field tower and SP71's equality
-over `X` are not a gluing theorem.
+**SP80: the actual integral evaluation factor.**
+`SeparabilityTrace.lean` contracts a central separability tensor by the
+field trace. `UnramifiedIntegralFactor.lean` combines this identity with
+the existing unramified section and integral trace over normal `B`.
+For `f:S -> T=IntCl_B(N)`, with `S/B` formally unramified and essentially
+of finite type and `N/K` finite, it constructs a `B`-linear map `r`
+satisfying `r(f(s)*t)=s*r(t)`. If the image of `S` spans `N` over `K`,
+the trace calculation gives `f∘r=id`. Consequently `E=r(1)` is
+idempotent, `f(E)=1`, `E*s=0 ↔ f(s)=0`, and `ker(f)=(1-E)`.
+Neither normality nor flatness of `S` is assumed.
+
+For the existing marked evaluation, the new
+`normalizationTensorEvaluation_span` derives this spanning condition
+from SP78's evaluator square and the existing generic surjectivity.
+`NormalizationIntegralFactor.lean` specializes to the actual finite
+normal etale intermediate model with fraction field `L`, constructing
+`r_B` and `E_m` inside `P_B`. Its quotient equivalence
+`P_B/(1-E_m) ≃_B IntCl_B(N)` preserves `ev_B` on every representative.
+The normalization is finite as a quotient of the finite tensor source;
+the kernel formula identifies it with localization away from `E_m`,
+so etaleness follows by localization and composition. Separability is
+used only for comparison with SP79's selector:
+`β_Σ(1⊗E_m)=e_m`. No Noetherian-base or integral-surjectivity premise,
+new carrier, field marking, or geometric input package is added.
+
+The proposed proof of integral-closedness of all `P_B` inside `P_K` is
+bypassed, not proved. Constructing the actual integral selector and
+identifying its quotient directly suffices for this factor. The source
+reference, Stacks Lemma 10.151.4, Tag 02FL, concerns the unramified
+diagonal localization/separability tensor; the trace-section construction
+and normalization comparison are direct project proofs. All 28 APIs
+compile without warnings; the 3198-job full build passes with only the
+two unchanged Challenge warnings. The focused suite and five fresh
+neighbors pass 153 examples and 88 enforced standard-three axiom audits.
+The unchanged dependency audit passes six primary contracts and two
+support reports. The central inventory is 940 checks, 565 examples and
+832 reports; its historical prefix is unchanged and was not rerun in
+full. The 79-page PDF (826296 bytes), eight-page visual review and
+independent mathematical/Lean--TeX reviews pass. The SP80 parity-queue
+entry records the complete validation.
+
+The focused suite passes the ring-level specialization to an actual
+finite etale affine inverse image, deriving both section-ring normality
+inputs from normal stalks without Noetherianity.
+
+**Next bounded bridge:** integrate this result
+into a named actual affine normalized-cover constructor and its
+structural-map/finite-etale morphism endpoints. Then prove compatibility
+on overlaps and glue the actual global finite etale Galois refinement.
+Normal stalks from smooth geometry remain separate. The earlier affine
+constructor retains its stronger normality and Noetherianity assumptions.
+The function-field tower and SP71's equality over `X` do not themselves
+prove gluing. Chow--Betti generation is unchanged.
 The main target is unchanged. Nonempty-boundary geometry remains an
 alternative if needed; Chow--Betti generation and convolution compatibility
 remain separate.

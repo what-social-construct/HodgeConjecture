@@ -17,9 +17,66 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source check: 2026-09-18 (SP79 selected generic evaluation factor;
+Last source check: 2026-09-19 (SP80 integral evaluation factor; validated;
 earlier source records retain
 their original validation scope).
+
+### The actual integral evaluation factor (SP80, 2026-09-19)
+
+The primary page for [Stacks, Lemma 10.151.4, Tag
+02FL](https://stacks.math.columbia.edu/tag/02FL) was checked. For an
+unramified ring map, the diagonal multiplication map is a localization
+at a single element, with the associated idempotent/separability-tensor
+description. This is the exact standard source for the unramified
+diagonal input used here. It does not itself supply the integral trace
+section, prove integral-evaluation surjectivity, identify the marked
+normalization, or prove a global Galois refinement.
+
+`SeparabilityTrace.lean` proves directly that contraction by the algebra
+trace of a central separability tensor equals its product; multiplying
+one tensor factor by an element then recovers that element under trace
+contraction. `UnramifiedIntegralFactor.lean` uses Mathlib's actual
+`Algebra.FormallyUnramified.sec` and `Algebra.intTraceAux` to construct
+`r:T -> S` over a normal base domain `B`, for its fraction field `K`,
+finite `N/K`, `T=IntCl_B(N)`, and `f:S -> T` with `S/B` formally
+unramified and essentially of finite type. Generic spanning of the
+actual image makes the transported tensor central on `N`; the trace
+identity gives `f∘r=id`. Its value `E=r(1)` is idempotent and the
+kernel is `(1-E)`. The section respects the source action through `f`.
+This needs neither normality nor flatness of `S`, Noetherianity of `B`,
+nor a separately assumed surjection.
+
+`normalizationTensorEvaluation_span` derives the required spanning
+condition from SP78's full evaluator square and the proved generic
+surjectivity. For the actual finite normal etale intermediate model,
+`NormalizationIntegralFactor.lean` specializes the section to `ev_B`,
+identifies `P_B/(1-E_m)` with the existing `IntCl_B(N)` by that evaluator,
+and derives finite etale structure on the whole normalization. Finiteness
+comes from the proved quotient of the finite tensor source. For
+etaleness, `IsLocalization.away_of_isIdempotentElem` uses the actual
+surjection and kernel formula; `Algebra.Etale.of_isLocalization_Away`
+and composition then apply. Under separability,
+`β_Σ(1⊗E_m)=e_m` compares the integral selector with SP79's existing
+generic one. The actual integral factor and finite-etale result do not
+add a separability premise.
+
+These are validated direct project proofs against the pinned Mathlib
+APIs. No literature axiom or new source-input package is
+introduced. The whole-source integral-closedness route is bypassed, not
+proved, and is not attributed to Tag 02FL. All 28 APIs compile without
+warnings; the 3198-job full build passes with only the two unchanged
+Challenge warnings. The focused suite and five fresh neighbors pass
+153 examples and 88 enforced standard-three axiom audits. The unchanged
+dependency audit passes six primary contracts and two support reports.
+The central inventory is 940 checks, 565 examples and 832 reports; the
+historical prefix is unchanged and was not rerun in full. The 79-page
+PDF (826296 bytes), eight-page visual review and independent
+mathematical/Lean--TeX reviews pass; the SP80 parity-queue entry records
+the complete validation. The focused suite
+verifies the actual scheme-chart ring specialization from normal stalks
+without Noetherianity. Named affine normalized-cover/morphism integration,
+overlap compatibility, gluing, normal stalks from smooth geometry and
+Chow--Betti generation retain their separate obligations.
 
 ### The selected generic evaluation factor (SP79, 2026-09-18)
 
@@ -57,10 +114,12 @@ reports; PDF and independent review pass. Validation completed on
 2026-09-19, following the 2026-09-18 source check;
 the SP79 parity-queue entry records detailed validation.
 
-Integral-closedness of `P_B` inside `P_K`, descent of this canonical
-idempotent and identification of the selected image with `IntCl_B(N)`,
-whole-chart etaleness and gluing remain distinct obligations, not
-consequences claimed for Tag 00U3.
+The integral selector, its comparison with this canonical generic
+idempotent, and the actual finite etale normalization are proved in
+SP80 above. The trace-section route bypasses
+whole-source integral-closedness. These integral statements and gluing
+are not consequences claimed for Tag 00U3; the SP79 validation record
+retains its original scope.
 
 ### Tensor base change and the full evaluator square (SP78, 2026-09-18)
 
@@ -105,9 +164,10 @@ the four suites. The fresh unchanged dependency audit passes six primary
 endpoint contracts and two support reports.
 
 SP79 supplies generic direct-factor/idempotent splitting under
-separability. Integral extension of its canonical selecting idempotent,
-normality and identification of the selected image with `IntCl_B(N)`, and
-whole-chart etaleness/gluing remain to be proved.
+separability. SP80 proves the integral selector, its exact generic
+comparison and the actual finite etale normalization through a trace
+section. Named affine-cover/morphism integration and gluing
+remain separate and are not attributed to Tag 0307.
 
 ### Finite tensor source and marked evaluations (SP77, 2026-09-18)
 
@@ -165,13 +225,12 @@ factor. SP78 above constructs the canonical comparison
 `K⊗_B P_B ≃ P_K` and full evaluator homomorphism equality left open at
 SP77; the preceding validation figures retain their SP77 scope. SP79
 constructs the selected generic factor and canonical idempotent under
-separability. Extension of that idempotent over `B` and normality/equality
-of its integral image with
-`IntCl_B(N)` follow as distinct proof obligations. Whole-chart etaleness
-and subsequent overlap/gluing arguments are not consequences of the current
-pure-tensor identity alone. The existing
-Stacks citations for normalization and Galois closure keep their original
-scope; no additional source theorem is claimed to discharge these gaps.
+separability. SP80 proves the integral factor and whole-ring
+finite-etale normalization directly by a trace section.
+These conclusions and subsequent overlap/gluing arguments do
+not follow from the pure-tensor identity alone. The existing Stacks
+citations for normalization and Galois closure keep their original
+scope; Tag 02FL is used only for the unramified diagonal input.
 
 ### Finite normal-closure normalization and actual affine cover (SP76, 2026-09-18)
 
@@ -208,15 +267,15 @@ The 74-page PDF (788608 bytes) passes its build, warning scan and visual
 checks; independent code and Lean--TeX reviews pass. The fresh unchanged
 dependency audit passes six endpoint contracts and two support reports.
 
-The next proposed geometric bridge identifies this specific normal-closure
-normalization as a direct factor of a finite tensor construction from
-the actual finite etale intermediate algebra. That identification is not
-yet proved, and the pinned Mathlib API has no direct whole-chart etaleness
-theorem for this normalization. Generic etaleness and localization to
-`N` do not give that conclusion, nor do finiteness and full-visible
-separation. Overlap compatibility, gluing and the actual
-global finite etale Galois refinement remain separate, as do normal
-stalks from smooth geometry and Chow--Betti generation.
+SP80 proves the actual integral normalization factor and whole-ring
+finite-etale structure using the actual finite etale intermediate algebra
+and an integral trace section. This is a direct
+construction, not a consequence attributed to generic etaleness,
+finiteness or full-visible separation. Named affine-cover/morphism integration,
+overlap compatibility, gluing and the global finite etale Galois
+refinement remain separate, as do normal stalks from smooth geometry and
+Chow--Betti generation. The preceding SP76 source and validation records
+retain their original scope.
 
 ### Local separability and consumer hypothesis cleanup (SP75, 2026-09-18)
 

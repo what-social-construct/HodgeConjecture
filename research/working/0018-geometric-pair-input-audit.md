@@ -580,3 +580,65 @@ that integral comparison or whole-chart etaleness. Overlap compatibility,
 gluing, the global finite etale Galois refinement and normal stalks from
 smooth geometry remain separate. Chow--Betti generation is unchanged.
 All earlier audit text is preserved unchanged.
+
+## 16. SP80 follow-up: the actual integral normalization factor
+
+The checkpoint is proved and validated. The previous proposed
+whole-source integral-closedness route is bypassed by constructing an
+integral selector directly. It is not asserted that all of `P_B` is
+normal or integrally closed inside `P_K`.
+
+For normal `B` with fraction field `K`, finite `N/K`, and
+`T=IntCl_B(N)`, `UnramifiedIntegralFactor.lean` contracts the existing
+unramified separability section by the integral trace. For an actual
+`f:S -> T`, with `S/B` formally unramified and essentially of finite
+type, this gives a `B`-linear map `r:T -> S` respecting the source
+action: `r(f(s)*t)=s*r(t)`. If the image of `S` spans `N` over `K`,
+the central separability-tensor identity from `SeparabilityTrace.lean`
+gives `f∘r=id`. The resulting `E=r(1)` is idempotent, evaluates to
+one, annihilates exactly `ker(f)`, and generates its complement:
+`ker(f)=(1-E)`. Normality and flatness of the source, Noetherianity of
+the base, and integral-evaluation surjectivity are not assumptions.
+
+For the marked normal closure, the new
+`normalizationTensorEvaluation_span` derives generic spanning from the
+existing evaluator square and generic surjectivity. The actual finite
+normal etale intermediate model supplies the finite etale structure
+on the existing `P_B`. `NormalizationIntegralFactor.lean` constructs
+`r_B` and `E_m=r_B(1)` and identifies `P_B/(1-E_m)` with the original
+`T` by the original evaluator, including its formula on every quotient
+representative. This makes `T` finite. The kernel formula and actual
+surjectivity identify `T` with localization away from `E_m`, giving
+whole-ring etaleness. Under separability, the comparison with the
+previous generic selector is `β_Σ(1⊗E_m)=e_m`. The integral construction
+itself adds no separability premise, new field marking, tensor carrier,
+second normalization model or factor-selection hypothesis.
+
+The checked primary source [Stacks, Lemma 10.151.4, Tag
+02FL](https://stacks.math.columbia.edu/tag/02FL) supplies the standard
+unramified diagonal localization/separability-tensor input only. The
+trace construction and actual normalization comparison are direct
+project proofs; no literature axiom or new source-input package is used.
+All 28 APIs compile without warnings. The full build passes 3198 jobs
+with only the two unchanged Challenge warnings. The focused suite and
+five fresh neighbors pass 153 examples and 88 enforced standard-three
+axiom audits; the focused suite contributes 30 examples, three private
+helpers and 28 audits. The unchanged dependency audit passes six primary
+contracts and two support reports. The central inventory is 940 checks,
+565 examples and 832 reports; its historical prefix is unchanged and was
+not rerun in full. The 79-page PDF (826296 bytes), eight-page visual
+review and independent mathematical/Lean--TeX reviews pass. The SP80
+parity-queue entry records the complete validation.
+
+The focused suite verifies the ring-level specialization to the actual
+finite-etale affine inverse image: both section-ring normality inputs
+are derived from normal stalks, and the original function fields and
+marked normal closure give finite etale normalization without
+Noetherianity. Next integrate this result into a
+named actual affine normalized-cover constructor and structural-map/
+finite-etale morphism endpoints. Overlap compatibility, gluing and the
+global finite etale Galois refinement are still required. The earlier
+affine-cover constructor retains its stronger normality/Noetherianity
+and normal-stalk inputs; deriving those stalk inputs from smooth geometry
+and Chow--Betti generation remain separate. All earlier audit text is
+preserved unchanged.

@@ -135,6 +135,93 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP77 | Finite tensor source, marked field quotient and integral evaluation | CONSTRUCT / EVALUATE / COMPARE | Prove finite-index tensor finiteness/etaleness, evaluate onto the existing marked normal closure, identify the actual generic kernel quotient, and restrict the same embeddings to integral closures with exact factor/pure-tensor compatibility. Keep integral factor identification and whole-chart etaleness separate. | PROVED / VALIDATED |
 | SP78 | Canonical tensor base change and full evaluator homomorphism square | LOCALIZE / COMPARE / COMMUTE | Identify each localized integral closure with its algebraic ambient field, construct finite-index tensor base change, and prove the actual evaluator homomorphisms commute. Relocate the three existing evaluator helpers without duplication. | PROVED / VALIDATED |
 | SP79 | Selected generic evaluation factor and canonical idempotent | SPLIT / SELECT / CHARACTERIZE | Derive finite etale source structure under extension separability, split the actual evaluation kernel factor, identify its first projection with the existing evaluator, and characterize its selecting idempotent and complementary kernel ideal. | PROVED / VALIDATED |
+| SP80 | Integral trace section, actual normalization factor and whole-ring etaleness | CONTRACT / SELECT / IDENTIFY / LOCALIZE | Derive generic spanning from the existing evaluator square, construct the integral selector by trace, identify its complementary quotient with the actual normalization, derive finite etale structure, and compare with the existing generic selector. Whole-source normality is bypassed. | PROVED / VALIDATED |
+
+SP80 (2026-09-19): **integral trace section / actual normalization factor**.
+The checkpoint is proved and validated. Over a normal base domain
+`B` with fraction field `K`, let `N/K` be finite and `T=IntCl_B(N)`.
+For an actual map `f:S -> T`, with `S/B` formally unramified and
+essentially of finite type, `UnramifiedIntegralFactor.lean` contracts
+the existing `Algebra.FormallyUnramified.sec` by `Algebra.intTraceAux`
+to construct a `B`-linear map `r:T -> S`. It satisfies the source-action
+law `r(f(s)*t)=s*r(t)`. If the image of `S` spans `N` over `K`, the
+central-tensor contraction identity in `SeparabilityTrace.lean` proves
+`f(r(t))=t`. Thus `E=r(1)` is an integral idempotent with `f(E)=1`,
+`E*s=r(f(s))`, `E*s=0 ↔ f(s)=0`, and `ker(f)=(1-E)`.
+
+The new `normalizationTensorEvaluation_span` derives the needed spanning
+condition from the existing SP78 comparison and generic surjectivity.
+`NormalizationIntegralFactor.lean` specializes to the actual finite
+normal etale intermediate model with fraction field `L`, constructs
+`r_B` and `E_m` on the original integral tensor carrier, and identifies
+`P_B/(1-E_m)` with `T` by the original evaluator. The quotient is finite
+because `P_B` is finite; localization away from `E_m` gives its etaleness.
+Under extension separability, the generic comparison is exactly
+`β_Σ(1⊗E_m)=e_m`. Separability is used for this comparison with SP79,
+not as an added premise of the integral factor or whole-ring finite-etale
+result. No Noetherian-base, whole-source normality/flatness or assumed
+integral-surjectivity premise is added.
+
+Notation parity:
+
+| Lean object / group | Mathematical role | TeX notation |
+| --- | --- | --- |
+| `traceContraction`, `_tmul`, `_eq_lmul_of_central`, `_eq_one_of_central`, `_one_tmul_mul` | contraction of a central separability tensor by the algebra trace | prose only; trace-contraction identity |
+| `unramifiedIntegralSection`, `_mul`, `_rightInverse`; `unramifiedIntegralEvaluation_surjective` | generic integral trace section, source-action law and derived surjectivity | prose only; `r` within the generic lemma |
+| `unramifiedIntegralIdempotent`, `_map`, `_mul`, `_baseChange_mul`, `_isIdempotentElem`, `_mul_eq_zero_iff`; `unramifiedIntegralEvaluation_ker_eq_span_one_sub` | integral selector, scalar-extension action, idempotence and complementary kernel | prose only; `E=r(1)` within the generic lemma |
+| `NormalClosureData.normalizationTensorEvaluation_span` | derive generic spanning for the original integral evaluation | existing \(\operatorname{ev}_B\), \(\beta_\Sigma\) and \(\operatorname{ev}_K\); no independent notation |
+| `.normalizationTensorSection`, `_mul`, `_rightInverse`; `.normalizationTensorEvaluation_surjective` | actual normalization trace section and original evaluation | \(r_B:T\to P_B\), \(\operatorname{ev}_B r_B=\operatorname{id}_T\) |
+| `.normalizationTensorIdempotent`, `_spec`, `_baseChange` | integral selecting idempotent and exact generic comparison | \(E_{\mathfrak m}=r_B(1)\), \(\ker(\operatorname{ev}_B)=(1-E_{\mathfrak m})\), \(\beta_\Sigma(1\otimes E_{\mathfrak m})=e_{\mathfrak m}\) |
+| `.normalizationTensorQuotientEquiv`, `_mk` | actual complementary quotient and evaluator-preserving comparison | \(P_B/(1-E_{\mathfrak m})\simeq_B T\); no second symbol for the comparison |
+| `.normalization_finite_of_etaleModel`, `.normalization_etale_of_etaleModel` | finite etale structure on the existing normalization | existing \(T=\widetilde B_N\) |
+
+Retain the existing `Σ`, `P_B`, `P_K`, `ev_B`, `ev_K`, `m`, `β_L`,
+`β_N`, `β_Σ` and `e_m`. The only new independent notation is the
+actual section `r_B` and its integral selector `E_m`; no second kernel
+symbol, tensor carrier, field marking, normalization model or Chow
+projector is introduced. The section is linear with the stated action
+law, not an asserted unital algebra section. The proposed normality/
+integral-closedness theorem for all of `P_B` is bypassed, not proved.
+
+The exact primary source checked is [Stacks, Lemma 10.151.4, Tag
+02FL](https://stacks.math.columbia.edu/tag/02FL), for the unramified
+diagonal localization/separability tensor only. The trace contraction,
+actual integral section, normalization factor and generic comparison
+are direct project proofs, not new source-input packages or axioms.
+
+Validation status: complete. All 28 public APIs compile: five
+trace-contraction, eleven generic integral-factor, one generic-span,
+and eleven marked normalization-factor declarations. The scoped
+`NormalizationIntegralFactor` build passes 2759 jobs without warnings.
+The central inventory is 940 checks, 565 examples and 832 axiom reports;
+the historical audit prefix is byte-identical and was not rerun in full.
+All 28 declarations have notation/source parity. The 79-page PDF
+(826296 bytes) passes its build and final warning/box/reference scan.
+Visual checks of pages 11, 12, 13, 60, 71, 72, 77 and 79 pass. The
+historical 0018 prefix and SP79-to-end queue suffix are byte-identical.
+The focused suite passes 30 examples and three private helpers without
+warnings or errors, with 28 enforced standard-three axiom audits and a
+unique-declaration registry check. It includes the actual finite-etale
+scheme-chart ring specialization: both section-ring normality inputs
+follow from normal stalks, and no Noetherianity premise is used.
+Independent mathematical and Lean--TeX review pass. The full build,
+with 3198 jobs, passes with only the two unchanged Challenge placeholder
+warnings. Fresh SP79, SP78, SP77, SP76 and SP74 suites pass 25/16,
+25/13, 28/17, 23/7 and 22/7 examples/enforced audits respectively,
+without warnings or errors. These six suites pass 153 examples and
+88 enforced standard-three axiom audits in total. The fresh unchanged
+dependency audit passes six primary endpoint contracts and two support
+reports. Earlier checkpoint counts retain their historical scope.
+
+The next bounded bridge is to integrate the verified
+scheme-chart ring specialization into a named actual affine
+normalized-cover constructor and structural-map/finite-etale morphism
+endpoints, followed by overlap compatibility and gluing of the global
+finite etale Galois refinement. The earlier affine-cover
+constructor retains its stronger normality/Noetherianity and upstairs-normal-stalk
+inputs; deriving the stalk inputs from smooth geometry and Chow--Betti
+generation remain separate. The SP79 (2026-09-18) block and all subsequent
+queue history below are preserved unchanged.
 
 SP79 (2026-09-18): **selected generic evaluation factor / canonical idempotent**.
 `ReducedArtinianFactor.lean` constructs the factor selected by a surjective
