@@ -30,6 +30,7 @@ import HodgeConjecture.Boundary.Normalization.NormalizationBaseChange
 import HodgeConjecture.Boundary.Normalization.NormalClosureFactor
 import HodgeConjecture.Boundary.Normalization.NormalizationIntegralFactor
 import HodgeConjecture.Boundary.Normalization.FiniteEtaleNormalClosure
+import HodgeConjecture.Boundary.Normalization.FiniteEtaleNormalClosureRestriction
 import HodgeConjecture.Boundary.Normalization.DeckAction
 import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
 import HodgeConjecture.Boundary.Normalization.ConjugateNormalization
@@ -123,6 +124,13 @@ is a finite étale surjective cover of each nonempty affine chart and refines
 the original whole inverse image by a finite étale surjective map. The
 normalization triangle commutes over both the chart and the original scheme.
 Explicit normal-stalk hypotheses supply these chartwise constructions.
+
+Enlarging the base gives the same-element inclusion between the existing
+normalization rings. Localization identifies the target with the localized
+source and with its canonical tensor base change. Principal restriction is
+an open immersion with the expected inverse-image basic open. On actual
+nested affine charts, the original germ maps, normalization isomorphisms,
+chart structural maps and marked refinements all commute with restriction.
 
 The broad normalization-purity/global-triviality prototype is preserved in
 `research/archive/legacy-lean/`, not as an importable library module.

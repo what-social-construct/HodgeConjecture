@@ -1,8 +1,8 @@
 # Current gap map
 
-Last reviewed: 2026-09-19 (SP81 actual finite etale affine refinement;
-validation complete; earlier checkpoint records retain their
-original scope).
+Last reviewed: 2026-09-19 (SP82 same-ambient localization and actual affine
+restriction; validation complete; earlier checkpoint records retain
+their original validation scope).
 
 Start with [the target and equivalence sketch](TARGET_BRIDGE.md): it fixes
 the geometric statement, separates the two directions of the proved bridge,
@@ -558,11 +558,47 @@ central inventory is 959 checks, 565 examples and 851 reports; its
 historical prefix is unchanged and the historical file was not
 re-elaborated. The SP81 parity-queue entry records the complete validation.
 
-**Next bounded bridge:** prove compatibility under
-localization and on overlaps, establish cocycle identities, glue the
-actual global refinement, and construct its compatible Galois action.
+**SP82: same-ambient localization and actual affine restriction.**
+The 17 generic APIs in `NormalizationLocalization.lean` construct the
+same-element map `rho^E_{B,C}:IntCl_B(E) -> IntCl_C(E)`, its injectivity,
+strict identity/composition and ambient-map naturality. For a compatible
+localization `B -> C`, its target is the corresponding localization and
+`C tensor_B IntCl_B(E)` is canonically equivalent to `IntCl_C(E)`, with
+the original scalar/inclusion formula. Contravariant `j^E=Spec(rho)`
+has the structural, naturality and identity/composition equalities.
+The open-immersion/range endpoints are principal-localization only;
+arbitrary multiplicative-set localization is not claimed to be open.
+
+The nine APIs in `AffineNormalizationRestriction.lean` derive scalar
+towers from actual section restriction/germ maps, construct the existing
+model's restriction and its structural squares, prove principal-open
+localization/open immersion, and prove naturality of the whole-preimage
+normalization isomorphism. The two APIs in
+`FiniteEtaleNormalClosureRestriction.lean` give the actual structural
+and marked-refinement squares for any nonempty affine `W <= U`, not
+only principal opens. They retain the same normal closure and marking.
+The structural square needs dominant `p`; the refinement square adds
+finite `p` and normal stalks on its inverse images. Neither needs
+etaleness, base normality or Noetherianity.
+
+All 28 APIs compile without warnings in the 2764-job scoped build. The
+focused suite passes 39 examples and 28 enforced standard-three axiom
+audits. Three fresh neighbor suites also pass; the four suites total
+107 examples and 71 audits, without warnings or errors. The full build
+passes 3203 jobs with only the two unchanged Challenge warnings. The
+unchanged dependency audit passes six primary contracts and two support
+reports. All 28 API parity checks and independent review pass. The
+81-page PDF (835379 bytes) has a clean final log and visual checks of
+pages 13, 14, 61, 62, 73, 74 and 81. The static central inventory is
+987 checks, 565 examples and 879 reports; its historical prefix is
+unchanged and was not re-elaborated in full. The SP82 parity-queue entry
+records the complete validation.
+
+**Subsequent bridge:** assemble the required actual overlap comparisons,
+establish cocycle identities, glue the actual global refinement, and
+construct its compatible Galois action.
 Normal stalks from smooth geometry remain separate. The older SP76
-constructor retains its stronger assumptions; this new finite-etale
+constructor retains its stronger assumptions; the SP81 finite-etale
 constructor removes its Noetherian-base requirement. The chartwise
 factorization identities do not themselves prove gluing. Chow--Betti
 generation is unchanged.

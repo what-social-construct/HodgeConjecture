@@ -1,7 +1,8 @@
 # Claim ledger
 
-Last audited: 2026-09-19 (SP81 actual finite etale affine refinement, validated; earlier checkpoint
-validation records are retained with their original scope).
+Last audited: 2026-09-19 (SP82 same-ambient localization and actual affine
+restriction, validated; earlier checkpoint validation records retain
+their original scope).
 
 Status vocabulary:
 
@@ -17,6 +18,51 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Same-ambient localization and actual affine restriction (A11bn / SP82)
+
+Status: `FORMAL`; checkpoint validated. The 17 APIs in
+`NormalizationLocalization.lean` construct the
+same-element inclusion `rho^E_{B,C}:IntCl_B(E) -> IntCl_C(E)`, prove its
+injectivity and strict identity/composition and ambient-map naturality,
+and exhibit the target as the corresponding localization whenever
+`B -> C` is one. The canonical tensor base-change equivalence preserves
+the actual ambient/scalar formula. Compatible scalar maps encode
+invertible denominators in `E`; normality, Noetherianity and finite
+degree are not additional hypotheses. Contravariant `j^E=Spec(rho)`
+has structural/naturality squares and identity/composition laws.
+Principal localization gives an open immersion with exact inverse-image
+range; arbitrary multiplicative-set localization is not asserted open.
+
+The nine APIs in `AffineNormalizationRestriction.lean` derive actual
+section scalar towers, construct restriction and structural squares,
+prove principal-open localization/open immersion and naturality of the
+whole-preimage normalization isomorphism. The two APIs
+`finiteEtaleAffineNormalClosureToChart_restriction` and
+`finiteEtaleAffineNormalClosureToPreimage_restriction` in
+`FiniteEtaleNormalClosureRestriction.lean` give the actual structural
+and marked-refinement squares for any nonempty affine `W <= U` on the
+same normal closure. The first needs dominant `p`; the second adds
+finite `p` and normal stalks on the inverse images. Neither assumes
+etaleness, base normality or Noetherianity. No replacement field,
+marking, normalization carrier or input axiom is introduced.
+
+All 28 APIs compile without warnings in the 2764-job scoped build. The
+focused suite passes 39 examples and 28 enforced standard-three axiom
+audits. Three fresh neighbor suites also pass; the four suites total
+107 examples and 71 audits, without warnings or errors. The full build
+passes 3203 jobs with only the two unchanged Challenge warnings. The
+unchanged dependency audit passes six primary contracts and two support
+reports. All 28 API parity checks and independent review pass. The
+81-page PDF (835379 bytes) has a clean final log and seven-page visual
+review. The static central inventory is 987 checks, 565 examples and
+879 reports; its historical prefix is unchanged and was not re-elaborated
+in full. The SP82 parity-queue entry records the complete validation.
+
+Generic self/composition identities are proved; actual overlap
+comparisons and cocycle assembly,
+global gluing/Galois compatibility, normal-stalk hypotheses from smooth
+geometry and Chow--Betti generation remain separate obligations.
 
 ## The actual finite etale affine refinement (A11bm / SP81)
 

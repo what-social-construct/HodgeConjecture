@@ -137,6 +137,89 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP79 | Selected generic evaluation factor and canonical idempotent | SPLIT / SELECT / CHARACTERIZE | Derive finite etale source structure under extension separability, split the actual evaluation kernel factor, identify its first projection with the existing evaluator, and characterize its selecting idempotent and complementary kernel ideal. | PROVED / VALIDATED |
 | SP80 | Integral trace section, actual normalization factor and whole-ring etaleness | CONTRACT / SELECT / IDENTIFY / LOCALIZE | Derive generic spanning from the existing evaluator square, construct the integral selector by trace, identify its complementary quotient with the actual normalization, derive finite etale structure, and compare with the existing generic selector. Whole-source normality is bypassed. | PROVED / VALIDATED |
 | SP81 | Actual finite etale affine normalized cover and marked refinement | TRANSPORT / CONSTRUCT / FACTOR | Preserve the actual intermediate scheme's local presentations through the tensor source and selected open component; construct the existing cover with finite-etale structural/refinement maps and exact factorization on the actual chart and over the original base. | PROVED / VALIDATED |
+| SP82 | Same-ambient normalization localization and actual affine restriction | LOCALIZE / RESTRICT / COMMUTE | Retain the ambient ring, normalization carriers and original marking; prove generic localization/naturality/composition, principal-open restriction, and both actual structural/refinement squares on nested affine charts. | PROVED / VALIDATED |
+
+SP82 (2026-09-19): **same-ambient localization / actual affine restriction**.
+The checkpoint is proved and validated. The 28 production APIs compile
+cleanly in the 2764-job scoped build.
+Seventeen are in `NormalizationLocalization.lean`, nine in
+`AffineNormalizationRestriction.lean` and two in
+`FiniteEtaleNormalClosureRestriction.lean`. The canonical inclusion
+`rho^E_{B,C}:IntCl_B(E) -> IntCl_C(E)` keeps each ambient element
+unchanged. Its injectivity, identity, composition and naturality with
+the existing normalization map are proved. Under `C=M⁻¹B`, its target
+carries the corresponding localization structure, and the canonical
+tensor base-change equivalence preserves the actual scalar/inclusion
+formula on pure tensors. The compatible ambient `C`-action makes the
+denominators units. No normality, Noetherianity, finite-degree premise,
+replacement field, normalization carrier or input axiom is introduced.
+
+The contravariant scheme map has structural and naturality squares
+and generic identity/composition laws. Principal localization gives
+an open immersion whose range is the inverse image of the original
+basic open. Arbitrary multiplicative-set localization is not asserted
+to be open. The actual adapter derives its scalar towers from section
+restriction and generic germs, constructs the restriction morphism
+and its structural squares, proves principal-open localization/open
+immersion, and proves naturality of the existing whole-preimage
+normalization isomorphism.
+
+For any nonempty affine `W <= U`, the normal-closure specialization
+proves both `pi_U after j = iota after pi_W` and
+`lambda_U after j = tilde-iota after lambda_W`, on the original marked
+normal closure. The chart square needs dominant `p`; the refinement
+square adds finite `p` and explicit normal stalks on both inverse images.
+Neither square needs etaleness, base normality or Noetherianity.
+The smaller base chart is `W`; retain SP81's `V=p⁻¹U` for the upstairs
+open. The generic identity/composition laws are proved, but actual
+overlap/coherence data and global gluing are not assembled by them.
+
+Notation parity:
+
+| Lean object / group | Mathematical role | TeX notation |
+| --- | --- | --- |
+| `normalizationBaseChangeMap`, `_coe`, `_injective`, `_self`, `_trans`, `_naturality` | existing integral-closure inclusion and strict same-ambient laws | \(\rho^E_{B,C}:T_B(E)\to T_C(E)\); \(T_B(E)=\operatorname{IntCl}_B(E)\) is local shorthand, not a second object |
+| `normalizedCoordinateRing_isLocalization`, `normalizationLocalizationBaseChangeEquiv`, `_tmul` | actual localization and tensor comparison preserving ambient scalars | \(C\otimes_B T_B(E)\simeq T_C(E)\) |
+| `normalizationBaseChange`, `_comp_toBase`, `_naturality`, `_self`, `_trans` | contravariant map and structural/naturality/composition laws | \(j^E_{B,C}=\operatorname{Spec}(\rho^E_{B,C})\); laws are prose only |
+| `normalizedCoordinateRing_isLocalizationAway`, `normalizationBaseChange_isOpenImmersion`, `_range` | principal localization and exact original-basic-open inverse-image range | existing \(j^E_{B,B_f}\), \(\mu_E^{-1}(D(f))\) |
+| `sectionRestriction_functionFieldScalarTower`, `sectionRestriction_ambientScalarTower`, `finiteAffinePreimageRestriction_functionFieldScalarTower` | derived compatibility of actual restrictions, germs and ambient actions | existing section maps and ambient fields; prose only |
+| `affineNormalizationRestriction`, `_comp_toBase`, `_comp_toChart`, `_basicOpen_isLocalization`, `_basicOpen_isOpenImmersion` | actual normalization restriction and principal-open specialization | \(j^N_{W,U}:Z_W\to Z_U\), using the same \(N\) |
+| `finiteAffinePreimageNormalizationIso_restriction` | naturality of the existing whole-preimage normalization isomorphism | existing \(\nu_{p,U},\nu_{p,W}\); inclusions \(\iota,\widetilde\iota\) |
+| `finiteEtaleAffineNormalClosureToChart_restriction`, `finiteEtaleAffineNormalClosureToPreimage_restriction` | actual structural and marked-refinement restriction squares | \(\pi_U\circ j^N_{W,U}=\iota\circ\pi_W\), \(\lambda_U\circ j^N_{W,U}=\widetilde\iota\circ\lambda_W\) |
+
+Primary sources 0307, 01I3 and 00E2 were checked in the exact scopes
+recorded in the source ledger. The paper reuses its 0307 entry and adds
+only `StacksPrincipalLocalizationOpen` (01I3); no source axiom is used.
+The focused suite passes 39 examples and 28 enforced standard-three
+axiom audits without warnings or errors. Three fresh neighbor suites
+also pass cleanly: SP81 `FiniteEtaleNormalClosureVerification` 25/19,
+SP71 `FiniteAffineChartVerification` 18/11, and SP78
+`NormalizationBaseChangeVerification` 25/13. The four suites total
+107 examples and 71 audits. The full build passes 3203 jobs with only
+the two unchanged `Challenge.lean` placeholder warnings at lines 33 and
+46. The fresh unchanged `ProofDependencies` audit passes six primary
+endpoint contracts and two support reports without warnings or errors.
+
+The single PDF passes its final build at 81 pages and 835379 bytes.
+The final log has no warnings, undefined references or citations, or
+overfull/underfull boxes. Visual checks of pages 13, 14, 61, 62, 73, 74
+and 81 pass, including the final crosswalk path formatting. Independent
+mathematical/code/Lean--TeX review passes with no defects.
+All 28 code/central/test/TeX parity checks pass, with exactly one central
+check and axiom report per new declaration. The static central inventory
+is 987 checks, 565 examples and 879 reports; its historical prefix is
+byte-identical to `db8a206` and was not re-elaborated in full.
+The audit 0018 prefix and the SP81-to-end queue suffix are also
+byte-identical to `db8a206`; `ProofDependencies` is unchanged.
+The three production modules have no axioms, proof placeholders or
+native-decision escapes. Earlier validation records retain their
+original scope.
+
+Next assemble actual overlap comparisons and coherence/cocycle data,
+then glue the refinement and its compatible global Galois action.
+Normal stalks from smooth geometry and Chow--Betti generation remain
+separate. The SP81 block and all subsequent queue history below are
+preserved byte-for-byte.
 
 SP81 (2026-09-19): **actual finite etale affine cover / marked refinement**.
 The checkpoint is proved and validated. For a finite dominant etale

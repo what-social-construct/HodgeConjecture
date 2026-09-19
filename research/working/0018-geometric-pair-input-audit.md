@@ -695,3 +695,61 @@ Compatibility under localization and on overlaps, cocycle
 identities, gluing and the global Galois action remain to be proved.
 Deriving normal stalks from smooth geometry and Chow--Betti generation
 remain separate. All earlier audit text is preserved unchanged.
+
+## 18. SP82 follow-up: same-ambient localization and actual affine restriction
+
+The checkpoint is proved and validated. The 28 production APIs compile
+cleanly in the 2764-job scoped build:
+17 generic localization APIs, nine actual-restriction APIs and two
+marked normal-closure restriction APIs. The same-element inclusion
+between existing integral closures has injectivity and strict
+identity/composition and ambient-map naturality. Under compatible base
+localization it exhibits the target as the corresponding localization;
+the tensor base-change equivalence preserves the original scalar and
+ambient inclusion on pure tensors. The ambient action already makes
+denominators units. No normality, Noetherianity, finite-degree premise
+or replacement field is needed for this algebraic comparison.
+
+The contravariant scheme map has its structural/naturality squares
+and generic identity/composition laws. Principal localization gives
+an open immersion with the exact inverse-image range. Arbitrary
+multiplicative-set localization is not claimed to be an open immersion.
+The actual adapter derives section scalar towers, constructs
+normalization restriction and its structural squares, proves its
+principal-open localization/open-immersion specialization, and proves
+naturality of the original whole-preimage normalization isomorphism.
+
+Both the actual structural map and marked refinement commute with
+restriction for any nonempty affine `W <= U`, not just principal opens.
+The original ambient field, normal closure and marking are unchanged.
+The chart square needs dominant `p`; the refinement square also needs
+finite `p` and explicit normal stalks on its inverse images. Neither
+requires etaleness, base normality or Noetherianity. The existing
+`pi_U`, `lambda_U` and visible `nu_{p,U}` are retained; no new cover
+carrier, geometric hypothesis package or source axiom is introduced.
+
+The exact checked primary source scopes are integral-closure
+localization (0307), principal-localization open immersion (01I3),
+and basic-open inverse image (00E2). The paper reuses 0307 and adds
+only the 01I3 bibliography entry. The focused suite passes 39 examples
+and 28 enforced standard-three axiom audits. Three fresh neighbor
+suites also pass; together the four suites have 107 examples and
+71 audits, without warnings or errors. The full build passes 3203 jobs
+with only the two unchanged Challenge warnings. The fresh unchanged
+dependency audit passes six primary endpoint contracts and two support
+reports without warnings or errors.
+
+The 81-page PDF (835379 bytes) passes its final clean warning/reference/
+citation/box scan and visual review of pages 13, 14, 61, 62, 73, 74 and
+81. Independent mathematical/code/Lean--TeX review and all 28 API
+parity checks pass. The static central inventory is 987 checks,
+565 examples and 879 reports; its byte-identical historical prefix
+was not re-elaborated in full. The audit prefix and SP81 queue history
+also remain byte-identical to `db8a206`. The parity-queue entry records
+the complete validation scope.
+
+The generic self/composition identities are proved, but actual overlap
+comparisons, coherence/cocycle assembly, global gluing and the compatible
+Galois action remain next. Normal stalks from smooth geometry and
+Chow--Betti generation are separate. All earlier audit text is preserved
+unchanged.

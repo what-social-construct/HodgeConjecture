@@ -17,9 +17,67 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source check: 2026-09-19 (SP81 actual finite etale affine refinement; validated;
-earlier source records retain
-their original validation scope).
+Last source check: 2026-09-19 (SP82 localization sources checked;
+same-ambient localization and actual affine restriction validated;
+earlier source records retain their original validation scope).
+
+### Same-ambient localization and actual affine restriction (SP82, 2026-09-19)
+
+The primary page for [Stacks, Lemma 10.36.11, Tag
+0307](https://stacks.math.columbia.edu/tag/0307) was checked. It states
+that integral closure commutes with localization for an arbitrary ring
+map and multiplicative subset. In the same-ambient specialization,
+compatible localization and ambient algebra structures identify the
+localized ambient ring with the original one because all denominators
+are already units there. This does not require normality,
+Noetherianity, separability or finite degree. Reuse the existing
+`StacksIntegralClosureLocalization` bibliography entry; SP78's earlier
+fraction-field specialization retains its original validation scope.
+
+[Stacks, Lemma 26.6.6, Tag
+01I3](https://stacks.math.columbia.edu/tag/01I3) was checked: principal
+localization gives an open immersion `Spec(B_f) -> Spec(B)` onto `D(f)`.
+[Lemma 10.17.4, Tag
+00E2](https://stacks.math.columbia.edu/tag/00E2) identifies inverse images
+of basic opens under the actual spectrum map. These are the exact
+geometric sources for the principal-open range and restriction target.
+They do not assert that localization at an arbitrary multiplicative
+subset is an open immersion. The existing [Lemma 26.5.4, Tag
+01HV](https://stacks.math.columbia.edu/tag/01HV), parts (3) and (5),
+identifies the actual section rings and restriction maps on basic opens;
+its existing bibliography key is `StacksAffineStalk`.
+
+SP82's strict map naturality, generic identity/composition laws and
+actual-chart comparisons are direct project constructions, not added
+source axioms or hypotheses imported wholesale from these pages.
+The proved marked-refinement square uses the actual whole-preimage
+normalization isomorphism's restriction naturality and the unchanged
+field marking. It requires finite dominant `p` and normal stalks on
+the inverse images, but no etaleness, base-normality or Noetherianity.
+The actual structural square requires dominance only beyond the
+integral/nonempty affine chart hypotheses. Both squares apply to
+nonempty affine inclusions, not just principal opens.
+
+The final inventory is 28 APIs: 17 generic localization, nine actual
+restriction and two marked normal-closure restriction declarations.
+All compile cleanly in the 2764-job scoped build. The focused suite
+passes 39 examples and 28 enforced standard-three axiom audits without
+warnings or errors. Three fresh neighbor suites also pass; the four
+suites total 107 examples and 71 audits, without warnings or errors.
+The full build passes 3203 jobs with only the two unchanged Challenge
+warnings. The unchanged dependency audit passes six primary contracts
+and two support reports. All 28 API parity checks and independent
+review pass. The 81-page PDF (835379 bytes), clean final log and
+seven-page visual review pass. The static central inventory is 987
+checks, 565 examples and 879 reports; its historical prefix is unchanged
+and was not re-elaborated in full. The SP82 parity-queue entry records
+the complete validation. The manuscript reuses `StacksIntegralClosureLocalization`
+and adds only `StacksPrincipalLocalizationOpen` (01I3); this ledger's
+00E2/01HV checks document the precise underlying geometric source scope,
+not duplicate bibliography entries. The citations and generic composition
+identities do not assemble actual overlaps, cocycles, global gluing or
+the compatible Galois action. Deriving normal stalks from smooth geometry
+and Chow--Betti generation remain separate.
 
 ### The actual finite etale affine refinement (SP81, 2026-09-19)
 

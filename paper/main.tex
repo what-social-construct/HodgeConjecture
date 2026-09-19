@@ -1074,6 +1074,64 @@ identifications preserve it.
 Full visibility gives the stated separation.
 \end{proof}
 
+\begin{proposition}[Localization and restriction of the marked refinement]
+\label{prop:normalization-localization}
+Let \(B\to C\to E\) be a compatible tower of commutative rings and
+write \(T_B(E)=\operatorname{IntCl}_B(E)\).
+The same-element inclusion
+\[
+  \rho_{B,C}^{E}:T_B(E)\longrightarrow T_C(E),\qquad x\longmapsto x,
+\]
+is injective, is the identity for \(C=B\), and composes under successive
+base extensions. If \(C=S^{-1}B\), it exhibits \(T_C(E)\) as the
+localization of \(T_B(E)\) at the image of \(S\), and gives the canonical
+comparison
+\[
+  C\otimes_B T_B(E)\xrightarrow{\ \sim\ }T_C(E),\qquad
+  c\otimes x\longmapsto cx.
+\]
+For every \(C\)-algebra map \(a:E\to F\), restriction commutes with
+the induced normalization maps. In particular, when \(C=B_f\),
+\(j^E=\Spec(\rho_{B,C}^{E})\) is an open immersion with image
+\(\mu_E^{-1}(D(f))\), where \(\mu_E:\Spec T_B(E)\to\Spec B\)
+is the original structural morphism.
+
+In the setting of Proposition~\ref{prop:finite-etale-normal-closure-chart},
+let \(W\subseteq U\) be a nonempty affine open and retain the same
+marked normal-closure field \(N\). Restriction of sections defines
+\(j^N_{W,U}:Z_W\to Z_U\). With \(\iota_{W,U}:W\hookrightarrow U\)
+and \(\widetilde\iota_{W,U}:p^{-1}(W)\hookrightarrow p^{-1}(U)\),
+the original maps satisfy
+\[
+  \pi_U\circ j^N_{W,U}=\iota_{W,U}\circ\pi_W,
+  \qquad
+  \lambda_U\circ j^N_{W,U}
+    =\widetilde\iota_{W,U}\circ\lambda_W.
+\]
+For a principal open \(W=D_U(f)\), the map \(j^N_{W,U}\) is an
+open immersion obtained by localizing at the same section \(f\).
+\end{proposition}
+
+\begin{proof}
+Integrality over \(B\) implies integrality over \(C\), so the first
+map is the inclusion in the unchanged ambient ring. Localization
+commutes with integral closure~\cite{StacksIntegralClosureLocalization};
+the given \(C\)-algebra structure on \(E\) already inverts the
+denominators. The resulting localization is the displayed tensor base
+change. Naturality, identity, and composition follow by evaluating in
+the same ambient ring. Principal localization induces an open immersion
+onto the indicated basic open~\cite{StacksPrincipalLocalizationOpen}.
+
+Restriction of sections commutes with the original generic germs.
+Thus the first geometric square follows from the affine structural
+maps. For the second, the actual normalization isomorphisms satisfy
+\(\nu_{p,U}\circ\widetilde\iota_{W,U}
+=j^{K(Y)}_{W,U}\circ\nu_{p,W}\): both sides are induced by the same
+inclusions into \(K(Y)\). Naturality for the marked embedding
+\(K(Y)\hookrightarrow N\), followed by cancellation of \(\nu_{p,U}\),
+gives the asserted equality for \(\lambda\).
+\end{proof}
+
 The group \(G=\mathcal N.\mathit{galoisGroup}\), the subgroup
 \(H=\mathcal N.\mathit{intermediateFixingSubgroup}\), and the canonical deck
 action on \(Y_N\) are all constructed from the same datum.  Normality keeps the conjugate embeddings inside the same field \(N\).
@@ -5095,6 +5153,17 @@ Actual affine normal-closure refinement \(\pi_U,\lambda_U\) &
 \leanpath{finiteEtaleAffineNormalClosureToPreimage_comp_restrict}\newline
 \leanpath{finiteEtaleAffineNormalClosureToPreimage_finite_etale}\newline
 \leanpath{Boundary/Normalization/FiniteEtaleNormalClosure.lean}\\
+Normalization localization and actual restriction &
+\leanpath{normalizedCoordinateRing_isLocalization}\newline
+\leanpath{normalizationLocalizationBaseChangeEquiv}\newline
+\leanpath{normalizationBaseChange_range}\newline
+\leanpath{affineNormalizationRestriction_basicOpen_isOpenImmersion}\newline
+\leanpath{finiteEtaleAffineNormalClosureToChart_restriction}\newline
+\leanpath{finiteEtaleAffineNormalClosureToPreimage_restriction}\newline
+\leanpath{Boundary/Normalization/NormalizationLocalization.lean}\newline
+\leanpath{Boundary/Normalization/AffineNormalizationRestriction.lean}\newline
+\leanpath{Boundary/Normalization/}\newline
+\leanpath{FiniteEtaleNormalClosureRestriction.lean}\\
 Full-visible boundary ideals &
 \leanpath{movingBoundaryIdeal_eq_top_of_surjective}\newline
 \leanpath{conjugateBoundarySeparation_of_surjective}\newline
@@ -5839,6 +5908,37 @@ principal table, grouped by mathematical layer.
 \leanpath{finiteEtaleAffineNormalClosureToPreimage_comp_restrict};
 \leanpath{finiteEtaleAffineNormalClosureToPreimage_surjective};
 \leanpath{finiteEtaleAffineNormalClosureToPreimage_finite_etale};
+\normsrc{NormalizationLocalization.lean};
+\leanpath{normalizationBaseChangeMap};
+\leanpath{normalizationBaseChangeMap_coe};
+\leanpath{normalizationBaseChangeMap_injective};
+\leanpath{normalizationBaseChangeMap_self};
+\leanpath{normalizationBaseChangeMap_trans};
+\leanpath{normalizationBaseChangeMap_naturality};
+\leanpath{normalizedCoordinateRing_isLocalization};
+\leanpath{normalizationLocalizationBaseChangeEquiv};
+\leanpath{normalizationLocalizationBaseChangeEquiv_tmul};
+\leanpath{normalizationBaseChange};
+\leanpath{normalizationBaseChange_comp_toBase};
+\leanpath{normalizationBaseChange_naturality};
+\leanpath{normalizationBaseChange_self};
+\leanpath{normalizationBaseChange_trans};
+\leanpath{normalizedCoordinateRing_isLocalizationAway};
+\leanpath{normalizationBaseChange_isOpenImmersion};
+\leanpath{normalizationBaseChange_range};
+\normsrc{AffineNormalizationRestriction.lean};
+\leanpath{sectionRestriction_functionFieldScalarTower};
+\leanpath{sectionRestriction_ambientScalarTower};
+\leanpath{affineNormalizationRestriction};
+\leanpath{affineNormalizationRestriction_comp_toBase};
+\leanpath{affineNormalizationRestriction_comp_toChart};
+\leanpath{affineNormalizationRestriction_basicOpen_isLocalization};
+\leanpath{affineNormalizationRestriction_basicOpen_isOpenImmersion};
+\leanpath{finiteAffinePreimageRestriction_functionFieldScalarTower};
+\leanpath{finiteAffinePreimageNormalizationIso_restriction};
+\normsrc{FiniteEtaleNormalClosureRestriction.lean};
+\leanpath{finiteEtaleAffineNormalClosureToChart_restriction};
+\leanpath{finiteEtaleAffineNormalClosureToPreimage_restriction};
 \normsrc{FiniteAffineCover.lean};
 \leanpath{normalizationToIntermediate_surjective};
 \leanpath{normalizationIntermediateEquiv};

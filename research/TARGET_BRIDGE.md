@@ -1,6 +1,8 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-09-18. This is the current target-first sketch, not a second
+Assessed: 2026-09-19 (SP82 same-ambient localization and actual affine
+restriction validated).
+This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
 
@@ -906,11 +908,72 @@ composition/base-change/open-immersion stability and the etale cancellation
 law have been checked in their exact source scope; the marked cover and
 factorization identities are direct project constructions.
 
-Next prove compatibility of these actual models and maps
-under localization and on overlaps, then the cocycle identities needed
-for gluing and compatibility of the global Galois action. The chartwise
-construction is not itself a gluing theorem. Deriving the normal-stalk
-inputs from smooth geometry and Chow--Betti generation remain separate.
+The next bounded localization step is B4o below; overlap comparisons,
+cocycle identities, gluing and compatibility of the global Galois action
+follow it. The chartwise construction is not itself a gluing theorem.
+Deriving the normal-stalk inputs from smooth geometry and Chow--Betti
+generation remain separate.
+
+### B4o. Localize the same normalization and restrict the actual chart
+
+SP82 is proved and validated. Its 28 production APIs compile cleanly in
+the 2764-job scoped build; the focused suite passes 39 examples and
+28 enforced standard-three axiom audits without warnings or errors.
+For compatible base algebras `B -> C -> E`, retain the existing
+`IntCl_B(E)` and `IntCl_C(E)` as subrings of the same `E`. The canonical
+map `rho^E_{B,C}` keeps each ambient element unchanged. Identity,
+composition and naturality with an ambient `C`-algebra homomorphism are
+proved strict map equalities. If `C` is the localization of `B` at `M`,
+the comparison exhibits `IntCl_C(E)` as the localization of `IntCl_B(E)` at
+the images of `M`. The `C`-action on `E` and scalar-tower law already
+encode that the denominators become units in the unchanged ambient ring.
+No normality, Noetherianity or finite-field-extension hypothesis is
+needed for this algebraic comparison.
+
+For principal localization, the resulting geometric identification is
+
+\[
+ \operatorname{Spec}\operatorname{IntCl}_{B_f}(E)
+ \simeq \mu_E^{-1}(D(f))
+ \subseteq \operatorname{Spec}\operatorname{IntCl}_{B}(E).
+\]
+
+The tensor comparison `C tensor_B IntCl_B(E) ~= IntCl_C(E)` preserves
+the actual scalar map and ambient inclusion on pure tensors. Its
+contravariant map `j^E=Spec(rho)` satisfies structural and naturality
+squares, together with the generic identity and composition laws.
+The actual adapter uses an integral scheme's existing section rings,
+restriction maps and ambient-field scalar towers. It retains the same
+normal closure rather than choosing another over the smaller chart.
+
+For any nonempty affine `W <= U`, write `j^N_{W,U}:Z_W -> Z_U` for
+this restriction and `iota:W -> U`, `tilde-iota:p⁻¹W -> p⁻¹U` for the
+actual inclusions. The two proved equalities are
+`pi_U after j = iota after pi_W` and
+`lambda_U after j = tilde-iota after lambda_W`. The latter uses the
+proved restriction naturality of the existing normalization isomorphism.
+The structural square requires dominant `p`; the marked square adds
+finiteness and normal stalks on the two inverse images. Neither square
+requires etaleness, base normality or Noetherianity. Principal subcharts
+also have the proved actual localization/open-immersion endpoints.
+
+The inventory is 17 generic localization APIs, nine actual-restriction
+APIs and two marked normal-closure restriction APIs. Three fresh neighbor
+suites also pass; the four suites total 107 examples and 71 audits,
+without warnings or errors. The full build passes 3203 jobs with only
+the two unchanged Challenge warnings. The unchanged dependency audit
+passes six primary contracts and two support reports. All 28 API parity
+checks and independent review pass. The 81-page PDF (835379 bytes)
+has a clean final log and visual review of pages 13, 14, 61, 62, 73,
+74 and 81. The static central inventory is 987 checks, 565 examples
+and 879 reports; its historical prefix is unchanged and was not
+re-elaborated in full. The SP82 parity-queue entry records the complete
+validation.
+
+Generic self/composition identities do not themselves assemble the
+actual overlaps or their cocycle data. Those comparisons, global
+gluing and the compatible Galois action remain next; normal stalks from
+smooth geometry and Chow--Betti generation are separate obligations.
 
 ### G0. Smooth projective setting and candidate constructions
 
@@ -2196,9 +2259,12 @@ comparison with `IntCl_B(N)`, and its whole-ring finite-etale conclusion.
 The focused suite verifies the actual scheme-chart ring specialization
 without Noetherianity. B4n implements the named actual affine normalized
 cover, its finite-etale structural maps and marked refinement, with exact
-factorization on the chart and over `X`; the checkpoint is validated. Next
-prove localization/overlap compatibility, cocycle identities, gluing and
-the compatible global Galois action. The trace-section route bypasses
+factorization on the chart and over `X`; the checkpoint is validated.
+B4o proves same-ambient localization, principal-open restriction and
+both actual structural/refinement squares on nested affine charts.
+Its generic identity/composition laws are proved. Next assemble actual
+overlap/coherence and cocycle data, gluing and the compatible global
+Galois action. The trace-section route bypasses
 whole-source integral-closedness and needs no Noetherian-base premise.
 The earlier affine-cover interfaces retain their explicit base normality,
 Noetherianity and upstairs-normal-stalk inputs; the global Galois
