@@ -642,3 +642,56 @@ affine-cover constructor retains its stronger normality/Noetherianity
 and normal-stalk inputs; deriving those stalk inputs from smooth geometry
 and Chow--Betti generation remain separate. All earlier audit text is
 preserved unchanged.
+
+## 17. SP81 follow-up: the actual finite etale affine refinement
+
+The checkpoint is proved and validated. For a finite dominant
+etale morphism `p:Y -> X` of integral schemes and a nonempty affine
+`U`, `FiniteEtaleNormalClosure.lean` constructs the existing
+`NormalizedCover` using the original marked function-field normal closure
+and actual inverse image `V=p⁻¹U`. Its visible map is the existing
+normalization isomorphism. Normal stalks on both `U` and `V` give the
+normal section rings; no Noetherian-base premise is needed. The datum
+identity is literal and the full-visible boundary separation applies.
+
+The structural maps from the normal-closure normalization to
+`Spec Γ(X,U)` and the actual `U` are finite etale. Its constructed
+refinement to `V` is the marked normalization leg followed by the
+inverse of the existing visible isomorphism. Composing with that
+isomorphism recovers the original leg; composing with `p|_U` gives
+exactly the chart structural map. The original composite over `X`
+is also proved, and the refinement itself is finite etale.
+Both actual maps are surjective by lying over. Chart surjectivity needs
+only dominance, integral schemes and the nonempty affine chart, without
+finiteness, etaleness or normal-stalk premises. Refinement surjectivity
+needs finite dominant `p` and normal stalks on `V`, with no etaleness or
+base-normality premise. Both normal-stalk hypotheses remain in the
+finite-etale endpoints.
+
+Scheme etaleness is transported from the actual intermediate morphism's
+local standard-smooth presentations through the finite tensor source.
+The two helper APIs are `piTensorProduct_ringHomProperty` and
+`piTensorProduct_isEtale`. SP80's evaluation surjectivity and
+complementary-idempotent kernel give an open immersion `Spec(ev_B)`
+into this source, whose structural composite is therefore etale.
+The missing general converse from `Algebra.Etale` to scheme `IsEtale`
+is not assumed. No replacement fields, marking, normalization carrier,
+cover type or source axiom is introduced.
+
+All 19 APIs compile without warnings in the 2761-job scoped build:
+seventeen in the main module and two helpers. The 81-page PDF (831678 bytes) passes
+its clean final warning/reference/box scan and visual checks of pages
+12, 13, 61, 72 and 78. Independent geometry and Lean--TeX reviews pass.
+The focused suite passes 25 examples and 19 enforced standard-three
+axiom audits without warnings. Five fresh neighbor suites also pass;
+the six suites total 146 examples and 89 enforced audits, with no warnings
+or errors. The full build passes 3200 jobs with only the two unchanged
+Challenge warnings. The unchanged dependency audit passes six primary
+contracts and two support reports. All nineteen API parity checks pass.
+The static central inventory is 959 checks, 565 examples and 851 reports;
+its historical prefix is unchanged and the historical file was not
+re-elaborated. The SP81 parity-queue entry records the complete validation.
+Compatibility under localization and on overlaps, cocycle
+identities, gluing and the global Galois action remain to be proved.
+Deriving normal stalks from smooth geometry and Chow--Betti generation
+remain separate. All earlier audit text is preserved unchanged.

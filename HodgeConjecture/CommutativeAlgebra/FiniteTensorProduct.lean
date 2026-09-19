@@ -2,6 +2,7 @@ import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.TensorProduct.Finite
 import Mathlib.RingTheory.Etale.Basic
 import Mathlib.Data.Fintype.Option
+import Mathlib.RingTheory.LocalProperties.Basic
 
 /-!
 # Finite étale tensor products indexed by a finite type
@@ -145,6 +146,43 @@ theorem piTensorProduct_etale (ι : Type u) [Finite ι] [Algebra.Etale B A] :
         Algebra.Etale.of_equiv (tensorSum (B := B) (A := A) ι PUnit)
       exact Algebra.Etale.of_equiv
         (tensorReindex (B := B) (A := A) (Equiv.optionEquivSumPUnit ι).symm)
+
+attribute [local instance] Algebra.TensorProduct.rightAlgebra in
+/-- A ring-homomorphism property preserved by isomorphism, identity, composition,
+and base change passes from an algebra to the existing tensor product of finitely
+many copies. In particular this applies to geometric local presentation properties,
+without replacing the tensor carrier or requiring a converse smoothness theorem. -/
+theorem piTensorProduct_ringHomProperty
+    (P : ∀ {R S : Type u} [CommRing R] [CommRing S], (R →+* S) → Prop)
+    (hIso : RingHom.RespectsIso P) (hId : RingHom.ContainsIdentities P)
+    (hComp : RingHom.StableUnderComposition P)
+    (hBase : RingHom.IsStableUnderBaseChange P)
+    (ι : Type u) [Finite ι] (hA : P (algebraMap B A)) :
+    P (algebraMap B (⨂[B] _ : ι, A)) := by
+  have transport {S T : Type u} [CommRing S] [CommRing T]
+      [Algebra B S] [Algebra B T] (e : S ≃ₐ[B] T)
+      (hS : P (algebraMap B S)) : P (algebraMap B T) := by
+    have he : e.toRingEquiv.toRingHom.comp (algebraMap B S) = algebraMap B T := by
+      ext b
+      exact e.commutes b
+    rw [← he]
+    exact hIso.1 _ e.toRingEquiv hS
+  induction ι using Finite.induction_empty_option with
+  | of_equiv e ih =>
+      exact transport (tensorReindex (B := B) (A := A) e) ih
+  | h_empty =>
+      exact transport (tensorEmpty (B := B) (A := A) PEmpty).symm (hId B)
+  | @h_option ι _ ih =>
+      have hSingle : P (algebraMap B (⨂[B] _ : PUnit.{u+1}, A)) :=
+        transport (tensorSingleton (B := B) (A := A)).symm hA
+      have hBinary : P (algebraMap B
+          ((⨂[B] _ : ι, A) ⊗[B] (⨂[B] _ : PUnit.{u+1}, A))) := by
+        rw [IsScalarTower.algebraMap_eq B (⨂[B] _ : ι, A)
+          ((⨂[B] _ : ι, A) ⊗[B] (⨂[B] _ : PUnit.{u+1}, A))]
+        exact hComp _ _ ih (hBase B (⨂[B] _ : PUnit.{u+1}, A) (⨂[B] _ : ι, A) _ hSingle)
+      exact transport
+        (tensorReindex (B := B) (A := A) (Equiv.optionEquivSumPUnit ι).symm)
+        (transport (tensorSum (B := B) (A := A) ι PUnit) hBinary)
 
 end
 

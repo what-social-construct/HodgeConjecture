@@ -29,6 +29,7 @@ import HodgeConjecture.Boundary.Normalization.NormalizationTensor
 import HodgeConjecture.Boundary.Normalization.NormalizationBaseChange
 import HodgeConjecture.Boundary.Normalization.NormalClosureFactor
 import HodgeConjecture.Boundary.Normalization.NormalizationIntegralFactor
+import HodgeConjecture.Boundary.Normalization.FiniteEtaleNormalClosure
 import HodgeConjecture.Boundary.Normalization.DeckAction
 import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
 import HodgeConjecture.Boundary.Normalization.ConjugateNormalization
@@ -116,6 +117,12 @@ the quotient is the existing normalization, finite and étale over the whole
 base. Scalar extension identifies this selector with the generic one.
 This construction does not require a Noetherian base or normality of the
 tensor source.
+
+For the actual finite étale morphism, the same normal-closure normalization
+is a finite étale surjective cover of each nonempty affine chart and refines
+the original whole inverse image by a finite étale surjective map. The
+normalization triangle commutes over both the chart and the original scheme.
+Explicit normal-stalk hypotheses supply these chartwise constructions.
 
 The broad normalization-purity/global-triviality prototype is preserved in
 `research/archive/legacy-lean/`, not as an importable library module.

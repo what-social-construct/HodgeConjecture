@@ -628,8 +628,9 @@ normal-closure normalization `T=IntCl_B(N)` from the actual finite etale
 algebra `A/B`. B4m proves its integral factor and whole-ring
 finite-etale structure by a trace section; the checkpoint is validated.
 Finiteness and full-visible separation alone do not imply etaleness.
-Named affine-cover/morphism integration, overlap compatibility, gluing and the
-global finite etale Galois refinement remain separate obligations. The
+SP81 in B4n implements the actual affine cover and finite-etale morphisms,
+with validation complete. Localization/overlap compatibility, cocycles,
+gluing and the global Galois action remain separate obligations. The
 SP76 interfaces retain explicit base normality/Noetherianity and upstairs
 normal stalks; deriving the stalk inputs from smooth geometry and proving
 Chow--Betti generation remain separate tasks.
@@ -682,8 +683,9 @@ factor and canonical idempotent under separability. SP80 in B4m proves
 the actual integral factor and whole-ring etaleness through a trace
 section; the checkpoint is validated. The integral selector, evaluation
 surjectivity and quotient comparison are constructed, not additional
-hypotheses. Named affine-cover/morphism integration, overlap
-compatibility, gluing and global finite etale Galois refinement remain
+hypotheses. SP81 in B4n implements the actual affine cover and morphisms,
+with validation complete. Localization/overlap compatibility, cocycles,
+gluing and the global Galois action remain
 subsequent steps. The independent Chow--Betti generation obligation is
 unchanged.
 
@@ -723,8 +725,9 @@ support reports.
 
 SP79 in B4l supplies the separable generic direct-factor/idempotent
 construction. SP80 in B4m proves its integral comparison and the
-actual finite etale normalization via a trace section. Named
-affine-cover/morphism integration, overlap compatibility, gluing and
+actual finite etale normalization via a trace section. SP81 implements
+the actual affine cover and morphisms, with validation complete.
+Localization/overlap compatibility, cocycles, gluing, the global Galois action and
 independent Chow--Betti generation remain subsequent steps.
 
 ### B4l. Select the actual generic evaluation factor
@@ -829,14 +832,85 @@ The focused suite verifies the ring-level specialization to an actual
 finite dominant etale morphism and a nonempty affine base chart. Both
 section-ring normality inputs follow from normal stalks; the original
 function fields, structural maps and marked normal closure give the
-finite etale normalization without a Noetherianity premise. Next
-integrate this result into a named actual affine
-normalized-cover constructor and prove its structural-map and
-finite-etale morphism endpoints. Then prove overlap compatibility and
-glue the global finite etale Galois refinement. The earlier affine-cover
+finite etale normalization without a Noetherianity premise. SP81 in B4n
+implements the named actual affine normalized cover, its structural maps
+and marked refinement as finite etale morphisms; the checkpoint is validated.
+Localization/overlap compatibility, cocycles, gluing and the global
+Galois action remain subsequent steps. The earlier affine-cover
 interfaces retain their stronger base-normality/Noetherianity and
 upstairs-normal-stalk inputs. Deriving the stalk inputs from smooth
 geometry and the independent Chow--Betti generation problem remain separate.
+
+### B4n. Construct the actual finite etale affine refinement
+
+SP81 is proved and validated. For integral
+schemes and a finite dominant etale morphism `p:Y -> X`, let `U` be a
+nonempty affine open, `V=p⁻¹U`, `B_U=Γ(X,U)`, and `A_U=Γ(Y,V)`.
+Normal stalks on `U` and `V` are explicit. They give normal section
+rings; the original function fields, scalar maps and marked normal
+closure are retained. `FiniteEtaleNormalClosure.lean` promotes SP80's
+ring-level specialization to the named
+`functionFieldNormalClosure_normalization_finite_etale` and constructs
+`finiteEtaleAffinePreimageNormalizedCover` in the existing `NormalizedCover`
+type. Its visible scheme and map are the actual `V` and the existing
+`finiteAffinePreimageNormalizationIso`. No Noetherianity, second field
+marking or new cover package is introduced. The normal-closure datum
+equality is literal, and full visibility gives boundary separation.
+
+The existing structural map from the normal-closure normalization to
+`Spec B_U`, and its composite to the actual `U` through the canonical
+affine presentation, are finite etale. The new refinement to `V` is the
+original marked normalization leg followed by the inverse of that same
+visible normalization isomorphism. Composing back with the isomorphism
+recovers the original leg. Composing with the actual restricted `p`
+gives exactly the chart structural map, and the corresponding composite
+over `X` is also proved. Finiteness of this refinement comes from the
+actual finite algebra map; etaleness follows from the exact factorization
+between schemes etale over `U`.
+The manuscript writes the same chartwise normalization as `Z_U`, its
+structural map as `π_U:Z_U -> U`, and its refinement as `λ_U:Z_U -> V`;
+the factorization is `p|_V∘λ_U=π_U`.
+Both maps are surjective by lying over for the actual injective integral
+normalization maps. The separate theorem for `π_U` needs only a dominant
+map of integral schemes and the nonempty affine chart, with no finite,
+etale or normal-stalk premise. The theorem for `λ_U` uses finite dominant
+`p` and normal stalks on `V`, but neither etaleness nor normality on `U`.
+The finite-etale endpoints retain the stated `hX` and `hY` hypotheses.
+
+The scheme-etale conclusion uses the actual intermediate morphism's
+local standard-smooth presentations. The generic helper
+`piTensorProduct_ringHomProperty` preserves a ring-map property stable
+under isomorphism, identity, composition and base change on the existing
+finite-index tensor carrier. `piTensorProduct_isEtale` in
+`EtaleTensorSource.lean` applies this to the presentations defining
+scheme etaleness. SP80's surjective evaluation and complementary-idempotent
+kernel identify `Spec(ev_B)` as an open immersion, so its composite with
+that etale tensor source is etale. A general `Algebra.Etale`-to-`IsEtale`
+converse is absent from the pinned API and is not postulated here.
+
+All 19 APIs compile without warnings in the 2761-job scoped build:
+seventeen in the main module and two tensor helpers. The 81-page PDF
+(831678 bytes) has a clean final warning/reference/box scan and passes
+visual review of pages 12, 13, 61, 72 and 78. Independent geometry and
+Lean--TeX reviews pass. The focused suite passes 25 examples and all
+19 enforced standard-three axiom audits without warnings. Five fresh
+neighbor suites also pass; the six suites total 146 examples and
+89 enforced audits, with no warnings or errors. The full build passes
+3200 jobs with only the two unchanged Challenge warnings. The unchanged
+dependency audit passes six primary contracts and two support reports.
+All nineteen API parity checks pass. The static central inventory is
+959 checks, 565 examples and 851 reports; its historical prefix is
+unchanged and the historical file was not re-elaborated. The SP81
+parity-queue entry records the complete validation. Standard
+composition/base-change/open-immersion stability and the etale cancellation
+law have been checked in their exact source scope; the marked cover and
+factorization identities are direct project constructions.
+
+Next prove compatibility of these actual models and maps
+under localization and on overlaps, then the cocycle identities needed
+for gluing and compatibility of the global Galois action. The chartwise
+construction is not itself a gluing theorem. Deriving the normal-stalk
+inputs from smooth geometry and Chow--Betti generation remain separate.
 
 ### G0. Smooth projective setting and candidate constructions
 
@@ -1282,10 +1356,10 @@ provide variable-class coverage.
 - Review new objects against the parity registry before adding wrappers.
   Promote a proved checkpoint only after the appropriate build, focused
   regressions, dependency/axiom checks and Lean--TeX comparison.
-- **Next action:** integrate B4m's verified scheme-chart ring specialization
-  into a named actual affine normalized-cover
-  constructor and structural-map/finite-etale morphism endpoints, then
-  prove overlap compatibility and gluing. The construction needs no
+- **Next action:** prove compatibility of B4n's actual affine normalized
+  covers, structural maps and marked refinements under localization and
+  on overlaps. Then establish cocycle identities, gluing and the
+  compatible global Galois action. The construction needs no
   Noetherianity premise and bypasses the proposed whole-source
   integral-closedness route; it does not establish that stronger result.
   B4j constructs the finite etale tensor
@@ -2120,10 +2194,11 @@ its canonical idempotent under separability. B4m proves the actual
 integral section and selector, the evaluation-preserving quotient
 comparison with `IntCl_B(N)`, and its whole-ring finite-etale conclusion.
 The focused suite verifies the actual scheme-chart ring specialization
-without Noetherianity. The next action is to integrate it into a named
-actual affine normalized-cover
-constructor and structural-map/finite-etale morphism endpoints, then prove
-overlap compatibility and gluing. The trace-section route bypasses
+without Noetherianity. B4n implements the named actual affine normalized
+cover, its finite-etale structural maps and marked refinement, with exact
+factorization on the chart and over `X`; the checkpoint is validated. Next
+prove localization/overlap compatibility, cocycle identities, gluing and
+the compatible global Galois action. The trace-section route bypasses
 whole-source integral-closedness and needs no Noetherian-base premise.
 The earlier affine-cover interfaces retain their explicit base normality,
 Noetherianity and upstairs-normal-stalk inputs; the global Galois

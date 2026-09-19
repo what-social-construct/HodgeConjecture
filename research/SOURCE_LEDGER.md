@@ -17,9 +17,78 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source check: 2026-09-19 (SP80 integral evaluation factor; validated;
+Last source check: 2026-09-19 (SP81 actual finite etale affine refinement; validated;
 earlier source records retain
 their original validation scope).
+
+### The actual finite etale affine refinement (SP81, 2026-09-19)
+
+The primary pages for [Stacks, Lemma 29.37.3, Tag
+02GN](https://stacks.math.columbia.edu/tag/02GN),
+[Lemma 29.37.4, Tag 02GO](https://stacks.math.columbia.edu/tag/02GO), and
+[Lemma 29.37.9, Tag 02GP](https://stacks.math.columbia.edu/tag/02GP) were
+checked: etale morphisms are closed under composition and base change,
+and open immersions are etale. [Lemma 29.37.19, Tag
+02GW](https://stacks.math.columbia.edu/tag/02GW) states that a morphism
+between schemes etale over the same base is etale. These exact stability
+and cancellation statements support the scheme-morphism steps, not the
+construction of the marked normalization, its factorization identities,
+or any global gluing assertion.
+
+The pinned Mathlib scheme predicate uses locally standard-smooth
+presentations of relative dimension zero. Its general converse from
+`Algebra.Etale` is not available. The direct generic theorem
+`piTensorProduct_ringHomProperty` instead transports a property stable
+under isomorphism, identity, composition and base change to the existing
+finite-index tensor source. `piTensorProduct_isEtale` in
+`EtaleTensorSource.lean` specializes this argument to those
+local presentations, starting from the actual intermediate scheme-etale
+map. It does not assert a new algebraic-to-scheme equivalence.
+
+`FiniteEtaleNormalClosure.lean` applies SP80's actual evaluation
+surjectivity and complementary-idempotent kernel through Mathlib's
+`isOpenImmersion_SpecMap_iff_of_surjective`. Hence `Spec(ev_B)` is an
+open immersion of the existing normalization into the tensor source,
+and its structural composite is scheme-etale. The actual affine-chart
+constructor retains the original function-field normal closure, whole
+inverse image and normalization isomorphism. Both chart section rings
+are normal from the explicit stalk hypotheses; no Noetherian-base
+premise is used. Ring finiteness gives scheme finiteness. Exact
+factorization through the restricted original morphism then gives
+etaleness of the actual marked refinement; the original composite over
+`X` is proved separately. Boundary separation uses full visibility.
+
+Both actual morphisms are surjective by
+`RingHom.IsIntegral.specComap_surjective`, after proving the actual
+normalization maps integral and injective. The exact standard counterpart
+is [Stacks, Lemma 10.36.17, Tag
+00GQ](https://stacks.math.columbia.edu/tag/00GQ), whose primary page was
+checked. Chart surjectivity needs only dominance, integral schemes and
+the nonempty affine chart, without finiteness, etaleness or either
+normal-stalk hypothesis. Refinement surjectivity uses finite dominant
+`p` and the normal stalks on its inverse image, with no etaleness or
+base-normality premise. These weaker surjectivity hypotheses are distinct
+from those of the finite-etale endpoints.
+
+All 19 APIs compile without warnings in the 2761-job scoped build:
+seventeen main declarations and two helpers. The 81-page PDF (831678 bytes), clean
+final warning/reference/box scan, visual review of pages 12, 13, 61, 72
+and 78, and independent geometry/Lean--TeX review pass. The focused suite
+passes 25 examples and 19 enforced standard-three axiom audits without
+warnings. Five fresh neighbor suites also pass; the six suites total
+146 examples and 89 enforced audits, with no warnings or errors. The
+full build passes 3200 jobs with only the two unchanged Challenge
+warnings. The unchanged dependency audit passes six primary contracts
+and two support reports. All nineteen API parity checks pass. The static
+central inventory is 959 checks, 565 examples and 851 reports; its
+historical prefix is unchanged and the historical file was not
+re-elaborated. The SP81 parity-queue entry records the complete validation.
+These are
+direct project constructions using proved Mathlib
+stability APIs, with no literature axiom, replacement marking or new
+input package. Localization/overlap compatibility, cocycle gluing,
+the global Galois action, normal stalks from smooth geometry and
+Chow--Betti generation remain separate obligations.
 
 ### The actual integral evaluation factor (SP80, 2026-09-19)
 
@@ -74,8 +143,9 @@ PDF (826296 bytes), eight-page visual review and independent
 mathematical/Lean--TeX reviews pass; the SP80 parity-queue entry records
 the complete validation. The focused suite
 verifies the actual scheme-chart ring specialization from normal stalks
-without Noetherianity. Named affine normalized-cover/morphism integration,
-overlap compatibility, gluing, normal stalks from smooth geometry and
+without Noetherianity. SP81 implements the named affine cover and actual
+finite-etale morphisms, with validation complete. Localization/overlap
+compatibility, cocycles, gluing, the global Galois action, normal stalks from smooth geometry and
 Chow--Betti generation retain their separate obligations.
 
 ### The selected generic evaluation factor (SP79, 2026-09-18)
@@ -166,8 +236,10 @@ endpoint contracts and two support reports.
 SP79 supplies generic direct-factor/idempotent splitting under
 separability. SP80 proves the integral selector, its exact generic
 comparison and the actual finite etale normalization through a trace
-section. Named affine-cover/morphism integration and gluing
-remain separate and are not attributed to Tag 0307.
+section. SP81 implements the actual affine cover and morphisms, with
+validation complete. Localization/overlap compatibility, cocycles, gluing
+and the global Galois action remain separate and are not attributed to
+Tag 0307.
 
 ### Finite tensor source and marked evaluations (SP77, 2026-09-18)
 
@@ -271,9 +343,10 @@ SP80 proves the actual integral normalization factor and whole-ring
 finite-etale structure using the actual finite etale intermediate algebra
 and an integral trace section. This is a direct
 construction, not a consequence attributed to generic etaleness,
-finiteness or full-visible separation. Named affine-cover/morphism integration,
-overlap compatibility, gluing and the global finite etale Galois
-refinement remain separate, as do normal stalks from smooth geometry and
+finiteness or full-visible separation. SP81 implements the actual affine
+cover and morphisms, with validation complete. Localization/overlap
+compatibility, cocycles, gluing and the global Galois action remain
+separate, as do normal stalks from smooth geometry and
 Chow--Betti generation. The preceding SP76 source and validation records
 retain their original scope.
 

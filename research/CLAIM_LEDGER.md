@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-19 (SP80 integral evaluation factor, validated; earlier checkpoint
+Last audited: 2026-09-19 (SP81 actual finite etale affine refinement, validated; earlier checkpoint
 validation records are retained with their original scope).
 
 Status vocabulary:
@@ -17,6 +17,67 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## The actual finite etale affine refinement (A11bm / SP81)
+
+Status: `FORMAL`; checkpoint validated. For a finite dominant
+etale morphism `p:Y -> X` of integral schemes and a nonempty affine `U`,
+`FiniteEtaleNormalClosure.lean` constructs the existing `NormalizedCover`
+from the original marked function-field normal closure and the actual
+inverse image `V=p⁻¹U`. Its visible map is the existing normalization
+isomorphism, and its normal-closure datum is literally the original one.
+Normal stalks on both opens are explicit; no Noetherianity is assumed.
+The normalization structural maps to `Spec Γ(X,U)` and the actual `U`
+are finite etale. The refinement to `V` uses the original marked
+normalization leg and is finite etale. Its composite with `p|_U` is
+exactly the chart structural map, with the original composite over `X`
+also proved. Full visibility gives boundary separation.
+Both maps are surjective by lying over. The separate chart-surjectivity
+theorem only assumes dominant `p`, integral schemes and the nonempty
+affine chart; it omits finiteness, etaleness and both normal-stalk
+hypotheses. Refinement surjectivity assumes finite dominant `p` and
+normal stalks on `V`, with no etaleness or base-normality premise.
+The finite-etale endpoints still use both normal-stalk hypotheses.
+
+The two tensor helpers are `piTensorProduct_ringHomProperty` in
+`FiniteTensorProduct.lean` and `piTensorProduct_isEtale` in
+`EtaleTensorSource.lean`. They retain the actual intermediate scheme's
+local standard-smooth presentations through finite tensor products.
+`NormalClosureData.normalizationTensorEvaluation_isOpenImmersion` uses
+SP80's actual surjection and complementary-idempotent kernel.
+`.normalizationToBase_isEtale_of_etaleModel` composes this open immersion
+with the scheme-etale tensor source. No general converse from
+`Algebra.Etale` to `IsEtale` is assumed.
+
+The actual-chart interfaces are
+`functionFieldNormalClosure_normalization_finite_etale`,
+`finiteEtaleAffinePreimageNormalizedCover`, its `_normalClosure` formula
+and `conjugateBoundarySeparation_finiteEtaleAffinePreimageNormalizedCover`;
+`finiteEtaleAffineNormalClosureToBase_finite_etale`;
+`finiteEtaleAffineNormalClosureToChart`, `_comp_inclusion`, `_finite_etale`,
+`_surjective`;
+and `finiteEtaleAffineNormalClosureToPreimage`, `_comp_normalizationIso`,
+`_comp_toBase`, `_comp_restrict`, `_finite_etale`, `_surjective`. The final
+inventory is 19 APIs: seventeen main declarations and two tensor helpers.
+All 19 APIs compile without warnings in the 2761-job scoped build.
+The 81-page PDF (831678 bytes) passes its final
+warning/reference/box scan and visual checks of pages 12, 13, 61, 72 and
+78; independent geometry and Lean--TeX reviews pass. The focused suite
+passes 25 examples and 19 enforced standard-three axiom audits without
+warnings. Five fresh neighbor suites also pass; the six suites total
+146 examples and 89 enforced audits, with no warnings or errors. The
+full build passes 3200 jobs with only the two unchanged Challenge
+warnings. The unchanged dependency audit passes six primary contracts
+and two support reports. All nineteen API parity checks pass. The static
+central inventory is 959 checks, 565 examples and 851 reports; its
+historical prefix is unchanged and the historical file was not
+re-elaborated. The SP81 parity-queue entry records the complete validation.
+
+No replacement field, normalization carrier, cover type, source axiom or
+gluing hypothesis is added. Compatibility under
+localization and on overlaps, cocycle identities, gluing and the global
+Galois action remain to be proved. Deriving normal stalks from smooth
+geometry and Chow--Betti generation remain separate.
 
 ## The actual integral evaluation factor (A11bl / SP80)
 
@@ -79,9 +140,10 @@ SP80 parity-queue entry records the complete validation.
 
 The focused suite verifies the actual finite-etale
 scheme-chart ring specialization, deriving both section-ring normality
-inputs from stalks without Noetherianity. Next integrate it into a named
-actual affine normalized-cover constructor and structural-map/finite-etale
-morphism endpoints; overlap compatibility and gluing remain to be proved.
+inputs from stalks without Noetherianity. SP81 above implements the named
+actual affine cover and finite-etale structural/refinement morphisms,
+with validation complete. Localization/overlap compatibility, cocycles,
+gluing and the global Galois action remain to be proved.
 Normal stalks from smooth geometry, global finite etale Galois refinement
 and Chow--Betti generation remain separate.
 
@@ -131,8 +193,10 @@ SP80 above proves the integral selector and actual normalization
 factor by a trace section. This bypasses the
 whole-source integral-closedness route; the idempotent equation alone
 does not prove descent. The preceding SP79 validation record retains
-its original scope. Named affine-cover/morphism integration, overlap compatibility,
-gluing and independent Chow--Betti generation remain separate.
+its original scope. SP81 implements the actual affine cover and morphisms,
+with validation complete. Localization/overlap compatibility, cocycles,
+gluing, the global Galois action and independent Chow--Betti generation
+remain separate.
 
 ## Tensor base change and the full evaluator square (A11bj / SP78)
 
@@ -189,9 +253,10 @@ reports.
 SP79 above supplies the separable generic direct-factor/idempotent
 construction for the actual maximal quotient. SP80 proves the
 integral section, selector and evaluation-preserving normalization
-quotient, together with whole-ring finite-etale structure. Named
-affine-cover/morphism integration, overlaps and gluing remain
-separate. The Chow--Betti generation obligation is unchanged.
+quotient, together with whole-ring finite-etale structure. SP81 implements
+the actual affine cover and morphisms, with validation complete.
+Localization/overlap compatibility, cocycles, gluing and the global
+Galois action remain separate. The Chow--Betti obligation is unchanged.
 
 ## Finite tensor source and marked evaluations (A11bi / SP77)
 
@@ -255,8 +320,9 @@ homomorphism equality left open at this checkpoint; the preceding
 validation figures retain their SP77 scope. SP79 supplies the separable
 generic direct-factor/idempotent construction. SP80 proves the
 integral comparison and whole-ring finite-etale normalization by a trace
-section, bypassing whole-source normality. Named
-affine-cover/morphism integration, overlap compatibility, gluing and Chow--Betti
+section, bypassing whole-source normality. SP81 implements the actual
+affine cover and morphisms, with validation complete. Localization/overlap
+compatibility, cocycles, gluing, the global Galois action and Chow--Betti
 generation remain separate; none is renamed as an input hypothesis here.
 
 ## Finite normal-closure normalization and actual affine cover (A11bh / SP76)
@@ -306,8 +372,9 @@ normal stalks upstairs stay explicit in these SP76 interfaces. SP80
 proves the actual integral factor and whole-ring finite-etale
 normalization from the finite etale intermediate algebra.
 Generic etaleness, finiteness and full-visible separation alone
-do not supply that result. Named affine-cover/morphism integration, overlaps,
-gluing, global finite etale Galois refinement and Chow--Betti generation
+do not supply that result. SP81 implements the actual affine cover and
+morphisms, with validation complete. Localization/overlap compatibility,
+cocycles, gluing, the global Galois action and Chow--Betti generation
 remain subsequent tasks.
 
 ## Local separability and consumer hypothesis cleanup (A11bg / SP75)

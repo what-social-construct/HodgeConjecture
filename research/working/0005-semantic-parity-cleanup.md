@@ -136,6 +136,104 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP78 | Canonical tensor base change and full evaluator homomorphism square | LOCALIZE / COMPARE / COMMUTE | Identify each localized integral closure with its algebraic ambient field, construct finite-index tensor base change, and prove the actual evaluator homomorphisms commute. Relocate the three existing evaluator helpers without duplication. | PROVED / VALIDATED |
 | SP79 | Selected generic evaluation factor and canonical idempotent | SPLIT / SELECT / CHARACTERIZE | Derive finite etale source structure under extension separability, split the actual evaluation kernel factor, identify its first projection with the existing evaluator, and characterize its selecting idempotent and complementary kernel ideal. | PROVED / VALIDATED |
 | SP80 | Integral trace section, actual normalization factor and whole-ring etaleness | CONTRACT / SELECT / IDENTIFY / LOCALIZE | Derive generic spanning from the existing evaluator square, construct the integral selector by trace, identify its complementary quotient with the actual normalization, derive finite etale structure, and compare with the existing generic selector. Whole-source normality is bypassed. | PROVED / VALIDATED |
+| SP81 | Actual finite etale affine normalized cover and marked refinement | TRANSPORT / CONSTRUCT / FACTOR | Preserve the actual intermediate scheme's local presentations through the tensor source and selected open component; construct the existing cover with finite-etale structural/refinement maps and exact factorization on the actual chart and over the original base. | PROVED / VALIDATED |
+
+SP81 (2026-09-19): **actual finite etale affine cover / marked refinement**.
+The checkpoint is proved and validated. For a finite dominant etale
+map `p:Y -> X` of integral schemes and a nonempty affine `U`, put
+`V=p⁻¹U`, `B_U=Γ(X,U)` and `A_U=Γ(Y,V)`. Explicit normal-stalk
+hypotheses on both opens give the normal section rings. The original
+function fields, scalar maps and marked normal closure supply the
+existing `NormalizedCover`, with actual visible scheme `V` and the
+existing normalization-isomorphism map. No Noetherianity is assumed.
+The datum identity is literal and full visibility gives boundary
+separation.
+
+The structural maps from the normal-closure normalization to `Spec B_U`
+and the actual `U` are finite etale. Its refinement to `V` is the
+original marked normalization leg followed by the inverse of the
+existing visible normalization isomorphism. Composing with the
+isomorphism recovers that leg. Composing with `p|_U` gives exactly
+the actual chart structural map, with the original composite over `X`
+also proved. The refinement itself is finite etale.
+Both actual maps are surjective by lying over for the actual injective
+integral normalization maps. Chart surjectivity only needs dominant `p`,
+integral schemes and the nonempty affine chart; finiteness, etaleness
+and both normal-stalk hypotheses are omitted. Refinement surjectivity
+uses finite dominant `p` and normal stalks on `V`, with no etale or
+base-normality premise. The finite-etale conclusions retain `hX` and `hY`.
+
+The pinned library does not supply a general `Algebra.Etale`-to-`IsEtale`
+converse. The generic `piTensorProduct_ringHomProperty` instead preserves
+isomorphism-, identity-, composition- and base-change-stable properties
+through finite tensor products. `piTensorProduct_isEtale` applies it to
+the local standard-smooth presentations of the actual intermediate
+scheme. SP80's actual complementary-idempotent quotient gives an open
+immersion `Spec(ev_B)` into that tensor source, so the normalization
+structural map is scheme-etale by composition. No new converse, carrier,
+field marking, cover package or source axiom is introduced.
+
+Notation parity:
+
+| Lean object / group | Mathematical role | TeX notation |
+| --- | --- | --- |
+| `piTensorProduct_ringHomProperty`, `piTensorProduct_isEtale` | generic finite-tensor stability and actual scheme-etale source | existing \(P_B\); prose only |
+| `NormalClosureData.normalizationTensorEvaluation_isOpenImmersion`, `.normalizationToBase_isEtale_of_etaleModel` | selected open component and its scheme-etale structural composite | existing \(\operatorname{Spec}(\operatorname{ev}_B)\) and normalization structural map |
+| `functionFieldNormalClosure_normalization_finite_etale` | finite-etale normal-closure ring of the actual chart | existing \(B_U,A_U,\widetilde B_N\) |
+| `finiteEtaleAffinePreimageNormalizedCover`, `_normalClosure`; `conjugateBoundarySeparation_finiteEtaleAffinePreimageNormalizedCover` | existing cover, original marked datum and full-visible separation | existing \(C_U,\mathcal N,\operatorname{Sep}_{\partial}(C_U)\) |
+| `finiteEtaleAffineNormalClosureToBase_finite_etale` | finite-etale structural map to the actual section-ring spectrum | existing \(Y_N\to\operatorname{Spec}(B_U)\), with \(Z_U=Y_N\) on this chart |
+| `finiteEtaleAffineNormalClosureToChart`, `_comp_inclusion`, `_finite_etale`, `_surjective` | structural morphism to the actual affine open, its original-base equality and surjectivity | \(\pi_U:Z_U\to U\) |
+| `finiteEtaleAffineNormalClosureToPreimage`, `_comp_normalizationIso`, `_comp_toBase`, `_comp_restrict`, `_finite_etale`, `_surjective` | actual finite-etale surjective refinement, original marked leg and exact factorization | \(\lambda_U:Z_U\to V\), \(\nu_{p,U}\circ\lambda_U=\operatorname{Norm}(\mathcal N.\mathit{embedding})\), \(p|_V\circ\lambda_U=\pi_U\) |
+
+Retain `V=p⁻¹U`, `B_U`, `A_U`, `K(X)`, `K(Y)`, the marked normal
+closure, `Y_L`, `Y_N`, `ν_{p,U}`, `C_U` and all existing tensor/selector
+notation. The older `q_U` continues to mean the intermediate
+normalization structural map; it is not silently reused for the new
+refinement. The manuscript's `Z_U` denotes this same existing
+normal-closure normalization on the chart, while `π_U` and `λ_U`
+denote the actual chart and refinement maps. The final inventory is
+19 APIs, seventeen in `FiniteEtaleNormalClosure.lean` and two tensor helpers.
+
+The checked primary sources are Stacks Tags 02GN, 02GO and 02GP for
+composition, base change and open-immersion etaleness, and Tag 02GW for
+the etale cancellation law, and Tag 00GQ for lying over along integral
+inclusions. The actual marked cover and factorization equalities are
+direct project constructions. The two helpers compile (2452 jobs), and
+the scoped main build passes 2761 jobs with all 19 APIs and no warnings
+or errors.
+The static central inventory is 959 checks, 565 examples and 851 axiom
+reports after appending nineteen checks and reports. Its historical
+prefix is byte-identical to `4de0703`; the historical central file was
+not re-elaborated in this checkpoint.
+The 81-page PDF (831678 bytes) rebuilds with no undefined references or
+citations, overfull or underfull boxes, or final-log warnings. Visual
+checks of pages 12, 13, 61, 72 and 78 pass. Independent geometry and
+Lean--TeX review pass with no defects. The focused SP81 suite passes
+25 examples and exactly nineteen enforced standard-three axiom audits,
+with a duplicate-free registry check and no warnings or errors. Four
+chart regressions omit finite/etale premises; six inverse-image
+regressions omit etaleness. Five fresh neighbor suites pass without
+warnings or errors: SP80 `NormalizationIntegralFactorVerification`
+passes 30 examples and 28 enforced audits; SP77 `NormalClosureTensorVerification`
+passes 28/17; SP76 `FiniteNormalClosureVerification` passes 23/7;
+SP71 `FiniteAffineChartVerification` passes 18/11; and SP74
+`FunctionFieldNormalClosureVerification` passes 22/7. Together the six
+suites pass 146 examples and 89 enforced standard-three axiom audits.
+The full build passes 3200 jobs with only the two unchanged
+`Challenge.lean` placeholder warnings at lines 33 and 46. The unchanged
+`ProofDependencies` audit passes six primary endpoint contracts and two
+support reports without warnings or errors; its file is unchanged.
+All nineteen code/central/test/TeX API parity checks pass. The historical
+`Verification.lean` and audit 0018 prefixes and the SP80-to-end queue
+suffix are byte-identical to `4de0703`.
+Earlier checkpoint results retain their original scope.
+
+The next bounded bridge is localization and overlap
+compatibility of these actual models and maps, followed by cocycle
+identities, gluing and a compatible global Galois action. Deriving normal
+stalks from smooth geometry and Chow--Betti generation remain separate.
+The SP80 (2026-09-19) block and all subsequent queue history below are
+preserved unchanged.
 
 SP80 (2026-09-19): **integral trace section / actual normalization factor**.
 The checkpoint is proved and validated. Over a normal base domain

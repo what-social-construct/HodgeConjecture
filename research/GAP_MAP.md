@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-09-19 (SP80 integral evaluation factor;
+Last reviewed: 2026-09-19 (SP81 actual finite etale affine refinement;
 validation complete; earlier checkpoint records retain their
 original scope).
 
@@ -515,14 +515,57 @@ The focused suite passes the ring-level specialization to an actual
 finite etale affine inverse image, deriving both section-ring normality
 inputs from normal stalks without Noetherianity.
 
-**Next bounded bridge:** integrate this result
-into a named actual affine normalized-cover constructor and its
-structural-map/finite-etale morphism endpoints. Then prove compatibility
-on overlaps and glue the actual global finite etale Galois refinement.
-Normal stalks from smooth geometry remain separate. The earlier affine
-constructor retains its stronger normality and Noetherianity assumptions.
-The function-field tower and SP71's equality over `X` do not themselves
-prove gluing. Chow--Betti generation is unchanged.
+**SP81: the actual finite etale affine refinement.**
+`FiniteEtaleNormalClosure.lean` constructs the existing `NormalizedCover`
+for a finite dominant etale morphism `p:Y -> X` of integral schemes and
+a nonempty affine chart `U`. The same constructed function-field normal
+closure supplies the marking. The visible scheme is the actual
+`V=p⁻¹U`, through its existing normalization isomorphism. Normal stalks
+on both opens give normal section rings; no Noetherianity is assumed.
+The normalization structural maps to `Spec Γ(X,U)` and the actual `U`
+are finite etale. The constructed refinement to `V` is finite etale,
+recovers the marked normalization leg, factors the structural map through
+`p|_U`, and has the original composite over `X`. Full visibility gives
+boundary separation for this actual cover.
+Both maps are surjective by lying over for the actual injective integral
+normalization maps. Chart surjectivity requires only dominant `p`,
+integral schemes and the nonempty affine chart; it needs neither finite
+nor etale `p` nor either normal-stalk premise. Refinement surjectivity
+uses finite dominant `p` and normal stalks on `V`, with no etale or
+base-normality premise. Finite-etale conclusions retain both normal-stalk
+hypotheses.
+
+The pinned library does not provide the general converse from algebraic
+to scheme etaleness. `piTensorProduct_ringHomProperty` therefore transports
+any ring-map property stable under isomorphism, identity, composition and
+base change through the existing finite tensor source.
+`EtaleTensorSource.lean` applies it to the local standard-smooth
+presentations defining scheme etaleness. SP80's actual complementary
+idempotent then makes `Spec(ev_B)` an open immersion, so composition
+gives the required scheme-etale normalization. The actual intermediate
+scheme supplies these presentations; no new converse theorem is assumed.
+All 19 APIs compile without warnings in the 2761-job scoped build:
+seventeen in `FiniteEtaleNormalClosure.lean` and two tensor helpers. The 81-page PDF
+(831678 bytes), its final warning/reference/box scan, five-page visual
+review and independent geometry/Lean--TeX review pass. The focused suite
+passes 25 examples and 19 enforced standard-three axiom audits without
+warnings. Five fresh neighbor suites also pass; the six suites total
+146 examples and 89 enforced audits, with no warnings or errors. The
+full build passes 3200 jobs with only the two unchanged Challenge
+warnings. The unchanged dependency audit passes six primary contracts
+and two support reports. All nineteen API parity checks pass. The static
+central inventory is 959 checks, 565 examples and 851 reports; its
+historical prefix is unchanged and the historical file was not
+re-elaborated. The SP81 parity-queue entry records the complete validation.
+
+**Next bounded bridge:** prove compatibility under
+localization and on overlaps, establish cocycle identities, glue the
+actual global refinement, and construct its compatible Galois action.
+Normal stalks from smooth geometry remain separate. The older SP76
+constructor retains its stronger assumptions; this new finite-etale
+constructor removes its Noetherian-base requirement. The chartwise
+factorization identities do not themselves prove gluing. Chow--Betti
+generation is unchanged.
 The main target is unchanged. Nonempty-boundary geometry remains an
 alternative if needed; Chow--Betti generation and convolution compatibility
 remain separate.
