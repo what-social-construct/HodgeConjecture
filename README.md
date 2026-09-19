@@ -749,9 +749,28 @@ pass 23/7 and 22/7, respectively: 73 examples and 31 audits in these three
 suites. The fresh unchanged dependency audit passes six primary endpoint
 contracts and two support reports.
 
-Next construct the canonical localization/base-change comparison
-`K⊗_B P_B ≃ P_K` and prove equality of the evaluator composites.
-Then, under separability, realize the generic maximal quotient as a
+SP78 constructs the canonical comparison `K⊗_B P_B ≃_K P_K` and proves
+the full equality of evaluator homomorphisms in
+[`NormalizationBaseChange.lean`](HodgeConjecture/Boundary/Normalization/NormalizationBaseChange.lean).
+Its one-factor comparison `K⊗_B IntCl_B(L) ≃_K L` uses the fraction-field
+localization and algebraicity of `L/K`, with compatible scalar towers;
+normality, Noetherianity, separability and finite degree are not required.
+[`PiTensorBaseChange.lean`](HodgeConjecture/CommutativeAlgebra/PiTensorBaseChange.lean)
+supplies the generic finite-index tensor base-change equivalence and
+factorwise algebra congruence. The three existing finite-family evaluation
+helpers move unchanged to `FiniteTensorProduct.lean`; their names and maps
+are preserved. The central inventory is 896 checks, 565 examples and
+788 reports; its historical prefix is unchanged and was not rerun in full.
+The 76-page PDF (812185 bytes) passes its build, warning scan and visual
+checks. Both new leaves compile without warnings. The focused suite passes
+25 examples and 13 enforced standard-three axiom audits, including three
+actual function-field cases. The full build passes (3189 jobs; only the
+two existing Challenge placeholder warnings). Fresh SP77, SP76 and SP74
+reruns pass 28/17, 23/7 and 22/7, respectively: 98 examples and 44 enforced
+axiom audits across the four suites. The fresh unchanged dependency audit
+passes six primary endpoint contracts and two support reports.
+
+Next, under separability, realize the generic maximal quotient as a
 direct factor, extend/select that factor integrally, and prove its image
 normal and equal to this specific `N`-normalization. Neither the generic
 splitting nor the integral factor identification is yet formalized.

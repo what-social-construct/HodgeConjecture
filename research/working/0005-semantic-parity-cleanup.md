@@ -133,6 +133,59 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP75 | Local-separability consumer generalization and core-free hypothesis cleanup | GENERALIZE / MOVE / REUSE | Replace fourteen perfect-field premises by extension separability; remove twelve without replacement. Move the two existing separability/Galois helpers to the core, retaining one perfect-field compatibility wrapper and all other geometric inputs. | PROVED / VALIDATED |
 | SP76 | Finite normal-closure normalization and actual affine-preimage cover | DERIVE / CONSTRUCT / SEPARATE | Derive finiteness over a normal Noetherian base, eliminate the separately supplied second affine algebra, and construct the existing cover from the actual affine inverse image and marked generic extension. | PROVED / VALIDATED |
 | SP77 | Finite tensor source, marked field quotient and integral evaluation | CONSTRUCT / EVALUATE / COMPARE | Prove finite-index tensor finiteness/etaleness, evaluate onto the existing marked normal closure, identify the actual generic kernel quotient, and restrict the same embeddings to integral closures with exact factor/pure-tensor compatibility. Keep integral factor identification and whole-chart etaleness separate. | PROVED / VALIDATED |
+| SP78 | Canonical tensor base change and full evaluator homomorphism square | LOCALIZE / COMPARE / COMMUTE | Identify each localized integral closure with its algebraic ambient field, construct finite-index tensor base change, and prove the actual evaluator homomorphisms commute. Relocate the three existing evaluator helpers without duplication. | PROVED / VALIDATED |
+
+SP78 (2026-09-18): **tensor base change / full evaluator square**.
+`PiTensorBaseChange.lean` constructs algebra equivalences for factorwise
+tensor congruence and scalar extension of the existing finite-index
+tensor product. Its factor, inverse-factor and pure-tensor formulas
+retain the original generators; no replacement tensor carrier is used.
+
+`NormalizationBaseChange.lean` uses fraction-field localization to
+construct `K⊗_B IntCl_B(L) ≃_K L` with the actual multiplication formula.
+The one-factor theorem only needs compatible scalar towers, the specified
+fraction field and algebraicity of `L/K`; it adds no normality,
+Noetherianity, separability or finite-degree premise. Applied factorwise
+to the marked closure, it constructs `K⊗_B P_B ≃_K P_K`. The full
+evaluator square is proved as equality of algebra homomorphisms, not
+assumed or restricted to selected pure tensors.
+
+The three existing generic evaluation helpers move unchanged from
+`NormalClosureTensor.lean` to `FiniteTensorProduct.lean`, under their
+existing public names. This removes a field-normalization dependency
+from generic tensor base change without duplicating the evaluator or
+altering its maps. No new source axiom or geometric input package appears.
+
+Notation parity: retain `Σ`, `P_B`, `P_K`, `ev_B`, `ev_K`, `m` and
+the existing `\widetilde B_L`, `\widetilde B_N`. Write `β_L` and `β_N`
+for the one-factor comparisons, and `β_Σ` for the tensor comparison.
+The full square is `ev_K∘β_Σ=β_N∘(1_K⊗ev_B)`. Generic congruence,
+scalar-extension helpers and formulas are prose-only; no new projector,
+normalization ring or field marking is introduced. Stacks Lemma 10.36.11,
+Tag 0307, is checked for the localization-of-integral-closure input only.
+
+The API inventory is seven generic tensor declarations and six
+normalization declarations; the three relocated helpers are not new
+APIs. The central inventory is 896 checks, 565 examples and 788 reports
+after appending thirteen checks and reports; its historical prefix is
+byte-identical and was not rerun in full. The 76-page PDF (812185 bytes)
+passes its build and clean warning/box/reference scan; visual checks of
+pages 10, 11, 58, 68, 69, 75 and 76 pass. Both new leaves compile without
+warnings. `NormalizationBaseChangeVerification.lean` passes 25 examples
+and 13 enforced standard-three axiom audits, including three actual
+function-field cases. The full build passes (3189 jobs; only the two
+existing Challenge placeholder warnings). Fresh SP77, SP76 and SP74
+reruns pass 28/17, 23/7 and 22/7, respectively: 98 examples and 44 enforced
+axiom audits across the four suites. The fresh unchanged dependency audit
+passes six primary endpoint contracts and two support reports.
+
+Next prove
+generic direct-factor/idempotent splitting using separability, then
+extend/select the integral factor and prove its image normal and equal
+to `IntCl_B(N)`. The new base-change equivalence and full square do not
+already prove those steps or whole-chart etaleness. Overlaps, gluing and
+Chow--Betti generation remain separate. Historical SP77 and earlier queue
+blocks below are preserved unchanged.
 
 SP77 (2026-09-18): **finite tensor source / marked evaluations**.
 `FiniteTensorProduct.lean` proves finiteness and etaleness independently

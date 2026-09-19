@@ -822,6 +822,48 @@ finiteness; \'{e}taleness is stable under base change and
 composition~\cite{StacksEtaleStability}.
 \end{proof}
 
+\begin{proposition}[Canonical base change of tensor evaluation]
+\label{prop:normalization-tensor-base-change}
+Let \(B\) be a domain with fraction field \(K\), and let \(L/K\)
+be algebraic, with the compatible \(B\)-scalar map. There is a canonical
+\(K\)-algebra isomorphism
+\[
+  \beta_L:K\otimes_B\widetilde B_L\xrightarrow{\ \sim\ }L,
+  \qquad k\otimes a\longmapsto k\,v_L(a).
+\]
+For the finite marked normal-closure datum \(\mathcal N\), these
+isomorphisms induce a canonical \(K\)-algebra isomorphism
+\[
+  \beta_\Sigma:K\otimes_B P_B\xrightarrow{\ \sim\ }P_K,
+  \qquad k\otimes\bigotimes_{\sigma,B}a_\sigma
+    \longmapsto k\,\bigotimes_{\sigma,K}v_L(a_\sigma).
+\]
+With \(\beta_N\) defined by the same one-factor construction, the
+following square of \(K\)-algebra homomorphisms commutes:
+\[
+\begin{CD}
+  K\otimes_B P_B @>{\beta_\Sigma}>> P_K\\
+  @V{1_K\otimes\operatorname{ev}_B}VV @VV{\operatorname{ev}_K}V\\
+  K\otimes_B\widetilde B_N @>{\beta_N}>> N.
+\end{CD}
+\]
+\end{proposition}
+
+\begin{proof}
+Integral closure commutes with localization
+\cite{StacksIntegralClosureLocalization}. Localizing at
+\(B\setminus\{0\}\) gives \(K\) downstairs; the integral closure
+of \(K\) in the algebraic extension \(L\) is \(L\). The localization
+pushout therefore gives \(\beta_L\) with the stated formula.
+Scalar extension commutes with finite tensor products by their universal
+properties. Applying \(\beta_L\) to each factor gives \(\beta_\Sigma\).
+Both composites in the square send the scalar factor \(k\) to its
+original image in \(N\), and the integral factor indexed by \(\sigma\)
+to \(\sigma(v_L(a))\), by
+Proposition~\ref{prop:normalization-tensor}. The tensor universal
+properties give equality of the homomorphisms.
+\end{proof}
+
 The group \(G=\mathcal N.\mathit{galoisGroup}\), the subgroup
 \(H=\mathcal N.\mathit{intermediateFixingSubgroup}\), and the canonical deck
 action on \(Y_N\) are all constructed from the same datum.  Normality keeps the conjugate embeddings inside the same field \(N\).
@@ -4819,6 +4861,11 @@ Integral tensor evaluation \(P_B\to\widetilde B_N\) &
 \leanpath{NormalClosureData.normalizationTensorEvaluation_coe_tprod}\newline
 \leanpath{NormalClosureData.normalizationTensor_etale}\newline
 \leanpath{Boundary/Normalization/NormalizationTensor.lean}\\
+Canonical base change \(\beta_L,\beta_\Sigma\) and evaluation square &
+\leanpath{normalizedCoordinateRingBaseChangeEquiv}\newline
+\leanpath{NormalClosureData.normalizationTensorBaseChangeEquiv}\newline
+\leanpath{NormalClosureData.normalizationTensorEvaluation_baseChange}\newline
+\leanpath{Boundary/Normalization/NormalizationBaseChange.lean}\\
 Full-visible boundary ideals &
 \leanpath{movingBoundaryIdeal_eq_top_of_surjective}\newline
 \leanpath{conjugateBoundarySeparation_of_surjective}\newline
@@ -5461,10 +5508,18 @@ principal table, grouped by mathematical layer.
 \leanpath{CommutativeAlgebra/FiniteTensorProduct.lean};
 \leanpath{piTensorProduct_finite};
 \leanpath{piTensorProduct_etale};
-\normsrc{NormalClosureTensor.lean};
 \leanpath{piTensorProductEvaluation};
 \leanpath{piTensorProductEvaluation_tprod};
 \leanpath{piTensorProductEvaluation_singleAlgHom};
+\leanpath{CommutativeAlgebra/PiTensorBaseChange.lean};
+\leanpath{piTensorProductCongr};
+\leanpath{piTensorProductCongr_tprod};
+\leanpath{piTensorProductCongr_singleAlgHom};
+\leanpath{piTensorProductBaseChangeEquiv};
+\leanpath{piTensorProductBaseChangeEquiv_tmul_singleAlgHom};
+\leanpath{piTensorProductBaseChangeEquiv_symm_singleAlgHom_tmul};
+\leanpath{piTensorProductBaseChangeEquiv_tmul_tprod};
+\normsrc{NormalClosureTensor.lean};
 \leanpath{NormalClosureData.tensorEvaluation};
 \leanpath{NormalClosureData.tensorEvaluation_singleAlgHom};
 \leanpath{NormalClosureData.tensorEvaluation_surjective};
@@ -5478,6 +5533,13 @@ principal table, grouped by mathematical layer.
 \leanpath{NormalClosureData.normalizationTensorEvaluation_coe_tprod};
 \leanpath{NormalClosureData.normalizationTensor_finite};
 \leanpath{NormalClosureData.normalizationTensor_etale};
+\normsrc{NormalizationBaseChange.lean};
+\leanpath{normalizedCoordinateRingBaseChangeEquiv};
+\leanpath{normalizedCoordinateRingBaseChangeEquiv_tmul};
+\leanpath{NormalClosureData.normalizationTensorBaseChangeEquiv};
+\leanpath{NormalClosureData.normalizationTensorBaseChangeEquiv_tmul_singleAlgHom};
+\leanpath{NormalClosureData.normalizationTensorBaseChangeEquiv_tmul_tprod};
+\leanpath{NormalClosureData.normalizationTensorEvaluation_baseChange};
 \normsrc{FiniteAffineCover.lean};
 \leanpath{normalizationToIntermediate_surjective};
 \leanpath{normalizationIntermediateEquiv};

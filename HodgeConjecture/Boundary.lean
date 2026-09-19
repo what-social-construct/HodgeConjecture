@@ -26,6 +26,7 @@ import HodgeConjecture.Boundary.Normalization.FunctionFieldNormalClosure
 import HodgeConjecture.Boundary.Normalization.FiniteNormalClosure
 import HodgeConjecture.Boundary.Normalization.NormalClosureTensor
 import HodgeConjecture.Boundary.Normalization.NormalizationTensor
+import HodgeConjecture.Boundary.Normalization.NormalizationBaseChange
 import HodgeConjecture.Boundary.Normalization.DeckAction
 import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
 import HodgeConjecture.Boundary.Normalization.ConjugateNormalization
@@ -98,8 +99,10 @@ The finite tensor product of the intermediate normalization has a canonical
 integral evaluation map, compatible with the surjective tensor evaluation
 onto the marked normal-closure field. The latter's actual kernel quotient
 is that field. A finite normal étale intermediate model makes the integral
-tensor source finite and étale; the integral direct-factor comparison is
-a separate step.
+tensor source finite and étale. Canonical scalar extension identifies the
+integral and generic tensor algebras, and the evaluation square commutes
+as algebra homomorphisms. The integral direct-factor comparison is a
+separate step.
 
 The broad normalization-purity/global-triviality prototype is preserved in
 `research/archive/legacy-lean/`, not as an importable library module.

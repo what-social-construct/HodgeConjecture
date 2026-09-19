@@ -17,9 +17,56 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source check: 2026-09-18 (SP77 finite tensor source and marked evaluations;
+Last source check: 2026-09-18 (SP78 tensor base change and evaluator square;
 earlier source records retain
 their original validation scope).
+
+### Tensor base change and the full evaluator square (SP78, 2026-09-18)
+
+The primary page for [Stacks, Lemma 10.36.11, Tag
+0307](https://stacks.math.columbia.edu/tag/0307) was checked: integral
+closure commutes with localization. For the map `B -> L`, localization
+at the non-zero-divisors of `B` identifies the base with its fraction
+field `K`, while those elements are already units in `L`. Algebraicity
+of `L/K` makes every element integral over `K`, so the localized integral
+closure is `L`. Normality, Noetherianity, separability and finite degree
+are not needed for this specialization. This is the standard source
+for the one-factor normalization comparison, not for factor splitting,
+whole-chart etaleness or gluing.
+
+Lean uses the proved Mathlib `IsIntegralClosure.isLocalization`,
+`Algebra.isPushout_of_isLocalization` and `Algebra.IsPushout.equiv` APIs
+to construct `normalizedCoordinateRingBaseChangeEquiv`, preserving the
+actual scalar map and integral-closure inclusion on pure tensors.
+`PiTensorBaseChange.lean` proves the generic finite-index tensor
+base-change equivalence directly from the tensor universal properties,
+with inverse laws and factorwise algebra congruence on existing carriers.
+The generic base-change theorem needs commutative rings and a finite
+index, not a field or flatness premise; factorwise congruence itself
+requires no finiteness of the index.
+Their composition identifies `K⊗_B P_B` with `P_K` for the same marked
+closure. The full evaluator square is equality of the resulting algebra
+homomorphisms, not an added commuting-square hypothesis.
+
+The three generic finite-family evaluation helpers are relocated unchanged
+to `FiniteTensorProduct.lean` without name changes or duplication. No
+literature axiom or new geometric input package is introduced. There are
+thirteen new APIs, distinct from the three relocated helpers. The central
+inventory is 896 checks, 565 examples and 788 reports; its historical
+prefix is unchanged and was not rerun in full. The 76-page PDF (812185
+bytes) passes its build, warning scan and visual checks. Both new leaves
+compile without warnings. The focused suite passes 25 examples and 13
+enforced standard-three axiom audits, including three actual function-field
+cases. The full build passes (3189 jobs; only the two existing Challenge
+placeholder warnings). Fresh SP77, SP76 and SP74 reruns pass 28/17, 23/7
+and 22/7, respectively: 98 examples and 44 enforced axiom audits across
+the four suites. The fresh unchanged dependency audit passes six primary
+endpoint contracts and two support reports.
+
+Generic direct-factor/
+idempotent splitting under separability, extension/selection of an
+integral factor, its normality and identification with `IntCl_B(N)`, and
+whole-chart etaleness/gluing remain to be proved.
 
 ### Finite tensor source and marked evaluations (SP77, 2026-09-18)
 
@@ -73,9 +120,9 @@ and 31 audits in these three suites. The fresh unchanged dependency audit
 passes six primary endpoint contracts and two support reports.
 
 The quotient over the fraction field does not yet identify a direct
-factor, even generically. First construct the
-canonical scalar-extension/localization comparison `K⊗_B P_B ≃ P_K` and
-prove equality of the evaluator homomorphism composites. Then, under
+factor, even generically. SP78 above constructs the canonical comparison
+`K⊗_B P_B ≃ P_K` and full evaluator homomorphism equality left open at
+SP77; the preceding validation figures retain their SP77 scope. Under
 separability, realize the generic maximal quotient as a direct factor/
 idempotent; that splitting is not yet formalized. Extension/selection of
 that factor over `B` and normality/equality of its integral image with

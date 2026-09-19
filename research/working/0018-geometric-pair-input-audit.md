@@ -490,3 +490,48 @@ overlap compatibility, gluing and the global finite etale Galois
 refinement remain subsequent. Normal stalks from smooth geometry and
 Chow--Betti generation remain separate. All earlier audit text is
 preserved unchanged.
+
+## 14. SP78 follow-up: canonical tensor base change and the evaluator square
+
+The generic tensor base-change equivalence and factorwise algebra
+congruence are constructed on the existing tensor carriers in
+`PiTensorBaseChange.lean`, with exact factor and pure-tensor formulas.
+`NormalizationBaseChange.lean` identifies `K⊗_B IntCl_B(L)` with `L`
+by fraction-field localization and algebraicity. Its one-factor theorem
+needs compatible scalar towers but no normality, Noetherianity,
+separability or finite degree.
+
+Composing these comparisons gives `β_Σ:K⊗_B P_B ≃_K P_K` for the
+existing marked closure. The full identity
+`ev_K∘β_Σ=β_N∘(1_K⊗ev_B)` is equality of algebra homomorphisms using
+the existing evaluations and the same one-factor comparison for `N`.
+It strengthens SP77's pure-tensor identity without supplying a commuting
+square or replacing the marked field. The three common evaluation
+helpers are relocated unchanged to `FiniteTensorProduct.lean`, with
+their public names preserved. No new source axiom or input package is
+introduced. The checked Stacks source is Lemma 10.36.11, Tag 0307, for
+localization of integral closure, not for factor splitting or etaleness.
+
+There are thirteen new APIs (seven generic tensor and six normalization
+declarations), separate from the three relocated helpers. The central
+inventory is 896 checks, 565 examples and 788 reports after appending
+thirteen checks and reports; its historical prefix is byte-identical and
+was not rerun in full. The 76-page PDF (812185 bytes) passes its build and
+clean warning/box/reference scan; visual checks of pages 10, 11, 58, 68,
+69, 75 and 76 pass. Both new leaves compile without warnings.
+`NormalizationBaseChangeVerification.lean` passes 25 examples and 13
+enforced standard-three axiom audits, including three actual function-field
+cases. The full build passes (3189 jobs; only the two existing Challenge
+placeholder warnings). Fresh SP77, SP76 and SP74 reruns pass 28/17, 23/7
+and 22/7, respectively: 98 examples and 44 enforced axiom audits across
+the four suites. The fresh unchanged dependency audit passes six primary
+endpoint contracts and two support reports.
+
+The next
+bounded proof is generic direct-factor/idempotent splitting under
+separability. Then extend/select the integral factor, prove its image
+normal and equal to `IntCl_B(N)`, and derive whole-chart etaleness.
+Neither generic splitting nor the integral identification is formalized
+by the present comparison. Overlaps, gluing and global Galois refinement
+remain later steps; normal stalks from smooth geometry and Chow--Betti
+generation remain separate. All earlier audit text is preserved unchanged.

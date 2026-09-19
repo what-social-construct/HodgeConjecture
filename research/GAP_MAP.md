@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-09-18 (SP77 finite tensor source and marked evaluations;
+Last reviewed: 2026-09-18 (SP78 tensor base change and evaluator square;
 validation complete; earlier checkpoint validation records retain their
 original scope).
 
@@ -423,10 +423,32 @@ Fresh SP76 and SP74 reruns pass 23/7 and 22/7, respectively: 73 examples
 and 31 audits in these three suites. The fresh unchanged dependency audit
 passes six primary endpoint contracts and two support reports.
 
-**Next bounded bridge:** construct the canonical localization/base-change
-comparison `K⊗_B P_B ≃ P_K` and prove equality of the evaluator
-homomorphism composites. The pure-tensor identity does not supply this
-comparison. Then, under separability, prove that the actual generic
+**SP78: canonical tensor base change and the full evaluator square.**
+`PiTensorBaseChange.lean` constructs finite-index tensor base change and
+factorwise algebra congruence on the existing carriers, with factor and
+pure-tensor formulas. `NormalizationBaseChange.lean` first identifies
+`K⊗_B IntCl_B(L)` with `L` from fraction-field localization, algebraicity
+and compatible scalar towers. It requires neither base normality nor
+Noetherianity, separability or finite degree. Applying this comparison
+factorwise constructs `β_Σ:K⊗_B P_B ≃_K P_K`. Its full evaluator equality
+is `ev_K∘β_Σ=β_N∘(1_K⊗ev_B)`, where `β_N` is the corresponding
+one-factor comparison for the same marked `N`. This strengthens the
+earlier pure-tensor formula to equality of algebra homomorphisms. No
+surjectivity, factor selection or replacement field/map is supplied as
+an assumption. The three existing evaluation helpers move unchanged to
+`FiniteTensorProduct.lean`. The central inventory is 896 checks, 565
+examples and 788 reports; its historical prefix is unchanged and was not
+rerun in full. The 76-page PDF (812185 bytes) passes its build, warning
+scan and visual checks. Both new leaves compile without warnings. The
+focused suite passes 25 examples and 13 enforced standard-three axiom
+audits, including three actual function-field cases. The full build passes
+(3189 jobs; only the two existing Challenge placeholder warnings).
+Fresh SP77, SP76 and SP74 reruns pass 28/17, 23/7 and 22/7, respectively:
+98 examples and 44 enforced axiom audits across the four suites. The fresh
+unchanged dependency audit passes six primary endpoint contracts and two
+support reports.
+
+**Next bounded bridge:** under separability, prove that the actual generic
 maximal quotient splits as a direct factor/idempotent; this splitting is
 not yet formalized. Subsequently extend/select that factor over `B`,
 prove normality of its integral image and identify it with the specific

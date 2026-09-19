@@ -678,10 +678,9 @@ pass 23/7 and 22/7, respectively: 73 examples and 31 audits in these three
 suites. The fresh unchanged dependency audit passes six primary endpoint
 contracts and two support reports.
 
-The immediate next proof must construct the canonical localization/base-
-change comparison `K⊗_B P_B ≃ P_K` and prove equality of the evaluator
-homomorphism composites. The pure-tensor formula does not replace that
-comparison. Then, under separability, realize the generic maximal quotient
+SP78 in B4k below constructs the canonical base-change comparison and
+full evaluator square left open here; the preceding validation figures
+retain their SP77 scope. Under separability, next realize the generic maximal quotient
 as a direct factor/idempotent; that splitting is not yet formalized.
 Subsequently extend/select that factor integrally and identify its image
 with the existing `T=IntCl_B(N)`. Normality of the integral image and its
@@ -692,6 +691,50 @@ target etaleness. Whole-chart etaleness, overlaps, gluing and global
 finite etale Galois refinement
 remain subsequent steps. The independent Chow--Betti generation obligation
 is unchanged.
+
+### B4k. Identify the tensor base change and full evaluator square
+
+SP78's `PiTensorBaseChange.lean` constructs finite-index tensor base change
+and factorwise algebra congruence, with exact factor/pure-tensor formulas.
+The underlying tensor carriers are unchanged, including the empty-index
+case of the generic base-change theorem.
+
+`NormalizationBaseChange.lean` first constructs
+`β_L:K⊗_B IntCl_B(L) ≃_K L`, sending `k⊗x` to `algebraMap K L k * x`.
+It uses the specified fraction field, compatible scalar towers and
+algebraicity of `L/K`; it needs neither normality nor Noetherianity of
+`B`, separability or finite degree. Localization of integral closure and
+the actual localization pushout supply this equivalence.
+
+For the existing marked normal closure, finite-index tensor base change
+followed by the factorwise `β_L` comparison constructs
+`β_Σ:K⊗_B P_B ≃_K P_K`. The full compatibility is
+`ev_K∘β_Σ=β_N∘(1_K⊗ev_B)` as algebra homomorphisms, where `β_N` is
+the same one-factor construction for `N`. Thus both routes use the
+original integral evaluation and marked field evaluation, not separately
+chosen maps. The three common evaluation helpers move unchanged into
+`FiniteTensorProduct.lean`; their public names are preserved and no
+parallel evaluator or source axiom is added. The central inventory is 896
+checks, 565 examples and 788 reports; its historical prefix is unchanged
+and was not rerun in full. The 76-page PDF (812185 bytes) passes its build,
+warning scan and visual checks. Both new leaves compile without warnings.
+The focused suite passes 25 examples and 13 enforced standard-three axiom
+audits, including three actual function-field cases. The full build passes
+(3189 jobs; only the two existing Challenge placeholder warnings).
+Fresh SP77, SP76 and SP74 reruns pass 28/17, 23/7 and 22/7, respectively:
+98 examples and 44 enforced axiom audits across the four suites. The fresh
+unchanged dependency audit passes six primary endpoint contracts and two
+support reports.
+
+The next bounded proof is separable generic direct-factor/idempotent
+splitting of the actual maximal quotient. Neither that splitting nor an
+integral direct-factor identification is yet formalized. Then extend/select
+the integral factor, prove its image normal and identify it with the
+existing `IntCl_B(N)`. Whole-chart etaleness, overlap compatibility and
+gluing remain further steps; Chow--Betti generation remains independent.
+The generic splitting should take the form `P_K ≃ N × Q`, or `eP_K ≃ N`
+with unit `e`. It does not provide a unital `K`-algebra section `N -> P_K`:
+the other factors need not admit a `K`-algebra map from `N`.
 
 ### G0. Smooth projective setting and candidate constructions
 
@@ -1137,9 +1180,8 @@ provide variable-class coverage.
 - Review new objects against the parity registry before adding wrappers.
   Promote a proved checkpoint only after the appropriate build, focused
   regressions, dependency/axiom checks and Lean--TeX comparison.
-- **Next action:** construct B4j's canonical localization/base-change
-  comparison `K⊗_B P_B ≃ P_K` and equality of the evaluator homomorphism
-  composites. Then, under separability, prove generic direct-factor/
+- **Next action:** after B4k's canonical tensor base-change comparison and
+  full evaluator square, use separability to prove generic direct-factor/
   idempotent splitting of the actual maximal quotient; the quotient
   identification does not already formalize that splitting. Next extend/
   select the integral factor, prove its image normal and identify it with
@@ -1969,10 +2011,10 @@ the dated checkpoints below document how the existing objects were built.
 After B4i's finite-normalization construction, B4j constructs the finite
 etale tensor source and actual evaluations, proves generic surjectivity
 from normal-closure generation, and identifies the corresponding generic
-kernel quotient with `N`. The immediate operative action is to construct
-the canonical localization/base-change comparison `K⊗_B P_B ≃ P_K` and
-prove equality of evaluator composites. Then separability must give a
-generic direct-factor/idempotent splitting, which is not yet formalized;
+kernel quotient with `N`. B4k constructs the canonical localization/base-
+change comparison `K⊗_B P_B ≃ P_K` and proves equality of evaluator
+homomorphism composites. The immediate operative action is now to use
+separability for generic direct-factor/idempotent splitting, which is not yet formalized;
 subsequently extend/select the integral factor and prove its image normal
 and equal to the specific `N`-normalization. This must yield whole-chart
 etaleness, not just a generic statement; overlap compatibility and gluing

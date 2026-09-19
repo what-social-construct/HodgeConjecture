@@ -1,6 +1,6 @@
 import HodgeConjecture.Boundary.Normalization.NormalClosure
 import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.RingTheory.PiTensorProduct
+import HodgeConjecture.CommutativeAlgebra.FiniteTensorProduct
 
 /-!
 # Tensor evaluation onto a marked normal closure
@@ -19,38 +19,7 @@ noncomputable section
 
 open scoped TensorProduct Classical
 
-universe uI uR uA uS uK uL uN
-
-/-- The algebra homomorphism multiplying a finite family of algebra maps.
-This same evaluation applies to affine coordinate algebras and their fields. -/
-def piTensorProductEvaluation
-    {ι : Type uI} {R : Type uR} {A : Type uA} {S : Type uS}
-    [Fintype ι] [CommRing R] [CommRing A] [CommRing S]
-    [Algebra R A] [Algebra R S] (f : ι → A →ₐ[R] S) :
-    (⨂[R] _ : ι, A) →ₐ[R] S :=
-  PiTensorProduct.liftAlgHom
-    ((MultilinearMap.mkPiAlgebra R ι S).compLinearMap fun i => (f i).toLinearMap)
-    (by simp [MultilinearMap.mkPiAlgebra_apply])
-    (by
-      intro x y
-      simp [MultilinearMap.mkPiAlgebra_apply, Finset.prod_mul_distrib])
-
-/-- Evaluation on a pure tensor is the product of its marked images. -/
-theorem piTensorProductEvaluation_tprod
-    {ι : Type uI} {R : Type uR} {A : Type uA} {S : Type uS}
-    [Fintype ι] [CommRing R] [CommRing A] [CommRing S]
-    [Algebra R A] [Algebra R S] (f : ι → A →ₐ[R] S) (x : ι → A) :
-    piTensorProductEvaluation f (PiTensorProduct.tprod R x) = ∏ i, f i (x i) := by
-  simp [piTensorProductEvaluation, MultilinearMap.mkPiAlgebra_apply]
-
-/-- Each tensor factor evaluates by its original algebra map. -/
-theorem piTensorProductEvaluation_singleAlgHom
-    {ι : Type uI} {R : Type uR} {A : Type uA} {S : Type uS}
-    [Fintype ι] [DecidableEq ι] [CommRing R] [CommRing A] [CommRing S]
-    [Algebra R A] [Algebra R S] (f : ι → A →ₐ[R] S) (i : ι) (x : A) :
-    piTensorProductEvaluation f (PiTensorProduct.singleAlgHom i x) = f i x := by
-  simp [PiTensorProduct.singleAlgHom, piTensorProductEvaluation_tprod,
-    Pi.mulSingle_apply, apply_ite]
+universe uK uL uN
 
 namespace NormalClosureData
 

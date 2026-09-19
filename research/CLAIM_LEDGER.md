@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-18 (SP77 finite tensor source and marked evaluations; earlier checkpoint
+Last audited: 2026-09-18 (SP78 tensor base change and evaluator square; earlier checkpoint
 validation records are retained with their original scope).
 
 Status vocabulary:
@@ -17,6 +17,64 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Tensor base change and the full evaluator square (A11bj / SP78)
+
+Status: `FORMAL`. The existing finite-index tensor product
+commutes with scalar extension as an algebra, with exact factor and
+pure-tensor formulas; factorwise algebra equivalences induce an algebra
+equivalence of the same tensor carriers without a finite-index premise.
+The generic base-change theorem works over commutative rings, not only
+fields, with the indexing and algebra carriers in independent universes.
+These generic constructions are
+in `CommutativeAlgebra/PiTensorBaseChange.lean`.
+
+`Boundary/Normalization/NormalizationBaseChange.lean` identifies
+`K⊗_B IntCl_B(L) ≃_K L` by localization at the base non-zero-divisors.
+Only the fraction-field structure, compatible scalar towers and
+algebraicity of `L/K` are needed. Normality/Noetherianity of `B`,
+separability and finite degree are not assumptions of this one-factor
+theorem. The pure-tensor formula is `k⊗x ↦ algebraMap K L k * x`.
+
+For the existing marked normal closure, these comparisons construct
+`β_Σ:K⊗_B P_B ≃_K P_K` and prove the full algebra-homomorphism equality
+`ev_K∘β_Σ=β_N∘(1_K⊗ev_B)`. All embeddings, inclusions and tensor carriers
+are the existing ones. The equality is proved, not supplied as a premise;
+it is stronger than SP77's agreement on integral pure tensors alone.
+
+The three existing `piTensorProductEvaluation` declarations move unchanged
+from `NormalClosureTensor.lean` to `FiniteTensorProduct.lean`, with their
+public names and proofs preserved. No duplicate evaluator, field carrier,
+normal-closure package or source axiom is introduced. The thirteen new
+declarations are:
+
+- `PiTensorBaseChange.lean`: `piTensorProductCongr`, its `_tprod` and
+  `_singleAlgHom` formulas; `piTensorProductBaseChangeEquiv`, its
+  `_tmul_singleAlgHom`, `_symm_singleAlgHom_tmul` and `_tmul_tprod`
+  formulas.
+- `NormalizationBaseChange.lean`:
+  `normalizedCoordinateRingBaseChangeEquiv` and `_tmul`;
+  `NormalClosureData.normalizationTensorBaseChangeEquiv`, its
+  `_tmul_singleAlgHom` and `_tmul_tprod` formulas, and
+  `NormalClosureData.normalizationTensorEvaluation_baseChange`.
+
+The central inventory is 896 checks, 565 examples and 788 reports; its
+historical prefix is unchanged and was not rerun in full. The 76-page PDF
+(812185 bytes) passes its build, warning scan and visual checks. Both new
+leaves compile without warnings. `NormalizationBaseChangeVerification.lean`
+passes 25 examples and 13 enforced standard-three axiom audits, including
+three actual function-field cases. The full build passes (3189 jobs; only
+the two existing Challenge placeholder warnings). Fresh SP77, SP76 and
+SP74 reruns pass 28/17, 23/7 and 22/7, respectively: 98 examples and 44
+enforced axiom audits across the four suites. The fresh unchanged
+dependency audit passes six primary endpoint contracts and two support
+reports.
+
+Next prove separable generic direct-factor/idempotent splitting of the
+actual maximal quotient; that splitting is not yet formalized. Integral
+factor extension/selection, normality and identification of its image with
+`IntCl_B(N)`, whole-chart etaleness, overlaps and gluing remain separate.
+The Chow--Betti generation obligation is unchanged.
 
 ## Finite tensor source and marked evaluations (A11bi / SP77)
 
@@ -72,12 +130,13 @@ and 31 audits in these three suites. The fresh unchanged dependency audit
 passes six primary endpoint contracts and two support reports.
 
 The generic quotient identification is not an integral direct-factor
-identification or proof of integral
-evaluation surjectivity. A scalar-extension/localization isomorphism
-between the integral and field tensor constructions is not asserted.
-The immediate next proof must construct the canonical comparison
-`K⊗_B P_B ≃ P_K` and equality of the evaluator homomorphism composites.
-Afterward, separability must be used to realize the generic maximal
+identification or proof of integral evaluation surjectivity. SP77 did not
+assert a scalar-extension/localization isomorphism between the integral
+and field tensor constructions.
+SP78 above implements the comparison `K⊗_B P_B ≃ P_K` and full evaluator
+homomorphism equality left open at this checkpoint; the preceding
+validation figures retain their SP77 scope. Separability must next be
+used to realize the generic maximal
 quotient as a direct factor/idempotent; that splitting is not yet
 formalized. Then extend/select the factor over the base, prove normality
 of its integral image and identify it with `IntCl_B(N)`.
