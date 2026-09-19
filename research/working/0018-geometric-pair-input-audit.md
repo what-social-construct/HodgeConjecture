@@ -391,3 +391,46 @@ the resulting `N`-model, overlap compatibility, gluing and the global
 finite etale Galois refinement remain subsequent geometric tasks.
 Normal stalks from smoothness and Chow--Betti generation remain separate.
 All earlier audit text is preserved unchanged.
+
+## 12. SP76 follow-up: finite normal-closure normalization and actual affine cover
+
+`FiniteNormalClosure.lean` proves finiteness of the existing integral
+closure over normal Noetherian `B` in a finite separable extension of its
+fraction field. Specializing to the marked normal closure constructs
+its finite model from `D.finiteNormal` and `D.isSeparable`. No separately
+supplied second finite normal algebra `S` is needed; the one-intermediate-
+model constructor uses the existing normalization map and derives
+full-visible boundary separation.
+
+For a finite dominant formally unramified morphism `p:Y -> X` of integral
+schemes and nonempty affine `U`, the actual generic extension constructs
+the marked normal closure and its finite normalization over `Γ(X,U)`.
+With normality/Noetherianity of that base ring and normal stalks on the
+whole inverse image explicit, `finiteAffinePreimageNormalizedCover`
+constructs the existing cover with actual visible scheme `(p⁻¹U).toScheme`
+and the existing normalization-isomorphism map. Its separation theorem
+uses full visibility. No independent `S` or marked closure is supplied;
+no new carrier, cover package or source axiom is introduced.
+
+Finite etale morphisms satisfy the formal-unramifiedness premise. The
+finiteness API has no perfectness, dimension-one or Dedekind assumption;
+its exact standard counterpart is Stacks Lemma 10.161.8, Tag 032L.
+Validation: the full build passes (3180 jobs; only the two existing
+Challenge placeholder warnings). The new suite passes 23 examples and
+seven enforced standard-three axiom audits; fresh consumer, affine-chart
+and normal-closure suites pass 24/29, 18/11 and 22/7. The central inventory
+has 866 checks, 565 examples and 758 reports after appending seven checks
+and reports; its historical prefix is byte-identical and was not rerun
+in full. The 74-page PDF (788608 bytes) passes its build, warning/box/
+reference scan and visual checks of pages 8--10, 57, 66--67 and 73--74;
+independent code and Lean--TeX reviews pass. The fresh unchanged
+dependency audit passes six endpoint contracts and two support reports.
+
+Next identify this specific finite `N`-normalization
+as a direct factor of a finite tensor construction from the actual finite
+etale intermediate algebra. The comparison and whole-chart etaleness are
+not yet proved; generic etaleness, localization to `N`, finiteness and
+full-visible separation do not imply the whole-chart result. Overlap
+compatibility and gluing follow as separate tasks. The actual global finite etale
+Galois refinement, normal stalks from smooth geometry and Chow--Betti
+generation remain separate. All earlier audit text is preserved unchanged.

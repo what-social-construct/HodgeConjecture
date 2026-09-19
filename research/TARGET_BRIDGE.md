@@ -579,17 +579,63 @@ Lean--TeX review passes. The full build passes (3179 jobs; only the two
 existing Challenge placeholder warnings). The fresh unchanged dependency
 audit passes six endpoint contracts and two support reports.
 
-The next bounded bridge is finiteness of the actual `integralClosure B N`
-over an explicitly normal Noetherian affine `B`, using the constructed
-finite separable normal closure instead of an independently supplied
-second finite normal algebra `S`. The inspected Mathlib
-`IsIntegralClosure.finite` in `RingTheory/DedekindDomain/IntegralClosure.lean`
-requires normality, Noetherianity, the fraction-field/scalar-tower data
-and finite separability, but no dimension-one or Dedekind hypothesis.
-This specialization is not yet implemented. Normality of `B` remains
-explicit; etaleness of the `N`-model, overlaps, gluing and the actual
-global finite etale Galois refinement are later obligations. Normal
-stalks from smooth geometry and Chow--Betti generation remain separate.
+The finite-normalization step identified at SP75 is implemented in B4i;
+the preceding validation figures retain their original SP75 scope.
+
+### B4i. Construct the finite normal-closure model and actual affine cover
+
+SP76's `FiniteNormalClosure.lean` first proves
+`normalizedCoordinateRing_finite_of_isSeparable` by applying Mathlib's
+`IsIntegralClosure.finite`: a normal Noetherian domain, its fraction field,
+compatible scalar towers and a finite separable extension suffice. No
+dimension-one, Dedekind or perfect-field hypothesis is used.
+`normalClosureNormalizationRing_finite` specializes this to the existing
+marked normal closure, using `D.finiteNormal` and `D.isSeparable`.
+
+`normalizedCoverOfFiniteNormalAffineModel` consequently needs only one
+finite normal intermediate algebra `A`, not a separately supplied second
+finite normal algebra `S`. Its visible map is the existing
+`intermediateToNormalization`; the corresponding separation theorem
+uses that map's surjectivity and the full-visible boundary result.
+
+For an actual finite dominant formally unramified morphism `p:Y -> X`
+of integral schemes and nonempty affine `U`,
+`functionFieldNormalClosure_normalization_finite` proves finiteness of
+the normalization in the constructed normal closure of `K(Y)/K(X)`.
+It assumes `IsIntegrallyClosed Γ(X,U)` and `IsNoetherianRing Γ(X,U)`.
+With explicit normal stalks on `V=p⁻¹U`,
+`finiteAffinePreimageNormalizedCover` builds the existing cover with
+visible scheme `V.toScheme`, map
+`(finiteAffinePreimageNormalizationIso p U hU hNormal).hom`, and datum
+`functionFieldNormalClosureData p`.
+`conjugateBoundarySeparation_finiteAffinePreimageNormalizedCover` then
+proves separation. The scalar maps are the existing generic germs and
+`kappa_p`; neither the fields nor their marking are replaced. Finite
+etale morphisms supply the formal-unramifiedness premise. No new carrier,
+cover package or source axiom is introduced. The full build passes
+(3180 jobs; only the two existing Challenge placeholder warnings).
+The new suite passes 23 examples and seven enforced standard-three
+axiom audits; fresh consumer, affine-chart and normal-closure reruns
+pass 24/29, 18/11 and 22/7. The central inventory has 866 checks,
+565 examples and 758 reports after appending seven checks and reports;
+its historical prefix is unchanged and was not rerun in full. The
+74-page PDF (788608 bytes) passes its build, warning scan and visual
+checks; independent code and Lean--TeX reviews pass. The fresh unchanged
+dependency audit passes six endpoint contracts and two support reports.
+
+The next proposed bridge is to identify this specific normal-closure
+normalization `T=IntCl_B(N)` as a direct factor of a finite tensor
+construction from the actual finite etale algebra `A/B`, then use that
+identification to prove etaleness on the whole chart. The identification
+and whole-chart conclusion are not yet proved, and no pinned Mathlib
+theorem directly supplies this `T/B` etaleness. Localization to `N` and
+generic etaleness are available routes for generic calculations, not
+substitutes for the whole-chart comparison. Finiteness and full-visible
+separation alone do not imply etaleness. Overlap
+compatibility, gluing and the actual global finite etale Galois refinement
+follow as separate obligations. Base normality/Noetherianity and upstairs
+normal stalks remain explicit; deriving them from the intended smooth
+geometry and proving Chow--Betti generation remain separate tasks.
 
 ### G0. Smooth projective setting and candidate constructions
 
@@ -1035,12 +1081,14 @@ provide variable-class coverage.
 - Review new objects against the parity registry before adding wrappers.
   Promote a proved checkpoint only after the appropriate build, focused
   regressions, dependency/axiom checks and Lean--TeX comparison.
-- **Next action:** specialize `IsIntegralClosure.finite` to B4g's actual
-  finite separable `N/K` over normal Noetherian affine `B`, deriving
-  finiteness of `integralClosure B N` rather than supplying a second
-  finite normal algebra. B4h supplies the generalized consumers. Normal stalks from
-  smooth geometry, global finite etale Galois refinement and chart gluing
-  remain separate tasks. B4d already derives the finite/etale affine rings
+- **Next action:** identify B4i's finite `N`-normalization as a direct factor
+  of a finite tensor construction from the actual finite etale intermediate
+  algebra, proving whole-chart etaleness rather than only its generic
+  version; then prove overlap compatibility and gluing. B4i has removed the separately
+  supplied second finite normal algebra and constructs the existing cover
+  from an actual affine inverse image and its marked generic extension.
+  Normal stalks from smooth geometry and the global finite etale Galois
+  refinement remain separate tasks. B4d already derives the finite/etale affine rings
   from a supplied finite morphism and proves the normalization
   identification over the original base. Full visibility is constructed on this branch,
   not added to every `NormalizedCover`. Retain nonempty-boundary geometry
@@ -1855,11 +1903,14 @@ the dated checkpoints below document how the existing objects were built.
    existing endpoint using constructed data, with no hypothesis that is
    merely the desired class-generation or realization conclusion renamed.
 
-The operative action after B4h's consumer generalization is to derive
-finiteness of the actual `integralClosure B N` over a normal Noetherian
-affine base, using the constructed finite separable normal closure.
-Normality of the base stays explicit; etaleness of the `N`-model,
-overlaps, gluing and the global Galois refinement remain subsequent.
+The operative action after B4i's finite-normalization construction is the
+proposed direct-factor comparison with a finite tensor construction from
+the actual finite etale intermediate algebra. This must prove etaleness
+of the specific `N`-model on the whole chart, not just generically; overlap
+compatibility and gluing follow. Its finiteness and full-visible separation are
+proved without a separately supplied second affine algebra. Normality
+and Noetherianity of the base and upstairs normal stalks stay explicit;
+the global Galois refinement remains subsequent.
 The existing
 fixed-field, selector and trace consumers now use extension separability;
 core-freeness and its full-visible/inertia/extension consumers need none.

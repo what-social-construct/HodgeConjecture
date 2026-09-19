@@ -131,6 +131,72 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP73 | Formal unramifiedness and separability of the actual generic extension | LOCALIZE / COMPOSE / APPLY | Transfer formal unramifiedness from an actual dominant affine scheme morphism to its existing function-field algebra. For finite morphisms, use SP72 finite-dimensionality to prove separability; finite etale morphisms are a specialization. | PROVED; FULL BUILD, SIXTEEN FOCUSED REGRESSIONS, THREE STANDARD-AXIOM AUDITS, SP72 RERUN, FRESH DEPENDENCY AUDIT AND SINGLE-PDF CHECKS PASS |
 | SP74 | Constructed marked normal closure and extension-specific Galois bridge | CONSTRUCT / PRESERVE / TRANSFER | Build the existing normal-closure datum inside the upstairs algebraic closure, preserving its canonical marking. Transfer separability to any marked normal closure and apply the Galois consequence to the actual finite generic extension. | PROVED; FULL BUILD, TWENTY-TWO FOCUSED REGRESSIONS, SEVEN STANDARD-AXIOM AUDITS, SP73 RERUN, FRESH DEPENDENCY AUDIT, SINGLE-PDF CHECKS AND INDEPENDENT REVIEW PASS |
 | SP75 | Local-separability consumer generalization and core-free hypothesis cleanup | GENERALIZE / MOVE / REUSE | Replace fourteen perfect-field premises by extension separability; remove twelve without replacement. Move the two existing separability/Galois helpers to the core, retaining one perfect-field compatibility wrapper and all other geometric inputs. | PROVED / VALIDATED |
+| SP76 | Finite normal-closure normalization and actual affine-preimage cover | DERIVE / CONSTRUCT / SEPARATE | Derive finiteness over a normal Noetherian base, eliminate the separately supplied second affine algebra, and construct the existing cover from the actual affine inverse image and marked generic extension. | PROVED / VALIDATED |
+
+SP76 (2026-09-18): **finite normal-closure normalization / actual affine cover**.
+`FiniteNormalClosure.lean` supplies seven declarations using existing
+carriers, fields, normalization maps and the existing `NormalizedCover`:
+
+- `CollisionFoundations.normalizedCoordinateRing_finite_of_isSeparable`
+  applies Mathlib's `IsIntegralClosure.finite` over a normal Noetherian
+  base with its fraction field and a finite separable extension.
+- `NormalizationInertia.normalClosureNormalizationRing_finite`
+  specializes to a marked normal closure using `D.finiteNormal` and
+  `D.isSeparable`.
+- `NormalizationInertia.normalizedCoverOfFiniteNormalAffineModel` and
+  `conjugateBoundarySeparation_normalizedCoverOfFiniteNormalAffineModel`
+  use a single finite normal intermediate algebra `A`, with no second
+  supplied algebra `S`.
+- `CollisionFoundations.functionFieldNormalClosure_normalization_finite`
+  gives chart finiteness for the actual generic extension of a finite
+  dominant formally unramified morphism of integral schemes.
+- `CollisionFoundations.finiteAffinePreimageNormalizedCover` and
+  `conjugateBoundarySeparation_finiteAffinePreimageNormalizedCover`
+  construct the cover and separation directly from the actual inverse
+  image of a nonempty affine chart, its normalization isomorphism and
+  `functionFieldNormalClosureData p`.
+
+Base normality and Noetherianity remain explicit. The last two declarations
+also assume normal stalks on the inverse-image open. Finite etale morphisms
+supply formal unramifiedness. No perfectness, dimension-one or Dedekind
+premise, new carrier, new cover package, projector or source axiom is
+introduced. The exact standard finiteness result is Stacks Lemma 10.161.8,
+Tag 032L; Lean uses the checked Mathlib theorem.
+
+The retained two-model constructor is not redundant: supplying both
+finite normal models avoids the new constructor's normal-Noetherian base
+and extension-separability premises. The new one-model constructor trades
+those explicit hypotheses for removal of the separately supplied `S`.
+
+Notation parity: `B_U=Γ(X,U)`, `A_U=Γ(Y,V)`, `V=p^{-1}U`,
+`K=K(X)`, `L=K(Y)` and `\mathcal N=(K,L,N,\iota)` retain their existing
+meanings. The finite `N`-model is the existing integral-closure ring,
+not a new `S` carrier. `\nu_{p,U}` denotes the existing affine-preimage
+normalization-isomorphism map, and `C_U` the constructed instance of the
+existing chartwise cover `C`. `\kappa_p` and the generic-germ scalar maps
+are unchanged, as are the boundary ideals and the single projector.
+
+Validation: the full build passes (3180 jobs; only the two existing
+Challenge placeholder warnings). `FiniteNormalClosureVerification.lean`
+passes 23 examples and seven enforced standard-three axiom audits;
+fresh consumer, affine-chart and normal-closure suites pass 24/29,
+18/11 and 22/7. The central inventory has 866 checks, 565 examples and
+758 reports after appending seven checks and reports; its historical
+prefix is byte-identical and was not rerun in full. The 74-page PDF
+(788608 bytes) passes its build and clean warning/box/reference scan;
+visual checks of pages 8--10, 57, 66--67 and 73--74 pass, as do
+independent code and Lean--TeX reviews. The fresh unchanged dependency
+audit passes six endpoint contracts and two support reports.
+
+Next identify this specific normal-closure
+normalization as a direct factor of a finite tensor construction from
+the actual finite etale intermediate algebra. That unproved comparison
+is the proposed route to whole-chart etaleness, which generic etaleness,
+localization to `N`, finiteness and full-visible separation do not supply.
+Overlap compatibility, gluing and the actual
+global finite etale Galois refinement remain subsequent. Deriving normal
+stalks from smooth geometry and Chow--Betti generation remain separate.
+Historical SP75 and earlier queue blocks below are preserved unchanged.
 
 SP75 (2026-09-18): **local separability / consumer hypothesis cleanup**.
 The existing declarations now state the hypotheses actually used. No

@@ -23,6 +23,7 @@ import HodgeConjecture.Boundary.Normalization.FiniteAffineChart
 import HodgeConjecture.Boundary.Normalization.FiniteFunctionField
 import HodgeConjecture.Boundary.Normalization.SeparableFunctionField
 import HodgeConjecture.Boundary.Normalization.FunctionFieldNormalClosure
+import HodgeConjecture.Boundary.Normalization.FiniteNormalClosure
 import HodgeConjecture.Boundary.Normalization.DeckAction
 import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
 import HodgeConjecture.Boundary.Normalization.ConjugateNormalization
@@ -87,6 +88,10 @@ Fixed-field, tensor-sheet and trace-dual consumers use that same extension's
 separability. Core-freeness, full-visible separation and their inertia/extension
 consequences require neither separability nor perfectness; their geometric
 and source-input hypotheses remain explicit.
+Over a normal Noetherian affine base, separability also proves finiteness of
+the normal-closure normalization. One finite normal intermediate model, or
+the actual affine inverse image with normal stalks, then constructs the
+existing normalized cover without a separately supplied second affine model.
 
 The broad normalization-purity/global-triviality prototype is preserved in
 `research/archive/legacy-lean/`, not as an importable library module.

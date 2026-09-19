@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-18 (SP75 local-separability consumer generalization; earlier checkpoint
+Last audited: 2026-09-18 (SP76 finite normal-closure normalization; earlier checkpoint
 validation records are retained with their original scope).
 
 Status vocabulary:
@@ -17,6 +17,56 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Finite normal-closure normalization and actual affine cover (A11bh / SP76)
+
+Status: `FORMAL`. For normal Noetherian `B`, compatible
+fraction-field/scalar-tower data and finite separable `E/K`, the actual
+`normalizedCoordinateRing B E` is finite over `B`. Specialization to a
+marked normal closure derives its finite normalization model from
+`Algebra.IsSeparable K L`, without a perfectness or dimension-one premise.
+A single finite normal intermediate algebra `A` now constructs the
+existing `NormalizedCover`; no independently supplied second algebra
+`S` is needed. Its full-visible boundary separation follows directly.
+
+For a finite dominant formally unramified morphism `p:Y -> X` of integral
+schemes, the normalization in its constructed function-field normal
+closure is finite over every nonempty normal Noetherian affine base
+chart. With normal stalks explicitly supplied on the inverse-image
+open `V`, that actual `V.toScheme` constructs the visible scheme of the
+existing cover. The map is the existing affine-preimage normalization
+isomorphism, and the marked closure is `functionFieldNormalClosureData p`.
+No `S`, marked-closure datum, new field carrier or cover package is
+independently supplied. Etaleness supplies the formal-unramifiedness
+premise; dominance and the normality inputs retain their stated roles.
+
+Witnesses in `Boundary/Normalization/FiniteNormalClosure.lean`:
+
+- `CollisionFoundations.normalizedCoordinateRing_finite_of_isSeparable`;
+- `NormalizationInertia.normalClosureNormalizationRing_finite`;
+- `NormalizationInertia.normalizedCoverOfFiniteNormalAffineModel` and
+  `conjugateBoundarySeparation_normalizedCoverOfFiniteNormalAffineModel`;
+- `CollisionFoundations.functionFieldNormalClosure_normalization_finite`;
+- `CollisionFoundations.finiteAffinePreimageNormalizedCover` and
+  `conjugateBoundarySeparation_finiteAffinePreimageNormalizedCover`.
+
+The full build passes (3180 jobs; only the two existing Challenge
+placeholder warnings). The new suite passes 23 examples and seven enforced
+standard-three axiom audits; fresh consumer, affine-chart and normal-closure
+reruns pass 24/29, 18/11 and 22/7. The central inventory has 866 checks,
+565 examples and 758 reports after appending seven checks and reports;
+its historical prefix is unchanged and was not rerun in full. The
+74-page PDF (788608 bytes) passes its build, warning scan and visual
+checks; independent code and Lean--TeX reviews pass. The fresh unchanged
+dependency audit passes six endpoint contracts and two support reports.
+
+No source axiom is introduced. Normality/Noetherianity of the base and
+normal stalks upstairs stay explicit. Next identify this specific
+`N`-normalization as a direct factor of a finite tensor construction
+from the actual finite etale intermediate algebra, then derive whole-chart
+etaleness. This comparison is not yet proved; generic etaleness, finiteness
+and full-visible separation do not supply it. Overlaps, gluing, global finite etale Galois refinement and
+Chow--Betti generation remain subsequent tasks.
 
 ## Local separability and consumer hypothesis cleanup (A11bg / SP75)
 
@@ -47,15 +97,11 @@ passes. The full build passes (3179 jobs; only the two existing Challenge
 placeholder warnings). The fresh unchanged dependency audit passes six
 endpoint contracts and two support reports.
 
-Next derive finiteness of the actual `integralClosure B N` for normal
-Noetherian affine `B`, using the constructed finite separable normal
-closure, instead of supplying a second finite normal algebra `S`.
-The inspected Mathlib theorem `IsIntegralClosure.finite` has the needed
-normal-Noetherian/fraction-field/scalar-tower hypotheses without a
-dimension-one or Dedekind assumption. This specialization is not yet
-implemented. Normality of `B` remains explicit; etaleness of the resulting
-`N`-model, overlap compatibility, gluing, global Galois refinement and
-Chow--Betti generation remain separate.
+SP76 above implements the finite-normalization step identified at this
+checkpoint, with base normality and Noetherianity still explicit. The
+preceding validation figures describe SP75. Etaleness of the resulting
+`N`-model, overlaps, gluing, global Galois refinement and Chow--Betti
+generation remain separate.
 
 ## Constructed marked normal closure and Galois bridge (A11bf / SP74)
 

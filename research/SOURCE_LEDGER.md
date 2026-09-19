@@ -17,9 +17,54 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source check: 2026-09-18 (SP75 local-separability consumer generalization;
+Last source check: 2026-09-18 (SP76 finite normal-closure normalization;
 earlier source records retain
 their original validation scope).
+
+### Finite normal-closure normalization and actual affine cover (SP76, 2026-09-18)
+
+The exact standard input is
+[Stacks, Lemma 10.161.8, Tag 032L](https://stacks.math.columbia.edu/tag/032L):
+normality and Noetherianity of a domain, together with a finite separable
+extension of its fraction field, give a finite integral closure. There
+is no dimension-one, Dedekind or perfect-field requirement. The live
+statement was checked against the hypotheses of Mathlib's
+`IsIntegralClosure.finite` in
+`RingTheory/DedekindDomain/IntegralClosure.lean`. The manuscript states
+and cites the result rather than repeating its proof; Lean invokes the
+checked Mathlib theorem, not a source axiom.
+
+`FiniteNormalClosure.lean` applies this API to the existing
+`normalizedCoordinateRing`, then to the marked normal closure using its
+proved finite-dimensionality and separability. This constructs the
+second finite normalization model instead of requiring another supplied
+finite normal algebra `S`. A one-intermediate-model constructor reuses
+the canonical normalization map and the existing full-visible separation
+theorem. For actual finite dominant formally unramified integral-scheme
+morphisms, the function-field construction supplies the field and marking;
+the existing whole affine inverse-image normalization isomorphism supplies
+the visible scheme and map. Base-chart normality/Noetherianity and normal
+stalks on that inverse image remain explicit. Finite etale morphisms
+satisfy formal unramifiedness. No new carrier, package or source axiom
+is introduced. The full build passes (3180 jobs; only the two existing
+Challenge placeholder warnings). The new suite passes 23 examples and
+seven enforced standard-three axiom audits; fresh consumer, affine-chart
+and normal-closure reruns pass 24/29, 18/11 and 22/7. The central inventory
+has 866 checks, 565 examples and 758 reports after appending seven checks
+and reports; its historical prefix is unchanged and was not rerun in full.
+The 74-page PDF (788608 bytes) passes its build, warning scan and visual
+checks; independent code and Lean--TeX reviews pass. The fresh unchanged
+dependency audit passes six endpoint contracts and two support reports.
+
+The next proposed geometric bridge identifies this specific normal-closure
+normalization as a direct factor of a finite tensor construction from
+the actual finite etale intermediate algebra. That identification is not
+yet proved, and the pinned Mathlib API has no direct whole-chart etaleness
+theorem for this normalization. Generic etaleness and localization to
+`N` do not give that conclusion, nor do finiteness and full-visible
+separation. Overlap compatibility, gluing and the actual
+global finite etale Galois refinement remain separate, as do normal
+stalks from smooth geometry and Chow--Betti generation.
 
 ### Local separability and consumer hypothesis cleanup (SP75, 2026-09-18)
 
@@ -52,16 +97,11 @@ endpoint contracts and two support reports. Earlier
 dated source/validation records retain their original checkpoint scope,
 while the active table below reflects the generalized signatures.
 
-The next inspected API, not yet implemented in this repository, is
-`IsIntegralClosure.finite` in Mathlib's
-`RingTheory/DedekindDomain/IntegralClosure.lean`. Despite the filename,
-this theorem requires an integrally closed Noetherian domain, its fraction
-field and compatible scalar towers, and a finite separable extension;
-it does not require dimension one or a Dedekind domain. Specializing it
-to the constructed `N/K` should derive `Module.Finite B (integralClosure B N)`,
-replacing the separately supplied second finite normal algebra. Normality
-of `B` remains explicit. Etaleness of this `N`-model and scheme-level
-refinement/gluing require subsequent geometric arguments.
+SP76 above implements the `IsIntegralClosure.finite` specialization
+identified at SP75, without a dimension-one or Dedekind premise. The
+preceding validation figures retain their original checkpoint scope.
+Normality of `B` remains explicit; etaleness of the `N`-model and
+scheme-level refinement/gluing require subsequent geometric arguments.
 
 ### Constructed marked normal closure and Galois bridge (SP74, 2026-09-18)
 

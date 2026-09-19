@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-09-18 (SP75 local-separability and hypothesis cleanup;
+Last reviewed: 2026-09-18 (SP76 finite normal-closure normalization;
 validation complete; earlier checkpoint validation records retain their
 original scope).
 
@@ -370,17 +370,41 @@ passes (3179 jobs; only the two existing Challenge placeholder warnings).
 The fresh unchanged dependency audit passes six endpoint contracts and
 two support reports.
 
-**Next bounded bridge:** derive `Module.Finite B (integralClosure B N)`
-from the constructed finite separable normal closure over an explicitly
-normal Noetherian affine `B`, replacing the independently supplied second
-finite normal algebra `S`. The inspected Mathlib
-`IsIntegralClosure.finite` requires no dimension-one or Dedekind premise,
-despite its file location; its specialization is not yet implemented.
-Normality of `B` remains explicit. Etaleness of the resulting `N`-model,
-overlap compatibility, gluing and actual global Galois refinement follow
-as separate geometric obligations. Normal stalks from smooth geometry
-remain separate. The
-function-field tower and SP71's equality over `X` are not a gluing theorem.
+**SP76: finite normal-closure normalization and the actual affine cover.**
+`FiniteNormalClosure.lean` derives
+`Module.Finite B (normalizedCoordinateRing B E)` for a finite separable
+extension of the fraction field of normal Noetherian `B`. Specializing
+to the existing marked normal closure removes the independently supplied
+second finite normal algebra `S`: one finite normal intermediate model
+constructs the existing `NormalizedCover`, with full-visible separation.
+For an actual finite dominant formally unramified morphism of integral
+schemes, the same construction uses the actual inverse-image open of a
+nonempty affine base chart, its existing normalization isomorphism and
+the constructed function-field normal closure. Base-chart normality
+and Noetherianity and normal stalks on that inverse image are explicit.
+Etaleness supplies formal unramifiedness; there is no perfectness, dimension-one
+or Dedekind premise, new carrier, cover package or source axiom.
+The full build passes (3180 jobs; only the two existing Challenge
+placeholder warnings). The new suite passes 23 examples and seven enforced
+standard-three axiom audits; fresh consumer, affine-chart and normal-closure
+reruns pass 24/29, 18/11 and 22/7. The central inventory has 866 checks,
+565 examples and 758 reports after appending seven checks and reports;
+its historical prefix is unchanged and was not rerun in full. The
+74-page PDF (788608 bytes) passes its build, warning scan and visual
+checks; independent code and Lean--TeX reviews pass. The fresh unchanged
+dependency audit passes six endpoint contracts and two support reports.
+
+**Next bounded bridge:** identify this specific `N`-normalization as a
+direct factor of a finite tensor construction from the actual finite
+etale intermediate algebra. This identification is not yet proved;
+it is the proposed route to whole-chart etaleness. Localization to `N`
+and generic etaleness do not prove the whole-chart property, and the
+pinned Mathlib API has no direct theorem supplying it. Proved finiteness
+and full-visible boundary separation do not supply it either. Then
+establish overlap compatibility and gluing to obtain
+the actual global finite etale Galois refinement. Normal stalks from
+smooth geometry remain separate. The function-field tower and SP71's
+equality over `X` are not a gluing theorem.
 The main target is unchanged. Nonempty-boundary geometry remains an
 alternative if needed; Chow--Betti generation and convolution compatibility
 remain separate.

@@ -697,6 +697,60 @@ Proposition~\ref{prop:finite-function-field}, and formal unramifiedness
 gives separability by Proposition~\ref{prop:separable-function-field}.
 \end{proof}
 
+\begin{proposition}[Finiteness of separable normalization]
+\label{prop:finite-separable-normalization}
+Assume \(B\) is normal and Noetherian. For every finite separable
+extension \(F/K\), the ring \(\operatorname{IntCl}_B(F)\) is a
+finite \(B\)-module~\cite{StacksFiniteSeparableNormalization}.
+\end{proposition}
+
+\begin{proposition}[Constructed finite normal-closure models]
+\label{prop:finite-normal-closure-model}
+Assume \(B\) is normal and Noetherian and \(L/K\) is separable.
+Then \(\widetilde B_N\) is finite over \(B\). Given the finite
+normal intermediate model \(A\) of
+Proposition~\ref{prop:finite-normal-affine-model}, the canonical
+\(j_A:\Spec A\to Y_L\), together with \(\mathcal N\), constructs
+the finite normalized cover. Its conjugate-boundary separation holds.
+
+In particular, let \(p:Y\to X\) be finite, dominant and formally
+unramified, with \(X,Y\) integral. For a nonempty affine open
+\(U\subseteq X\), set \(V=p^{-1}(U)\) and
+\(B_U=\Gamma(U,\mathcal O_X)\). If \(B_U\) is normal and
+Noetherian, then its integral closure in the constructed normal
+closure \(N\) of \(K(Y)/K(X)\) is finite over \(B_U\).
+The scalar map is
+\[
+  B_U\xrightarrow{\rho_{X,U}}K(X)\longrightarrow N.
+\]
+If every local ring of \(Y\) at a point of \(V\) is normal,
+the canonical isomorphism \(\nu_{p,U}\) of
+Proposition~\ref{prop:finite-affine-chart} constructs
+\[
+  \mathcal C_U=
+  \bigl(V\xrightarrow{\nu_{p,U}}
+    \Spec(\operatorname{IntCl}_{B_U}K(Y)),\mathcal N\bigr),
+  \qquad \operatorname{Sep}_{\partial}(\mathcal C_U).
+\]
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:constructed-normal-closure} makes \(N/K\)
+finite and separable. Proposition~\ref{prop:finite-separable-normalization}
+therefore supplies the finite normal-closure model. The intermediate
+model and its visible isomorphism come from
+Proposition~\ref{prop:finite-normal-affine-model}.
+
+For the scheme specialization, use the actual generic extension
+\(\kappa_p\) and the normal closure constructed above. Its scalar
+map from \(B_U\) is the displayed composite; the germ square of
+Proposition~\ref{prop:finite-function-field} identifies the
+intermediate scalar route with pullback along \(p\).
+Proposition~\ref{prop:finite-affine-chart} supplies the finite
+intermediate model and \(\nu_{p,U}\). Each visible map is an isomorphism,
+so Proposition~\ref{prop:full-visible-boundary} gives separation.
+\end{proof}
+
 The group \(G=\mathcal N.\mathit{galoisGroup}\), the subgroup
 \(H=\mathcal N.\mathit{intermediateFixingSubgroup}\), and the canonical deck
 action on \(Y_N\) are all constructed from the same datum.  Normality keeps the conjugate embeddings inside the same field \(N\).
@@ -4680,6 +4734,11 @@ Galoisness from the marked extension &
 \leanpath{NormalClosureData.isSeparable}\newline
 \leanpath{NormalClosureData.isGalois_of_isSeparable}\newline
 \leanpath{Boundary/Normalization/NormalClosure.lean}\\
+Finite normal-closure normalization and actual affine cover &
+\leanpath{normalClosureNormalizationRing_finite}\newline
+\leanpath{functionFieldNormalClosure_normalization_finite}\newline
+\leanpath{finiteAffinePreimageNormalizedCover}\newline
+\leanpath{Boundary/Normalization/FiniteNormalClosure.lean}\\
 Full-visible boundary ideals &
 \leanpath{movingBoundaryIdeal_eq_top_of_surjective}\newline
 \leanpath{conjugateBoundarySeparation_of_surjective}\newline
@@ -5311,6 +5370,14 @@ principal table, grouped by mathematical layer.
 \leanpath{functionFieldNormalClosureData};
 \leanpath{functionFieldNormalClosureData_embedding_apply};
 \leanpath{functionFieldNormalClosure_isGalois};
+\normsrc{FiniteNormalClosure.lean};
+\leanpath{normalizedCoordinateRing_finite_of_isSeparable};
+\leanpath{normalClosureNormalizationRing_finite};
+\leanpath{normalizedCoverOfFiniteNormalAffineModel};
+\leanpath{conjugateBoundarySeparation_normalizedCoverOfFiniteNormalAffineModel};
+\leanpath{functionFieldNormalClosure_normalization_finite};
+\leanpath{finiteAffinePreimageNormalizedCover};
+\leanpath{conjugateBoundarySeparation_finiteAffinePreimageNormalizedCover};
 \normsrc{FiniteAffineCover.lean};
 \leanpath{normalizationToIntermediate_surjective};
 \leanpath{normalizationIntermediateEquiv};

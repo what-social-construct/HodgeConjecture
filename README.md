@@ -696,13 +696,41 @@ its historical prefix is unchanged and was not rerun in full. The
 checks; independent Lean--TeX review passes. The full build passes
 (3179 jobs; only the two existing Challenge placeholder warnings).
 The fresh unchanged dependency audit passes six endpoint contracts and
-two support reports. Next derive finiteness of
-the actual `integralClosure B N` over a normal Noetherian affine base,
-using the constructed finite separable normal closure rather than a
-separately supplied second algebra `S`. The inspected Mathlib finiteness
-theorem needs no dimension-one hypothesis. Normality of `B` stays
-explicit; etaleness, overlap compatibility, gluing, the global finite
-etale Galois refinement and Chow--Betti generation remain subsequent tasks.
+two support reports. SP76 below implements the next finite-normalization
+bridge; the preceding validation figures describe SP75.
+
+SP76 derives finiteness of the actual normal-closure normalization over
+an explicitly normal Noetherian affine base in
+[`FiniteNormalClosure.lean`](HodgeConjecture/Boundary/Normalization/FiniteNormalClosure.lean).
+The generic theorem uses Mathlib's `IsIntegralClosure.finite`, with no
+dimension-one, Dedekind or perfectness premise. A single finite normal
+intermediate algebra now constructs the existing `NormalizedCover`;
+no independently supplied second algebra `S` is needed. For an actual
+finite dominant formally unramified morphism `p:Y -> X` of integral
+schemes, a nonempty normal Noetherian affine base chart and normal stalks
+on its whole inverse image construct that cover directly. Its visible
+scheme is the actual inverse-image open, its map is the existing
+normalization isomorphism, and its marked field closure is constructed
+from the actual generic extension. Full visibility gives boundary
+separation. Finite etale morphisms satisfy the formal-unramifiedness
+premise. No new carrier, cover package or source axiom is introduced.
+The full build passes (3180 jobs; only the two existing Challenge
+placeholder warnings). The new suite passes 23 examples and seven enforced
+standard-three axiom audits. Fresh consumer, affine-chart and normal-closure
+reruns pass 24/29, 18/11 and 22/7 respectively. The central inventory has
+866 checks, 565 examples and 758 reports after appending seven checks and
+reports; its historical prefix is unchanged and was not rerun in full.
+The 74-page PDF (788608 bytes) passes its build, warning scan and visual
+checks; independent code and Lean--TeX reviews pass. The fresh unchanged
+dependency audit passes six endpoint contracts and two support reports.
+Next identify this specific normal-closure
+normalization as a direct factor of a finite tensor construction from
+the actual finite etale intermediate algebra, to prove whole-chart
+etaleness; then establish overlap compatibility and gluing.
+Finiteness and full-visible separation do not imply etaleness. Base
+normality/Noetherianity and upstairs normal stalks remain explicit;
+the global finite etale Galois refinement and Chow--Betti generation
+remain separate geometric tasks.
 
 `paper/main.pdf` is the single current manuscript PDF. The earlier drafts
 and their sources are preserved in the
