@@ -1,7 +1,7 @@
 # Current gap map
 
-Last reviewed: 2026-09-19 (SP83 actual affine restriction coherence and
-inverse-image opens; validated; earlier checkpoint records retain
+Last reviewed: 2026-09-19 (SP84 actual affine diagram and global gluing;
+validated; earlier checkpoint records retain
 their original validation scope).
 
 Start with [the target and equivalence sketch](TARGET_BRIDGE.md): it fixes
@@ -615,17 +615,50 @@ visual review and all ten API parity checks pass. The static central
 inventory is 997 checks, 565 examples and 889 reports; its historical
 prefix is unchanged and was not re-elaborated in full.
 
-**Next bounded bridge:** package the nonempty affine-open diagram, prove
-its locally directed common-refinement condition, and use it to glue the
-actual normalization charts. Descend the marked refinement and compatible
-Galois action. Actual restriction chains now commute, but no global glued
-scheme, non-affine overlap identification, or gluing cocycle package is
-claimed by SP83. The local comparisons avoid requiring intersections
-themselves to be affine.
+**SP84: the actual locally directed diagram and glued scheme.**
+`AffineNormalizationDiagram.lean` uses the inclusion-ordered subtype
+`NonemptyAffineChart X`, retaining nonemptiness from each original open.
+The existing `Z_U` and actual restrictions form `F_N`; their original
+maps to `X` form `c_N`. The open-immersion and exact-range endpoints
+feed a direct proof of `(F_N comp Scheme.forget).IsLocallyDirected`:
+equal images in an upper chart lift through one common principal
+neighborhood in the two base charts. No global upper affine chart is
+required, and intersections need not be affine.
+
+`GluedNormalization.lean` constructs `Z_N = colimit F_N`, canonical
+open immersions `jmath_U : Z_U -> Z_N` forming an open cover, and the
+descended `mu_N : Z_N -> X`. It proves the exact structural formula
+`mu_N jmath_U = mu_U`, transition naturality, equality of chart points
+if and only if they lift from a common smaller chart, and chartwise
+extensionality of morphisms out of `Z_N`. These 16 public APIs retain
+integral `X` and the fixed extension of its original function field;
+normality, finite degree, Noetherianity and separatedness are not added.
+No source axiom or replacement local normalization is introduced.
+
+SP84 is validated: both production modules compile cleanly in
+2741/2742-job scoped builds. The focused suite passes 40 examples and
+16 exact standard-three axiom audits. With the unchanged SP83, SP82
+and SP81 suites, the total is 125 examples and 73 audits, all clean.
+The full build passes 3207 jobs with only the two unchanged Challenge
+placeholder warnings. The unchanged dependency audit passes six primary
+contracts and two support reports without warnings. The 84-page PDF
+(845594 bytes) has a clean final log and passes visual review of pages
+14, 15, 63, 64, 75, 76 and 82. All 16 API parity checks and independent
+Lean--TeX review pass. The static central inventory is 1013 checks,
+565 examples and 905 reports; its historical prefix is unchanged and
+was not re-elaborated in full.
+
+**Next bounded bridge:** identify each global chart image exactly with
+`mu_N^-1(U)`, then transfer the applicable local finite/etale properties
+and descend the marked refinement and compatible Galois action. The
+global structural map is constructed, but those additional properties
+are not asserted by SP84. No section-ring model on a non-affine
+intersection is substituted for its geometric overlap.
 Normal stalks from smooth geometry remain separate. The older SP76
 constructor retains its stronger assumptions; the SP81 finite-etale
 constructor removes its Noetherian-base requirement. The chartwise
-factorization identities do not themselves prove gluing. Chow--Betti
+factorization identities alone do not prove gluing; SP84 supplies the
+separate locally directed construction. Chow--Betti
 generation is unchanged.
 The main target is unchanged. Nonempty-boundary geometry remains an
 alternative if needed; Chow--Betti generation and convolution compatibility

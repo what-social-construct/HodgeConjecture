@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-19 (SP83 affine inverse-image opens and coherence,
+Last audited: 2026-09-19 (SP84 affine diagram and global gluing,
 validated; earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,53 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Actual affine diagram and global gluing (A11bp / SP84)
+
+Status: `FORMAL`; 16 public APIs construct the inclusion-indexed
+normalization diagram and its glued scheme. `NonemptyAffineChart X`
+indexes actual nonempty affine opens. The functor `F_N` uses the same
+normalization models and restriction maps; `c_N` is their original
+structural cocone to `X`. All diagram arrows are open immersions with
+the previously proved inverse-image ranges. Common principal
+neighborhoods, those exact ranges and injectivity prove locally
+directedness, rather than postulating it as an input.
+
+`Z_N = colimit F_N` is an actual scheme. The original charts map into
+it by open immersions `jmath_U` forming an open cover. Their structural
+maps descend to `mu_N : Z_N -> X`, with the exact original chart
+formula and transition naturality. Chart points agree globally if and
+only if they lift from a common smaller affine chart. Morphisms out of
+the glued scheme are determined by their chart restrictions.
+
+The only ambient hypotheses are integral `X` and a fixed field
+extension of its original function field. There is no finite-degree,
+normality, Noetherianity or separatedness hypothesis. The local
+normalization carriers and germ-derived scalar maps are unchanged;
+there is no new source axiom or geometric hypothesis package.
+The Lean witnesses are `Boundary/Normalization/AffineNormalizationDiagram.lean`
+and `Boundary/Normalization/GluedNormalization.lean`; the manuscript
+counterpart is `prop:normalization-gluing`.
+
+SP84 is validated: both production modules compile cleanly in
+2741/2742-job scoped builds. The focused suite passes 40 examples and
+16 exact standard-three axiom audits. With the unchanged SP83, SP82
+and SP81 suites, the total is 125 examples and 73 audits, all clean.
+The full build passes 3207 jobs with only the two unchanged Challenge
+placeholder warnings. The unchanged dependency audit passes six primary
+contracts and two support reports without warnings. The 84-page PDF
+(845594 bytes) has a clean final log and passes visual review of pages
+14, 15, 63, 64, 75, 76 and 82. All 16 API parity checks and independent
+Lean--TeX review pass. The static central inventory is 1013 checks,
+565 examples and 905 reports; its historical prefix is unchanged and
+was not re-elaborated in full.
+
+Remaining: exact global chart image `range(jmath_U) = mu_N^-1(U)`,
+global finite/etale properties under the appropriate added hypotheses,
+marked refinement and compatible Galois-action descent, normal stalks
+from smooth geometry, and Chow--Betti generation. The construction does
+not identify the section normalization of a non-affine intersection
+with its geometric overlap.
 
 ## Coherent actual affine inverse-image opens (A11bo / SP83)
 

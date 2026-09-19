@@ -787,3 +787,53 @@ refinement and Galois action. Formal chain equalities on non-affine
 opens are not a geometric-overlap theorem for their global-section
 models. Normal stalks from smooth geometry and Chow--Betti generation
 remain separate. The complete pre-SP83 audit text is unchanged.
+
+## 20. SP84 follow-up: actual affine diagram and global gluing
+
+The inclusion-ordered `NonemptyAffineChart X` indexes the original
+nonempty affine opens and retains their inherited nonemptiness. The
+existing normalization models in the same ambient field and their actual
+restrictions form `F_N`; the original maps to `X` form the cocone `c_N`.
+All arrows are open immersions with the exact SP83 inverse-image range.
+Locally directedness is proved, not assumed: equal images in an upper
+chart have a common original base point; a common principal neighborhood
+gives a smaller affine chart, whose exact range lifts one point, while
+injectivity in the upper chart identifies the other image.
+
+The resulting small thin diagram satisfies Mathlib's scheme-gluing
+interface. `Z_N = colimit F_N` is an actual scheme, and its canonical
+original-chart maps `jmath_U` are open immersions forming an open cover.
+The cocone descends to `mu_N : Z_N -> X`, with exact formula
+`mu_N jmath_U = mu_U` and actual transition naturality. Two original
+chart points agree globally if and only if they lift from one common
+smaller chart. Maps from `Z_N` are determined by their restrictions to
+the original charts. These are seven diagram APIs and nine gluing APIs.
+
+The hypotheses remain integral `X` and the fixed extension of its
+original function field. There is no finite-degree, normality,
+Noetherianity or separatedness assumption, nor any requirement that
+intersections be affine. Stacks 01JB/01JC are verified background for
+scheme gluing; the normalization-specific common-refinement condition
+is proved using SP83 and 01IW's existing Mathlib input. No source axiom,
+geometric input package or replacement local normalization is added.
+
+SP84 is validated: both production modules compile cleanly in
+2741/2742-job scoped builds. The focused suite passes 40 examples and
+16 exact standard-three axiom audits. With the unchanged SP83, SP82
+and SP81 suites, the total is 125 examples and 73 audits, all clean.
+The full build passes 3207 jobs with only the two unchanged Challenge
+placeholder warnings. The unchanged dependency audit passes six primary
+contracts and two support reports without warnings. The 84-page PDF
+(845594 bytes) has a clean final log and passes visual review of pages
+14, 15, 63, 64, 75, 76 and 82. All 16 API parity checks and independent
+Lean--TeX review pass. The static central inventory is 1013 checks,
+565 examples and 905 reports; its historical prefix is unchanged and
+was not re-elaborated in full.
+
+The next bounded endpoint is the exact global chart image
+`range(jmath_U) = mu_N^-1(U)`. Global finite/etale properties under the
+appropriate hypotheses, marked refinement and compatible Galois-action
+descent, normal stalks from smooth geometry, and Chow--Betti generation
+remain separate. No normalization of sections on a non-affine
+intersection is identified with the geometric overlap. The full audit
+prefix through SP83 remains byte-identical to `5e16059`.

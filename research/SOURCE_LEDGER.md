@@ -17,9 +17,58 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source check: 2026-09-19 (SP83 common principal neighborhoods checked;
-actual affine inverse-image comparisons validated;
+Last source check: 2026-09-19 (SP84 scheme-gluing sources checked;
+actual locally directed diagram and global gluing validated;
 earlier source records retain their original validation scope).
+
+### Actual affine diagram and global gluing (SP84, 2026-09-19)
+
+[Stacks, Lemma 26.14.1, Tag 01JB](https://stacks.math.columbia.edu/tag/01JB)
+and [Lemma 26.14.2, Tag 01JC](https://stacks.math.columbia.edu/tag/01JC)
+were checked on their primary pages. The former constructs the glued
+locally ringed space with open cover and mapping property; the latter
+shows that gluing schemes gives a scheme. They supply the standard
+scheme-gluing background for `prop:normalization-gluing`, not the
+specific common-refinement proof for this normalization diagram.
+
+The precise Lean consumer is Mathlib's
+`Mathlib/AlgebraicGeometry/Gluing.lean`, `Scheme.IsLocallyDirected`:
+a small thin indexing category, open-immersion diagram maps, and
+`(F comp Scheme.forget).IsLocallyDirected` give `HasColimit` and
+`Scheme.IsLocallyDirected.openCover`. Its canonical colimit inclusions
+are open immersions; `Scheme.IsLocallyDirected.ι_eq_ι_iff` identifies
+equal chart images by a common smaller-chart point.
+`colimit.ι_desc`, `colimit.w` and `colimit.hom_ext` give the exact
+structural formula, transition naturality and mapping extensionality.
+
+`AffineNormalizationDiagram.lean` supplies all these hypotheses for
+the actual inclusion-ordered nonempty affine charts, with their same
+fixed ambient field and original scalar maps. The locally directed
+instance is proved directly from SP83's exact range and injectivity
+and the common-principal-neighborhood input 01IW. This does not assume
+separatedness or affine intersections. `GluedNormalization.lean`
+constructs the actual glued scheme and its map to the original `X`.
+No literature axiom, gluing hypothesis package, or replacement
+normalization carrier is introduced. Integral `X` and the fixed field
+extension suffice, without finite degree, normality or Noetherianity.
+
+SP84 is validated: both production modules compile cleanly in
+2741/2742-job scoped builds. The focused suite passes 40 examples and
+16 exact standard-three axiom audits. With the unchanged SP83, SP82
+and SP81 suites, the total is 125 examples and 73 audits, all clean.
+The full build passes 3207 jobs with only the two unchanged Challenge
+placeholder warnings. The unchanged dependency audit passes six primary
+contracts and two support reports without warnings. The 84-page PDF
+(845594 bytes) has a clean final log and passes visual review of pages
+14, 15, 63, 64, 75, 76 and 82. All 16 API parity checks and independent
+Lean--TeX review pass. The static central inventory is 1013 checks,
+565 examples and 905 reports; its historical prefix is unchanged and
+was not re-elaborated in full.
+
+The exact global chart inverse-image identification and global
+finite/etale properties, marked refinement and Galois-action descent,
+normal stalks from smooth geometry and Chow--Betti generation remain
+separate.
 
 ### Coherent affine inverse-image opens (SP83, 2026-09-19)
 

@@ -139,6 +139,73 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP81 | Actual finite etale affine normalized cover and marked refinement | TRANSPORT / CONSTRUCT / FACTOR | Preserve the actual intermediate scheme's local presentations through the tensor source and selected open component; construct the existing cover with finite-etale structural/refinement maps and exact factorization on the actual chart and over the original base. | PROVED / VALIDATED |
 | SP82 | Same-ambient normalization localization and actual affine restriction | LOCALIZE / RESTRICT / COMMUTE | Retain the ambient ring, normalization carriers and original marking; prove generic localization/naturality/composition, principal-open restriction, and both actual structural/refinement squares on nested affine charts. | PROVED / VALIDATED |
 | SP83 | Coherent actual affine inverse-image opens | COMPOSE / REFINE / IDENTIFY | Prove actual restriction identities and common-refinement diamonds; identify arbitrary nonempty affine subcharts with their genuine open inverse images using common principal neighborhoods. | PROVED / VALIDATED |
+| SP84 | Actual affine normalization diagram and glued scheme | INDEX / REFINE / GLUE | Prove locally directedness for the original inclusion-indexed chart diagram; construct its scheme colimit, original-chart open cover and structural map with exact chart and common-refinement identities. | PROVED / VALIDATED |
+
+SP84 (2026-09-19): **actual affine normalization diagram and glued scheme**.
+Seven public APIs in `AffineNormalizationDiagram.lean` index all actual
+nonempty affine opens, retain their nonemptiness, construct the original
+normalization functor and structural cocone, derive open-immersion maps
+and exact ranges, and prove locally directedness. Nine public APIs in
+`GluedNormalization.lean` construct the scheme colimit, its original-chart
+open cover and descended structural map, with exact restriction,
+naturality, point-identification and mapping-extensionality laws.
+
+The nonempty affine index is small and thin by its inherited inclusion
+order. Equal images in an upper chart have the same original base point;
+a neighborhood principal in both base charts gives a common smaller
+chart. SP83's exact range lifts one point, and injectivity in the upper
+chart proves the second equality. A global upper affine chart for every
+pair is not assumed. Integral `X` and the fixed extension of its original
+function field suffice; no normality, finite degree, Noetherianity,
+separatedness or affineness of intersections is added.
+
+| Lean API | Mathematical role | TeX notation |
+| --- | --- | --- |
+| `NonemptyAffineChart` | inclusion-ordered actual nonempty affine opens | `A^times(X)` |
+| `nonemptyAffineChart_nonempty` | inherited nonemptiness instance | `U != empty` for `U in A^times(X)`; no new object |
+| `affineNormalizationDiagram` | existing normalization objects and actual restrictions as a functor | `F_N`, `F_N(U)=Z_U`, `F_N(W<=U)=j^N_{W,U}` |
+| `affineNormalizationBaseCocone` | original structural maps to `X` | `c_N=(mu_U)_U` |
+| `affineNormalizationDiagram_isOpenImmersion` | open-immersion instance for each transition | existing `j^N_{W,U}` |
+| `affineNormalizationDiagram_range` | exact transition inverse-image range | `range(j^N_{W,U})=mu_U^-1(W)` |
+| `affineNormalizationDiagram_isLocallyDirected` | proved common-refinement criterion | locally directed `F_N` |
+| `gluedNormalizationModel` | actual scheme colimit | `Z_N=colim F_N` |
+| `normalizationChartToGlued` | canonical inclusion of each original chart | `jmath_U:Z_U -> Z_N` |
+| `normalizationChartToGlued_isOpenImmersion` | canonical chart open-immersion instance | existing `jmath_U` |
+| `gluedNormalizationOpenCover` | original-chart open cover | `(jmath_U)_{U in A^times(X)}` |
+| `gluedNormalizationToBase` | structural map induced by the original cocone | `mu_N:Z_N -> X` |
+| `normalizationChartToGlued_comp_toBase` | exact original structural formula | `mu_N jmath_U=mu_U` |
+| `normalizationChartToGlued_naturality` | restriction compatibility of chart inclusions | `jmath_U j^N_{W,U}=jmath_W` |
+| `normalizationChartToGlued_eq_iff` | chart points agree exactly through a common smaller chart | `jmath_U(a)=jmath_V(b) iff exists (W,w)` with the two prescribed images |
+| `gluedNormalization_hom_ext` | maps out of the glued scheme are determined on charts | `(f jmath_U=g jmath_U for all U) implies f=g` |
+
+The local helper scalar instance only retains the original germ-derived
+algebra map; it is not an additional public mathematical object.
+The manuscript counterpart is `prop:normalization-gluing`. Stacks 01JB
+and 01JC supply standard gluing background; Mathlib's locally directed
+scheme gluing is applied to the project-proved instance. The specific
+normalization refinement argument is not delegated to those sources.
+No input axiom or replacement local normalization is introduced.
+
+SP84 is validated: both production modules compile cleanly in
+2741/2742-job scoped builds. The focused suite passes 40 examples and
+16 exact standard-three axiom audits. With the unchanged SP83, SP82
+and SP81 suites, the total is 125 examples and 73 audits, all clean.
+The full build passes 3207 jobs with only the two unchanged Challenge
+placeholder warnings. The unchanged dependency audit passes six primary
+contracts and two support reports without warnings. The 84-page PDF
+(845594 bytes) has a clean final log and passes visual review of pages
+14, 15, 63, 64, 75, 76 and 82. All 16 API parity checks and independent
+Lean--TeX review pass. The static central inventory is 1013 checks,
+565 examples and 905 reports; its historical prefix is unchanged and
+was not re-elaborated in full.
+
+Next identify each global chart image with `mu_N^-1(U)`, transfer the
+appropriate finite/etale properties, and descend the marked refinement
+and compatible Galois action. Global normality, normal stalks from smooth
+geometry and Chow--Betti generation remain separate. A section-ring
+model on a non-affine intersection is not substituted for the geometric
+overlap. The SP83 block and all queue history below are preserved
+byte-for-byte from `5e16059`.
 
 SP83 (2026-09-19): **coherent actual affine inverse-image opens**.
 Ten production APIs compile without warnings in the 2740-job scoped

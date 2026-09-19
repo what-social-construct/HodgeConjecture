@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-09-19 (SP83 coherent affine inverse-image opens; validated).
+Assessed: 2026-09-19 (SP84 actual affine diagram and gluing; validated).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -970,9 +970,10 @@ re-elaborated in full. The SP82 parity-queue entry records the complete
 validation.
 
 SP83 supplies the actual restriction coherence and affine inverse-image
-comparisons in B4p below. Global gluing and the compatible Galois action
-remain next; normal stalks from smooth geometry and Chow--Betti generation
-are separate obligations.
+comparisons in B4p below; SP84 constructs the locally directed diagram
+and global gluing in B4q. Global chart-image identification and the
+compatible marked/Galois maps remain next; normal stalks from smooth
+geometry and Chow--Betti generation are separate obligations.
 
 ### B4p. Coherent affine inverse-image opens
 
@@ -999,21 +1000,77 @@ visual review and all ten API parity checks pass. The static central
 inventory is 997 checks, 565 examples and 889 reports; its historical
 prefix is unchanged and was not re-elaborated in full.
 
-Next use nonempty affine opens as the inclusion-indexed chart diagram.
-Prove the locally directed condition by common principal refinement of
-points, then apply scheme gluing and descend the marked maps/action.
-The chain identities alone do not instantiate that gluing package; in
-particular, `Spec IntCl Gamma(U intersect W)` is not identified with
-the geometric overlap when the intersection is non-affine.
+The locally directed diagram and gluing consumer are now implemented
+in B4q. The chain identities alone did not supply that package; the
+pointwise common-refinement proof is an additional step. In particular,
+`Spec IntCl Gamma(U intersect W)` is not identified with the geometric
+overlap when the intersection is non-affine.
 
-The concrete next interface is Mathlib's locally directed diagram
-construction in `AlgebraicGeometry/Gluing.lean`: supply open immersions
-for all diagram maps and `(F comp Scheme.forget).IsLocallyDirected`,
-then use its `HasColimit` and `Scheme.IsLocallyDirected.openCover`.
-For the pointwise condition, equal images in a common upper chart must
-lift through one common smaller affine chart. SP83's exact range and
-injectivity endpoints are the named consumers for that proof. This is
-an implementation plan, not a claimed instance of those interfaces.
+### B4q. Inclusion-indexed normalization diagram and global gluing
+
+Let `A^times(X)` be the inclusion-ordered subtype of actual nonempty
+affine opens. `affineNormalizationDiagram` forms the functor `F_N`
+with objects the existing `Z_U` and arrows the actual `j^N_{W,U}`.
+`affineNormalizationBaseCocone` is the original cocone `c_N` to `X`.
+The diagram's arrows are open immersions and have exactly SP83's
+inverse-image ranges.
+
+The required `(F_N comp Scheme.forget).IsLocallyDirected` is proved
+directly: equal images of two chart points in a common upper chart
+have the same original base point, so a common principal neighborhood
+gives a smaller nonempty affine chart. The exact range lifts one point;
+injectivity in the upper chart gives the other equality. This uses a
+common upper chart only when it occurs in the locally directed premise,
+not an assumed upper affine chart for every pair.
+
+Mathlib's `AlgebraicGeometry/Gluing.lean` now supplies `HasColimit` and
+`Scheme.IsLocallyDirected.openCover` for this proved instance.
+`GluedNormalization.lean` constructs `Z_N = colimit F_N` with the
+original chart open immersions `jmath_U`, their open cover, and
+`mu_N : Z_N -> X` induced by `c_N`. It proves
+`mu_N jmath_U = mu_U`, transition naturality, the common-refinement
+criterion for equality of chart points in `Z_N`, and extensionality
+of maps out of `Z_N` from their chart restrictions.
+
+The 16 public APIs require integral `X` and a fixed field extension of
+its original function field; they add no finite-degree, normality,
+Noetherianity or separatedness hypothesis. The original normalization
+carriers and scalar maps are retained. The manuscript counterpart is
+`prop:normalization-gluing`; Stacks 01JB/01JC give background for scheme
+gluing, not a substitute for the proved locally directed condition.
+
+SP84 is validated: both production modules compile cleanly in
+2741/2742-job scoped builds. The focused suite passes 40 examples and
+16 exact standard-three axiom audits. With the unchanged SP83, SP82
+and SP81 suites, the total is 125 examples and 73 audits, all clean.
+The full build passes 3207 jobs with only the two unchanged Challenge
+placeholder warnings. The unchanged dependency audit passes six primary
+contracts and two support reports without warnings. The 84-page PDF
+(845594 bytes) has a clean final log and passes visual review of pages
+14, 15, 63, 64, 75, 76 and 82. All 16 API parity checks and independent
+Lean--TeX review pass. The static central inventory is 1013 checks,
+565 examples and 905 reports; its historical prefix is unchanged and
+was not re-elaborated in full.
+
+Next identify `range(jmath_U)` with the global inverse image
+`mu_N^-1(U)`, transfer the applicable finite/etale properties, and
+descend the marked refinement `lambda` and compatible Galois action.
+Global normality, normal stalks from smooth geometry, and Chow--Betti
+generation are separate obligations; the name of the glued model does
+not assert those properties.
+
+The inspected next proof route is concrete, but is not yet a SP84
+theorem. For `z` with `mu_N(z) in U`, the constructed open cover gives
+`b in Z_V` with `jmath_V(b)=z`. Choose a common principal neighborhood
+`W <= U intersect V` of `mu_V(b)`. The exact transition range lifts
+`b` to `w in Z_W`; transition naturality then gives
+`z = jmath_U(j^N_{W,U}(w))`. The forward range inclusion follows from
+the exact structural formula. After proving the range equality, apply
+Mathlib's existing `Scheme.Hom.isoOpensRange` in
+`AlgebraicGeometry/Restrict.lean` and identify its range open with
+`mu_N^-1(U)` to obtain the actual inverse-image open-subscheme
+isomorphism. This is the next proof plan, not a claimed global-image
+endpoint in the present checkpoint.
 
 ### G0. Smooth projective setting and candidate constructions
 

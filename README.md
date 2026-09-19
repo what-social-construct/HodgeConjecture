@@ -913,9 +913,36 @@ visual review and all ten API parity checks pass. The static central
 inventory is 997 checks, 565 examples and 889 reports; its historical
 prefix is unchanged and was not re-elaborated in full.
 
-Next package the nonempty affine-chart diagram and its common-refinement
-condition for locally directed gluing, then descend the marked maps and
-compatible Galois action. A model built from global sections of a
+SP84 packages all actual nonempty affine opens as the inclusion-ordered
+diagram `F_N` of the existing normalization charts. Its structural maps
+form the original cocone `c_N` to `X`; every transition is an open
+immersion with SP83's exact range. Common principal refinements prove
+the locally directed condition required by Mathlib's scheme gluing.
+`GluedNormalization.lean` then constructs the actual scheme
+`Z_N = colimit F_N`, its open cover by the original charts `jmath_U`,
+and the descended map `mu_N : Z_N -> X`. Its restriction to each chart
+is exactly the original `mu_U`. Equality of chart points in `Z_N` is
+equivalent to a common smaller-chart lift, and maps from `Z_N` are
+determined by their chart restrictions. Integral `X` and the same fixed
+field extension suffice; no normality, finite degree, Noetherianity or
+separatedness assumption is introduced.
+
+SP84 is validated: both production modules compile cleanly in
+2741/2742-job scoped builds. The focused suite passes 40 examples and
+16 exact standard-three axiom audits. With the unchanged SP83, SP82
+and SP81 suites, the total is 125 examples and 73 audits, all clean.
+The full build passes 3207 jobs with only the two unchanged Challenge
+placeholder warnings. The unchanged dependency audit passes six primary
+contracts and two support reports without warnings. The 84-page PDF
+(845594 bytes) has a clean final log and passes visual review of pages
+14, 15, 63, 64, 75, 76 and 82. All 16 API parity checks and independent
+Lean--TeX review pass. The static central inventory is 1013 checks,
+565 examples and 905 reports; its historical prefix is unchanged and
+was not re-elaborated in full.
+
+Next identify the global chart image with `mu_N^-1(U)`, transfer the
+appropriate finite/etale properties, and descend the marked refinement
+and compatible Galois action. A model built from global sections of a
 non-affine intersection is not asserted to be the geometric overlap.
 Deriving normal stalks from smooth geometry and Chow--Betti generation
 remain separate. The earlier SP76 constructor retains its stronger

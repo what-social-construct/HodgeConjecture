@@ -32,6 +32,7 @@ import HodgeConjecture.Boundary.Normalization.NormalizationIntegralFactor
 import HodgeConjecture.Boundary.Normalization.FiniteEtaleNormalClosure
 import HodgeConjecture.Boundary.Normalization.FiniteEtaleNormalClosureRestriction
 import HodgeConjecture.Boundary.Normalization.AffineNormalizationOpenImmersion
+import HodgeConjecture.Boundary.Normalization.GluedNormalization
 import HodgeConjecture.Boundary.Normalization.DeckAction
 import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
 import HodgeConjecture.Boundary.Normalization.ConjugateNormalization
@@ -138,6 +139,12 @@ coherence. Common principal neighborhoods then identify restriction to any
 nonempty affine subopen with the corresponding open inverse image in the
 larger normalization. No separatedness or affine-intersection hypothesis is
 needed for these chart comparisons.
+
+The nonempty affine normalization charts form a locally directed diagram
+of open immersions. Its colimit is a scheme covered by those same charts;
+the original structural maps descend to a map to the original base. Two
+chart points agree globally exactly when they lift to a common smaller
+affine chart, and morphisms out are determined by their chart restrictions.
 
 The broad normalization-purity/global-triviality prototype is preserved in
 `research/archive/legacy-lean/`, not as an importable library module.

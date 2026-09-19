@@ -1176,6 +1176,62 @@ principal neighborhood and therefore through \(Z_W\).
 The final equality follows from composition along either chain.
 \end{proof}
 
+\begin{proposition}[Gluing the original normalization charts]
+\label{prop:normalization-gluing}
+Let \(X\) be integral and fix a field extension \(K(X)\to N\).
+Let \(\mathcal A^{\times}(X)\) be the inclusion-ordered category of
+nonempty affine opens of \(X\). The original normalization charts and
+restriction morphisms define a functor
+\[
+ F_N:\mathcal A^{\times}(X)\longrightarrow\operatorname{Sch},
+ \qquad U\longmapsto Z_U,\qquad
+ (W\subseteq U)\longmapsto j^N_{W,U}.
+\]
+Its underlying topological diagram is locally directed, and its colimit
+\[
+ Z_N=\mathop{\operatorname{colim}}_{U\in\mathcal A^{\times}(X)}Z_U
+\]
+is a scheme. The canonical open immersions
+\(\jmath_U:Z_U\to Z_N\) form an open cover and satisfy
+\(\jmath_U\circ j^N_{W,U}=\jmath_W\).
+The structural cocone \(c_N=(X,(\mu_U)_U)\) induces the unique morphism
+\[
+ \mu_N:Z_N\longrightarrow X,
+ \qquad \mu_N\circ\jmath_U=\mu_U.
+\]
+For \(a\in Z_U\) and \(b\in Z_V\), one has
+\[
+ \jmath_U(a)=\jmath_V(b)
+ \quad\Longleftrightarrow\quad
+ \begin{gathered}
+  \text{there exist }W\in\mathcal A^{\times}(X),\quad W\subseteq U\cap V,
+     \quad w\in Z_W,\\
+  j^N_{W,U}(w)=a,\qquad j^N_{W,V}(w)=b.
+ \end{gathered}
+\]
+Morphisms out of \(Z_N\) are determined by their restrictions along
+all \(\jmath_U\).
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:normalization-affine-restriction} gives the functor
+laws, open immersions and structural cocone. To check local directedness,
+suppose \(U,V\subseteq T\) and \(a\in Z_U,b\in Z_V\) have the same
+image in \(Z_T\). The structural squares give a common image
+\(x=\mu_U(a)=\mu_V(b)\in U\cap V\).
+Choose \(W=D_U(r)=D_V(s)\) containing \(x\). The exact image formula
+lifts \(a\) to \(w\in Z_W\). Both images of \(w\) in \(Z_T\)
+agree by restriction coherence, and injectivity of \(j^N_{V,T}\)
+then gives \(j^N_{W,V}(w)=b\).
+
+Apply scheme gluing to this locally directed diagram of open immersions;
+the general gluing and mapping properties are
+\cite{StacksGluingLocallyRingedSpaces,StacksGluingSchemes}.
+The common-refinement relation above describes equality of chart points
+in the colimit. Its universal property descends \(c_N\) to \(\mu_N\)
+and determines morphisms by their chart restrictions.
+\end{proof}
+
 The group \(G=\mathcal N.\mathit{galoisGroup}\), the subgroup
 \(H=\mathcal N.\mathit{intermediateFixingSubgroup}\), and the canonical deck
 action on \(Y_N\) are all constructed from the same datum.  Normality keeps the conjugate embeddings inside the same field \(N\).
@@ -5216,6 +5272,15 @@ Coherent affine inverse-image opens &
 \leanpath{affineNormalizationRestriction_range}\newline
 \leanpath{Boundary/Normalization/AffineNormalizationCoherence.lean}\newline
 \leanpath{Boundary/Normalization/AffineNormalizationOpenImmersion.lean}\\
+Glued normalization \(Z_N,\jmath_U,\mu_N\) &
+\leanpath{affineNormalizationDiagram}\newline
+\leanpath{affineNormalizationDiagram_isLocallyDirected}\newline
+\leanpath{gluedNormalizationModel}\newline
+\leanpath{gluedNormalizationOpenCover}\newline
+\leanpath{normalizationChartToGlued_comp_toBase}\newline
+\leanpath{normalizationChartToGlued_eq_iff}\newline
+\leanpath{Boundary/Normalization/AffineNormalizationDiagram.lean}\newline
+\leanpath{Boundary/Normalization/GluedNormalization.lean}\\
 Full-visible boundary ideals &
 \leanpath{movingBoundaryIdeal_eq_top_of_surjective}\newline
 \leanpath{conjugateBoundarySeparation_of_surjective}\newline
@@ -6003,6 +6068,24 @@ principal table, grouped by mathematical layer.
 \leanpath{affineNormalizationRestriction_injective};
 \leanpath{affineNormalizationRestriction_isOpenImmersion};
 \leanpath{affineNormalizationRestriction_range};
+\normsrc{AffineNormalizationDiagram.lean};
+\leanpath{NonemptyAffineChart};
+\leanpath{nonemptyAffineChart_nonempty};
+\leanpath{affineNormalizationDiagram};
+\leanpath{affineNormalizationBaseCocone};
+\leanpath{affineNormalizationDiagram_isOpenImmersion};
+\leanpath{affineNormalizationDiagram_range};
+\leanpath{affineNormalizationDiagram_isLocallyDirected};
+\normsrc{GluedNormalization.lean};
+\leanpath{gluedNormalizationModel};
+\leanpath{normalizationChartToGlued};
+\leanpath{normalizationChartToGlued_isOpenImmersion};
+\leanpath{gluedNormalizationOpenCover};
+\leanpath{gluedNormalizationToBase};
+\leanpath{normalizationChartToGlued_comp_toBase};
+\leanpath{normalizationChartToGlued_naturality};
+\leanpath{normalizationChartToGlued_eq_iff};
+\leanpath{gluedNormalization_hom_ext};
 \normsrc{FiniteAffineCover.lean};
 \leanpath{normalizationToIntermediate_surjective};
 \leanpath{normalizationIntermediateEquiv};
