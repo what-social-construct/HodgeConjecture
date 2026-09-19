@@ -1,7 +1,7 @@
 # Current gap map
 
-Last reviewed: 2026-09-19 (SP82 same-ambient localization and actual affine
-restriction; validation complete; earlier checkpoint records retain
+Last reviewed: 2026-09-19 (SP83 actual affine restriction coherence and
+inverse-image opens; validated; earlier checkpoint records retain
 their original validation scope).
 
 Start with [the target and equivalence sketch](TARGET_BRIDGE.md): it fixes
@@ -594,9 +594,34 @@ pages 13, 14, 61, 62, 73, 74 and 81. The static central inventory is
 unchanged and was not re-elaborated in full. The SP82 parity-queue entry
 records the complete validation.
 
-**Subsequent bridge:** assemble the required actual overlap comparisons,
-establish cocycle identities, glue the actual global refinement, and
-construct its compatible Galois action.
+**SP83: coherent actual affine inverse-image opens.**
+The seven APIs in `AffineNormalizationCoherence.lean` prove identity,
+composition, common-refinement diamonds, compatibility over the original
+`X`, and the principal/equal-principal range adapters. The three APIs in
+`AffineNormalizationOpenImmersion.lean` prove pointwise injectivity,
+open immersion and the exact range for any nested nonempty affine opens:
+`range(j^N_{W,U}) = mu_U^-1(W)`. The existing normalization models and
+germ-derived ambient scalars are unchanged. Common principal neighborhoods
+in both charts supply the proof, with no separatedness, affine-intersection,
+finite-degree, normality or Noetherianity premise. The scoped build passes
+2740 jobs without warnings.
+SP83 is validated: the focused suite passes 21 examples and ten exact
+standard-three axiom audits. With the unchanged SP82 and SP81 suites,
+the total is 85 examples and 57 audits, all clean. The full build passes
+3205 jobs with only the two existing Challenge placeholder warnings;
+the unchanged dependency audit passes six primary contracts and two
+support reports. The 83-page PDF (839977 bytes), final log, seven-page
+visual review and all ten API parity checks pass. The static central
+inventory is 997 checks, 565 examples and 889 reports; its historical
+prefix is unchanged and was not re-elaborated in full.
+
+**Next bounded bridge:** package the nonempty affine-open diagram, prove
+its locally directed common-refinement condition, and use it to glue the
+actual normalization charts. Descend the marked refinement and compatible
+Galois action. Actual restriction chains now commute, but no global glued
+scheme, non-affine overlap identification, or gluing cocycle package is
+claimed by SP83. The local comparisons avoid requiring intersections
+themselves to be affine.
 Normal stalks from smooth geometry remain separate. The older SP76
 constructor retains its stronger assumptions; the SP81 finite-etale
 constructor removes its Noetherian-base requirement. The chartwise

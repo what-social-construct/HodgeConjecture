@@ -1,7 +1,7 @@
 # Claim ledger
 
-Last audited: 2026-09-19 (SP82 same-ambient localization and actual affine
-restriction, validated; earlier checkpoint validation records retain
+Last audited: 2026-09-19 (SP83 affine inverse-image opens and coherence,
+validated; earlier checkpoint records retain
 their original scope).
 
 Status vocabulary:
@@ -18,6 +18,36 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Coherent actual affine inverse-image opens (A11bo / SP83)
+
+Status: `FORMAL`; ten production APIs compile cleanly in the 2740-job
+scoped build. Actual restriction has identity, composition and diamond
+laws on nonempty opens. For nested nonempty affine opens `W <= U`, it
+is an open immersion with image exactly `mu_U^-1(W)`, where `mu_U` is
+the existing normalization structural map composed with the original
+affine chart map to `X`. The only ambient hypotheses are integral `X`
+and a fixed field extension of its original function field. No finite
+degree, etaleness, normality, Noetherianity or separatedness is added.
+
+The proof lifts points through neighborhoods principal in both affine
+charts, uses principal injectivity, and applies the local open-immersion
+criterion. No replacement normalization, field marking or input axiom
+is introduced. On non-affine opens only the restriction-chain identities
+are asserted, not a geometric-overlap interpretation of their section
+normalizations. The manuscript proposition uses affine opens throughout.
+SP83 is validated: the focused suite passes 21 examples and ten exact
+standard-three axiom audits. With the unchanged SP82 and SP81 suites,
+the total is 85 examples and 57 audits, all clean. The full build passes
+3205 jobs with only the two existing Challenge placeholder warnings;
+the unchanged dependency audit passes six primary contracts and two
+support reports. The 83-page PDF (839977 bytes), final log, seven-page
+visual review and all ten API parity checks pass. The static central
+inventory is 997 checks, 565 examples and 889 reports; its historical
+prefix is unchanged and was not re-elaborated in full.
+
+Remaining: locally directed diagram and gluing, global marked/Galois-map
+compatibility, normal stalks from smooth geometry and Chow--Betti generation.
 
 ## Same-ambient localization and actual affine restriction (A11bn / SP82)
 

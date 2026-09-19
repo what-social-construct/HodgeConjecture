@@ -753,3 +753,37 @@ comparisons, coherence/cocycle assembly, global gluing and the compatible
 Galois action remain next. Normal stalks from smooth geometry and
 Chow--Betti generation are separate. All earlier audit text is preserved
 unchanged.
+
+## 19. SP83 follow-up: coherent actual affine inverse-image opens
+
+Ten production APIs compile cleanly in the 2740-job scoped build.
+Actual restriction in the same fixed ambient field has identity,
+composition and common-refinement diamond laws. Its structural square
+commutes over the original `X`, retaining the original section rings,
+generic germs and normalization carriers.
+
+For any nested nonempty affine opens `W <= U`, the actual restriction
+is injective on points, is an open immersion, and has exact image
+`mu_U^-1(W)`. Common principal neighborhoods in both charts supply
+the point lifts and local open immersions. This introduces no
+separatedness, affine-intersection, finite-degree, normality or
+Noetherianity assumption beyond integral `X` and its fixed field
+extension. The exact standard input is Stacks 01IW and its existing
+Mathlib counterpart; no new source axiom is introduced.
+
+SP83 is validated: the focused suite passes 21 examples and ten exact
+standard-three axiom audits. With the unchanged SP82 and SP81 suites,
+the total is 85 examples and 57 audits, all clean. The full build passes
+3205 jobs with only the two existing Challenge placeholder warnings;
+the unchanged dependency audit passes six primary contracts and two
+support reports. The 83-page PDF (839977 bytes), final log, seven-page
+visual review and all ten API parity checks pass. The static central
+inventory is 997 checks, 565 examples and 889 reports; its historical
+prefix is unchanged and was not re-elaborated in full.
+
+Next package the nonempty affine-open diagram, its locally directed
+common-refinement condition and global gluing, then descend the marked
+refinement and Galois action. Formal chain equalities on non-affine
+opens are not a geometric-overlap theorem for their global-section
+models. Normal stalks from smooth geometry and Chow--Betti generation
+remain separate. The complete pre-SP83 audit text is unchanged.

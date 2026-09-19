@@ -138,6 +138,68 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP80 | Integral trace section, actual normalization factor and whole-ring etaleness | CONTRACT / SELECT / IDENTIFY / LOCALIZE | Derive generic spanning from the existing evaluator square, construct the integral selector by trace, identify its complementary quotient with the actual normalization, derive finite etale structure, and compare with the existing generic selector. Whole-source normality is bypassed. | PROVED / VALIDATED |
 | SP81 | Actual finite etale affine normalized cover and marked refinement | TRANSPORT / CONSTRUCT / FACTOR | Preserve the actual intermediate scheme's local presentations through the tensor source and selected open component; construct the existing cover with finite-etale structural/refinement maps and exact factorization on the actual chart and over the original base. | PROVED / VALIDATED |
 | SP82 | Same-ambient normalization localization and actual affine restriction | LOCALIZE / RESTRICT / COMMUTE | Retain the ambient ring, normalization carriers and original marking; prove generic localization/naturality/composition, principal-open restriction, and both actual structural/refinement squares on nested affine charts. | PROVED / VALIDATED |
+| SP83 | Coherent actual affine inverse-image opens | COMPOSE / REFINE / IDENTIFY | Prove actual restriction identities and common-refinement diamonds; identify arbitrary nonempty affine subcharts with their genuine open inverse images using common principal neighborhoods. | PROVED / VALIDATED |
+
+SP83 (2026-09-19): **coherent actual affine inverse-image opens**.
+Ten production APIs compile without warnings in the 2740-job scoped
+build. `AffineNormalizationCoherence.lean` proves actual identity,
+composition and common-refinement diamonds, compatibility over `X`,
+the principal image over `X`, and two equal-principal-presentation
+adapters. `AffineNormalizationOpenImmersion.lean` proves pointwise
+injectivity, open immersion and the exact image for every nested
+nonempty affine inclusion `W <= U`.
+
+The original `Z_U`, fixed field `N` and germ-derived scalar maps are
+unchanged. Common principal neighborhoods give both lifts in the
+injectivity argument, local open immersions, and both image inclusions.
+There is no separatedness, affine-intersection, normality, Noetherianity
+or finite-degree assumption. Identity/composition/diamonds are proved
+even on non-affine nonempty opens as identities of the existing models;
+the geometric inverse-image conclusion is restricted to affine charts.
+
+| Lean API / group | Mathematical role | TeX notation |
+| --- | --- | --- |
+| `affineNormalizationRestriction_self`, `_trans`, `_diamond` | actual identity, chain and common-refinement equalities | existing `j^N_{W,U}`, `j^N_{W,U} j^N_{T,W}=j^N_{T,U}` |
+| `affineNormalizationRestriction_comp_toX` | original structural square | `mu_U j^N_{W,U}=mu_W`; `mu_U` is the existing structural map to `X`, not a new carrier |
+| `affineNormalizationRestriction_basicOpen_range`, `_range_of_eq_basicOpen`, `_isOpenImmersion_of_eq_basicOpen` | principal/equal-principal comparison adapters | existing `j^N_{Q,U}`, `mu_U^-1(Q)`; no separate object notation |
+| `affineNormalizationRestriction_injective`, `_isOpenImmersion`, `_range` | genuine arbitrary-affine inverse-image identification | `Z_W ~= mu_U^-1(W)` via the existing `j^N_{W,U}` |
+
+The common-principal-neighborhood input is Stacks 01IW, checked in its
+exact scope, and Mathlib `exists_basicOpen_le_affine_inter`. The
+manuscript cites its statement without repeating its proof. No input
+axiom, geometric package or replacement normalization is introduced.
+SP83 is validated: the focused suite passes 21 examples and ten exact
+standard-three axiom audits. With the unchanged SP82 and SP81 suites,
+the total is 85 examples and 57 audits, all clean. The full build passes
+3205 jobs with only the two existing Challenge placeholder warnings;
+the unchanged dependency audit passes six primary contracts and two
+support reports. The 83-page PDF (839977 bytes), final log, seven-page
+visual review and all ten API parity checks pass. The static central
+inventory is 997 checks, 565 examples and 889 reports; its historical
+prefix is unchanged and was not re-elaborated in full.
+
+Next package the nonempty affine-open diagram and prove its locally
+directed common-refinement condition, then glue and descend the marked
+maps and Galois action. This checkpoint does not identify a section-ring
+model on a non-affine intersection with the geometric overlap or build
+a global gluing object. Normal stalks from smooth geometry and
+Chow--Betti generation remain separate. The SP82 block and all queue
+history below are preserved byte-for-byte.
+
+Exact validation: `AffineNormalizationCoherenceVerification` 21/10,
+unchanged `NormalizationLocalizationVerification` 39/28, and unchanged
+`FiniteEtaleNormalClosureVerification` 25/19. All runs have zero warnings
+or errors. The full build's only warnings are the unchanged Challenge
+placeholders at lines 33 and 46. The final PDF log has no warnings,
+undefined references/citations or overfull/underfull boxes; visual review
+covers pages 14, 15, 62, 63, 74, 80 and 83. Lean--TeX scope and notation
+match the ten checked APIs. Each has exactly one appended central check
+and axiom report and one entry in the duplicate-free enforced audit.
+No new production axioms, placeholders or native-decision escapes occur.
+The central verification and audit 0018 prefixes and the SP82-to-end
+queue suffix are byte-identical to `817bee2`. `ProofDependencies` and
+both neighboring diagnostic files are unchanged. All earlier validation
+records retain their original scope.
 
 SP82 (2026-09-19): **same-ambient localization / actual affine restriction**.
 The checkpoint is proved and validated. The 28 production APIs compile

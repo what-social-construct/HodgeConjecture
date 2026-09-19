@@ -17,9 +17,41 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source check: 2026-09-19 (SP82 localization sources checked;
-same-ambient localization and actual affine restriction validated;
+Last source check: 2026-09-19 (SP83 common principal neighborhoods checked;
+actual affine inverse-image comparisons validated;
 earlier source records retain their original validation scope).
+
+### Coherent affine inverse-image opens (SP83, 2026-09-19)
+
+[Stacks, Lemma 26.11.5, Tag 01IW](https://stacks.math.columbia.edu/tag/01IW)
+was checked on its primary page. Every point in the intersection of two
+affine opens has a neighborhood principal in both. There is no
+separatedness assumption and no assertion that the entire intersection
+is affine. The exact Mathlib input is
+`exists_basicOpen_le_affine_inter`; the manuscript states the input and
+cites `StacksCommonPrincipalNeighborhood` without repeating its proof.
+
+The ten project APIs in `AffineNormalizationCoherence.lean` and
+`AffineNormalizationOpenImmersion.lean` prove the actual same-field
+restriction laws and use those neighborhoods for pointwise injectivity,
+local open immersion, and the exact inverse-image range. The generic
+principal-localization inputs retain the SP82 scopes 0307/01I3.
+`IsOpenImmersion.of_forall_source_exists` is the existing Mathlib
+local criterion; no literature axiom or geometric input package is added.
+The 2740-job scoped build passes cleanly.
+SP83 is validated: the focused suite passes 21 examples and ten exact
+standard-three axiom audits. With the unchanged SP82 and SP81 suites,
+the total is 85 examples and 57 audits, all clean. The full build passes
+3205 jobs with only the two existing Challenge placeholder warnings;
+the unchanged dependency audit passes six primary contracts and two
+support reports. The 83-page PDF (839977 bytes), final log, seven-page
+visual review and all ten API parity checks pass. The static central
+inventory is 997 checks, 565 examples and 889 reports; its historical
+prefix is unchanged and was not re-elaborated in full.
+
+These results supply nested affine comparisons, not a completed global
+gluing construction, an identification using sections of non-affine
+overlaps, a global Galois action, or Chow--Betti generation.
 
 ### Same-ambient localization and actual affine restriction (SP82, 2026-09-19)
 

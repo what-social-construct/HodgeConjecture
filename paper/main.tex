@@ -1132,6 +1132,50 @@ inclusions into \(K(Y)\). Naturality for the marked embedding
 gives the asserted equality for \(\lambda\).
 \end{proof}
 
+\begin{proposition}[Coherent affine restriction]
+\label{prop:normalization-affine-restriction}
+Let \(X\) be integral, fix a field extension \(K(X)\to N\), and set
+\(Z_U=\Spec\operatorname{IntCl}_{\Gamma(U,\mathcal O_X)}(N)\)
+for each nonempty affine open \(U\subseteq X\). Write
+\(\mu_U:Z_U\to X\) for its original structural morphism.
+For every inclusion of nonempty affine opens \(W\subseteq U\),
+the restriction morphism identifies
+\[
+  j^N_{W,U}:Z_W\xrightarrow{\ \sim\ }\mu_U^{-1}(W)
+    \hookrightarrow Z_U.
+\]
+These open immersions commute over \(X\) and satisfy
+\[
+ j^N_{U,U}=\operatorname{id}_{Z_U},\qquad
+ j^N_{W,U}\circ j^N_{T,W}=j^N_{T,U}
+ \quad(T\subseteq W\subseteq U).
+\]
+In particular, for nonempty affine opens \(T,W_1,W_2\) with
+\(T\subseteq W_1\cap W_2\) and \(W_1,W_2\subseteq U\),
+the two composites from \(Z_T\) to \(Z_U\) agree.
+\end{proposition}
+
+\begin{proof}
+Identity and composition follow from the same-element integral-closure
+maps and functoriality of \(\Spec\). Their structural squares commute
+because restriction preserves the original generic germs.
+Every point of the intersection of two affine opens has a neighborhood
+principal in both~\cite{StacksCommonPrincipalNeighborhood}.
+For \(x\in W\subseteq U\), choose such a neighborhood
+\(Q=D_U(f)=D_W(g)\). Proposition~\ref{prop:normalization-localization}
+identifies the images of \(Z_Q\) in \(Z_U\) and \(Z_W\) with
+\(\mu_U^{-1}(Q)\) and \(\mu_W^{-1}(Q)\), respectively.
+Two points of \(Z_W\) with the same image in \(Z_U\) have the
+same image \(x\) in \(X\); both lift to this \(Z_Q\), where
+injectivity of the principal restriction forces them to agree.
+Thus \(j^N_{W,U}\) is injective, and these principal neighborhoods
+show that it is locally an open immersion, hence an open immersion.
+Its image lies in \(\mu_U^{-1}(W)\) by the structural square.
+Conversely, a point of \(\mu_U^{-1}(W)\) lifts through a common
+principal neighborhood and therefore through \(Z_W\).
+The final equality follows from composition along either chain.
+\end{proof}
+
 The group \(G=\mathcal N.\mathit{galoisGroup}\), the subgroup
 \(H=\mathcal N.\mathit{intermediateFixingSubgroup}\), and the canonical deck
 action on \(Y_N\) are all constructed from the same datum.  Normality keeps the conjugate embeddings inside the same field \(N\).
@@ -5164,6 +5208,14 @@ Normalization localization and actual restriction &
 \leanpath{Boundary/Normalization/AffineNormalizationRestriction.lean}\newline
 \leanpath{Boundary/Normalization/}\newline
 \leanpath{FiniteEtaleNormalClosureRestriction.lean}\\
+Coherent affine inverse-image opens &
+\leanpath{affineNormalizationRestriction_self}\newline
+\leanpath{affineNormalizationRestriction_trans}\newline
+\leanpath{affineNormalizationRestriction_diamond}\newline
+\leanpath{affineNormalizationRestriction_isOpenImmersion}\newline
+\leanpath{affineNormalizationRestriction_range}\newline
+\leanpath{Boundary/Normalization/AffineNormalizationCoherence.lean}\newline
+\leanpath{Boundary/Normalization/AffineNormalizationOpenImmersion.lean}\\
 Full-visible boundary ideals &
 \leanpath{movingBoundaryIdeal_eq_top_of_surjective}\newline
 \leanpath{conjugateBoundarySeparation_of_surjective}\newline
@@ -5939,6 +5991,18 @@ principal table, grouped by mathematical layer.
 \normsrc{FiniteEtaleNormalClosureRestriction.lean};
 \leanpath{finiteEtaleAffineNormalClosureToChart_restriction};
 \leanpath{finiteEtaleAffineNormalClosureToPreimage_restriction};
+\normsrc{AffineNormalizationCoherence.lean};
+\leanpath{affineNormalizationRestriction_self};
+\leanpath{affineNormalizationRestriction_trans};
+\leanpath{affineNormalizationRestriction_diamond};
+\leanpath{affineNormalizationRestriction_comp_toX};
+\leanpath{affineNormalizationRestriction_basicOpen_range};
+\leanpath{affineNormalizationRestriction_range_of_eq_basicOpen};
+\leanpath{affineNormalizationRestriction_isOpenImmersion_of_eq_basicOpen};
+\normsrc{AffineNormalizationOpenImmersion.lean};
+\leanpath{affineNormalizationRestriction_injective};
+\leanpath{affineNormalizationRestriction_isOpenImmersion};
+\leanpath{affineNormalizationRestriction_range};
 \normsrc{FiniteAffineCover.lean};
 \leanpath{normalizationToIntermediate_surjective};
 \leanpath{normalizationIntermediateEquiv};

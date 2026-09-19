@@ -895,8 +895,28 @@ inventory is 987 checks, 565 examples and 879 reports; its historical
 prefix is unchanged and was not re-elaborated in full. The SP82
 parity-queue entry records the complete validation.
 
-Actual overlap/coherence and cocycle assembly, gluing and the global
-Galois action remain subsequent tasks.
+SP83 proves identity, composition and common-refinement coherence for the
+actual restrictions. For any nested nonempty affine opens `W <= U`,
+`AffineNormalizationOpenImmersion.lean` identifies `Z_W` with exactly
+the open inverse image of `W` under the original `Z_U -> X`. Common
+principal neighborhoods supply the comparison, without assuming
+separatedness or affine intersections, and without finiteness, normality
+or Noetherian hypotheses. The same ambient field and germ-derived scalar
+maps are retained. The ten APIs compile in the 2740-job scoped build.
+SP83 is validated: the focused suite passes 21 examples and ten exact
+standard-three axiom audits. With the unchanged SP82 and SP81 suites,
+the total is 85 examples and 57 audits, all clean. The full build passes
+3205 jobs with only the two existing Challenge placeholder warnings;
+the unchanged dependency audit passes six primary contracts and two
+support reports. The 83-page PDF (839977 bytes), final log, seven-page
+visual review and all ten API parity checks pass. The static central
+inventory is 997 checks, 565 examples and 889 reports; its historical
+prefix is unchanged and was not re-elaborated in full.
+
+Next package the nonempty affine-chart diagram and its common-refinement
+condition for locally directed gluing, then descend the marked maps and
+compatible Galois action. A model built from global sections of a
+non-affine intersection is not asserted to be the geometric overlap.
 Deriving normal stalks from smooth geometry and Chow--Betti generation
 remain separate. The earlier SP76 constructor retains its stronger
 assumptions.

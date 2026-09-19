@@ -31,6 +31,7 @@ import HodgeConjecture.Boundary.Normalization.NormalClosureFactor
 import HodgeConjecture.Boundary.Normalization.NormalizationIntegralFactor
 import HodgeConjecture.Boundary.Normalization.FiniteEtaleNormalClosure
 import HodgeConjecture.Boundary.Normalization.FiniteEtaleNormalClosureRestriction
+import HodgeConjecture.Boundary.Normalization.AffineNormalizationOpenImmersion
 import HodgeConjecture.Boundary.Normalization.DeckAction
 import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
 import HodgeConjecture.Boundary.Normalization.ConjugateNormalization
@@ -131,6 +132,12 @@ source and with its canonical tensor base change. Principal restriction is
 an open immersion with the expected inverse-image basic open. On actual
 nested affine charts, the original germ maps, normalization isomorphisms,
 chart structural maps and marked refinements all commute with restriction.
+
+The actual restriction maps satisfy identity, composition and common-refinement
+coherence. Common principal neighborhoods then identify restriction to any
+nonempty affine subopen with the corresponding open inverse image in the
+larger normalization. No separatedness or affine-intersection hypothesis is
+needed for these chart comparisons.
 
 The broad normalization-purity/global-triviality prototype is preserved in
 `research/archive/legacy-lean/`, not as an importable library module.

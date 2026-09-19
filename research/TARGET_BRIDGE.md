@@ -1,7 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-09-19 (SP82 same-ambient localization and actual affine
-restriction validated).
+Assessed: 2026-09-19 (SP83 coherent affine inverse-image opens; validated).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -970,10 +969,51 @@ and 879 reports; its historical prefix is unchanged and was not
 re-elaborated in full. The SP82 parity-queue entry records the complete
 validation.
 
-Generic self/composition identities do not themselves assemble the
-actual overlaps or their cocycle data. Those comparisons, global
-gluing and the compatible Galois action remain next; normal stalks from
-smooth geometry and Chow--Betti generation are separate obligations.
+SP83 supplies the actual restriction coherence and affine inverse-image
+comparisons in B4p below. Global gluing and the compatible Galois action
+remain next; normal stalks from smooth geometry and Chow--Betti generation
+are separate obligations.
+
+### B4p. Coherent affine inverse-image opens
+
+Retain the same `Z_U = Spec IntCl_{Gamma(U)}(N)` and original
+`mu_U : Z_U -> X`. The actual `j^N_{W,U}` satisfy identity, composition
+and common-refinement diamonds, and commute with `mu_U`. For arbitrary
+nested nonempty affine opens `W <= U`, the map is an open immersion
+whose range is exactly `mu_U^-1(W)`. Thus the local comparison is an
+actual open-subscheme identification, not just a field isomorphism.
+
+Common principal neighborhoods in the two charts provide injectivity,
+local open immersion and both range inclusions. No separatedness or
+affineness of intersections is assumed. No finiteness, normality or
+Noetherianity is needed beyond integral `X`, nonempty affine charts and
+the fixed field extension. Seven coherence/range adapters and three
+arbitrary-affine endpoints compile cleanly in the 2740-job scoped build.
+SP83 is validated: the focused suite passes 21 examples and ten exact
+standard-three axiom audits. With the unchanged SP82 and SP81 suites,
+the total is 85 examples and 57 audits, all clean. The full build passes
+3205 jobs with only the two existing Challenge placeholder warnings;
+the unchanged dependency audit passes six primary contracts and two
+support reports. The 83-page PDF (839977 bytes), final log, seven-page
+visual review and all ten API parity checks pass. The static central
+inventory is 997 checks, 565 examples and 889 reports; its historical
+prefix is unchanged and was not re-elaborated in full.
+
+Next use nonempty affine opens as the inclusion-indexed chart diagram.
+Prove the locally directed condition by common principal refinement of
+points, then apply scheme gluing and descend the marked maps/action.
+The chain identities alone do not instantiate that gluing package; in
+particular, `Spec IntCl Gamma(U intersect W)` is not identified with
+the geometric overlap when the intersection is non-affine.
+
+The concrete next interface is Mathlib's locally directed diagram
+construction in `AlgebraicGeometry/Gluing.lean`: supply open immersions
+for all diagram maps and `(F comp Scheme.forget).IsLocallyDirected`,
+then use its `HasColimit` and `Scheme.IsLocallyDirected.openCover`.
+For the pointwise condition, equal images in a common upper chart must
+lift through one common smaller affine chart. SP83's exact range and
+injectivity endpoints are the named consumers for that proof. This is
+an implementation plan, not a claimed instance of those interfaces.
 
 ### G0. Smooth projective setting and candidate constructions
 
