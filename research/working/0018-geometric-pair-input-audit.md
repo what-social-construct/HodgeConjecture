@@ -434,3 +434,59 @@ full-visible separation do not imply the whole-chart result. Overlap
 compatibility and gluing follow as separate tasks. The actual global finite etale
 Galois refinement, normal stalks from smooth geometry and Chow--Betti
 generation remain separate. All earlier audit text is preserved unchanged.
+
+## 13. SP77 follow-up: finite tensor source and marked evaluations
+
+The finite tensor construction now has actual integral and field maps.
+`FiniteTensorProduct.lean` proves the existing finite-index tensor
+product finite when its factors are finite, and etale when its factors
+are etale; the empty index case is included. No new tensor carrier is used.
+
+For `Σ=Hom_K(L,N)`, `NormalClosureTensor.lean` evaluates
+`P_K=⊗_{Σ,K}L` in the existing marked normal closure by multiplying
+the corresponding conjugate images. The range is an intermediate field
+and contains every conjugate, so the normal-closure property proves
+surjectivity. The actual kernel `m` is maximal and the quotient
+`P_K/m` is canonically equivalent to `N`. This uses neither separability
+nor an independently supplied surjectivity premise.
+
+`NormalizationTensor.lean` restricts those same embeddings to the
+existing integral closures, obtaining
+`ev_B:P_B=⊗_{Σ,B}IntCl_B(L) -> IntCl_B(N)`. Its factor formula is the
+existing `normalizationMap`; inclusion into `N` agrees on integral pure
+tensors with the field evaluation. An actual finite normal intermediate
+algebra `A` with fraction field `L` makes `P_B` finite. If `A/B` is
+etale, `P_B/B` is etale by transport along the existing normalization
+equivalence and the finite tensor theorem. The field marking and all
+scalar compatibility are retained, without new source axioms or input
+packages. The source-property theorems omit four unused base/target scalar
+assumptions while evaluation retains its needed scalar towers. Stacks
+Lemma 10.143.3, Tag 00U2, parts (2) and (3), supplies the checked standard
+source for etale composition/base change only; it does not discharge the
+integral factor comparison.
+
+Validation: all 17 new APIs compile. The central inventory is 883 checks,
+565 examples and 775 reports after appending 17 checks and reports; its
+historical prefix is byte-identical and was not rerun in full. The 76-page
+PDF (805454 bytes) passes its build and clean warning/box/reference scan;
+visual checks of pages 9, 10, 58, 68, 69, 75 and 76 pass, as do independent
+code and Lean--TeX reviews covering all 17 names. The full build passes
+(3187 jobs; only the two existing Challenge placeholder warnings).
+`NormalClosureTensorVerification.lean` passes 28 examples and 17 enforced
+standard-three axiom audits without warnings. Fresh SP76 and SP74 reruns
+pass 23/7 and 22/7, respectively: 73 examples and 31 audits in these three
+suites. The fresh unchanged dependency audit passes six primary endpoint
+contracts and two support reports.
+
+Next construct the canonical tensor localization/base-change comparison
+`K⊗_B P_B ≃ P_K` and equality of evaluator homomorphism composites; the
+pure-tensor equality is not a substitute for that comparison. Then, under
+separability, realize the generic maximal quotient as a direct factor/
+idempotent; this splitting is not yet formalized. Subsequently extend/
+select the integral factor and prove its image normal and equal to
+`IntCl_B(N)`. The generic maximal-kernel quotient does not itself provide
+either direct-factor identification. Whole-chart target etaleness,
+overlap compatibility, gluing and the global finite etale Galois
+refinement remain subsequent. Normal stalks from smooth geometry and
+Chow--Betti generation remain separate. All earlier audit text is
+preserved unchanged.

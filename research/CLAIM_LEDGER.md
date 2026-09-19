@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-18 (SP76 finite normal-closure normalization; earlier checkpoint
+Last audited: 2026-09-18 (SP77 finite tensor source and marked evaluations; earlier checkpoint
 validation records are retained with their original scope).
 
 Status vocabulary:
@@ -17,6 +17,72 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Finite tensor source and marked evaluations (A11bi / SP77)
+
+Status: `FORMAL`. For a finite index type, the existing
+`PiTensorProduct` of copies of a module-finite algebra is module-finite;
+copies of an etale algebra give an etale tensor algebra. These two
+properties are proved independently, using the existing binary tensor
+instances and algebra equivalences, including the empty index case.
+
+For marked `NormalClosureData K L N`, let `Σ=Hom_K(L,N)` and
+`P_K=⊗_{Σ,K} L`. The constructed algebra map `ev_K:P_K -> N` multiplies
+the corresponding embedded factors. Its range, viewed as an intermediate
+field because `N/K` is algebraic, contains every conjugate field. Thus the
+normal-closure property proves surjectivity. The actual kernel `m` is
+maximal, and the canonical quotient equivalence `P_K/m ≃_K N` agrees
+with evaluation on every quotient representative. No separability,
+perfectness or supplied surjectivity hypothesis is used.
+
+For compatible `B`-algebras and scalar towers, those same embeddings
+restrict to the existing integral closures. Their tensor evaluation
+`ev_B:P_B -> IntCl_B(N)`, for `P_B=⊗_{Σ,B} IntCl_B(L)`, agrees factorwise
+and on pure tensors with `ev_K` after inclusion into `N`. A supplied
+actual finite normal intermediate algebra `A` with fraction field `L`
+proves `P_B` finite, and etaleness of `A/B` proves `P_B` etale. The
+existing normalization equivalence transports these properties; the two
+source-property theorems omit the four unused assumptions `Algebra B K`,
+`Algebra B N`, `IsScalarTower B K L`, and `IsScalarTower B K N`. No new
+tensor carrier, normalization ring, field package or source axiom is used.
+
+Witnesses:
+
+- `CommutativeAlgebra/FiniteTensorProduct.lean`:
+  `piTensorProduct_finite`, `piTensorProduct_etale`.
+- `Boundary/Normalization/NormalClosureTensor.lean`:
+  `piTensorProductEvaluation`, its pure-tensor and factor formulas;
+  `NormalClosureData.tensorEvaluation`, its factor and surjectivity
+  theorems, `tensorEvaluation_ker_isMaximal`,
+  `tensorEvaluationQuotientEquiv` and its representative formula.
+- `Boundary/Normalization/NormalizationTensor.lean`:
+  `NormalClosureData.normalizationTensorEvaluation`, its factor,
+  ambient-field factor and pure-tensor formulas,
+  `normalizationTensor_finite`, `normalizationTensor_etale`.
+
+All 17 new APIs compile. The central inventory is 883 checks, 565 examples
+and 775 reports after appending 17 checks and reports; its historical
+prefix is unchanged and was not rerun in full. The 76-page PDF (805454
+bytes) passes its build, warning scan and visual checks; independent code
+and Lean--TeX review pass. The full build passes (3187 jobs; only the two
+existing Challenge placeholder warnings). The new suite passes 28
+examples and 17 enforced standard-three axiom audits without warnings.
+Fresh SP76 and SP74 reruns pass 23/7 and 22/7, respectively: 73 examples
+and 31 audits in these three suites. The fresh unchanged dependency audit
+passes six primary endpoint contracts and two support reports.
+
+The generic quotient identification is not an integral direct-factor
+identification or proof of integral
+evaluation surjectivity. A scalar-extension/localization isomorphism
+between the integral and field tensor constructions is not asserted.
+The immediate next proof must construct the canonical comparison
+`K⊗_B P_B ≃ P_K` and equality of the evaluator homomorphism composites.
+Afterward, separability must be used to realize the generic maximal
+quotient as a direct factor/idempotent; that splitting is not yet
+formalized. Then extend/select the factor over the base, prove normality
+of its integral image and identify it with `IntCl_B(N)`.
+Whole-chart etaleness, overlap compatibility, gluing and Chow--Betti
+generation remain separate; none is renamed as an input hypothesis here.
 
 ## Finite normal-closure normalization and actual affine cover (A11bh / SP76)
 

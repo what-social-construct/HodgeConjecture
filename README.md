@@ -723,14 +723,42 @@ reports; its historical prefix is unchanged and was not rerun in full.
 The 74-page PDF (788608 bytes) passes its build, warning scan and visual
 checks; independent code and Lean--TeX reviews pass. The fresh unchanged
 dependency audit passes six endpoint contracts and two support reports.
-Next identify this specific normal-closure
-normalization as a direct factor of a finite tensor construction from
-the actual finite etale intermediate algebra, to prove whole-chart
-etaleness; then establish overlap compatibility and gluing.
-Finiteness and full-visible separation do not imply etaleness. Base
-normality/Noetherianity and upstairs normal stalks remain explicit;
-the global finite etale Galois refinement and Chow--Betti generation
-remain separate geometric tasks.
+SP77 constructs the finite tensor source and its actual evaluations in
+[`FiniteTensorProduct.lean`](HodgeConjecture/CommutativeAlgebra/FiniteTensorProduct.lean),
+[`NormalClosureTensor.lean`](HodgeConjecture/Boundary/Normalization/NormalClosureTensor.lean)
+and [`NormalizationTensor.lean`](HodgeConjecture/Boundary/Normalization/NormalizationTensor.lean).
+For `Σ=Hom_K(L,N)`, the field tensor `P_K=⊗_{Σ,K} L` maps onto the
+existing marked `N`: its algebraic range contains every conjugate field,
+so normal-closure generation proves surjectivity. The actual kernel is
+maximal and its quotient is canonically `N`. No separability or supplied
+surjectivity premise is needed for that argument. Restrictions of those
+same embeddings give `ev_B:P_B -> IntCl_B(N)`, with
+`P_B=⊗_{Σ,B} IntCl_B(L)`. On pure tensors its inclusion into `N` agrees
+with the field evaluation. An actual finite normal etale intermediate
+model makes `P_B` finite and etale over `B`; no new tensor carrier or
+normal-closure package is introduced. All 17 new APIs compile; the two
+source-property theorems omit four unused base/target scalar assumptions.
+The central inventory is 883 checks, 565 examples and 775 reports after
+appending 17 checks and reports; its historical prefix is unchanged and
+was not rerun in full. The 76-page PDF (805454 bytes) passes its build,
+warning scan and visual checks; independent code and Lean--TeX review pass.
+The full build passes (3187 jobs; only the two existing Challenge
+placeholder warnings). The new suite passes 28 examples and 17 enforced
+standard-three axiom audits without warnings. Fresh SP76 and SP74 reruns
+pass 23/7 and 22/7, respectively: 73 examples and 31 audits in these three
+suites. The fresh unchanged dependency audit passes six primary endpoint
+contracts and two support reports.
+
+Next construct the canonical localization/base-change comparison
+`K⊗_B P_B ≃ P_K` and prove equality of the evaluator composites.
+Then, under separability, realize the generic maximal quotient as a
+direct factor, extend/select that factor integrally, and prove its image
+normal and equal to this specific `N`-normalization. Neither the generic
+splitting nor the integral factor identification is yet formalized.
+Whole-chart etaleness, overlaps and gluing therefore remain to be proved.
+Base normality/Noetherianity and upstairs
+normal stalks remain explicit; the global finite etale Galois refinement
+and Chow--Betti generation remain separate geometric tasks.
 
 `paper/main.pdf` is the single current manuscript PDF. The earlier drafts
 and their sources are preserved in the

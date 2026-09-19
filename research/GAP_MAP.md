@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-09-18 (SP76 finite normal-closure normalization;
+Last reviewed: 2026-09-18 (SP77 finite tensor source and marked evaluations;
 validation complete; earlier checkpoint validation records retain their
 original scope).
 
@@ -394,17 +394,50 @@ its historical prefix is unchanged and was not rerun in full. The
 checks; independent code and Lean--TeX reviews pass. The fresh unchanged
 dependency audit passes six endpoint contracts and two support reports.
 
-**Next bounded bridge:** identify this specific `N`-normalization as a
-direct factor of a finite tensor construction from the actual finite
-etale intermediate algebra. This identification is not yet proved;
-it is the proposed route to whole-chart etaleness. Localization to `N`
-and generic etaleness do not prove the whole-chart property, and the
-pinned Mathlib API has no direct theorem supplying it. Proved finiteness
-and full-visible boundary separation do not supply it either. Then
-establish overlap compatibility and gluing to obtain
-the actual global finite etale Galois refinement. Normal stalks from
-smooth geometry remain separate. The function-field tower and SP71's
-equality over `X` are not a gluing theorem.
+**SP77: finite tensor source and marked evaluations.**
+`FiniteTensorProduct.lean` proves finiteness and etaleness for the existing
+finite-index tensor product of copies of a finite etale algebra, including
+the empty index case. `NormalClosureTensor.lean` uses all embeddings
+`Σ=Hom_K(L,N)` to construct `ev_K:P_K -> N`, where `P_K=⊗_{Σ,K} L`.
+Every conjugate field lies in its algebraic range, so the given
+normal-closure property proves surjectivity without adding a premise.
+Its actual kernel `m` is maximal and `P_K/m ≃_K N` commutes with evaluation.
+Neither the evaluation nor this surjectivity proof needs separability.
+
+`NormalizationTensor.lean` restricts the same embeddings to the existing
+integral closures, giving `ev_B:P_B -> IntCl_B(N)` for
+`P_B=⊗_{Σ,B} IntCl_B(L)`. It proves the factor formula and agreement with
+`ev_K` on integral pure tensors after inclusion into `N`. An actual finite
+normal etale intermediate algebra with fraction field `L` makes this
+integral tensor source finite and etale. The source, target, field marking
+and scalar maps are not replaced by supplied objects. All 17 new APIs
+compile; the two source-property theorems omit four unused base/target
+scalar assumptions. The central inventory is 883 checks, 565 examples
+and 775 reports after appending 17 checks and reports; its historical
+prefix is unchanged and was not rerun in full. The 76-page PDF (805454
+bytes) passes its build, warning scan and visual checks; independent code
+and Lean--TeX review pass. The full build passes (3187 jobs; only the two
+existing Challenge placeholder warnings). The new suite passes 28
+examples and 17 enforced standard-three axiom audits without warnings.
+Fresh SP76 and SP74 reruns pass 23/7 and 22/7, respectively: 73 examples
+and 31 audits in these three suites. The fresh unchanged dependency audit
+passes six primary endpoint contracts and two support reports.
+
+**Next bounded bridge:** construct the canonical localization/base-change
+comparison `K⊗_B P_B ≃ P_K` and prove equality of the evaluator
+homomorphism composites. The pure-tensor identity does not supply this
+comparison. Then, under separability, prove that the actual generic
+maximal quotient splits as a direct factor/idempotent; this splitting is
+not yet formalized. Subsequently extend/select that factor over `B`,
+prove normality of its integral image and identify it with the specific
+`N`-normalization, rather than supplying these goals as hypotheses. The
+generic quotient `P_K/m ≃ N` is not either direct-factor theorem.
+The proposed direct-factor route must still prove whole-chart
+etaleness; generic etaleness, finiteness and full-visible separation do
+not supply it. Then establish overlap compatibility and gluing to obtain
+the actual global finite etale Galois refinement. Normal stalks from smooth
+geometry remain separate. The function-field tower and SP71's equality
+over `X` are not a gluing theorem.
 The main target is unchanged. Nonempty-boundary geometry remains an
 alternative if needed; Chow--Betti generation and convolution compatibility
 remain separate.

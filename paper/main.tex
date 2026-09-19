@@ -751,6 +751,77 @@ intermediate model and \(\nu_{p,U}\). Each visible map is an isomorphism,
 so Proposition~\ref{prop:full-visible-boundary} gives separation.
 \end{proof}
 
+\begin{proposition}[Tensor evaluation and its field quotient]
+\label{prop:normal-closure-tensor}
+For the finite marked normal-closure datum \(\mathcal N\), put
+\[
+  \Sigma=\operatorname{Hom}_{K\text{-alg}}(L,N),
+  \qquad P_K=\bigotimes_{\sigma\in\Sigma,K}L.
+\]
+The set \(\Sigma\) is finite. The formula
+\[
+  \operatorname{ev}_K:P_K\longrightarrow N,
+  \qquad \bigotimes_{\sigma}x_\sigma
+       \longmapsto\prod_{\sigma}\sigma(x_\sigma)
+\]
+defines a surjective \(K\)-algebra homomorphism. Its restriction to the
+\(\sigma\)-factor is \(\sigma\), including the marked factor
+\(\sigma=\iota\). Consequently
+\(\mathfrak m=\ker(\operatorname{ev}_K)\) is maximal and evaluation
+induces the canonical \(K\)-algebra isomorphism
+\[
+  P_K/\mathfrak m\ \xrightarrow{\ \sim\ }N,
+  \qquad [z]\longmapsto\operatorname{ev}_K(z).
+\]
+\end{proposition}
+
+\begin{proof}
+The tensor universal property gives the algebra homomorphism and its
+factor identities. Its range is a \(K\)-subalgebra of the algebraic
+extension \(N/K\), hence a field. It contains \(\sigma(L)\) for every
+\(\sigma\in\Sigma\). Those conjugate fields generate \(N\) by the
+normal-closure property, so the range is all of \(N\). Maximality and
+the displayed isomorphism follow from the first isomorphism theorem.
+\end{proof}
+
+\begin{proposition}[Integral tensor evaluation]
+\label{prop:normalization-tensor}
+With the compatible \(B\)-scalar maps, set
+\[
+  P_B=\bigotimes_{\sigma\in\Sigma,B}\widetilde B_L.
+\]
+Restriction of each \(\sigma\) to integral closures gives a
+\(B\)-algebra homomorphism
+\[
+  \operatorname{ev}_B:P_B\longrightarrow\widetilde B_N,
+  \qquad \bigotimes_{\sigma}a_\sigma
+       \longmapsto\prod_{\sigma}\sigma(a_\sigma).
+\]
+Each tensor factor maps by its canonical normalization ring map.
+Writing \(v_L:\widetilde B_L\hookrightarrow L\) and
+\(v_N:\widetilde B_N\hookrightarrow N\) for the inclusions, one has
+\[
+  v_N\!\left(\operatorname{ev}_B
+       \left(\bigotimes_{\sigma,B}a_\sigma\right)\right)
+  =\operatorname{ev}_K
+       \left(\bigotimes_{\sigma,K}v_L(a_\sigma)\right).
+\]
+If \(A\) is the finite normal intermediate affine model of
+Proposition~\ref{prop:finite-normal-affine-model}, then \(P_B\) is
+finite over \(B\). If \(A/B\) is also \'{e}tale, then \(P_B/B\)
+is finite \'{e}tale.
+\end{proposition}
+
+\begin{proof}
+Algebra homomorphisms preserve integral elements, so the restrictions
+land in \(\widetilde B_N\). Their tensor evaluation gives the displayed
+map and compatibility formula. The canonical identification
+\(\widetilde B_L\simeq A\) supplies finiteness and, when assumed,
+\'{e}taleness of every factor. Finite tensor products preserve module
+finiteness; \'{e}taleness is stable under base change and
+composition~\cite{StacksEtaleStability}.
+\end{proof}
+
 The group \(G=\mathcal N.\mathit{galoisGroup}\), the subgroup
 \(H=\mathcal N.\mathit{intermediateFixingSubgroup}\), and the canonical deck
 action on \(Y_N\) are all constructed from the same datum.  Normality keeps the conjugate embeddings inside the same field \(N\).
@@ -4739,6 +4810,15 @@ Finite normal-closure normalization and actual affine cover &
 \leanpath{functionFieldNormalClosure_normalization_finite}\newline
 \leanpath{finiteAffinePreimageNormalizedCover}\newline
 \leanpath{Boundary/Normalization/FiniteNormalClosure.lean}\\
+Tensor evaluation \(P_K\to N\) and \(P_K/\mathfrak m\simeq N\) &
+\leanpath{NormalClosureData.tensorEvaluation_surjective}\newline
+\leanpath{NormalClosureData.tensorEvaluationQuotientEquiv}\newline
+\leanpath{Boundary/Normalization/NormalClosureTensor.lean}\\
+Integral tensor evaluation \(P_B\to\widetilde B_N\) &
+\leanpath{NormalClosureData.normalizationTensorEvaluation}\newline
+\leanpath{NormalClosureData.normalizationTensorEvaluation_coe_tprod}\newline
+\leanpath{NormalClosureData.normalizationTensor_etale}\newline
+\leanpath{Boundary/Normalization/NormalizationTensor.lean}\\
 Full-visible boundary ideals &
 \leanpath{movingBoundaryIdeal_eq_top_of_surjective}\newline
 \leanpath{conjugateBoundarySeparation_of_surjective}\newline
@@ -5378,6 +5458,26 @@ principal table, grouped by mathematical layer.
 \leanpath{functionFieldNormalClosure_normalization_finite};
 \leanpath{finiteAffinePreimageNormalizedCover};
 \leanpath{conjugateBoundarySeparation_finiteAffinePreimageNormalizedCover};
+\leanpath{CommutativeAlgebra/FiniteTensorProduct.lean};
+\leanpath{piTensorProduct_finite};
+\leanpath{piTensorProduct_etale};
+\normsrc{NormalClosureTensor.lean};
+\leanpath{piTensorProductEvaluation};
+\leanpath{piTensorProductEvaluation_tprod};
+\leanpath{piTensorProductEvaluation_singleAlgHom};
+\leanpath{NormalClosureData.tensorEvaluation};
+\leanpath{NormalClosureData.tensorEvaluation_singleAlgHom};
+\leanpath{NormalClosureData.tensorEvaluation_surjective};
+\leanpath{NormalClosureData.tensorEvaluation_ker_isMaximal};
+\leanpath{NormalClosureData.tensorEvaluationQuotientEquiv};
+\leanpath{NormalClosureData.tensorEvaluationQuotientEquiv_mk};
+\normsrc{NormalizationTensor.lean};
+\leanpath{NormalClosureData.normalizationTensorEvaluation};
+\leanpath{NormalClosureData.normalizationTensorEvaluation_singleAlgHom};
+\leanpath{NormalClosureData.normalizationTensorEvaluation_coe_singleAlgHom};
+\leanpath{NormalClosureData.normalizationTensorEvaluation_coe_tprod};
+\leanpath{NormalClosureData.normalizationTensor_finite};
+\leanpath{NormalClosureData.normalizationTensor_etale};
 \normsrc{FiniteAffineCover.lean};
 \leanpath{normalizationToIntermediate_surjective};
 \leanpath{normalizationIntermediateEquiv};

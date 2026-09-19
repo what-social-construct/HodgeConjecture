@@ -637,6 +637,62 @@ follow as separate obligations. Base normality/Noetherianity and upstairs
 normal stalks remain explicit; deriving them from the intended smooth
 geometry and proving Chow--Betti generation remain separate tasks.
 
+### B4j. Construct the finite tensor source and its marked evaluations
+
+SP77 works with the existing finite-index tensor product and existing
+marked normal closure. Put `Σ=Hom_K(L,N)`,
+`P_K=⊗_{Σ,K} L` and `P_B=⊗_{Σ,B} IntCl_B(L)`.
+`FiniteTensorProduct.lean` proves finiteness and etaleness of finite tensor
+products from the respective properties of their factors, by finite-index
+induction and existing binary tensor APIs. Empty, singleton and reindexed
+products are included; no new tensor carrier is introduced.
+
+`NormalClosureTensor.lean` constructs the multiplication evaluation
+`ev_K:P_K -> N`. Each tensor factor evaluates by its corresponding
+embedding. The range is an intermediate field because `N/K` is algebraic;
+it contains every conjugate of `L`, so the given normal-closure property
+proves that it is all of `N`. Thus `m=ker(ev_K)` is maximal and
+`P_K/m ≃_K N`, with the quotient comparison commuting on every
+representative. Neither separability nor an independent surjectivity
+hypothesis is required.
+
+`NormalizationTensor.lean` restricts those same embeddings to the existing
+integral closures and constructs `ev_B:P_B -> IntCl_B(N)`. Its factor map
+is exactly `normalizationMap N (σ.restrictScalars B)`. Including the value
+of an integral pure tensor into `N` gives the value of the corresponding
+field pure tensor under `ev_K`. This is a proved formula for the actual
+maps, not a supplied commuting-square assumption. An actual finite normal
+intermediate affine algebra `A` with fraction field `L` supplies finiteness
+of `P_B`; if `A/B` is etale, it also supplies etaleness of `P_B`, using the
+existing normalization equivalence. The two source-property theorems omit
+the four unused base/target scalar assumptions; the evaluation maps retain
+their needed compatible scalar towers. All 17 new APIs compile. The
+central inventory is 883 checks, 565 examples and 775 reports after
+appending 17 checks and reports; its historical prefix is unchanged and
+was not rerun in full. The 76-page PDF (805454 bytes) passes its build,
+warning scan and visual checks; independent code and Lean--TeX review pass.
+The full build passes (3187 jobs; only the two existing Challenge
+placeholder warnings). The new suite passes 28 examples and 17 enforced
+standard-three axiom audits without warnings. Fresh SP76 and SP74 reruns
+pass 23/7 and 22/7, respectively: 73 examples and 31 audits in these three
+suites. The fresh unchanged dependency audit passes six primary endpoint
+contracts and two support reports.
+
+The immediate next proof must construct the canonical localization/base-
+change comparison `K⊗_B P_B ≃ P_K` and prove equality of the evaluator
+homomorphism composites. The pure-tensor formula does not replace that
+comparison. Then, under separability, realize the generic maximal quotient
+as a direct factor/idempotent; that splitting is not yet formalized.
+Subsequently extend/select that factor integrally and identify its image
+with the existing `T=IntCl_B(N)`. Normality of the integral image and its
+equality to the integral closure must be proved, not inserted as renamed
+hypotheses. The generic maximal-kernel quotient alone is not either
+direct-factor identification, and source etaleness does not yet prove
+target etaleness. Whole-chart etaleness, overlaps, gluing and global
+finite etale Galois refinement
+remain subsequent steps. The independent Chow--Betti generation obligation
+is unchanged.
+
 ### G0. Smooth projective setting and candidate constructions
 
 Keep the following three outcomes distinct: a formalization of a known
@@ -1081,10 +1137,17 @@ provide variable-class coverage.
 - Review new objects against the parity registry before adding wrappers.
   Promote a proved checkpoint only after the appropriate build, focused
   regressions, dependency/axiom checks and Lean--TeX comparison.
-- **Next action:** identify B4i's finite `N`-normalization as a direct factor
-  of a finite tensor construction from the actual finite etale intermediate
-  algebra, proving whole-chart etaleness rather than only its generic
-  version; then prove overlap compatibility and gluing. B4i has removed the separately
+- **Next action:** construct B4j's canonical localization/base-change
+  comparison `K⊗_B P_B ≃ P_K` and equality of the evaluator homomorphism
+  composites. Then, under separability, prove generic direct-factor/
+  idempotent splitting of the actual maximal quotient; the quotient
+  identification does not already formalize that splitting. Next extend/
+  select the integral factor, prove its image normal and identify it with
+  B4i's finite `N`-normalization. Then derive whole-chart etaleness and prove
+  overlap compatibility and gluing. B4j constructs the finite etale tensor
+  source and its actual integral/generic evaluations, with generic
+  surjectivity and quotient identification proved from normal closure.
+  B4i has removed the separately
   supplied second finite normal algebra and constructs the existing cover
   from an actual affine inverse image and its marked generic extension.
   Normal stalks from smooth geometry and the global finite etale Galois
@@ -1903,14 +1966,20 @@ the dated checkpoints below document how the existing objects were built.
    existing endpoint using constructed data, with no hypothesis that is
    merely the desired class-generation or realization conclusion renamed.
 
-The operative action after B4i's finite-normalization construction is the
-proposed direct-factor comparison with a finite tensor construction from
-the actual finite etale intermediate algebra. This must prove etaleness
-of the specific `N`-model on the whole chart, not just generically; overlap
-compatibility and gluing follow. Its finiteness and full-visible separation are
-proved without a separately supplied second affine algebra. Normality
-and Noetherianity of the base and upstairs normal stalks stay explicit;
-the global Galois refinement remains subsequent.
+After B4i's finite-normalization construction, B4j constructs the finite
+etale tensor source and actual evaluations, proves generic surjectivity
+from normal-closure generation, and identifies the corresponding generic
+kernel quotient with `N`. The immediate operative action is to construct
+the canonical localization/base-change comparison `K⊗_B P_B ≃ P_K` and
+prove equality of evaluator composites. Then separability must give a
+generic direct-factor/idempotent splitting, which is not yet formalized;
+subsequently extend/select the integral factor and prove its image normal
+and equal to the specific `N`-normalization. This must yield whole-chart
+etaleness, not just a generic statement; overlap compatibility and gluing
+follow. Finiteness and full-visible separation are proved without a
+separately supplied second affine algebra. Normality and Noetherianity of
+the base and upstairs normal stalks stay explicit; the global Galois
+refinement remains subsequent.
 The existing
 fixed-field, selector and trace consumers now use extension separability;
 core-freeness and its full-visible/inertia/extension consumers need none.

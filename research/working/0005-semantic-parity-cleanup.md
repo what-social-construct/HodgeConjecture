@@ -132,6 +132,77 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP74 | Constructed marked normal closure and extension-specific Galois bridge | CONSTRUCT / PRESERVE / TRANSFER | Build the existing normal-closure datum inside the upstairs algebraic closure, preserving its canonical marking. Transfer separability to any marked normal closure and apply the Galois consequence to the actual finite generic extension. | PROVED; FULL BUILD, TWENTY-TWO FOCUSED REGRESSIONS, SEVEN STANDARD-AXIOM AUDITS, SP73 RERUN, FRESH DEPENDENCY AUDIT, SINGLE-PDF CHECKS AND INDEPENDENT REVIEW PASS |
 | SP75 | Local-separability consumer generalization and core-free hypothesis cleanup | GENERALIZE / MOVE / REUSE | Replace fourteen perfect-field premises by extension separability; remove twelve without replacement. Move the two existing separability/Galois helpers to the core, retaining one perfect-field compatibility wrapper and all other geometric inputs. | PROVED / VALIDATED |
 | SP76 | Finite normal-closure normalization and actual affine-preimage cover | DERIVE / CONSTRUCT / SEPARATE | Derive finiteness over a normal Noetherian base, eliminate the separately supplied second affine algebra, and construct the existing cover from the actual affine inverse image and marked generic extension. | PROVED / VALIDATED |
+| SP77 | Finite tensor source, marked field quotient and integral evaluation | CONSTRUCT / EVALUATE / COMPARE | Prove finite-index tensor finiteness/etaleness, evaluate onto the existing marked normal closure, identify the actual generic kernel quotient, and restrict the same embeddings to integral closures with exact factor/pure-tensor compatibility. Keep integral factor identification and whole-chart etaleness separate. | PROVED / VALIDATED |
+
+SP77 (2026-09-18): **finite tensor source / marked evaluations**.
+`FiniteTensorProduct.lean` proves finiteness and etaleness independently
+for the existing finite-index tensor carrier. Finite-index induction
+uses existing binary tensor instances and private algebra-equivalence
+upgrades of existing reindexing/regrouping maps. No public replacement
+tensor representation is introduced.
+
+`NormalClosureTensor.lean` defines the common finite-family algebra-map
+evaluation and its pure-tensor/factor formulas. Specializing to all
+embeddings of the existing intermediate field in its marked normal
+closure gives an evaluation onto that same `N`. Its algebraic range
+contains every conjugate field; the normal-closure property proves
+surjectivity. The actual kernel is maximal and its quotient is
+canonically equivalent to `N`, with the representative formula proved.
+These results use no separability or independently supplied surjectivity.
+
+`NormalizationTensor.lean` specializes the same evaluator to the existing
+restrictions `normalizationMap N (σ.restrictScalars B)`. The integral
+factor formula and the equality with field evaluation on integral pure
+tensors are proved after inclusion into `N`. An actual finite normal
+intermediate model with fraction field `L` makes the source finite; its
+etaleness makes the source etale. The original field marking, integral
+closures and scalar towers are reused. No new source axiom or input
+package is introduced. The two source-property theorems omit the unused
+`Algebra B K`, `Algebra B N`, `IsScalarTower B K L`, and
+`IsScalarTower B K N` assumptions; evaluation retains its actual scalar
+compatibility. Stacks Lemma 10.143.3, Tag 00U2, parts (2) and (3), is
+checked and cited for source etale stability under composition/base
+change only, not for identification or etaleness of the target.
+
+Notation parity: write `Σ=Hom_K(L,N)`, `P_K=⊗_{Σ,K}L` and
+`P_B=⊗_{Σ,B}IntCl_B(L)`, with evaluations `ev_K` and `ev_B`, and
+`m=ker(ev_K)`. In the manuscript the unchanged integral closures are
+`\widetilde B_L` and `\widetilde B_N`, evaluation is typeset
+`\operatorname{ev}_K`/`\operatorname{ev}_B`, and the kernel is
+`\mathfrak m`. These are the existing tensor carriers with genuinely
+constructed maps and their actual kernel, not new abstract models.
+Keep `I` for the existing inertia/split-index notation and `μ` for the
+existing collision multiplication. The generic evaluation is distinct
+from the older `N⊗_K L` sheet comparison: its all-embeddings source maps
+onto `N`, rather than identifying the one-factor base change with the
+generic-sheet algebra. The generic finite-family evaluator and all
+compatibility/property theorems are prose-only helpers, not extra
+projectors or independently named geometric objects.
+
+Validation: all 17 new APIs compile. The central inventory is 883 checks,
+565 examples and 775 reports after appending 17 checks and reports; its
+historical prefix is byte-identical and was not rerun in full. The 76-page
+PDF (805454 bytes) passes its build and clean warning/box/reference scan;
+visual checks of pages 9, 10, 58, 68, 69, 75 and 76 pass, as do independent
+code and Lean--TeX reviews covering all 17 names. The full build passes
+(3187 jobs; only the two existing Challenge placeholder warnings).
+`NormalClosureTensorVerification.lean` passes 28 examples and 17 enforced
+standard-three axiom audits without warnings. Fresh SP76 and SP74 reruns
+pass 23/7 and 22/7, respectively: 73 examples and 31 audits in these three
+suites. The fresh unchanged dependency audit passes six primary endpoint
+contracts and two support reports.
+
+The generic quotient is not an integral direct factor, and no
+scalar-extension/localization isomorphism between
+these tensor sources is yet asserted. First construct the canonical
+comparison `K⊗_B P_B ≃ P_K` and equality of evaluator homomorphism
+composites. Then, under separability, prove a generic direct-factor/
+idempotent splitting of the maximal quotient; that splitting is not yet
+formalized. Next extend/select the integral factor, prove its image normal
+and identify it with the existing `IntCl_B(N)`. Whole-chart target
+etaleness, overlaps, gluing and Chow--Betti generation remain separate.
+Historical SP76 and earlier
+queue blocks below are preserved unchanged.
 
 SP76 (2026-09-18): **finite normal-closure normalization / actual affine cover**.
 `FiniteNormalClosure.lean` supplies seven declarations using existing

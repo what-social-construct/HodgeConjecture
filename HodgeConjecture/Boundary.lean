@@ -24,6 +24,8 @@ import HodgeConjecture.Boundary.Normalization.FiniteFunctionField
 import HodgeConjecture.Boundary.Normalization.SeparableFunctionField
 import HodgeConjecture.Boundary.Normalization.FunctionFieldNormalClosure
 import HodgeConjecture.Boundary.Normalization.FiniteNormalClosure
+import HodgeConjecture.Boundary.Normalization.NormalClosureTensor
+import HodgeConjecture.Boundary.Normalization.NormalizationTensor
 import HodgeConjecture.Boundary.Normalization.DeckAction
 import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
 import HodgeConjecture.Boundary.Normalization.ConjugateNormalization
@@ -92,6 +94,12 @@ Over a normal Noetherian affine base, separability also proves finiteness of
 the normal-closure normalization. One finite normal intermediate model, or
 the actual affine inverse image with normal stalks, then constructs the
 existing normalized cover without a separately supplied second affine model.
+The finite tensor product of the intermediate normalization has a canonical
+integral evaluation map, compatible with the surjective tensor evaluation
+onto the marked normal-closure field. The latter's actual kernel quotient
+is that field. A finite normal étale intermediate model makes the integral
+tensor source finite and étale; the integral direct-factor comparison is
+a separate step.
 
 The broad normalization-purity/global-triviality prototype is preserved in
 `research/archive/legacy-lean/`, not as an importable library module.

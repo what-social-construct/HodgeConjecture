@@ -17,9 +17,73 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source check: 2026-09-18 (SP76 finite normal-closure normalization;
+Last source check: 2026-09-18 (SP77 finite tensor source and marked evaluations;
 earlier source records retain
 their original validation scope).
+
+### Finite tensor source and marked evaluations (SP77, 2026-09-18)
+
+These are direct project proofs against the pinned Mathlib APIs, not new
+literature input packages or axioms. `FiniteTensorProduct.lean` upgrades
+the existing finite-index tensor reindexing, empty/singleton and binary
+regrouping equivalences to algebra equivalences. Induction on the finite
+index type then uses `Module.Finite.tensorProduct` for finiteness and etale
+base change/composition plus `Algebra.Etale.of_equiv` for etaleness. Each result
+states only its corresponding property of the copied algebra. The exact
+standard etale-stability counterpart is [Stacks, Lemma 10.143.3, Tag 00U2,
+parts (2) and (3)](https://stacks.math.columbia.edu/tag/00U2): composition
+and base change preserve etaleness. The live source was checked and the
+manuscript cites it for the source tensor algebra only. It does not
+identify the target normalization with a direct factor or prove its
+etaleness.
+
+`NormalClosureTensor.lean` uses `PiTensorProduct.liftAlgHom` to multiply
+a finite family of algebra maps. For the embeddings of `L` into the
+existing marked `N`, its image is an intermediate field via
+`subalgebraEquivIntermediateField`. The factor formula puts every
+conjugate field in that image, and `normalClosure_le_iff` and the
+normal-closure top identity prove surjectivity. The actual evaluation
+kernel is maximal by `RingHom.ker_isMaximal_of_surjective`; the existing
+`Ideal.quotientKerAlgEquivOfSurjective` constructs its quotient equivalence
+to `N`. This uses the marked datum's finiteness and normal-closure property,
+not separability, perfectness or a supplied surjectivity assumption.
+
+`NormalizationTensor.lean` uses the existing `normalizationMap` to
+restrict each of those same embeddings to the existing integral closures.
+Its factor and pure-tensor formulas identify the resulting integral
+evaluation with the field evaluation after inclusion into `N`. SP70's
+`normalizedCoordinateRing_finite` and `normalizedCoordinateRing_etale`
+transport the properties of an actual finite normal intermediate model,
+and the new finite-index tensor results make the integral source finite
+and etale. The source-property theorems omit the four unused assumptions
+`Algebra B K`, `Algebra B N`, `IsScalarTower B K L`, and
+`IsScalarTower B K N`; the evaluation maps retain their needed scalar
+compatibility. No whole-chart etaleness of the target normalization is
+invoked or supplied as a new hypothesis.
+
+All 17 new APIs compile. The central inventory is 883 checks, 565 examples
+and 775 reports after appending 17 checks and reports; its historical
+prefix is unchanged and was not rerun in full. The 76-page PDF (805454
+bytes) passes its build, warning scan and visual checks; independent code
+and Lean--TeX review pass. The full build passes (3187 jobs; only the two
+existing Challenge placeholder warnings). The new suite passes 28
+examples and 17 enforced standard-three axiom audits without warnings.
+Fresh SP76 and SP74 reruns pass 23/7 and 22/7, respectively: 73 examples
+and 31 audits in these three suites. The fresh unchanged dependency audit
+passes six primary endpoint contracts and two support reports.
+
+The quotient over the fraction field does not yet identify a direct
+factor, even generically. First construct the
+canonical scalar-extension/localization comparison `K⊗_B P_B ≃ P_K` and
+prove equality of the evaluator homomorphism composites. Then, under
+separability, realize the generic maximal quotient as a direct factor/
+idempotent; that splitting is not yet formalized. Extension/selection of
+that factor over `B` and normality/equality of its integral image with
+`IntCl_B(N)` follow as distinct proof obligations. Whole-chart etaleness
+and subsequent overlap/gluing arguments are not consequences of the current
+pure-tensor identity alone. The existing
+Stacks citations for normalization and Galois closure keep their original
+scope; no additional source theorem is claimed to discharge these gaps.
 
 ### Finite normal-closure normalization and actual affine cover (SP76, 2026-09-18)
 
