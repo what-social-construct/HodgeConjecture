@@ -1,7 +1,7 @@
 # Current gap map
 
-Last reviewed: 2026-09-19 (SP85 actual global inverse-image charts;
-validated; earlier checkpoint records retain
+Last reviewed: 2026-09-19 (SP86 global target-local properties and actual
+finite-etale normal closure; validated; earlier checkpoint records retain
 their original validation scope).
 
 Start with [the target and equivalence sketch](TARGET_BRIDGE.md): it fixes
@@ -680,15 +680,50 @@ static central inventory is 1020 checks, 565 examples and 912 axiom
 reports; its historical prefix is unchanged and was not re-elaborated
 in full.
 
-**Next bounded bridge:** apply these exact inverse-image isomorphisms
-to the target-local affine-morphism interface and transfer finite/etale
-properties under their appropriate hypotheses. Then descend the marked
-refinement and compatible Galois action. Global normality, normal stalks
-from smooth geometry and Chow--Betti generation are separate. The older
+**SP86: target-local properties and the actual finite-etale global map.**
+`GluedNormalizationProperties.lean` proves that the actual nonempty
+affine opens cover every scheme, including the empty scheme. For a
+target-local morphism property `P`, SP85's exact isomorphism and
+structural formula identify `P(mu_N)` with `P(pi_U)` for every original
+chart map `pi_U : Z_U -> U`. This proves `IsAffineHom mu_N` for integral
+`X` and any fixed extension of its original function field, without a
+finite-degree, normal-base, Noetherian or separatedness premise.
+Finiteness and scheme etaleness are each equivalent to the respective
+property of these exact chart maps.
+
+`FiniteEtaleGluedNormalClosure.lean` then specializes to an actual
+dominant finite etale `p : Y -> X`, with integral `X` and `Y` and
+explicit integrally closed stalks on both. SP81 supplies the chart
+properties for the original marked normal closure
+`N_p = normalClosure K(X) K(Y) (AlgebraicClosure K(Y))`; the target-local
+equivalences prove that the already constructed `mu_(N_p)` is finite
+etale. Its field map remains the actual map induced by `p`. No
+Noetherian or perfect-field premise, source axiom, or new geometric
+hypothesis package is added. The six APIs correspond to
+`prop:normalization-target-local` and
+`cor:normal-closure-global-finite-etale` in the manuscript.
+
+SP86 is validated: all six production APIs compile cleanly in the
+2770-job scoped build. The focused suite passes 31 examples and six
+exact standard-three axiom audits without warnings. The full build
+passes 3210 jobs with only the two unchanged Challenge placeholder
+warnings. The unchanged dependency audit passes six primary contracts
+and two support reports without warnings. No fresh older neighbor-suite
+pass is claimed. The 86-page PDF (852527 bytes) has a clean final log
+and passes visual review of pages 15, 16, 65, 77, 82, 83 and 84. All
+six exact API parity checks and independent Lean--TeX review pass.
+The static central inventory is 1026 checks, 565 examples and 918 axiom
+reports; its historical prefix is unchanged and was not re-elaborated
+in full.
+
+**Next bounded bridge:** descend the marked refinement and compatible
+Galois action. Global normality and surjectivity, normal stalks from
+smooth geometry and Chow--Betti generation are separate. The older
 SP76 constructor retains its stronger assumptions; SP81 removes its
 Noetherian-base requirement. SP84 supplies the locally directed gluing,
 and SP85 identifies its original charts with the actual global inverse
-images; neither checkpoint asserts the subsequent finite/etale descent.
+images. SP86 transfers the properties and proves finite etaleness of
+the actual normal-closure map with its explicit normal-stalk inputs.
 The main target is unchanged. Nonempty-boundary geometry remains an
 alternative if needed; Chow--Betti generation and convolution compatibility
 remain separate.

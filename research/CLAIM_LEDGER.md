@@ -1,7 +1,7 @@
 # Claim ledger
 
-Last audited: 2026-09-19 (SP85 actual global inverse-image charts,
-validated; earlier checkpoint records retain
+Last audited: 2026-09-19 (SP86 target-local properties and actual global
+finite-etale normal closure, validated; earlier checkpoint records retain
 their original scope).
 
 Status vocabulary:
@@ -18,6 +18,55 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Target-local properties and actual global finite-etale normal closure (A11br / SP86)
+
+Status: `FORMAL`; all six production APIs compile cleanly and the
+checkpoint is validated. The five public
+APIs in `Boundary/Normalization/GluedNormalizationProperties.lean`
+prove that nonempty affine opens cover every scheme and transport any
+target-local morphism property through the exact chart comparison
+`e_U`. For integral `X` and any fixed extension `N` of its original
+function field, this gives `P(mu_N) iff forall U, P(pi_U)`, global
+`IsAffineHom mu_N`, and exact finite/etale chartwise equivalences.
+The original chart map is
+`pi_U = normalizedModelToBase Γ(X,U) N` followed by `hU.isoSpec.inv`.
+The manuscript counterpart is `prop:normalization-target-local`.
+
+The sixth API,
+`functionFieldNormalClosure_glued_finite_etale` in
+`Boundary/Normalization/FiniteEtaleGluedNormalClosure.lean`, proves
+finite etaleness of the actual global map for the original marked
+`N_p = normalClosure K(X) K(Y) (AlgebraicClosure K(Y))`.
+Its hypotheses are an actual dominant finite etale `p : Y -> X`,
+integral `X` and `Y`, and explicitly integrally closed stalks of both
+schemes. The function-field map is the original map induced by `p`.
+SP81 supplies the original finite-etale chart maps and the new
+equivalences transport their properties to the existing glued map.
+The manuscript counterpart is `cor:normal-closure-global-finite-etale`.
+
+Neither result introduces a source axiom, replacement normalization
+carrier, or new geometric hypothesis package. No Noetherian or
+perfect-field hypothesis is needed. Affineness does not require the
+normal-stalk assumptions of the actual finite-etale specialization.
+
+SP86 is validated: all six production APIs compile cleanly in the
+2770-job scoped build. The focused suite passes 31 examples and six
+exact standard-three axiom audits without warnings. The full build
+passes 3210 jobs with only the two unchanged Challenge placeholder
+warnings. The unchanged dependency audit passes six primary contracts
+and two support reports without warnings. No fresh older neighbor-suite
+pass is claimed. The 86-page PDF (852527 bytes) has a clean final log
+and passes visual review of pages 15, 16, 65, 77, 82, 83 and 84. All
+six exact API parity checks and independent Lean--TeX review pass.
+The static central inventory is 1026 checks, 565 examples and 918 axiom
+reports; its historical prefix is unchanged and was not re-elaborated
+in full.
+
+Remaining: descent of the marked refinement to `Y` and its compatible
+Galois action, global normality and surjectivity, normal stalks from
+smooth geometry, and Chow--Betti generation. No new Hodge case follows
+from the finite-etale result alone.
 
 ## Actual global inverse-image normalization charts (A11bq / SP85)
 
@@ -54,8 +103,8 @@ static central inventory is 1020 checks, 565 examples and 912 axiom
 reports; its historical prefix is unchanged and was not re-elaborated
 in full.
 
-Remaining: target-local `IsAffineHom` and finite/etale transfer under
-the appropriate hypotheses, marked refinement and compatible
+SP86 above supplies target-local `IsAffineHom` and finite/etale transfer
+under the appropriate hypotheses. Remaining: marked refinement and compatible
 Galois-action descent, global normality, normal stalks from smooth
 geometry and Chow--Betti generation. The chart isomorphisms are not a
 claim about global sections of a non-affine intersection.
@@ -101,8 +150,8 @@ Lean--TeX review pass. The static central inventory is 1013 checks,
 was not re-elaborated in full.
 
 The exact global chart image `range(jmath_U) = mu_N^-1(U)` is supplied
-by SP85 above. Remaining: global affine/finite/etale properties under
-the appropriate hypotheses,
+by SP85 above; SP86 supplies global affine/finite/etale properties under
+the appropriate hypotheses. Remaining:
 marked refinement and compatible Galois-action descent, normal stalks
 from smooth geometry, and Chow--Betti generation. The construction does
 not identify the section normalization of a non-affine intersection

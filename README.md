@@ -964,11 +964,42 @@ static central inventory is 1020 checks, 565 examples and 912 axiom
 reports; its historical prefix is unchanged and was not re-elaborated
 in full.
 
-Next use these actual inverse-image isomorphisms to establish the
-target-local affine-morphism interface and transfer the applicable
-finite/etale properties, then descend the marked refinement and
-compatible Galois action. Global normality, normal stalks from smooth
-geometry and Chow--Betti generation remain separate. No model built
+SP86 uses these actual inverse-image isomorphisms to transfer every
+target-local morphism property from the original chart maps
+`pi_U : Z_U -> U` to `mu_N`. The actual nonempty affine opens cover any
+scheme, including the empty scheme. Thus the local-property proof
+needs no exceptional empty-chart normalization. It proves global
+`IsAffineHom` for integral `X` and any fixed field extension of its
+original function field, and exact finite/etale equivalences with the
+original chart maps.
+
+For an actual dominant finite etale map `p : Y -> X` of integral schemes,
+SP86 then applies SP81 to the same marked field
+`N_p = normalClosure K(X) K(Y) (AlgebraicClosure K(Y))`. With explicit
+normal-stalk hypotheses on both `X` and `Y`, the actual global map
+`mu_(N_p)` is finite etale. There is no Noetherian or perfect-field
+premise and no replacement normalization model. The six public APIs
+are in `GluedNormalizationProperties.lean` and
+`FiniteEtaleGluedNormalClosure.lean`; their manuscript counterparts are
+`prop:normalization-target-local` and
+`cor:normal-closure-global-finite-etale`.
+
+SP86 is validated: all six production APIs compile cleanly in the
+2770-job scoped build. The focused suite passes 31 examples and six
+exact standard-three axiom audits without warnings. The full build
+passes 3210 jobs with only the two unchanged Challenge placeholder
+warnings. The unchanged dependency audit passes six primary contracts
+and two support reports without warnings. No fresh older neighbor-suite
+pass is claimed. The 86-page PDF (852527 bytes) has a clean final log
+and passes visual review of pages 15, 16, 65, 77, 82, 83 and 84. All
+six exact API parity checks and independent Lean--TeX review pass.
+The static central inventory is 1026 checks, 565 examples and 918 axiom
+reports; its historical prefix is unchanged and was not re-elaborated
+in full.
+
+Next descend the marked refinement and compatible Galois action.
+Global normality and surjectivity, normal stalks from smooth geometry
+and Chow--Betti generation remain separate. No model built
 from global sections of a non-affine intersection is substituted for
 its geometric overlap. The earlier SP76 constructor retains its
 stronger assumptions.

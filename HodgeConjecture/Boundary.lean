@@ -34,6 +34,8 @@ import HodgeConjecture.Boundary.Normalization.FiniteEtaleNormalClosureRestrictio
 import HodgeConjecture.Boundary.Normalization.AffineNormalizationOpenImmersion
 import HodgeConjecture.Boundary.Normalization.GluedNormalization
 import HodgeConjecture.Boundary.Normalization.GluedNormalizationChart
+import HodgeConjecture.Boundary.Normalization.GluedNormalizationProperties
+import HodgeConjecture.Boundary.Normalization.FiniteEtaleGluedNormalClosure
 import HodgeConjecture.Boundary.Normalization.DeckAction
 import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
 import HodgeConjecture.Boundary.Normalization.ConjugateNormalization
@@ -151,6 +153,13 @@ Each original chart is exactly the inverse image of its base open under
 the global structural map. The resulting open-subscheme isomorphism
 retains the original map to the base chart and commutes with restriction
 to every smaller nonempty affine chart.
+
+Target-local morphism properties transfer through these same inverse-image
+comparisons. The global normalization map is affine; it is finite or étale
+exactly when its original affine chart maps are. For the actual marked
+normal-closure field of a dominant finite étale morphism of integral schemes,
+explicit normal stalks on source and target therefore give a global finite
+étale normalization map.
 
 The broad normalization-purity/global-triviality prototype is preserved in
 `research/archive/legacy-lean/`, not as an importable library module.

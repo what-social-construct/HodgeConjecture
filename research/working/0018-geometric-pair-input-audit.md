@@ -889,3 +889,52 @@ or saved log after interruption, so its result is unconfirmed and
 excluded from this checkpoint's passing counts. The SP84, SP83 and
 SP81 verification files are statically unchanged from the baseline;
 the earlier recorded results are historical, not fresh reruns.
+
+## 22. SP86 follow-up: target-local properties and actual global finite-etale normal closure
+
+`GluedNormalizationProperties.lean` first proves that the actual
+nonempty affine opens cover every scheme, including the empty scheme.
+For integral `X` and its original fixed field extension `N`, the exact
+SP85 chart comparison `e_U` and structural formula identify any
+target-local property of `mu_N` with that property of every original
+`pi_U : Z_U -> U`. Both schemes in `pi_U` are affine, so `mu_N` is an
+affine morphism without a finite-degree or normal-base assumption.
+Finiteness and scheme etaleness each have the same exact chartwise
+equivalence. These account for five public APIs.
+
+The sixth API in `FiniteEtaleGluedNormalClosure.lean` proves finite
+etaleness of the actual global normal-closure map. Its data are
+dominant finite etale `p : Y -> X`, integral `X` and `Y`, and explicit
+integrally closed stalks on both schemes. The fixed
+`N_p = normalClosure K(X) K(Y) (AlgebraicClosure K(Y))` retains the
+actual generic map induced by `p`. SP81's finite-etale chart theorem
+applies with these stalk inputs; the target-local equivalences give
+the two global properties. No replacement normalization carrier,
+Noetherian or perfect-field premise, source axiom, or new geometric
+hypothesis package is introduced.
+
+The manuscript counterparts are `prop:normalization-target-local`
+and `cor:normal-closure-global-finite-etale`. Stacks 01S8, 01WI and
+02GJ are verified primary-page locality references. The Lean input is
+Mathlib's target-locality and isomorphism transport, combined with
+the proved exact map formula; the source citations do not replace
+the actual SP81 chart construction.
+
+SP86 is validated: all six production APIs compile cleanly in the
+2770-job scoped build. The focused suite passes 31 examples and six
+exact standard-three axiom audits without warnings. The full build
+passes 3210 jobs with only the two unchanged Challenge placeholder
+warnings. The unchanged dependency audit passes six primary contracts
+and two support reports without warnings. No fresh older neighbor-suite
+pass is claimed. The 86-page PDF (852527 bytes) has a clean final log
+and passes visual review of pages 15, 16, 65, 77, 82, 83 and 84. All
+six exact API parity checks and independent Lean--TeX review pass.
+The static central inventory is 1026 checks, 565 examples and 918 axiom
+reports; its historical prefix is unchanged and was not re-elaborated
+in full.
+
+Next descend the marked refinement to `Y` and the compatible Galois
+action. Global normality and surjectivity still need checks; normal
+stalks from smooth geometry and Chow--Betti generation remain separate.
+The complete audit prefix through SP85 remains byte-identical to
+`7fca0b4`.

@@ -1282,6 +1282,54 @@ as relative gluing over the affine basis, as in
 \cite{StacksRelativeGluing}.
 \end{proof}
 
+\begin{proposition}[Target-local properties of the glued normalization]
+\label{prop:normalization-target-local}
+In the setting of Proposition~\ref{prop:normalization-gluing}, let
+\(\mathsf P\) be an isomorphism-invariant property of scheme morphisms
+that is local on the target for the Zariski topology. Then
+\[
+ \mathsf P(\mu_N)
+ \quad\Longleftrightarrow\quad
+ \mathsf P(\pi_U)\text{ for every }U\in\mathcal A^{\times}(X).
+\]
+The map \(\mu_N:Z_N\to X\) is affine. It is finite, respectively
+\'{e}tale, if and only if every original chart map \(\pi_U:Z_U\to U\)
+is finite, respectively \'{e}tale.
+\end{proposition}
+
+\begin{proof}
+Every point of \(X\) has a nonempty affine open neighborhood, so these
+base charts cover \(X\). Proposition~\ref{prop:normalization-global-chart}
+identifies the restriction of \(\mu_N\) over each such chart with the
+original \(\pi_U\), via \(e_U\). The equivalence follows from target
+locality and invariance under this isomorphism. Both \(Z_U\) and \(U\)
+are affine, so the affine inverse-image criterion gives affineness of
+\(\mu_N\). The finite and \'{e}tale assertions use the corresponding
+local criteria \cite{StacksAffineTargetLocal,StacksFiniteTargetLocal,StacksEtaleLocality}.
+\end{proof}
+
+\begin{corollary}[The global finite \'{e}tale normal-closure map]
+\label{cor:normal-closure-global-finite-etale}
+Let \(p:Y\to X\) be a dominant finite \'{e}tale morphism of integral
+schemes, and suppose every local ring of \(X\) and of \(Y\) is
+integrally closed. Let
+\[
+ N_p=\operatorname{NormalClosure}_{K(X)}
+       \bigl(K(Y)\subseteq\overline{K(Y)}\bigr)
+\]
+be the normal closure of the actual function-field extension induced by
+\(p\). Then the glued normalization map
+\(\mu_{N_p}:Z_{N_p}\to X\) is finite and \'{e}tale.
+\end{corollary}
+
+\begin{proof}
+On every nonempty affine open \(U\subseteq X\),
+Proposition~\ref{prop:finite-etale-normal-closure-chart} proves that the
+original map \(\pi_U\), constructed from the same field \(N_p\)
+and the original generic germs, is finite and \'{e}tale. Apply
+Proposition~\ref{prop:normalization-target-local}.
+\end{proof}
+
 The group \(G=\mathcal N.\mathit{galoisGroup}\), the subgroup
 \(H=\mathcal N.\mathit{intermediateFixingSubgroup}\), and the canonical deck
 action on \(Y_N\) are all constructed from the same datum.  Normality keeps the conjugate embeddings inside the same field \(N\).
@@ -5337,6 +5385,12 @@ Global inverse-image chart comparison \(e_U\) &
 \leanpath{normalizationChartPreimageIso_hom_comp_restrict}\newline
 \leanpath{normalizationChartPreimageIso_naturality}\newline
 \leanpath{Boundary/Normalization/GluedNormalizationChart.lean}\\
+Target-local transfer and global finite \'{e}taleness &
+\leanpath{gluedNormalizationToBase_property_iff}\newline
+\leanpath{gluedNormalizationToBase_isAffineHom}\newline
+\leanpath{functionFieldNormalClosure_glued_finite_etale}\newline
+\leanpath{Boundary/Normalization/GluedNormalizationProperties.lean}\newline
+\leanpath{Boundary/Normalization/FiniteEtaleGluedNormalClosure.lean}\\
 Full-visible boundary ideals &
 \leanpath{movingBoundaryIdeal_eq_top_of_surjective}\newline
 \leanpath{conjugateBoundarySeparation_of_surjective}\newline
@@ -6150,6 +6204,14 @@ principal table, grouped by mathematical layer.
 \leanpath{normalizationChartPreimageIso_inv_comp_chart};
 \leanpath{normalizationChartPreimageIso_hom_comp_restrict};
 \leanpath{normalizationChartPreimageIso_naturality};
+\normsrc{GluedNormalizationProperties.lean};
+\leanpath{nonemptyAffineChart_iSup_eq_top};
+\leanpath{gluedNormalizationToBase_property_iff};
+\leanpath{gluedNormalizationToBase_isAffineHom};
+\leanpath{gluedNormalizationToBase_isFinite_iff};
+\leanpath{gluedNormalizationToBase_isEtale_iff};
+\normsrc{FiniteEtaleGluedNormalClosure.lean};
+\leanpath{functionFieldNormalClosure_glued_finite_etale};
 \normsrc{FiniteAffineCover.lean};
 \leanpath{normalizationToIntermediate_surjective};
 \leanpath{normalizationIntermediateEquiv};

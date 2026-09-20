@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-09-19 (SP85 actual global inverse-image charts; validated).
+Assessed: 2026-09-19 (SP86 target-local properties and actual global finite-etale normal closure; validated).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -972,8 +972,9 @@ validation.
 SP83 supplies the actual restriction coherence and affine inverse-image
 comparisons in B4p below; SP84 constructs the locally directed diagram
 and global gluing in B4q. SP85 identifies the actual global inverse-image
-charts in B4r. Target-local affine/finite/etale transport and compatible
-marked/Galois maps remain next; normal stalks from smooth geometry and
+charts in B4r; SP86 proves target-local affine/finite/etale transport in
+B4s and constructs the actual finite-etale global normal-closure map.
+Compatible marked/Galois maps remain next; normal stalks from smooth geometry and
 Chow--Betti generation are separate obligations.
 
 ### B4p. Coherent affine inverse-image opens
@@ -1103,18 +1104,81 @@ static central inventory is 1020 checks, 565 examples and 912 axiom
 reports; its historical prefix is unchanged and was not re-elaborated
 in full.
 
-The next bounded consumer is target-local: use `e_U` and its structural
+The target-local consumer, supplied in B4s below, uses `e_U` and its structural
 formula to establish `IsAffineHom` for `mu_N`, then transport the
 appropriate chartwise finite/etale inputs to the global map.
-`IsAffineHom.isAffine_preimage` asks for every affine open, so this next
-proof must also handle the empty open explicitly or use an affine-basis
-cover; SP85's chart index is nonempty. The planned finite/etale transfer
-uses `IsZariskiLocalAtTarget.iff_of_openCover` and the restricted-map
-isomorphism, retaining SP81's explicit normal-stalk inputs rather than
+`IsAffineHom.isAffine_preimage` asks for every affine open; B4s uses
+the nonempty affine-basis cover, which covers any scheme, to avoid
+requiring a normalization over the empty open. The finite/etale transfer
+uses target-locality and the restricted-map isomorphism, retaining
+SP81's explicit normal-stalk inputs rather than
 silently deriving them from smoothness. Descent of the marked refinement
 and compatible Galois action follows separately.
 Global normality, normal stalks from smooth geometry and Chow--Betti
 generation are not consequences asserted by SP85.
+
+### B4s. Target-local properties and the actual global finite-etale normal closure
+
+The nonempty affine opens indexed by `NonemptyAffineChart X` have
+supremum `top` for every scheme `X`: each point has an affine
+neighborhood, and an empty scheme requires no chosen chart. This
+allows the proof to use the existing target-locality interface
+`IsZariskiLocalAtTarget.iff_of_iSup_eq_top` without constructing a
+normalization over an empty affine chart.
+
+For integral `X` and a fixed extension `N` of its original function
+field, let `pi_U : Z_U -> U` be the original map
+`normalizedModelToBase Γ(X,U) N` followed by `hU.isoSpec.inv`.
+For any target-local morphism property `P`, SP85's actual comparison
+`e_U` and exact equality `(mu_N restricted to U)e_U = pi_U` give
+`P(mu_N) iff forall U, P(pi_U)`. This is an equivalence of properties
+of the actual scheme maps, not a pointwise or section-ring surrogate.
+
+Both the source and target of `pi_U` are affine. Hence the original
+global `mu_N` is an affine morphism without a finite-degree or
+normal-base hypothesis. Finiteness and scheme etaleness each satisfy
+the same exact chartwise equivalence. These are the five public APIs
+in `GluedNormalizationProperties.lean`; the manuscript counterpart is
+`prop:normalization-target-local`.
+
+The sixth API, `functionFieldNormalClosure_glued_finite_etale` in
+`FiniteEtaleGluedNormalClosure.lean`, supplies an actual geometric
+specialization. Let `p : Y -> X` be dominant, finite and etale, with
+integral `X` and `Y`, and assume explicitly
+`forall x, IsIntegrallyClosed (X.presheaf.stalk x)` and
+`forall y, IsIntegrallyClosed (Y.presheaf.stalk y)`.
+Retain the function-field map induced by `p` and its original marked
+`N_p = normalClosure K(X) K(Y) (AlgebraicClosure K(Y))`.
+SP81 proves finite etaleness of each `pi_U`; the equivalences above
+prove `IsFinite mu_(N_p)` and `IsEtale mu_(N_p)`. This is the actual
+map of the existing glued model, not another existential cover.
+The manuscript counterpart is `cor:normal-closure-global-finite-etale`.
+
+There is no Noetherian, perfect-field or separatedness premise and no
+new source axiom or geometric input package. Stacks 01S8, 01WI and
+02GJ supply the corresponding target-locality background; the Lean
+proof uses Mathlib's locality and isomorphism-transport instances.
+Normal stalks are explicit inputs, not consequences silently inferred
+from the intended smooth projective application.
+
+SP86 is validated: all six production APIs compile cleanly in the
+2770-job scoped build. The focused suite passes 31 examples and six
+exact standard-three axiom audits without warnings. The full build
+passes 3210 jobs with only the two unchanged Challenge placeholder
+warnings. The unchanged dependency audit passes six primary contracts
+and two support reports without warnings. No fresh older neighbor-suite
+pass is claimed. The 86-page PDF (852527 bytes) has a clean final log
+and passes visual review of pages 15, 16, 65, 77, 82, 83 and 84. All
+six exact API parity checks and independent Lean--TeX review pass.
+The static central inventory is 1026 checks, 565 examples and 918 axiom
+reports; its historical prefix is unchanged and was not re-elaborated
+in full.
+
+Next descend the marked refinement to `Y` and its compatible Galois
+action. Global normality and surjectivity need their own checks;
+normal stalks from smooth geometry and Chow--Betti generation remain
+separate. Finite etaleness alone is not the Hodge class-generation
+argument.
 
 ### G0. Smooth projective setting and candidate constructions
 

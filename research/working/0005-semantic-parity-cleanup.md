@@ -141,6 +141,67 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP83 | Coherent actual affine inverse-image opens | COMPOSE / REFINE / IDENTIFY | Prove actual restriction identities and common-refinement diamonds; identify arbitrary nonempty affine subcharts with their genuine open inverse images using common principal neighborhoods. | PROVED / VALIDATED |
 | SP84 | Actual affine normalization diagram and glued scheme | INDEX / REFINE / GLUE | Prove locally directedness for the original inclusion-indexed chart diagram; construct its scheme colimit, original-chart open cover and structural map with exact chart and common-refinement identities. | PROVED / VALIDATED |
 | SP85 | Original charts as actual global inverse-image schemes | IDENTIFY / COMPARE / RESTRICT | Prove the global chart image and equality of opens; construct the actual inverse-image scheme isomorphism with both inclusion identities, original structural map to the base chart and restriction naturality. | PROVED / VALIDATED |
+| SP86 | Target-local properties and actual finite-etale global normal closure | TRANSFER / SPECIALIZE / RETAIN | Prove the nonempty affine basis covers the base, transfer target-local properties through the exact chart comparisons, derive global affineness, and prove finite etaleness for the original marked normal closure from SP81's explicit normal-stalk inputs. | PROVED / VALIDATED |
+
+SP86 (2026-09-19): **target-local properties and actual global finite-etale normal closure**.
+Five public APIs in `GluedNormalizationProperties.lean` prove the
+nonempty affine basis cover, the generic target-local property
+equivalence, global affineness, and exact finite/etale equivalences.
+One public API in `FiniteEtaleGluedNormalClosure.lean` applies the
+chartwise SP81 result to the actual marked normal closure and proves
+finite etaleness of its already constructed global map.
+
+| Lean API | Mathematical role | TeX notation |
+| --- | --- | --- |
+| `nonemptyAffineChart_iSup_eq_top` | all nonempty affine opens cover any scheme, including the empty scheme | `sup_(U in A^times(X)) U = X` |
+| `gluedNormalizationToBase_property_iff` | transfer a target-local morphism property through the exact original chart comparison | `P(mu_N) iff forall U, P(pi_U)` |
+| `gluedNormalizationToBase_isAffineHom` | the actual glued structural map is affine | `mu_N:Z_N -> X` affine |
+| `gluedNormalizationToBase_isFinite_iff` | exact finiteness comparison with original normalization chart maps | `mu_N` finite iff every `pi_U` is finite |
+| `gluedNormalizationToBase_isEtale_iff` | exact scheme-etaleness comparison with the same chart maps | `mu_N` etale iff every `pi_U` is etale |
+| `functionFieldNormalClosure_glued_finite_etale` | finite etaleness for the actual marked normal-closure global map | `mu_(N_p):Z_(N_p) -> X` finite etale |
+
+Here `P` denotes the manuscript's target-local property `mathsf P`,
+and `pi_U : Z_U -> U` is the original normalization structural map,
+not its composite with `U -> X`. The fixed comparison `e_U` identifies
+it with the restriction of `mu_N`. The local scalar helper retains
+the original germ-derived algebra map and is not another public
+mathematical object. The nonempty affine cover is generic for any
+scheme, so no empty-chart normalization is added.
+
+The generic property and affineness results require only integral `X`
+and a fixed extension of its original function field. The actual
+finite-etale specialization requires dominant finite etale
+`p : Y -> X`, integral `X` and `Y`, and explicitly integrally closed
+stalks on both schemes. Its `N_p` is the same marked normal closure
+in `AlgebraicClosure K(Y)`, with the original generic map from `p`.
+SP81 supplies the chart properties; the new target-local equivalences
+transport them. No Noetherian, perfect-field or separatedness premise,
+new source axiom, or replacement normalization carrier is introduced.
+
+The manuscript counterparts are `prop:normalization-target-local`
+and `cor:normal-closure-global-finite-etale`. Stacks 01S8, 01WI and
+02GJ provide target-locality background; they do not assert finite
+etaleness of an arbitrary field-extension normalization or discharge
+the actual specialization's normal-stalk inputs.
+
+SP86 is validated: all six production APIs compile cleanly in the
+2770-job scoped build. The focused suite passes 31 examples and six
+exact standard-three axiom audits without warnings. The full build
+passes 3210 jobs with only the two unchanged Challenge placeholder
+warnings. The unchanged dependency audit passes six primary contracts
+and two support reports without warnings. No fresh older neighbor-suite
+pass is claimed. The 86-page PDF (852527 bytes) has a clean final log
+and passes visual review of pages 15, 16, 65, 77, 82, 83 and 84. All
+six exact API parity checks and independent Lean--TeX review pass.
+The static central inventory is 1026 checks, 565 examples and 918 axiom
+reports; its historical prefix is unchanged and was not re-elaborated
+in full.
+
+Next descend the marked refinement and compatible Galois action.
+Global normality and surjectivity, normal stalks from smooth geometry
+and Chow--Betti generation remain separate. The complete queue suffix
+beginning at the SP85 block below is preserved byte-for-byte from
+`7fca0b4`.
 
 SP85 (2026-09-19): **original normalization charts as global inverse images**.
 Seven public APIs in `GluedNormalizationChart.lean` prove the exact
