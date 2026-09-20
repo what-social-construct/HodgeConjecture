@@ -1562,6 +1562,68 @@ then give \(\lambda\circ a_{N_p}(h)=\lambda\). The identity and
 multiplication laws are inherited from the same action over \(X\).
 \end{proof}
 
+\begin{proposition}[The function field and its action]
+\label{prop:normalization-function-field-comparison}
+Let \(X\) be integral and let \(N/K(X)\) be finite. The original glued
+normalization has a canonical \(K(X)\)-algebra isomorphism
+\[
+ e_N:K(Z_N)\xrightarrow{\sim}N,
+ \qquad e_N\circ\mu_N^*=\bigl(K(X)\hookrightarrow N\bigr).
+\]
+For every original nonempty affine chart \(U\), it is the composite of
+\(\jmath_U^*:K(Z_N)\xrightarrow{\sim}K(Z_U)\) with the fraction-field
+identification \(K(Z_U)\xrightarrow{\sim}N\) induced by \(T_U\subseteq N\).
+These composites are independent of \(U\). Moreover,
+\[
+ e_N\circ a_N(\sigma)^*\circ e_N^{-1}=\sigma^{-1}
+ \qquad\bigl(\sigma\in\operatorname{Aut}_{K(X)}(N)\bigr).
+\]
+Consequently the homomorphism
+\(a_N:\operatorname{Aut}_{K(X)}(N)\to\operatorname{Aut}_X(Z_N)\)
+is injective.
+\end{proposition}
+
+\begin{proof}
+Integral closure commutes with localization
+\cite{StacksIntegralClosureLocalization}. Localizing \(B_U\) at its
+nonzero elements gives \(K(X)\); since \(N/K(X)\) is finite, the integral
+closure after this localization is \(N\). Thus \(N\) is the fraction
+field of \(T_U\). Each original chart is a nonempty open subscheme of
+the integral scheme \(Z_N\), so its actual generic-stalk map identifies
+their function fields. For a restriction \(W\subseteq U\), the ring map
+\(T_U\to T_W\) retains the same element of \(N\). The resulting field
+comparisons agree on \(T_U\), hence on its fraction field. A common
+nonempty affine refinement gives independence for any two charts.
+The structural chart formula proves compatibility with \(K(X)\).
+
+On \(T_U\), the pullback of \(a_U(\sigma)\) is the restriction of
+\(\sigma^{-1}\). Equality extends to fraction fields and then, by the
+global action's exact chart formula, gives the displayed identity.
+Equality of two global actions therefore implies equality of their
+inverse field automorphisms, proving injectivity.
+\end{proof}
+
+\begin{corollary}[Preservation of the marked intermediate field]
+\label{cor:normalization-marked-function-field}
+Let \(p:Y\to X\) be finite and dominant, with \(X,Y\) integral and
+every local ring of \(Y\) integrally closed. For the original normal
+closure and its marked refinement \(\lambda:Z_{N_p}\to Y\),
+\[
+ e_{N_p}\circ\lambda^*=\iota:K(Y)\hookrightarrow N_p.
+\]
+\end{corollary}
+
+\begin{proof}
+On a nonempty affine chart, the original normalization isomorphism
+identifies the inverse image in \(Y\) with the spectrum of
+\(\operatorname{IntCl}_{B_U}(K(Y))\). Its function-field map preserves
+the original generic germs. The refinement's ring map is induced by
+the marked embedding \(\iota\), so the required equality holds on
+this integral closure. It extends to its fraction field \(K(Y)\).
+The exact global refinement formula and chart independence give the
+assertion for the original \(\lambda\) and \(e_{N_p}\).
+\end{proof}
+
 The group \(G=\mathcal N.\mathit{galoisGroup}\), the subgroup
 \(H=\mathcal N.\mathit{intermediateFixingSubgroup}\), and the canonical deck
 action on \(Y_N\) are all constructed from the same datum.  Normality keeps the conjugate embeddings inside the same field \(N\).
@@ -5669,6 +5731,20 @@ Marked subgroup action &
 \leanpath{gluedNormalClosureMarkedDeckAction}\newline
 \leanpath{gluedNormalClosureMarkedDeckAction_hom}\newline
 \leanpath{Boundary/Normalization/GluedNormalClosureAction.lean}\\
+Function field \(e_N:K(Z_N)\simeq_{K(X)}N\) &
+\leanpath{gluedNormalizationFunctionFieldEquivAt_eq}\newline
+\leanpath{gluedNormalizationFunctionFieldEquivAt_toBase}\newline
+\leanpath{gluedNormalizationFunctionFieldEquiv}\newline
+\leanpath{Boundary/Normalization/GluedNormalizationFunctionField.lean}\\
+Inverse pullback and faithful action &
+\leanpath{gluedNormalizationFunctionFieldEquiv_automorphism}\newline
+\leanpath{gluedNormalizationDeckAction_injective}\newline
+\leanpath{Boundary/Normalization/}\newline
+\leanpath{GluedNormalizationFunctionFieldAction.lean}\\
+Marked generic comparison \(e_{N_p}\lambda^*=\iota\) &
+\leanpath{gluedNormalClosureFunctionFieldEquivAt_toCover}\newline
+\leanpath{gluedNormalClosureFunctionFieldEquiv_toCover}\newline
+\leanpath{Boundary/Normalization/GluedNormalClosureFunctionField.lean}\\
 Full-visible boundary ideals &
 \leanpath{movingBoundaryIdeal_eq_top_of_surjective}\newline
 \leanpath{conjugateBoundarySeparation_of_surjective}\newline
@@ -6529,6 +6605,29 @@ principal table, grouped by mathematical layer.
 \leanpath{gluedNormalizationAutomorphism_comp_toCover};
 \leanpath{gluedNormalClosureMarkedDeckAction};
 \leanpath{gluedNormalClosureMarkedDeckAction_hom};
+\leanpath{HodgeConjecture/Cycles/FunctionFieldComparison.lean};
+\leanpath{openImmersion_isDominant_of_nonempty};
+\leanpath{functionFieldMapOfDominant_spec_algebraMap};
+\leanpath{functionFieldMapOfDominant_fromSpec_germ};
+\leanpath{specMap_isDominant_of_injective};
+\normsrc{GluedNormalizationFunctionField.lean};
+\leanpath{affineNormalizationFunctionFieldEquiv};
+\leanpath{affineNormalizationFunctionFieldEquiv_algebraMap};
+\leanpath{gluedNormalizationFunctionFieldEquivAt};
+\leanpath{gluedNormalizationFunctionFieldEquivAt_apply_chart};
+\leanpath{gluedNormalizationFunctionFieldEquivAt_restriction};
+\leanpath{gluedNormalizationFunctionFieldEquivAt_eq};
+\leanpath{gluedNormalizationFunctionFieldEquivAt_toBase};
+\leanpath{gluedNormalizationFunctionFieldEquiv};
+\leanpath{gluedNormalizationFunctionFieldEquiv_apply_chart};
+\normsrc{GluedNormalizationFunctionFieldAction.lean};
+\leanpath{affineNormalizationFunctionFieldEquiv_automorphism};
+\leanpath{gluedNormalizationFunctionFieldEquivAt_automorphism};
+\leanpath{gluedNormalizationFunctionFieldEquiv_automorphism};
+\leanpath{gluedNormalizationDeckAction_injective};
+\normsrc{GluedNormalClosureFunctionField.lean};
+\leanpath{gluedNormalClosureFunctionFieldEquivAt_toCover};
+\leanpath{gluedNormalClosureFunctionFieldEquiv_toCover};
 \normsrc{FiniteAffineCover.lean};
 \leanpath{normalizationToIntermediate_surjective};
 \leanpath{normalizationIntermediateEquiv};

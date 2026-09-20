@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-09-20 (SP92 integrality of the original glued normalization;
+Last reviewed: 2026-09-20 (SP93 marked function-field comparison;
 validated; earlier checkpoint records retain
 their original validation scope).
 
@@ -918,9 +918,46 @@ parity checks and independent Lean--TeX review pass. The static central
 inventory is 1058 checks, 565 examples and 950 axiom reports; its
 historical prefix is unchanged and was not re-elaborated in full.
 
-**Next bounded bridge:** marked function-field
-comparison. Faithfulness, fiber
-comparison and Galois-cover or torsor identification remain separate.
+**SP93: marked function-field comparison and action faithfulness.**
+The checkpoint has 19 public APIs across four production modules.
+For integral `X` and finite `N/K(X)`, the original affine integral
+closures have fraction field `N`. Actual open-immersion generic-stalk
+maps give a chart-independent comparison `e : K(Z_N) ≃ N`, preserving
+the existing structural field embedding. The existing inverse-ring
+action has pullback formula `e(a_sigma^* b) = sigma^{-1}(e(b))`;
+surjectivity of `e` gives faithfulness. This checkpoint does not identify
+`K(Z_N)` with arbitrary transcendental ambient extensions.
+
+For the original marked normal closure of finite dominant `p : Y -> X`,
+integral `X/Y` and normal stalks of `Y` suffice to compare the actual
+`lambda` pullback with the original `D.embedding`. No normality of `X`,
+etaleness, separability or Noetherianity is used. The new modules are
+`GluedNormalizationFunctionField.lean`,
+`GluedNormalizationFunctionFieldAction.lean` and
+`GluedNormalClosureFunctionField.lean`, with generic-stalk support in
+`Cycles/FunctionFieldComparison.lean`. The manuscript counterparts are
+`prop:normalization-function-field-comparison` and
+`cor:normalization-marked-function-field`.
+
+SP93 is validated: all 19 production APIs compile in the 2779-job
+scoped build. The focused suite passes 35 examples, 19 declaration checks
+and 19 axiom audits; every observed axiom set is exactly the standard
+three, with no warnings. The full build passes 3221 jobs with only the
+two unchanged Challenge placeholder warnings at lines 33 and 46 and
+no new production warnings. The unchanged dependency audit passes six
+primary contracts and two support reports without warnings. Fresh
+SP92 and SP90 focused reruns pass 24 examples/four audits and 30
+examples/15 audits respectively, all with exactly the standard three
+axioms and no warnings; no other fresh neighbor-suite pass is claimed.
+The 90-page PDF (874726 bytes) has a clean final log and passes visual
+review of pages 18, 19, 69, 81 and 82. All 19 API parity checks and
+independent Lean--TeX scope review pass. The static central inventory
+is 1077 checks, 565 examples and 969 axiom reports; its historical
+prefix is unchanged and was not re-elaborated in full.
+
+**Next bounded bridge:** reconstruct arbitrary deck transformations and
+compare the full deck group. Fiber comparison and Galois-cover or torsor
+identification remain separate.
 The fixing-subgroup result is sufficient for preservation of `lambda`,
 not an equality with its full stabilizer. Normal
 stalks from smooth geometry and Chow--Betti generation are separate. The older

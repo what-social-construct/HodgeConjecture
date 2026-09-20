@@ -1207,3 +1207,54 @@ Next address marked function-field comparison. Faithfulness,
 fiber/torsor comparison, normal stalks from smooth geometry and
 Chow--Betti generation remain separate. The complete audit prefix
 through SP91 remains byte-identical to `44d8fec`.
+
+## 29. SP93 follow-up: marked function-field comparison and action faithfulness
+
+The checkpoint has 19 public APIs across four production modules.
+For integral `X` and finite `N/K(X)`, the original normalization chart
+coordinate rings have fraction field `N`. Compose their canonical
+fraction-field equivalences with the actual chart generic-stalk
+isomorphisms to compare the intrinsic `K(Z_N)` with `N`. Restriction
+squares and common affine refinements prove chart independence; the
+actual structural generic-stalk map is preserved. The finite-extension
+hypothesis belongs to this comparison, not to SP91/SP92's broader
+normality and integrality statements.
+
+The original action was built from inverse ring automorphisms, so its
+pullback comparison is `e(a_sigma^* b) = sigma^{-1}(e(b))`. Surjectivity
+of `e` yields faithfulness of this same action. No reconstruction of
+arbitrary deck transformations, full deck-group equivalence, fiber or
+torsor assertion is included.
+
+For the original `N_p` of finite dominant `p : Y -> X`, integral
+`X/Y` and normal stalks of `Y` suffice for
+`e(lambda^* c) = (functionFieldNormalClosureData p).embedding c`.
+The proof cancels the original affine-preimage normalization
+isomorphism and uses the exact marked chart formula. No normality of
+`X`, etaleness, separability, Noetherianity, replacement field or new
+marking is supplied. The manuscript counterparts are
+`prop:normalization-function-field-comparison` and
+`cor:normalization-marked-function-field`. Existing Stacks Tag 0307
+supports only the fraction-field reduction, not a deck-group comparison.
+
+SP93 is validated: all 19 production APIs compile in the 2779-job
+scoped build. The focused suite passes 35 examples, 19 declaration checks
+and 19 axiom audits; every observed axiom set is exactly the standard
+three, with no warnings. The full build passes 3221 jobs with only the
+two unchanged Challenge placeholder warnings at lines 33 and 46 and
+no new production warnings. The unchanged dependency audit passes six
+primary contracts and two support reports without warnings. Fresh
+SP92 and SP90 focused reruns pass 24 examples/four audits and 30
+examples/15 audits respectively, all with exactly the standard three
+axioms and no warnings; no other fresh neighbor-suite pass is claimed.
+The 90-page PDF (874726 bytes) has a clean final log and passes visual
+review of pages 18, 19, 69, 81 and 82. All 19 API parity checks and
+independent Lean--TeX scope review pass. The static central inventory
+is 1077 checks, 565 examples and 969 axiom reports; its historical
+prefix is unchanged and was not re-elaborated in full.
+
+Next reconstruct arbitrary deck transformations and compare the full
+deck group. Fiber/torsor comparison, the full stabilizer of `lambda`,
+normal stalks from smooth geometry and Chow--Betti generation remain
+separate. The complete audit prefix through SP92 remains byte-identical
+to `cffbb9e`.

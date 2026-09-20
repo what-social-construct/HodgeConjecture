@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-20 (SP92 integrality of the original glued normalization,
+Last audited: 2026-09-20 (SP93 marked function-field comparison,
 validated; earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,48 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Marked function-field comparison and action faithfulness (A11by / SP93)
+
+Status: `FORMAL`; all 19 public APIs compile and the checkpoint is
+validated. The checkpoint has 19 public APIs across four production
+modules. For integral `X` and finite `N/K(X)`, the comparison of
+the intrinsic function field of the original glued normalization with
+`N` is constructed through the original nonempty affine charts and is
+chart-independent. It preserves the actual structural function-field
+map. The original inverse-ring action has comparison
+`e(a_sigma^* b) = sigma^{-1}(e(b))`; this yields faithfulness of that
+action. No ambient-field identification for arbitrary `N/K(X)` is claimed.
+
+For finite dominant `p : Y -> X`, integral `X/Y` and normal stalks
+of `Y`, the marked comparison is `e(lambda^* c) = D.embedding c`
+for the original `functionFieldNormalClosureData p`. It keeps the
+actual refinement, affine-preimage isomorphism, generic germs and
+normal-closure marking. No normality of `X`, etaleness, separability
+or Noetherianity is added. The manuscript counterparts are
+`prop:normalization-function-field-comparison` and
+`cor:normalization-marked-function-field`.
+
+SP93 is validated: all 19 production APIs compile in the 2779-job
+scoped build. The focused suite passes 35 examples, 19 declaration checks
+and 19 axiom audits; every observed axiom set is exactly the standard
+three, with no warnings. The full build passes 3221 jobs with only the
+two unchanged Challenge placeholder warnings at lines 33 and 46 and
+no new production warnings. The unchanged dependency audit passes six
+primary contracts and two support reports without warnings. Fresh
+SP92 and SP90 focused reruns pass 24 examples/four audits and 30
+examples/15 audits respectively, all with exactly the standard three
+axioms and no warnings; no other fresh neighbor-suite pass is claimed.
+The 90-page PDF (874726 bytes) has a clean final log and passes visual
+review of pages 18, 19, 69, 81 and 82. All 19 API parity checks and
+independent Lean--TeX scope review pass. The static central inventory
+is 1077 checks, 565 examples and 969 axiom reports; its historical
+prefix is unchanged and was not re-elaborated in full.
+
+Full deck-group reconstruction/equivalence, fiber/torsor comparison and
+a full-stabilizer characterization remain separate. Normal stalks from
+smooth geometry and Chow--Betti generation remain separate; this is not
+a new Hodge case.
 
 ## Integrality of the original glued normalization (A11bx / SP92)
 

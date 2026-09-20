@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-09-20 (SP92 integrality of the original glued normalization; validated).
+Assessed: 2026-09-20 (SP93 marked function-field comparison; validated).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -978,7 +978,8 @@ SP87 descends the original marked refinement in B4t, and SP88 proves
 its finite etaleness in B4u. SP89 proves both original global maps
 surjective in B4v; SP90 descends the compatible actions in B4w.
 SP91 proves normal local rings of the same scheme in B4x; SP92 proves
-global integrality in B4y. Marked function-field comparison is next;
+global integrality in B4y. SP93's marked function-field comparison and
+action faithfulness are proved and validated in B4z;
 normal stalks from smooth geometry and
 Chow--Betti generation are separate obligations.
 
@@ -1477,6 +1478,56 @@ historical prefix is unchanged and was not re-elaborated in full.
 Next address marked function-field comparison. Faithfulness,
 fiber/torsor comparison, normal stalks from smooth geometry and
 Chow--Betti generation remain separate. No new Hodge case is asserted.
+
+### B4z. Marked function-field comparison and action faithfulness
+
+The checkpoint has 19 public APIs across four production modules.
+For integral `X` and finite `N/K(X)`, localize each original
+`T_U = IntCl_{Γ(X,U)}(N)` to identify its fraction field with `N`.
+Compose that canonical fraction-field equivalence with the actual
+generic-stalk isomorphism of the original chart open immersion.
+Restriction compatibility and common affine refinements make the
+resulting `e : K(Z_N) ≃ N` independent of the chart. The actual
+structural map is retained: `e(mu^* a) = a` through the supplied
+`K(X)`-algebra structure on `N`.
+
+The original action was built from inverse ring automorphisms.
+Accordingly its comparison is `e(a_sigma^* b) = sigma^{-1}(e(b))`,
+not the direct `sigma` formula. Since `e` is onto, this also proves
+faithfulness of the existing action. The finite-extension hypothesis
+is part of this checkpoint; earlier arbitrary-extension normality and
+integrality do not assert that the ambient field equals `K(Z_N)`.
+
+For finite dominant `p : Y -> X` with integral `X/Y` and normal
+stalks of `Y`, use the original `N_p` and `functionFieldNormalClosureData p`.
+The canonical affine-preimage normalization isomorphism and original
+marked chart maps give `e(lambda^* c) = D.embedding c`. No normality
+of `X`, etaleness, separability or Noetherianity is needed. No new field,
+marking, glued carrier or geometric input package is substituted.
+The manuscript counterparts are
+`prop:normalization-function-field-comparison` and
+`cor:normalization-marked-function-field`.
+
+SP93 is validated: all 19 production APIs compile in the 2779-job
+scoped build. The focused suite passes 35 examples, 19 declaration checks
+and 19 axiom audits; every observed axiom set is exactly the standard
+three, with no warnings. The full build passes 3221 jobs with only the
+two unchanged Challenge placeholder warnings at lines 33 and 46 and
+no new production warnings. The unchanged dependency audit passes six
+primary contracts and two support reports without warnings. Fresh
+SP92 and SP90 focused reruns pass 24 examples/four audits and 30
+examples/15 audits respectively, all with exactly the standard three
+axioms and no warnings; no other fresh neighbor-suite pass is claimed.
+The 90-page PDF (874726 bytes) has a clean final log and passes visual
+review of pages 18, 19, 69, 81 and 82. All 19 API parity checks and
+independent Lean--TeX scope review pass. The static central inventory
+is 1077 checks, 565 examples and 969 axiom reports; its historical
+prefix is unchanged and was not re-elaborated in full.
+
+Next reconstruct arbitrary deck transformations and compare the full
+deck group. Fiber/torsor comparison, a characterization of the full
+stabilizer of `lambda`, normal stalks from smooth geometry and Chow--Betti
+generation remain separate. No new Hodge case is asserted.
 
 ### G0. Smooth projective setting and candidate constructions
 

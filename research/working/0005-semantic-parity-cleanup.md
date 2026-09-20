@@ -148,6 +148,67 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP90 | Compatible global normalization and marked-subgroup actions | COMMUTE / DESCEND / PRESERVE | Glue the original inverse-ring chart automorphisms to the same global normalization and prove that the subgroup fixing the marked intermediate field preserves the original refinement, with the same underlying automorphisms. | PROVED / VALIDATED |
 | SP91 | Normal local rings of the original glued normalization | CLOSE / LOCALIZE / TRANSFER | Prove integral closedness of the original coordinate rings and affine stalks, then transfer domain and integral-closedness properties through the original chart open immersions to every global local ring. | PROVED / VALIDATED |
 | SP92 | Integrality of the original glued normalization | OVERLAP / REDUCE / UNITE | Prove that original chart images intersect, transfer reducedness from the proved domain stalks, and derive irreducibility and integrality of the same global scheme. | PROVED / VALIDATED |
+| SP93 | Marked function-field comparison and action faithfulness | IDENTIFY / COMPARE / RETAIN | Compare the original generic stalk with the finite ambient extension independently of charts; preserve the base map and marked refinement, prove inverse-pullback action compatibility and faithfulness. | PROVED / VALIDATED |
+
+SP93 (2026-09-20): **marked function-field comparison and action faithfulness**.
+The 19 public APIs are in `Cycles/FunctionFieldComparison.lean`,
+`GluedNormalizationFunctionField.lean`, `GluedNormalizationFunctionFieldAction.lean`
+and `GluedNormalClosureFunctionField.lean`. The manuscript counterparts are
+`prop:normalization-function-field-comparison` and
+`cor:normalization-marked-function-field`.
+
+| Lean API | Mathematical role | TeX notation |
+| --- | --- | --- |
+| `openImmersion_isDominant_of_nonempty` | nonempty open immersion into an irreducible target is dominant | prose only |
+| `functionFieldMapOfDominant_spec_algebraMap` | actual generic pullback extends the original affine ring map | prose only |
+| `functionFieldMapOfDominant_fromSpec_germ` | actual chart pullback identifies generic germs with affine fractions | prose only |
+| `specMap_isDominant_of_injective` | injective ring map supplies spectrum-map dominance | prose only |
+| `affineNormalizationFunctionFieldEquiv` | canonical fraction-field identification of the original normalization chart | `K(Z_U) ≃ N` |
+| `affineNormalizationFunctionFieldEquiv_algebraMap` | integral coordinates retain their ambient value | prose only |
+| `gluedNormalizationFunctionFieldEquivAt` | chart generic pullback followed by affine fraction comparison | chart computation of `e_N` |
+| `gluedNormalizationFunctionFieldEquivAt_apply_chart` | exact factorization through the original chart pullback | prose only |
+| `gluedNormalizationFunctionFieldEquivAt_restriction` | comparison unchanged under actual affine restriction | prose only |
+| `gluedNormalizationFunctionFieldEquivAt_eq` | comparison independent of any two original charts | prose only |
+| `gluedNormalizationFunctionFieldEquivAt_toBase` | comparison preserves the actual structural field embedding | `e_N mu_N^*` is the original inclusion |
+| `gluedNormalizationFunctionFieldEquiv` | canonical algebra equivalence over the actual structural field map | `e_N : K(Z_N) ≃_{K(X)} N` |
+| `gluedNormalizationFunctionFieldEquiv_apply_chart` | canonical equivalence agrees with every chart computation | prose only |
+| `affineNormalizationFunctionFieldEquiv_automorphism` | original chart pullback is the inverse field automorphism | prose only |
+| `gluedNormalizationFunctionFieldEquivAt_automorphism` | inverse pullback through every original chart | prose only |
+| `gluedNormalizationFunctionFieldEquiv_automorphism` | canonical equivalence intertwines pullback and inverse action | `e_N a_N(sigma)^* e_N^{-1} = sigma^{-1}` |
+| `gluedNormalizationDeckAction_injective` | existing global deck action is faithful | `a_N` is injective |
+| `gluedNormalClosureFunctionFieldEquivAt_toCover` | chart comparison retains the original marked embedding | prose only |
+| `gluedNormalClosureFunctionFieldEquiv_toCover` | canonical comparison preserves the actual marked refinement | `e_{N_p} lambda^* = iota` |
+
+For integral `X` and finite `N/K(X)`, retain the actual generic-stalk
+map of every original chart and the canonical fraction-field equivalence.
+The comparison `e : K(Z_N) ≃ N` is chart-independent, preserves
+`mu^*`, and satisfies `e(a_sigma^* b) = sigma^{-1}(e(b))` for the
+existing inverse-ring action. Faithfulness follows from this comparison.
+The original marked specialization uses finite dominant `p`, integral
+`X/Y` and normal stalks of `Y` only, and gives
+`e(lambda^* c) = (functionFieldNormalClosureData p).embedding c`.
+No normality of `X`, etaleness, separability or Noetherianity is added.
+
+SP93 is validated: all 19 production APIs compile in the 2779-job
+scoped build. The focused suite passes 35 examples, 19 declaration checks
+and 19 axiom audits; every observed axiom set is exactly the standard
+three, with no warnings. The full build passes 3221 jobs with only the
+two unchanged Challenge placeholder warnings at lines 33 and 46 and
+no new production warnings. The unchanged dependency audit passes six
+primary contracts and two support reports without warnings. Fresh
+SP92 and SP90 focused reruns pass 24 examples/four audits and 30
+examples/15 audits respectively, all with exactly the standard three
+axioms and no warnings; no other fresh neighbor-suite pass is claimed.
+The 90-page PDF (874726 bytes) has a clean final log and passes visual
+review of pages 18, 19, 69, 81 and 82. All 19 API parity checks and
+independent Lean--TeX scope review pass. The static central inventory
+is 1077 checks, 565 examples and 969 axiom reports; its historical
+prefix is unchanged and was not re-elaborated in full.
+
+Next address full deck-group reconstruction and comparison; fiber/torsor
+comparison, the full stabilizer of `lambda`, normal stalks from smooth
+geometry and Chow--Betti generation remain separate. The complete SP92
+dated record and all following history remain byte-identical to `cffbb9e`.
 
 SP92 (2026-09-20): **integrality of the original glued normalization**.
 Four APIs in `GluedNormalizationIntegrality.lean` supply integral

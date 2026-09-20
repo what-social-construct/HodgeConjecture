@@ -43,6 +43,9 @@ import HodgeConjecture.Boundary.Normalization.FiniteEtaleGluedRefinement
 import HodgeConjecture.Boundary.Normalization.GluedNormalizationSurjectivity
 import HodgeConjecture.Boundary.Normalization.GluedNormalizationAction
 import HodgeConjecture.Boundary.Normalization.GluedNormalClosureAction
+import HodgeConjecture.Boundary.Normalization.GluedNormalizationFunctionField
+import HodgeConjecture.Boundary.Normalization.GluedNormalizationFunctionFieldAction
+import HodgeConjecture.Boundary.Normalization.GluedNormalClosureFunctionField
 import HodgeConjecture.Boundary.Normalization.DeckAction
 import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
 import HodgeConjecture.Boundary.Normalization.ConjugateNormalization
@@ -200,6 +203,13 @@ maps and descends to the same glued normalization over the base. Its exact
 chart formulas prove the identity and multiplication laws. The subgroup
 fixing the original marked intermediate field preserves the refinement to
 the cover; its deck action has the same underlying global automorphisms.
+
+For a finite ambient extension, the actual generic-stalk maps identify the
+function field of the same glued scheme with that extension. The comparison
+is independent of the original chart and preserves the structural embedding.
+The global action pulls back to the inverse field automorphism, proving
+faithfulness. For the marked normal closure, the refinement's actual generic
+pullback is the original marked intermediate-field embedding.
 
 The broad normalization-purity/global-triviality prototype is preserved in
 `research/archive/legacy-lean/`, not as an importable library module.

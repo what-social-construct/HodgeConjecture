@@ -17,9 +17,61 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-09-20 (SP92 irreducible-chart and
-reduced-plus-irreducible integrality criteria; validated;
+Last source/interface review: 2026-09-20 (SP93 marked function-field
+comparison; validated;
 earlier source records retain their original validation scope).
+
+### Marked function-field comparison and action faithfulness (SP93, 2026-09-20)
+
+The existing citation [Stacks, Lemma 10.36.11, Tag
+0307](https://stacks.math.columbia.edu/tag/0307), with bibliography key
+`StacksIntegralClosureLocalization`, supports the fraction-field
+reduction only: integral closure commutes with localization, and a
+finite ambient extension of the base fraction field is algebraic.
+Consequently the original integral-closure chart has the ambient field
+as its fraction field. This citation is not a source for the chart
+gluing, action faithfulness, or a full deck-group or fiber comparison.
+The primary page was rechecked live for SP93. The manuscript reuses
+this existing bibliography entry; no new literature premise is introduced.
+
+Lean uses `integralClosure.isFractionRing_of_finite_extension` and
+`IsLocalization.algEquiv` on the original coordinate rings, followed
+by actual open-immersion generic-stalk maps. Generic `Spec.map` and
+affine-chart germ formulas identify the ring coordinates under pullback;
+fraction-field uniqueness and actual chart squares yield chart
+independence, preservation of the base map and the inverse-pullback
+action formula. Faithfulness follows from surjectivity of the field
+equivalence, without importing a deck-group reconstruction theorem.
+The checkpoint has 19 public APIs across four production modules.
+
+The marked theorem cancels the existing canonical affine-preimage
+normalization isomorphism and retains exactly `D.embedding` through
+the defining integral-coordinate formula of `normalizationMap`.
+Finite dominance, integral `X/Y` and normal
+stalks of `Y` suffice; no normality of `X`, etaleness, separability or
+Noetherianity is added. The manuscript counterparts are
+`prop:normalization-function-field-comparison` and
+`cor:normalization-marked-function-field`. No source axiom is introduced.
+
+SP93 is validated: all 19 production APIs compile in the 2779-job
+scoped build. The focused suite passes 35 examples, 19 declaration checks
+and 19 axiom audits; every observed axiom set is exactly the standard
+three, with no warnings. The full build passes 3221 jobs with only the
+two unchanged Challenge placeholder warnings at lines 33 and 46 and
+no new production warnings. The unchanged dependency audit passes six
+primary contracts and two support reports without warnings. Fresh
+SP92 and SP90 focused reruns pass 24 examples/four audits and 30
+examples/15 audits respectively, all with exactly the standard three
+axioms and no warnings; no other fresh neighbor-suite pass is claimed.
+The 90-page PDF (874726 bytes) has a clean final log and passes visual
+review of pages 18, 19, 69, 81 and 82. All 19 API parity checks and
+independent Lean--TeX scope review pass. The static central inventory
+is 1077 checks, 565 examples and 969 axiom reports; its historical
+prefix is unchanged and was not re-elaborated in full.
+
+Next address reconstruction of arbitrary deck transformations and full
+deck-group comparison; fibers, torsors, normal stalks from smooth geometry
+and Chow--Betti generation remain separate.
 
 ### Integrality of the original glued normalization (SP92, 2026-09-20)
 
