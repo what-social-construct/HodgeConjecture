@@ -1236,6 +1236,34 @@ in the colimit. Its universal property descends \(c_N\) to \(\mu_N\)
 and determines morphisms by their chart restrictions.
 \end{proof}
 
+\begin{proposition}[Normality of the glued normalization]
+\label{prop:normalization-global-normal}
+Let \(X\) be integral and fix any field extension \(K(X)\to N\).
+The original glued scheme \(Z_N\) is normal: every local ring
+\(\mathcal O_{Z_N,z}\) is an integrally closed domain.
+More explicitly, choose an original chart \(\jmath_U:Z_U\to Z_N\)
+and \(z_U\in Z_U\) with \(\jmath_U(z_U)=z\). Writing
+\(T_U=\operatorname{IntCl}_{B_U}(N)\) and
+\(\mathfrak p\in\Spec T_U\) for the prime corresponding to \(z_U\),
+the actual chart stalk map gives
+\[
+ \mathcal O_{Z_N,z}\xrightarrow{\ \sim\ }
+ \mathcal O_{Z_U,z_U}\xrightarrow{\ \sim\ }(T_U)_{\mathfrak p}.
+\]
+\end{proposition}
+
+\begin{proof}
+Since \(N\) is a field, its integral closure of \(B_U\) is a normal
+domain~\cite{StacksIntegralClosureNormal}. The prime localization
+\((T_U)_{\mathfrak p}\) is again a normal
+domain~\cite{StacksNormalLocalization}.
+Proposition~\ref{prop:normalization-gluing} supplies \(U\) and \(z_U\)
+through the original open cover. The chart inclusion is an open
+immersion, so its stalk map is an isomorphism. Composing with the
+canonical affine stalk--localization comparison gives the displayed
+isomorphisms and the asserted local-ring properties.
+\end{proof}
+
 \begin{proposition}[The original charts as global inverse images]
 \label{prop:normalization-global-chart}
 In the setting of Proposition~\ref{prop:normalization-gluing}, for every
@@ -5557,6 +5585,12 @@ Glued normalization \(Z_N,\jmath_U,\mu_N\) &
 \leanpath{normalizationChartToGlued_eq_iff}\newline
 \leanpath{Boundary/Normalization/AffineNormalizationDiagram.lean}\newline
 \leanpath{Boundary/Normalization/GluedNormalization.lean}\\
+Normal local rings of \(Z_N\) &
+\leanpath{normalizedCoordinateRing_isIntegrallyClosed}\newline
+\leanpath{normalizedAffineModel_stalk_isIntegrallyClosed}\newline
+\leanpath{gluedNormalizationModel_stalk_isDomain}\newline
+\leanpath{gluedNormalizationModel_stalk_isIntegrallyClosed}\newline
+\leanpath{Boundary/Normalization/GluedNormalizationNormality.lean}\\
 Global inverse-image chart comparison \(e_U\) &
 \leanpath{normalizationChartToGlued_range}\newline
 \leanpath{normalizationChartPreimageIso}\newline
@@ -6408,6 +6442,11 @@ principal table, grouped by mathematical layer.
 \leanpath{normalizationChartToGlued_naturality};
 \leanpath{normalizationChartToGlued_eq_iff};
 \leanpath{gluedNormalization_hom_ext};
+\normsrc{GluedNormalizationNormality.lean};
+\leanpath{normalizedCoordinateRing_isIntegrallyClosed};
+\leanpath{normalizedAffineModel_stalk_isIntegrallyClosed};
+\leanpath{gluedNormalizationModel_stalk_isDomain};
+\leanpath{gluedNormalizationModel_stalk_isIntegrallyClosed};
 \normsrc{GluedNormalizationChart.lean};
 \leanpath{normalizationChartToGlued_range};
 \leanpath{normalizationChartToGlued_opensRange};

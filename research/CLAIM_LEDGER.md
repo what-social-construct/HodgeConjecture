@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-20 (SP90 compatible global normalization and marked-subgroup actions,
+Last audited: 2026-09-20 (SP91 normal local rings of the original glued normalization,
 validated; earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,50 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Normal local rings of the original glued normalization (A11bw / SP91)
+
+Status: `FORMAL`; all four public APIs compile and the checkpoint is
+validated. Four public APIs in
+`Boundary/Normalization/GluedNormalizationNormality.lean` prove normality
+of the same glued scheme by proving that every actual local ring is a
+domain and integrally closed. The affine coordinate-ring theorem needs
+only a commutative ring `B`, a field `N`, and an algebra map `B -> N`;
+neither injectivity nor normality of `B` is assumed. Integral closure
+in `N` is integrally closed in `N`, and the injective map from its own
+fraction field to `N` gives integral closedness in that fraction field.
+It is not asserted that this embedding is onto.
+
+Localization and the actual spectrum stalk isomorphisms give the affine
+stalk result. The original chart open immersions and covering property
+then transfer domain and integral-closedness properties to every stalk
+of `gluedNormalizationModel X N`. These global assertions need integral
+`X` and any extension `N/K(X)`, without algebraicity, finite degree,
+separability, normality of `X`, Noetherianity, or separatedness. The
+original scheme, chart carriers, generic germs, and marked fields remain
+fixed. The manuscript counterpart is `prop:normalization-global-normal`.
+
+Normality here is the pair of actual local-ring properties. No scheme
+`IsNormal` class or global `IsIntegral` instance is introduced. For the
+actual `N_p`, the specialization needs no normal-stalk hypotheses on
+`X` or `Y`; the existing marked refinement still has its own hypotheses.
+
+SP91 is validated: all four production APIs compile in the 2743-job
+scoped build. The focused suite passes 24 examples and four exact
+standard-three axiom audits without warnings. The full build passes
+3216 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings; no fresh neighbor-suite pass is claimed.
+The 89-page PDF (866193 bytes) has a clean final log and passes visual
+review of pages 15, 16, 67, 68 and 80. All four exact API parity checks
+and independent Lean--TeX review pass. The static central inventory is
+1054 checks, 565 examples and 946 axiom reports; its historical prefix
+is unchanged and was not re-elaborated in full.
+
+Next: global integrality and the marked function-field comparison.
+Faithfulness, fiber comparison and a torsor or Galois-cover identification
+remain separate, as do normal stalks from smooth geometry and Chow--Betti
+generation. Normalization normality does not prove a new Hodge case.
 
 ## Compatible global normalization and marked-subgroup actions (A11bv / SP90)
 

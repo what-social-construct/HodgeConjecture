@@ -146,6 +146,51 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP88 | Finite etaleness of the actual global marked refinement | CANCEL / TRANSFER / RETAIN | Prove finite cancellation for a separated second morphism and use the exact global triangle with SP86 to prove the original marked refinement finite etale under the actual finite-etale and explicit normal-stalk inputs. | PROVED / VALIDATED |
 | SP89 | Surjectivity of the original global normalization and marked refinement | LIE OVER / LIFT / RETAIN | Prove global normalization surjectivity for any original function-field extension and directly lift points through the existing marked chart refinements under finite dominance and normal stalks of `Y` only. | PROVED / VALIDATED |
 | SP90 | Compatible global normalization and marked-subgroup actions | COMMUTE / DESCEND / PRESERVE | Glue the original inverse-ring chart automorphisms to the same global normalization and prove that the subgroup fixing the marked intermediate field preserves the original refinement, with the same underlying automorphisms. | PROVED / VALIDATED |
+| SP91 | Normal local rings of the original glued normalization | CLOSE / LOCALIZE / TRANSFER | Prove integral closedness of the original coordinate rings and affine stalks, then transfer domain and integral-closedness properties through the original chart open immersions to every global local ring. | PROVED / VALIDATED |
+
+SP91 (2026-09-20): **normal local rings of the original glued normalization**.
+Four public APIs in `GluedNormalizationNormality.lean` prove normality
+of the same scheme through its actual local rings. The manuscript
+counterpart is `prop:normalization-global-normal`.
+
+| Lean API | Mathematical role | TeX notation |
+| --- | --- | --- |
+| `normalizedCoordinateRing_isIntegrallyClosed` | integral closure in a field is integrally closed in its own fraction field | `IntCl_B(N)` is integrally closed |
+| `normalizedAffineModel_stalk_isIntegrallyClosed` | prime-localized original affine stalks are integrally closed | `O_(Spec IntCl_B(N),z)` is integrally closed |
+| `gluedNormalizationModel_stalk_isDomain` | original chart stalk isomorphisms transfer the domain property globally | `O_(Z_N,z)` is a domain |
+| `gluedNormalizationModel_stalk_isIntegrallyClosed` | original chart stalk isomorphisms transfer integral closedness globally | `O_(Z_N,z)` is integrally closed |
+
+The affine APIs require only a commutative `B`, a field `N`, and an
+algebra map `B -> N`. The global APIs require integral `X` and any
+extension `N/K(X)`, without algebraicity, finite degree, separability,
+normality of `X`, Noetherianity or separatedness. Normality combines
+the last two local-ring properties; it introduces no new scheme class
+or geometric carrier. The fraction field of the integral closure
+embeds into `N` and is not claimed to equal `N`.
+
+The proof uses original spectrum stalk comparisons and chart
+open-immersion stalk isomorphisms. Original germs, fields, markings,
+chart carriers and the scheme colimit remain fixed. The actual `N_p`
+specialization needs no normal-stalk hypotheses on either base or
+cover for this normality assertion.
+
+SP91 is validated: all four production APIs compile in the 2743-job
+scoped build. The focused suite passes 24 examples and four exact
+standard-three axiom audits without warnings. The full build passes
+3216 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings; no fresh neighbor-suite pass is claimed.
+The 89-page PDF (866193 bytes) has a clean final log and passes visual
+review of pages 15, 16, 67, 68 and 80. All four exact API parity checks
+and independent Lean--TeX review pass. The static central inventory is
+1054 checks, 565 examples and 946 axiom reports; its historical prefix
+is unchanged and was not re-elaborated in full.
+
+Next address global integrality and marked function-field comparison.
+Faithfulness, fiber comparison, torsor or Galois-cover identification,
+normal stalks from smooth geometry and Chow--Betti generation remain
+separate. The complete queue suffix beginning with SP90 below remains
+byte-identical to `88a5f8b`.
 
 SP90 (2026-09-20): **compatible global normalization and marked-subgroup actions**.
 Ten public APIs in `GluedNormalizationAction.lean` descend the

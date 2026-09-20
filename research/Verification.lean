@@ -7772,3 +7772,15 @@ Focused regressions and enforced standard-axiom checks are in
 #print axioms HodgeConjecture.CollisionFoundations.gluedNormalizationAutomorphism_comp_toCover
 #print axioms HodgeConjecture.CollisionFoundations.gluedNormalClosureMarkedDeckAction
 #print axioms HodgeConjecture.CollisionFoundations.gluedNormalClosureMarkedDeckAction_hom
+
+/-! SP91: normal local rings of the original glued normalization. -/
+
+#check HodgeConjecture.CollisionFoundations.normalizedCoordinateRing_isIntegrallyClosed
+#check HodgeConjecture.CollisionFoundations.normalizedAffineModel_stalk_isIntegrallyClosed
+#check HodgeConjecture.CollisionFoundations.gluedNormalizationModel_stalk_isDomain
+#check HodgeConjecture.CollisionFoundations.gluedNormalizationModel_stalk_isIntegrallyClosed
+
+#print axioms HodgeConjecture.CollisionFoundations.normalizedCoordinateRing_isIntegrallyClosed
+#print axioms HodgeConjecture.CollisionFoundations.normalizedAffineModel_stalk_isIntegrallyClosed
+#print axioms HodgeConjecture.CollisionFoundations.gluedNormalizationModel_stalk_isDomain
+#print axioms HodgeConjecture.CollisionFoundations.gluedNormalizationModel_stalk_isIntegrallyClosed

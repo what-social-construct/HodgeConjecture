@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-09-20 (SP90 compatible global normalization and marked-subgroup actions; validated).
+Assessed: 2026-09-20 (SP91 normal local rings of the original glued normalization; validated).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -977,7 +977,8 @@ B4s and constructs the actual finite-etale global normal-closure map.
 SP87 descends the original marked refinement in B4t, and SP88 proves
 its finite etaleness in B4u. SP89 proves both original global maps
 surjective in B4v; SP90 descends the compatible actions in B4w.
-Global normality is the next bounded follow-up; normal stalks from smooth geometry and
+SP91 proves normal local rings of the same scheme in B4x. Global integrality
+and marked function-field comparison are next; normal stalks from smooth geometry and
 Chow--Betti generation are separate obligations.
 
 ### B4p. Coherent affine inverse-image opens
@@ -1386,13 +1387,56 @@ checks and independent Lean--TeX review pass. The static central inventory
 is 1050 checks, 565 examples and 942 axiom reports; its historical prefix
 is unchanged and was not re-elaborated in full.
 
-Next address global normality as a bounded follow-up. Faithfulness,
+SP91 below addresses global normality. Faithfulness,
 fiber comparison and a torsor or Galois-cover identification remain
 separate. Fixing the marked `K(Y)` is a sufficient condition for
 preserving `lambda`, not a proved converse or full-stabilizer
 identification. Normal stalks from smooth geometry and Chow--Betti
 generation remain separate; the action construction does not assert
 a new Hodge case.
+
+### B4x. Normal local rings of the original glued normalization
+
+For integral `X` and any extension `N/K(X)`,
+`GluedNormalizationNormality.lean` proves that every actual local ring
+of the original `Z_N` is a domain and integrally closed. The underlying
+affine result is stronger: any commutative ring `B` mapping to a field
+`N` has an integrally closed integral-closure ring `IntCl_B(N)`.
+Integral closure is closed under elements of `N` integral over it;
+the injective map `Frac(IntCl_B(N)) -> N` pulls this property back to
+its own fraction field. No equality of those fields is asserted.
+
+The original affine stalk isomorphisms identify local rings with
+prime localizations of these domain coordinate rings. Localization
+preserves integral closedness. Every global point lifts to an original
+chart, and its open-immersion stalk map is an isomorphism. This transfers
+both properties to the same global scheme, giving four public APIs and
+the manuscript counterpart `prop:normalization-global-normal`.
+
+This requires no algebraicity, finite degree, separability, normality
+of `X`, Noetherianity, or separatedness. For the actual marked field
+`N_p`, it also needs no normal-stalk premise on `Y`. The original germs,
+field marking, charts, and colimit are unchanged. Normality is stated
+as domain and integral closedness of every stalk; neither a scheme
+`IsNormal` class nor global `IsIntegral` is introduced.
+
+SP91 is validated: all four production APIs compile in the 2743-job
+scoped build. The focused suite passes 24 examples and four exact
+standard-three axiom audits without warnings. The full build passes
+3216 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings; no fresh neighbor-suite pass is claimed.
+The 89-page PDF (866193 bytes) has a clean final log and passes visual
+review of pages 15, 16, 67, 68 and 80. All four exact API parity checks
+and independent Lean--TeX review pass. The static central inventory is
+1054 checks, 565 examples and 946 axiom reports; its historical prefix
+is unchanged and was not re-elaborated in full.
+
+Next address global integrality and the marked function-field
+comparison. Faithfulness, fiber comparison and a torsor or Galois-cover
+identification remain separate, as do normal stalks from smooth geometry
+and Chow--Betti generation. This normality theorem asserts no new Hodge
+case and does not weaken the hypotheses of the existing refinement.
 
 ### G0. Smooth projective setting and candidate constructions
 

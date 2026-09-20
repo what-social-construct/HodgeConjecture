@@ -33,6 +33,7 @@ import HodgeConjecture.Boundary.Normalization.FiniteEtaleNormalClosure
 import HodgeConjecture.Boundary.Normalization.FiniteEtaleNormalClosureRestriction
 import HodgeConjecture.Boundary.Normalization.AffineNormalizationOpenImmersion
 import HodgeConjecture.Boundary.Normalization.GluedNormalization
+import HodgeConjecture.Boundary.Normalization.GluedNormalizationNormality
 import HodgeConjecture.Boundary.Normalization.GluedNormalizationChart
 import HodgeConjecture.Boundary.Normalization.GluedNormalizationProperties
 import HodgeConjecture.Boundary.Normalization.FiniteEtaleGluedNormalClosure
@@ -153,6 +154,11 @@ of open immersions. Its colimit is a scheme covered by those same charts;
 the original structural maps descend to a map to the original base. Two
 chart points agree globally exactly when they lift to a common smaller
 affine chart, and morphisms out are determined by their chart restrictions.
+
+Every local ring of the same glued scheme is an integrally closed domain.
+The integral closure in the ambient field is integrally closed in its own
+fraction field; prime localization and the original open-chart stalk
+isomorphisms transfer these properties to the actual global local rings.
 
 Each original chart is exactly the inverse image of its base open under
 the global structural map. The resulting open-subscheme isomorphism

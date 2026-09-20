@@ -1123,3 +1123,47 @@ condition for preserving `lambda`, not a converse or full-stabilizer
 identification. Normal stalks from smooth geometry and Chow--Betti
 generation remain separate. The complete audit prefix through SP89
 remains byte-identical to `6b2baba`.
+
+## 27. SP91 follow-up: normal local rings of the original glued normalization
+
+Four public APIs in `GluedNormalizationNormality.lean` prove integral
+closedness of the original normalization coordinate rings and affine
+stalks, then domain and integral closedness of every global local ring.
+The affine APIs allow any commutative `B` mapping to a field `N`.
+Integral closure is integrally closed in that field. Pulling back along
+its injective fraction-field map proves integral closedness in its own
+fraction field, without claiming that the ambient field is that fraction
+field. Localization supplies the affine stalk assertion.
+
+For integral `X` and arbitrary `N/K(X)`, every point of the same glued
+scheme lies in an original normalization chart. The chart open immersion
+induces an actual stalk isomorphism, transferring the two local-ring
+properties. This requires no algebraicity, finite degree, separability,
+normality of `X`, Noetherianity or separatedness. The actual marked
+`N_p` specialization needs no normal-stalk premise on `X` or `Y`.
+It retains the original generic germs, field marking, chart carriers
+and colimit scheme; no geometric hypothesis package is introduced.
+
+The manuscript counterpart is `prop:normalization-global-normal`.
+Normality is expressed as domain and integral closedness of each stalk.
+No scheme `IsNormal` class, global `IsIntegral` instance or marked
+function-field identification is asserted. The existing source citations
+are Stacks Tags 034L and 00GY, with no new source axiom.
+
+SP91 is validated: all four production APIs compile in the 2743-job
+scoped build. The focused suite passes 24 examples and four exact
+standard-three axiom audits without warnings. The full build passes
+3216 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings; no fresh neighbor-suite pass is claimed.
+The 89-page PDF (866193 bytes) has a clean final log and passes visual
+review of pages 15, 16, 67, 68 and 80. All four exact API parity checks
+and independent Lean--TeX review pass. The static central inventory is
+1054 checks, 565 examples and 946 axiom reports; its historical prefix
+is unchanged and was not re-elaborated in full.
+
+Next address global integrality and marked function-field comparison.
+Faithfulness, fiber comparison and torsor or Galois-cover identification
+remain separate. Normal stalks from smooth geometry and Chow--Betti
+generation remain separate. The complete audit prefix through SP90
+remains byte-identical to `88a5f8b`.

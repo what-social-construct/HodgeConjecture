@@ -17,9 +17,58 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-09-20 (SP90 existing affine action
-and colimit interfaces; validated;
+Last source/interface review: 2026-09-20 (SP91 integral-closure normality
+and localization interfaces; validated;
 earlier source records retain their original validation scope).
+
+### Normal local rings of the original glued normalization (SP91, 2026-09-20)
+
+[Stacks, Lemma 10.37.2, Tag 034L](https://stacks.math.columbia.edu/tag/034L)
+states that the integral closure of a ring in a field is a normal domain.
+[Stacks, Lemma 10.37.5, Tag 00GY](https://stacks.math.columbia.edu/tag/00GY)
+states that localization preserves normality. Here the multiplicative
+sets are prime complements and avoid zero, so the domain property is
+preserved as well.
+Both primary pages were checked for SP91. The manuscript reuses the
+existing bibliography keys `StacksIntegralClosureNormal` and
+`StacksNormalLocalization`; no new bibliography object or source axiom
+is introduced.
+
+`normalizedCoordinateRing_isIntegrallyClosed` allows any commutative
+`B` mapping to a field `N`. Its direct proof uses
+`IsIntegrallyClosedIn.of_isIntegralClosure`, the injective fraction-field
+map from `IsFractionRing.liftAlgHom`, and
+`AlgHom.isIntegrallyClosedIn`. The ambient `N` need not be the fraction
+field of the integral closure, and no algebraicity hypothesis is used.
+`normalizedAffineModel_stalk_isIntegrallyClosed` applies
+`isIntegrallyClosed_of_isLocalization` and `StructureSheaf.stalkIso`.
+The affine coordinate ring is a domain because it is a subring of `N`.
+
+The original `gluedNormalizationOpenCover` covers every global point.
+`IsOpenImmersion.stalk_iso` for each original chart map identifies its
+local ring with the global local ring. The remaining two APIs transfer
+the domain and integral-closedness properties through these actual
+isomorphisms. Integral `X` and arbitrary `N/K(X)` suffice; no normality
+of the base, finite degree, separability or Noetherianity is required.
+The manuscript counterpart is `prop:normalization-global-normal`.
+This proves normality as a local-ring assertion; global integrality and
+the marked function-field identification are separate.
+
+SP91 is validated: all four production APIs compile in the 2743-job
+scoped build. The focused suite passes 24 examples and four exact
+standard-three axiom audits without warnings. The full build passes
+3216 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings; no fresh neighbor-suite pass is claimed.
+The 89-page PDF (866193 bytes) has a clean final log and passes visual
+review of pages 15, 16, 67, 68 and 80. All four exact API parity checks
+and independent Lean--TeX review pass. The static central inventory is
+1054 checks, 565 examples and 946 axiom reports; its historical prefix
+is unchanged and was not re-elaborated in full.
+
+Next address global integrality and marked function-field comparison.
+Normal stalks from smooth geometry, faithfulness, fiber/torsor comparison
+and Chow--Betti generation remain separate obligations.
 
 ### Compatible global normalization and marked-subgroup actions (SP90, 2026-09-20)
 

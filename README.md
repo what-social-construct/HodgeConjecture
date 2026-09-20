@@ -1124,7 +1124,37 @@ checks and independent Lean--TeX review pass. The static central inventory
 is 1050 checks, 565 examples and 942 axiom reports; its historical prefix
 is unchanged and was not re-elaborated in full.
 
-Next address global normality as a bounded follow-up. Faithfulness,
+SP91 proves normal local rings of the same glued normalization through
+four APIs in `GluedNormalizationNormality.lean`. Integral closure of
+any commutative ring `B` in a field `N` is integrally closed in its
+own fraction field, which embeds into `N` without an asserted equality.
+Prime localization gives the affine stalk result. The original chart
+open immersions identify those local rings with all global stalks,
+proving that each is a domain and integrally closed.
+
+For `Z_N`, integral `X` and arbitrary `N/K(X)` suffice, without
+algebraicity, finite degree, separability, normality of `X`, or
+Noetherianity. The same conclusion for the actual marked `N_p` needs
+no normal-stalk premise on `Y`. No chart, field marking, generic germ
+or glued carrier changes. The manuscript counterpart is
+`prop:normalization-global-normal`. Normality is expressed through
+the actual local rings; global `IsIntegral` and the marked function-field
+identification remain separate results to prove.
+
+SP91 is validated: all four production APIs compile in the 2743-job
+scoped build. The focused suite passes 24 examples and four exact
+standard-three axiom audits without warnings. The full build passes
+3216 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings; no fresh neighbor-suite pass is claimed.
+The 89-page PDF (866193 bytes) has a clean final log and passes visual
+review of pages 15, 16, 67, 68 and 80. All four exact API parity checks
+and independent Lean--TeX review pass. The static central inventory is
+1054 checks, 565 examples and 946 axiom reports; its historical prefix
+is unchanged and was not re-elaborated in full.
+
+Next address global integrality and marked function-field comparison.
+Faithfulness,
 fiber comparison and a Galois-cover or torsor identification remain
 separate: subgroup fixing is a sufficient condition for preserving
 `lambda`, not a characterization of its entire stabilizer.

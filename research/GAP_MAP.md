@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-09-20 (SP90 compatible global normalization and marked-subgroup actions;
+Last reviewed: 2026-09-20 (SP91 normal local rings of the original glued normalization;
 validated; earlier checkpoint records retain
 their original validation scope).
 
@@ -855,7 +855,40 @@ checks and independent Lean--TeX review pass. The static central inventory
 is 1050 checks, 565 examples and 942 axiom reports; its historical prefix
 is unchanged and was not re-elaborated in full.
 
-**Next bounded bridge:** global normality. Faithfulness, fiber
+**SP91: normal local rings of the same glued normalization.**
+Four APIs in `GluedNormalizationNormality.lean` prove integral closedness
+of `IntCl_B(N)`, integral closedness of its actual affine stalks, and
+domain plus integral closedness for every actual stalk of `Z_N`.
+The affine result permits any commutative `B` mapping to a field `N`.
+The global result permits integral `X` and any extension `N/K(X)`.
+The fraction field of the integral closure embeds in `N`; equality
+with `N` is not required or claimed. Localization gives the affine
+stalk result, and the original chart open immersions identify these
+local rings with all global stalks.
+
+No algebraicity, finite degree, separability, base normality,
+Noetherianity, separatedness or new geometric input package is used.
+The same colimit scheme, original germs, chart carriers and marked
+fields are retained. The manuscript counterpart is
+`prop:normalization-global-normal`. Normality is expressed by local
+domains that are integrally closed, without a new scheme `IsNormal`
+class or a global `IsIntegral` assertion. For the original `N_p`, no
+normal-stalk premise on `X` or `Y` is needed for this conclusion.
+
+SP91 is validated: all four production APIs compile in the 2743-job
+scoped build. The focused suite passes 24 examples and four exact
+standard-three axiom audits without warnings. The full build passes
+3216 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings; no fresh neighbor-suite pass is claimed.
+The 89-page PDF (866193 bytes) has a clean final log and passes visual
+review of pages 15, 16, 67, 68 and 80. All four exact API parity checks
+and independent Lean--TeX review pass. The static central inventory is
+1054 checks, 565 examples and 946 axiom reports; its historical prefix
+is unchanged and was not re-elaborated in full.
+
+**Next bounded bridge:** global integrality and marked function-field
+comparison. Faithfulness, fiber
 comparison and Galois-cover or torsor identification remain separate.
 The fixing-subgroup result is sufficient for preservation of `lambda`,
 not an equality with its full stabilizer. Normal
