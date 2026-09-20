@@ -7730,3 +7730,11 @@ Focused regressions and enforced standard-axiom checks are in
 
 #print axioms HodgeConjecture.CollisionFoundations.isFinite_of_comp_of_isSeparated
 #print axioms HodgeConjecture.CollisionFoundations.gluedNormalClosureToCover_finite_etale
+
+/-! SP89: surjectivity of the original glued normalization and marked refinement. -/
+
+#check HodgeConjecture.CollisionFoundations.gluedNormalizationToBase_surjective
+#check HodgeConjecture.CollisionFoundations.gluedNormalClosureToCover_surjective
+
+#print axioms HodgeConjecture.CollisionFoundations.gluedNormalizationToBase_surjective
+#print axioms HodgeConjecture.CollisionFoundations.gluedNormalClosureToCover_surjective

@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-20 (SP88 finite etaleness of the actual global marked refinement,
+Last audited: 2026-09-20 (SP89 surjectivity of the original global normalization and marked refinement,
 validated; earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,52 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Surjectivity of the original global normalization and marked refinement (A11bu / SP89)
+
+Status: `FORMAL`; both production APIs compile and the checkpoint
+is validated. Two public APIs
+in `Boundary/Normalization/GluedNormalizationSurjectivity.lean` prove
+surjectivity of the existing global maps under distinct hypotheses.
+`gluedNormalizationToBase_surjective X N` assumes integral `X` and
+any field extension of its original function field. Injectivity and
+integrality of the original chart scalar map into `IntCl_B(N)` give
+lying over, and SP86's target-local comparison gives surjectivity of
+`mu_N : Z_N -> X`. No algebraicity or finite-degree premise on `N`,
+normality of `X`, Noetherianity or separatedness is required.
+
+`gluedNormalClosureToCover_surjective p hY` assumes finite dominant
+`p : Y -> X`, integral `X` and `Y`, and explicitly integrally closed
+stalks of `Y` only. It lifts a point of `Y` through SP81's original
+surjective affine refinement into an entire inverse image of an
+affine base chart. SP87's exact marked chart formula then gives the
+global lift. No etaleness or normal-stalk premise on `X` is needed,
+and surjectivity is not inferred by cancelling `p` from the triangle.
+
+The manuscript counterpart is `prop:normalization-global-surjective`.
+Under SP86/SP88's stronger finite-etale and normal-stalk hypotheses,
+both original global maps are finite etale and surjective. No new
+carrier, field marking, scalar map, source axiom or geometric input
+package is introduced; the surjectivity theorems concern the same
+`mu_N` and marked `lambda` already constructed.
+
+SP89 is validated: both production APIs compile in the 2772-job scoped
+build. The focused suite passes 24 examples and two exact standard-three
+axiom audits without warnings on its first run. The full build passes
+3213 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings. No fresh neighbor-suite pass is
+claimed. The 87-page PDF (859905 bytes) has a clean final log and passes
+visual review of pages 17, 18, 66, 78 and 86. Both exact API parity
+checks and independent Lean--TeX review pass. The static central
+inventory is 1035 checks, 565 examples and 927 axiom reports; its
+historical prefix is unchanged and was not re-elaborated in full.
+
+Remaining: compatible Galois-action descent, global normality,
+normal stalks from smooth geometry and Chow--Betti generation. The
+intended full-group action is over `X`; only the subgroup fixing the
+marked `K(Y)` preserves `lambda`. No global action, global normality
+or new Hodge case is asserted by SP89.
 
 ## Finite etaleness of the actual global marked refinement (A11bt / SP88)
 
@@ -60,7 +106,8 @@ API parity checks and independent Lean--TeX review pass. The static
 central inventory is 1033 checks, 565 examples and 925 axiom reports;
 its historical prefix is unchanged and was not re-elaborated in full.
 
-Remaining: surjectivity, compatible Galois-action descent, global
+SP89 above supplies surjectivity under the stated weaker hypotheses.
+Remaining: compatible Galois-action descent, global
 normality, normal stalks from smooth geometry and Chow--Betti
 generation. The full Galois group acts over `X`; only the subgroup
 fixing the marked `K(Y)` preserves `lambda`. No new global action,

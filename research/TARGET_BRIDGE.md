@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-09-20 (SP88 finite etaleness of the actual global marked refinement; validated).
+Assessed: 2026-09-20 (SP89 surjectivity of the original global normalization and marked refinement; validated).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -975,8 +975,8 @@ and global gluing in B4q. SP85 identifies the actual global inverse-image
 charts in B4r; SP86 proves target-local affine/finite/etale transport in
 B4s and constructs the actual finite-etale global normal-closure map.
 SP87 descends the original marked refinement in B4t, and SP88 proves
-its finite etaleness in B4u. Surjectivity and Galois-action descent
-remain next; normal stalks from smooth geometry and
+its finite etaleness in B4u. SP89 proves both original global maps
+surjective in B4v. Galois-action descent remains next; normal stalks from smooth geometry and
 Chow--Betti generation are separate obligations.
 
 ### B4p. Coherent affine inverse-image opens
@@ -1282,6 +1282,57 @@ the marked `K(Y)` preserves `lambda`. No global action, surjectivity,
 global normality, or new Hodge case follows as an asserted SP88
 conclusion. Normal stalks from smooth geometry and Chow--Betti
 generation remain separate.
+
+### B4v. Surjectivity of the original global normalization and marked refinement
+
+The two public APIs in `GluedNormalizationSurjectivity.lean` have
+different minimal scopes. First, `gluedNormalizationToBase_surjective`
+proves `mu_N : Z_N -> X` surjective for integral `X` and any field
+extension `N` of its original `K(X)`. Neither algebraicity nor finite
+degree of `N` is required. For an original nonempty affine chart with
+ring `B`, the map `B -> IntCl_B(N)` is injective and integral. Lying
+over gives surjectivity on spectra; the actual chart-to-base
+isomorphism retains it, and SP86's target-local property comparison
+gives surjectivity of the original global `mu_N`. This uses no
+normality, Noetherianity or separatedness assumption on `X`.
+
+Second, `gluedNormalClosureToCover_surjective p hY` proves the actual
+marked `lambda : Z_(N_p) -> Y` surjective for finite dominant
+`p : Y -> X`, integral `X` and `Y`, and explicitly integrally closed
+stalks of `Y`. No etaleness or normal-stalk input on `X` is needed.
+Given `y : Y`, choose an actual affine neighborhood `U` of `p(y)`.
+SP81's original chart refinement `lambda_U : Z_U -> p^-1(U)` is
+surjective, so it lifts `y` to a chart point. SP87's exact formula
+`lambda jmath_U = iota_(V_U) lambda_U` maps that point to `y` globally.
+The proof does not cancel surjectivity from `p lambda = mu_(N_p)`,
+which alone would not imply surjectivity of `lambda`.
+
+The manuscript counterpart is `prop:normalization-global-surjective`,
+with these two scopes explicitly separated. Under SP86/SP88's
+dominant finite-etale and normal-stalk hypotheses on both schemes,
+both original global maps are therefore finite etale and surjective.
+This consequence combines the existing property theorems with the
+two new surjectivity theorems; it is not a third new public API or a
+replacement cover. No field, normalization carrier, germ-derived
+scalar map, marking, source axiom or geometric input package is added.
+
+SP89 is validated: both production APIs compile in the 2772-job scoped
+build. The focused suite passes 24 examples and two exact standard-three
+axiom audits without warnings on its first run. The full build passes
+3213 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings. No fresh neighbor-suite pass is
+claimed. The 87-page PDF (859905 bytes) has a clean final log and passes
+visual review of pages 17, 18, 66, 78 and 86. Both exact API parity
+checks and independent Lean--TeX review pass. The static central
+inventory is 1035 checks, 565 examples and 927 axiom reports; its
+historical prefix is unchanged and was not re-elaborated in full.
+
+Next descend the compatible Galois action. Its full group is over
+`X`; only the subgroup fixing the marked `K(Y)` preserves `lambda`.
+Global normality can be addressed as a separate bounded follow-up.
+Normal stalks from smooth geometry and Chow--Betti generation remain
+separate, and no new Hodge case is asserted by this surjectivity result.
 
 ### G0. Smooth projective setting and candidate constructions
 

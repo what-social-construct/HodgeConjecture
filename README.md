@@ -1055,10 +1055,43 @@ API parity checks and independent Lean--TeX review pass. The static
 central inventory is 1033 checks, 565 examples and 925 axiom reports;
 its historical prefix is unchanged and was not re-elaborated in full.
 
-Next prove surjectivity and descend the Galois action.
+SP89 proves surjectivity of both original global maps in
+`GluedNormalizationSurjectivity.lean`, with distinct minimal scopes.
+For integral `X` and any field extension `N` of its original function
+field, `mu_N : Z_N -> X` is surjective. The original chart algebra
+maps into its integral closure injectively and integrally; lying over
+gives chart surjectivity and the proved target-local comparison gives
+the global result. No algebraicity or finite-degree assumption on `N`
+is needed.
+
+For finite dominant `p : Y -> X` with integral `X` and `Y` and
+explicitly integrally closed stalks of `Y`, the same original marked
+`lambda : Z_(N_p) -> Y` is surjective. This proof lifts a point of `Y`
+through an actual affine inverse image and the already proved
+surjective chart refinement, then uses SP87's exact chart formula.
+It does not infer surjectivity of `lambda` from that of `p lambda`.
+No etaleness or normal-stalk assumption on `X` is required for this
+surjectivity theorem. Under SP86/SP88's stronger finite-etale and
+normal-stalk hypotheses, both global maps are therefore finite etale
+and surjective. The manuscript counterpart is
+`prop:normalization-global-surjective`.
+
+SP89 is validated: both production APIs compile in the 2772-job scoped
+build. The focused suite passes 24 examples and two exact standard-three
+axiom audits without warnings on its first run. The full build passes
+3213 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings. No fresh neighbor-suite pass is
+claimed. The 87-page PDF (859905 bytes) has a clean final log and passes
+visual review of pages 17, 18, 66, 78 and 86. Both exact API parity
+checks and independent Lean--TeX review pass. The static central
+inventory is 1035 checks, 565 examples and 927 axiom reports; its
+historical prefix is unchanged and was not re-elaborated in full.
+
+Next descend the compatible Galois action.
 The full Galois group acts over `X`;
 only the subgroup fixing the marked `K(Y)` preserves `lambda`.
-Global normality and surjectivity, normal stalks from smooth geometry
+Global normality, normal stalks from smooth geometry
 and Chow--Betti generation remain separate. No model built
 from global sections of a non-affine intersection is substituted for
 its geometric overlap. The earlier SP76 constructor retains its

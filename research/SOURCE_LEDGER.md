@@ -17,9 +17,59 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-09-20 (SP88 finite/etale cancellation
-sources checked; property theorem validated;
+Last source/interface review: 2026-09-20 (SP89 lying-over and original
+chart-surjectivity interfaces; validated;
 earlier source records retain their original validation scope).
+
+### Surjectivity of the original global normalization and marked refinement (SP89, 2026-09-20)
+
+[Stacks, Lemma 10.36.17, Tag 00GQ](https://stacks.math.columbia.edu/tag/00GQ)
+is the existing lying-over input: an injective integral ring map
+induces a surjective map on prime spectra. It does not require a
+finite module, an algebraic ambient field extension or a Noetherian
+base. The citation is already in the manuscript as `StacksLyingOver`;
+no new bibliography object or source axiom is added.
+
+For `gluedNormalizationToBase_surjective X N`, the original chart
+algebra maps injectively into its integral closure inside `N`, and
+that map is integral by construction. Lying over gives surjectivity
+of the actual chart normalization map. Its original affine-base
+isomorphism and SP86's target-local property comparison transfer the
+property to the existing global `mu_N`. Integral `X` and any field
+extension `N` of its original function field suffice, without
+algebraicity, finite degree, normality of `X`, Noetherianity or
+separatedness.
+
+The second API, `gluedNormalClosureToCover_surjective p hY`, uses the
+already proved SP81 surjectivity of the original chart refinement
+and SP87's exact marked chart formula. A point of `Y` lies in the
+inverse image of an affine neighborhood of its image in `X`; the
+actual surjective chart map lifts it and the formula identifies its
+global image. This requires only finite dominant `p`, integral `X`
+and `Y`, and explicitly integrally closed stalks of `Y`. It does not
+use etaleness or normal stalks of `X`, nor does it cancel surjectivity
+from `p lambda`. All maps, field markings, carriers and germ-derived
+scalars are retained.
+
+The manuscript counterpart is `prop:normalization-global-surjective`,
+which states the two scopes separately and combines them with the
+existing finite-etale conclusions under SP86/SP88's stronger inputs.
+No new geometric hypothesis package is introduced.
+
+SP89 is validated: both production APIs compile in the 2772-job scoped
+build. The focused suite passes 24 examples and two exact standard-three
+axiom audits without warnings on its first run. The full build passes
+3213 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings. No fresh neighbor-suite pass is
+claimed. The 87-page PDF (859905 bytes) has a clean final log and passes
+visual review of pages 17, 18, 66, 78 and 86. Both exact API parity
+checks and independent Lean--TeX review pass. The static central
+inventory is 1035 checks, 565 examples and 927 axiom reports; its
+historical prefix is unchanged and was not re-elaborated in full.
+
+Compatible Galois-action descent, global normality, normal stalks from
+smooth geometry and Chow--Betti generation remain separate.
 
 ### Finite etaleness of the actual global marked refinement (SP88, 2026-09-20)
 

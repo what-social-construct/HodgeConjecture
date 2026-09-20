@@ -144,6 +144,61 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP86 | Target-local properties and actual finite-etale global normal closure | TRANSFER / SPECIALIZE / RETAIN | Prove the nonempty affine basis covers the base, transfer target-local properties through the exact chart comparisons, derive global affineness, and prove finite etaleness for the original marked normal closure from SP81's explicit normal-stalk inputs. | PROVED / VALIDATED |
 | SP87 | Descent of the original marked refinement | FORM COCONE / DESCEND / IDENTIFY | Glue the original marked chart refinements to a map to the actual `Y`; prove its marked chart formulas, global triangle and uniqueness from those chart formulas under finite dominance and normal stalks of `Y` only. | PROVED / VALIDATED |
 | SP88 | Finite etaleness of the actual global marked refinement | CANCEL / TRANSFER / RETAIN | Prove finite cancellation for a separated second morphism and use the exact global triangle with SP86 to prove the original marked refinement finite etale under the actual finite-etale and explicit normal-stalk inputs. | PROVED / VALIDATED |
+| SP89 | Surjectivity of the original global normalization and marked refinement | LIE OVER / LIFT / RETAIN | Prove global normalization surjectivity for any original function-field extension and directly lift points through the existing marked chart refinements under finite dominance and normal stalks of `Y` only. | PROVED / VALIDATED |
+
+SP89 (2026-09-20): **surjectivity of the original global normalization and marked refinement**.
+Two public APIs in `GluedNormalizationSurjectivity.lean` prove
+surjectivity of the same original global maps with distinct minimal
+scopes. The manuscript counterpart is
+`prop:normalization-global-surjective`.
+
+| Lean API | Mathematical role | TeX notation |
+| --- | --- | --- |
+| `gluedNormalizationToBase_surjective` | normalization over any field extension of the original function field is surjective | `mu_N:Z_N -> X` surjective |
+| `gluedNormalClosureToCover_surjective` | the original marked refinement is surjective by an actual chartwise point lift | `lambda:Z_(N_p) -> Y` surjective |
+
+The first theorem assumes integral `X` and any field extension `N`
+of its original `K(X)`. The original chart scalar map
+`B -> IntCl_B(N)` is injective and integral. Lying over gives
+surjectivity of the chart normalization, and SP86's exact target-local
+comparison gives surjectivity of `mu_N`. There is no algebraicity,
+finite-degree, normal-base, Noetherian or separatedness premise.
+Stacks 00GQ is the existing lying-over citation, not a new source axiom.
+
+The second theorem assumes finite dominant `p : Y -> X`, integral
+`X` and `Y`, and explicitly integrally closed stalks of `Y` only.
+Each point of `Y` lies in an actual affine inverse image; SP81's
+surjective refinement into that whole inverse image lifts the point,
+and SP87's exact chart formula gives its image under the original
+global `lambda`. No etaleness or normal-stalk hypothesis on `X` is
+used. The proof does not infer surjectivity of `lambda` from that of
+`p lambda`, which would not be a valid cancellation argument.
+
+The consequence that both global maps are finite etale and surjective
+under SP86/SP88's stronger hypotheses uses the existing property
+theorems and these two new APIs; it is not a third new public API.
+The original field, marked maps, normalization carriers and
+germ-derived scalars are unchanged. No source axiom or geometric
+input package is introduced.
+
+SP89 is validated: both production APIs compile in the 2772-job scoped
+build. The focused suite passes 24 examples and two exact standard-three
+axiom audits without warnings on its first run. The full build passes
+3213 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings. No fresh neighbor-suite pass is
+claimed. The 87-page PDF (859905 bytes) has a clean final log and passes
+visual review of pages 17, 18, 66, 78 and 86. Both exact API parity
+checks and independent Lean--TeX review pass. The static central
+inventory is 1035 checks, 565 examples and 927 axiom reports; its
+historical prefix is unchanged and was not re-elaborated in full.
+
+Next descend the compatible Galois action. Its full group is over
+`X`, and only the subgroup fixing the marked `K(Y)` preserves
+`lambda`. Global normality can be a separate bounded follow-up;
+normal stalks from smooth geometry and Chow--Betti generation remain
+separate. The complete queue suffix beginning at the SP88 block below
+is preserved byte-for-byte from `e910f25`.
 
 SP88 (2026-09-20): **finite etaleness of the actual global marked refinement**.
 Two public APIs in `FiniteEtaleGluedRefinement.lean` prove a generic

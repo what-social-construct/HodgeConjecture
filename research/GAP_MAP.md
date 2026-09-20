@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-09-20 (SP88 finite etaleness of the actual global marked refinement;
+Last reviewed: 2026-09-20 (SP89 surjectivity of the original global normalization and marked refinement;
 validated; earlier checkpoint records retain
 their original validation scope).
 
@@ -776,12 +776,47 @@ API parity checks and independent Lean--TeX review pass. The static
 central inventory is 1033 checks, 565 examples and 925 axiom reports;
 its historical prefix is unchanged and was not re-elaborated in full.
 
-**Next bounded bridge:** prove surjectivity and descend the Galois action.
-The full Galois group acts
-over `X`; only the subgroup fixing the marked `K(Y)` preserves
-`lambda`. SP88 supplies finite etaleness with the stated additional
-inputs; surjectivity of the global refinement is not yet asserted.
-Global normality and surjectivity, normal
+**SP89: surjectivity of both original global maps.**
+`GluedNormalizationSurjectivity.lean` proves surjectivity of
+`mu_N : Z_N -> X` for integral `X` and any field extension `N` of its
+original function field. On each actual nonempty affine chart, the
+original scalar map into the integral closure is injective and
+integral. Lying over proves the chart map surjective, and SP86's
+target-local comparison proves the global result. Algebraicity or
+finite degree of `N`, normality of `X`, Noetherianity and separatedness
+of `X` are not required.
+
+The second API proves surjectivity of the original marked
+`lambda : Z_(N_p) -> Y` for finite dominant `p : Y -> X`, integral
+`X` and `Y`, and explicitly integrally closed stalks of `Y` only.
+For a point of `Y`, take an actual affine neighborhood of its image
+in `X`, use SP81's surjective refinement into that entire inverse
+image, and apply SP87's exact marked chart formula. This is a direct
+point lift, not cancellation of surjectivity from `p lambda`.
+No etaleness or normal-stalk hypothesis on `X` is used.
+
+The two scopes are kept distinct in
+`prop:normalization-global-surjective`. With SP86/SP88's stronger
+finite-etale and normal-stalk hypotheses, both original global maps
+are finite etale and surjective. The field, maps, normalization
+carriers and germ-derived scalars remain unchanged; there is no new
+source axiom or geometric input package.
+
+SP89 is validated: both production APIs compile in the 2772-job scoped
+build. The focused suite passes 24 examples and two exact standard-three
+axiom audits without warnings on its first run. The full build passes
+3213 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings. No fresh neighbor-suite pass is
+claimed. The 87-page PDF (859905 bytes) has a clean final log and passes
+visual review of pages 17, 18, 66, 78 and 86. Both exact API parity
+checks and independent Lean--TeX review pass. The static central
+inventory is 1035 checks, 565 examples and 927 axiom reports; its
+historical prefix is unchanged and was not re-elaborated in full.
+
+**Next bounded bridge:** descend the compatible Galois action.
+The full group acts over `X`; only the subgroup fixing the marked
+`K(Y)` preserves `lambda`. Global normality, normal
 stalks from smooth geometry and Chow--Betti generation are separate. The older
 SP76 constructor retains its stronger assumptions; SP81 removes its
 Noetherian-base requirement. SP84 supplies the locally directed gluing,

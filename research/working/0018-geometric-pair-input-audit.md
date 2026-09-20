@@ -1028,3 +1028,48 @@ geometry and Chow--Betti generation remain separate. No new global
 action, surjectivity, global normality or Hodge case is asserted by
 SP88. The complete audit prefix through SP87 remains byte-identical
 to `af73385`.
+
+## 25. SP89 follow-up: surjectivity of the original global normalization and marked refinement
+
+`GluedNormalizationSurjectivity.lean` adds two public APIs with
+different minimal scopes. For integral `X` and any field extension
+`N` of its original function field, the actual `mu_N : Z_N -> X`
+is surjective. The original chart scalar map `B -> IntCl_B(N)` is
+injective and integral. Lying over supplies chart surjectivity;
+SP86's exact target-local comparison supplies the global result.
+No algebraicity or finite degree of `N`, normality of `X`,
+Noetherianity or separatedness is assumed.
+
+For finite dominant `p : Y -> X`, integral `X` and `Y`, and explicitly
+integrally closed stalks of `Y` only, the original marked
+`lambda : Z_(N_p) -> Y` is surjective. The proof chooses an actual
+affine neighborhood of the image of a point of `Y`, lifts the point
+through SP81's surjective refinement into that entire inverse image,
+and applies SP87's exact marked chart formula. It uses neither
+etaleness nor normal stalks of `X`. It does not cancel surjectivity
+from the structural triangle `p lambda = mu_(N_p)`.
+
+The manuscript counterpart is `prop:normalization-global-surjective`,
+which distinguishes the two scopes and records the finite-etale and
+surjective consequence under SP86/SP88's stronger hypotheses. Stacks
+00GQ supplies the existing lying-over citation. The same fields,
+marked maps, normalization carriers and germ-derived scalars are
+retained. There is no new source axiom or geometric input package.
+
+SP89 is validated: both production APIs compile in the 2772-job scoped
+build. The focused suite passes 24 examples and two exact standard-three
+axiom audits without warnings on its first run. The full build passes
+3213 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings. No fresh neighbor-suite pass is
+claimed. The 87-page PDF (859905 bytes) has a clean final log and passes
+visual review of pages 17, 18, 66, 78 and 86. Both exact API parity
+checks and independent Lean--TeX review pass. The static central
+inventory is 1035 checks, 565 examples and 927 axiom reports; its
+historical prefix is unchanged and was not re-elaborated in full.
+
+Next descend the compatible Galois action; the full group acts over
+`X`, while only the subgroup fixing the marked `K(Y)` preserves
+`lambda`. Global normality, normal stalks from smooth geometry and
+Chow--Betti generation remain separate. The complete audit prefix
+through SP88 remains byte-identical to `e910f25`.

@@ -1395,6 +1395,47 @@ a separated morphism therefore makes \(\lambda\) finite
 \'{e}tale \cite{StacksEtaleCancellation}.
 \end{proof}
 
+\begin{proposition}[Surjectivity of the global normalization maps]
+\label{prop:normalization-global-surjective}
+Let \(X\) be integral and fix any field extension \(K(X)\to N\).
+The original glued normalization map \(\mu_N:Z_N\to X\) is surjective.
+
+Let \(p:Y\to X\) be a finite dominant morphism of integral schemes,
+and suppose every local ring of \(Y\) is integrally closed. Then the
+original marked refinement \(\lambda:Z_{N_p}\to Y\) is surjective.
+Consequently, under the hypotheses of
+Corollary~\ref{cor:normal-closure-refinement-finite-etale}, both
+\(\mu_{N_p}\) and \(\lambda\) are finite \'{e}tale and surjective.
+\end{proposition}
+
+\begin{proof}
+For a nonempty affine open \(U\subseteq X\), set
+\(B_U=\Gamma(U,\mathcal O_X)\). The original generic germ and the
+field embedding make
+\(B_U\to\operatorname{IntCl}_{B_U}(N)\) injective; it is integral
+by definition. Lying-over therefore makes \(\pi_U:Z_U\to U\)
+surjective \cite{StacksLyingOver}. Apply
+Proposition~\ref{prop:normalization-target-local} to surjectivity.
+
+For the marked refinement, the original embedding \(K(Y)\hookrightarrow N_p\)
+induces an injective integral map
+\[
+ \operatorname{IntCl}_{B_U}\bigl(K(Y)\bigr)
+ \longrightarrow\operatorname{IntCl}_{B_U}(N_p).
+\]
+Lying-over and the original identification \(\nu_{p,U}\) make
+\(\lambda_U:Z_U\to p^{-1}(U)\) surjective. Given \(y\in Y\),
+choose an affine neighborhood \(U\) of \(p(y)\), and lift \(y\)
+to \(z\in Z_U\). The exact chart formula gives
+\[
+ \lambda\bigl(\jmath_U(z)\bigr)
+ =\iota_{p^{-1}(U)}\bigl(\lambda_U(z)\bigr)=y.
+\]
+The final assertion follows from
+Corollaries~\ref{cor:normal-closure-global-finite-etale}
+and~\ref{cor:normal-closure-refinement-finite-etale}.
+\end{proof}
+
 The group \(G=\mathcal N.\mathit{galoisGroup}\), the subgroup
 \(H=\mathcal N.\mathit{intermediateFixingSubgroup}\), and the canonical deck
 action on \(Y_N\) are all constructed from the same datum.  Normality keeps the conjugate embeddings inside the same field \(N\).
@@ -5467,6 +5508,10 @@ Finite \'{e}tale marked refinement &
 \leanpath{isFinite_of_comp_of_isSeparated}\newline
 \leanpath{gluedNormalClosureToCover_finite_etale}\newline
 \leanpath{Boundary/Normalization/FiniteEtaleGluedRefinement.lean}\\
+Surjective global normalization and refinement &
+\leanpath{gluedNormalizationToBase_surjective}\newline
+\leanpath{gluedNormalClosureToCover_surjective}\newline
+\leanpath{Boundary/Normalization/GluedNormalizationSurjectivity.lean}\\
 Full-visible boundary ideals &
 \leanpath{movingBoundaryIdeal_eq_top_of_surjective}\newline
 \leanpath{conjugateBoundarySeparation_of_surjective}\newline
@@ -6297,6 +6342,9 @@ principal table, grouped by mathematical layer.
 \normsrc{FiniteEtaleGluedRefinement.lean};
 \leanpath{isFinite_of_comp_of_isSeparated};
 \leanpath{gluedNormalClosureToCover_finite_etale};
+\normsrc{GluedNormalizationSurjectivity.lean};
+\leanpath{gluedNormalizationToBase_surjective};
+\leanpath{gluedNormalClosureToCover_surjective};
 \normsrc{FiniteAffineCover.lean};
 \leanpath{normalizationToIntermediate_surjective};
 \leanpath{normalizationIntermediateEquiv};
