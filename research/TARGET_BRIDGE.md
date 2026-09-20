@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-09-20 (SP93 marked function-field comparison; validated).
+Assessed: 2026-09-20 (SP94 arbitrary-class generation criterion, validated).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -37,9 +37,66 @@ restriction and integral/rational Chow restriction. The full build,
 The four new declarations use only the standard three logical axioms.
 The existing target equivalence and finite split model are retained.
 
+### G2a. Arbitrary-class recipe generation (SP94)
+
+**Completed SP94:** the bounded checkpoint formalizes the condition before returning
+to the Galois comparison. In
+`Realization/Chow/UpstairsGeneration.lean`, `HodgePullbackGeneratedBy` is
+
+\[
+ p_i(V_{\mathrm{Hdg}})\subseteq
+ \operatorname{im}(\operatorname{cl}_i\circ r_i).
+\]
+
+Its proved elementwise form asks for a coefficient `c` with
+`cl_i (r_i c) = p_i α` for each Hodge class `α`.
+`ClassDependentChowBettiGeneration` allows the index as well as the
+coefficient to depend on `α`, with all recipe and realization maps fixed
+before the quantifier. Neither definition asks for all upstairs Hodge
+classes or all upstairs cohomology to be generated.
+
+Reuse `RationalDegreeTransfer HY HX` with `pull : HX → HY` and
+`push : HY → HX`. For each index, require its positive degree `d_i` and
+`push_i ∘ pull_i = d_i • id`, together with a Chow pushforward `s_i`
+satisfying `cl_X ∘ s_i = push_i ∘ cl_i`. The proved conditional endpoint
+`rationalHodgeConjectureAt_of_classDependentChowBettiGeneration` exhibits
+`d_i⁻¹ • s_i (r_i c)` as the downstairs cycle. This is an implication
+for supplied maps, not an actual geometric realization or a proof of the
+generation condition. No unused scheme morphism, new projector structure,
+residual-surjectivity hypothesis, or global axiom is introduced.
+
+The live continuation order supersedes the historical local “next” notes
+below:
+
+1. Complete deck-action surjectivity/full-group comparison on SP93's
+   original normalization, then the required stabilizer and fiber claims.
+2. Build the actual same-cover Chow--Betti maps and prove the displayed
+   degree and cycle-class laws; derive normal stalks from the selected
+   smooth geometry where required.
+3. Construct the recipes and prove generation for the intended `X,p`.
+   Only then apply the descent theorem to the geometric Hodge target.
+
+The next bounded Galois checkpoint starts with extensionality: show that
+two deck transformations of the same glued normalization agree when
+their function-field pullbacks agree. The intended proof uses Mathlib's
+`ext_of_isDominant_of_isSeparated` at the generic-stalk inclusion;
+the already affine normalization map supplies relative separatedness.
+Then reconstruct the candidate field automorphism from the inverse deck
+map, conjugated by SP93's field equivalence, and compare with the existing
+action. The inverse preserves SP93's inverse-pullback convention. These
+are planned proof steps, not yet additional declarations or a surjectivity
+claim.
+
+For pruning, inventory transitive declaration dependencies and downstream
+mathematical claims first. Mark a branch as active, supporting a stronger
+endpoint, example-only, or bench candidate in the semantic-parity queue.
+Do not equate absence from the minimal descent proof with redundancy;
+retain the stronger marked/projector branch while it has live consumers.
+SP94 performs this initial audit without moving or deleting modules.
+
 ### B0. Boundary-section algebra and uniform trace landing
 
-The immediate checkpoint returns to the existing ideal/defect route. Keep
+The earlier construction checkpoint returned to the existing ideal/defect route. Keep
 the candidate analyses below as optional examples, rather than selecting
 PB0 or an abelian family as the next implementation. The first bounded
 algebraic statement is

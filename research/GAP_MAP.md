@@ -1,7 +1,7 @@
 # Current gap map
 
-Last reviewed: 2026-09-20 (SP93 marked function-field comparison;
-validated; earlier checkpoint records retain
+Last reviewed: 2026-09-20 (SP94 arbitrary-class generation criterion, validated;
+earlier checkpoint records retain
 their original validation scope).
 
 Start with [the target and equivalence sketch](TARGET_BRIDGE.md): it fixes
@@ -35,6 +35,34 @@ The candidate comparison must name explicit geometric cycles, their Betti
 images and the property of the variety supporting the generation argument.
 Galois actions and projectors are mechanisms to use when needed, not
 prerequisites for a direct cycle-class construction.
+
+SP94 makes this first obligation explicit in
+`Realization/Chow/UpstairsGeneration.lean`: for every independently
+specified Hodge class `α`, some member of a fixed indexed family of
+upstairs recipes has cycle class `pull_i α`. Both a fixed-index subspace
+inclusion and its class-dependent indexed form are defined. With explicit
+positive-degree transfer and cycle-class compatibility, the normalized
+Chow pushforward represents `α`; this conditional implication is proved.
+The geometric generation hypothesis itself has not been discharged.
+
+The live order is now:
+
+1. **Completed SP94:** the arbitrary-class condition and its conditional
+   descent implication; no additional marked-Galois witness package.
+2. Extend SP93's faithful action to a full deck-group comparison, including
+   surjectivity and the intended stabilizer/fiber identifications.
+3. Instantiate Chow pushforward, Betti pullback/trace and their two
+   compatibility laws for the same actual cover. Supply smooth-geometric
+   normality where the construction needs it.
+4. Construct named upstairs cycle recipes and prove generation of the
+   pulled-back rational Hodge classes for the intended varieties and
+   codimensions, then apply normalized descent.
+
+A parallel pruning queue records actual theorem dependencies and
+mathematical consumers before moving objects. The minimal cycle conclusion
+need not consume all projector/action machinery; that does not make the
+stronger existing endpoints or their dependencies redundant. No module is
+removed or archived at SP94.
 
 The [candidate comparison](TARGET_BRIDGE.md#g0-smooth-projective-setting-and-candidate-constructions)
 retains smooth projective complex varieties as the main setting. When a
@@ -79,7 +107,7 @@ Relative bundle gluing, `O(1)`/Chow operations, positive-degree Betti/Hodge
 comparison and finite-cover trace are separate missing constructions.
 Existing field normal closure is not a global finite etale cover adapter.
 
-The immediate work instead follows the existing
+The construction history below follows the existing
 [boundary-section ideal route](TARGET_BRIDGE.md#b0-boundary-section-algebra-and-uniform-trace-landing).
 The first checkpoint is the normal-Noetherian implication
 `T <= R <= Frac(T)`, `0 != a in T`, `a R <= T` implies `R = T`,

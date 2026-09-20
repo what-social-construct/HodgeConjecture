@@ -71,6 +71,26 @@ effective Hodge structure and its geometric Tate-block comparison. The
 general variety-level and all-varieties indexing data needed to instantiate
 the classical conjecture remain separate.
 
+The current class-first checkpoint (SP94) is
+[`Realization/Chow/UpstairsGeneration.lean`](HodgeConjecture/Realization/Chow/UpstairsGeneration.lean).
+For each independently specified Hodge class `α`, it asks for an index `i`
+and a coefficient `c` in a fixed upstairs recipe with
+`cl_i (recipe_i c) = pull_i α`. The index and coefficient may depend on
+the class; the family of maps is fixed in advance. The fixed-index version
+is the inclusion of the pulled-back Hodge subspace in the recipe's
+cycle-class image, not surjectivity onto all upstairs cohomology.
+
+The conditional descent theorem reuses `RationalDegreeTransfer`: given
+positive degree, `push_i ∘ pull_i = degree_i • id`, and compatibility of
+Chow pushforward with cycle classes, the normalized cycle
+`degree_i⁻¹ • pushCH_i (recipe_i c)` represents `α`. These maps and laws
+are explicit inputs, not a construction of geometric transfer or a proof
+of recipe generation. No new projector or Galois witness package is added.
+The next order is deck-group surjectivity, the actual same-cover
+Chow--Betti adapters, then geometric generation for the intended `X,p`.
+Pruning follows checked dependencies and mathematical roles; objects are
+queued before any move to the bench. See [the live plan](research/TARGET_BRIDGE.md#0-operative-plan-chow-to-betti-first).
+
 For a smooth projective \(d\)-fold, the correspondence language is
 
 \[

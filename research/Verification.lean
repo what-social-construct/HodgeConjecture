@@ -7838,3 +7838,21 @@ Focused regressions and enforced standard-axiom checks are in
 #print axioms HodgeConjecture.CollisionFoundations.gluedNormalizationDeckAction_injective
 #print axioms HodgeConjecture.CollisionFoundations.gluedNormalClosureFunctionFieldEquivAt_toCover
 #print axioms HodgeConjecture.CollisionFoundations.gluedNormalClosureFunctionFieldEquiv_toCover
+
+/-! SP94: prescribed Hodge-class generation and normalized cycle descent. -/
+
+#check HodgeConjecture.HodgePullbackGeneratedBy
+#check HodgeConjecture.hodgePullbackGeneratedBy_iff
+#check HodgeConjecture.normalizedPushforward_cycleClass
+#check HodgeConjecture.rationalHodgeConjectureAt_of_hodgePullbackGeneratedBy
+#check HodgeConjecture.ClassDependentChowBettiGeneration
+#check HodgeConjecture.classDependentChowBettiGeneration_of_fixed
+#check HodgeConjecture.rationalHodgeConjectureAt_of_classDependentChowBettiGeneration
+
+#print axioms HodgeConjecture.HodgePullbackGeneratedBy
+#print axioms HodgeConjecture.hodgePullbackGeneratedBy_iff
+#print axioms HodgeConjecture.normalizedPushforward_cycleClass
+#print axioms HodgeConjecture.rationalHodgeConjectureAt_of_hodgePullbackGeneratedBy
+#print axioms HodgeConjecture.ClassDependentChowBettiGeneration
+#print axioms HodgeConjecture.classDependentChowBettiGeneration_of_fixed
+#print axioms HodgeConjecture.rationalHodgeConjectureAt_of_classDependentChowBettiGeneration

@@ -1258,3 +1258,54 @@ deck group. Fiber/torsor comparison, the full stabilizer of `lambda`,
 normal stalks from smooth geometry and Chow--Betti generation remain
 separate. The complete audit prefix through SP92 remains byte-identical
 to `cffbb9e`.
+
+## 30. SP94: arbitrary-class recipe condition and normalized descent
+
+The new `Realization/Chow/UpstairsGeneration.lean` uses the independently
+specified downstairs Hodge subspace. Its fixed-recipe condition is
+`pull (Hdg_X) <= range (clY.comp recipe)`; its indexed condition asks,
+for every Hodge class `α`, for an index and coefficient representing
+`pull_i α`. The family of maps is fixed before `α` is quantified.
+Neither condition asserts generation of all upstairs cohomology.
+
+Seven public APIs give the two definitions, the fixed condition's
+elementwise equivalence, passage from fixed to indexed generation,
+the normalized-cycle formula, and two conditional Hodge endpoints.
+They reuse `RationalDegreeTransfer HY HX` with its positive degree and
+push-pull identity. An explicit Chow pushforward and its cycle-class
+comparison are required. The downstairs cycle is
+`degree_i⁻¹ • pushCH_i (recipe_i c)`. No new projector or marked-Galois
+witness package, residual-surjectivity premise, source axiom or unused
+scheme morphism is added.
+
+This establishes the conditional implication, not the geometric maps
+or recipe generation. The next geometric work remains deck-action
+surjectivity/full-group comparison, followed by actual same-cover
+Chow--Betti transfer and then generation for the intended `X,p`.
+The manuscript gives the precise definition and descent theorem in
+section 1, with explicit mathematical hypotheses and no editorial
+gap commentary.
+
+The pruning pass begins with dependencies and mathematical consumers.
+An object not consumed by the minimal cycle conclusion can still support
+a live stronger projector/action endpoint. No module is removed or
+archived. The semantic-parity queue records this distinction before any
+future bench move. The complete audit prefix through SP93 is preserved
+byte-for-byte from `9539dc6`.
+
+SP94 validation passes: 2466-job scoped build; 26 focused examples,
+seven declaration checks and seven axiom audits, each with exactly the
+standard three axioms; and two new dependency assertions. The latter
+confirm that both sufficient-Hodge endpoints consume the degree law
+without the normalized projector or declarations from `LinearAlgebra`,
+`Boundary` or `Correspondence`. The full build passes 3222 jobs with
+only the unchanged Challenge warnings at lines 33 and 46. The unchanged
+dependency audit passes six primary contracts and two supporting reports.
+No fresh neighbor-suite pass is claimed.
+
+The 92-page PDF (880675 bytes) has a clean final log and passes visual
+review of pages 3, 4, 67, 80 and 81. Independent scope review and all
+seven API parity checks pass. The central static inventory is 1084
+checks, 565 examples and 976 axiom reports; the preserved central prefix
+was not re-elaborated in full. The SP93-to-EOF semantic-queue record is
+also byte-identical to `9539dc6`.

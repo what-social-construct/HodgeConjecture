@@ -17,9 +17,36 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-09-20 (SP93 marked function-field
-comparison; validated;
+Last source/interface review: 2026-09-20 (SP94 arbitrary-class generation
+criterion, validated;
 earlier source records retain their original validation scope).
+
+### Arbitrary-class generation and normalized descent (SP94, 2026-09-20)
+
+No new literature premise, bibliography entry or source axiom is introduced.
+The seven public APIs in `Realization/Chow/UpstairsGeneration.lean` give
+a conditional rational-linear argument using the already existing
+`RationalDegreeTransfer` data. Positive degree and the cohomological
+push-pull identity are fields of the explicitly supplied transfer;
+the Chow/cycle-class pushforward comparison and recipe-generation
+condition are explicit proposition parameters.
+
+The kernel-checked calculation sends an upstairs cycle representing
+`pull_i α` to `degree_i⁻¹ • pushCH_i z`, whose downstairs cycle class is
+`α`. No citation is used to supply the generation premise. No statement
+about algebraic-cycle degrees alone is treated as a proof of the Betti
+transfer identity. The actual geometric maps must later refer to the
+same cover and discharge both displayed laws. Manuscript statements
+`def:upstairs-generation` and `thm:upstairs-generation-descent` use the
+same explicit maps and hypotheses.
+
+Validation passes the scoped build, 26 focused examples, seven
+standard-three axiom audits, two direct-descent dependency checks, the
+3222-job full build and the unchanged six-primary/two-support dependency
+regression. The single 92-page PDF is rebuilt and visually checked.
+Detailed counts and preserved-history guards are recorded under
+A11bz in [the claim ledger](CLAIM_LEDGER.md). No new geometric source
+input has been discharged by these conditional calculations.
 
 ### Marked function-field comparison and action faithfulness (SP93, 2026-09-20)
 

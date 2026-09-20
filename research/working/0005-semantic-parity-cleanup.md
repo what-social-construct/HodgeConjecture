@@ -149,6 +149,118 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP91 | Normal local rings of the original glued normalization | CLOSE / LOCALIZE / TRANSFER | Prove integral closedness of the original coordinate rings and affine stalks, then transfer domain and integral-closedness properties through the original chart open immersions to every global local ring. | PROVED / VALIDATED |
 | SP92 | Integrality of the original glued normalization | OVERLAP / REDUCE / UNITE | Prove that original chart images intersect, transfer reducedness from the proved domain stalks, and derive irreducibility and integrality of the same global scheme. | PROVED / VALIDATED |
 | SP93 | Marked function-field comparison and action faithfulness | IDENTIFY / COMPARE / RETAIN | Compare the original generic stalk with the finite ambient extension independently of charts; preserve the base map and marked refinement, prove inverse-pullback action compatibility and faithfulness. | PROVED / VALIDATED |
+| SP94 | Specified upstairs recipes and arbitrary-class generation condition | SPECIFY / NORMALIZE / DESCEND | State fixed and class-dependent recipe generation over the independently supplied Hodge subspace; prove normalized Chow descent using the existing positive-degree transfer and an explicit cycle-class/pushforward square. | PROVED / VALIDATED |
+
+SP94 (2026-09-20): **specified upstairs recipes and normalized descent**.
+The seven public APIs are in `Realization/Chow/UpstairsGeneration.lean`.
+The manuscript counterparts are `def:upstairs-generation` and
+`thm:upstairs-generation-descent`; the ledger checkpoint is A11bz and the
+target-bridge checkpoint is G2a.
+
+| Lean API | Mathematical role | TeX notation |
+| --- | --- | --- |
+| `HodgePullbackGeneratedBy` | A fixed linear cycle recipe contains the pullbacks of the independently specified downstairs Hodge subspace | `p_i(Hdg_X) ⊆ im(cl_i ∘ r_i)` |
+| `hodgePullbackGeneratedBy_iff` | The Hodge class is prescribed before choosing its recipe coefficient | `∀ α ∈ Hdg_X, ∃ c, cl_i(r_i(c)) = p_i(α)` |
+| `normalizedPushforward_cycleClass` | The actual normalized Chow pushforward of an upstairs representative has the prescribed class | `cl_X(d_i⁻¹ s_i(z)) = α` |
+| `rationalHodgeConjectureAt_of_hodgePullbackGeneratedBy` | Fixed-recipe generation implies the existing fixed-codimension Hodge target under the explicit transfer laws | `Hdg_X ⊆ im(cl_X)` |
+| `ClassDependentChowBettiGeneration` | A supplied indexed family allows the index and coefficient to vary with the prescribed class | `∀ α ∈ Hdg_X, ∃ i,c, cl_i(r_i(c)) = p_i(α)` |
+| `classDependentChowBettiGeneration_of_fixed` | One successful fixed recipe supplies the indexed condition | Choose the same `i` for every `α` |
+| `rationalHodgeConjectureAt_of_classDependentChowBettiGeneration` | Class-dependent generation descends through the selected positive-degree transfer | `z_X = d_i⁻¹ s_i(r_i(c))` |
+
+The recipe and maps for each index are fixed before quantifying over the
+class. Only the pulled-back downstairs Hodge subspace must be generated;
+there is no requirement that the recipe, pullback, or a residual realization
+be surjective onto the full upstairs space. The upstairs cycle-class map is
+a supplied linear map, without an unused upstairs Hodge model. The descent
+proof reuses `RationalDegreeTransfer HY HX`: its `pull` goes from downstairs
+to upstairs, its `push` goes back, and its positive degree satisfies
+`push ∘ pull = d · id`. The separate comparison is
+`cl_X ∘ pushCH = push ∘ cl_Y`. The output is the displayed normalized Chow
+cycle, not just an abstract projector or range assertion.
+
+No scheme, cover, deck group, correspondence algebra, or projector is added
+as a phantom parameter. This checkpoint formalizes and consumes a precise
+generation obligation; it does not prove that obligation for arbitrary
+smooth projective varieties, construct the requisite Chow--Betti maps, or
+turn the desired Hodge conclusion into an axiom. Taking the recipe to be
+all upstairs Chow classes is a conditional algebraicity criterion, not an
+independent geometric generation mechanism.
+
+The requested order is now: (1) this arbitrary-class condition and its
+descent theorem; (2) surjectivity onto the full deck-automorphism group for
+the existing normalization action, beyond SP93 faithfulness; (3) genuine
+Chow--Betti realization and proof of the generation condition on the chosen
+geometric targets. The second task concerns deck automorphisms, not
+surjectivity of the recipe or residual map. An actual-cover adapter must
+identify its maps with those of a genuine morphism and prove the degree and
+cycle-class squares; finite etaleness attached to arbitrary maps would not
+do so. This ordering does not make deck-group reconstruction a prerequisite
+of the direct normalized-descent theorem.
+
+SP94 scoped and focused validation passes: the production build completes
+2466 jobs with a clean log, and the focused file completes with exit zero,
+26 examples, seven declaration checks and seven axiom audits, without
+warnings or errors. Every actual axiom set is exactly `propext`,
+`Classical.choice` and `Quot.sound`. The examples cover fixed and genuinely
+class-dependent recipes (all line recipes together generate the rational
+plane, but no single line does), non-surjective recipes and pullback, the
+strict pulled-back subspace, degree-two normalization, a zero-pullback
+counterexample without transfer, and empty-index failure. Both new
+sufficient-Hodge endpoints also pass the declaration-level dependency
+boundary: they consume the positive-degree law without the normalized
+projector or declarations originating in `LinearAlgebra`, `Boundary`, or
+`Correspondence` modules. The unchanged six-primary/two-support dependency
+regression passes with a clean log. The full build passes 3222 jobs with
+only the two unchanged Challenge placeholder warnings at lines 33 and 46;
+there are no new production warnings. No fresh neighbor-suite pass is claimed.
+
+The single PDF builds with exit zero to 92 pages and 880675 bytes, with a
+clean final LaTeX log; root visual review passes pages 3, 4, 67, 80 and 81.
+Read-only review confirms the definition, descent proof and seven-name
+registry match the Lean statements. Central verification has static counts
+1084 checks, 565 examples and 976 axiom reports; this is not a fresh full
+central replay. The complete SP93 dated record through end-of-file remains
+byte-identical to `9539dc6`, and whitespace checks pass. The central and
+geometric-audit historical prefixes also remain byte-identical to that
+commit. Independent scope review of the six current documentation
+additions passes; SP94 is validated.
+
+### SP94 bounded pruning inventory: preserve now, prune only with evidence
+
+- **Consumed by direct descent:** `RationalHodgeCycleClassModel`, its
+  independently specified Hodge submodule and cycle-class map, the existing
+  `RationalDegreeTransfer` degree law, the specified recipe, and the explicit
+  cycle-class/pushforward square. No second transfer record or new marked
+  coverage object is introduced.
+- **Active optional branches, not deletion candidates:** graph-projector
+  construction/detection, marked action comparisons and their stronger
+  surjective-cancellation endpoints, the two existing Galois coverage
+  interfaces, and reverse fixed-deck factorization/replacement. They have
+  existing consumers and verification contracts; in particular,
+  `research/ProofDependencies.lean` explicitly audits both fixed-deck
+  sufficient and iff endpoints. Their stronger hypotheses are not imported
+  into the new descent statements.
+- **Deferred geometric work, not redundant objects:** global deck-group
+  reconstruction, actual positive-dimensional Chow--Betti operations and
+  their comparisons, and arbitrary-class generation. Boundary extension,
+  idempotence-defect correction and projector realization remain optional
+  mechanisms for a selected route, not assumptions of normalized descent.
+- **Safe review candidates:** obsolete current-plan prose naming already
+  completed localization/gluing/action checkpoints as the next action, and
+  future aliases shown by a declaration-level caller audit to have no
+  active consumers. Historical dated records and the existing archive are
+  provenance, not current next-step instructions. No Lean declaration or
+  historical record is moved, archived, or deleted in SP94. Absence from the
+  two new endpoint dependency closures alone is not evidence of global
+  dead code.
+
+This inventory is deliberately bounded: the existing six-primary/two-support
+dependency diagnostic is unchanged. The new focused diagnostic checks
+declaration dependencies, not imports, and tests that direct descent uses
+the degree law without the normalized projector or declarations originating
+in `LinearAlgebra`, `Boundary`, or `Correspondence` modules. A future pruning
+change must separately enumerate consumers, preserve mathematical roles and
+rerun the affected contracts.
 
 SP93 (2026-09-20): **marked function-field comparison and action faithfulness**.
 The 19 public APIs are in `Cycles/FunctionFieldComparison.lean`,

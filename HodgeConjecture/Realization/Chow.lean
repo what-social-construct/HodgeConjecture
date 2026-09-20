@@ -9,6 +9,7 @@ import HodgeConjecture.Realization.Chow.Model
 import HodgeConjecture.Realization.Chow.Presentation
 import HodgeConjecture.Realization.Chow.TateGraphProjector
 import HodgeConjecture.Realization.Chow.TransferProjector
+import HodgeConjecture.Realization.Chow.UpstairsGeneration
 import HodgeConjecture.Realization.Chow.Examples.SplitPoints
 import HodgeConjecture.Realization.Chow.Examples.SplitSpanRealization
 import HodgeConjecture.Realization.Chow.Examples.SplitSpanQuotient
@@ -67,6 +68,14 @@ Its actual Chow action is matrix-vector multiplication in point coordinates.
 `Realization.Betti` constructs the singular degree-zero cycle-class
 comparison and cohomological action for these schemes over the complex field.
 No realization on all nonsplit finite-étale classes is claimed.
+
+The upstairs-generation criterion fixes a cycle recipe and asks it to
+represent the pullbacks of the independently specified downstairs Hodge
+classes. An indexed version allows the chosen recipe to vary with the class.
+Existing positive-degree transfer data and explicit cycle-class/pushforward
+compatibility give the normalized representative downstairs. This conditional
+criterion needs no projector, deck action, or surjective residual map;
+constructing the geometric maps and proving generation remain separate tasks.
 
 The superseded commutative selector-generated specialization is also
 archived outside the library, not available through its former import path.

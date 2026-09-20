@@ -162,6 +162,71 @@ statement ranges over all smooth projective complex varieties and
 codimensions with these geometric models. The finite split degree-zero
 model is constructed below.
 
+\subsection{Upstairs generation and descent}
+\label{subsec:upstairs-generation}
+
+Fix an index set \(\Lambda\). For each \(i\in\Lambda\), let
+\(A_i,V_i,\mathcal R_i\) be rational vector spaces with specified linear maps
+\[
+ \operatorname{cl}_i:A_i\to V_i,\qquad
+ p_i:V\to V_i,\qquad r_i:\mathcal R_i\to A_i.
+\]
+The map \(r_i\) is the chosen cycle recipe. All these maps are fixed before
+a Hodge class is prescribed; the choice of index and recipe coefficient
+may depend on that class.
+
+\begin{definition}[Class-dependent upstairs generation]
+\label{def:upstairs-generation}
+The recipes generate the pulled-back Hodge classes if
+\[
+ \forall\alpha\in V_{\mathrm{Hdg}},\quad
+ \exists i\in\Lambda,\ \exists c\in\mathcal R_i,\quad
+ \operatorname{cl}_i(r_i(c))=p_i(\alpha).
+\]
+For a single recipe, this is equivalently the subspace inclusion
+\[
+ p_i(V_{\mathrm{Hdg}})
+   \subseteq\operatorname{im}(\operatorname{cl}_i\circ r_i).
+\]
+\end{definition}
+
+\begin{theorem}[Degree-normalized descent of generated classes]
+\label{thm:upstairs-generation-descent}
+For each \(i\), suppose there are linear maps
+\(s_i:A_i\to A\), \(t_i:V_i\to V\), and an integer \(d_i>0\) satisfying
+\[
+ \operatorname{cl}\circ s_i=t_i\circ\operatorname{cl}_i,
+ \qquad t_i\circ p_i=d_i\operatorname{id}_V.
+\]
+If the class-dependent generation condition holds, then
+\(\mathrm{HC}_{\Q}(\mathscr H)\) holds. More precisely, any coefficient
+\(c\) representing \(p_i(\alpha)\) gives the representative
+\[
+ z_\alpha=\frac{1}{d_i}s_i(r_i(c)),
+ \qquad \operatorname{cl}(z_\alpha)=\alpha.
+\]
+\end{theorem}
+
+\begin{proof}
+For the chosen \(i,c\), linearity and the two comparison laws give
+\[
+ \operatorname{cl}\left(\frac{1}{d_i}s_i(r_i(c))\right)
+ =\frac{1}{d_i}t_i\operatorname{cl}_i(r_i(c))
+ =\frac{1}{d_i}t_i p_i(\alpha)=\alpha.
+\]
+Apply this calculation to every \(\alpha\in V_{\mathrm{Hdg}}\).
+\end{proof}
+
+For the finite-cover construction, \(i\) indexes specified covers
+\(f_i:Y_i\to X\) and cycle recipes in \(\CH^p(Y_i)_{\Q}\).
+The geometric specialization takes \(p_i=f_i^*\), \(t_i=f_{i,*}\)
+on Betti cohomology and \(s_i=f_{i,*}\) on Chow groups, with their
+cycle-class comparison and positive constant-degree transfer law as the
+displayed hypotheses. The generation condition concerns precisely
+\(f_i^*\alpha\); it does not require generation of every class upstairs.
+
+\subsection{Graph-projector formulation}
+
 Let \(\Gamma\) be a rational algebra acting on \(\Q\oplus V\) through
 \(\rho:\Gamma\to\End_{\Q}(\Q\oplus V)\).  For \(\alpha\in V\), define
 
@@ -5548,6 +5613,12 @@ isomorphism; the same Palomar square holds for the quotient image of
 Rational Hodge target &
 \leanpath{RationalHodgeConjectureAt}\newline
 \leanpath{Realization/HodgeClasses.lean}\\
+Upstairs recipe generation &
+\leanpath{ClassDependentChowBettiGeneration}\newline
+\leanpath{Realization/Chow/UpstairsGeneration.lean}\\
+Normalized cycle descent &
+\leanpath{rationalHodgeConjectureAt_of_classDependentChowBettiGeneration}\newline
+\leanpath{Realization/Chow/UpstairsGeneration.lean}\\
 Graph-projector equivalence &
 \leanpath{rationalHodgeConjectureAt_iff_everyHodgeClassHasGraphProjectorLift}\newline
 \leanpath{Realization/Chow/TateGraphProjector.lean}\\
@@ -6328,6 +6399,16 @@ principal table, grouped by mathematical layer.
 \leanpath{ClassDependentMarkedGaloisSelectorCoverage};
 \leanpath{rationalHodgeConjectureAt_of_classDependentMarkedGaloisSelectorCoverage};
 \leanpath{StrongGraphProjectorLiftReplacementByClassDependentMarkedGaloisSelector}.
+
+\paragraph{Upstairs generation and normalized descent.}
+\chowsrc{UpstairsGeneration.lean};
+\leanpath{HodgePullbackGeneratedBy};
+\leanpath{hodgePullbackGeneratedBy_iff};
+\leanpath{normalizedPushforward_cycleClass};
+\leanpath{rationalHodgeConjectureAt_of_hodgePullbackGeneratedBy};
+\leanpath{ClassDependentChowBettiGeneration};
+\leanpath{classDependentChowBettiGeneration_of_fixed};
+\leanpath{rationalHodgeConjectureAt_of_classDependentChowBettiGeneration}.
 
 \paragraph{Normal closure, conjugate boundaries, and codimension one.}
 \leanpath{NormalClosureData.isGalois};

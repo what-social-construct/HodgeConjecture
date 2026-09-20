@@ -1,7 +1,7 @@
 # Claim ledger
 
-Last audited: 2026-09-20 (SP93 marked function-field comparison,
-validated; earlier checkpoint records retain
+Last audited: 2026-09-20 (SP94 arbitrary-class generation criterion, validated;
+earlier checkpoint records retain
 their original scope).
 
 Status vocabulary:
@@ -18,6 +18,57 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Arbitrary-class upstairs generation and normalized descent (A11bz / SP94)
+
+Status: `CONDITIONAL`. Seven public APIs in
+`Realization/Chow/UpstairsGeneration.lean` define the fixed-recipe
+pullback-image inclusion, prove its elementwise form, define indexed
+class-dependent generation, and prove degree-normalized descent to the
+existing `RationalHodgeConjectureAt` target. For each prescribed Hodge
+class, the witness is the explicit cycle
+`degree_i⁻¹ • pushCH_i (recipe_i c)`. The Hodge subspace is specified
+independently of the cycle-class map. Recipes and realization maps are
+fixed before the class is quantified; the chosen index and coefficient
+may vary with the class.
+
+The existing `RationalDegreeTransfer` supplies a positive degree and the
+cohomological push-pull law. Compatibility of Chow pushforward with the
+cycle-class map and the generation condition are explicit theorem
+hypotheses. There is no new input axiom, phantom geometric morphism,
+projector package, residual-surjectivity premise, or claim that this
+construction already supplies geometric transfer. The manuscript
+counterparts are `def:upstairs-generation` and
+`thm:upstairs-generation-descent`.
+
+The open substantive obligations are full deck-group comparison on the
+constructed cover, actual same-cover Chow--Betti maps and their laws, and
+generation by the specified geometric recipes for the intended `X,p`.
+The conditional implication does not prove generation or a new Hodge case.
+The pruning queue distinguishes dependencies of this minimal cycle
+conclusion from the live stronger projector/action endpoints; no object
+is moved or deleted at this checkpoint.
+
+SP94 is validated. The scoped production build passes 2466 jobs; the
+focused suite passes 26 examples, seven declaration checks and seven
+axiom audits, each with exactly `propext`, `Classical.choice` and
+`Quot.sound`. Both new Hodge endpoints pass transitive-dependency checks:
+they consume the existing degree law, but neither the normalized
+projector nor declarations from the `LinearAlgebra`, `Boundary` or
+`Correspondence` modules. The full build passes 3222 jobs with only the
+two unchanged Challenge placeholder warnings at lines 33 and 46.
+The unchanged dependency regression passes six primary contracts and
+two supporting reports. Scoped, focused and dependency logs are clean;
+no fresh neighbor-suite replay is claimed.
+
+The single PDF has 92 pages and 880675 bytes, a clean final LaTeX log,
+and visual review of pages 3, 4, 67, 80 and 81. Independent Lean--TeX and
+documentation scope reviews pass. All seven public APIs occur in the
+manuscript registry, semantic table and central checks/audits. The central
+inventory is statically 1084 checks, 565 examples and 976 axiom reports;
+its historical prefix was preserved, not re-elaborated in full. The
+geometric-audit prefix and SP93-to-EOF queue record are also byte-identical
+to `9539dc6`.
 
 ## Marked function-field comparison and action faithfulness (A11by / SP93)
 
