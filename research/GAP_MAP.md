@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-09-20 (SP91 normal local rings of the original glued normalization;
+Last reviewed: 2026-09-20 (SP92 integrality of the original glued normalization;
 validated; earlier checkpoint records retain
 their original validation scope).
 
@@ -887,7 +887,38 @@ and independent Lean--TeX review pass. The static central inventory is
 1054 checks, 565 examples and 946 axiom reports; its historical prefix
 is unchanged and was not re-elaborated in full.
 
-**Next bounded bridge:** global integrality and marked function-field
+**SP92: integrality of the same glued normalization.**
+Four APIs in `GluedNormalizationIntegrality.lean` prove pairwise
+intersection of original chart images, global reducedness, global
+irreducibility and the `IsIntegral` instance. Actual nonempty common
+affine refinements witness the overlaps. Each chart is integral,
+and its irreducible open image belongs to the original covering family.
+The overlaps force irreducibility; nonemptiness comes from a base
+chart. SP91's domain stalks give reducedness and hence integrality.
+
+The manuscript counterpart is `prop:normalization-global-integral`.
+Integral `X` and arbitrary `N/K(X)` suffice, without algebraicity,
+finite degree, separability, base normality, Noetherianity or
+separatedness. The same carriers, germs, chart maps and marked field
+remain fixed. The original `N_p` specialization needs no normal-stalk
+premise on either scheme. The intrinsic function field is available;
+its marked comparison with the ambient field remains separate.
+
+SP92 is validated: all four production APIs compile in the 2744-job
+scoped build. The focused suite passes 24 examples and four exact
+standard-three axiom audits without warnings. The full build passes
+3217 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings. A fresh rerun of the unchanged SP91
+focused suite passes its 24 examples and four exact standard-three
+axiom audits without warnings; no other fresh neighbor-suite pass is
+claimed. The 89-page PDF (867807 bytes) has a clean final log and passes
+visual review of pages 15, 16, 67, 68, 80 and 87. All four exact API
+parity checks and independent Lean--TeX review pass. The static central
+inventory is 1058 checks, 565 examples and 950 axiom reports; its
+historical prefix is unchanged and was not re-elaborated in full.
+
+**Next bounded bridge:** marked function-field
 comparison. Faithfulness, fiber
 comparison and Galois-cover or torsor identification remain separate.
 The fixing-subgroup result is sufficient for preservation of `lambda`,

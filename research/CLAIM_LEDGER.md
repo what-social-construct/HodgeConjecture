@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-20 (SP91 normal local rings of the original glued normalization,
+Last audited: 2026-09-20 (SP92 integrality of the original glued normalization,
 validated; earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,48 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Integrality of the original glued normalization (A11bx / SP92)
+
+Status: `FORMAL`; all four public APIs compile and the checkpoint is
+validated. Four public APIs in
+`Boundary/Normalization/GluedNormalizationIntegrality.lean` prove that
+any two original affine normalization chart images intersect, that the
+same glued scheme is reduced and irreducible, and supply its global
+`IsIntegral` instance. Integral `X` and arbitrary `N/K(X)` suffice,
+without algebraicity, finite degree, separability, base normality,
+Noetherianity or separatedness.
+
+An actual nonempty common affine refinement witnesses the chart
+intersection. The charts are integral because their coordinate rings
+are subrings of `N`; their irreducible open images cover the scheme.
+The proved intersections force irreducibility, with nonemptiness
+constructed from a base chart. SP91's domain stalks imply reducedness,
+and reducedness plus irreducibility imply integrality. The manuscript
+counterpart is `prop:normalization-global-integral`.
+
+All original carriers, maps, generic germs and field markings remain
+fixed. The actual `N_p` specialization needs no normal-stalk premise on
+`X` or `Y`. The intrinsic function field is now available, without an
+asserted identification with arbitrary ambient `N`.
+
+SP92 is validated: all four production APIs compile in the 2744-job
+scoped build. The focused suite passes 24 examples and four exact
+standard-three axiom audits without warnings. The full build passes
+3217 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings. A fresh rerun of the unchanged SP91
+focused suite passes its 24 examples and four exact standard-three
+axiom audits without warnings; no other fresh neighbor-suite pass is
+claimed. The 89-page PDF (867807 bytes) has a clean final log and passes
+visual review of pages 15, 16, 67, 68, 80 and 87. All four exact API
+parity checks and independent Lean--TeX review pass. The static central
+inventory is 1058 checks, 565 examples and 950 axiom reports; its
+historical prefix is unchanged and was not re-elaborated in full.
+
+Next: marked function-field comparison. Faithfulness, fiber/torsor
+comparison, normal stalks from smooth geometry and Chow--Betti generation
+remain separate. Global integrality supplies no new Hodge case.
 
 ## Normal local rings of the original glued normalization (A11bw / SP91)
 

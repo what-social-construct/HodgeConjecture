@@ -1167,3 +1167,43 @@ Faithfulness, fiber comparison and torsor or Galois-cover identification
 remain separate. Normal stalks from smooth geometry and Chow--Betti
 generation remain separate. The complete audit prefix through SP90
 remains byte-identical to `88a5f8b`.
+
+## 28. SP92 follow-up: integrality of the original glued normalization
+
+Four public APIs in `GluedNormalizationIntegrality.lean` prove pairwise
+chart intersection, global reducedness, global irreducibility and the
+`IsIntegral` instance. Integral `X` and arbitrary `N/K(X)` suffice.
+Actual nonempty common affine refinements witness the overlaps through
+the original chart maps. Each normalization chart is integral because
+its coordinate ring is a subring of `N`. The irreducible open images
+cover the global scheme and their pairwise intersections give global
+irreducibility. Nonemptiness comes from a base chart. SP91's domain
+stalks imply reducedness, and hence integrality of the same carrier.
+
+The manuscript counterpart is `prop:normalization-global-integral`,
+with source citations Stacks Tags 01OM and 01ON. No algebraicity,
+finite degree, separability, base normality, Noetherianity or
+separatedness is assumed. The actual marked `N_p` specialization needs
+no normal-stalk hypotheses on `X` or `Y`. Original germs, fields,
+markings, chart carriers and the colimit remain fixed. The intrinsic
+function field is available without an asserted identification with
+arbitrary ambient `N`.
+
+SP92 is validated: all four production APIs compile in the 2744-job
+scoped build. The focused suite passes 24 examples and four exact
+standard-three axiom audits without warnings. The full build passes
+3217 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings. A fresh rerun of the unchanged SP91
+focused suite passes its 24 examples and four exact standard-three
+axiom audits without warnings; no other fresh neighbor-suite pass is
+claimed. The 89-page PDF (867807 bytes) has a clean final log and passes
+visual review of pages 15, 16, 67, 68, 80 and 87. All four exact API
+parity checks and independent Lean--TeX review pass. The static central
+inventory is 1058 checks, 565 examples and 950 axiom reports; its
+historical prefix is unchanged and was not re-elaborated in full.
+
+Next address marked function-field comparison. Faithfulness,
+fiber/torsor comparison, normal stalks from smooth geometry and
+Chow--Betti generation remain separate. The complete audit prefix
+through SP91 remains byte-identical to `44d8fec`.

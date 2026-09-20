@@ -17,9 +17,54 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-09-20 (SP91 integral-closure normality
-and localization interfaces; validated;
+Last source/interface review: 2026-09-20 (SP92 irreducible-chart and
+reduced-plus-irreducible integrality criteria; validated;
 earlier source records retain their original validation scope).
+
+### Integrality of the original glued normalization (SP92, 2026-09-20)
+
+[Stacks, Lemma 28.3.3, Tag 01OM](https://stacks.math.columbia.edu/tag/01OM)
+gives the criterion for irreducibility through a nonempty covering
+family of irreducible affine opens with nonempty pairwise intersections.
+[Stacks, Lemma 28.3.4, Tag 01ON](https://stacks.math.columbia.edu/tag/01ON)
+identifies integral schemes with reduced irreducible schemes.
+Both primary pages were checked for SP92. The manuscript adds keys
+`StacksIrreducibleAffineCover` and `StacksIntegralReducedIrreducible`;
+no source axiom or geometric input package is introduced.
+
+`normalizationChartToGlued_range_inter_nonempty` constructs an actual
+common affine refinement of the original base opens. Its normalization
+is nonempty because its coordinate ring is a domain. Chart naturality
+places its image in both global chart ranges. The irreducibility proof
+uses these irreducible open images and their intersections and proves
+global nonemptiness explicitly. SP91's domain stalks and
+`isReduced_of_isReduced_stalk` give global reducedness; the existing
+`isIntegral_of_irreducibleSpace_of_isReduced` gives the integral instance.
+
+All four APIs need integral `X` and arbitrary `N/K(X)`, without
+algebraicity, finite degree, separability, base normality, Noetherianity
+or separatedness. The manuscript counterpart is
+`prop:normalization-global-integral`. Original chart maps, carriers,
+germs and field markings are retained. Integrality does not identify
+the intrinsic function field with arbitrary ambient `N`.
+
+SP92 is validated: all four production APIs compile in the 2744-job
+scoped build. The focused suite passes 24 examples and four exact
+standard-three axiom audits without warnings. The full build passes
+3217 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings. A fresh rerun of the unchanged SP91
+focused suite passes its 24 examples and four exact standard-three
+axiom audits without warnings; no other fresh neighbor-suite pass is
+claimed. The 89-page PDF (867807 bytes) has a clean final log and passes
+visual review of pages 15, 16, 67, 68, 80 and 87. All four exact API
+parity checks and independent Lean--TeX review pass. The static central
+inventory is 1058 checks, 565 examples and 950 axiom reports; its
+historical prefix is unchanged and was not re-elaborated in full.
+
+Next address marked function-field comparison. Faithfulness,
+fiber/torsor comparison, normal stalks from smooth geometry and
+Chow--Betti generation remain separate.
 
 ### Normal local rings of the original glued normalization (SP91, 2026-09-20)
 

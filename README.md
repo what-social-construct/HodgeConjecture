@@ -1153,7 +1153,36 @@ and independent Lean--TeX review pass. The static central inventory is
 1054 checks, 565 examples and 946 axiom reports; its historical prefix
 is unchanged and was not re-elaborated in full.
 
-Next address global integrality and marked function-field comparison.
+SP92 proves integrality of the same glued normalization through four
+APIs in `GluedNormalizationIntegrality.lean`. Actual common affine
+refinements witness pairwise chart intersections. The charts' irreducible
+open images cover the scheme and give global irreducibility, including
+nonemptiness. SP91's domain stalks give reducedness; together these
+properties supply the global `IsIntegral` instance.
+
+Integral `X` and arbitrary `N/K(X)` suffice, without algebraicity,
+finite degree, separability, base normality, Noetherianity or
+separatedness. The actual `N_p` specialization needs no normal-stalk
+premise on either scheme. All original chart maps, germs, fields and
+markings remain fixed. The manuscript counterpart is
+`prop:normalization-global-integral`. The intrinsic function field is
+now available, without an asserted equality with arbitrary ambient `N`.
+
+SP92 is validated: all four production APIs compile in the 2744-job
+scoped build. The focused suite passes 24 examples and four exact
+standard-three axiom audits without warnings. The full build passes
+3217 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings. A fresh rerun of the unchanged SP91
+focused suite passes its 24 examples and four exact standard-three
+axiom audits without warnings; no other fresh neighbor-suite pass is
+claimed. The 89-page PDF (867807 bytes) has a clean final log and passes
+visual review of pages 15, 16, 67, 68, 80 and 87. All four exact API
+parity checks and independent Lean--TeX review pass. The static central
+inventory is 1058 checks, 565 examples and 950 axiom reports; its
+historical prefix is unchanged and was not re-elaborated in full.
+
+Next address marked function-field comparison.
 Faithfulness,
 fiber comparison and a Galois-cover or torsor identification remain
 separate: subgroup fixing is a sufficient condition for preserving

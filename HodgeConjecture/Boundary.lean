@@ -34,6 +34,7 @@ import HodgeConjecture.Boundary.Normalization.FiniteEtaleNormalClosureRestrictio
 import HodgeConjecture.Boundary.Normalization.AffineNormalizationOpenImmersion
 import HodgeConjecture.Boundary.Normalization.GluedNormalization
 import HodgeConjecture.Boundary.Normalization.GluedNormalizationNormality
+import HodgeConjecture.Boundary.Normalization.GluedNormalizationIntegrality
 import HodgeConjecture.Boundary.Normalization.GluedNormalizationChart
 import HodgeConjecture.Boundary.Normalization.GluedNormalizationProperties
 import HodgeConjecture.Boundary.Normalization.FiniteEtaleGluedNormalClosure
@@ -159,6 +160,11 @@ Every local ring of the same glued scheme is an integrally closed domain.
 The integral closure in the ambient field is integrally closed in its own
 fraction field; prime localization and the original open-chart stalk
 isomorphisms transfer these properties to the actual global local rings.
+
+The same glued scheme is integral. Any two original affine normalization
+charts meet through a nonempty common refinement, so their irreducible
+open images make the global space irreducible. Its domain stalks give
+reducedness, completing the global integrality proof.
 
 Each original chart is exactly the inverse image of its base open under
 the global structural map. The resulting open-subscheme isomorphism

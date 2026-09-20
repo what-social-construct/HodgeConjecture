@@ -147,6 +147,46 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP89 | Surjectivity of the original global normalization and marked refinement | LIE OVER / LIFT / RETAIN | Prove global normalization surjectivity for any original function-field extension and directly lift points through the existing marked chart refinements under finite dominance and normal stalks of `Y` only. | PROVED / VALIDATED |
 | SP90 | Compatible global normalization and marked-subgroup actions | COMMUTE / DESCEND / PRESERVE | Glue the original inverse-ring chart automorphisms to the same global normalization and prove that the subgroup fixing the marked intermediate field preserves the original refinement, with the same underlying automorphisms. | PROVED / VALIDATED |
 | SP91 | Normal local rings of the original glued normalization | CLOSE / LOCALIZE / TRANSFER | Prove integral closedness of the original coordinate rings and affine stalks, then transfer domain and integral-closedness properties through the original chart open immersions to every global local ring. | PROVED / VALIDATED |
+| SP92 | Integrality of the original glued normalization | OVERLAP / REDUCE / UNITE | Prove that original chart images intersect, transfer reducedness from the proved domain stalks, and derive irreducibility and integrality of the same global scheme. | PROVED / VALIDATED |
+
+SP92 (2026-09-20): **integrality of the original glued normalization**.
+Four APIs in `GluedNormalizationIntegrality.lean` supply integral
+structure on the original carrier; the manuscript counterpart is
+`prop:normalization-global-integral`.
+
+| Lean API | Mathematical role | TeX notation |
+| --- | --- | --- |
+| `normalizationChartToGlued_range_inter_nonempty` | actual common refinements witness intersection of original chart images | `jmath_U(Z_U) intersect jmath_V(Z_V)` is nonempty |
+| `gluedNormalizationModel_isReduced` | domain stalks imply global reducedness | `Z_N` is reduced |
+| `gluedNormalizationModel_irreducibleSpace` | overlapping irreducible open chart images give global irreducibility | `Z_N` is irreducible |
+| `gluedNormalizationModel_isIntegral` | reducedness and irreducibility supply the global integral instance | `Z_N` is integral |
+
+All four APIs require integral `X` and arbitrary `N/K(X)`, without
+algebraicity, finite degree, separability, base normality, Noetherianity
+or separatedness. Nonemptiness is proved from an original chart.
+The same chart carriers, maps, germs, markings and colimit are retained;
+the actual `N_p` specialization needs no normal-stalk premise on either
+scheme. The global instance makes the intrinsic function field
+available without identifying it with arbitrary `N`.
+
+SP92 is validated: all four production APIs compile in the 2744-job
+scoped build. The focused suite passes 24 examples and four exact
+standard-three axiom audits without warnings. The full build passes
+3217 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings. A fresh rerun of the unchanged SP91
+focused suite passes its 24 examples and four exact standard-three
+axiom audits without warnings; no other fresh neighbor-suite pass is
+claimed. The 89-page PDF (867807 bytes) has a clean final log and passes
+visual review of pages 15, 16, 67, 68, 80 and 87. All four exact API
+parity checks and independent Lean--TeX review pass. The static central
+inventory is 1058 checks, 565 examples and 950 axiom reports; its
+historical prefix is unchanged and was not re-elaborated in full.
+
+Next address marked function-field comparison. Faithfulness,
+fiber/torsor comparison, normal stalks from smooth geometry and
+Chow--Betti generation remain separate. The complete queue suffix
+beginning with SP91 below remains byte-identical to `44d8fec`.
 
 SP91 (2026-09-20): **normal local rings of the original glued normalization**.
 Four public APIs in `GluedNormalizationNormality.lean` prove normality

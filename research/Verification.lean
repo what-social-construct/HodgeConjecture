@@ -7784,3 +7784,15 @@ Focused regressions and enforced standard-axiom checks are in
 #print axioms HodgeConjecture.CollisionFoundations.normalizedAffineModel_stalk_isIntegrallyClosed
 #print axioms HodgeConjecture.CollisionFoundations.gluedNormalizationModel_stalk_isDomain
 #print axioms HodgeConjecture.CollisionFoundations.gluedNormalizationModel_stalk_isIntegrallyClosed
+
+/-! SP92: integrality of the original glued normalization. -/
+
+#check HodgeConjecture.CollisionFoundations.normalizationChartToGlued_range_inter_nonempty
+#check HodgeConjecture.CollisionFoundations.gluedNormalizationModel_isReduced
+#check HodgeConjecture.CollisionFoundations.gluedNormalizationModel_irreducibleSpace
+#check HodgeConjecture.CollisionFoundations.gluedNormalizationModel_isIntegral
+
+#print axioms HodgeConjecture.CollisionFoundations.normalizationChartToGlued_range_inter_nonempty
+#print axioms HodgeConjecture.CollisionFoundations.gluedNormalizationModel_isReduced
+#print axioms HodgeConjecture.CollisionFoundations.gluedNormalizationModel_irreducibleSpace
+#print axioms HodgeConjecture.CollisionFoundations.gluedNormalizationModel_isIntegral

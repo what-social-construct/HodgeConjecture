@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-09-20 (SP91 normal local rings of the original glued normalization; validated).
+Assessed: 2026-09-20 (SP92 integrality of the original glued normalization; validated).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -977,8 +977,9 @@ B4s and constructs the actual finite-etale global normal-closure map.
 SP87 descends the original marked refinement in B4t, and SP88 proves
 its finite etaleness in B4u. SP89 proves both original global maps
 surjective in B4v; SP90 descends the compatible actions in B4w.
-SP91 proves normal local rings of the same scheme in B4x. Global integrality
-and marked function-field comparison are next; normal stalks from smooth geometry and
+SP91 proves normal local rings of the same scheme in B4x; SP92 proves
+global integrality in B4y. Marked function-field comparison is next;
+normal stalks from smooth geometry and
 Chow--Betti generation are separate obligations.
 
 ### B4p. Coherent affine inverse-image opens
@@ -1432,11 +1433,50 @@ and independent Lean--TeX review pass. The static central inventory is
 1054 checks, 565 examples and 946 axiom reports; its historical prefix
 is unchanged and was not re-elaborated in full.
 
-Next address global integrality and the marked function-field
-comparison. Faithfulness, fiber comparison and a torsor or Galois-cover
+SP92 below addresses global integrality; the marked function-field
+comparison remains next. Faithfulness, fiber comparison and a torsor or Galois-cover
 identification remain separate, as do normal stalks from smooth geometry
 and Chow--Betti generation. This normality theorem asserts no new Hodge
 case and does not weaken the hypotheses of the existing refinement.
+
+### B4y. Integrality of the original glued normalization
+
+For integral `X` and arbitrary `N/K(X)`, four APIs in
+`GluedNormalizationIntegrality.lean` establish pairwise chart overlap,
+reducedness, irreducibility and integrality of the same glued `Z_N`.
+The original base opens intersect by irreducibility of `X`. An actual
+common affine refinement has a nonempty integral normalization; its
+original restriction maps witness an intersection of the global chart
+images. These irreducible open images cover the scheme, and their
+overlaps force global irreducibility. Nonemptiness is proved internally.
+
+SP91's domain stalks make the global scheme reduced. The reduced and
+irreducible criterion supplies its `IsIntegral` instance, giving section
+domains on nonempty opens and access to the intrinsic function field.
+The manuscript counterpart is `prop:normalization-global-integral`.
+No algebraicity, finite degree, separability, base normality,
+Noetherianity or separatedness is used. The actual `N_p` specialization
+needs no normal-stalk premise on `X` or `Y`; all original chart maps,
+germs, fields, markings and the colimit are retained. Integrality does
+not identify the intrinsic function field with arbitrary ambient `N`.
+
+SP92 is validated: all four production APIs compile in the 2744-job
+scoped build. The focused suite passes 24 examples and four exact
+standard-three axiom audits without warnings. The full build passes
+3217 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings. A fresh rerun of the unchanged SP91
+focused suite passes its 24 examples and four exact standard-three
+axiom audits without warnings; no other fresh neighbor-suite pass is
+claimed. The 89-page PDF (867807 bytes) has a clean final log and passes
+visual review of pages 15, 16, 67, 68, 80 and 87. All four exact API
+parity checks and independent Lean--TeX review pass. The static central
+inventory is 1058 checks, 565 examples and 950 axiom reports; its
+historical prefix is unchanged and was not re-elaborated in full.
+
+Next address marked function-field comparison. Faithfulness,
+fiber/torsor comparison, normal stalks from smooth geometry and
+Chow--Betti generation remain separate. No new Hodge case is asserted.
 
 ### G0. Smooth projective setting and candidate constructions
 
