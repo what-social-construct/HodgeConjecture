@@ -145,6 +145,76 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP87 | Descent of the original marked refinement | FORM COCONE / DESCEND / IDENTIFY | Glue the original marked chart refinements to a map to the actual `Y`; prove its marked chart formulas, global triangle and uniqueness from those chart formulas under finite dominance and normal stalks of `Y` only. | PROVED / VALIDATED |
 | SP88 | Finite etaleness of the actual global marked refinement | CANCEL / TRANSFER / RETAIN | Prove finite cancellation for a separated second morphism and use the exact global triangle with SP86 to prove the original marked refinement finite etale under the actual finite-etale and explicit normal-stalk inputs. | PROVED / VALIDATED |
 | SP89 | Surjectivity of the original global normalization and marked refinement | LIE OVER / LIFT / RETAIN | Prove global normalization surjectivity for any original function-field extension and directly lift points through the existing marked chart refinements under finite dominance and normal stalks of `Y` only. | PROVED / VALIDATED |
+| SP90 | Compatible global normalization and marked-subgroup actions | COMMUTE / DESCEND / PRESERVE | Glue the original inverse-ring chart automorphisms to the same global normalization and prove that the subgroup fixing the marked intermediate field preserves the original refinement, with the same underlying automorphisms. | PROVED / VALIDATED |
+
+SP90 (2026-09-20): **compatible global normalization and marked-subgroup actions**.
+Ten public APIs in `GluedNormalizationAction.lean` descend the
+original affine action and package it over the base. Five in
+`GluedNormalClosureAction.lean` prove marked compatibility and
+package the fixing-subgroup action over the original intermediate
+scheme. Manuscript counterparts are
+`prop:normalization-global-action` and
+`prop:normalization-marked-action`.
+
+| Lean API | Mathematical role | TeX notation |
+| --- | --- | --- |
+| `affineNormalizationChartAutomorphism` | original inverse-ring automorphism on an actual chart | `a_U(sigma)=Spec(sigma^-1 restricted to IntCl)` |
+| `affineNormalizationChartAutomorphism_naturality` | compatibility with every actual chart restriction | `a_U(sigma) j^N_(W,U)=j^N_(W,U) a_W(sigma)` |
+| `affineNormalizationDiagramAutomorphism` | original chart automorphisms form a natural diagram automorphism | `(a_U(sigma))_U:F_N ~= F_N` |
+| `gluedNormalizationAutomorphism` | descent to an automorphism of the same scheme colimit | `a_N(sigma):Z_N ~= Z_N` |
+| `normalizationChartToGlued_comp_automorphism` | exact global-to-chart action comparison | `a_N(sigma) jmath_U=jmath_U a_U(sigma)` |
+| `gluedNormalizationAutomorphism_comp_toBase` | full action preserves the original base map | `mu_N a_N(sigma)=mu_N` |
+| `gluedNormalizationAutomorphism_one` | identity automorphism law | `a_N(1)=id` |
+| `gluedNormalizationAutomorphism_mul` | multiplication with the inverse-ring convention | `a_N(sigma tau)=a_N(sigma) a_N(tau)` |
+| `gluedNormalizationDeckAction` | same global maps packaged as an action over `X` | `a_N:Aut_(K(X))(N) -> Aut_X(Z_N)` |
+| `gluedNormalizationDeckAction_hom` | deck packaging retains the underlying global morphism | underlying map of `a_N(sigma)` is the constructed `a_N(sigma)` |
+| `normalClosureNormalizationSchemeIso_comp_toIntermediate` | fixing subgroup preserves the original marked affine normalization leg | `c_1 Spec(h^-1 restricted to IntCl_B(N))=c_1` |
+| `affineNormalizationChartAutomorphism_comp_toPreimage` | marked subgroup preserves each actual affine refinement | `lambda_U a_U(h)=lambda_U` |
+| `gluedNormalizationAutomorphism_comp_toCover` | marked subgroup preserves the original global refinement | `lambda a_(N_p)(h)=lambda` |
+| `gluedNormalClosureMarkedDeckAction` | fixing-subgroup action over the original `Y` | `a_(N_p)` restricted to `H` maps into `Aut_Y(Z_(N_p))` |
+| `gluedNormalClosureMarkedDeckAction_hom` | marked deck packaging retains the full action's underlying morphism | underlying marked map is `a_(N_p)(h)` |
+
+All displayed products of maps use ordinary mathematical composition
+order. In Lean the multiplication law is written with the `tau` map
+followed by the `sigma` map. The inverse-ring convention matches the
+existing affine action. Deck packaging and the diagram automorphism
+are not new geometric carriers. The same `a_N` notation is used for
+the action homomorphism and its evaluated automorphism; no new `rho`
+notation competes with the original germs or Betti realization.
+
+The generic ten APIs require integral `X` and any extension `N/K(X)`,
+without algebraicity, finite degree or separability. The first marked
+API is an affine statement for the existing `NormalClosureData` and
+compatible scalar towers; its proof uses inverse fixing and equality
+of the original marked ring maps. The four actual marked consumers
+need only finite dominant `p`, integral `X` and `Y`, and explicitly
+integrally closed stalks of `Y`. They cancel the existing affine
+normalization comparison isomorphism and use the exact glued chart
+formulas, not cancellation of `p` from the structural triangle.
+No etaleness, normal-stalk premise on `X`, Noetherianity or perfectness
+is added. Original chart carriers, field markings and germ-derived
+scalars are unchanged; no source axiom or geometric input package is
+introduced.
+
+SP90 is validated: the generic and combined action scoped builds pass
+2743 and 2771 jobs. The focused suite passes 30 examples and 15 exact
+standard-three axiom audits without warnings. The full build passes
+3215 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings; no fresh neighbor-suite pass is claimed.
+The 89-page PDF (864292 bytes) has a clean final log and passes visual
+review of pages 17, 18, 19, 67, 68 and 80. All 15 exact API parity
+checks and independent Lean--TeX review pass. The static central inventory
+is 1050 checks, 565 examples and 942 axiom reports; its historical prefix
+is unchanged and was not re-elaborated in full.
+
+Next address global normality. Faithfulness, fiber comparison and a
+torsor or Galois-cover identification remain separate. Subgroup
+fixing is sufficient for preserving `lambda`, not an exact-stabilizer
+or converse theorem. Normal stalks from smooth geometry and
+Chow--Betti generation remain separate. The complete queue suffix
+beginning at the SP89 block below is preserved byte-for-byte from
+`6b2baba`.
 
 SP89 (2026-09-20): **surjectivity of the original global normalization and marked refinement**.
 Two public APIs in `GluedNormalizationSurjectivity.lean` prove

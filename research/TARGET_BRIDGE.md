@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-09-20 (SP89 surjectivity of the original global normalization and marked refinement; validated).
+Assessed: 2026-09-20 (SP90 compatible global normalization and marked-subgroup actions; validated).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -976,7 +976,8 @@ charts in B4r; SP86 proves target-local affine/finite/etale transport in
 B4s and constructs the actual finite-etale global normal-closure map.
 SP87 descends the original marked refinement in B4t, and SP88 proves
 its finite etaleness in B4u. SP89 proves both original global maps
-surjective in B4v. Galois-action descent remains next; normal stalks from smooth geometry and
+surjective in B4v; SP90 descends the compatible actions in B4w.
+Global normality is the next bounded follow-up; normal stalks from smooth geometry and
 Chow--Betti generation are separate obligations.
 
 ### B4p. Coherent affine inverse-image opens
@@ -1333,6 +1334,65 @@ Next descend the compatible Galois action. Its full group is over
 Global normality can be addressed as a separate bounded follow-up.
 Normal stalks from smooth geometry and Chow--Betti generation remain
 separate, and no new Hodge case is asserted by this surjectivity result.
+
+### B4w. Compatible global normalization and marked-subgroup actions
+
+For integral `X` and an arbitrary field extension `N/K(X)`, retain the
+existing affine normalization automorphism `Spec(sigma^-1)`. The
+inverse convention is essential for the group multiplication law.
+`GluedNormalizationAction.lean` proves that these original chart
+automorphisms commute with every actual restriction map. Their
+natural diagram automorphism descends to an automorphism of the same
+scheme colimit. Its exact chart restriction is the original affine
+map, and it commutes with `mu_N`.
+
+The identity and multiplication laws are proved as actual morphism
+equalities, then packaged into
+`Aut_(K(X))(N) -> Deck(mu_N)`, with a theorem retaining the exact
+underlying global morphism. These ten APIs do not require `N/K(X)`
+algebraic or separable, or assume finite degree, normality of `X`,
+Noetherianity or separatedness. The manuscript counterpart is
+`prop:normalization-global-action`.
+
+For the marked normal closure `N_p` associated to finite dominant
+`p : Y -> X` of integral schemes, assume explicitly integrally closed
+stalks of `Y` only. `GluedNormalClosureAction.lean` proves that an
+automorphism fixing the marked `K(Y)` preserves the actual
+`lambda : Z_(N_p) -> Y`. First its inverse fixes the same embedded
+field. Extensionality for the original affine ring map proves the
+local marked square; cancellation of the actual affine chart
+isomorphism gives compatibility with `lambda_U`. The global chart
+formula and morphism extensionality then give compatibility with
+`lambda`. The proof does not cancel `p` from the structural triangle.
+
+The fixing subgroup thus maps into `Deck(lambda)` with precisely the
+same underlying global automorphisms as the action over `X`. These
+five marked APIs and the manuscript
+`prop:normalization-marked-action` require no etaleness, normal-stalk
+input on `X`, separability, Noetherianity or perfectness. All chart
+carriers, field markings and germ-derived scalar maps remain fixed.
+The construction reuses the existing affine action and colimit APIs;
+it introduces no source axiom or geometric hypothesis package.
+
+SP90 is validated: the generic and combined action scoped builds pass
+2743 and 2771 jobs. The focused suite passes 30 examples and 15 exact
+standard-three axiom audits without warnings. The full build passes
+3215 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings; no fresh neighbor-suite pass is claimed.
+The 89-page PDF (864292 bytes) has a clean final log and passes visual
+review of pages 17, 18, 19, 67, 68 and 80. All 15 exact API parity
+checks and independent Lean--TeX review pass. The static central inventory
+is 1050 checks, 565 examples and 942 axiom reports; its historical prefix
+is unchanged and was not re-elaborated in full.
+
+Next address global normality as a bounded follow-up. Faithfulness,
+fiber comparison and a torsor or Galois-cover identification remain
+separate. Fixing the marked `K(Y)` is a sufficient condition for
+preserving `lambda`, not a proved converse or full-stabilizer
+identification. Normal stalks from smooth geometry and Chow--Betti
+generation remain separate; the action construction does not assert
+a new Hodge case.
 
 ### G0. Smooth projective setting and candidate constructions
 

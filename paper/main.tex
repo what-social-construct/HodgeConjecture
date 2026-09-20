@@ -1436,6 +1436,78 @@ Corollaries~\ref{cor:normal-closure-global-finite-etale}
 and~\ref{cor:normal-closure-refinement-finite-etale}.
 \end{proof}
 
+\begin{proposition}[The global normalization action]
+\label{prop:normalization-global-action}
+Let \(X\) be integral, fix a field extension \(K(X)\to N\), and set
+\(G_N=\operatorname{Aut}_{K(X)}(N)\). For each nonempty affine open
+\(U\subseteq X\), write \(T_U=\operatorname{IntCl}_{B_U}(N)\).
+The original chart automorphisms
+\[
+ a_U(\sigma)=\Spec\bigl(\sigma^{-1}|_{T_U}\bigr):Z_U\xrightarrow{\sim}Z_U
+ \qquad(\sigma\in G_N)
+\]
+commute with the actual restriction morphisms. They define a unique
+group homomorphism
+\[
+ a_N:G_N\longrightarrow\operatorname{Aut}_X(Z_N),\qquad
+ a_N(\sigma)\circ\jmath_U=\jmath_U\circ a_U(\sigma).
+\]
+In particular,
+\[
+ \mu_N\circ a_N(\sigma)=\mu_N,\qquad
+ a_N(1)=\operatorname{id}_{Z_N},\qquad
+ a_N(\sigma\tau)=a_N(\sigma)\circ a_N(\tau).
+\]
+\end{proposition}
+
+\begin{proof}
+Each \(\sigma\) fixes the original \(B_U\)-scalars through their
+generic germs, so it preserves \(T_U\). For \(W\subseteq U\),
+the integral-closure restriction retains the same ambient element of
+\(N\). It therefore commutes with \(\sigma^{-1}\), giving
+\(a_U(\sigma)\circ j^N_{W,U}=j^N_{W,U}\circ a_W(\sigma)\).
+These isomorphisms form a natural automorphism of the original chart
+diagram. Its colimit gives the displayed automorphism of \(Z_N\)
+and its exact chart formula. The affine actions commute with the
+structural maps. Their identity and multiplication laws, with the
+inverse required by contravariance of \(\Spec\), give the global
+laws by chartwise extensionality. The same extensionality proves
+uniqueness.
+\end{proof}
+
+\begin{proposition}[The marked subgroup action]
+\label{prop:normalization-marked-action}
+Let \(p:Y\to X\) be a finite dominant morphism of integral schemes,
+and suppose every local ring of \(Y\) is integrally closed. In the
+original marked normal closure, write
+\[
+ G=\operatorname{Aut}_{K(X)}(N_p),\qquad
+ H=\{\sigma\in G:\sigma\circ\iota=\iota\},
+ \qquad \iota:K(Y)\hookrightarrow N_p.
+\]
+The restriction of \(a_{N_p}\) to \(H\) acts over the original marked
+refinement \(\lambda:Z_{N_p}\to Y\):
+\[
+ \lambda\circ a_{N_p}(h)=\lambda\quad(h\in H),\qquad
+ a_{N_p}|_H:H\longrightarrow\operatorname{Aut}_Y(Z_{N_p}).
+\]
+Its underlying scheme automorphisms are exactly those of the action
+over \(X\).
+\end{proposition}
+
+\begin{proof}
+For \(h\in H\), its inverse fixes every element of the marked
+\(K(Y)\). Thus the map
+\(\operatorname{IntCl}_{B_U}(K(Y))\to\operatorname{IntCl}_{B_U}(N_p)\)
+induced by \(\iota\) is unchanged after applying \(h^{-1}\).
+Taking spectra and composing with the original normalization
+isomorphism \(\nu_{p,U}^{-1}\) gives
+\(\lambda_U\circ a_U(h)=\lambda_U\).
+The exact chart formulas for the action and the marked refinement
+then give \(\lambda\circ a_{N_p}(h)=\lambda\). The identity and
+multiplication laws are inherited from the same action over \(X\).
+\end{proof}
+
 The group \(G=\mathcal N.\mathit{galoisGroup}\), the subgroup
 \(H=\mathcal N.\mathit{intermediateFixingSubgroup}\), and the canonical deck
 action on \(Y_N\) are all constructed from the same datum.  Normality keeps the conjugate embeddings inside the same field \(N\).
@@ -5512,6 +5584,25 @@ Surjective global normalization and refinement &
 \leanpath{gluedNormalizationToBase_surjective}\newline
 \leanpath{gluedNormalClosureToCover_surjective}\newline
 \leanpath{Boundary/Normalization/GluedNormalizationSurjectivity.lean}\\
+Global normalization action &
+\leanpath{affineNormalizationChartAutomorphism}\newline
+\leanpath{affineNormalizationChartAutomorphism_naturality}\newline
+\leanpath{affineNormalizationDiagramAutomorphism}\newline
+\leanpath{gluedNormalizationAutomorphism}\newline
+\leanpath{normalizationChartToGlued_comp_automorphism}\newline
+\leanpath{gluedNormalizationAutomorphism_comp_toBase}\newline
+\leanpath{gluedNormalizationAutomorphism_one}\newline
+\leanpath{gluedNormalizationAutomorphism_mul}\newline
+\leanpath{gluedNormalizationDeckAction}\newline
+\leanpath{gluedNormalizationDeckAction_hom}\newline
+\leanpath{Boundary/Normalization/GluedNormalizationAction.lean}\\
+Marked subgroup action &
+\leanpath{normalClosureNormalizationSchemeIso_comp_toIntermediate}\newline
+\leanpath{affineNormalizationChartAutomorphism_comp_toPreimage}\newline
+\leanpath{gluedNormalizationAutomorphism_comp_toCover}\newline
+\leanpath{gluedNormalClosureMarkedDeckAction}\newline
+\leanpath{gluedNormalClosureMarkedDeckAction_hom}\newline
+\leanpath{Boundary/Normalization/GluedNormalClosureAction.lean}\\
 Full-visible boundary ideals &
 \leanpath{movingBoundaryIdeal_eq_top_of_surjective}\newline
 \leanpath{conjugateBoundarySeparation_of_surjective}\newline
@@ -6345,6 +6436,23 @@ principal table, grouped by mathematical layer.
 \normsrc{GluedNormalizationSurjectivity.lean};
 \leanpath{gluedNormalizationToBase_surjective};
 \leanpath{gluedNormalClosureToCover_surjective};
+\normsrc{GluedNormalizationAction.lean};
+\leanpath{affineNormalizationChartAutomorphism};
+\leanpath{affineNormalizationChartAutomorphism_naturality};
+\leanpath{affineNormalizationDiagramAutomorphism};
+\leanpath{gluedNormalizationAutomorphism};
+\leanpath{normalizationChartToGlued_comp_automorphism};
+\leanpath{gluedNormalizationAutomorphism_comp_toBase};
+\leanpath{gluedNormalizationAutomorphism_one};
+\leanpath{gluedNormalizationAutomorphism_mul};
+\leanpath{gluedNormalizationDeckAction};
+\leanpath{gluedNormalizationDeckAction_hom};
+\normsrc{GluedNormalClosureAction.lean};
+\leanpath{normalClosureNormalizationSchemeIso_comp_toIntermediate};
+\leanpath{affineNormalizationChartAutomorphism_comp_toPreimage};
+\leanpath{gluedNormalizationAutomorphism_comp_toCover};
+\leanpath{gluedNormalClosureMarkedDeckAction};
+\leanpath{gluedNormalClosureMarkedDeckAction_hom};
 \normsrc{FiniteAffineCover.lean};
 \leanpath{normalizationToIntermediate_surjective};
 \leanpath{normalizationIntermediateEquiv};

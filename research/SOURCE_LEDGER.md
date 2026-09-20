@@ -17,9 +17,64 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-09-20 (SP89 lying-over and original
-chart-surjectivity interfaces; validated;
+Last source/interface review: 2026-09-20 (SP90 existing affine action
+and colimit interfaces; validated;
 earlier source records retain their original validation scope).
+
+### Compatible global normalization and marked-subgroup actions (SP90, 2026-09-20)
+
+No new literature input, bibliography object or primary-page source
+verification is needed for this checkpoint. The generic action
+reuses `normalClosureNormalizationSchemeIso`, with its existing
+`Spec(sigma^-1)` convention, on the original normalization charts.
+Direct ring-map extensionality proves naturality with respect to
+their actual restrictions. `NatIso.ofComponents` packages the
+diagram automorphism; `HasColimit.isoOfNatIso` descends it to the
+same glued scheme, and `HasColimit.isoOfNatIso_ι_hom` gives the exact
+chart formula. Chartwise morphism extensionality proves compatibility
+with the base, identity and multiplication. `Over.isoMk` packages
+the action into the existing deck-transformation group without
+changing the underlying global automorphism.
+
+The marked affine input is proved directly for the existing
+`NormalClosureData` and compatible `B/K/L/N` scalar towers. Subgroup
+inverse closure and `IntermediateField.mem_fixingSubgroup_iff` show
+that the inverse automorphism fixes the embedded intermediate field.
+Extensionality then proves equality of the original normalization
+ring maps. The actual marked theorem cancels the existing
+`finiteAffinePreimageNormalizationIso`, using its proved comparison
+with the chart refinement; it does not cancel the generally nonmonic
+map `p`. SP87's exact global chart formula and extensionality give
+compatibility with `lambda`, and the same `Over.isoMk` construction
+packages the fixing-subgroup action over `Y`.
+
+The ten generic APIs need integral `X` and an arbitrary extension
+`N/K(X)`, without algebraicity or separability. The four actual
+marked APIs need finite dominant `p`, integral `X` and `Y`, and
+explicitly integrally closed stalks of `Y` only; the fifth marked
+API is the generic affine statement above. There is no etaleness,
+normal-stalk premise on `X`, Noetherianity, perfectness, source axiom
+or new geometric input package. Original fields, chart carriers and
+germ-derived scalar maps are retained. Manuscript counterparts are
+`prop:normalization-global-action` and
+`prop:normalization-marked-action`.
+
+SP90 is validated: the generic and combined action scoped builds pass
+2743 and 2771 jobs. The focused suite passes 30 examples and 15 exact
+standard-three axiom audits without warnings. The full build passes
+3215 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings; no fresh neighbor-suite pass is claimed.
+The 89-page PDF (864292 bytes) has a clean final log and passes visual
+review of pages 17, 18, 19, 67, 68 and 80. All 15 exact API parity
+checks and independent Lean--TeX review pass. The static central inventory
+is 1050 checks, 565 examples and 942 axiom reports; its historical prefix
+is unchanged and was not re-elaborated in full.
+
+The fixing-subgroup condition is sufficient, not an exact-stabilizer
+theorem. Faithfulness, fiber comparison, torsor or Galois-cover
+identification, global normality, normal stalks from smooth geometry
+and Chow--Betti generation remain separate.
 
 ### Surjectivity of the original global normalization and marked refinement (SP89, 2026-09-20)
 

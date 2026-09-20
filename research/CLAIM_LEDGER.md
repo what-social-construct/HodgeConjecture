@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-20 (SP89 surjectivity of the original global normalization and marked refinement,
+Last audited: 2026-09-20 (SP90 compatible global normalization and marked-subgroup actions,
 validated; earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,59 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Compatible global normalization and marked-subgroup actions (A11bv / SP90)
+
+Status: `FORMAL`; all 15 public APIs compile and the checkpoint
+is validated. Ten public APIs
+in `Boundary/Normalization/GluedNormalizationAction.lean` preserve
+the existing inverse-ring convention
+`a_U(sigma) = Spec(sigma^-1 restricted to IntCl)`. For integral `X`
+and any field extension `N/K(X)`, they prove compatibility with actual
+chart restrictions, construct the natural diagram automorphism and
+its automorphism `a_N(sigma)` of the same scheme colimit, and prove
+the exact chart formula, compatibility over `X`, identity and
+multiplication. The action packages as
+`a_N : Aut_(K(X))(N) -> Aut_X(Z_N)` with the same underlying maps.
+Its manuscript counterpart is `prop:normalization-global-action`.
+
+Five APIs in `Boundary/Normalization/GluedNormalClosureAction.lean`
+give the marked compatibility. The first is the affine statement for
+the existing `NormalClosureData` and compatible scalar towers: an
+automorphism in the subgroup fixing the marked intermediate field
+preserves its normalization leg. Its inverse fixes that field too,
+which proves the required affine ring-map equality. The four actual
+consumers require finite dominant `p : Y -> X`, integral `X` and `Y`,
+and explicitly integrally closed stalks of `Y` only. They transport
+the identity through the actual affine chart isomorphism and exact
+global chart formulas, then package the fixing subgroup into
+`Aut_Y(Z_(N_p))` with the same underlying global automorphisms.
+The manuscript counterpart is `prop:normalization-marked-action`.
+
+No etaleness, normal-stalk assumption on `X`, separability,
+Noetherianity or perfectness is added. The proof cancels the existing
+affine normalization comparison isomorphism, not `p` from the global
+triangle. No chart, carrier, field marking, scalar map, source axiom
+or geometric hypothesis package is replaced or introduced.
+
+SP90 is validated: the generic and combined action scoped builds pass
+2743 and 2771 jobs. The focused suite passes 30 examples and 15 exact
+standard-three axiom audits without warnings. The full build passes
+3215 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings; no fresh neighbor-suite pass is claimed.
+The 89-page PDF (864292 bytes) has a clean final log and passes visual
+review of pages 17, 18, 19, 67, 68 and 80. All 15 exact API parity
+checks and independent Lean--TeX review pass. The static central inventory
+is 1050 checks, 565 examples and 942 axiom reports; its historical prefix
+is unchanged and was not re-elaborated in full.
+
+Remaining: global normality, faithfulness, fiber comparison and a
+torsor or Galois-cover identification, normal stalks from smooth
+geometry, and Chow--Betti generation. The full group acts over `X`,
+and the fixing subgroup preserves `lambda`; the latter is a sufficient
+condition, not a proved converse or full-stabilizer identification.
+No new Hodge case is asserted by the action construction.
 
 ## Surjectivity of the original global normalization and marked refinement (A11bu / SP89)
 
@@ -59,7 +112,8 @@ checks and independent Lean--TeX review pass. The static central
 inventory is 1035 checks, 565 examples and 927 axiom reports; its
 historical prefix is unchanged and was not re-elaborated in full.
 
-Remaining: compatible Galois-action descent, global normality,
+SP90 above supplies compatible global actions under the stated
+hypotheses. Remaining: global normality,
 normal stalks from smooth geometry and Chow--Betti generation. The
 intended full-group action is over `X`; only the subgroup fixing the
 marked `K(Y)` preserves `lambda`. No global action, global normality

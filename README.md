@@ -1088,10 +1088,47 @@ checks and independent Lean--TeX review pass. The static central
 inventory is 1035 checks, 565 examples and 927 axiom reports; its
 historical prefix is unchanged and was not re-elaborated in full.
 
-Next descend the compatible Galois action.
-The full Galois group acts over `X`;
-only the subgroup fixing the marked `K(Y)` preserves `lambda`.
-Global normality, normal stalks from smooth geometry
+SP90 glues the original inverse-ring chart actions to the same global
+normalization. For integral `X` and any field extension `N/K(X)`, the
+original `Spec(sigma^-1)` maps commute with every actual chart
+restriction. Their natural diagram automorphisms descend to global
+automorphisms with the exact chart formula, compatibility over `X`,
+identity and multiplication laws, and a homomorphism
+`Aut_(K(X))(N) -> Deck(mu_N)` retaining those underlying maps.
+
+For finite dominant `p : Y -> X` with integral `X` and `Y` and
+explicitly integrally closed stalks of `Y` only, the subgroup fixing
+the marked `K(Y)` preserves the original refinement `lambda`.
+Inverse fixing, the original marked affine ring map and its existing
+chart isomorphism prove the local compatibility; chart extensionality
+then proves the global equality. This proof does not cancel `p` from
+the structural triangle. The subgroup action packages into
+`Deck(lambda)` with the same underlying global automorphisms.
+
+These 15 APIs are in `GluedNormalizationAction.lean` and
+`GluedNormalClosureAction.lean`; their manuscript counterparts are
+`prop:normalization-global-action` and
+`prop:normalization-marked-action`. The action theorems need no
+etaleness, normal-stalk assumption on `X`, separability, Noetherianity
+or perfectness, and change no carrier, field marking or scalar map.
+
+SP90 is validated: the generic and combined action scoped builds pass
+2743 and 2771 jobs. The focused suite passes 30 examples and 15 exact
+standard-three axiom audits without warnings. The full build passes
+3215 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings; no fresh neighbor-suite pass is claimed.
+The 89-page PDF (864292 bytes) has a clean final log and passes visual
+review of pages 17, 18, 19, 67, 68 and 80. All 15 exact API parity
+checks and independent Lean--TeX review pass. The static central inventory
+is 1050 checks, 565 examples and 942 axiom reports; its historical prefix
+is unchanged and was not re-elaborated in full.
+
+Next address global normality as a bounded follow-up. Faithfulness,
+fiber comparison and a Galois-cover or torsor identification remain
+separate: subgroup fixing is a sufficient condition for preserving
+`lambda`, not a characterization of its entire stabilizer.
+Normal stalks from smooth geometry
 and Chow--Betti generation remain separate. No model built
 from global sections of a non-affine intersection is substituted for
 its geometric overlap. The earlier SP76 constructor retains its

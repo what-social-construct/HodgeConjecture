@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-09-20 (SP89 surjectivity of the original global normalization and marked refinement;
+Last reviewed: 2026-09-20 (SP90 compatible global normalization and marked-subgroup actions;
 validated; earlier checkpoint records retain
 their original validation scope).
 
@@ -814,9 +814,51 @@ checks and independent Lean--TeX review pass. The static central
 inventory is 1035 checks, 565 examples and 927 axiom reports; its
 historical prefix is unchanged and was not re-elaborated in full.
 
-**Next bounded bridge:** descend the compatible Galois action.
-The full group acts over `X`; only the subgroup fixing the marked
-`K(Y)` preserves `lambda`. Global normality, normal
+**SP90: compatible actions on the same glued normalization.**
+`GluedNormalizationAction.lean` begins with the existing affine
+`Spec(sigma^-1)` convention. For integral `X` and an arbitrary field
+extension `N/K(X)`, the chart automorphisms commute with the actual
+restriction maps and form a natural automorphism of the original
+diagram. Descent to its same colimit gives the global automorphism,
+its exact chart formula, compatibility over `X`, identity and
+multiplication laws, and the homomorphism
+`Aut_(K(X))(N) -> Deck(mu_N)`. No algebraicity or separability is
+required to construct this action.
+
+`GluedNormalClosureAction.lean` uses the original marked normal
+closure for finite dominant `p : Y -> X`, integral `X` and `Y`,
+and explicitly integrally closed stalks of `Y` only. If a field
+automorphism fixes the marked `K(Y)`, its inverse does too. The
+original marked affine ring formula and cancellation of the existing
+affine chart isomorphism prove compatibility with each refinement
+chart; global chart extensionality proves compatibility with
+`lambda`. This does not cancel `p` from the triangle. The fixing
+subgroup therefore maps into `Deck(lambda)` with the same underlying
+global automorphisms as its action over `X`.
+
+These are 15 APIs, with manuscript counterparts
+`prop:normalization-global-action` and
+`prop:normalization-marked-action`. The marked theorem needs no
+etaleness, normal-stalk input on `X`, separability, Noetherianity or
+perfectness. No carrier, marking, scalar map, source axiom or new
+geometric hypothesis package is introduced.
+
+SP90 is validated: the generic and combined action scoped builds pass
+2743 and 2771 jobs. The focused suite passes 30 examples and 15 exact
+standard-three axiom audits without warnings. The full build passes
+3215 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings; no fresh neighbor-suite pass is claimed.
+The 89-page PDF (864292 bytes) has a clean final log and passes visual
+review of pages 17, 18, 19, 67, 68 and 80. All 15 exact API parity
+checks and independent Lean--TeX review pass. The static central inventory
+is 1050 checks, 565 examples and 942 axiom reports; its historical prefix
+is unchanged and was not re-elaborated in full.
+
+**Next bounded bridge:** global normality. Faithfulness, fiber
+comparison and Galois-cover or torsor identification remain separate.
+The fixing-subgroup result is sufficient for preservation of `lambda`,
+not an equality with its full stabilizer. Normal
 stalks from smooth geometry and Chow--Betti generation are separate. The older
 SP76 constructor retains its stronger assumptions; SP81 removes its
 Noetherian-base requirement. SP84 supplies the locally directed gluing,

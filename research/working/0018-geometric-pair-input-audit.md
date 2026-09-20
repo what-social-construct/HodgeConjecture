@@ -1073,3 +1073,53 @@ Next descend the compatible Galois action; the full group acts over
 `lambda`. Global normality, normal stalks from smooth geometry and
 Chow--Betti generation remain separate. The complete audit prefix
 through SP88 remains byte-identical to `e910f25`.
+
+## 26. SP90 follow-up: compatible global normalization and marked-subgroup actions
+
+`GluedNormalizationAction.lean` adds ten public APIs for integral `X`
+and any field extension `N/K(X)`. The existing inverse-ring chart
+automorphisms `a_U(sigma)=Spec(sigma^-1)` commute with the actual
+restriction maps. Their natural diagram automorphism descends to
+`a_N(sigma)` on the same scheme colimit, retaining the exact chart
+formula. Compatibility with the base and identity/multiplication
+laws give `a_N:Aut_(K(X))(N) -> Aut_X(Z_N)`, with the same underlying
+morphisms. No algebraicity, finite degree or separability is required.
+
+`GluedNormalClosureAction.lean` adds five public APIs. The first
+proves preservation of the original marked affine normalization leg
+for existing `NormalClosureData` and compatible scalar towers:
+the inverse of an element fixing the marked intermediate field fixes
+it too, so the original ring-map formulas agree. The four actual
+consumers need finite dominant `p`, integral `X` and `Y`, and
+explicitly integrally closed stalks of `Y` only. They cancel the actual
+affine normalization comparison isomorphism, then use SP87's exact
+chart formulas and global morphism extensionality to prove
+`lambda a_(N_p)(h)=lambda`. This does not cancel `p`. The marked
+subgroup action packages over `Y` with the same underlying global
+automorphisms as the full action over `X`.
+
+The manuscript counterparts are `prop:normalization-global-action`
+and `prop:normalization-marked-action`. There is no etaleness,
+normal-stalk premise on `X`, Noetherianity, perfectness, new source
+axiom, literature premise or geometric input package. Original
+fields, chart carriers and germ-derived scalar maps remain fixed.
+
+SP90 is validated: the generic and combined action scoped builds pass
+2743 and 2771 jobs. The focused suite passes 30 examples and 15 exact
+standard-three axiom audits without warnings. The full build passes
+3215 jobs with only the two unchanged Challenge placeholder warnings.
+The unchanged dependency audit passes six primary contracts and two
+support reports without warnings; no fresh neighbor-suite pass is claimed.
+The 89-page PDF (864292 bytes) has a clean final log and passes visual
+review of pages 17, 18, 19, 67, 68 and 80. All 15 exact API parity
+checks and independent Lean--TeX review pass. The static central inventory
+is 1050 checks, 565 examples and 942 axiom reports; its historical prefix
+is unchanged and was not re-elaborated in full.
+
+Next address global normality as a bounded follow-up. Faithfulness,
+fiber comparison and torsor or Galois-cover identification remain
+separate. Fixing the marked intermediate field is a sufficient
+condition for preserving `lambda`, not a converse or full-stabilizer
+identification. Normal stalks from smooth geometry and Chow--Betti
+generation remain separate. The complete audit prefix through SP89
+remains byte-identical to `6b2baba`.

@@ -39,6 +39,8 @@ import HodgeConjecture.Boundary.Normalization.FiniteEtaleGluedNormalClosure
 import HodgeConjecture.Boundary.Normalization.GluedNormalClosureRefinement
 import HodgeConjecture.Boundary.Normalization.FiniteEtaleGluedRefinement
 import HodgeConjecture.Boundary.Normalization.GluedNormalizationSurjectivity
+import HodgeConjecture.Boundary.Normalization.GluedNormalizationAction
+import HodgeConjecture.Boundary.Normalization.GluedNormalClosureAction
 import HodgeConjecture.Boundary.Normalization.DeckAction
 import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
 import HodgeConjecture.Boundary.Normalization.ConjugateNormalization
@@ -180,6 +182,12 @@ surjective for every fixed extension of the original function field.
 The original marked refinement is surjective already under finite dominance
 and normal stalks on the cover alone: every point lifts through an actual
 affine refinement and its original inclusion into the glued scheme.
+
+The existing inverse-ring action commutes with the actual affine restriction
+maps and descends to the same glued normalization over the base. Its exact
+chart formulas prove the identity and multiplication laws. The subgroup
+fixing the original marked intermediate field preserves the refinement to
+the cover; its deck action has the same underlying global automorphisms.
 
 The broad normalization-purity/global-triviality prototype is preserved in
 `research/archive/legacy-lean/`, not as an importable library module.
