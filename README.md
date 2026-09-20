@@ -940,13 +940,38 @@ Lean--TeX review pass. The static central inventory is 1013 checks,
 565 examples and 905 reports; its historical prefix is unchanged and
 was not re-elaborated in full.
 
-Next identify the global chart image with `mu_N^-1(U)`, transfer the
-appropriate finite/etale properties, and descend the marked refinement
-and compatible Galois action. A model built from global sections of a
-non-affine intersection is not asserted to be the geometric overlap.
-Deriving normal stalks from smooth geometry and Chow--Betti generation
-remain separate. The earlier SP76 constructor retains its stronger
-assumptions.
+SP85 proves the exact global chart image
+`range(jmath_U) = mu_N^-1(U)` in `GluedNormalizationChart.lean` and
+constructs the actual open-subscheme isomorphism
+`e_U : Z_U ~= mu_N^-1(U)`. It preserves the original chart inclusion,
+identifies the restricted global map with the original normalization
+map to `U`, and commutes with every actual affine chart restriction.
+The proof uses the constructed open cover and common principal
+refinements; no replacement chart, field marking, or extra geometric
+hypothesis is introduced. Its seven public APIs have manuscript
+counterpart `prop:normalization-global-chart`.
+
+SP85 is validated: all seven production APIs compile cleanly in the
+2743-job scoped build. The focused suite passes 29 examples and seven
+exact standard-three axiom audits without warnings. The full build
+passes 3208 jobs with only the two unchanged Challenge placeholder
+warnings. The unchanged dependency audit passes six primary contracts
+and two support reports without warnings. No fresh neighbor-suite pass
+is claimed. The 84-page PDF (848404 bytes) has a clean final log and
+passes visual review of pages 15, 16, 64, 65, 75, 76 and 84. All seven
+exact API parity checks and independent Lean--TeX review pass. The
+static central inventory is 1020 checks, 565 examples and 912 axiom
+reports; its historical prefix is unchanged and was not re-elaborated
+in full.
+
+Next use these actual inverse-image isomorphisms to establish the
+target-local affine-morphism interface and transfer the applicable
+finite/etale properties, then descend the marked refinement and
+compatible Galois action. Global normality, normal stalks from smooth
+geometry and Chow--Betti generation remain separate. No model built
+from global sections of a non-affine intersection is substituted for
+its geometric overlap. The earlier SP76 constructor retains its
+stronger assumptions.
 
 `paper/main.pdf` is the single current manuscript PDF. The earlier drafts
 and their sources are preserved in the

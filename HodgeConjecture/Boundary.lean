@@ -33,6 +33,7 @@ import HodgeConjecture.Boundary.Normalization.FiniteEtaleNormalClosure
 import HodgeConjecture.Boundary.Normalization.FiniteEtaleNormalClosureRestriction
 import HodgeConjecture.Boundary.Normalization.AffineNormalizationOpenImmersion
 import HodgeConjecture.Boundary.Normalization.GluedNormalization
+import HodgeConjecture.Boundary.Normalization.GluedNormalizationChart
 import HodgeConjecture.Boundary.Normalization.DeckAction
 import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
 import HodgeConjecture.Boundary.Normalization.ConjugateNormalization
@@ -145,6 +146,11 @@ of open immersions. Its colimit is a scheme covered by those same charts;
 the original structural maps descend to a map to the original base. Two
 chart points agree globally exactly when they lift to a common smaller
 affine chart, and morphisms out are determined by their chart restrictions.
+
+Each original chart is exactly the inverse image of its base open under
+the global structural map. The resulting open-subscheme isomorphism
+retains the original map to the base chart and commutes with restriction
+to every smaller nonempty affine chart.
 
 The broad normalization-purity/global-triviality prototype is preserved in
 `research/archive/legacy-lean/`, not as an importable library module.

@@ -17,9 +17,49 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source check: 2026-09-19 (SP84 scheme-gluing sources checked;
-actual locally directed diagram and global gluing validated;
+Last source check: 2026-09-19 (SP85 relative basis-gluing source checked;
+actual global inverse-image charts validated;
 earlier source records retain their original validation scope).
+
+### Actual global inverse-image normalization charts (SP85, 2026-09-19)
+
+[Stacks, Lemma 27.2.1, Tag 01LH](https://stacks.math.columbia.edu/tag/01LH)
+was checked on its primary page. Basis-indexed schemes over their base
+opens, with compatible transitions identifying smaller charts with
+inverse images, glue over the base; the resulting inverse-image charts
+recover the original schemes compatibly. This is the relative-gluing
+context for `prop:normalization-global-chart`, not an additional Lean
+premise or a replacement for the existing colimit construction.
+
+The seven APIs in `GluedNormalizationChart.lean` prove the exact global
+chart range from SP84's actual open cover and structural formula,
+SP83's transition ranges, and common principal neighborhoods. The
+equality of opens then combines Mathlib's `Scheme.Hom.isoOpensRange`
+and `Scheme.isoOfEq` into the actual inverse-image scheme isomorphism
+`e_U`. Its inclusion, inverse-inclusion, restricted structural-map
+and restriction-naturality identities are direct morphism equalities.
+The cancellation arguments use existing open-immersion monomorphisms;
+no new source axiom or geometric input package is added.
+
+Integral `X` and its fixed original function-field extension suffice,
+with the same normalization carriers and germ-derived scalar maps.
+No finite-degree, normality, Noetherianity, separatedness or affineness
+of intersections is assumed. Target-local affine/finite/etale transport,
+marked refinement and Galois-action descent, global normality, normal
+stalks from smooth geometry and Chow--Betti generation remain separate.
+
+SP85 is validated: all seven production APIs compile cleanly in the
+2743-job scoped build. The focused suite passes 29 examples and seven
+exact standard-three axiom audits without warnings. The full build
+passes 3208 jobs with only the two unchanged Challenge placeholder
+warnings. The unchanged dependency audit passes six primary contracts
+and two support reports without warnings. No fresh neighbor-suite pass
+is claimed. The 84-page PDF (848404 bytes) has a clean final log and
+passes visual review of pages 15, 16, 64, 65, 75, 76 and 84. All seven
+exact API parity checks and independent Lean--TeX review pass. The
+static central inventory is 1020 checks, 565 examples and 912 axiom
+reports; its historical prefix is unchanged and was not re-elaborated
+in full.
 
 ### Actual affine diagram and global gluing (SP84, 2026-09-19)
 
@@ -65,10 +105,10 @@ Lean--TeX review pass. The static central inventory is 1013 checks,
 565 examples and 905 reports; its historical prefix is unchanged and
 was not re-elaborated in full.
 
-The exact global chart inverse-image identification and global
-finite/etale properties, marked refinement and Galois-action descent,
-normal stalks from smooth geometry and Chow--Betti generation remain
-separate.
+SP85 above supplies the exact global chart inverse-image identification.
+Global affine/finite/etale properties, marked refinement and Galois-action
+descent, normal stalks from smooth geometry and Chow--Betti generation
+remain separate.
 
 ### Coherent affine inverse-image opens (SP83, 2026-09-19)
 

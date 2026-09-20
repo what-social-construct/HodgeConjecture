@@ -140,6 +140,72 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP82 | Same-ambient normalization localization and actual affine restriction | LOCALIZE / RESTRICT / COMMUTE | Retain the ambient ring, normalization carriers and original marking; prove generic localization/naturality/composition, principal-open restriction, and both actual structural/refinement squares on nested affine charts. | PROVED / VALIDATED |
 | SP83 | Coherent actual affine inverse-image opens | COMPOSE / REFINE / IDENTIFY | Prove actual restriction identities and common-refinement diamonds; identify arbitrary nonempty affine subcharts with their genuine open inverse images using common principal neighborhoods. | PROVED / VALIDATED |
 | SP84 | Actual affine normalization diagram and glued scheme | INDEX / REFINE / GLUE | Prove locally directedness for the original inclusion-indexed chart diagram; construct its scheme colimit, original-chart open cover and structural map with exact chart and common-refinement identities. | PROVED / VALIDATED |
+| SP85 | Original charts as actual global inverse-image schemes | IDENTIFY / COMPARE / RESTRICT | Prove the global chart image and equality of opens; construct the actual inverse-image scheme isomorphism with both inclusion identities, original structural map to the base chart and restriction naturality. | PROVED / VALIDATED |
+
+SP85 (2026-09-19): **original normalization charts as global inverse images**.
+Seven public APIs in `GluedNormalizationChart.lean` prove the exact
+global chart range as sets and opens, construct the corresponding
+scheme isomorphism, and retain the actual inclusions, original
+normalization map to the base chart and chart restriction maps.
+
+For the reverse range inclusion, the original open cover lifts a global
+point into `Z_V`. A common principal neighborhood in `U` and `V` lifts
+it to `Z_W` by the exact transition range, and transition naturality
+places it in `jmath_U(Z_U)`. The forward inclusion is the original
+structural formula. The open-immersion isomorphism onto its range then
+gives the actual inverse-image comparison; no replacement chart or
+normalization model is introduced.
+
+| Lean API | Mathematical role | TeX notation |
+| --- | --- | --- |
+| `normalizationChartToGlued_range` | exact image of an original chart in the glued scheme | `range(jmath_U)=mu_N^-1(U)` |
+| `normalizationChartToGlued_opensRange` | same equality as opens of the glued scheme | `opensRange(jmath_U)=mu_N^-1(U)` |
+| `normalizationChartPreimageIso` | actual inverse-image open-subscheme isomorphism | `e_U:Z_U ~= mu_N^-1(U)` |
+| `normalizationChartPreimageIso_hom_comp_inclusion` | forward comparison retains the original inclusion | `kappa_U e_U=jmath_U` |
+| `normalizationChartPreimageIso_inv_comp_chart` | inverse comparison retains the open inclusion | `jmath_U e_U^-1=kappa_U` |
+| `normalizationChartPreimageIso_hom_comp_restrict` | restricted global map is the original normalization map to `U` | `(mu_N restricted to U)e_U=pi_U` |
+| `normalizationChartPreimageIso_naturality` | restriction square for actual inverse-image opens | `e_U j^N_{W,U}=kappa_{W,U} e_W` |
+
+Here `kappa_U` denotes the inclusion of the actual open `mu_N^-1(U)`
+in `Z_N`, `kappa_{W,U}` its inclusion for a smaller base chart, and
+`pi_U` the original normalization map to `U`. None is a replacement
+normalization chart. The local helper algebra instance retains the
+original germ-derived scalars and is not another public mathematical
+object. Integral `X` and the fixed field extension remain the only
+ambient hypotheses. No finite-degree, normality, Noetherianity,
+separatedness or affine-intersection premise is added.
+
+The manuscript counterpart is `prop:normalization-global-chart`.
+Stacks 01LH supplies relative basis-gluing context; the seven project
+APIs are proved for the already constructed scheme using existing
+Mathlib open-immersion/range APIs. No source axiom is introduced.
+
+SP85 is validated: all seven production APIs compile cleanly in the
+2743-job scoped build. The focused suite passes 29 examples and seven
+exact standard-three axiom audits without warnings. The full build
+passes 3208 jobs with only the two unchanged Challenge placeholder
+warnings. The unchanged dependency audit passes six primary contracts
+and two support reports without warnings. No fresh neighbor-suite pass
+is claimed. The 84-page PDF (848404 bytes) has a clean final log and
+passes visual review of pages 15, 16, 64, 65, 75, 76 and 84. All seven
+exact API parity checks and independent Lean--TeX review pass. The
+static central inventory is 1020 checks, 565 examples and 912 axiom
+reports; its historical prefix is unchanged and was not re-elaborated
+in full.
+
+Next use `e_U` and its exact structural formula for target-local
+`IsAffineHom` and finite/etale transfer under the appropriate hypotheses,
+then descend the marked refinement and compatible Galois action.
+Global normality, normal stalks from smooth geometry and Chow--Betti
+generation remain separate. No section-ring model on a non-affine
+intersection is substituted for its geometric overlap. The SP84 block
+and all queue history below are preserved byte-for-byte from `2a4a52a`.
+
+The SP84 neighbor verification was attempted, but its final tool output
+was not retained after interruption and no saved log is available.
+It is unconfirmed and excluded from this checkpoint's passing counts.
+The SP84, SP83 and SP81 verification files are statically byte-identical
+to the baseline; their historical results below are not fresh reruns.
 
 SP84 (2026-09-19): **actual affine normalization diagram and glued scheme**.
 Seven public APIs in `AffineNormalizationDiagram.lean` index all actual

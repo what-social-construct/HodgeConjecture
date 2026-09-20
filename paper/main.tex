@@ -1232,6 +1232,56 @@ in the colimit. Its universal property descends \(c_N\) to \(\mu_N\)
 and determines morphisms by their chart restrictions.
 \end{proof}
 
+\begin{proposition}[The original charts as global inverse images]
+\label{prop:normalization-global-chart}
+In the setting of Proposition~\ref{prop:normalization-gluing}, for every
+nonempty affine open \(U\subseteq X\) one has the equality of opens
+\[
+ \jmath_U(Z_U)=\mu_N^{-1}(U)\subseteq Z_N.
+\]
+Consequently, the original chart inclusion induces an isomorphism
+\[
+ e_U:Z_U\xrightarrow{\ \sim\ }\mu_N^{-1}(U),
+ \qquad \kappa_U\circ e_U=\jmath_U,
+ \qquad \jmath_U\circ e_U^{-1}=\kappa_U,
+\]
+where \(\kappa_U:\mu_N^{-1}(U)\hookrightarrow Z_N\) is the inclusion.
+Let \(\pi_U:Z_U\to U\) be the original normalization map, using the
+original generic germs \(\Gamma(U,\mathcal O_X)\to K(X)\to N\).
+Then
+\[
+ \bigl(\mu_N|_{\mu_N^{-1}(U)}\bigr)\circ e_U=\pi_U.
+\]
+For nonempty affine opens \(W\subseteq U\), let
+\(\kappa_{W,U}:\mu_N^{-1}(W)\hookrightarrow\mu_N^{-1}(U)\)
+be the inclusion. The comparisons commute with the actual restrictions:
+\[
+ e_U\circ j^N_{W,U}=\kappa_{W,U}\circ e_W.
+\]
+\end{proposition}
+
+\begin{proof}
+The formula \(\mu_N\circ\jmath_U=\mu_U\) gives the forward image
+inclusion. Conversely, suppose \(\mu_N(z)\in U\). The original-chart
+open cover gives \(z=\jmath_V(b)\) for some \(b\in Z_V\), and
+\(x=\mu_V(b)=\mu_N(z)\) lies in \(U\cap V\). Choose a neighborhood
+\(W=D_U(r)=D_V(s)\) containing \(x\).
+Proposition~\ref{prop:normalization-affine-restriction} gives
+\(w\in Z_W\) with \(j^N_{W,V}(w)=b\). Chart naturality yields
+\[
+ z=\jmath_V(j^N_{W,V}(w))
+   =\jmath_W(w)=\jmath_U(j^N_{W,U}(w)),
+\]
+which proves the reverse inclusion.
+Since \(\jmath_U\) is an open immersion, identifying its open image
+gives \(e_U\) with the stated inclusion formulas. Composing the
+structural-map identity with \(U\hookrightarrow X\), and the
+restriction identity with \(\kappa_U\), proves both by cancellation
+of open immersions. This realizes the original normalization diagram
+as relative gluing over the affine basis, as in
+\cite{StacksRelativeGluing}.
+\end{proof}
+
 The group \(G=\mathcal N.\mathit{galoisGroup}\), the subgroup
 \(H=\mathcal N.\mathit{intermediateFixingSubgroup}\), and the canonical deck
 action on \(Y_N\) are all constructed from the same datum.  Normality keeps the conjugate embeddings inside the same field \(N\).
@@ -5281,6 +5331,12 @@ Glued normalization \(Z_N,\jmath_U,\mu_N\) &
 \leanpath{normalizationChartToGlued_eq_iff}\newline
 \leanpath{Boundary/Normalization/AffineNormalizationDiagram.lean}\newline
 \leanpath{Boundary/Normalization/GluedNormalization.lean}\\
+Global inverse-image chart comparison \(e_U\) &
+\leanpath{normalizationChartToGlued_range}\newline
+\leanpath{normalizationChartPreimageIso}\newline
+\leanpath{normalizationChartPreimageIso_hom_comp_restrict}\newline
+\leanpath{normalizationChartPreimageIso_naturality}\newline
+\leanpath{Boundary/Normalization/GluedNormalizationChart.lean}\\
 Full-visible boundary ideals &
 \leanpath{movingBoundaryIdeal_eq_top_of_surjective}\newline
 \leanpath{conjugateBoundarySeparation_of_surjective}\newline
@@ -6086,6 +6142,14 @@ principal table, grouped by mathematical layer.
 \leanpath{normalizationChartToGlued_naturality};
 \leanpath{normalizationChartToGlued_eq_iff};
 \leanpath{gluedNormalization_hom_ext};
+\normsrc{GluedNormalizationChart.lean};
+\leanpath{normalizationChartToGlued_range};
+\leanpath{normalizationChartToGlued_opensRange};
+\leanpath{normalizationChartPreimageIso};
+\leanpath{normalizationChartPreimageIso_hom_comp_inclusion};
+\leanpath{normalizationChartPreimageIso_inv_comp_chart};
+\leanpath{normalizationChartPreimageIso_hom_comp_restrict};
+\leanpath{normalizationChartPreimageIso_naturality};
 \normsrc{FiniteAffineCover.lean};
 \leanpath{normalizationToIntermediate_surjective};
 \leanpath{normalizationIntermediateEquiv};

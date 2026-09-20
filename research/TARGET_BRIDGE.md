@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-09-19 (SP84 actual affine diagram and gluing; validated).
+Assessed: 2026-09-19 (SP85 actual global inverse-image charts; validated).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -971,9 +971,10 @@ validation.
 
 SP83 supplies the actual restriction coherence and affine inverse-image
 comparisons in B4p below; SP84 constructs the locally directed diagram
-and global gluing in B4q. Global chart-image identification and the
-compatible marked/Galois maps remain next; normal stalks from smooth
-geometry and Chow--Betti generation are separate obligations.
+and global gluing in B4q. SP85 identifies the actual global inverse-image
+charts in B4r. Target-local affine/finite/etale transport and compatible
+marked/Galois maps remain next; normal stalks from smooth geometry and
+Chow--Betti generation are separate obligations.
 
 ### B4p. Coherent affine inverse-image opens
 
@@ -1052,25 +1053,68 @@ Lean--TeX review pass. The static central inventory is 1013 checks,
 565 examples and 905 reports; its historical prefix is unchanged and
 was not re-elaborated in full.
 
-Next identify `range(jmath_U)` with the global inverse image
-`mu_N^-1(U)`, transfer the applicable finite/etale properties, and
-descend the marked refinement `lambda` and compatible Galois action.
-Global normality, normal stalks from smooth geometry, and Chow--Betti
-generation are separate obligations; the name of the glued model does
-not assert those properties.
+The exact global chart comparison planned at SP84 is implemented in
+B4r below. Global affine/finite/etale properties under the appropriate
+hypotheses, marked refinement `lambda`, compatible Galois-action
+descent, normal stalks from smooth geometry and Chow--Betti generation
+remain separate; the glued model's name does not assert those properties.
 
-The inspected next proof route is concrete, but is not yet a SP84
-theorem. For `z` with `mu_N(z) in U`, the constructed open cover gives
-`b in Z_V` with `jmath_V(b)=z`. Choose a common principal neighborhood
-`W <= U intersect V` of `mu_V(b)`. The exact transition range lifts
-`b` to `w in Z_W`; transition naturality then gives
-`z = jmath_U(j^N_{W,U}(w))`. The forward range inclusion follows from
-the exact structural formula. After proving the range equality, apply
-Mathlib's existing `Scheme.Hom.isoOpensRange` in
-`AlgebraicGeometry/Restrict.lean` and identify its range open with
-`mu_N^-1(U)` to obtain the actual inverse-image open-subscheme
-isomorphism. This is the next proof plan, not a claimed global-image
-endpoint in the present checkpoint.
+### B4r. Original normalization charts as global inverse-image schemes
+
+`GluedNormalizationChart.lean` proves the global equality
+`range(jmath_U) = mu_N^-1(U)` and its equality-of-opens version. For
+`z` with `mu_N(z) in U`, the constructed open cover gives `b in Z_V`
+with `jmath_V(b)=z`. A common principal neighborhood
+`W <= U intersect V` of `mu_V(b)` gives a lift `w in Z_W` by the exact
+transition range. Transition naturality then gives
+`z = jmath_U(j^N_{W,U}(w))`. The forward inclusion follows from the
+exact original structural formula.
+
+Mathlib's `Scheme.Hom.isoOpensRange` and the proved equality of opens
+construct `e_U : Z_U ~= mu_N^-1(U)` as an actual scheme isomorphism.
+Writing `kappa_U : mu_N^-1(U) -> Z_N` for the open inclusion, the two
+proved inclusion formulas are `kappa_U e_U = jmath_U` and
+`jmath_U e_U^-1 = kappa_U`. The restricted global map composed with
+`e_U` is exactly the original normalization structural map
+`pi_U : Z_U -> U`, not merely a pointwise comparison over `X`.
+For `W <= U`, the square formed by `j^N_{W,U}`, `e_W`, `e_U` and
+the actual inverse-image inclusion `kappa_{W,U}` commutes as scheme
+morphisms.
+
+These seven public APIs retain integral `X`, the same fixed extension
+of its original function field, and the original germ-derived scalars.
+No finite-degree, normality, Noetherianity or separatedness hypothesis
+is added. The manuscript counterpart is
+`prop:normalization-global-chart`. Stacks 01LH supplies the relative
+basis-gluing context; the global chart equality and comparison maps
+are proved directly for the already constructed colimit, without a
+new source axiom or replacement normalization model.
+
+SP85 is validated: all seven production APIs compile cleanly in the
+2743-job scoped build. The focused suite passes 29 examples and seven
+exact standard-three axiom audits without warnings. The full build
+passes 3208 jobs with only the two unchanged Challenge placeholder
+warnings. The unchanged dependency audit passes six primary contracts
+and two support reports without warnings. No fresh neighbor-suite pass
+is claimed. The 84-page PDF (848404 bytes) has a clean final log and
+passes visual review of pages 15, 16, 64, 65, 75, 76 and 84. All seven
+exact API parity checks and independent Lean--TeX review pass. The
+static central inventory is 1020 checks, 565 examples and 912 axiom
+reports; its historical prefix is unchanged and was not re-elaborated
+in full.
+
+The next bounded consumer is target-local: use `e_U` and its structural
+formula to establish `IsAffineHom` for `mu_N`, then transport the
+appropriate chartwise finite/etale inputs to the global map.
+`IsAffineHom.isAffine_preimage` asks for every affine open, so this next
+proof must also handle the empty open explicitly or use an affine-basis
+cover; SP85's chart index is nonempty. The planned finite/etale transfer
+uses `IsZariskiLocalAtTarget.iff_of_openCover` and the restricted-map
+isomorphism, retaining SP81's explicit normal-stalk inputs rather than
+silently deriving them from smoothness. Descent of the marked refinement
+and compatible Galois action follows separately.
+Global normality, normal stalks from smooth geometry and Chow--Betti
+generation are not consequences asserted by SP85.
 
 ### G0. Smooth projective setting and candidate constructions
 

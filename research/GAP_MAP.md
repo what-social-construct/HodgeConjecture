@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-09-19 (SP84 actual affine diagram and global gluing;
+Last reviewed: 2026-09-19 (SP85 actual global inverse-image charts;
 validated; earlier checkpoint records retain
 their original validation scope).
 
@@ -648,18 +648,47 @@ Lean--TeX review pass. The static central inventory is 1013 checks,
 565 examples and 905 reports; its historical prefix is unchanged and
 was not re-elaborated in full.
 
-**Next bounded bridge:** identify each global chart image exactly with
-`mu_N^-1(U)`, then transfer the applicable local finite/etale properties
-and descend the marked refinement and compatible Galois action. The
-global structural map is constructed, but those additional properties
-are not asserted by SP84. No section-ring model on a non-affine
-intersection is substituted for its geometric overlap.
-Normal stalks from smooth geometry remain separate. The older SP76
-constructor retains its stronger assumptions; the SP81 finite-etale
-constructor removes its Noetherian-base requirement. The chartwise
-factorization identities alone do not prove gluing; SP84 supplies the
-separate locally directed construction. Chow--Betti
-generation is unchanged.
+**SP85: the actual global inverse-image chart comparison.**
+`GluedNormalizationChart.lean` proves
+`range(jmath_U) = mu_N^-1(U)` as sets and as opens of the glued scheme.
+For the reverse inclusion, lift a global point through the original
+chart cover, choose a common principal neighborhood in that base chart
+and `U`, and use the SP83 transition range and SP84 naturality to lift
+the point into `Z_U`. The forward inclusion is the exact structural
+formula. Thus the comparison uses actual geometric overlaps rather
+than a section-ring model of a possibly non-affine intersection.
+
+The canonical open-immersion isomorphism then gives
+`e_U : Z_U ~= mu_N^-1(U)` as schemes. Both inclusion formulas,
+the exact restricted structural map to `U`, and compatibility with
+every smaller affine chart are proved. These seven APIs keep integral
+`X`, the original fixed function-field extension, normalization carriers
+and germ-derived scalar maps; they add no finite-degree, normality,
+Noetherianity or separatedness premise. The manuscript counterpart is
+`prop:normalization-global-chart`.
+
+SP85 is validated: all seven production APIs compile cleanly in the
+2743-job scoped build. The focused suite passes 29 examples and seven
+exact standard-three axiom audits without warnings. The full build
+passes 3208 jobs with only the two unchanged Challenge placeholder
+warnings. The unchanged dependency audit passes six primary contracts
+and two support reports without warnings. No fresh neighbor-suite pass
+is claimed. The 84-page PDF (848404 bytes) has a clean final log and
+passes visual review of pages 15, 16, 64, 65, 75, 76 and 84. All seven
+exact API parity checks and independent Lean--TeX review pass. The
+static central inventory is 1020 checks, 565 examples and 912 axiom
+reports; its historical prefix is unchanged and was not re-elaborated
+in full.
+
+**Next bounded bridge:** apply these exact inverse-image isomorphisms
+to the target-local affine-morphism interface and transfer finite/etale
+properties under their appropriate hypotheses. Then descend the marked
+refinement and compatible Galois action. Global normality, normal stalks
+from smooth geometry and Chow--Betti generation are separate. The older
+SP76 constructor retains its stronger assumptions; SP81 removes its
+Noetherian-base requirement. SP84 supplies the locally directed gluing,
+and SP85 identifies its original charts with the actual global inverse
+images; neither checkpoint asserts the subsequent finite/etale descent.
 The main target is unchanged. Nonempty-boundary geometry remains an
 alternative if needed; Chow--Betti generation and convolution compatibility
 remain separate.

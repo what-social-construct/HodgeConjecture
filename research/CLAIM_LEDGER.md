@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-19 (SP84 affine diagram and global gluing,
+Last audited: 2026-09-19 (SP85 actual global inverse-image charts,
 validated; earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,47 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Actual global inverse-image normalization charts (A11bq / SP85)
+
+Status: `FORMAL`; seven production APIs compile cleanly and the checkpoint
+is validated. `Boundary/Normalization/GluedNormalizationChart.lean` identifies
+each original chart with its actual global inverse image:
+`range(jmath_U) = mu_N^-1(U)` as sets and opens, and
+`e_U : Z_U ~= mu_N^-1(U)` as schemes. The two inclusion identities,
+the exact comparison of the restricted global map with the original
+normalization map to `U`, and restriction naturality are proved without
+replacing any normalization carrier, field marking or germ-derived
+scalar map. The manuscript counterpart is
+`prop:normalization-global-chart`.
+
+The only ambient hypotheses remain integral `X` and a fixed field
+extension of its original function field. The proof lifts a point from
+the existing global open cover through a common principal neighborhood
+and the existing exact transition range. It needs no finite-degree,
+normality, Noetherianity, separatedness or affine-intersection premise.
+The inverse-image isomorphism is then the canonical open-immersion
+comparison, with its actual scheme-map compatibilities. No literature
+axiom or new geometric hypothesis package is introduced.
+
+SP85 is validated: all seven production APIs compile cleanly in the
+2743-job scoped build. The focused suite passes 29 examples and seven
+exact standard-three axiom audits without warnings. The full build
+passes 3208 jobs with only the two unchanged Challenge placeholder
+warnings. The unchanged dependency audit passes six primary contracts
+and two support reports without warnings. No fresh neighbor-suite pass
+is claimed. The 84-page PDF (848404 bytes) has a clean final log and
+passes visual review of pages 15, 16, 64, 65, 75, 76 and 84. All seven
+exact API parity checks and independent Lean--TeX review pass. The
+static central inventory is 1020 checks, 565 examples and 912 axiom
+reports; its historical prefix is unchanged and was not re-elaborated
+in full.
+
+Remaining: target-local `IsAffineHom` and finite/etale transfer under
+the appropriate hypotheses, marked refinement and compatible
+Galois-action descent, global normality, normal stalks from smooth
+geometry and Chow--Betti generation. The chart isomorphisms are not a
+claim about global sections of a non-affine intersection.
 
 ## Actual affine diagram and global gluing (A11bp / SP84)
 
@@ -59,8 +100,9 @@ Lean--TeX review pass. The static central inventory is 1013 checks,
 565 examples and 905 reports; its historical prefix is unchanged and
 was not re-elaborated in full.
 
-Remaining: exact global chart image `range(jmath_U) = mu_N^-1(U)`,
-global finite/etale properties under the appropriate added hypotheses,
+The exact global chart image `range(jmath_U) = mu_N^-1(U)` is supplied
+by SP85 above. Remaining: global affine/finite/etale properties under
+the appropriate hypotheses,
 marked refinement and compatible Galois-action descent, normal stalks
 from smooth geometry, and Chow--Betti generation. The construction does
 not identify the section normalization of a non-affine intersection

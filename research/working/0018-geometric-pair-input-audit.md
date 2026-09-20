@@ -837,3 +837,55 @@ descent, normal stalks from smooth geometry, and Chow--Betti generation
 remain separate. No normalization of sections on a non-affine
 intersection is identified with the geometric overlap. The full audit
 prefix through SP83 remains byte-identical to `5e16059`.
+
+## 21. SP85 follow-up: actual global inverse-image normalization charts
+
+`GluedNormalizationChart.lean` proves the global range identity
+`range(jmath_U) = mu_N^-1(U)` and its equality-of-opens version.
+The constructed original-chart cover lifts a global point into some
+`Z_V`; a common principal neighborhood in `U` and `V`, the exact
+transition range and inclusion naturality then lift it into `Z_U`.
+The converse follows from the original structural formula. This uses
+the actual glued scheme, not the normalization of sections over a
+possibly non-affine intersection.
+
+The canonical open-immersion comparison gives the actual scheme
+isomorphism `e_U : Z_U ~= mu_N^-1(U)`. Both inclusion identities,
+the exact restricted structural map to `U`, and compatibility with
+every original affine chart restriction are proved. These are seven
+public APIs; the local scalar helper retains the original germ-derived
+algebra map rather than introducing a new public object.
+
+The hypotheses remain integral `X` and the same fixed extension of its
+original function field. No finite-degree, normality, Noetherianity,
+separatedness or affine-intersection assumption is added. Stacks 01LH
+is verified relative basis-gluing context for the manuscript
+`prop:normalization-global-chart`; it is not a source axiom. The actual
+global range and comparison morphisms are proved from the existing
+construction and Mathlib's open-immersion APIs.
+
+SP85 is validated: all seven production APIs compile cleanly in the
+2743-job scoped build. The focused suite passes 29 examples and seven
+exact standard-three axiom audits without warnings. The full build
+passes 3208 jobs with only the two unchanged Challenge placeholder
+warnings. The unchanged dependency audit passes six primary contracts
+and two support reports without warnings. No fresh neighbor-suite pass
+is claimed. The 84-page PDF (848404 bytes) has a clean final log and
+passes visual review of pages 15, 16, 64, 65, 75, 76 and 84. All seven
+exact API parity checks and independent Lean--TeX review pass. The
+static central inventory is 1020 checks, 565 examples and 912 axiom
+reports; its historical prefix is unchanged and was not re-elaborated
+in full.
+
+The next bounded consumer is target-local `IsAffineHom` and finite/etale
+transfer through these exact chart isomorphisms under the appropriate
+hypotheses. Marked refinement and compatible Galois-action descent,
+global normality, normal stalks from smooth geometry and Chow--Betti
+generation remain separate. The complete audit prefix through SP84
+remains byte-identical to `2a4a52a`.
+
+The SP84 neighbor verification attempt has no retained final tool output
+or saved log after interruption, so its result is unconfirmed and
+excluded from this checkpoint's passing counts. The SP84, SP83 and
+SP81 verification files are statically unchanged from the baseline;
+the earlier recorded results are historical, not fresh reruns.
