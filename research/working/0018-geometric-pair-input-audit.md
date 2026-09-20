@@ -981,3 +981,50 @@ preserves `lambda`. This checkpoint does not construct the global
 action. Global normality and surjectivity, normal stalks from smooth
 geometry and Chow--Betti generation remain separate. The complete
 audit prefix through SP86 remains byte-identical to `30fe0ae`.
+
+## 24. SP88 follow-up: finite etaleness of the actual global marked refinement
+
+`FiniteEtaleGluedRefinement.lean` adds two public APIs. The generic
+finite-cancellation theorem assumes a finite composite `g f` and
+separated `g`, and concludes that `f` is finite. It does not assume
+`g` finite, integral schemes, normality, Noetherianity or a field.
+The direct Lean proof factors through the graph closed immersion and
+a base change of the finite composite. No generic
+postcomposition-property instance is introduced.
+
+The actual specialization proves finite etaleness of the existing
+`lambda = gluedNormalClosureToCover p hY`, assuming integral `X` and
+`Y`, dominant finite etale `p : Y -> X`, and explicitly integrally
+closed stalks on both schemes. The SP87 triangle identifies
+`p lambda` with the finite-etale `mu_(N_p)` from SP86. Finiteness of
+`p` implies separatedness; finite cancellation gives finiteness of
+`lambda`, and `IsEtale.of_comp` gives its etaleness. The SP87 map
+definition retains its weaker finite-dominant and `hY` hypotheses.
+
+The manuscript counterpart is
+`cor:normal-closure-refinement-finite-etale`. The standard finite and
+etale cancellation inputs are stated and cited via Stacks 035D and
+02GW, whose primary pages were verified. Their source proofs are not
+repeated in the manuscript. The property theorem introduces no new
+source axiom, re-gluing, chart or carrier replacement, field marking,
+or scalar-map change.
+
+SP88 is validated: both production APIs compile cleanly on the first
+2773-job scoped build. The focused suite passes 20 examples and two
+exact standard-three axiom audits without warnings on its first run.
+The full build passes 3212 jobs with only the two unchanged Challenge
+placeholder warnings. The unchanged dependency audit passes six primary
+contracts and two support reports without warnings. No fresh neighbor-suite
+pass is claimed. The 86-page PDF (856518 bytes) has a clean final log
+and passes visual review of pages 16, 17, 65, 77 and 84. Both exact
+API parity checks and independent Lean--TeX review pass. The static
+central inventory is 1033 checks, 565 examples and 925 axiom reports;
+its historical prefix is unchanged and was not re-elaborated in full.
+
+Next prove surjectivity and descend the compatible Galois action.
+The full group acts over `X`; only the subgroup fixing the marked
+`K(Y)` preserves `lambda`. Global normality, normal stalks from smooth
+geometry and Chow--Betti generation remain separate. No new global
+action, surjectivity, global normality or Hodge case is asserted by
+SP88. The complete audit prefix through SP87 remains byte-identical
+to `af73385`.

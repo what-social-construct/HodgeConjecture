@@ -143,6 +143,54 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP85 | Original charts as actual global inverse-image schemes | IDENTIFY / COMPARE / RESTRICT | Prove the global chart image and equality of opens; construct the actual inverse-image scheme isomorphism with both inclusion identities, original structural map to the base chart and restriction naturality. | PROVED / VALIDATED |
 | SP86 | Target-local properties and actual finite-etale global normal closure | TRANSFER / SPECIALIZE / RETAIN | Prove the nonempty affine basis covers the base, transfer target-local properties through the exact chart comparisons, derive global affineness, and prove finite etaleness for the original marked normal closure from SP81's explicit normal-stalk inputs. | PROVED / VALIDATED |
 | SP87 | Descent of the original marked refinement | FORM COCONE / DESCEND / IDENTIFY | Glue the original marked chart refinements to a map to the actual `Y`; prove its marked chart formulas, global triangle and uniqueness from those chart formulas under finite dominance and normal stalks of `Y` only. | PROVED / VALIDATED |
+| SP88 | Finite etaleness of the actual global marked refinement | CANCEL / TRANSFER / RETAIN | Prove finite cancellation for a separated second morphism and use the exact global triangle with SP86 to prove the original marked refinement finite etale under the actual finite-etale and explicit normal-stalk inputs. | PROVED / VALIDATED |
+
+SP88 (2026-09-20): **finite etaleness of the actual global marked refinement**.
+Two public APIs in `FiniteEtaleGluedRefinement.lean` prove a generic
+finite-cancellation lemma and its actual finite-etale refinement
+consumer. The manuscript counterpart is
+`cor:normal-closure-refinement-finite-etale`.
+
+| Lean API | Mathematical role | TeX notation |
+| --- | --- | --- |
+| `isFinite_of_comp_of_isSeparated` | a finite composite with separated second morphism has finite first morphism | `g f` finite and `g` separated imply `f` finite |
+| `gluedNormalClosureToCover_finite_etale` | the original global marked refinement is finite etale under the stated geometric inputs | `lambda:Z_(N_p) -> Y` finite etale |
+
+The generic result does not require `g` finite, integral schemes,
+normality, Noetherianity or a field. Its Lean proof uses the graph
+closed immersion and the finite base change of the composite; no
+generic postcomposition-property instance is added. The manuscript
+states and cites this standard input via Stacks 035D rather than
+repeating a proof. Stacks 02GW supplies the etale-cancellation citation.
+
+The actual specialization assumes integral `X` and `Y`, dominant
+finite etale `p : Y -> X`, and explicitly integrally closed stalks
+of both schemes. SP87's exact `p lambda = mu_(N_p)` triangle and
+SP86's finite-etale `mu_(N_p)` supply the composite. Finite `p` is
+separated, so finite cancellation applies; etaleness follows from
+`IsEtale.of_comp`. The definition of `lambda` retains SP87's weaker
+finite-dominant and `hY` hypotheses. The proof neither re-glues nor
+replaces the original charts, normalization carrier, field marking
+or scalar maps, and introduces no source axiom.
+
+SP88 is validated: both production APIs compile cleanly on the first
+2773-job scoped build. The focused suite passes 20 examples and two
+exact standard-three axiom audits without warnings on its first run.
+The full build passes 3212 jobs with only the two unchanged Challenge
+placeholder warnings. The unchanged dependency audit passes six primary
+contracts and two support reports without warnings. No fresh neighbor-suite
+pass is claimed. The 86-page PDF (856518 bytes) has a clean final log
+and passes visual review of pages 16, 17, 65, 77 and 84. Both exact
+API parity checks and independent Lean--TeX review pass. The static
+central inventory is 1033 checks, 565 examples and 925 axiom reports;
+its historical prefix is unchanged and was not re-elaborated in full.
+
+Next prove surjectivity and descend the compatible Galois action.
+The full group acts over `X`; only the subgroup fixing the marked
+`K(Y)` preserves `lambda`. Global normality, normal stalks from smooth
+geometry and Chow--Betti generation remain separate. The complete
+queue suffix beginning at the SP87 block below is preserved
+byte-for-byte from `af73385`.
 
 SP87 (2026-09-20): **descent of the original marked refinement**.
 Five public APIs in `GluedNormalClosureRefinement.lean` construct the

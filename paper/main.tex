@@ -1375,6 +1375,26 @@ On each original chart, the normalization triangle gives
 The same colimit property proves the asserted equality over \(X\).
 \end{proof}
 
+\begin{corollary}[Finite \'{e}taleness of the marked refinement]
+\label{cor:normal-closure-refinement-finite-etale}
+Let \(p:Y\to X\) be a finite dominant \'{e}tale morphism of integral
+schemes, and suppose every local ring of \(X\) and of \(Y\) is
+integrally closed. The original marked refinement
+\(\lambda:Z_{N_p}\to Y\) of
+Proposition~\ref{prop:normal-closure-marked-refinement} is finite
+and \'{e}tale.
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:normal-closure-global-finite-etale},
+\(\mu_{N_p}=p\circ\lambda\) is finite and \'{e}tale.
+Since \(p\) is finite, it is separated. Finite cancellation through
+a separated morphism therefore makes \(\lambda\) finite
+\cite{StacksFiniteCancellation}. Both \(p\) and \(\mu_{N_p}\) are
+\'{e}tale over \(X\), so \'{e}tale cancellation makes \(\lambda\)
+\'{e}tale \cite{StacksEtaleCancellation}.
+\end{proof}
+
 The group \(G=\mathcal N.\mathit{galoisGroup}\), the subgroup
 \(H=\mathcal N.\mathit{intermediateFixingSubgroup}\), and the canonical deck
 action on \(Y_N\) are all constructed from the same datum.  Normality keeps the conjugate embeddings inside the same field \(N\).
@@ -5443,6 +5463,10 @@ Global marked refinement \(\lambda\) &
 \leanpath{gluedNormalClosureToCover_comp_toBase}\newline
 \leanpath{gluedNormalClosureToCover_unique}\newline
 \leanpath{Boundary/Normalization/GluedNormalClosureRefinement.lean}\\
+Finite \'{e}tale marked refinement &
+\leanpath{isFinite_of_comp_of_isSeparated}\newline
+\leanpath{gluedNormalClosureToCover_finite_etale}\newline
+\leanpath{Boundary/Normalization/FiniteEtaleGluedRefinement.lean}\\
 Full-visible boundary ideals &
 \leanpath{movingBoundaryIdeal_eq_top_of_surjective}\newline
 \leanpath{conjugateBoundarySeparation_of_surjective}\newline
@@ -6270,6 +6294,9 @@ principal table, grouped by mathematical layer.
 \leanpath{normalizationChartToGlued_comp_toCover};
 \leanpath{gluedNormalClosureToCover_comp_toBase};
 \leanpath{gluedNormalClosureToCover_unique};
+\normsrc{FiniteEtaleGluedRefinement.lean};
+\leanpath{isFinite_of_comp_of_isSeparated};
+\leanpath{gluedNormalClosureToCover_finite_etale};
 \normsrc{FiniteAffineCover.lean};
 \leanpath{normalizationToIntermediate_surjective};
 \leanpath{normalizationIntermediateEquiv};

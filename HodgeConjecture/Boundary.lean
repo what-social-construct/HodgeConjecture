@@ -37,6 +37,7 @@ import HodgeConjecture.Boundary.Normalization.GluedNormalizationChart
 import HodgeConjecture.Boundary.Normalization.GluedNormalizationProperties
 import HodgeConjecture.Boundary.Normalization.FiniteEtaleGluedNormalClosure
 import HodgeConjecture.Boundary.Normalization.GluedNormalClosureRefinement
+import HodgeConjecture.Boundary.Normalization.FiniteEtaleGluedRefinement
 import HodgeConjecture.Boundary.Normalization.DeckAction
 import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
 import HodgeConjecture.Boundary.Normalization.ConjugateNormalization
@@ -167,6 +168,11 @@ alone also let the original marked refinement maps descend to that cover.
 The global refinement has the exact original chart formulas and commutes
 with the structural map to the base. It is unique with those marked chart
 formulas; the commuting triangle alone is not the uniqueness hypothesis.
+
+For the finite étale map with explicit normal stalks on both schemes,
+the same global refinement is finite étale. The proved triangle lets
+finite cancellation through the separated original map and étale
+cancellation apply to the existing normal-closure structural map.
 
 The broad normalization-purity/global-triviality prototype is preserved in
 `research/archive/legacy-lean/`, not as an importable library module.

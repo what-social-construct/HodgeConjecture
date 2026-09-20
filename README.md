@@ -1027,8 +1027,36 @@ review pass. The static central inventory is 1031 checks, 565 examples
 and 923 axiom reports; its historical prefix is unchanged and was not
 re-elaborated in full.
 
-Next prove the applicable global properties of the marked refinement
-and descend the Galois action. The full Galois group acts over `X`;
+SP88 proves finite etaleness of that same marked refinement
+`lambda : Z_(N_p) -> Y` in `FiniteEtaleGluedRefinement.lean`. A generic
+finite-morphism cancellation lemma proves that `f` is finite whenever
+`f` followed by `g` is finite and `g` is separated; `g` need not itself
+be finite. For the actual finite etale `p`, finiteness gives
+separatedness, and SP87's exact triangle and SP86's finite-etale
+`mu_(N_p)` give both finiteness and etaleness of `lambda`.
+
+The actual specialization assumes integral `X` and `Y`, dominant
+finite etale `p : Y -> X`, and explicitly integrally closed stalks on
+both schemes. These are additional inputs for the property theorem;
+the SP87 definition of `lambda` still needs only finite dominance and
+normal stalks of `Y`. The proof does not re-glue or replace a chart,
+carrier, field marking or scalar map. Its manuscript counterpart is
+`cor:normal-closure-refinement-finite-etale`.
+
+SP88 is validated: both production APIs compile cleanly on the first
+2773-job scoped build. The focused suite passes 20 examples and two
+exact standard-three axiom audits without warnings on its first run.
+The full build passes 3212 jobs with only the two unchanged Challenge
+placeholder warnings. The unchanged dependency audit passes six primary
+contracts and two support reports without warnings. No fresh neighbor-suite
+pass is claimed. The 86-page PDF (856518 bytes) has a clean final log
+and passes visual review of pages 16, 17, 65, 77 and 84. Both exact
+API parity checks and independent Lean--TeX review pass. The static
+central inventory is 1033 checks, 565 examples and 925 axiom reports;
+its historical prefix is unchanged and was not re-elaborated in full.
+
+Next prove surjectivity and descend the Galois action.
+The full Galois group acts over `X`;
 only the subgroup fixing the marked `K(Y)` preserves `lambda`.
 Global normality and surjectivity, normal stalks from smooth geometry
 and Chow--Betti generation remain separate. No model built

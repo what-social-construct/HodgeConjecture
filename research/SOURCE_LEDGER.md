@@ -17,9 +17,57 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-09-20 (SP87 uses existing colimit and
-proved chart-restriction interfaces; validated;
+Last source/interface review: 2026-09-20 (SP88 finite/etale cancellation
+sources checked; property theorem validated;
 earlier source records retain their original validation scope).
+
+### Finite etaleness of the actual global marked refinement (SP88, 2026-09-20)
+
+The primary pages for [Stacks, Lemma 29.45.14, Tag 035D](https://stacks.math.columbia.edu/tag/035D)
+and [Lemma 29.37.19, Tag 02GW](https://stacks.math.columbia.edu/tag/02GW)
+were checked. The first proves that `f` is finite if `f` followed by
+`g` is finite and `g` is separated. Finiteness of `g` is not required.
+The second proves etaleness of `f` when both `g` and the composite
+are etale. Their role is the standard cancellation step in
+`cor:normal-closure-refinement-finite-etale`; neither supplies the
+actual normal-closure construction or its normal-stalk inputs.
+
+`isFinite_of_comp_of_isSeparated` directly proves the first statement
+in Lean using the graph factorization: the graph is a closed immersion
+when `g` is separated, and the following map is a base change of the
+finite composite. It does not add a generic postcomposition-property
+instance or require integral schemes, normality, Noetherianity or a
+field. Mathlib's `IsEtale.of_comp` supplies the etale cancellation.
+The manuscript states and cites these standard facts without
+repeating their proofs.
+
+`gluedNormalClosureToCover_finite_etale p hX hY` then applies these
+facts to SP87's actual marked refinement. It assumes integral `X`
+and `Y`, dominant finite etale `p`, and explicitly integrally closed
+stalks on both schemes. The exact SP87 triangle and SP86 finite-etale
+structural map supply the composite; finite `p` is separated. The
+original map, field marking, normalization carriers and germ-derived
+scalars remain unchanged. No re-gluing, replacement chart or source
+axiom is introduced. The definition of the refinement still retains
+SP87's weaker finite-dominant and normal-stalk-of-`Y` hypotheses.
+
+SP88 is validated: both production APIs compile cleanly on the first
+2773-job scoped build. The focused suite passes 20 examples and two
+exact standard-three axiom audits without warnings on its first run.
+The full build passes 3212 jobs with only the two unchanged Challenge
+placeholder warnings. The unchanged dependency audit passes six primary
+contracts and two support reports without warnings. No fresh neighbor-suite
+pass is claimed. The 86-page PDF (856518 bytes) has a clean final log
+and passes visual review of pages 16, 17, 65, 77 and 84. Both exact
+API parity checks and independent Lean--TeX review pass. The static
+central inventory is 1033 checks, 565 examples and 925 axiom reports;
+its historical prefix is unchanged and was not re-elaborated in full.
+
+Surjectivity, global normality and the compatible global Galois
+action remain separate. In the latter, the full group acts over `X`
+while only the subgroup fixing the marked `K(Y)` preserves the
+refinement. Normal stalks from smooth geometry and Chow--Betti
+generation are not supplied by these cancellation results.
 
 ### Descent of the original marked refinement (SP87, 2026-09-20)
 

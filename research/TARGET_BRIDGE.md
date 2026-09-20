@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-09-20 (SP87 descent of the original marked refinement; validated).
+Assessed: 2026-09-20 (SP88 finite etaleness of the actual global marked refinement; validated).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -974,8 +974,9 @@ comparisons in B4p below; SP84 constructs the locally directed diagram
 and global gluing in B4q. SP85 identifies the actual global inverse-image
 charts in B4r; SP86 proves target-local affine/finite/etale transport in
 B4s and constructs the actual finite-etale global normal-closure map.
-SP87 descends the original marked refinement in B4t. Its applicable
-global properties and Galois-action descent remain next; normal stalks from smooth geometry and
+SP87 descends the original marked refinement in B4t, and SP88 proves
+its finite etaleness in B4u. Surjectivity and Galois-action descent
+remain next; normal stalks from smooth geometry and
 Chow--Betti generation are separate obligations.
 
 ### B4p. Coherent affine inverse-image opens
@@ -1227,13 +1228,60 @@ review pass. The static central inventory is 1031 checks, 565 examples
 and 923 axiom reports; its historical prefix is unchanged and was not
 re-elaborated in full.
 
-Next prove the applicable global properties of `lambda` and descend
-the Galois action. The full group `G = Gal(N_p/K(X))` belongs to the
+SP88 below proves finite etaleness of `lambda` with the corresponding
+additional inputs. Surjectivity and Galois-action descent remain next.
+The full group `G = Gal(N_p/K(X))` belongs to the
 action over `X`; only `H = Gal(N_p/K(Y))`, for the fixed marking,
 preserves `lambda`. SP87 does not yet construct this global action or
 assert finite etaleness or surjectivity of `lambda`. Global normality,
 normal stalks from smooth geometry and Chow--Betti generation remain
 separate.
+
+### B4u. Finite etaleness of the actual global marked refinement
+
+`FiniteEtaleGluedRefinement.lean` has two public APIs. The generic
+`isFinite_of_comp_of_isSeparated` states that for composable scheme
+maps `f : A -> B` and `g : B -> C`, finiteness of `g f` and
+separatedness of `g` imply finiteness of `f`. In particular, it does
+not require `g` finite, nor integral schemes, normality, Noetherianity
+or a ground field. This is the standard finite-cancellation input,
+stated and cited in the manuscript rather than reproved there.
+
+The actual specialization,
+`gluedNormalClosureToCover_finite_etale p hX hY`, assumes integral
+`X` and `Y`, dominant finite etale `p : Y -> X`, and explicitly
+integrally closed stalks on both schemes. It retains the actual
+SP87 map `lambda = gluedNormalClosureToCover p hY`. Its definition
+still needs only SP87's weaker hypotheses; `hX` and etaleness are
+inputs to this property theorem, not to the construction of the map.
+
+SP87's exact triangle identifies `p lambda` with SP86's finite-etale
+`mu_(N_p)`. Since finite `p` is separated, finite cancellation proves
+`lambda` finite. Standard etale cancellation, using etaleness of
+both `p` and `p lambda`, proves it etale. Thus the properties are
+proved directly for the existing global map: there is no re-gluing,
+chart replacement, new normalization carrier, field marking, scalar
+map or source axiom. The manuscript counterpart is
+`cor:normal-closure-refinement-finite-etale`.
+
+SP88 is validated: both production APIs compile cleanly on the first
+2773-job scoped build. The focused suite passes 20 examples and two
+exact standard-three axiom audits without warnings on its first run.
+The full build passes 3212 jobs with only the two unchanged Challenge
+placeholder warnings. The unchanged dependency audit passes six primary
+contracts and two support reports without warnings. No fresh neighbor-suite
+pass is claimed. The 86-page PDF (856518 bytes) has a clean final log
+and passes visual review of pages 16, 17, 65, 77 and 84. Both exact
+API parity checks and independent Lean--TeX review pass. The static
+central inventory is 1033 checks, 565 examples and 925 axiom reports;
+its historical prefix is unchanged and was not re-elaborated in full.
+
+Next prove surjectivity and descend the compatible Galois action.
+The full `G = Gal(N_p/K(X))` acts over `X`; only the subgroup fixing
+the marked `K(Y)` preserves `lambda`. No global action, surjectivity,
+global normality, or new Hodge case follows as an asserted SP88
+conclusion. Normal stalks from smooth geometry and Chow--Betti
+generation remain separate.
 
 ### G0. Smooth projective setting and candidate constructions
 

@@ -7722,3 +7722,11 @@ Focused regressions and enforced standard-axiom checks are in
 #print axioms HodgeConjecture.CollisionFoundations.normalizationChartToGlued_comp_toCover
 #print axioms HodgeConjecture.CollisionFoundations.gluedNormalClosureToCover_comp_toBase
 #print axioms HodgeConjecture.CollisionFoundations.gluedNormalClosureToCover_unique
+
+/-! SP88: finite cancellation and finite étaleness of the original global marked refinement. -/
+
+#check HodgeConjecture.CollisionFoundations.isFinite_of_comp_of_isSeparated
+#check HodgeConjecture.CollisionFoundations.gluedNormalClosureToCover_finite_etale
+
+#print axioms HodgeConjecture.CollisionFoundations.isFinite_of_comp_of_isSeparated
+#print axioms HodgeConjecture.CollisionFoundations.gluedNormalClosureToCover_finite_etale

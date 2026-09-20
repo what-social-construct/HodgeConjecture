@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-20 (SP87 descent of the original marked refinement,
+Last audited: 2026-09-20 (SP88 finite etaleness of the actual global marked refinement,
 validated; earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,53 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Finite etaleness of the actual global marked refinement (A11bt / SP88)
+
+Status: `FORMAL`; both production APIs compile cleanly and the
+checkpoint is validated. Two public APIs
+in `Boundary/Normalization/FiniteEtaleGluedRefinement.lean` establish
+generic finite cancellation and finite etaleness of the original
+global marked refinement. `isFinite_of_comp_of_isSeparated` assumes
+only finiteness of `f` followed by `g` and separatedness of `g`.
+It does not require `g` finite or any integral, normality, Noetherian
+or field hypotheses.
+
+`gluedNormalClosureToCover_finite_etale p hX hY` retains the actual
+`lambda = gluedNormalClosureToCover p hY`. Its hypotheses are integral
+`X` and `Y`, dominant finite etale `p : Y -> X`, and explicitly
+integrally closed stalks on both schemes. SP87's triangle identifies
+`p lambda` with SP86's finite-etale `mu_(N_p)`. Finiteness of `p`
+supplies separatedness; finite cancellation and standard etale
+cancellation prove the two asserted properties of `lambda`.
+The manuscript counterpart is
+`cor:normal-closure-refinement-finite-etale`.
+
+The SP87 construction retains its weaker finite-dominant and `hY`
+scope. SP88 adds inputs only to prove properties of that map; it does
+not re-glue, replace a chart or normalization carrier, change the
+original field marking or germ-derived scalars, or introduce a new
+source axiom. Stacks 035D and 02GW state the standard cancellation
+facts used in the manuscript; the Lean theorems are proved from the
+existing Mathlib interfaces.
+
+SP88 is validated: both production APIs compile cleanly on the first
+2773-job scoped build. The focused suite passes 20 examples and two
+exact standard-three axiom audits without warnings on its first run.
+The full build passes 3212 jobs with only the two unchanged Challenge
+placeholder warnings. The unchanged dependency audit passes six primary
+contracts and two support reports without warnings. No fresh neighbor-suite
+pass is claimed. The 86-page PDF (856518 bytes) has a clean final log
+and passes visual review of pages 16, 17, 65, 77 and 84. Both exact
+API parity checks and independent Lean--TeX review pass. The static
+central inventory is 1033 checks, 565 examples and 925 axiom reports;
+its historical prefix is unchanged and was not re-elaborated in full.
+
+Remaining: surjectivity, compatible Galois-action descent, global
+normality, normal stalks from smooth geometry and Chow--Betti
+generation. The full Galois group acts over `X`; only the subgroup
+fixing the marked `K(Y)` preserves `lambda`. No new global action,
+surjectivity, global normality or Hodge case is asserted by SP88.
 
 ## Descent of the original marked refinement (A11bs / SP87)
 
@@ -56,8 +103,9 @@ review pass. The static central inventory is 1031 checks, 565 examples
 and 923 axiom reports; its historical prefix is unchanged and was not
 re-elaborated in full.
 
-Remaining: applicable global finite-etale and surjectivity properties
-of the marked refinement, Galois-action descent, global normality,
+SP88 above supplies finite etaleness of the marked refinement with
+its stated additional inputs. Remaining: surjectivity,
+Galois-action descent, global normality,
 normal stalks from smooth geometry, and Chow--Betti generation.
 The full `G = Gal(N_p/K(X))` acts over `X`; only the marked subgroup
 `H = Gal(N_p/K(Y))` preserves `lambda`. No global action is constructed
