@@ -1,7 +1,7 @@
 # Claim ledger
 
-Last audited: 2026-09-19 (SP86 target-local properties and actual global
-finite-etale normal closure, validated; earlier checkpoint records retain
+Last audited: 2026-09-20 (SP87 descent of the original marked refinement,
+validated; earlier checkpoint records retain
 their original scope).
 
 Status vocabulary:
@@ -18,6 +18,51 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Descent of the original marked refinement (A11bs / SP87)
+
+Status: `FORMAL`; all five production APIs compile cleanly and the
+checkpoint is validated. Five public APIs
+in `Boundary/Normalization/GluedNormalClosureRefinement.lean` form the
+cocone of original marked affine refinements and descend it to the
+actual global `lambda : Z_(N_p) -> Y`. The exact marked chart formula
+identifies `lambda jmath_U` with `iota_(V_U) lambda_U`, where
+`V_U = p^-1(U)` and `iota_(V_U) : V_U -> Y` is the actual open inclusion. The global triangle
+`p lambda = mu_(N_p)` is proved, as is uniqueness among maps satisfying
+those same marked chart formulas. The triangle alone is not the
+uniqueness hypothesis. The manuscript counterpart is
+`prop:normal-closure-marked-refinement`.
+
+The hypotheses are integral `X` and `Y`, finite dominant `p : Y -> X`,
+and explicitly integrally closed stalks of `Y` only. No etaleness,
+normal-stalk assumption on `X`, Noetherianity or perfectness is needed.
+The field is the original marked
+`N_p = normalClosure K(X) K(Y) (AlgebraicClosure K(Y))`, using the
+generic map induced by `p`. All normalization carriers and
+germ-derived scalar maps are retained. There is no source axiom or
+new geometric input package: the proved actual restriction square and
+the existing colimit mapping property construct the cocone and its map.
+
+SP87 is validated: all five production APIs compile cleanly in the
+2769-job scoped build. The focused suite passes 24 examples and five
+exact standard-three axiom audits without warnings on its first run.
+The full build passes 3211 jobs with only the two unchanged Challenge
+placeholder warnings. The unchanged dependency audit passes six primary
+contracts and two support reports without warnings. No fresh older
+neighbor-suite pass is claimed. The 86-page PDF (854782 bytes) has a
+clean final log and passes visual review of pages 13, 14, 16, 17, 65
+and 77. All five exact API parity checks and independent Lean--TeX
+review pass. The static central inventory is 1031 checks, 565 examples
+and 923 axiom reports; its historical prefix is unchanged and was not
+re-elaborated in full.
+
+Remaining: applicable global finite-etale and surjectivity properties
+of the marked refinement, Galois-action descent, global normality,
+normal stalks from smooth geometry, and Chow--Betti generation.
+The full `G = Gal(N_p/K(X))` acts over `X`; only the marked subgroup
+`H = Gal(N_p/K(Y))` preserves `lambda`. No global action is constructed
+by SP87, and the finite-etale property of SP86's `mu_(N_p)` is not
+reasserted as a proved property of `lambda` here.
 
 ## Target-local properties and actual global finite-etale normal closure (A11br / SP86)
 
@@ -63,8 +108,9 @@ The static central inventory is 1026 checks, 565 examples and 918 axiom
 reports; its historical prefix is unchanged and was not re-elaborated
 in full.
 
-Remaining: descent of the marked refinement to `Y` and its compatible
-Galois action, global normality and surjectivity, normal stalks from
+SP87 above supplies descent of the marked refinement to `Y`.
+Remaining: its applicable global properties and Galois-action descent,
+global normality and surjectivity, normal stalks from
 smooth geometry, and Chow--Betti generation. No new Hodge case follows
 from the finite-etale result alone.
 

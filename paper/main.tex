@@ -1096,9 +1096,13 @@ the induced normalization maps. In particular, when \(C=B_f\),
 \(\mu_E^{-1}(D(f))\), where \(\mu_E:\Spec T_B(E)\to\Spec B\)
 is the original structural morphism.
 
-In the setting of Proposition~\ref{prop:finite-etale-normal-closure-chart},
-let \(W\subseteq U\) be a nonempty affine open and retain the same
-marked normal-closure field \(N\). Restriction of sections defines
+For the geometric restriction statement, let \(p:Y\to X\) be a finite
+dominant morphism of integral schemes, and let \(W\subseteq U\subseteq X\)
+be nonempty affine opens. Suppose the local rings of \(Y\) on
+\(p^{-1}(U)\) are integrally closed. Let \(N\) be the marked normal
+closure of the actual extension \(K(Y)/K(X)\). Its original embedding
+\(K(Y)\hookrightarrow N\) and the isomorphisms \(\nu_{p,U},\nu_{p,W}\)
+define the maps \(\lambda_U,\lambda_W\) as above. Restriction of sections defines
 \(j^N_{W,U}:Z_W\to Z_U\). With \(\iota_{W,U}:W\hookrightarrow U\)
 and \(\widetilde\iota_{W,U}:p^{-1}(W)\hookrightarrow p^{-1}(U)\),
 the original maps satisfy
@@ -1328,6 +1332,47 @@ Proposition~\ref{prop:finite-etale-normal-closure-chart} proves that the
 original map \(\pi_U\), constructed from the same field \(N_p\)
 and the original generic germs, is finite and \'{e}tale. Apply
 Proposition~\ref{prop:normalization-target-local}.
+\end{proof}
+
+\begin{proposition}[Descent of the marked refinement]
+\label{prop:normal-closure-marked-refinement}
+Let \(p:Y\to X\) be a finite dominant morphism of integral schemes,
+and suppose every local ring of \(Y\) is integrally closed. Retain
+the original normal-closure field \(N_p\), its marked embedding
+\(K(Y)\hookrightarrow N_p\), and the glued scheme \(Z_{N_p}\).
+For each \(U\in\mathcal A^{\times}(X)\), put \(V_U=p^{-1}(U)\),
+write \(\iota_{V_U}:V_U\hookrightarrow Y\) for its inclusion, and let
+\(\lambda_U:Z_U\to V_U\) be the map defined by the marked embedding
+and \(\nu_{p,U}\).
+
+The maps \(\iota_{V_U}\circ\lambda_U\) form a cocone with vertex
+\(Y\) on the original normalization diagram. There is a unique
+morphism \(\lambda:Z_{N_p}\to Y\) satisfying, for every such \(U\),
+\[
+ \lambda\circ\jmath_U=\iota_{V_U}\circ\lambda_U.
+\]
+It factors the original structural map:
+\[
+ p\circ\lambda=\mu_{N_p}.
+\]
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:finite-affine-chart} constructs \(\nu_{p,U}\)
+from finiteness and the stated local rings of \(Y\). For
+\(W\subseteq U\), Proposition~\ref{prop:normalization-localization}
+gives \(\lambda_U\circ j^{N_p}_{W,U}
+=\widetilde\iota_{W,U}\circ\lambda_W\). Composing with
+\(\iota_{V_U}\) gives the cocone identity. The colimit property of
+Proposition~\ref{prop:normalization-gluing} supplies \(\lambda\) with
+the exact chart formulas and proves its uniqueness with those formulas.
+On each original chart, the normalization triangle gives
+\[
+ p\circ\lambda\circ\jmath_U
+ =p\circ\iota_{V_U}\circ\lambda_U
+ =\mu_{N_p}\circ\jmath_U.
+\]
+The same colimit property proves the asserted equality over \(X\).
 \end{proof}
 
 The group \(G=\mathcal N.\mathit{galoisGroup}\), the subgroup
@@ -5391,6 +5436,13 @@ Target-local transfer and global finite \'{e}taleness &
 \leanpath{functionFieldNormalClosure_glued_finite_etale}\newline
 \leanpath{Boundary/Normalization/GluedNormalizationProperties.lean}\newline
 \leanpath{Boundary/Normalization/FiniteEtaleGluedNormalClosure.lean}\\
+Global marked refinement \(\lambda\) &
+\leanpath{affineNormalClosureRefinementCocone}\newline
+\leanpath{gluedNormalClosureToCover}\newline
+\leanpath{normalizationChartToGlued_comp_toCover}\newline
+\leanpath{gluedNormalClosureToCover_comp_toBase}\newline
+\leanpath{gluedNormalClosureToCover_unique}\newline
+\leanpath{Boundary/Normalization/GluedNormalClosureRefinement.lean}\\
 Full-visible boundary ideals &
 \leanpath{movingBoundaryIdeal_eq_top_of_surjective}\newline
 \leanpath{conjugateBoundarySeparation_of_surjective}\newline
@@ -6212,6 +6264,12 @@ principal table, grouped by mathematical layer.
 \leanpath{gluedNormalizationToBase_isEtale_iff};
 \normsrc{FiniteEtaleGluedNormalClosure.lean};
 \leanpath{functionFieldNormalClosure_glued_finite_etale};
+\normsrc{GluedNormalClosureRefinement.lean};
+\leanpath{affineNormalClosureRefinementCocone};
+\leanpath{gluedNormalClosureToCover};
+\leanpath{normalizationChartToGlued_comp_toCover};
+\leanpath{gluedNormalClosureToCover_comp_toBase};
+\leanpath{gluedNormalClosureToCover_unique};
 \normsrc{FiniteAffineCover.lean};
 \leanpath{normalizationToIntermediate_surjective};
 \leanpath{normalizationIntermediateEquiv};

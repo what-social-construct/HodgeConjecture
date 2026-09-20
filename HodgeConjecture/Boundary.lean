@@ -36,6 +36,7 @@ import HodgeConjecture.Boundary.Normalization.GluedNormalization
 import HodgeConjecture.Boundary.Normalization.GluedNormalizationChart
 import HodgeConjecture.Boundary.Normalization.GluedNormalizationProperties
 import HodgeConjecture.Boundary.Normalization.FiniteEtaleGluedNormalClosure
+import HodgeConjecture.Boundary.Normalization.GluedNormalClosureRefinement
 import HodgeConjecture.Boundary.Normalization.DeckAction
 import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
 import HodgeConjecture.Boundary.Normalization.ConjugateNormalization
@@ -160,6 +161,12 @@ exactly when its original affine chart maps are. For the actual marked
 normal-closure field of a dominant finite étale morphism of integral schemes,
 explicit normal stalks on source and target therefore give a global finite
 étale normalization map.
+
+For a finite dominant map of integral schemes, normal stalks on the cover
+alone also let the original marked refinement maps descend to that cover.
+The global refinement has the exact original chart formulas and commutes
+with the structural map to the base. It is unique with those marked chart
+formulas; the commuting triangle alone is not the uniqueness hypothesis.
 
 The broad normalization-purity/global-triviality prototype is preserved in
 `research/archive/legacy-lean/`, not as an importable library module.

@@ -938,3 +938,46 @@ action. Global normality and surjectivity still need checks; normal
 stalks from smooth geometry and Chow--Betti generation remain separate.
 The complete audit prefix through SP85 remains byte-identical to
 `7fca0b4`.
+
+## 23. SP87 follow-up: descent of the original marked refinement
+
+`GluedNormalClosureRefinement.lean` forms a cocone to the actual `Y`
+from the original marked chart refinements
+`lambda_U : Z_U -> p^-1(U)` and the target-chart inclusions
+`iota_(V_U) : V_U -> Y`, where `V_U = p^-1(U)`. The proved actual restriction square gives its
+naturality. The existing scheme colimit then supplies the actual
+global `lambda : Z_(N_p) -> Y`, with the exact marked chart formulas
+`lambda jmath_U = iota_(V_U) lambda_U` and triangle `p lambda = mu_(N_p)`.
+Uniqueness is proved for maps satisfying these marked chart formulas,
+not for arbitrary maps satisfying only the triangle over `X`.
+
+These are five public APIs. Their hypotheses are integral `X` and
+`Y`, finite dominant `p : Y -> X`, and explicitly integrally closed
+stalks of `Y` only. There is no etaleness or normal-stalk input on `X`,
+Noetherianity or perfectness. The original marked normal-closure
+field, actual normalization carriers and germ-derived scalar maps
+are retained. The proved restriction compatibility and existing
+colimit mapping property suffice; no new source axiom, literature
+premise, or geometric input package is introduced. The manuscript
+counterpart is `prop:normal-closure-marked-refinement`.
+
+SP87 is validated: all five production APIs compile cleanly in the
+2769-job scoped build. The focused suite passes 24 examples and five
+exact standard-three axiom audits without warnings on its first run.
+The full build passes 3211 jobs with only the two unchanged Challenge
+placeholder warnings. The unchanged dependency audit passes six primary
+contracts and two support reports without warnings. No fresh older
+neighbor-suite pass is claimed. The 86-page PDF (854782 bytes) has a
+clean final log and passes visual review of pages 13, 14, 16, 17, 65
+and 77. All five exact API parity checks and independent Lean--TeX
+review pass. The static central inventory is 1031 checks, 565 examples
+and 923 axiom reports; its historical prefix is unchanged and was not
+re-elaborated in full.
+
+Next prove the applicable finite-etale and surjectivity properties of
+the refinement and descend the Galois action. The full `G` belongs
+to the action over `X`, while only `H` fixing the marked `K(Y)`
+preserves `lambda`. This checkpoint does not construct the global
+action. Global normality and surjectivity, normal stalks from smooth
+geometry and Chow--Betti generation remain separate. The complete
+audit prefix through SP86 remains byte-identical to `30fe0ae`.

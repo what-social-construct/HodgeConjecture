@@ -7708,3 +7708,17 @@ Focused regressions and enforced standard-axiom checks are in
 #print axioms HodgeConjecture.CollisionFoundations.gluedNormalizationToBase_isFinite_iff
 #print axioms HodgeConjecture.CollisionFoundations.gluedNormalizationToBase_isEtale_iff
 #print axioms HodgeConjecture.CollisionFoundations.functionFieldNormalClosure_glued_finite_etale
+
+/-! SP87: descent and marked uniqueness of the original normal-closure refinement. -/
+
+#check HodgeConjecture.CollisionFoundations.affineNormalClosureRefinementCocone
+#check HodgeConjecture.CollisionFoundations.gluedNormalClosureToCover
+#check HodgeConjecture.CollisionFoundations.normalizationChartToGlued_comp_toCover
+#check HodgeConjecture.CollisionFoundations.gluedNormalClosureToCover_comp_toBase
+#check HodgeConjecture.CollisionFoundations.gluedNormalClosureToCover_unique
+
+#print axioms HodgeConjecture.CollisionFoundations.affineNormalClosureRefinementCocone
+#print axioms HodgeConjecture.CollisionFoundations.gluedNormalClosureToCover
+#print axioms HodgeConjecture.CollisionFoundations.normalizationChartToGlued_comp_toCover
+#print axioms HodgeConjecture.CollisionFoundations.gluedNormalClosureToCover_comp_toBase
+#print axioms HodgeConjecture.CollisionFoundations.gluedNormalClosureToCover_unique

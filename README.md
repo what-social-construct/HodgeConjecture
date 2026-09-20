@@ -997,7 +997,39 @@ The static central inventory is 1026 checks, 565 examples and 918 axiom
 reports; its historical prefix is unchanged and was not re-elaborated
 in full.
 
-Next descend the marked refinement and compatible Galois action.
+SP87 descends the original marked affine refinements to an actual map
+`lambda : Z_(N_p) -> Y` in `GluedNormalClosureRefinement.lean`.
+The original chart maps form a cocone by the proved restriction
+compatibility, and its colimit descent retains the exact chart formula
+`jmath_U` followed by `lambda` equals `lambda_U` followed by the
+inclusion of `p^-1(U)` into `Y`. It proves `lambda` followed by `p`
+equals `mu_(N_p)` and uniqueness among maps with those same marked
+chart formulas. The triangle over `X` alone is not its uniqueness
+hypothesis.
+
+These five public APIs need only integral `X` and `Y`, finite dominant
+`p : Y -> X`, and explicitly integrally closed stalks of `Y`.
+No etaleness, normal-stalk input on `X`, Noetherianity or perfectness
+is assumed. The original normal-closure field, chart carriers and
+germ-derived scalar maps are unchanged. The manuscript counterpart is
+`prop:normal-closure-marked-refinement`.
+
+SP87 is validated: all five production APIs compile cleanly in the
+2769-job scoped build. The focused suite passes 24 examples and five
+exact standard-three axiom audits without warnings on its first run.
+The full build passes 3211 jobs with only the two unchanged Challenge
+placeholder warnings. The unchanged dependency audit passes six primary
+contracts and two support reports without warnings. No fresh older
+neighbor-suite pass is claimed. The 86-page PDF (854782 bytes) has a
+clean final log and passes visual review of pages 13, 14, 16, 17, 65
+and 77. All five exact API parity checks and independent Lean--TeX
+review pass. The static central inventory is 1031 checks, 565 examples
+and 923 axiom reports; its historical prefix is unchanged and was not
+re-elaborated in full.
+
+Next prove the applicable global properties of the marked refinement
+and descend the Galois action. The full Galois group acts over `X`;
+only the subgroup fixing the marked `K(Y)` preserves `lambda`.
 Global normality and surjectivity, normal stalks from smooth geometry
 and Chow--Betti generation remain separate. No model built
 from global sections of a non-affine intersection is substituted for

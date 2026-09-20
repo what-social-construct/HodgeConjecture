@@ -142,6 +142,63 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP84 | Actual affine normalization diagram and glued scheme | INDEX / REFINE / GLUE | Prove locally directedness for the original inclusion-indexed chart diagram; construct its scheme colimit, original-chart open cover and structural map with exact chart and common-refinement identities. | PROVED / VALIDATED |
 | SP85 | Original charts as actual global inverse-image schemes | IDENTIFY / COMPARE / RESTRICT | Prove the global chart image and equality of opens; construct the actual inverse-image scheme isomorphism with both inclusion identities, original structural map to the base chart and restriction naturality. | PROVED / VALIDATED |
 | SP86 | Target-local properties and actual finite-etale global normal closure | TRANSFER / SPECIALIZE / RETAIN | Prove the nonempty affine basis covers the base, transfer target-local properties through the exact chart comparisons, derive global affineness, and prove finite etaleness for the original marked normal closure from SP81's explicit normal-stalk inputs. | PROVED / VALIDATED |
+| SP87 | Descent of the original marked refinement | FORM COCONE / DESCEND / IDENTIFY | Glue the original marked chart refinements to a map to the actual `Y`; prove its marked chart formulas, global triangle and uniqueness from those chart formulas under finite dominance and normal stalks of `Y` only. | PROVED / VALIDATED |
+
+SP87 (2026-09-20): **descent of the original marked refinement**.
+Five public APIs in `GluedNormalClosureRefinement.lean` construct the
+cocone of original affine refinements, its colimit map to `Y`, and the
+exact marked chart formula, global factorization and uniqueness from
+the fixed chart maps. The manuscript counterpart is
+`prop:normal-closure-marked-refinement`.
+
+| Lean API | Mathematical role | TeX notation |
+| --- | --- | --- |
+| `affineNormalClosureRefinementCocone` | original marked affine maps, composed with their target-chart inclusions, form a cocone to `Y` | `(iota_(V_U) lambda_U)_U` |
+| `gluedNormalClosureToCover` | descent to the actual intermediate scheme | `lambda:Z_(N_p) -> Y` |
+| `normalizationChartToGlued_comp_toCover` | exact original marked chart restriction | `lambda jmath_U = iota_(V_U) lambda_U` |
+| `gluedNormalClosureToCover_comp_toBase` | original structural map factors through the actual intermediate cover | `p lambda = mu_(N_p)` |
+| `gluedNormalClosureToCover_unique` | uniqueness from the fixed marked chart formulas, not the triangle alone | `(forall U, f jmath_U = iota_(V_U) lambda_U) => f = lambda` |
+
+Here `V_U = p^-1(U)` and `iota_(V_U) : V_U -> Y` is the actual open inclusion. The formulas
+use ordinary mathematical composition order, while Lean writes
+composition from left to right with `≫`. The original marked normal
+closure `N_p`, normalization carriers and germ-derived scalar maps
+remain unchanged. The existing restriction square supplies cocone
+naturality, and the colimit mapping property supplies its descent;
+there is no new source axiom or geometric hypothesis package.
+
+The minimal hypotheses are integral `X` and `Y`, finite dominant
+`p : Y -> X`, and explicitly integrally closed stalks of `Y` only.
+No etaleness, normal-stalk input on `X`, Noetherianity or perfectness
+is assumed. This construction does not assert finite etaleness or
+surjectivity of the global refinement.
+
+The manuscript's existing `prop:normalization-localization` geometric
+paragraph is aligned with its actual SP82 restriction theorem: finite
+dominant `p`, integral `X` and `Y`, and normal stalks of `Y` suffice.
+Removing the previously stronger incidental assumptions in that
+paragraph introduces no new Lean theorem or duplicate object.
+
+SP87 is validated: all five production APIs compile cleanly in the
+2769-job scoped build. The focused suite passes 24 examples and five
+exact standard-three axiom audits without warnings on its first run.
+The full build passes 3211 jobs with only the two unchanged Challenge
+placeholder warnings. The unchanged dependency audit passes six primary
+contracts and two support reports without warnings. No fresh older
+neighbor-suite pass is claimed. The 86-page PDF (854782 bytes) has a
+clean final log and passes visual review of pages 13, 14, 16, 17, 65
+and 77. All five exact API parity checks and independent Lean--TeX
+review pass. The static central inventory is 1031 checks, 565 examples
+and 923 axiom reports; its historical prefix is unchanged and was not
+re-elaborated in full.
+
+Next prove the applicable global properties of the refinement and
+descend the Galois action. The full group `G` acts over `X`, whereas
+only the subgroup `H` fixing the marked `K(Y)` preserves `lambda`.
+Global normality and surjectivity, normal stalks from smooth geometry
+and Chow--Betti generation remain separate. The complete queue suffix
+beginning at the SP86 block below is preserved byte-for-byte from
+`30fe0ae`.
 
 SP86 (2026-09-19): **target-local properties and actual global finite-etale normal closure**.
 Five public APIs in `GluedNormalizationProperties.lean` prove the

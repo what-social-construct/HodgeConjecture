@@ -1,7 +1,7 @@
 # Current gap map
 
-Last reviewed: 2026-09-19 (SP86 global target-local properties and actual
-finite-etale normal closure; validated; earlier checkpoint records retain
+Last reviewed: 2026-09-20 (SP87 descent of the original marked refinement;
+validated; earlier checkpoint records retain
 their original validation scope).
 
 Start with [the target and equivalence sketch](TARGET_BRIDGE.md): it fixes
@@ -716,9 +716,43 @@ The static central inventory is 1026 checks, 565 examples and 918 axiom
 reports; its historical prefix is unchanged and was not re-elaborated
 in full.
 
-**Next bounded bridge:** descend the marked refinement and compatible
-Galois action. Global normality and surjectivity, normal stalks from
-smooth geometry and Chow--Betti generation are separate. The older
+**SP87: descent of the original marked refinement.**
+`GluedNormalClosureRefinement.lean` uses the actual chart refinements
+`lambda_U : Z_U -> p^-1(U)` and their proved restriction square to
+form a cocone to `Y` for the existing normalization diagram. Colimit
+descent gives the actual `lambda : Z_(N_p) -> Y`, with its exact marked
+chart formulas and the global triangle `lambda` followed by `p`
+equals `mu_(N_p)`. Chart extensionality proves uniqueness for maps
+with the same marked chart formulas; the triangle over `X` alone does
+not identify the marked refinement.
+
+The five APIs assume integral `X` and `Y`, finite dominant
+`p : Y -> X`, and explicitly integrally closed stalks of `Y` only.
+They do not assume etaleness of `p`, normal stalks of `X`, Noetherianity
+or perfectness. The original marked normal closure, actual chart
+carriers and germ-derived scalar maps are retained. No new source
+axiom or geometric hypothesis package is added. The manuscript
+counterpart is `prop:normal-closure-marked-refinement`.
+
+SP87 is validated: all five production APIs compile cleanly in the
+2769-job scoped build. The focused suite passes 24 examples and five
+exact standard-three axiom audits without warnings on its first run.
+The full build passes 3211 jobs with only the two unchanged Challenge
+placeholder warnings. The unchanged dependency audit passes six primary
+contracts and two support reports without warnings. No fresh older
+neighbor-suite pass is claimed. The 86-page PDF (854782 bytes) has a
+clean final log and passes visual review of pages 13, 14, 16, 17, 65
+and 77. All five exact API parity checks and independent Lean--TeX
+review pass. The static central inventory is 1031 checks, 565 examples
+and 923 axiom reports; its historical prefix is unchanged and was not
+re-elaborated in full.
+
+**Next bounded bridge:** prove the applicable global properties of
+`lambda` and descend the Galois action. The full Galois group acts
+over `X`; only the subgroup fixing the marked `K(Y)` preserves
+`lambda`. Finite etaleness and surjectivity of the global refinement
+are not asserted by SP87. Global normality and surjectivity, normal
+stalks from smooth geometry and Chow--Betti generation are separate. The older
 SP76 constructor retains its stronger assumptions; SP81 removes its
 Noetherian-base requirement. SP84 supplies the locally directed gluing,
 and SP85 identifies its original charts with the actual global inverse

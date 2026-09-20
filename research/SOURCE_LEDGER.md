@@ -17,9 +17,55 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source check: 2026-09-19 (SP86 target-locality sources checked;
-global property transfer and actual finite-etale normal closure validated;
+Last source/interface review: 2026-09-20 (SP87 uses existing colimit and
+proved chart-restriction interfaces; validated;
 earlier source records retain their original validation scope).
+
+### Descent of the original marked refinement (SP87, 2026-09-20)
+
+No new literature input is needed for
+`prop:normal-closure-marked-refinement`. The exact project input is
+the already proved restriction compatibility of the actual marked
+affine refinement. After composing its target chart with the actual
+inclusion into `Y`, this square supplies the naturality of
+`affineNormalClosureRefinementCocone`. The existing scheme colimit
+mapping property supplies `gluedNormalClosureToCover`.
+
+Mathlib's colimit inclusion/descent formula identifies each actual
+chart restriction with the original marked map. The previously proved
+affine factorization and chartwise morphism extensionality give
+`p lambda = mu_(N_p)`. The same extensionality proves uniqueness from
+the exact marked chart formulas; it does not prove uniqueness of all
+maps making only the triangle over `X` commute. Thus this checkpoint
+uses the fixed normal-closure marking throughout, without replacing
+the field, normalization carriers, or germ-derived scalar maps.
+
+The five public APIs in `GluedNormalClosureRefinement.lean` assume
+integral `X` and `Y`, finite dominant `p : Y -> X`, and explicitly
+integrally closed stalks of `Y`. There is no etaleness or normal-stalk
+input on `X`, Noetherianity, perfectness, new source axiom, or new
+geometric hypothesis package. The previous general gluing references
+remain background; no new primary-page source verification is claimed
+for this checkpoint.
+
+SP87 is validated: all five production APIs compile cleanly in the
+2769-job scoped build. The focused suite passes 24 examples and five
+exact standard-three axiom audits without warnings on its first run.
+The full build passes 3211 jobs with only the two unchanged Challenge
+placeholder warnings. The unchanged dependency audit passes six primary
+contracts and two support reports without warnings. No fresh older
+neighbor-suite pass is claimed. The 86-page PDF (854782 bytes) has a
+clean final log and passes visual review of pages 13, 14, 16, 17, 65
+and 77. All five exact API parity checks and independent Lean--TeX
+review pass. The static central inventory is 1031 checks, 565 examples
+and 923 axiom reports; its historical prefix is unchanged and was not
+re-elaborated in full.
+
+Global finite-etale and surjectivity properties of the refinement and
+Galois-action descent remain separate. In the latter, the full group
+acts over `X`, and only the subgroup fixing the marked `K(Y)` preserves
+the refinement to `Y`. Global normality, normal stalks from smooth
+geometry and Chow--Betti generation are not supplied by colimit descent.
 
 ### Target-local properties and actual global finite-etale normal closure (SP86, 2026-09-19)
 

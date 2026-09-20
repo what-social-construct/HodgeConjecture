@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-09-19 (SP86 target-local properties and actual global finite-etale normal closure; validated).
+Assessed: 2026-09-20 (SP87 descent of the original marked refinement; validated).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -974,7 +974,8 @@ comparisons in B4p below; SP84 constructs the locally directed diagram
 and global gluing in B4q. SP85 identifies the actual global inverse-image
 charts in B4r; SP86 proves target-local affine/finite/etale transport in
 B4s and constructs the actual finite-etale global normal-closure map.
-Compatible marked/Galois maps remain next; normal stalks from smooth geometry and
+SP87 descends the original marked refinement in B4t. Its applicable
+global properties and Galois-action descent remain next; normal stalks from smooth geometry and
 Chow--Betti generation are separate obligations.
 
 ### B4p. Coherent affine inverse-image opens
@@ -1174,11 +1175,65 @@ The static central inventory is 1026 checks, 565 examples and 918 axiom
 reports; its historical prefix is unchanged and was not re-elaborated
 in full.
 
-Next descend the marked refinement to `Y` and its compatible Galois
-action. Global normality and surjectivity need their own checks;
+SP87 below descends the marked refinement to `Y`. Its applicable global
+properties and Galois-action descent remain separate. Global normality
+and surjectivity need their own checks;
 normal stalks from smooth geometry and Chow--Betti generation remain
 separate. Finite etaleness alone is not the Hodge class-generation
 argument.
+
+### B4t. Descent of the original marked refinement
+
+Retain the original function-field map of a finite dominant morphism
+`p : Y -> X` between integral schemes and the marked normal closure
+`N_p` in `AlgebraicClosure K(Y)`. Assume explicitly that every stalk
+of `Y` is integrally closed. The original affine refinement
+`lambda_U : Z_U -> p^-1(U)` is defined with this marking and the
+original germ-derived scalar maps. Compose it with the actual open
+inclusion `iota_(V_U) : V_U -> Y`, where `V_U = p^-1(U)`.
+
+The proved chart-restriction square makes these maps into
+`affineNormalClosureRefinementCocone` on the existing diagram. Its
+colimit descent is `gluedNormalClosureToCover`, the actual global
+`lambda : Z_(N_p) -> Y`. The exact cocone formula is
+`lambda jmath_U = iota_(V_U) lambda_U`, using ordinary mathematical
+composition order. The original affine factorization then gives
+`p lambda = mu_(N_p)` by chart extensionality. Finally, any other
+scheme map to `Y` with these same marked chart formulas equals
+`lambda`. This uniqueness statement uses the fixed marked local maps,
+not only the triangle over `X`.
+
+These are five public APIs in `GluedNormalClosureRefinement.lean`;
+the manuscript counterpart is `prop:normal-closure-marked-refinement`.
+Only finite dominance, integral `X` and `Y`, and the explicit
+normal-stalk input on `Y` are required. There is no etaleness
+hypothesis, normal-stalk premise on `X`, Noetherianity or perfectness.
+The original field marking, normalization carriers and scalar maps
+are unchanged; no source axiom or new geometric input package is
+introduced. The existing colimit mapping property and proved actual
+chart restriction supply the construction, without an additional
+literature premise.
+
+SP87 is validated: all five production APIs compile cleanly in the
+2769-job scoped build. The focused suite passes 24 examples and five
+exact standard-three axiom audits without warnings on its first run.
+The full build passes 3211 jobs with only the two unchanged Challenge
+placeholder warnings. The unchanged dependency audit passes six primary
+contracts and two support reports without warnings. No fresh older
+neighbor-suite pass is claimed. The 86-page PDF (854782 bytes) has a
+clean final log and passes visual review of pages 13, 14, 16, 17, 65
+and 77. All five exact API parity checks and independent Lean--TeX
+review pass. The static central inventory is 1031 checks, 565 examples
+and 923 axiom reports; its historical prefix is unchanged and was not
+re-elaborated in full.
+
+Next prove the applicable global properties of `lambda` and descend
+the Galois action. The full group `G = Gal(N_p/K(X))` belongs to the
+action over `X`; only `H = Gal(N_p/K(Y))`, for the fixed marking,
+preserves `lambda`. SP87 does not yet construct this global action or
+assert finite etaleness or surjectivity of `lambda`. Global normality,
+normal stalks from smooth geometry and Chow--Betti generation remain
+separate.
 
 ### G0. Smooth projective setting and candidate constructions
 
