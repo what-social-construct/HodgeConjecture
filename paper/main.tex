@@ -1668,6 +1668,56 @@ Equality of two global actions therefore implies equality of their
 inverse field automorphisms, proving injectivity.
 \end{proof}
 
+\begin{lemma}[Generic pullback determines a relatively separated morphism]
+\label{lem:generic-pullback-extensionality}
+Let \(V,W\) be integral schemes, let \(q:W\to S\) be separated, and
+let \(f,g:V\to W\) be dominant morphisms with \(q\circ f=q\circ g\).
+If their actual function-field pullbacks agree, then \(f=g\).
+\end{lemma}
+
+\begin{proof}
+Write \(\eta_V:\Spec K(V)\to V\) and
+\(\eta_W:\Spec K(W)\to W\) for the generic-stalk morphisms.
+Naturality of the stalk maps gives
+\[
+ f\circ\eta_V=\eta_W\circ\Spec(f^*).
+\]
+Thus \(f\) and \(g\) agree after the dominant morphism \(\eta_V\).
+Their relative equalizer is closed because \(q\) is separated.
+It is all of \(V\), since \(V\) is reduced and the equalizer contains
+the image of that dominant morphism.
+\end{proof}
+
+\begin{theorem}[The full deck group of the glued normalization]
+\label{thm:normalization-full-deck-group}
+Let \(X\) be integral and \(N/K(X)\) finite. The original action is
+an isomorphism of groups
+\[
+ a_N:\operatorname{Aut}_{K(X)}(N)
+       \xrightarrow{\sim}\operatorname{Aut}_X(Z_N).
+\]
+Its inverse is the actual inverse-deck pullback through the original
+field comparison:
+\[
+ b_N(d)=e_N\circ(d^{-1})^*\circ e_N^{-1}.
+\]
+For arbitrary \(N/K(X)\), two deck transformations of \(Z_N\) are
+already equal whenever their function-field pullbacks agree.
+\end{theorem}
+
+\begin{proof}
+The scheme \(Z_N\) is integral and \(\mu_N:Z_N\to X\) is affine,
+hence separated. Lemma~\ref{lem:generic-pullback-extensionality}
+therefore gives the stated uniqueness without a degree assumption.
+For finite \(N/K(X)\), the map \(b_N(d)\) fixes \(K(X)\), because
+\(d^{-1}\) lies over \(X\) and \(e_N\) preserves the actual
+structural embedding. Proposition~\ref{prop:normalization-function-field-comparison}
+shows that \(a_N(b_N(d))^{-1}\) and \(d^{-1}\) have the same generic
+pullback. Uniqueness gives \(a_N(b_N(d))=d\). The already proved
+faithfulness gives the other inverse identity; the original action
+is a group homomorphism, so this is the displayed group isomorphism.
+\end{proof}
+
 \begin{corollary}[Preservation of the marked intermediate field]
 \label{cor:normalization-marked-function-field}
 Let \(p:Y\to X\) be finite and dominant, with \(X,Y\) integral and
@@ -5812,6 +5862,15 @@ Inverse pullback and faithful action &
 \leanpath{gluedNormalizationDeckAction_injective}\newline
 \leanpath{Boundary/Normalization/}\newline
 \leanpath{GluedNormalizationFunctionFieldAction.lean}\\
+Generic pullback determines morphisms &
+\leanpath{functionFieldMapOfDominant_fromSpecStalk}\newline
+\leanpath{eq_of_functionFieldMapOfDominant_eq}\newline
+\leanpath{Cycles/FunctionFieldExtensionality.lean}\\
+Full deck-group comparison &
+\leanpath{gluedNormalizationDeckTransformation_ext}\newline
+\leanpath{gluedNormalizationDeckAction_surjective}\newline
+\leanpath{gluedNormalizationDeckEquiv}\newline
+\leanpath{Boundary/Normalization/GluedNormalizationDeckComparison.lean}\\
 Marked generic comparison \(e_{N_p}\lambda^*=\iota\) &
 \leanpath{gluedNormalClosureFunctionFieldEquivAt_toCover}\newline
 \leanpath{gluedNormalClosureFunctionFieldEquiv_toCover}\newline
@@ -6706,6 +6765,16 @@ principal table, grouped by mathematical layer.
 \leanpath{gluedNormalizationFunctionFieldEquivAt_automorphism};
 \leanpath{gluedNormalizationFunctionFieldEquiv_automorphism};
 \leanpath{gluedNormalizationDeckAction_injective};
+\leanpath{HodgeConjecture/Cycles/FunctionFieldExtensionality.lean};
+\leanpath{functionFieldMapOfDominant_fromSpecStalk};
+\leanpath{eq_of_functionFieldMapOfDominant_eq};
+\normsrc{GluedNormalizationDeckComparison.lean};
+\leanpath{gluedNormalizationDeckTransformation_ext};
+\leanpath{gluedNormalizationDeckFieldAutomorphism};
+\leanpath{gluedNormalizationDeckFieldAutomorphism_apply};
+\leanpath{gluedNormalizationDeckAction_fieldAutomorphism};
+\leanpath{gluedNormalizationDeckAction_surjective};
+\leanpath{gluedNormalizationDeckEquiv};
 \normsrc{GluedNormalClosureFunctionField.lean};
 \leanpath{gluedNormalClosureFunctionFieldEquivAt_toCover};
 \leanpath{gluedNormalClosureFunctionFieldEquiv_toCover};

@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-09-20 (SP94 arbitrary-class generation criterion, validated;
+Last reviewed: 2026-09-20 (SP95 full deck-group comparison, validated;
 earlier checkpoint records retain
 their original validation scope).
 
@@ -49,8 +49,9 @@ The live order is now:
 
 1. **Completed SP94:** the arbitrary-class condition and its conditional
    descent implication; no additional marked-Galois witness package.
-2. Extend SP93's faithful action to a full deck-group comparison, including
-   surjectivity and the intended stabilizer/fiber identifications.
+2. **Completed SP95:** the existing action is an explicit full deck-group
+   equivalence for finite `N/K(X)`. Next identify the full stabilizer of
+   the marked refinement and prove the intended fiber comparison.
 3. Instantiate Chow pushforward, Betti pullback/trace and their two
    compatibility laws for the same actual cover. Supply smooth-geometric
    normality where the construction needs it.
@@ -62,7 +63,21 @@ A parallel pruning queue records actual theorem dependencies and
 mathematical consumers before moving objects. The minimal cycle conclusion
 need not consume all projector/action machinery; that does not make the
 stronger existing endpoints or their dependencies redundant. No module is
-removed or archived at SP94.
+removed or archived at SP94 or SP95.
+
+SP95 uses `Cycles/FunctionFieldExtensionality.lean` and
+`Boundary/Normalization/GluedNormalizationDeckComparison.lean`.
+Actual generic pullback determines dominant morphisms over a common base
+when the target is relatively separated and source/target are integral.
+For the original normalization, relative separatedness comes from its
+already proved affineness. This proves uniqueness of deck transformations
+without a finite-extension assumption. For finite `N/K(X)`, the field
+automorphism reconstructed from `d` is `e_N ∘ (d⁻¹)^* ∘ e_N⁻¹`.
+The old action recovers `d`, giving surjectivity and an explicit group
+equivalence. All maps, carriers and markings are unchanged. No normality
+of the base, separability, etaleness or finiteness of the normalization
+morphism is required for this comparison. This does not yet identify
+fibers as coset spaces or supply a torsor or Chow--Betti realization.
 
 The [candidate comparison](TARGET_BRIDGE.md#g0-smooth-projective-setting-and-candidate-constructions)
 retains smooth projective complex varieties as the main setting. When a

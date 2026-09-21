@@ -150,6 +150,59 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP92 | Integrality of the original glued normalization | OVERLAP / REDUCE / UNITE | Prove that original chart images intersect, transfer reducedness from the proved domain stalks, and derive irreducibility and integrality of the same global scheme. | PROVED / VALIDATED |
 | SP93 | Marked function-field comparison and action faithfulness | IDENTIFY / COMPARE / RETAIN | Compare the original generic stalk with the finite ambient extension independently of charts; preserve the base map and marked refinement, prove inverse-pullback action compatibility and faithfulness. | PROVED / VALIDATED |
 | SP94 | Specified upstairs recipes and arbitrary-class generation condition | SPECIFY / NORMALIZE / DESCEND | State fixed and class-dependent recipe generation over the independently supplied Hodge subspace; prove normalized Chow descent using the existing positive-degree transfer and an explicit cycle-class/pushforward square. | PROVED / VALIDATED |
+| SP95 | Generic extensionality and the full original deck group | RESTRICT / RECONSTRUCT / IDENTIFY | Detect dominant morphisms by actual generic pullback under relative separatedness; reconstruct every deck transformation through the original finite-extension marking and existing action. | PROVED / VALIDATED |
+
+SP95 (2026-09-20): **generic extensionality and full deck-group comparison**.
+Eight public APIs in `Cycles/FunctionFieldExtensionality.lean` and
+`Boundary/Normalization/GluedNormalizationDeckComparison.lean` match
+`lem:generic-pullback-extensionality` and
+`thm:normalization-full-deck-group`; the ledger checkpoint is A11ca.
+
+| Lean API | Mathematical role | TeX notation |
+| --- | --- | --- |
+| `functionFieldMapOfDominant_fromSpecStalk` | Actual field pullback describes the generic-stalk restriction | `f ∘ η_V = η_W ∘ Spec(f*)` |
+| `eq_of_functionFieldMapOfDominant_eq` | Equality of dominant maps over a common base, with relatively separated target | `f* = g* ⇒ f = g` |
+| `gluedNormalizationDeckTransformation_ext` | Generic pullback determines a deck transformation for arbitrary ambient extension | `d* = e* ⇒ d = e` |
+| `gluedNormalizationDeckFieldAutomorphism` | Recover the base-field automorphism from inverse deck pullback | `b_N(d)` |
+| `gluedNormalizationDeckFieldAutomorphism_apply` | Preserve the actual field marking and inverse convention | `b_N(d)(x) = e_N((d⁻¹)*(e_N⁻¹(x)))` |
+| `gluedNormalizationDeckAction_fieldAutomorphism` | The existing action recovers the original deck map | `a_N(b_N(d)) = d` |
+| `gluedNormalizationDeckAction_surjective` | Every deck transformation comes from the field action | `a_N` is onto |
+| `gluedNormalizationDeckEquiv` | Explicit equivalence with the full deck group | `Aut_{K(X)}(N) ≃ Aut_X(Z_N)` |
+
+The generic extensionality theorem retains the common-base square,
+integral source/target, dominance and relative separatedness. The
+normalization is already integral and affine over its base, so uniqueness
+needs neither a finite extension nor separatedness of the base. Finite
+`N/K(X)` is used for the original field equivalence and reconstruction;
+there is no normality, separability, etaleness or Noetherianity addition.
+The full group equivalence uses exactly the old forward action, not a
+replacement action or new cover. Its inverse is explicit, not a supplied
+comparison witness. The original inverse-ring convention is retained.
+
+The next marked step is the full stabilizer of `λ` under this identified
+group. Fiber/coset and torsor comparisons, genuine Chow--Betti maps and
+recipe generation are not conclusions of this checkpoint. The pruning
+inventory remains dependency-based: the new reverse map has a direct
+consumer in the full equivalence, the old action and field comparison
+remain its inputs, and no object is deleted or archived.
+
+Production scoped builds pass (2327 jobs for generic extensionality,
+2780 for the deck comparison). The focused suite passes 27 examples,
+eight declaration checks and eight axiom audits, all actual sets exactly
+the standard three. The full build passes 3224 jobs with only the two
+unchanged Challenge warnings at lines 33 and 46. The unchanged dependency
+audit passes six primary contracts and two supporting reports. A fresh
+SP94 rerun passes 26 examples, seven standard-three audits and two
+direct-descent dependency assertions; no other fresh neighbor-suite
+pass is claimed. Scoped, focused and regression logs have no new warnings.
+
+The single 92-page PDF (882837 bytes) has a clean final log and passes
+visual review of pages 19, 20, 21, 70 and 83. Independent production,
+manuscript and six-document scope reviews pass. All eight API parity
+checks pass; the central static inventory is 1092 checks, 565 examples
+and 984 axiom reports, not a fresh full central replay. The central and
+geometric-audit prefixes and the complete SP94 dated queue record through
+end-of-file remain byte-identical to `05d8601`. SP95 is validated.
 
 SP94 (2026-09-20): **specified upstairs recipes and normalized descent**.
 The seven public APIs are in `Realization/Chow/UpstairsGeneration.lean`.

@@ -45,6 +45,7 @@ import HodgeConjecture.Boundary.Normalization.GluedNormalizationAction
 import HodgeConjecture.Boundary.Normalization.GluedNormalClosureAction
 import HodgeConjecture.Boundary.Normalization.GluedNormalizationFunctionField
 import HodgeConjecture.Boundary.Normalization.GluedNormalizationFunctionFieldAction
+import HodgeConjecture.Boundary.Normalization.GluedNormalizationDeckComparison
 import HodgeConjecture.Boundary.Normalization.GluedNormalClosureFunctionField
 import HodgeConjecture.Boundary.Normalization.DeckAction
 import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
@@ -210,6 +211,14 @@ is independent of the original chart and preserves the structural embedding.
 The global action pulls back to the inverse field automorphism, proving
 faithfulness. For the marked normal closure, the refinement's actual generic
 pullback is the original marked intermediate-field embedding.
+
+Generic pullback also determines every deck transformation: the same
+normalization is integral and affine over its base, so relative separatedness
+gives extensionality at the generic point. In a finite ambient extension,
+inverse deck pullback reconstructs a field automorphism under the original
+field comparison. The existing action recovers the original deck map,
+giving an explicit equivalence with the full deck group. No separability,
+base normality or finiteness of the normalization morphism is added.
 
 The broad normalization-purity/global-triviality prototype is preserved in
 `research/archive/legacy-lean/`, not as an importable library module.

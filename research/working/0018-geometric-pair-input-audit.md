@@ -1309,3 +1309,47 @@ seven API parity checks pass. The central static inventory is 1084
 checks, 565 examples and 976 axiom reports; the preserved central prefix
 was not re-elaborated in full. The SP93-to-EOF semantic-queue record is
 also byte-identical to `9539dc6`.
+
+## 31. SP95: generic extensionality and the full original deck group
+
+Two public generic APIs identify the actual function-field pullback with
+the generic-stalk square and prove that it determines a dominant map
+between integral schemes over a common base with relatively separated
+target. The generic-stalk inclusion is dominant because its image
+contains the generic point. Mathlib's existing relative-separatedness
+extensionality theorem supplies the equality of actual scheme maps.
+
+Six public normalization APIs use this result on the original integral
+glued scheme and its already affine structural map. Uniqueness of deck
+transformations needs no finite ambient extension. For finite `N/K(X)`,
+the original field comparison gives
+`b_N(d)=e_N ∘ (d⁻¹)^* ∘ e_N⁻¹`, which fixes the actual base embedding.
+The existing action reconstructs `d`, proving surjectivity. Its previous
+faithfulness and the explicit reconstruction give a `MulEquiv` with the
+same forward action and the displayed inverse.
+
+No separability, base normality, Noetherianity, etaleness, or finiteness
+of the normalization morphism is added. No source axiom, replacement
+scheme, field marking or action is introduced. The manuscript's
+`lem:generic-pullback-extensionality` and
+`thm:normalization-full-deck-group` have these same scopes and maps.
+Marked stabilizer converses, fiber/coset and torsor comparisons and
+actual Chow--Betti generation remain separate. No object is deleted or
+archived. The complete audit prefix through SP94 is preserved from
+`05d8601`.
+
+SP95 validation passes the 2327/2780-job scoped builds, 27 focused
+examples, eight declaration checks and eight exact standard-three axiom
+audits. The 3224-job full build has only the unchanged Challenge warnings
+at lines 33 and 46. The unchanged dependency audit passes six primary
+contracts and two supporting reports. A fresh SP94 regression passes
+26 examples, seven standard-three audits and two direct-descent dependency
+assertions, without warnings; no other fresh neighbor-suite pass is claimed.
+
+The 92-page PDF (882837 bytes) has a clean final log and passes visual
+review of pages 19, 20, 21, 70 and 83. Independent production, manuscript
+and six-document scope reviews and all eight API parity checks pass.
+The central inventory is statically 1092 checks, 565 examples and 984
+axiom reports; its historical prefix was not re-elaborated in full.
+The central and geometric-audit prefixes and the SP94-to-EOF queue
+record are byte-identical to `05d8601`.

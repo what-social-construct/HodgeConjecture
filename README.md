@@ -86,8 +86,16 @@ Chow pushforward with cycle classes, the normalized cycle
 `degree_i⁻¹ • pushCH_i (recipe_i c)` represents `α`. These maps and laws
 are explicit inputs, not a construction of geometric transfer or a proof
 of recipe generation. No new projector or Galois witness package is added.
-The next order is deck-group surjectivity, the actual same-cover
-Chow--Betti adapters, then geometric generation for the intended `X,p`.
+SP95 now proves the full deck-group comparison in
+[`GluedNormalizationDeckComparison.lean`](HodgeConjecture/Boundary/Normalization/GluedNormalizationDeckComparison.lean).
+For integral `X` and finite `N/K(X)`, the original action is an explicit
+group equivalence `Aut_{K(X)}(N) ≃ Aut_X(Z_N)`. Its inverse is actual
+pullback by the inverse deck transformation through the original field
+comparison. Generic pullback already determines a deck transformation
+for arbitrary `N/K(X)`. Relative separatedness comes from the existing
+affine normalization map; no base normality or separability is added.
+The next order is the marked stabilizer/fiber comparison, the actual
+same-cover Chow--Betti adapters, then generation for the intended `X,p`.
 Pruning follows checked dependencies and mathematical roles; objects are
 queued before any move to the bench. See [the live plan](research/TARGET_BRIDGE.md#0-operative-plan-chow-to-betti-first).
 

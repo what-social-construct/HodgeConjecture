@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-20 (SP94 arbitrary-class generation criterion, validated;
+Last audited: 2026-09-20 (SP95 full deck-group comparison, validated;
 earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,52 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Generic extensionality and the full original deck group (A11ca / SP95)
+
+Status: `FORMAL`; all eight public APIs compile across
+`Cycles/FunctionFieldExtensionality.lean` and
+`Boundary/Normalization/GluedNormalizationDeckComparison.lean`.
+Generic-stalk naturality identifies the restriction of any dominant
+morphism of integral schemes with its actual function-field pullback.
+For maps over a common base into a relatively separated target,
+equality of these pullbacks implies equality of morphisms.
+
+Thus two deck transformations of the original glued normalization agree
+if their generic pullbacks agree, for arbitrary ambient `N/K(X)`.
+Its existing affineness supplies relative separatedness; no separatedness
+or normality of `X` is added. For finite `N/K(X)`, the reconstructed
+automorphism `b_N(d)=e_N ∘ (d⁻¹)^* ∘ e_N⁻¹` fixes the actual base map.
+The original action satisfies `a_N(b_N(d))=d`; its existing faithfulness
+gives the other inverse identity. The resulting `MulEquiv` has exactly
+the original action as forward map and the displayed reconstruction as
+inverse. No separability, etaleness, Noetherianity or finiteness of the
+normalization morphism is assumed.
+
+The manuscript counterparts are `lem:generic-pullback-extensionality`
+and `thm:normalization-full-deck-group`. Full marked stabilizers,
+fiber/coset and torsor comparisons, actual Chow--Betti transfer and
+geometric generation remain separate. This is not a new Hodge case.
+No object is deleted or archived; existing forward maps are reused.
+
+SP95 is validated: generic and deck scoped builds pass 2327 and 2780
+jobs respectively. The focused suite passes 27 examples, eight declaration
+checks and eight axiom audits, every actual set exactly `propext`,
+`Classical.choice` and `Quot.sound`, without warnings. The full build
+passes 3224 jobs with only the two unchanged Challenge placeholder
+warnings at lines 33 and 46. The unchanged dependency audit passes six
+primary contracts and two supporting reports. A fresh SP94 regression
+passes its 26 examples, seven standard-three axiom audits and two
+direct-descent dependency assertions without warnings; no other fresh
+neighbor-suite pass is claimed.
+
+The 92-page PDF (882837 bytes) has a clean final LaTeX log and passes
+visual review of pages 19, 20, 21, 70 and 83. Independent production,
+Lean--TeX and six-document scope reviews pass, as do all eight API parity
+checks. The central static inventory is 1092 checks, 565 examples and
+984 axiom reports; its historical prefix was preserved, not re-elaborated
+in full. That prefix, the geometric-audit prefix and the SP94-to-EOF
+semantic-queue record are byte-identical to `05d8601`.
 
 ## Arbitrary-class upstairs generation and normalized descent (A11bz / SP94)
 

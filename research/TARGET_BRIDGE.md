@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-09-20 (SP94 arbitrary-class generation criterion, validated).
+Assessed: 2026-09-20 (SP95 full deck-group comparison, validated).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -68,24 +68,35 @@ residual-surjectivity hypothesis, or global axiom is introduced.
 The live continuation order supersedes the historical local “next” notes
 below:
 
-1. Complete deck-action surjectivity/full-group comparison on SP93's
-   original normalization, then the required stabilizer and fiber claims.
+1. Following SP95's full deck-group equivalence, identify the full
+   stabilizer of the marked refinement and prove the required fiber claims.
 2. Build the actual same-cover Chow--Betti maps and prove the displayed
    degree and cycle-class laws; derive normal stalks from the selected
    smooth geometry where required.
 3. Construct the recipes and prove generation for the intended `X,p`.
    Only then apply the descent theorem to the geometric Hodge target.
 
-The next bounded Galois checkpoint starts with extensionality: show that
-two deck transformations of the same glued normalization agree when
-their function-field pullbacks agree. The intended proof uses Mathlib's
-`ext_of_isDominant_of_isSeparated` at the generic-stalk inclusion;
-the already affine normalization map supplies relative separatedness.
-Then reconstruct the candidate field automorphism from the inverse deck
-map, conjugated by SP93's field equivalence, and compare with the existing
-action. The inverse preserves SP93's inverse-pullback convention. These
-are planned proof steps, not yet additional declarations or a surjectivity
-claim.
+**Completed SP95:** `functionFieldMapOfDominant_fromSpecStalk` identifies
+actual pullback with the generic-stalk square, and
+`eq_of_functionFieldMapOfDominant_eq` uses relative separatedness to give
+extensionality. The same normalization is integral and affine over `X`,
+so generic pullback determines its deck transformations for arbitrary
+`N/K(X)`. For finite `N/K(X)`, reconstruct
+`b_N(d) = e_N ∘ (d⁻¹)^* ∘ e_N⁻¹`. It fixes the actual base embedding.
+SP93's inverse-pullback comparison and extensionality prove
+`a_N(b_N(d)) = d`. With the old faithfulness theorem this gives
+`gluedNormalizationDeckEquiv`, whose forward map is literally the old
+action and whose inverse is that reconstruction. The checkpoint does
+not add separability, base normality, or a new normalization model.
+
+The next bounded marked comparison is the converse to SP90's inclusion:
+under the same finite dominant `p:Y→X`, integral `X/Y`, and normal stalks
+of `Y`, show that `a_N(σ)` preserves `λ:Z_N→Y` exactly when `σ` fixes
+the original embedding `ι:K(Y)→N`. SP93 already compares `λ^*` with `ι`;
+SP95 supplies generic extensionality, and finite `p` supplies relative
+separatedness of `Y` over `X`. This is a planned stabilizer proof, not
+yet a fiber/coset or torsor theorem. None of these group comparisons
+proves the upstairs cycle-generation hypothesis.
 
 For pruning, inventory transitive declaration dependencies and downstream
 mathematical claims first. Mark a branch as active, supporting a stronger

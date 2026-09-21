@@ -17,9 +17,39 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-09-20 (SP94 arbitrary-class generation
-criterion, validated;
+Last source/interface review: 2026-09-20 (SP95 full deck-group comparison, validated;
 earlier source records retain their original validation scope).
+
+### Generic extensionality and full deck-group comparison (SP95, 2026-09-20)
+
+No new literature premise, bibliography entry or source axiom is added.
+The new generic-stalk square uses Mathlib's
+`Scheme.Spec_map_stalkMap_fromSpecStalk` and
+`Scheme.Spec_map_stalkSpecializes_fromSpecStalk` on the actual pullback.
+`ext_of_isDominant_of_isSeparated` then applies to the generic-stalk
+inclusion: its image contains the generic point, hence it is dominant.
+The reduced source and relative separatedness are explicit mathematical
+hypotheses, derived from existing integrality and affineness for the
+normalization application.
+
+SP93's finite-extension field comparison is reused without a replacement
+field. Pullback along `d⁻¹` preserves the original base embedding because
+`d` is over `X`; conjugation by `e_N` therefore defines a genuine
+`K(X)`-algebra automorphism. The existing inverse-action formula and the
+new extensionality prove reconstruction, surjectivity and the full group
+equivalence. These are kernel-proved consequences, not imported deck-group
+or torsor assertions. Eight public APIs match manuscript statements
+`lem:generic-pullback-extensionality` and
+`thm:normalization-full-deck-group`. Source scope for the earlier
+integral-closure localization citation is unchanged.
+
+Validation passes the two scoped builds, 27 focused examples and all
+eight standard-three axiom audits, the 3224-job full build, the unchanged
+six-primary/two-support dependency audit and a fresh SP94 regression
+(26 examples, seven axiom reports, two dependency assertions). The
+92-page PDF is rebuilt and visually checked. Exact validation and
+preserved-history scope is recorded under A11ca in
+[the claim ledger](CLAIM_LEDGER.md).
 
 ### Arbitrary-class generation and normalized descent (SP94, 2026-09-20)
 
