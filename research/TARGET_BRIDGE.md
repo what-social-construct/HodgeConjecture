@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-09-20 (SP95 full deck-group comparison, validated).
+Assessed: 2026-09-20 (SP96 full marked stabilizer, validated).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -68,8 +68,8 @@ residual-surjectivity hypothesis, or global axiom is introduced.
 The live continuation order supersedes the historical local “next” notes
 below:
 
-1. Following SP95's full deck-group equivalence, identify the full
-   stabilizer of the marked refinement and prove the required fiber claims.
+1. Following SP95/SP96's full base and marked deck-group equivalences,
+   identify the actual geometric fibers and their coset/action comparison.
 2. Build the actual same-cover Chow--Betti maps and prove the displayed
    degree and cycle-class laws; derive normal stalks from the selected
    smooth geometry where required.
@@ -89,14 +89,41 @@ SP93's inverse-pullback comparison and extensionality prove
 action and whose inverse is that reconstruction. The checkpoint does
 not add separability, base normality, or a new normalization model.
 
-The next bounded marked comparison is the converse to SP90's inclusion:
-under the same finite dominant `p:Y→X`, integral `X/Y`, and normal stalks
-of `Y`, show that `a_N(σ)` preserves `λ:Z_N→Y` exactly when `σ` fixes
-the original embedding `ι:K(Y)→N`. SP93 already compares `λ^*` with `ι`;
-SP95 supplies generic extensionality, and finite `p` supplies relative
-separatedness of `Y` over `X`. This is a planned stabilizer proof, not
-yet a fiber/coset or torsor theorem. None of these group comparisons
-proves the upstairs cycle-generation hypothesis.
+**SP96:** the converse to SP90's inclusion uses actual generic pullback
+and SP93's marked comparison. Under finite dominant `p:Y→X`, integral
+`X/Y`, and normal stalks of `Y`, one has `λ ∘ a_N(σ) = λ` iff
+`σ ∈ H`, where `H` fixes the original embedding `ι:K(Y)→N`.
+SP90 supplies the reverse implication, so no second relative-separatedness
+proof is needed. For arbitrary `d ∈ Aut_X(Z_N)`, the equivalent condition
+is `b_N(d) ∈ H`. The original marked action is then a `MulEquiv`
+`H ≃ Aut_Y(Z_N)`. Its inverse privately regards a marked deck map as a
+base deck map through `p ∘ λ = μ_N` and uses the same inverse-deck
+pullback. There is no replacement marking, action or public forgetful
+package, and no additional separability or base-normality hypothesis.
+
+The next bounded comparison must specify the actual geometric fiber,
+its base point and the maps carrying the existing coset labels and
+inverse-pullback action. Separate that statement from transitivity or
+simple transitivity; use finite-etale/separability hypotheses only where
+the selected fiber argument requires them. SP96 proves neither a
+fiber/coset identification nor a torsor theorem, and does not invoke
+fixed-field equality. Neither deck-group equivalence proves the upstairs
+cycle-generation hypothesis.
+
+The first bounded fiber bridge is to prove that the existing commutative
+generic-stalk square `Spec K(Y) → Y` over `Spec K(X) → X` is a pullback
+for finite dominant `p`. Reuse
+`functionFieldMapOfDominant_fromSpecStalk` and the actual section-ring
+and fraction-field constructions in `FiniteFunctionField.lean`; do not
+introduce a replacement abstract fiber. After that identification,
+`SelectorComparison.lean` already supplies the separable tensor/sheet
+equivalence, and `SplitPointMaps.lean` supplies actual split-point labels.
+Begin with the generic split fiber over `N`, before any further base
+change to a specified algebraic closure. Keep `ι` as the marked basepoint:
+the label `gH` means `g ∘ ι`, so the scheme-side map uses the original
+`a_N(g⁻¹)` before `λ`, with the generic point map included. This is a
+planned comparison, not an assertion about all geometric fibers or an
+action of `G` by deck maps on `Y` when `H` is not normal.
 
 For pruning, inventory transitive declaration dependencies and downstream
 mathematical claims first. Mark a branch as active, supporting a stronger

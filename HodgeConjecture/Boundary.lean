@@ -47,6 +47,7 @@ import HodgeConjecture.Boundary.Normalization.GluedNormalizationFunctionField
 import HodgeConjecture.Boundary.Normalization.GluedNormalizationFunctionFieldAction
 import HodgeConjecture.Boundary.Normalization.GluedNormalizationDeckComparison
 import HodgeConjecture.Boundary.Normalization.GluedNormalClosureFunctionField
+import HodgeConjecture.Boundary.Normalization.GluedNormalClosureStabilizer
 import HodgeConjecture.Boundary.Normalization.DeckAction
 import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
 import HodgeConjecture.Boundary.Normalization.ConjugateNormalization
@@ -219,6 +220,15 @@ inverse deck pullback reconstructs a field automorphism under the original
 field comparison. The existing action recovers the original deck map,
 giving an explicit equivalence with the full deck group. No separability,
 base normality or finiteness of the normalization morphism is added.
+
+For the original finite dominant cover with integral source and target and
+normal stalks on the source, a field automorphism preserves the marked
+refinement exactly when it fixes the original embedded intermediate field.
+The same criterion applies to arbitrary base deck transformations through
+the proved field reconstruction. The existing marked subgroup action is
+therefore an equivalence with the full deck group over the original cover,
+with the same inverse-pullback formula. This does not assert a geometric
+fiber/coset or torsor comparison.
 
 The broad normalization-purity/global-triviality prototype is preserved in
 `research/archive/legacy-lean/`, not as an importable library module.

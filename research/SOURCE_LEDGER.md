@@ -17,8 +17,35 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-09-20 (SP95 full deck-group comparison, validated;
+Last source/interface review: 2026-09-20 (SP96 full marked stabilizer, validated;
 earlier source records retain their original validation scope).
+
+### Full marked stabilizer and marked deck-group equivalence (SP96, 2026-09-20)
+
+No new literature input, bibliography entry or source axiom is introduced.
+The converse to SP90's subgroup inclusion uses the proved contravariant
+composition of actual function-field maps, SP93's inverse-action and
+marked-embedding comparisons, and
+`IntermediateField.mem_fixingSubgroup_iff` on the original embedding's
+field range. This is pointwise subgroup membership; no Galois fixed-field
+correspondence or separability premise is used.
+
+The other direction reuses `gluedNormalizationAutomorphism_comp_toCover`.
+For arbitrary deck maps, SP95's reconstruction supplies the field
+automorphism. The original refinement triangle lets an automorphism over
+`Y` be viewed over `X`; subgroup membership and reconstruction then give
+the full marked action equivalence. The promotion is private, while the
+public inverse formula is the actual inverse-deck pullback through the
+same field marking. Six public APIs correspond to manuscript theorem
+`thm:normalization-marked-stabilizer`, with finite dominance, integral
+source/target and normal stalks of `Y` only. No source is cited for a
+geometric-fiber, torsor or Hodge-generation conclusion here.
+
+The six new declarations pass the focused standard-three axiom audit;
+each observed set is exactly `propext`, `Classical.choice` and `Quot.sound`.
+The scoped and full builds, unchanged dependency audit, fresh SP95
+regression and six-API Lean--TeX parity checks pass. No historical central
+verification replay or additional neighbor regression is claimed.
 
 ### Generic extensionality and full deck-group comparison (SP95, 2026-09-20)
 

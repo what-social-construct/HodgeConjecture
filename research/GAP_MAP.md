@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-09-20 (SP95 full deck-group comparison, validated;
+Last reviewed: 2026-09-20 (SP96 full marked stabilizer, validated;
 earlier checkpoint records retain
 their original validation scope).
 
@@ -49,9 +49,10 @@ The live order is now:
 
 1. **Completed SP94:** the arbitrary-class condition and its conditional
    descent implication; no additional marked-Galois witness package.
-2. **Completed SP95:** the existing action is an explicit full deck-group
-   equivalence for finite `N/K(X)`. Next identify the full stabilizer of
-   the marked refinement and prove the intended fiber comparison.
+2. **Completed SP95/SP96:** the existing actions identify the full base and marked
+   deck groups; preservation of the original refinement is exactly
+   membership in the original fixing subgroup. Next prove the intended
+   geometric fiber/coset comparison under the appropriate cover hypotheses.
 3. Instantiate Chow pushforward, Betti pullback/trace and their two
    compatibility laws for the same actual cover. Supply smooth-geometric
    normality where the construction needs it.
@@ -63,7 +64,7 @@ A parallel pruning queue records actual theorem dependencies and
 mathematical consumers before moving objects. The minimal cycle conclusion
 need not consume all projector/action machinery; that does not make the
 stronger existing endpoints or their dependencies redundant. No module is
-removed or archived at SP94 or SP95.
+removed or archived at SP94, SP95 or SP96.
 
 SP95 uses `Cycles/FunctionFieldExtensionality.lean` and
 `Boundary/Normalization/GluedNormalizationDeckComparison.lean`.
@@ -78,6 +79,20 @@ equivalence. All maps, carriers and markings are unchanged. No normality
 of the base, separability, etaleness or finiteness of the normalization
 morphism is required for this comparison. This does not yet identify
 fibers as coset spaces or supply a torsor or Chow--Betti realization.
+
+SP96's `GluedNormalClosureStabilizer.lean` retains finite dominance of
+`p:Y→X`, integrality of both schemes and normal stalks of `Y`. The new
+converse takes actual pullback of `λ ∘ a_N(σ) = λ`; SP93 then gives
+`σ⁻¹(ι(c)) = ι(c)`, hence `σ` fixes the marked field. SP90 already
+supplies the other direction. SP95 reconstructs arbitrary base deck
+transformations, so this is the full stabilizer, not only an inclusion.
+Viewing a marked deck transformation over `X` through `p ∘ λ = μ_N`
+gives an explicit inverse for the unchanged marked action and hence
+`H ≃ Aut_Y(Z_N)`. The promotion is private implementation data, not a
+second public deck or cover package. No separability, etaleness, normality
+of `X`, Noetherianity or finiteness of `μ_N` is added. A geometric-fiber
+identification, fixed-field equality or torsor theorem is not inferred
+from this group equivalence.
 
 The [candidate comparison](TARGET_BRIDGE.md#g0-smooth-projective-setting-and-candidate-constructions)
 retains smooth projective complex varieties as the main setting. When a

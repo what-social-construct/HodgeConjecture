@@ -94,7 +94,13 @@ pullback by the inverse deck transformation through the original field
 comparison. Generic pullback already determines a deck transformation
 for arbitrary `N/K(X)`. Relative separatedness comes from the existing
 affine normalization map; no base normality or separability is added.
-The next order is the marked stabilizer/fiber comparison, the actual
+SP96 identifies the full marked stabilizer in
+[`GluedNormalClosureStabilizer.lean`](HodgeConjecture/Boundary/Normalization/GluedNormalClosureStabilizer.lean).
+For the original finite dominant `p:Y→X` with integral `X/Y` and normal
+stalks of `Y`, `λ ∘ a_N(σ) = λ` holds exactly when `σ` fixes the
+original embedded `K(Y)`. The existing marked action is a group equivalence
+`H ≃ Aut_Y(Z_N)`, with the same inverse-deck pullback formula.
+The next order is the geometric fiber/coset comparison, the actual
 same-cover Chow--Betti adapters, then generation for the intended `X,p`.
 Pruning follows checked dependencies and mathematical roles; objects are
 queued before any move to the bench. See [the live plan](research/TARGET_BRIDGE.md#0-operative-plan-chow-to-betti-first).

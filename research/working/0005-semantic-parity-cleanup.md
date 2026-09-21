@@ -151,6 +151,53 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP93 | Marked function-field comparison and action faithfulness | IDENTIFY / COMPARE / RETAIN | Compare the original generic stalk with the finite ambient extension independently of charts; preserve the base map and marked refinement, prove inverse-pullback action compatibility and faithfulness. | PROVED / VALIDATED |
 | SP94 | Specified upstairs recipes and arbitrary-class generation condition | SPECIFY / NORMALIZE / DESCEND | State fixed and class-dependent recipe generation over the independently supplied Hodge subspace; prove normalized Chow descent using the existing positive-degree transfer and an explicit cycle-class/pushforward square. | PROVED / VALIDATED |
 | SP95 | Generic extensionality and the full original deck group | RESTRICT / RECONSTRUCT / IDENTIFY | Detect dominant morphisms by actual generic pullback under relative separatedness; reconstruct every deck transformation through the original finite-extension marking and existing action. | PROVED / VALIDATED |
+| SP96 | Full stabilizer of the original marked refinement | FIX / RECONSTRUCT / IDENTIFY | Detect exactly which original field automorphisms preserve the marked refinement; identify its original subgroup action with the full deck group over the cover. | PROVED / VALIDATED |
+
+SP96 (2026-09-20): **full marked stabilizer and marked deck-group comparison**.
+Six public APIs in `Boundary/Normalization/GluedNormalClosureStabilizer.lean`
+match `thm:normalization-marked-stabilizer`; the ledger checkpoint is A11cb.
+
+| Lean API | Mathematical role | TeX notation |
+| --- | --- | --- |
+| `gluedNormalizationAutomorphism_comp_toCover_iff` | Exact stabilizer of the original marked refinement | `λ ∘ a_N(σ) = λ ↔ σ ∈ H` |
+| `gluedNormalClosureDeckTransformation_comp_toCover_iff` | Detect preservation for an arbitrary deck transformation over the base | `λ ∘ d = λ ↔ b_N(d) ∈ H` |
+| `gluedNormalClosureMarkedDeckAction_injective` | Faithfulness of the existing marked action | `a_N|_H` is injective |
+| `gluedNormalClosureMarkedDeckAction_surjective` | Reconstruct every deck transformation over the original cover | `a_N|_H` is onto `Aut_Y(Z_N)` |
+| `gluedNormalClosureMarkedDeckEquiv` | Full marked deck group with the original action | `H ≃ Aut_Y(Z_N)` |
+| `gluedNormalClosureMarkedDeckEquiv_symm_apply` | Same explicit inverse-deck pullback as over the base | `b_N(d)(x) = e_N((d⁻¹)*(e_N⁻¹(x)))` |
+
+Here `p : Y → X` is finite dominant, both schemes are integral and
+the stalks of `Y` are integrally closed. The field, embedding, refinement
+and action are unchanged. Pulling back `λ ∘ a_N(σ) = λ` and applying
+the existing comparison shows that `σ⁻¹` fixes the original embedded
+`K(Y)` pointwise, hence so does `σ`. The forward inclusion is SP90.
+The full marked equivalence reuses SP95's reconstruction, viewing a
+deck transformation over `Y` as one over `X` through `p ∘ λ = μ`.
+Viewing the same automorphism over `X` is a private implementation detail,
+not another public comparison package or action. No new source input is introduced.
+
+No etaleness, separability, base normality, Noetherianity or finiteness
+of `μ` is added to this statement. The full marked deck group does not
+by itself identify a geometric fiber with a coset space or prove a
+torsor assertion. That is the next geometric checkpoint, before actual
+same-cover Chow--Betti transfer and recipe generation. No object is
+deleted or archived. The complete SP95 record below remains unchanged.
+
+The 2783-job scoped and 3225-job full builds pass; the full build has
+only the two unchanged Challenge warnings at lines 33 and 46. The focused
+suite passes 22 examples, six declaration checks and six axiom audits;
+each observed axiom set is exactly the standard three, with no warnings.
+The 93-page PDF (885899 bytes) has a clean final log and passes visual
+review of pages 20, 21, 22, 71 and 84. Independent scope reviews and all
+six API parity checks pass. The central static inventory is 1098 checks,
+565 examples and 990 axiom reports, not a fresh full central replay.
+The central and geometric-audit prefixes and the full SP95 dated queue
+record through end-of-file remain byte-identical to `864100b`.
+
+The unchanged dependency audit passes six primary contracts and two
+supporting reports. A fresh SP95 regression passes 27 examples, eight
+declaration checks and eight exact standard-three axiom audits without
+warnings; no other fresh neighbor-suite pass is claimed. SP96 is validated.
 
 SP95 (2026-09-20): **generic extensionality and full deck-group comparison**.
 Eight public APIs in `Cycles/FunctionFieldExtensionality.lean` and

@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-20 (SP95 full deck-group comparison, validated;
+Last audited: 2026-09-20 (SP96 full marked stabilizer, validated;
 earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,49 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Full marked stabilizer and the original marked deck group (A11cb / SP96)
+
+Status: `FORMAL`. Six public APIs in
+`Boundary/Normalization/GluedNormalClosureStabilizer.lean` characterize
+preservation of the original marked refinement by the original field
+fixing subgroup, characterize the same condition for arbitrary base deck
+transformations through SP95's reconstruction, and identify the existing
+marked action with the full deck group over the original cover.
+
+The hypotheses remain finite dominant `p:Y→X`, integral `X/Y`, and
+integrally closed stalks of `Y`. Pullback of the preserved refinement,
+followed by the existing marked field comparison, gives
+`σ⁻¹(ι(c)) = ι(c)` for each `c`; applying `σ` gives the required
+subgroup membership. The reverse implication is SP90's existing action.
+Every deck map over `Y` is privately viewed over `X` through the original
+triangle, and its reconstructed field automorphism lies in `H` by the
+criterion. The marked group equivalence has literally the original
+forward action; its inverse has the same actual inverse-pullback formula.
+
+No separability, etaleness, normality of `X`, Noetherianity or finiteness
+of the normalization morphism is added. No new public deck package or
+source axiom is introduced. The manuscript counterpart is
+`thm:normalization-marked-stabilizer`. Geometric-fiber/coset comparison,
+torsor assertions, fixed-field equality and Chow--Betti generation are
+not conclusions of this checkpoint. No object is deleted or archived.
+
+The 2783-job scoped build and 3225-job full build pass. The latter has
+only the two unchanged Challenge placeholder warnings at lines 33 and 46.
+The focused suite passes 22 examples, six declaration checks and six
+axiom audits, every actual set exactly `propext`, `Classical.choice`
+and `Quot.sound`, without warnings. The 93-page PDF (885899 bytes) has
+a clean final LaTeX log and passes visual review of pages 20, 21, 22,
+71 and 84. Independent production and Lean--TeX scope reviews and all
+six API parity checks pass. The static central inventory is 1098 checks,
+565 examples and 990 axiom reports; its historical prefix is preserved,
+not re-elaborated in full. Both historical prefixes and the SP95-to-EOF
+semantic-queue record remain byte-identical to `864100b`.
+
+The unchanged dependency audit passes six primary contracts and two
+supporting reports. A fresh SP95 regression passes 27 examples, eight
+declaration checks and eight exact standard-three axiom audits without
+warnings. No other fresh neighbor-suite pass is claimed. SP96 is validated.
 
 ## Generic extensionality and the full original deck group (A11ca / SP95)
 

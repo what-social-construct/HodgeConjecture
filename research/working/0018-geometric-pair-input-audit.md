@@ -1353,3 +1353,51 @@ The central inventory is statically 1092 checks, 565 examples and 984
 axiom reports; its historical prefix was not re-elaborated in full.
 The central and geometric-audit prefixes and the SP94-to-EOF queue
 record are byte-identical to `05d8601`.
+
+## 32. SP96: full marked stabilizer and marked deck-group comparison
+
+The six public APIs in `GluedNormalClosureStabilizer.lean` retain the
+same finite dominant `p : Y → X`, integral schemes, normal stalks of
+`Y`, normal-closure field, original embedding and refinement. They prove
+`λ ∘ a_N(σ) = λ ↔ σ ∈ H` and its arbitrary-base-deck counterpart
+`λ ∘ d = λ ↔ b_N(d) ∈ H`. The converse uses the actual marked generic
+pullback comparison: `σ⁻¹` fixes every element of the embedded `K(Y)`,
+and applying `σ` gives pointwise fixedness by `σ`. The other direction
+is the existing SP90 preservation theorem.
+
+Viewing a deck transformation over `Y` as one over `X` through
+`p ∘ λ = μ`, SP95 reconstructs its field automorphism; the criterion
+places it in the original subgroup. The original marked action is
+therefore injective and surjective, with an explicit `MulEquiv`
+`H ≃ Aut_Y(Z_N)`. Its inverse retains the formula
+`b_N(d)=e_N ∘ (d⁻¹)^* ∘ e_N⁻¹`. The promotion over the base and subgroup
+membership are private helpers, not replacement public data packages.
+
+The manuscript counterpart is `thm:normalization-marked-stabilizer`.
+There is no added etaleness, separability, normal-base, Noetherian or
+finite-normalization-morphism hypothesis and no new literature input.
+This is not a fixed-field equality, geometric-fiber/coset comparison
+or torsor proof. The next geometric checkpoint must fix the actual
+fiber, basepoint, coset convention and inverse-pullback action before
+proving that comparison. Same-cover Chow--Betti maps and recipe
+generation remain separate. No object is deleted or archived; the
+complete audit prefix through SP95 is preserved from `864100b`.
+
+The scoped production build passes 2783 jobs and the full build passes
+3225 jobs with only the two unchanged Challenge warnings at lines 33
+and 46. The focused suite passes 22 examples, six declaration checks
+and six axiom audits, every actual axiom set exactly the standard three,
+without warnings. Independent production, manuscript and documentation
+scope reviews and all six API parity checks pass.
+
+The 93-page PDF (885899 bytes) has a clean final log and passes visual
+review of pages 20, 21, 22, 71 and 84. The central static inventory is
+1098 checks, 565 examples and 990 axiom reports; its historical prefix
+was not re-elaborated in full. Both complete historical prefixes and
+the SP95-to-EOF semantic-queue record are byte-identical to `864100b`.
+
+The unchanged dependency audit passes six primary contracts and two
+supporting reports. A fresh SP95 regression passes 27 examples, eight
+declaration checks and eight axiom audits, each observed set exactly the
+standard three, without warnings. No other fresh neighbor-suite pass is
+claimed. SP96 is validated.

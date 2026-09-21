@@ -1739,6 +1739,52 @@ The exact global refinement formula and chart independence give the
 assertion for the original \(\lambda\) and \(e_{N_p}\).
 \end{proof}
 
+\begin{theorem}[The full marked stabilizer]
+\label{thm:normalization-marked-stabilizer}
+Let \(p:Y\to X\) be finite and dominant, with \(X,Y\) integral and
+every local ring of \(Y\) integrally closed. Retain the original
+\(N_p\), \(\iota:K(Y)\hookrightarrow N_p\), and
+\(\lambda:Z_{N_p}\to Y\). For
+\[
+ G=\operatorname{Aut}_{K(X)}(N_p),\qquad
+ H=\{\sigma\in G:\sigma\circ\iota=\iota\},
+\]
+one has
+\[
+ \lambda\circ a_{N_p}(\sigma)=\lambda
+ \quad\Longleftrightarrow\quad \sigma\in H.
+\]
+Equivalently, for any \(d\in\operatorname{Aut}_X(Z_{N_p})\),
+\[
+ \lambda\circ d=\lambda
+ \quad\Longleftrightarrow\quad b_{N_p}(d)\in H.
+\]
+The original marked action is consequently an isomorphism
+\[
+ a_{N_p}|_H:H\xrightarrow{\sim}\operatorname{Aut}_Y(Z_{N_p}).
+\]
+Its inverse sends \(d\), viewed over \(X\) through
+\(p\circ\lambda=\mu_{N_p}\), to the same marked field automorphism
+\(b_{N_p}(d)=e_{N_p}\circ(d^{-1})^*\circ e_{N_p}^{-1}\).
+\end{theorem}
+
+\begin{proof}
+If \(\lambda\circ a_{N_p}(\sigma)=\lambda\), actual pullback,
+Proposition~\ref{prop:normalization-function-field-comparison} and
+Corollary~\ref{cor:normalization-marked-function-field} give
+\[
+ \sigma^{-1}(\iota(c))=\iota(c)\qquad(c\in K(Y)).
+\]
+Applying \(\sigma\) shows \(\sigma\in H\). The converse is
+Proposition~\ref{prop:normalization-marked-action}. The criterion for
+arbitrary \(d\) follows from \(a_{N_p}(b_{N_p}(d))=d\).
+The restriction of the faithful action to \(H\) is faithful.
+Every automorphism over \(Y\) is also over \(X\); its reconstructed
+field automorphism lies in \(H\) by the criterion, and the original
+marked action recovers the same underlying scheme automorphism.
+This proves surjectivity and the stated inverse formula.
+\end{proof}
+
 The group \(G=\mathcal N.\mathit{galoisGroup}\), the subgroup
 \(H=\mathcal N.\mathit{intermediateFixingSubgroup}\), and the canonical deck
 action on \(Y_N\) are all constructed from the same datum.  Normality keeps the conjugate embeddings inside the same field \(N\).
@@ -5875,6 +5921,10 @@ Marked generic comparison \(e_{N_p}\lambda^*=\iota\) &
 \leanpath{gluedNormalClosureFunctionFieldEquivAt_toCover}\newline
 \leanpath{gluedNormalClosureFunctionFieldEquiv_toCover}\newline
 \leanpath{Boundary/Normalization/GluedNormalClosureFunctionField.lean}\\
+Full marked stabilizer and deck group &
+\leanpath{gluedNormalizationAutomorphism_comp_toCover_iff}\newline
+\leanpath{gluedNormalClosureMarkedDeckEquiv}\newline
+\leanpath{Boundary/Normalization/GluedNormalClosureStabilizer.lean}\\
 Full-visible boundary ideals &
 \leanpath{movingBoundaryIdeal_eq_top_of_surjective}\newline
 \leanpath{conjugateBoundarySeparation_of_surjective}\newline
@@ -6778,6 +6828,13 @@ principal table, grouped by mathematical layer.
 \normsrc{GluedNormalClosureFunctionField.lean};
 \leanpath{gluedNormalClosureFunctionFieldEquivAt_toCover};
 \leanpath{gluedNormalClosureFunctionFieldEquiv_toCover};
+\normsrc{GluedNormalClosureStabilizer.lean};
+\leanpath{gluedNormalizationAutomorphism_comp_toCover_iff};
+\leanpath{gluedNormalClosureDeckTransformation_comp_toCover_iff};
+\leanpath{gluedNormalClosureMarkedDeckAction_injective};
+\leanpath{gluedNormalClosureMarkedDeckAction_surjective};
+\leanpath{gluedNormalClosureMarkedDeckEquiv};
+\leanpath{gluedNormalClosureMarkedDeckEquiv_symm_apply};
 \normsrc{FiniteAffineCover.lean};
 \leanpath{normalizationToIntermediate_surjective};
 \leanpath{normalizationIntermediateEquiv};
