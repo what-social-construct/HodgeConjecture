@@ -1401,3 +1401,52 @@ supporting reports. A fresh SP95 regression passes 27 examples, eight
 declaration checks and eight axiom audits, each observed set exactly the
 standard three, without warnings. No other fresh neighbor-suite pass is
 claimed. SP96 is validated.
+
+## 33. SP97: actual generic fiber and affine function-field pushout
+
+The two public APIs in `FiniteFunctionField.lean` and `GenericFiber.lean`
+retain a finite dominant `p:Y→X` and integral schemes. The actual affine
+section rings, generic germs and function-field embedding form an algebra
+pushout: localizing the finite faithful section algebra at the base's
+nonzero elements yields the actual upstairs fraction field. The two scalar
+towers in the statement are derived locally from the original maps.
+
+Passing to spectra, transporting the original affine-preimage pullback
+along its affine presentations, and composing the squares proves that
+the actual generic-stalk square is cartesian. Its first leg is the
+upstairs generic-stalk morphism, so `IsPullback.isoPullback` gives
+`Spec K(Y) ≅ Y ×_X Spec K(X)` with exactly the expected projections.
+This standard comparison is not a new public package. The two chart and
+generic-germ helpers are private implementation lemmas.
+
+The manuscript counterpart is `prop:actual-generic-fiber`. It distinguishes
+generic points `η_X` from their canonical scheme maps `ι_{η_X}`, including
+in the existing generic-extensionality proof. No normality, etaleness,
+separability, Noetherianity or extra finite-extension premise is added;
+there is no new literature input or source axiom.
+
+This is the actual generic fiber, not yet its split base change over `N`,
+all geometric fibers, a coset identification or torsor theorem. Next use
+the existing tensor/sheet and base-sheet augmentation maps for the generic split fiber,
+retaining the marked embedding and inverse-pullback convention. Same-cover
+Chow--Betti maps and generation remain separate. No object is deleted or
+archived; the complete audit prefix through SP96 is preserved from `e6b06a7`.
+
+Scoped builds pass 2736/2737 jobs for the affine pushout and scheme square.
+The focused suite passes 18 examples, two declaration checks and two axiom
+audits, each observed set exactly the standard three, without warnings.
+Independent production, manuscript and documentation scope reviews and
+both API parity checks pass. The 93-page PDF (887663 bytes) has a clean
+final log and passes visual review of pages 8, 9, 10, 20, 69 and 81.
+The static central inventory is 1100 checks, 565 examples and 992 axiom
+reports; its historical prefix was not re-elaborated in full. Both complete
+historical prefixes and the SP96-to-EOF queue record are byte-identical
+to `e6b06a7`.
+
+The full build passes 3226 jobs with only the unchanged Challenge warnings
+at lines 33 and 46. The unchanged dependency audit passes six primary
+contracts and two supporting reports. Fresh finite-function-field and
+SP96 regressions pass 18 examples/11 axiom audits and 22 examples/six
+axiom audits respectively, each actual set exactly the standard three,
+without warnings. No other fresh neighbor-suite pass is claimed.
+SP97 is validated.

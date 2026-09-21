@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-09-20 (SP96 full marked stabilizer, validated).
+Assessed: 2026-09-21 (SP97 actual generic fiber, validated).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -68,8 +68,10 @@ residual-surjectivity hypothesis, or global axiom is introduced.
 The live continuation order supersedes the historical local “next” notes
 below:
 
-1. Following SP95/SP96's full base and marked deck-group equivalences,
-   identify the actual geometric fibers and their coset/action comparison.
+1. Following SP95/SP96's full base and marked deck-group equivalences
+   and SP97's actual generic-fiber identification, compare the generic
+   split fiber over the same `N` with the original coset/action model.
+   Keep arbitrary geometric fibers as a separate subsequent statement.
 2. Build the actual same-cover Chow--Betti maps and prove the displayed
    degree and cycle-class laws; derive normal stalks from the selected
    smooth geometry where required.
@@ -110,16 +112,32 @@ fiber/coset identification nor a torsor theorem, and does not invoke
 fixed-field equality. Neither deck-group equivalence proves the upstairs
 cycle-generation hypothesis.
 
-The first bounded fiber bridge is to prove that the existing commutative
-generic-stalk square `Spec K(Y) → Y` over `Spec K(X) → X` is a pullback
-for finite dominant `p`. Reuse
-`functionFieldMapOfDominant_fromSpecStalk` and the actual section-ring
-and fraction-field constructions in `FiniteFunctionField.lean`; do not
-introduce a replacement abstract fiber. After that identification,
+**Completed SP97:** the existing commutative generic-stalk square
+`Spec K(Y) → Y` over `Spec K(X) → X` is a pullback for finite dominant
+`p` between integral schemes. `FiniteFunctionField.lean` proves the
+actual affine function-field pushout; `GenericFiber.lean` passes to
+spectra and composes with the affine restriction square. The generic
+germs identify the outer maps with the original generic-stalk maps.
+No replacement abstract fiber, cover, marking or algebra structure is
+introduced. The canonical comparison to `Y ×_X Spec K(X)` is obtained
+from the existing `IsPullback.isoPullback`, not a new public package.
+Normality, etaleness and separability are not required for this step.
+
+Next identify the split base change of this actual generic fiber. First,
+for a field extension `E/K(X)`, compose the tensor-product spectrum square
+with SP97 using `IsPullback.paste_horiz`. This should give
+`Spec(E ⊗_{K(X)} K(Y)) ≅ Y ×_X Spec E`, retaining both projection
+identities, without a new associativity or fiber package. This tensor
+bridge needs no separability. Then specialize `E` to the original `N_p`:
 `SelectorComparison.lean` already supplies the separable tensor/sheet
-equivalence, and `SplitPointMaps.lean` supplies actual split-point labels.
-Begin with the generic split fiber over `N`, before any further base
-change to a specified algebraic closure. Keep `ι` as the marked basepoint:
+equivalence and the base-sheet augmentation identity. Apply `Spec`
+contravariantly to identify `Spec(N_p^{G/H})` with the actual split fiber
+and carry its marked point to the original embedding. Obtain separability
+from finite formal unramifiedness (in particular, finite etaleness) using
+`SeparableFunctionField.lean`. No example-module import is needed for
+this comparison. Further base change to a specified algebraic closure,
+or labeling individual geometric points, remains a separate step.
+Keep `ι` as the marked basepoint:
 the label `gH` means `g ∘ ι`, so the scheme-side map uses the original
 `a_N(g⁻¹)` before `λ`, with the generic point map included. This is a
 planned comparison, not an assertion about all geometric fibers or an

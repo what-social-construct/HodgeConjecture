@@ -152,6 +152,55 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP94 | Specified upstairs recipes and arbitrary-class generation condition | SPECIFY / NORMALIZE / DESCEND | State fixed and class-dependent recipe generation over the independently supplied Hodge subspace; prove normalized Chow descent using the existing positive-degree transfer and an explicit cycle-class/pushforward square. | PROVED / VALIDATED |
 | SP95 | Generic extensionality and the full original deck group | RESTRICT / RECONSTRUCT / IDENTIFY | Detect dominant morphisms by actual generic pullback under relative separatedness; reconstruct every deck transformation through the original finite-extension marking and existing action. | PROVED / VALIDATED |
 | SP96 | Full stabilizer of the original marked refinement | FIX / RECONSTRUCT / IDENTIFY | Detect exactly which original field automorphisms preserve the marked refinement; identify its original subgroup action with the full deck group over the cover. | PROVED / VALIDATED |
+| SP97 | Actual generic fiber of the original finite dominant map | LOCALIZE / DUALIZE / COMPOSE | Prove the original affine function-field pushout, pass to spectra, and compose with the actual chart pullback to identify the original generic-stalk square. | PROVED / VALIDATED |
+
+SP97 (2026-09-21): **actual generic fiber and affine function-field pushout**.
+Two public APIs in `Boundary/Normalization/FiniteFunctionField.lean` and
+`Boundary/Normalization/GenericFiber.lean` match
+`prop:actual-generic-fiber`; the ledger checkpoint is A11cc.
+
+| Lean API | Mathematical role | TeX notation |
+| --- | --- | --- |
+| `functionFieldMapOfDominant_isPushout_of_affine` | Original section rings and generic fields form the affine pushout | `A_U ⊗_{B_U} K(X) ≃ K(Y)` |
+| `functionFieldMapOfDominant_isPullback` | The actual generic-stalk square is cartesian | `Spec K(Y) ≃ Y ×_X Spec K(X)` |
+
+The assumptions are finite dominant `p:Y→X` and integral `X,Y`.
+For nonempty affine `U`, the section map and generic germs supply all
+algebra structures; their scalar towers are proved. Finiteness, faithful
+scalar action and the actual fraction fields give the algebra pushout.
+Passing to spectra and composing with the original affine-preimage square
+gives the generic-stalk pullback. Its orientation makes the existing
+`IsPullback.isoPullback` the comparison to the actual generic fiber, with
+the original generic-stalk map and `Spec(κ_p)` as projections. No public
+fiber carrier or isomorphism package is added; chart transport is private.
+
+Generic points retain `η_X`; their canonical maps are `ι_{η_X}`.
+The manuscript's existing generic-extensionality proof uses the same map
+notation. Historical dated records below are preserved unchanged.
+No normality, etaleness, separability, Noetherianity or additional degree
+input is assumed. This does not yet identify the split generic fiber over
+the original normal-closure field, coset labels, all geometric fibers or
+a torsor. Those comparisons remain distinct from same-cover Chow--Betti
+realization and cycle generation. No object is deleted or archived.
+
+The scoped builds pass 2736 jobs for the affine pushout and 2737 for the
+scheme square. The focused suite passes 18 examples, two declaration
+checks and two axiom audits, each observed set exactly the standard three,
+without warnings. Independent production, manuscript and documentation
+scope reviews and both API parity checks pass. The 93-page PDF (887663
+bytes) has a clean final log and passes visual review of pages 8, 9, 10,
+20, 69 and 81. The central static inventory is 1100 checks, 565 examples
+and 992 axiom reports, not a fresh historical central replay. The central
+and geometric-audit prefixes and the complete SP96 dated queue record
+through end-of-file remain byte-identical to `e6b06a7`.
+
+The full build passes 3226 jobs with only the two unchanged Challenge
+warnings at lines 33 and 46. The unchanged dependency audit passes six
+primary contracts and two supporting reports. Fresh finite-function-field
+and SP96 regressions pass 18 examples/11 axiom audits and 22 examples/six
+axiom audits respectively, all actual sets exactly the standard three,
+without warnings. No other fresh neighbor-suite pass is claimed.
+SP97 is validated.
 
 SP96 (2026-09-20): **full marked stabilizer and marked deck-group comparison**.
 Six public APIs in `Boundary/Normalization/GluedNormalClosureStabilizer.lean`

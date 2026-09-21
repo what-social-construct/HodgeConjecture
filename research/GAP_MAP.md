@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-09-20 (SP96 full marked stabilizer, validated;
+Last reviewed: 2026-09-21 (SP97 actual generic fiber, validated;
 earlier checkpoint records retain
 their original validation scope).
 
@@ -51,8 +51,10 @@ The live order is now:
    descent implication; no additional marked-Galois witness package.
 2. **Completed SP95/SP96:** the existing actions identify the full base and marked
    deck groups; preservation of the original refinement is exactly
-   membership in the original fixing subgroup. Next prove the intended
-   geometric fiber/coset comparison under the appropriate cover hypotheses.
+   membership in the original fixing subgroup. SP97 identifies the actual
+   generic fiber via its generic-stalk pullback square. Next compare its
+   split base change over the same normal-closure field with the existing
+   coset labels, keeping the chosen basepoint and action convention.
 3. Instantiate Chow pushforward, Betti pullback/trace and their two
    compatibility laws for the same actual cover. Supply smooth-geometric
    normality where the construction needs it.
@@ -64,7 +66,7 @@ A parallel pruning queue records actual theorem dependencies and
 mathematical consumers before moving objects. The minimal cycle conclusion
 need not consume all projector/action machinery; that does not make the
 stronger existing endpoints or their dependencies redundant. No module is
-removed or archived at SP94, SP95 or SP96.
+removed or archived at SP94, SP95, SP96 or SP97.
 
 SP95 uses `Cycles/FunctionFieldExtensionality.lean` and
 `Boundary/Normalization/GluedNormalizationDeckComparison.lean`.
@@ -93,6 +95,18 @@ second public deck or cover package. No separability, etaleness, normality
 of `X`, Noetherianity or finiteness of `μ_N` is added. A geometric-fiber
 identification, fixed-field equality or torsor theorem is not inferred
 from this group equivalence.
+
+SP97 uses `functionFieldMapOfDominant_isPushout_of_affine` in
+`FiniteFunctionField.lean` and `functionFieldMapOfDominant_isPullback`
+in `GenericFiber.lean`. For finite dominant `p:Y→X` between integral
+schemes, the actual generic-stalk square is cartesian. Its standard
+`IsPullback.isoPullback` gives `Spec K(Y) ≅ Y ×_X Spec K(X)`, with
+the actual generic-stalk and field-pullback maps as projections. The
+section-ring algebra structures are the original pullback and generic
+germs, not separately supplied compatible maps. No normality, etaleness,
+separability, Noetherianity, or additional finite-extension premise is
+assumed. This identifies the generic fiber; it does not yet identify its
+split base change with a coset space, all geometric fibers, or a torsor.
 
 The [candidate comparison](TARGET_BRIDGE.md#g0-smooth-projective-setting-and-candidate-constructions)
 retains smooth projective complex varieties as the main setting. When a

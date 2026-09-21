@@ -94,6 +94,49 @@ theorem functionFieldMapOfDominant_finiteDimensional [IsFinite p] :
   letI : Nonempty U := ⟨⟨genericPoint X, hxU⟩⟩
   exact functionFieldMapOfDominant_finiteDimensional_of_affine p U hU
 
+/-- The actual section-ring square becomes a pushout after passage to the
+two actual function fields. All scalar structures are the original pullbacks
+and generic germs. -/
+theorem functionFieldMapOfDominant_isPushout_of_affine [IsFinite p]
+    (U : X.Opens) [Nonempty U] (hU : IsAffineOpen U) :
+    letI := SchemeCycles.nonempty_preimage_of_isDominant p U
+    letI : Algebra Γ(X, U) Γ(Y, p ⁻¹ᵁ U) := (p.app U).hom.toAlgebra
+    letI : Algebra Γ(X, U) Y.functionField :=
+      ((Y.germToFunctionField (p ⁻¹ᵁ U)).hom.comp (p.app U).hom).toAlgebra
+    letI : Algebra X.functionField Y.functionField :=
+      (SchemeCycles.functionFieldMapOfDominant p).hom.toAlgebra
+    letI : IsScalarTower Γ(X, U) Γ(Y, p ⁻¹ᵁ U) Y.functionField :=
+      IsScalarTower.of_algebraMap_eq' rfl
+    letI : IsScalarTower Γ(X, U) X.functionField Y.functionField :=
+      functionFieldMapOfDominant_sectionScalarTower p U
+    Algebra.IsPushout Γ(X, U) Γ(Y, p ⁻¹ᵁ U) X.functionField Y.functionField := by
+  letI := SchemeCycles.nonempty_preimage_of_isDominant p U
+  letI : Algebra Γ(X, U) Γ(Y, p ⁻¹ᵁ U) := (p.app U).hom.toAlgebra
+  letI : Algebra Γ(X, U) Y.functionField :=
+    ((Y.germToFunctionField (p ⁻¹ᵁ U)).hom.comp (p.app U).hom).toAlgebra
+  letI : Algebra X.functionField Y.functionField :=
+    (SchemeCycles.functionFieldMapOfDominant p).hom.toAlgebra
+  letI : IsScalarTower Γ(X, U) Γ(Y, p ⁻¹ᵁ U) Y.functionField :=
+    IsScalarTower.of_algebraMap_eq' rfl
+  letI : IsScalarTower Γ(X, U) X.functionField Y.functionField :=
+    functionFieldMapOfDominant_sectionScalarTower p U
+  letI : IsFractionRing Γ(X, U) X.functionField :=
+    functionField_isFractionRing_of_isAffineOpen X U hU
+  letI : IsFractionRing Γ(Y, p ⁻¹ᵁ U) Y.functionField :=
+    functionField_isFractionRing_of_isAffineOpen Y _ (hU.preimage p)
+  letI : Module.Finite Γ(X, U) Γ(Y, p ⁻¹ᵁ U) :=
+    finiteAffinePreimage_moduleFinite p U hU
+  have hinj : Function.Injective (algebraMap Γ(X, U) Y.functionField) := by
+    rw [IsScalarTower.algebraMap_eq Γ(X, U) X.functionField Y.functionField]
+    exact (algebraMap X.functionField Y.functionField).injective.comp
+      (IsFractionRing.injective Γ(X, U) X.functionField)
+  letI : FaithfulSMul Γ(X, U) Γ(Y, p ⁻¹ᵁ U) :=
+    (faithfulSMul_iff_algebraMap_injective Γ(X, U) Γ(Y, p ⁻¹ᵁ U)).mpr (fun x y h ↦
+      hinj (by simpa only
+        [IsScalarTower.algebraMap_apply Γ(X, U) Γ(Y, p ⁻¹ᵁ U) Y.functionField] using
+          congrArg (algebraMap Γ(Y, p ⁻¹ᵁ U) Y.functionField) h))
+  infer_instance
+
 end
 
 end HodgeConjecture.CollisionFoundations

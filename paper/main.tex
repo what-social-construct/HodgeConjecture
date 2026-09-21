@@ -691,6 +691,47 @@ localizes to a finite-dimensional domain over
 for the actual generic-stalk embedding.
 \end{proof}
 
+\begin{proposition}[The actual generic fiber]
+\label{prop:actual-generic-fiber}
+Let \(p:Y\to X\) be finite and dominant, with \(X,Y\) integral.
+Write \(\eta_X,\eta_Y\) for the generic points and
+\(\iota_{\eta_X}:\Spec K(X)\to X\),
+\(\iota_{\eta_Y}:\Spec K(Y)\to Y\) for their canonical generic-stalk maps.
+Then the square
+\[
+\begin{CD}
+\Spec K(Y) @>{\iota_{\eta_Y}}>> Y\\
+@V{\Spec(\kappa_p)}VV @VV{p}V\\
+\Spec K(X) @>{\iota_{\eta_X}}>> X
+\end{CD}
+\]
+is cartesian. In particular, its canonical comparison gives
+\[
+ \Spec K(Y)\xrightarrow{\sim}Y\times_X\Spec K(X)
+\]
+with projections \(\iota_{\eta_Y}\) and \(\Spec(\kappa_p)\).
+For every nonempty affine \(U\subseteq X\), with
+\(V=p^{-1}(U)\), the section-ring square in
+Proposition~\ref{prop:finite-function-field} is a pushout of
+commutative rings.
+\end{proposition}
+
+\begin{proof}
+Put \(B=\Gamma(U,\mathcal O_X)\) and
+\(A=\Gamma(V,\mathcal O_Y)\). The actual pullback \(B\to A\)
+is injective, \(A\) is finite over \(B\), and the generic germs
+identify \(K(X)\) and \(K(Y)\) with their fraction fields.
+Localizing \(A\) at the nonzero elements of \(B\) gives a field,
+namely \(K(Y)\). Thus the original scalar maps exhibit the pushout
+\(A\otimes_B K(X)\cong K(Y)\).
+Passing to spectra gives the corresponding affine pullback.
+Compose it with the pullback defining \(V=p^{-1}(U)\), using
+the canonical affine presentations of \(U,V\). The generic germs
+composed with these chart maps are exactly
+\(\iota_{\eta_X},\iota_{\eta_Y}\).
+The resulting outer square is the displayed cartesian square.
+\end{proof}
+
 \begin{proposition}[Separability of the generic extension]
 \label{prop:separable-function-field}
 Let \(p:Y\to X\) be a dominant affine formally unramified morphism
@@ -1676,13 +1717,13 @@ If their actual function-field pullbacks agree, then \(f=g\).
 \end{lemma}
 
 \begin{proof}
-Write \(\eta_V:\Spec K(V)\to V\) and
-\(\eta_W:\Spec K(W)\to W\) for the generic-stalk morphisms.
+Write \(\iota_{\eta_V}:\Spec K(V)\to V\) and
+\(\iota_{\eta_W}:\Spec K(W)\to W\) for the generic-stalk morphisms.
 Naturality of the stalk maps gives
 \[
- f\circ\eta_V=\eta_W\circ\Spec(f^*).
+ f\circ\iota_{\eta_V}=\iota_{\eta_W}\circ\Spec(f^*).
 \]
-Thus \(f\) and \(g\) agree after the dominant morphism \(\eta_V\).
+Thus \(f\) and \(g\) agree after the dominant morphism \(\iota_{\eta_V}\).
 Their relative equalizer is closed because \(q\) is separated.
 It is all of \(V\), since \(V\) is reduced and the equalizer contains
 the image of that dominant morphism.
@@ -5761,6 +5802,11 @@ Finite extension of actual function fields &
 \leanpath{functionFieldMapOfDominant_sectionScalarTower}\newline
 \leanpath{functionFieldMapOfDominant_finiteDimensional}\newline
 \leanpath{Boundary/Normalization/FiniteFunctionField.lean}\\
+Actual generic fiber and affine pushout &
+\leanpath{functionFieldMapOfDominant_isPushout_of_affine}\newline
+\leanpath{Boundary/Normalization/FiniteFunctionField.lean}\newline
+\leanpath{functionFieldMapOfDominant_isPullback}\newline
+\leanpath{Boundary/Normalization/GenericFiber.lean}\\
 Separable generic extension through \(\kappa_p\) &
 \leanpath{functionFieldMapOfDominant_formallyUnramified}\newline
 \leanpath{functionFieldMapOfDominant_isSeparable}\newline
@@ -6555,6 +6601,9 @@ principal table, grouped by mathematical layer.
 \leanpath{functionFieldMapOfDominant_sectionScalarTower};
 \leanpath{functionFieldMapOfDominant_finiteDimensional_of_affine};
 \leanpath{functionFieldMapOfDominant_finiteDimensional};
+\leanpath{functionFieldMapOfDominant_isPushout_of_affine};
+\normsrc{GenericFiber.lean};
+\leanpath{functionFieldMapOfDominant_isPullback};
 \normsrc{SeparableFunctionField.lean};
 \leanpath{functionFieldMapOfDominant_formallyUnramified_of_affine};
 \leanpath{functionFieldMapOfDominant_formallyUnramified};

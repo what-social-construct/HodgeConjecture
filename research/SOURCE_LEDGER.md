@@ -17,8 +17,41 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-09-20 (SP96 full marked stabilizer, validated;
+Last source/interface review: 2026-09-21 (SP97 actual generic fiber, validated;
 earlier source records retain their original validation scope).
+
+### Actual generic fiber and affine function-field pushout (SP97, 2026-09-21)
+
+No new literature premise, bibliography entry or source axiom is introduced.
+`functionFieldMapOfDominant_isPushout_of_affine` reuses the actual section
+scalar tower, finite affine-preimage algebra and fraction-field instances.
+The faithful scalar action follows from the injective actual generic
+embedding. Mathlib's fraction-field pushout instance in
+`RingTheory/Algebraic/Integral.lean` then proves `Algebra.IsPushout`.
+Both scalar towers in the statement are locally constructed proofs,
+not additional hypotheses supplied by a caller.
+
+`functionFieldMapOfDominant_isPullback` uses
+`CommRingCat.isPushout_of_isPushout` and
+`isPullback_Spec_map_isPushout`. The original affine chart isomorphisms
+transport `isPullback_morphismRestrict`; vertical composition and
+`IsAffineOpen.fromSpecStalk_eq_fromSpecStalk` identify the actual outer
+maps. Thus finite dominance and integrality suffice for the actual
+generic-fiber square, without normality, separability or etaleness.
+The canonical isomorphism uses the existing `IsPullback.isoPullback`
+interface; no new geometric comparison is imported as a hypothesis.
+
+The two public APIs correspond to `prop:actual-generic-fiber` in the
+manuscript. Generic points `η_X` and their scheme morphisms `ι_{η_X}`
+have distinct notation, also in the existing generic-extensionality proof.
+No split-fiber/coset or arbitrary-geometric-fiber statement, torsor, or
+cycle-generation conclusion is attributed to these inputs.
+
+Both new declarations pass the actual standard-three axiom audit, each
+set exactly `propext`, `Classical.choice` and `Quot.sound`. Scoped and
+full builds, the unchanged dependency audit, fresh finite-function-field
+and SP96 regressions, and both API parity checks pass. No historical
+central replay or other neighbor-suite rerun is claimed.
 
 ### Full marked stabilizer and marked deck-group equivalence (SP96, 2026-09-20)
 

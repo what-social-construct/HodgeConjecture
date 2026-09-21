@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-20 (SP96 full marked stabilizer, validated;
+Last audited: 2026-09-21 (SP97 actual generic fiber, validated;
 earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,54 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Actual generic fiber and affine function-field pushout (A11cc / SP97)
+
+Status: `FORMAL`. Two public APIs in `FiniteFunctionField.lean` and
+`GenericFiber.lean` prove the actual affine function-field pushout and
+the cartesian generic-stalk square for finite dominant `p:Y→X` between
+integral schemes. The affine scalar structures are the existing section
+pullback, generic germs and actual function-field map; their compatibility
+is proved, not separately assumed. Finite affine section algebras and
+fraction-field localization give the pushout. Passing to spectra and
+composing with the actual affine-preimage pullback gives the global square.
+
+The theorem is oriented with `Y.fromSpecStalk` as first leg, so the
+existing `IsPullback.isoPullback` directly gives
+`Spec K(Y) ≅ Y ×_X Spec K(X)` with the original maps as projections.
+No new generic-fiber carrier, isomorphism package, field or action is
+introduced. Only the two chart-transport lemmas are private helpers.
+There is no normality, etaleness, separability, Noetherianity or separately
+supplied finite-extension premise. The manuscript counterpart is
+`prop:actual-generic-fiber`; its generic points are `η_X`, and their
+scheme maps are `ι_{η_X}`. The generic-extensionality proof uses the
+same map notation.
+
+This identifies the generic fiber, not the generic split fiber over `N`,
+all geometric fibers, coset labels, a torsor or Chow--Betti generation.
+The split comparison is the next bounded geometric step. No module or
+object is deleted or archived.
+
+Scoped validation passes 2736 jobs for the affine pushout and 2737 for
+the scheme square. The focused suite passes 18 examples, two declaration
+checks and two axiom audits, each observed set exactly `propext`,
+`Classical.choice` and `Quot.sound`, without warnings. Independent
+production, manuscript and documentation scope reviews and both API
+parity checks pass. The 93-page PDF (887663 bytes) has a clean final log
+and passes visual review of pages 8, 9, 10, 20, 69 and 81.
+
+The static central inventory is 1100 checks, 565 examples and 992 axiom
+reports; its historical prefix was not re-elaborated in full. Both complete
+historical prefixes and the SP96-to-EOF semantic-queue record remain
+byte-identical to `e6b06a7`.
+
+The full build passes 3226 jobs with only the two unchanged Challenge
+warnings at lines 33 and 46. The unchanged dependency audit passes six
+primary contracts and two supporting reports. Fresh finite-function-field
+and SP96 regressions pass 18 examples/11 axiom audits and 22 examples/six
+axiom audits respectively; all observed sets are exactly the standard
+three, without warnings. No additional neighbor-suite pass is claimed.
+SP97 is validated.
 
 ## Full marked stabilizer and the original marked deck group (A11cb / SP96)
 

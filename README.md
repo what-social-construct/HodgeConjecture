@@ -100,8 +100,16 @@ For the original finite dominant `p:Y→X` with integral `X/Y` and normal
 stalks of `Y`, `λ ∘ a_N(σ) = λ` holds exactly when `σ` fixes the
 original embedded `K(Y)`. The existing marked action is a group equivalence
 `H ≃ Aut_Y(Z_N)`, with the same inverse-deck pullback formula.
-The next order is the geometric fiber/coset comparison, the actual
-same-cover Chow--Betti adapters, then generation for the intended `X,p`.
+SP97's first fiber bridge is in
+[`GenericFiber.lean`](HodgeConjecture/Boundary/Normalization/GenericFiber.lean).
+For finite dominant `p` between integral schemes, the actual generic-stalk
+square is a pullback, canonically identifying `Spec K(Y)` with
+`Y ×_X Spec K(X)`. The affine proof uses the original section-ring and
+function-field pushout; it requires neither normality nor separability.
+The next order is the generic split-fiber/coset comparison over the same
+normal-closure field, the actual same-cover Chow--Betti adapters, then
+generation for the intended `X,p`. Generic and arbitrary geometric fibers
+remain distinct steps.
 Pruning follows checked dependencies and mathematical roles; objects are
 queued before any move to the bench. See [the live plan](research/TARGET_BRIDGE.md#0-operative-plan-chow-to-betti-first).
 

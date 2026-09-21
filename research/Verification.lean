@@ -7892,3 +7892,11 @@ Focused regressions and enforced standard-axiom checks are in
 #print axioms HodgeConjecture.CollisionFoundations.gluedNormalClosureMarkedDeckAction_surjective
 #print axioms HodgeConjecture.CollisionFoundations.gluedNormalClosureMarkedDeckEquiv
 #print axioms HodgeConjecture.CollisionFoundations.gluedNormalClosureMarkedDeckEquiv_symm_apply
+
+/-! SP97: the actual generic fiber and affine function-field pushout. -/
+
+#check HodgeConjecture.CollisionFoundations.functionFieldMapOfDominant_isPushout_of_affine
+#check HodgeConjecture.CollisionFoundations.functionFieldMapOfDominant_isPullback
+
+#print axioms HodgeConjecture.CollisionFoundations.functionFieldMapOfDominant_isPushout_of_affine
+#print axioms HodgeConjecture.CollisionFoundations.functionFieldMapOfDominant_isPullback
