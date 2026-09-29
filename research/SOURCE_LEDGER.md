@@ -17,8 +17,51 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-09-29 (SP101 finite cycle pushforward, validated;
+Last source/interface review: 2026-09-29 (SP102 canonical finite-map grading validated;
 earlier source records retain their original validation scope).
+
+### Canonical finite-map grading (SP102, 2026-09-29)
+
+The affine input is Mathlib's existing prime-residue algebraicity instance
+in `RingTheory/LocalRing/ResidueField/Instances.lean`, for an integral
+coordinate algebra. `specResidueFieldEquiv` and its evaluation formula
+identify the affine scalar map; residue-map naturality and actual chart
+isomorphisms transport it to `f.residueFieldMap x`. Finiteness of `f`
+supplies an integral coordinate algebra on the entire affine preimage.
+No stalk-finiteness or stalk-integrality inference is used.
+
+The two structural base actions are the existing `residueFieldBaseAlgebra`
+definitions. `residueFieldBaseMap_comp` gives their actual scalar tower;
+`trdeg_add_eq` and `trdeg_eq_zero` give the full cardinal
+equality before conversion to the integer dimension values. The tower law
+reuses the existing bibliography entry `StacksTranscendenceDegreeTower`,
+[Lemma 9.26.5, 030H](https://stacks.math.columbia.edu/tag/030H), checked at
+this checkpoint. No new commutative-algebra proof or bibliography item is
+introduced. Canonical support-degree equality then invokes SP101's
+existing homogeneous-cycle preservation theorem, not a replacement map.
+
+Five public theorems correspond to `prop:finite-field-grading`. No source
+axiom, literature hypothesis or new global instance is introduced. The
+principal/norm identity of 02RT and actual Chow descent remain separate;
+this checkpoint only discharges their canonical grading prerequisite.
+
+The next local source is
+[Stacks Lemma 10.121.8, 02MJ](https://stacks.math.columbia.edu/tag/02MJ),
+checked against its stated hypotheses: `A` is a one-dimensional Noetherian
+local domain and `A ⊂ B` is a finite extension of domains. For their fraction
+fields `K ⊂ L` and `u ∈ Lˣ`, the norm order is the sum of the local orders at maximal
+ideals of `B`, weighted by their residue degrees. Neither normality,
+freeness nor separability is a premise. This is a pending local input to
+02RT, not a theorem proved at SP102. The existing `Algebra.norm` and
+`Units.map` provide the operation; the pinned `Algebra.norm_localization`
+requires a free module and does not by itself discharge this general law.
+
+All five public declarations pass the actual standard-three axiom audit,
+each observed set exactly `propext`, `Classical.choice` and `Quot.sound`.
+Both scoped builds, the focused suite, full build, endpoint dependency
+audit and fresh SP101 regression pass. Independent source/scope review,
+five-API Lean--TeX parity and historical preservation checks pass. No full
+historical central replay or additional fresh neighbor-suite run is claimed.
 
 ### Degree-weighted finite cycle pushforward (SP101, 2026-09-29)
 

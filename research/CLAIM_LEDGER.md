@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-29 (SP101 finite cycle pushforward, validated;
+Last audited: 2026-09-29 (SP102 canonical finite-map grading validated;
 earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,52 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Canonical finite-map grading (A11ch / SP102)
+
+Status: `FORMAL`. Five public theorems in `Cycles/FiniteResidueField.lean`
+and `FiniteGrading.lean` discharge the degree-compatibility premise of SP101
+for the existing canonical field-induced grading.
+
+The literal residue map of a finite morphism is algebraic on arbitrary
+schemes. No ambient integrality, dominance, normality, Noetherianity,
+etaleness, separability or structural field is required. With a structural
+field map, the two existing base actions and the original residue map form
+the scalar tower supplied by `residueFieldBaseMap_comp`. The resulting
+transcendence-degree equality is at the cardinal level and requires no
+locally finite-type structural hypothesis.
+
+Locally finite type of the target structural map supplies the existing
+dimension function; the source has the composite structural map. Pointwise
+equality and the old image-generic-point identity give image-support degree
+equality. The existing finite pushforward preserves the canonical homogeneous
+cycles over every semiring without a supplied `hdeg`. Independently chosen
+dimension functions retain SP101's explicit compatibility requirement.
+
+The manuscript counterpart is `prop:finite-field-grading`, with the actual
+map `f_x^#`, existing `δ_{X/k},δ_{Y/k}` and unchanged `f_{*,cyc}`. No new
+field, scalar-action definition, dimension function, cycle carrier,
+pushforward, global instance, project axiom or literature package is added.
+Finite-dimensionality or separability of the residue extension, finite
+stalk maps, codimension preservation, principal/norm compatibility, Chow
+descent, finite-map composition, Betti compatibility and generation are
+not new conclusions of this checkpoint. No object is removed or archived.
+
+The residue/grading scoped builds pass 2331/2859 jobs without warnings.
+The focused suite passes twenty examples, five declaration checks and five
+axiom audits; every observed set is exactly `propext`, `Classical.choice`
+and `Quot.sound`. The full build passes 3233 jobs with only the unchanged
+Challenge warnings at lines 33 and 46. The dependency audit passes six
+primary contracts and two supporting reports. The fresh SP101 regression
+passes thirty examples, twenty checks and twenty axiom audits, with exactly
+the standard three and no warnings. No additional fresh neighbor-suite run
+or full historical central replay is claimed.
+
+Independent scope/source review and five-API parity pass. The 97-page PDF
+(905084 bytes) has a clean final log and visually checked pages 40, 54, 55,
+79 and 90. The central static inventory is 1134 checks, 565 examples and
+1026 axiom reports. Both complete historical prefixes and the SP101-to-EOF
+queue record remain byte-identical to `41f15b3`. SP102 is validated.
 
 ## Degree-weighted finite cycle pushforward (A11cg / SP101)
 

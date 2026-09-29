@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-09-29 (SP101 finite cycle pushforward, validated;
+Last reviewed: 2026-09-29 (SP102 canonical finite-map grading validated;
 earlier checkpoint records retain
 their original validation scope).
 
@@ -60,8 +60,8 @@ The live order is now:
    the original sheet embedding and, using normal stalks of `Y`, the
    original inverse-labelled normalization action followed by the refinement.
 3. SP101 constructs actual degree-weighted finite cycle pushforward and its
-   restriction to explicitly compatible existing gradings. Next derive
-   compatibility for the canonical field grading and prove the principal/norm
+   restriction to explicitly compatible existing gradings. SP102 supplies
+   compatibility for the canonical field grading. Next prove the principal/norm
    identity needed for Chow descent. Instantiate Betti pullback/trace and their two
    compatibility laws for the same actual cover. Supply smooth-geometric
    normality where the construction needs it.
@@ -73,7 +73,7 @@ A parallel pruning queue records actual theorem dependencies and
 mathematical consumers before moving objects. The minimal cycle conclusion
 need not consume all projector/action machinery; that does not make the
 stronger existing endpoints or their dependencies redundant. No module is
-removed or archived at SP94, SP95, SP96, SP97, SP98, SP99, SP100 or SP101.
+removed or archived at SP94, SP95, SP96, SP97, SP98, SP99, SP100, SP101 or SP102.
 
 SP101 uses `Cycles/FinitePushforward.lean` and `GradedFinitePushforward.lean`.
 Its generalized image is literally the existing `W.val.map f`; comparison
@@ -84,6 +84,19 @@ normality, dominance or etaleness is required. Coefficients may lie in any
 semiring. Grading uses an explicit support-degree equality, not an automatic
 codimension assertion or a new free module.
 
+SP102's `Cycles/FiniteResidueField.lean` proves algebraicity for the literal
+`f.residueFieldMap x`, with no ambient normality, integrality, Noetherianity,
+etaleness or base-field hypothesis. `FiniteGrading.lean` uses the existing
+structural maps and `residueFieldBaseMap_comp` to install their actual scalar
+tower. Mathlib's transcendence-degree formula gives equality of cardinals
+before taking integer values. Over a locally finite-type field base this
+preserves the existing dimension function and every actual image-support
+degree. SP101's existing raw/graded cycle maps therefore preserve the canonical
+grading without a supplied compatibility premise. No second map or grading
+is constructed; arbitrary independently chosen dimension functions still
+require SP101's explicit comparison. Dimension degree is not relabelled
+as codimension without its existing complementary-degree hypotheses.
+
 The next relation obligation is
 `f_*(ambientPrincipalDivisor W u) = ambientPrincipalDivisor f(W) (Norm u)`
 for the actual field norm. Arbitrary integral carriers need not be normal,
@@ -92,9 +105,23 @@ images need not be etale. A DVR-only argument will not establish preservation
 of the repository's general length-order principal relations. The exact
 source is [Stacks 02RT](https://stacks.math.columbia.edu/tag/02RT); quotient
 descent must use that geometric identity, not assume preservation of the
-relation submodule. Canonical finite-map grading preservation, this norm
-law, finite pushforward composition, flat pullback/degree, Betti transfer,
+relation submodule. This norm law, finite pushforward composition,
+flat pullback/degree, Betti transfer,
 the cycle-class square and class-dependent generation remain separate.
+
+The first local norm obligation is the weighted length-order formula of
+[Stacks 02MJ](https://stacks.math.columbia.edu/tag/02MJ) for a finite
+extension of domains over a one-dimensional Noetherian local domain.
+Reuse `Algebra.norm`; the missing assertion is its compatibility with
+those local orders, not the existence of a norm operation. The pinned
+norm-localization API assumes freeness and is insufficient on its own
+for the potentially nonnormal relation carriers.
+
+SP102 validation passes the residue/grading scoped builds, full build,
+twenty-example focused suite, endpoint dependency audit and fresh SP101
+regression. All five new public APIs have exactly the standard three Lean
+axioms. Lean--TeX parity and historical preservation checks pass; see A11ch
+in the claim ledger for the precise validation scope.
 
 SP95 uses `Cycles/FunctionFieldExtensionality.lean` and
 `Boundary/Normalization/GluedNormalizationDeckComparison.lean`.

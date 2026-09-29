@@ -1640,3 +1640,50 @@ Independent scope review and twenty-API parity pass. The final 96-page PDF
 The central static inventory is 1129 checks, 565 examples and 1021 axiom
 reports. Both complete historical prefixes and the SP100-to-EOF queue
 record remain byte-identical to `85662d0`. SP101 is validated.
+
+## 38. SP102: canonical finite-map grading
+
+The five public theorems in `Cycles/FiniteResidueField.lean` and
+`FiniteGrading.lean` retain the literal residue-field map and both existing
+structural actions. Finite `f` gives affine coordinate integrality; native
+prime-residue algebraicity is transported through the actual affine and
+chart residue-field comparisons. No ambient integrality, dominance,
+normality, Noetherianity, etaleness or separability is assumed.
+
+The existing structural-map naturality proves the scalar tower. The native
+transcendence-degree formula and algebraic vanishing give equality of
+cardinals without structural local finite type. With the target locally
+of finite type over the field, the existing dimension functions agree
+pointwise. The original generic-point image formula then supplies SP101's
+support-degree equality; the same cycle pushforward preserves its canonical
+homogeneous submodules for every semiring without a supplied compatibility
+proof. No new carrier, field, scalar action, dimension function, pushforward
+or global instance is introduced.
+
+The manuscript counterpart is `prop:finite-field-grading`, with actual
+`f_x^#`, existing `δ_{X/k},δ_{Y/k}` and unchanged `f_{*,cyc}`. The full
+cardinal equality precedes the integer conversion. Arbitrary unrelated
+dimension functions still need comparison; codimension preservation is
+not asserted without the existing complementary-degree hypotheses.
+
+The new residue conclusion is algebraicity, not finite stalk maps or a
+new finite-dimensional/separable extension theorem. Principal/norm
+compatibility on potentially nonnormal relation carriers is the next
+obligation before actual Chow descent. No composition, Betti realization
+or generation statement is added. No object is moved or removed. The
+complete audit prefix through SP101 is preserved from `41f15b3`.
+
+Residue/grading scoped builds pass 2331/2859 jobs without warnings. The
+focused suite passes twenty examples, five checks and five axiom audits;
+every actual axiom set is exactly the standard three. The full build passes
+3233 jobs with only the unchanged Challenge warnings at lines 33 and 46.
+The dependency audit passes six primary contracts and two supporting
+reports; fresh SP101 regression passes thirty examples, twenty checks and
+twenty standard-three axiom audits without warnings. No additional fresh
+regression or full historical central replay is claimed.
+
+Independent scope/source review and five-API parity pass. The final 97-page
+PDF (905084 bytes) has a clean log and visually checked pages 40, 54, 55,
+79 and 90. The central static inventory is 1134 checks, 565 examples and
+1026 axiom reports. Both complete historical prefixes and the SP101-to-EOF
+queue record remain byte-identical to `41f15b3`. SP102 is validated.

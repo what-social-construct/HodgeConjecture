@@ -135,8 +135,14 @@ map. [`GradedFinitePushforward.lean`](HodgeConjecture/Cycles/GradedFinitePushfor
 restricts that same map to explicitly compatible dimension functions and
 proves integer-to-rational coefficient compatibility. This does not yet
 descend through the principal relations defining Chow groups.
-The next order is canonical grading compatibility, the general principal/norm
-identity for the actual support maps, and the same-cover Chow--Betti adapters, then
+SP102's [`FiniteResidueField.lean`](HodgeConjecture/Cycles/FiniteResidueField.lean)
+and [`FiniteGrading.lean`](HodgeConjecture/Cycles/FiniteGrading.lean) identify
+the actual finite-map residue extension as algebraic and retain both
+structural field actions. The existing transcendence-degree tower formula
+then gives canonical field-grading compatibility, discharging that premise
+of the same finite cycle pushforward without defining a replacement map.
+The next order is the general principal/norm identity for the actual
+support maps, and the same-cover Chow--Betti adapters, then
 generation for the intended `X,p`. Generic and arbitrary geometric fibers
 remain distinct steps.
 Pruning follows checked dependencies and mathematical roles; objects are

@@ -157,6 +157,55 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP99 | Original marked split generic fiber | SPECIALIZE / COMPOSE / MARK | Apply the existing normal-closure tensor/sheet equivalence to the actual generic base change, retaining both projections and the original marked point. | PROVED / VALIDATED |
 | SP100 | Sheet points and the original normalization action | EVALUATE / LABEL / COMPARE | Identify individual coset evaluations in the existing split fiber with the original generic normalization orbit, preserving both pullback projections and the inverse convention. | PROVED / VALIDATED |
 | SP101 | Degree-weighted finite cycle pushforward | IMAGE / WEIGHT / RESTRICT | Use the actual mapped ideal and positive function-field degree to extend closed-immersion pushforward to finite morphisms, retaining compatible existing gradings and coefficient extension. | PROVED / VALIDATED |
+| SP102 | Canonical finite-map grading | IDENTIFY / COMPARE / DISCHARGE | Identify the actual residue extension as algebraic, preserve structural transcendence degrees, and discharge the existing finite pushforward's canonical grading premise. | PROVED / VALIDATED |
+
+SP102 (2026-09-29): **canonical finite-map grading**.
+One public theorem in `Cycles/FiniteResidueField.lean` and four in
+`Cycles/FiniteGrading.lean` correspond to `prop:finite-field-grading`;
+the ledger checkpoint is A11ch.
+
+| Lean API | Mathematical role / notation |
+| --- | --- |
+| `residueFieldMap_isAlgebraic_of_isFinite` | Algebraicity through the literal map `f_x^#:κ_Y(fx)→κ_X(x)` |
+| `residueFieldBase_trdeg_eq_of_isFinite` | Equality of full structural transcendence-degree cardinals |
+| `DimensionFunction.ofLocallyOfFiniteType_apply_of_isFinite` | `δ_{X/k}(x)=δ_{Y/k}(f(x))` for the existing functions |
+| `supportDegree_imageSubscheme_ofLocallyOfFiniteType` | `deg_{δY}(f(W))=deg_{δX}(W)` |
+| `finitePushforward_mem_cyclesOfDegree_ofLocallyOfFiniteType` | The existing `f_{*,cyc}` preserves canonical homogeneous cycles without supplied `hdeg` |
+
+Residue algebraicity uses only finite `f`, with arbitrary ambient schemes.
+Structural cardinal equality adds a field and an arbitrary target structural
+map, not local finite type. The dimension and cycle statements add local
+finite type of that target map; the source uses its actual composite.
+The cycle theorem allows any semiring. The actual structural scalar tower
+is established before applying the existing transcendence-degree theorem.
+No new scalar-action definition, global instance, field, dimension function,
+cycle carrier or pushforward is added. Arbitrary independently chosen
+gradings still require SP101's explicit compatibility hypothesis.
+
+The proof reuses affine prime-residue algebraicity and transports through
+the actual affine/chart residue comparisons. It does not infer finite or
+integral stalk maps. It proves algebraicity, not a new finite-dimensionality
+or separability endpoint. This is dimension grading, not an unqualified
+codimension-preservation theorem. The next obligation remains the general
+length-order principal/norm identity on actual relation carriers and then
+Chow descent; no such compatibility is assumed here. Composition, Betti
+transfer, the cycle-class square and generation remain separate. No object
+is moved or removed. Preserve the full SP101 record below from `41f15b3`.
+
+Residue/grading scoped builds pass 2331/2859 jobs without warnings. The
+focused suite passes twenty examples, five checks and five axiom audits;
+all observed sets are exactly the standard three. The full build passes
+3233 jobs with only the unchanged Challenge warnings at lines 33 and 46.
+The dependency audit passes six primary contracts and two supporting
+reports. Fresh SP101 regression passes thirty examples, twenty checks and
+twenty standard-three axiom audits without warnings. No other fresh
+neighbor regression or full historical central replay is claimed.
+
+Independent scope/source review and five-API parity pass. The 97-page PDF
+(905084 bytes) has a clean final log and visually checked pages 40, 54, 55,
+79 and 90. Central static inventory: 1134 checks, 565 examples, 1026 axiom
+reports. Both complete historical prefixes and the SP101-to-EOF queue
+record are byte-identical to `41f15b3`. SP102 is validated.
 
 SP101 (2026-09-29): **degree-weighted finite cycle pushforward**.
 Thirteen public APIs in `Cycles/FinitePushforward.lean` and seven in

@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-09-29 (SP101 finite cycle pushforward, validated).
+Assessed: 2026-09-29 (SP102 canonical finite-map grading validated).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -87,7 +87,7 @@ below:
    Keep arbitrary geometric fibers as a separate subsequent statement.
 2. SP101 builds degree-weighted finite pushforward on actual finite cycles,
    with graded restriction for explicitly compatible dimension functions.
-   Prove canonical grading compatibility and the principal/norm identity,
+   SP102 discharges canonical grading compatibility. Prove the principal/norm identity,
    then descend this same map to Chow groups. Build the remaining actual
    same-cover Chow--Betti maps and prove the displayed
    degree and cycle-class laws; derive normal stalks from the selected
@@ -254,9 +254,25 @@ coefficient compatibility. No canonical-grading theorem is hidden in that
 explicit equality; the degree index is dimension, not an unproved
 codimension identification.
 
-The next bounded comparison is finite-map preservation of the canonical
-`DimensionFunction.ofLocallyOfFiniteType`, retaining its structural residue
-field actions. Then handle the actual relation carriers with
+**SP102:** `FiniteResidueField.lean` proves algebraicity of the literal
+`f.residueFieldMap x` for finite `f` on arbitrary schemes. Affine coordinate
+integrality, existing prime-residue algebraicity, the actual affine residue
+comparisons and chart residue isomorphisms supply this adapter. No stalk
+finiteness claim or new residue-field model is used.
+
+`FiniteGrading.lean` retains both existing structural field actions and
+uses `residueFieldBaseMap_comp` for the actual scalar tower. Mathlib's
+transcendence-degree additivity and algebraic vanishing give equality of
+the full cardinals, without a locally finite-type structural premise.
+When the target structural map is locally of finite type, evaluation of
+the existing `DimensionFunction.ofLocallyOfFiniteType` gives pointwise
+equality; `supportDegree_imageSubscheme` then supplies SP101's `hdeg`.
+The existing finite cycle pushforward thus preserves the canonical
+homogeneous submodules for any semiring. No new dimension function,
+pushforward wrapper, cycle carrier or global instance is introduced.
+Independently chosen gradings still require explicit compatibility.
+
+The next bounded step handles the actual relation carriers with
 `f_*(div_W u)=div_{f(W)}(Norm_{K(W)/K(f(W))}u)` in the ambient cycle modules.
 The source is [Stacks 02RT](https://stacks.math.columbia.edu/tag/02RT),
 followed by the existing quotient construction. These carriers can be
@@ -265,15 +281,25 @@ smooth; the law must match the existing length-order divisors, not only
 DVR valuations. The current checkpoint constructs no finite Chow map,
 assumes no norm compatibility, and adds no literature hypothesis package.
 
-For the grading comparison, install the actual residue-field algebra from
-`f.residueFieldMap x` alongside the two existing structural base algebras.
-`residueFieldBaseMap_comp` supplies their scalar tower. Algebraicity of
-that residue extension is enough: reuse Mathlib's transcendence-degree
-tower formula and vanishing for algebraic extensions, then the existing
-dimension-function evaluation and image-generic-point formula. The affine
-route uses the finite coordinate map and existing prime-residue algebraicity,
-transported through the actual residue-field/chart comparisons. Do not
-infer that a pointwise stalk map is module-finite merely from finite `f`.
+The first substantive local input is
+[Stacks Lemma 10.121.8, 02MJ](https://stacks.math.columbia.edu/tag/02MJ):
+for a finite extension of domains `A ⊂ B`, with `A` a one-dimensional
+Noetherian local domain and fraction fields `K ⊂ L`, for `u ∈ Lˣ` the order of
+`Norm_{L/K}(u)` is the sum of the orders at the maximal localizations of
+`B`, weighted by residue-field degrees. The law must not require normality,
+freeness or separability. The pinned Mathlib already supplies `Algebra.norm`
+and its units map, but its norm-localization theorem requires freeness;
+no general weighted norm–order law was found in the local API audit.
+Formalize that missing standard local identity, then connect it to the
+existing `principalDivisor_apply` and `localOrder_fraction` consumers.
+Do not count a new norm package or assumed relation preservation as progress
+on this identity.
+
+The SP102 proof uses algebraicity, not a new theorem asserting finite
+dimensionality or separability of the residue extension. It does not infer
+that a pointwise stalk map is module-finite or integral merely from finite
+`f`. The affine integral coordinate map and its prime-residue extension
+are the standard inputs reused before transport to the actual scheme map.
 
 Keep the target obligations explicit. The graph-projector equivalence in
 `TateGraphProjector.lean` uses the actual construction and detection maps.

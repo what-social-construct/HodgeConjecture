@@ -3457,6 +3457,8 @@ then the same map restricts, for every \(n\in\mathbf Z\), to
 These are the homogeneous submodules defined in
 Proposition~\ref{prop:principal-divisor-degree}; both closed-immersion
 agreement and coefficient extension retain their underlying cycle maps.
+For the canonical field-induced dimension functions, the displayed
+compatibility follows from Proposition~\ref{prop:finite-field-grading}.
 \end{proposition}
 
 \begin{proof}
@@ -4601,6 +4603,52 @@ These proofs supply the two fields of the existing dimension-function
 structure. The affine agreement follows from
 Proposition~\ref{prop:structural-affine-value}; open compatibility
 follows from the structural residue-field algebra equivalence.
+\end{proof}
+
+\begin{proposition}[Finite morphisms preserve the field-induced grading]
+\label{prop:finite-field-grading}
+For a finite morphism \(f:X\to Y\) and any point \(x\in X\), the
+actual residue-field map
+\[
+ f_x^\#: \kappa_Y(f(x))\longrightarrow\kappa_X(x)
+\]
+is algebraic. If \(s:Y\to\Spec k\) is a structural morphism over a
+field, the scalar actions induced by \(s\) and \(s\circ f\) satisfy
+\[
+ \operatorname{trdeg}_k\kappa_Y(f(x))
+   =\operatorname{trdeg}_k\kappa_X(x).
+\]
+This equality is an equality of transcendence-degree cardinals.
+When \(s\) is locally of finite type, the existing dimension functions
+therefore satisfy
+\[
+ \delta_{X/k}(x)=\delta_{Y/k}(f(x)),
+ \qquad
+ \deg_{\delta_{Y/k}}(f(W))=\deg_{\delta_{X/k}}(W)
+ \quad(W\in\operatorname{IntSub}(X)).
+\]
+Consequently the finite pushforward of
+Proposition~\ref{prop:finite-cycle-pushforward} preserves the canonical
+homogeneous submodules for every coefficient semiring \(R\):
+\[
+ f_{*,\mathrm{cyc}}:
+ Z^{\delta_{X/k}}_{\mathrm{fin},n}(X;R)
+   \longrightarrow Z^{\delta_{Y/k}}_{\mathrm{fin},n}(Y;R).
+\]
+\end{proposition}
+
+\begin{proof}
+Over an affine neighbourhood of \(f(x)\), finiteness gives a finite,
+hence integral, coordinate algebra. The corresponding prime-residue
+extension is algebraic. The canonical affine residue-field comparisons
+and the chart residue isomorphisms identify it with the displayed actual
+map. Naturality of structural constants gives the scalar tower
+\(k\to\kappa_Y(f(x))\to\kappa_X(x)\). The transcendence-degree
+tower formula \cite{StacksTranscendenceDegreeTower} then gives the cardinal
+equality, since the relative transcendence degree is zero. Evaluate the
+existing dimension functions and use \(\xi_{f(W)}=f(\xi_W)\) to obtain
+the support-degree identity. This supplies precisely the compatibility
+used to restrict the existing cycle pushforward.
 \end{proof}
 
 \begin{proposition}[Global point heights and geometric carrier degrees]
@@ -6433,6 +6481,14 @@ Constructed global dimension function over a field &
 Affine equality and open-value invariance
 (Proposition~\ref{prop:global-field-dimension-function})\newline
 \leanpath{Cycles/FieldDimensionFunction.lean}\\
+Finite-map compatibility with the canonical grading &
+\leanpath{residueFieldMap_isAlgebraic_of_isFinite}\newline
+\leanpath{residueFieldBase_trdeg_eq_of_isFinite}\newline
+\leanpath{DimensionFunction.ofLocallyOfFiniteType_apply_of_isFinite}\newline
+\leanpath{supportDegree_imageSubscheme_ofLocallyOfFiniteType}\newline
+\leanpath{finitePushforward_mem_cyclesOfDegree_ofLocallyOfFiniteType}\newline
+\leanpath{Cycles/FiniteResidueField.lean}\newline
+\leanpath{Cycles/FiniteGrading.lean}\\
 Global point heights and geometric carrier degrees &
 \leanpath{point_height_eq_ofLocallyOfFiniteType}\newline
 \leanpath{supportDegree_ofLocallyOfFiniteType_eq_iff}\newline
@@ -7350,6 +7406,13 @@ principal table, grouped by mathematical layer.
 \leanpath{DimensionFunction.ofLocallyOfFiniteType_nonneg};
 \leanpath{DimensionFunction.ofLocallyOfFiniteType_eq_ofAffineLocallyOfFiniteType};
 \leanpath{DimensionFunction.ofLocallyOfFiniteType_apply_of_isOpenImmersion};
+\leanpath{Cycles/FiniteResidueField.lean};
+\leanpath{residueFieldMap_isAlgebraic_of_isFinite};
+\leanpath{Cycles/FiniteGrading.lean};
+\leanpath{residueFieldBase_trdeg_eq_of_isFinite};
+\leanpath{DimensionFunction.ofLocallyOfFiniteType_apply_of_isFinite};
+\leanpath{supportDegree_imageSubscheme_ofLocallyOfFiniteType};
+\leanpath{finitePushforward_mem_cyclesOfDegree_ofLocallyOfFiniteType};
 \leanpath{point_height_ne_top_of_locallyOfFiniteType};
 \leanpath{DimensionFunction.ofLocallyOfFiniteType_eq_pointHeight};
 \leanpath{pointSupport_dimension_eq_ofLocallyOfFiniteType};

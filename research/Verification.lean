@@ -7973,3 +7973,17 @@ Focused regressions and enforced standard-axiom checks are in
 #print axioms HodgeConjecture.SchemeCycles.gradedFinitePushforward_eq_closedImmersionPushforward
 #print axioms HodgeConjecture.SchemeCycles.finitePushforward_rationalize
 #print axioms HodgeConjecture.SchemeCycles.gradedFinitePushforward_rationalize
+
+/-! SP102: the existing finite pushforward preserves the canonical field grading. -/
+
+#check HodgeConjecture.SchemeCycles.residueFieldMap_isAlgebraic_of_isFinite
+#check HodgeConjecture.SchemeCycles.residueFieldBase_trdeg_eq_of_isFinite
+#check HodgeConjecture.SchemeCycles.DimensionFunction.ofLocallyOfFiniteType_apply_of_isFinite
+#check HodgeConjecture.SchemeCycles.supportDegree_imageSubscheme_ofLocallyOfFiniteType
+#check HodgeConjecture.SchemeCycles.finitePushforward_mem_cyclesOfDegree_ofLocallyOfFiniteType
+
+#print axioms HodgeConjecture.SchemeCycles.residueFieldMap_isAlgebraic_of_isFinite
+#print axioms HodgeConjecture.SchemeCycles.residueFieldBase_trdeg_eq_of_isFinite
+#print axioms HodgeConjecture.SchemeCycles.DimensionFunction.ofLocallyOfFiniteType_apply_of_isFinite
+#print axioms HodgeConjecture.SchemeCycles.supportDegree_imageSubscheme_ofLocallyOfFiniteType
+#print axioms HodgeConjecture.SchemeCycles.finitePushforward_mem_cyclesOfDegree_ofLocallyOfFiniteType
