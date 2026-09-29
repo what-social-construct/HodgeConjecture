@@ -1450,3 +1450,44 @@ SP96 regressions pass 18 examples/11 axiom audits and 22 examples/six
 axiom audits respectively, each actual set exactly the standard three,
 without warnings. No other fresh neighbor-suite pass is claimed.
 SP97 is validated.
+
+## 34. SP98: tensor base change of the actual generic fiber
+
+The single public API in `GenericFiberBaseChange.lean` uses finite
+dominant `p:Y→X` between integral schemes and any commutative
+`K(X)`-algebra `E`. It proves the pullback square exhibiting
+`Spec(E⊗_{K(X)}K(Y))` as the actual base change along
+`Spec E → Spec K(X) → X`, retaining the actual `κ_p` and this tensor
+order. The first leg uses the right inclusion followed by the upstairs
+generic-stalk map, while the second uses the left inclusion.
+
+The tensor-spectrum square is pasted horizontally with SP97. The standard
+`IsPullback.isoPullback` and its projection lemmas provide the canonical
+comparison; no public isomorphism wrapper, carrier, marking, action,
+private helper or global instance is added. There is no field, finite,
+separable, reduced or nontrivial hypothesis on `E`, nor new normality or
+etaleness hypothesis on the schemes or `p`.
+
+The manuscript counterpart is `cor:generic-fiber-base-change`, whose
+notation `T_E,u_E,v_E,α_E,β_E,θ_{p,E}` records the original maps.
+No new literature input or source axiom is introduced. The next step is
+the specialization to the original normal closure, its separable
+tensor/sheet equivalence and marked base-sheet augmentation. This is not
+yet that split comparison, an arbitrary-geometric-fiber or torsor theorem,
+or a Chow--Betti generation result. No object is deleted or archived;
+the complete audit prefix through SP97 is preserved from `cd3341a`.
+
+The scoped build passes 2738 jobs. The corrected focused suite passes
+19 examples, one declaration check and one exact standard-three axiom
+audit without warnings. The full build passes 3227 jobs with only the
+unchanged Challenge warnings at lines 33 and 46. The dependency audit
+passes six primary contracts and two supporting reports. A fresh SP97
+regression passes 18 examples, two checks and two exact standard-three
+axiom audits; no other fresh neighbor-suite pass is claimed.
+
+Production/manuscript/API parity and the bounded overlap audit pass.
+The 94-page PDF (891430 bytes) has a clean final log and passes visual
+review of pages 9, 10, 11, 70 and 82. The static central inventory is
+1101 checks, 565 examples and 993 axiom reports; its historical prefix
+was not re-elaborated in full. Both complete historical prefixes and
+the SP97-to-EOF queue record are byte-identical to `cd3341a`. SP98 is validated.

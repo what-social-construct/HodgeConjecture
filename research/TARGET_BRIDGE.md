@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-09-21 (SP97 actual generic fiber, validated).
+Assessed: 2026-09-29 (SP98 tensor base change of the actual generic fiber, validated).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -30,6 +30,16 @@ the relevant Hodge classes upstairs. The universal target in section 1 is
 unchanged. This section controls the work order; section 6 records construction history and detailed
 dependencies, not a competing queue. Implementation checkpoints below are
 **planned**, unless explicitly marked completed.
+
+Working rule reaffirmed (2026-09-29): work backward from the target
+equivalence and fill its geometric inputs, rather than creating parallel
+constructions or another abstract reformulation. Standard commutative
+algebra and tensor-product facts are reused from Mathlib. A new adapter
+must retain the existing maps and identify the next missing comparison.
+For the current step, the canonical geometric object is the original
+`Y ×_X Spec E`; its tensor spectrum is a proved presentation, not a
+second independently chosen fiber. The existing normal closure and
+marked embedding remain fixed.
 
 **Completed baseline:** SP63 proves surjectivity of actual raw/graded cycle
 restriction and integral/rational Chow restriction. The full build,
@@ -69,7 +79,7 @@ The live continuation order supersedes the historical local “next” notes
 below:
 
 1. Following SP95/SP96's full base and marked deck-group equivalences
-   and SP97's actual generic-fiber identification, compare the generic
+   and SP97/SP98's actual generic-fiber and tensor base-change identifications, compare the generic
    split fiber over the same `N` with the original coset/action model.
    Keep arbitrary geometric fibers as a separate subsequent statement.
 2. Build the actual same-cover Chow--Betti maps and prove the displayed
@@ -123,12 +133,17 @@ introduced. The canonical comparison to `Y ×_X Spec K(X)` is obtained
 from the existing `IsPullback.isoPullback`, not a new public package.
 Normality, etaleness and separability are not required for this step.
 
-Next identify the split base change of this actual generic fiber. First,
-for a field extension `E/K(X)`, compose the tensor-product spectrum square
-with SP97 using `IsPullback.paste_horiz`. This should give
-`Spec(E ⊗_{K(X)} K(Y)) ≅ Y ×_X Spec E`, retaining both projection
-identities, without a new associativity or fiber package. This tensor
-bridge needs no separability. Then specialize `E` to the original `N_p`:
+**SP98:** for any commutative `K(X)`-algebra `E`, the tensor-product
+spectrum square composed with SP97 using `IsPullback.paste_horiz` gives
+`Spec(E ⊗_{K(X)} K(Y)) ≅ Y ×_X Spec E`. The first projection is
+`Spec(includeRight)` followed by the actual upstairs generic-stalk map;
+the second is `Spec(includeLeft)`. The existing `IsPullback.isoPullback`
+and its projection lemmas give the comparison, without an additional
+public isomorphism or associativity wrapper. The original scalar map
+`κ_p` is retained. No field, separability, finiteness or nontriviality
+condition is needed on `E`.
+
+Next specialize `E` to the original `N_p` and prove the split comparison:
 `SelectorComparison.lean` already supplies the separable tensor/sheet
 equivalence and the base-sheet augmentation identity. Apply `Spec`
 contravariantly to identify `Spec(N_p^{G/H})` with the actual split fiber
@@ -142,6 +157,24 @@ the label `gH` means `g ∘ ι`, so the scheme-side map uses the original
 `a_N(g⁻¹)` before `λ`, with the generic point map included. This is a
 planned comparison, not an assertion about all geometric fibers or an
 action of `G` by deck maps on `Y` when `H` is not normal.
+
+The immediate consumer to implement is the spectrum of the existing
+`normalClosureTensorGenericSheetsEquiv`, composed with SP98 at `E=N_p`,
+and the existing augmentation identity for its marked point. Do not add
+a second tensor evaluator or reprove the splitting theorem. This supplies
+an actual geometric identification for the selected construction; it is
+not already a realization on Chow or Betti cohomology.
+
+Keep the target obligations explicit. The graph-projector equivalence in
+`TateGraphProjector.lean` uses the actual construction and detection maps.
+The prescribed-cover equivalence in `GaloisHodgeTarget.lean` additionally
+requires `GraphProjectorLiftFactorizationThroughFixedDeckData`; the marked
+selector version in `GaloisMarkedRealization.lean` requires its named strong
+replacement input. Neither follows merely from a split generic fiber.
+On the class-first route, instantiate the same-cover transfer and cycle-class
+square and prove `ClassDependentChowBettiGeneration` for the prescribed
+classes before applying `UpstairsGeneration.lean`. These are obligations
+for the existing construction, not reasons to introduce a replacement target.
 
 For pruning, inventory transitive declaration dependencies and downstream
 mathematical claims first. Mark a branch as active, supporting a stronger

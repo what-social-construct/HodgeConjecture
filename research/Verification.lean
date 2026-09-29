@@ -7900,3 +7900,8 @@ Focused regressions and enforced standard-axiom checks are in
 
 #print axioms HodgeConjecture.CollisionFoundations.functionFieldMapOfDominant_isPushout_of_affine
 #print axioms HodgeConjecture.CollisionFoundations.functionFieldMapOfDominant_isPullback
+
+/-! SP98: tensor base change of the actual generic fiber. -/
+
+#check HodgeConjecture.CollisionFoundations.functionFieldMapOfDominant_baseChange_isPullback
+#print axioms HodgeConjecture.CollisionFoundations.functionFieldMapOfDominant_baseChange_isPullback

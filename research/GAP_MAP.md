@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-09-21 (SP97 actual generic fiber, validated;
+Last reviewed: 2026-09-29 (SP98 tensor base change of the actual generic fiber, validated;
 earlier checkpoint records retain
 their original validation scope).
 
@@ -52,8 +52,9 @@ The live order is now:
 2. **Completed SP95/SP96:** the existing actions identify the full base and marked
    deck groups; preservation of the original refinement is exactly
    membership in the original fixing subgroup. SP97 identifies the actual
-   generic fiber via its generic-stalk pullback square. Next compare its
-   split base change over the same normal-closure field with the existing
+   generic fiber via its generic-stalk pullback square; SP98 identifies
+   its base change with the actual tensor spectrum and both projections.
+   Next compare the split base change over the same normal-closure field with the existing
    coset labels, keeping the chosen basepoint and action convention.
 3. Instantiate Chow pushforward, Betti pullback/trace and their two
    compatibility laws for the same actual cover. Supply smooth-geometric
@@ -66,7 +67,7 @@ A parallel pruning queue records actual theorem dependencies and
 mathematical consumers before moving objects. The minimal cycle conclusion
 need not consume all projector/action machinery; that does not make the
 stronger existing endpoints or their dependencies redundant. No module is
-removed or archived at SP94, SP95, SP96 or SP97.
+removed or archived at SP94, SP95, SP96, SP97 or SP98.
 
 SP95 uses `Cycles/FunctionFieldExtensionality.lean` and
 `Boundary/Normalization/GluedNormalizationDeckComparison.lean`.
@@ -107,6 +108,21 @@ germs, not separately supplied compatible maps. No normality, etaleness,
 separability, Noetherianity, or additional finite-extension premise is
 assumed. This identifies the generic fiber; it does not yet identify its
 split base change with a coset space, all geometric fibers, or a torsor.
+
+SP98's `functionFieldMapOfDominant_baseChange_isPullback` in
+`GenericFiberBaseChange.lean` identifies
+`Spec(E ⊗_{K(X)} K(Y)) ≅ Y ×_X Spec E`, where the base map is the
+actual `Spec E → Spec K(X) → X`. Here `E` is any commutative
+`K(X)`-algebra, not necessarily a field, finite, reduced or nontrivial.
+The upstairs algebra structure is the original `κ_p`; the two maps are
+the right tensor inclusion followed by the upstairs generic-stalk map
+and the left tensor inclusion to `Spec E`. The existing
+`IsPullback.isoPullback` retains both projections. No new isomorphism
+wrapper, carrier or action is introduced. The result needs no
+separability and does not assert that this tensor algebra splits.
+Next specialize to `E=N_p` and apply the existing separable tensor/sheet
+equivalence and base-sheet augmentation comparison. This remains a
+generic split-fiber comparison, not a statement about all geometric fibers.
 
 The [candidate comparison](TARGET_BRIDGE.md#g0-smooth-projective-setting-and-candidate-constructions)
 retains smooth projective complex varieties as the main setting. When a

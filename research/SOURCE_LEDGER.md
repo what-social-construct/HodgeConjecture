@@ -17,8 +17,33 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-09-21 (SP97 actual generic fiber, validated;
+Last source/interface review: 2026-09-29 (SP98 tensor base change of the actual generic fiber, validated;
 earlier source records retain their original validation scope).
+
+### Tensor base change of the actual generic fiber (SP98, 2026-09-29)
+
+No new literature premise, bibliography entry or source axiom is introduced.
+The tensor pushout is Mathlib's `CommRingCat.isPushout_tensorProduct`;
+`isPullback_Spec_map_isPushout` gives its spectrum square. Flipping that
+square and applying `IsPullback.paste_horiz` to SP97 gives the actual
+base-change square. The standard `IsPullback.isoPullback` interface
+provides the canonical isomorphism and its projection identities.
+
+The single public theorem is
+`functionFieldMapOfDominant_baseChange_isPullback`; its manuscript
+counterpart is `cor:generic-fiber-base-change`. The original scalar map
+on `K(Y)`, tensor order and generic-stalk maps are retained. Only a
+commutative `K(X)`-algebra structure is needed on `E`, not a field,
+finite extension or separable algebra. Finite dominance and integrality
+belong to `p` and its source/target through SP97, not to `E`.
+The proof imports no splitting, marked-point, torsor or Hodge-generation
+comparison. There is no new public carrier or isomorphism wrapper.
+
+The declaration passes the actual standard-three axiom audit, with observed
+set exactly `propext`, `Classical.choice` and `Quot.sound`. Scoped and full
+builds, the corrected focused suite, the unchanged dependency audit, a fresh
+SP97 regression and the one-API Lean--TeX parity check pass. No historical
+central replay or additional neighbor-suite rerun is claimed.
 
 ### Actual generic fiber and affine function-field pushout (SP97, 2026-09-21)
 

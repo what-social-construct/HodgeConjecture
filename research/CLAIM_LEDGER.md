@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-21 (SP97 actual generic fiber, validated;
+Last audited: 2026-09-29 (SP98 tensor base change of the actual generic fiber, validated;
 earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,47 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Tensor base change of the actual generic fiber (A11cd / SP98)
+
+Status: `FORMAL`. The single public API
+`functionFieldMapOfDominant_baseChange_isPullback` in
+`GenericFiberBaseChange.lean` identifies the actual base change of finite
+dominant `p:Y→X` between integral schemes along `Spec E → Spec K(X) → X`.
+The algebra `E` is any commutative `K(X)`-algebra. The actual upstairs
+scalar map is `κ_p`, and the tensor order is `E ⊗_{K(X)} K(Y)`.
+The proof pastes the tensor-spectrum pullback horizontally with SP97.
+
+The first leg is the spectrum of the right tensor inclusion followed by
+the upstairs generic-stalk map; the second is the spectrum of the left
+inclusion. The existing `IsPullback.isoPullback` identifies the tensor
+spectrum with the actual fiber product and retains both projections.
+There is no new carrier, isomorphism wrapper, marking, action or private
+support lemma. No normality, etaleness or separability is added; `E` need
+not be a field, finite, reduced or nontrivial.
+
+The manuscript counterpart is `cor:generic-fiber-base-change`, with
+`T_E=E⊗_K L`, inclusions `u_E,v_E`, structure map `α_E`, base map `β_E`,
+and canonical comparison `θ_{p,E}`. This does not yet identify the
+normal-closure specialization with a sheet algebra or identify its
+marked point; nor does it prove an all-geometric-fiber, torsor or
+Chow--Betti generation statement. No object is deleted or archived.
+
+Scoped validation passes 2738 jobs. The corrected focused suite passes
+19 examples, one declaration check and one axiom audit, whose observed
+set is exactly `propext`, `Classical.choice` and `Quot.sound`, without
+warnings. The full build passes 3227 jobs with only the unchanged
+Challenge warnings at lines 33 and 46. The unchanged dependency audit
+passes six primary contracts and two supporting reports; a fresh SP97
+regression passes 18 examples, two declaration checks and two standard-three
+axiom audits. No other fresh neighbor-suite pass is claimed.
+
+The production/manuscript/API parity review and bounded overlap audit pass.
+The 94-page PDF (891430 bytes) has a clean final log and passes visual
+review of pages 9, 10, 11, 70 and 82. The central static inventory is
+1101 checks, 565 examples and 993 axiom reports; its historical prefix
+was not re-elaborated in full. Both complete historical prefixes and the
+SP97-to-EOF queue record are byte-identical to `cd3341a`. SP98 is validated.
 
 ## Actual generic fiber and affine function-field pushout (A11cc / SP97)
 

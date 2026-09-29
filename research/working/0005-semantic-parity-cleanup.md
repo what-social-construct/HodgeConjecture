@@ -153,6 +153,75 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP95 | Generic extensionality and the full original deck group | RESTRICT / RECONSTRUCT / IDENTIFY | Detect dominant morphisms by actual generic pullback under relative separatedness; reconstruct every deck transformation through the original finite-extension marking and existing action. | PROVED / VALIDATED |
 | SP96 | Full stabilizer of the original marked refinement | FIX / RECONSTRUCT / IDENTIFY | Detect exactly which original field automorphisms preserve the marked refinement; identify its original subgroup action with the full deck group over the cover. | PROVED / VALIDATED |
 | SP97 | Actual generic fiber of the original finite dominant map | LOCALIZE / DUALIZE / COMPOSE | Prove the original affine function-field pushout, pass to spectra, and compose with the actual chart pullback to identify the original generic-stalk square. | PROVED / VALIDATED |
+| SP98 | Tensor base change of the actual generic fiber | TENSOR / PASTE / RETAIN | Compose the tensor-spectrum square with the actual generic-stalk pullback, preserving the original scalar map, tensor order and both projections for any commutative base-field algebra. | PROVED / VALIDATED |
+
+SP98 (2026-09-29): **tensor base change of the actual generic fiber**.
+The single public API in `Boundary/Normalization/GenericFiberBaseChange.lean`
+matches `cor:generic-fiber-base-change`; the ledger checkpoint is A11cd.
+
+| Lean API | Mathematical role | TeX notation |
+| --- | --- | --- |
+| `functionFieldMapOfDominant_baseChange_isPullback` | Actual tensor spectrum and base change with both original projections | `θ_{p,E}: Spec(E⊗_K L) ≃ Y ×_X Spec E` |
+
+Here `p:Y→X` is finite dominant with integral source and target;
+`K=K(X)`, `L=K(Y)` via `κ_p`, and `E` is any commutative `K`-algebra.
+The tensor is `T_E=E⊗_K L`, with `u_E(e)=e⊗1` and `v_E(ℓ)=1⊗ℓ`.
+Writing `α_E:K→E` for the structure map and
+`β_E=ι_{η_X} ∘ Spec(α_E)`, the first projection is
+`ι_{η_Y} ∘ Spec(v_E)` and the second is `Spec(u_E)`.
+`θ_{p,E}` denotes the existing `IsPullback.isoPullback`, not another
+public Lean object. There is no field, finiteness, separability,
+reducedness or nontriviality requirement on `E`.
+
+The proof directly pastes the tensor-spectrum pullback with SP97's
+actual generic-stalk square. It adds no replacement carrier, marking,
+action, private helper or global instance. Normal-closure specialization,
+splitting and the marked augmentation comparison are the next step;
+arbitrary geometric fibers, torsors and Chow--Betti generation remain
+separate. No object is deleted or archived. The complete SP97 record
+below remains unchanged.
+
+SP98 reuse / target-consumer audit (2026-09-29): the new proof only applies
+Mathlib's tensor pushout, its spectrum pullback and SP97. It proves a
+predicate on the existing maps; it defines no tensor algebra, field,
+fiber carrier, evaluator or isomorphism wrapper.
+
+| Existing object or presentation | Owner and role | Audit disposition |
+| --- | --- | --- |
+| `Y ×_X Spec E` | Existing categorical pullback of the original scheme map | Canonical geometric object; SP98 identifies its tensor presentation |
+| `S[image R⁰]` | `GenericFiberAlgebra.lean`, used by the affine dimension/localization branch | Existing localization carrier, not a second `K(Y)` or scheme fiber |
+| `⨂_σ L` and its integral-coordinate analogue | `NormalClosureTensor.lean` and `NormalizationTensor.lean` | Many-factor evaluation into the already chosen normal closure and its normalization; not the binary base-change tensor |
+| `N⊗_K L ≃ N^{G/H}` | `SelectorComparison.lean` | Reuse the existing splitting and augmentation identity for SP98's next consumer |
+| `L⊗_K L` | Existing collision algebra and its evaluation on sheets | Different domain from `N⊗_K L`; do not introduce a third evaluator |
+
+One older consolidation candidate is the comparison of
+`collisionToGenericSheets` with the restriction of
+`normalClosureTensorToGenericSheets` along `D.embedding ⊗ id`. They have
+different domains, so they are not competing objects; any later definition
+sharing must first check their consumers and prove compatibility. No removal
+or refactor is made in this checkpoint. This is a bounded overlap audit,
+not a claim that the entire repository is free of redundancy.
+
+The next consumer is still to be implemented: specialize SP98 to the original
+normal closure and apply `Spec` to the existing tensor/sheet equivalence,
+preserving the marked augmentation. A new generic algebra theory or a second
+coverage witness package is not part of that step. The target equivalences'
+construction/detection and prescribed-coverage factorization inputs remain
+explicit obligations, not consequences of this fiber comparison.
+
+SP98 validation: scoped build 2738 jobs; corrected focused suite 19 examples,
+one declaration check and one exact standard-three axiom audit; full build
+3227 jobs with only the unchanged Challenge warnings at lines 33 and 46.
+The dependency audit passes six primary contracts and two supporting reports.
+The fresh SP97 regression passes 18 examples, two checks and two exact
+standard-three axiom audits. No other fresh neighbor-suite pass is claimed.
+Production/manuscript/API parity and the bounded overlap audit pass.
+
+The 94-page PDF (891430 bytes) has a clean final log and passes visual review
+of pages 9, 10, 11, 70 and 82. The static central inventory is 1101 checks,
+565 examples and 993 axiom reports; its historical prefix was not fully
+re-elaborated. Both complete historical prefixes and the SP97-to-EOF queue
+record are byte-identical to `cd3341a`. SP98 is validated.
 
 SP97 (2026-09-21): **actual generic fiber and affine function-field pushout**.
 Two public APIs in `Boundary/Normalization/FiniteFunctionField.lean` and

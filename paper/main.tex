@@ -732,6 +732,47 @@ composed with these chart maps are exactly
 The resulting outer square is the displayed cartesian square.
 \end{proof}
 
+\begin{corollary}[Base change of the actual generic fiber]
+\label{cor:generic-fiber-base-change}
+Let \(p:Y\to X\) be finite and dominant, with \(X,Y\) integral,
+and set \(K=K(X)\), \(L=K(Y)\), using \(\kappa_p:K\to L\).
+For any commutative \(K\)-algebra \(E\), write
+\[
+ T_E=E\otimes_K L,\qquad
+ u_E:E\to T_E,\ e\mapsto e\otimes1,\qquad
+ v_E:L\to T_E,\ \ell\mapsto1\otimes\ell.
+\]
+Let \(\alpha_E:K\to E\) be the structure map and put
+\(\beta_E=\iota_{\eta_X}\circ\Spec(\alpha_E)\).
+The square
+\[
+\begin{CD}
+\Spec T_E @>{\iota_{\eta_Y}\circ\Spec(v_E)}>> Y\\
+@V{\Spec(u_E)}VV @VV{p}V\\
+\Spec E @>{\beta_E}>> X
+\end{CD}
+\]
+is cartesian. Its canonical comparison
+\[
+ \theta_{p,E}:\Spec T_E\xrightarrow{\sim}Y\times_X\Spec E
+\]
+satisfies
+\[
+ \operatorname{pr}_Y\circ\theta_{p,E}
+   =\iota_{\eta_Y}\circ\Spec(v_E),\qquad
+ \operatorname{pr}_E\circ\theta_{p,E}=\Spec(u_E).
+\]
+\end{corollary}
+
+\begin{proof}
+The tensor-product pushout gives the cartesian square with corners
+\(\Spec T_E\), \(\Spec L\), \(\Spec E\) and \(\Spec K\), whose projections are
+\(\Spec(v_E)\) and \(\Spec(u_E)\). Compose it horizontally with
+the generic-stalk square of Proposition~\ref{prop:actual-generic-fiber}.
+The outer square is the displayed one, and its canonical pullback
+comparison has the stated projections.
+\end{proof}
+
 \begin{proposition}[Separability of the generic extension]
 \label{prop:separable-function-field}
 Let \(p:Y\to X\) be a dominant affine formally unramified morphism
@@ -5807,6 +5848,9 @@ Actual generic fiber and affine pushout &
 \leanpath{Boundary/Normalization/FiniteFunctionField.lean}\newline
 \leanpath{functionFieldMapOfDominant_isPullback}\newline
 \leanpath{Boundary/Normalization/GenericFiber.lean}\\
+Tensor base change \(\theta_{p,E}\) &
+\leanpath{functionFieldMapOfDominant_baseChange_isPullback}\newline
+\leanpath{Boundary/Normalization/GenericFiberBaseChange.lean}\\
 Separable generic extension through \(\kappa_p\) &
 \leanpath{functionFieldMapOfDominant_formallyUnramified}\newline
 \leanpath{functionFieldMapOfDominant_isSeparable}\newline
@@ -6604,6 +6648,8 @@ principal table, grouped by mathematical layer.
 \leanpath{functionFieldMapOfDominant_isPushout_of_affine};
 \normsrc{GenericFiber.lean};
 \leanpath{functionFieldMapOfDominant_isPullback};
+\normsrc{GenericFiberBaseChange.lean};
+\leanpath{functionFieldMapOfDominant_baseChange_isPullback};
 \normsrc{SeparableFunctionField.lean};
 \leanpath{functionFieldMapOfDominant_formallyUnramified_of_affine};
 \leanpath{functionFieldMapOfDominant_formallyUnramified};

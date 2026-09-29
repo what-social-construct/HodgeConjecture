@@ -106,6 +106,13 @@ For finite dominant `p` between integral schemes, the actual generic-stalk
 square is a pullback, canonically identifying `Spec K(Y)` with
 `Y ×_X Spec K(X)`. The affine proof uses the original section-ring and
 function-field pushout; it requires neither normality nor separability.
+SP98's
+[`GenericFiberBaseChange.lean`](HodgeConjecture/Boundary/Normalization/GenericFiberBaseChange.lean)
+identifies `Spec(E ⊗_{K(X)} K(Y))` with the actual base change
+`Y ×_X Spec E` for any commutative `K(X)`-algebra `E`. The map to `Y`
+uses the right tensor inclusion followed by the generic-stalk map; the
+map to `Spec E` uses the left inclusion. Both are retained by the canonical
+comparison, with no new fiber package or field hypothesis on `E`.
 The next order is the generic split-fiber/coset comparison over the same
 normal-closure field, the actual same-cover Chow--Betti adapters, then
 generation for the intended `X,p`. Generic and arbitrary geometric fibers

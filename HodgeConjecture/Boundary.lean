@@ -22,6 +22,7 @@ import HodgeConjecture.Boundary.Normalization.FiniteAffineCover
 import HodgeConjecture.Boundary.Normalization.FiniteAffineChart
 import HodgeConjecture.Boundary.Normalization.FiniteFunctionField
 import HodgeConjecture.Boundary.Normalization.GenericFiber
+import HodgeConjecture.Boundary.Normalization.GenericFiberBaseChange
 import HodgeConjecture.Boundary.Normalization.SeparableFunctionField
 import HodgeConjecture.Boundary.Normalization.FunctionFieldNormalClosure
 import HodgeConjecture.Boundary.Normalization.FiniteNormalClosure
@@ -106,6 +107,11 @@ The same actual affine section rings and function fields form a pushout.
 Passing to spectra and composing with the affine restriction square proves
 that the original generic-stalk square is a pullback: the actual generic
 fiber is canonically the spectrum of the upstairs function field.
+For any commutative algebra over the actual downstairs function field,
+the tensor-product spectrum is the corresponding base change of the
+original map. Both projections are the original tensor inclusions and
+generic-stalk maps; no field or separability condition is needed on the
+base-change algebra.
 Formal unramifiedness passes to the actual function-field extension for an
 affine morphism. In the finite case it proves separability; scheme étaleness
 supplies the formal-unramifiedness premise without a perfect-field assumption.
