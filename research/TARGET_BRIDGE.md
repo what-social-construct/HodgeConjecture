@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-09-29 (SP99 marked split generic fiber, validated).
+Assessed: 2026-09-29 (SP100 validated: sheet points and the original normalization action).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -81,8 +81,9 @@ below:
 1. Following SP95/SP96's full base and marked deck-group equivalences
    and SP97/SP98's actual generic-fiber and tensor base-change identifications,
    SP99 identifies the split sheet spectrum over the same `N` with that
-   original fiber and identifies its marked point. Finish the comparison
-   of the individual coset labels with the original geometric action.
+   original fiber and identifies its marked point. SP100 identifies the
+   individual coset evaluation points with the original geometric orbits,
+   using the existing normal-stalk input for the marked refinement.
    Keep arbitrary geometric fibers as a separate subsequent statement.
 2. Build the actual same-cover Chow--Betti maps and prove the displayed
    degree and cycle-class laws; derive normal stalks from the selected
@@ -182,24 +183,59 @@ diagonal element obtained from separability to establish that same
 separability would not discharge a missing hypothesis; that is not this
 dependency chain.
 
-Next compare the points given by evaluation at individual cosets with
-the original normalization maps. Further base change to a specified
-algebraic closure remains separate.
+**SP100:** `GenericSplitFiberAction.lean` applies the existing `Pi.evalAlgHom`
+at each sheet to SP99's two projection laws. The point
+`ξ_{p,s}=ψ_p ∘ Spec(ε_s^{N_p})` has projections
+`ι_{η_Y} ∘ Spec(D.sheetEmbedding s)` and `id`.
+No normality is required for these formulas. Using the original normal
+stalks of `Y`, write `γ_{N_p}=ι_{η_Z} ∘ Spec(e_{N_p})`, with the
+existing field comparison `e_{N_p}` and the same glued normalization.
+Then the full point equality is
+
+\[
+ \xi_{p,gH}=\langle\lambda\circ a_{N_p}(g^{-1})\circ\gamma_{N_p},
+                 \mathrm{id}_{\operatorname{Spec}N_p}\rangle.
+\]
+
+The equality of maps to `Y` is proved without formal unramifiedness:
+generic-stalk naturality, the old inverse-action field formula and the
+old marked field formula identify it with `Spec(g ∘ ι)` followed by
+the generic map of `Y`. Finite formal unramifiedness is used only for
+the split-fiber isomorphism and its evaluation-point statements.
+No new point type, evaluator, action, field or geometric comparison
+isomorphism is introduced. Further base change to a specified algebraic
+closure remains separate.
 Use the existing evaluation maps; if an explicit disjoint-union
 presentation is needed, Mathlib's `AlgebraicGeometry.sigmaSpec`, its
 finite-index isomorphism instance and `ι_sigmaSpec` already supply it.
 Do not construct a second sheet scheme.
 Keep `ι` as the marked basepoint:
 the label `gH` means `g ∘ ι`, so the scheme-side map uses the original
-`a_N(g⁻¹)` before `λ`, with the generic point map included. This is a
-planned action comparison, not an assertion about all geometric fibers or an
-action of `G` by deck maps on `Y` when `H` is not normal.
+`a_N(g⁻¹)` before `λ`, with the generic point map included. This orbit
+formula does not assert that `G` acts by deck maps on `Y` when `H` is
+not normal, nor establish equivariance for an unspecified action on the
+whole base-changed fiber.
 
-SP99 discharges the previously named split-spectrum/marked-point consumer.
-Its next consumer must use this same comparison to track the original
-sheet labels and action, not replace it with another comparison package.
-This supplies an actual geometric identification for the selected
-construction; it is not already a realization on Chow or Betti cohomology.
+SP99/SP100 discharge the named split-spectrum, marked-point and individual
+sheet/orbit consumers. The next checkpoint follows the existing live order:
+inventory actual same-cover Chow pushforward and Betti pullback/trace,
+then construct the missing map and prove its degree or cycle-class law.
+Do not substitute another abstract compatibility package for that geometric
+work. Degree-zero split examples remain examples, not arbitrary-codimension
+realization. Introduce an all-points classification or torsor theorem only
+when its precise consumer needs it. These geometric identifications do
+not themselves prove a Chow--Betti generation statement.
+
+The immediate reuse inventory is specific: `Cycles/ChowPushforward.lean`
+and `Cycles/RationalChowPushforward.lean` descend pushforward along
+closed immersions, not a general finite etale map. `Betti/FiniteTransfer.lean`
+constructs transfer in the finite-discrete degree-zero model, not arbitrary
+Betti degree for a positive-dimensional cover. The next bounded geometric
+task should fix the graded cycle source and target for the same finite
+cover, construct its degree-weighted cycle pushforward using existing
+field-degree results, and identify the principal/norm compatibility
+needed to descend through the existing Chow quotient. Do not treat either
+of the current specialized pushforwards as that missing general map.
 
 Keep the target obligations explicit. The graph-projector equivalence in
 `TateGraphProjector.lean` uses the actual construction and detection maps.

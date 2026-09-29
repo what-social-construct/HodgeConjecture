@@ -155,6 +155,66 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP97 | Actual generic fiber of the original finite dominant map | LOCALIZE / DUALIZE / COMPOSE | Prove the original affine function-field pushout, pass to spectra, and compose with the actual chart pullback to identify the original generic-stalk square. | PROVED / VALIDATED |
 | SP98 | Tensor base change of the actual generic fiber | TENSOR / PASTE / RETAIN | Compose the tensor-spectrum square with the actual generic-stalk pullback, preserving the original scalar map, tensor order and both projections for any commutative base-field algebra. | PROVED / VALIDATED |
 | SP99 | Original marked split generic fiber | SPECIALIZE / COMPOSE / MARK | Apply the existing normal-closure tensor/sheet equivalence to the actual generic base change, retaining both projections and the original marked point. | PROVED / VALIDATED |
+| SP100 | Sheet points and the original normalization action | EVALUATE / LABEL / COMPARE | Identify individual coset evaluations in the existing split fiber with the original generic normalization orbit, preserving both pullback projections and the inverse convention. | PROVED / VALIDATED |
+
+SP100 (2026-09-29): **sheet points and the original normalization action**.
+Four public theorems in `Boundary/Normalization/GenericSplitFiberAction.lean`
+correspond to `prop:split-fiber-sheet-action`; the ledger checkpoint is A11cf.
+
+| Lean API | Mathematical role | TeX notation |
+| --- | --- | --- |
+| `functionFieldNormalClosureSplitFiberIso_eval_fst` | Evaluation point's original cover projection | `pr_Y ∘ ξ_{p,s} = ι_{η_Y} ∘ Spec(ι_s)` |
+| `functionFieldNormalClosureSplitFiberIso_eval_snd` | Evaluation point's original base projection | `pr_{N_p} ∘ ξ_{p,s} = id` |
+| `functionFieldNormalClosureSheetPoint_eq_normalizationOrbit` | Original sheet embedding equals the inverse-labelled geometric orbit | `ι_{η_Y} ∘ Spec(g ∘ ι) = λ ∘ a_{N_p}(g⁻¹) ∘ γ_{N_p}` |
+| `functionFieldNormalClosureSplitFiberIso_eval_eq_normalizationOrbit` | Full equality of points in the existing actual pullback | `ξ_{p,gH} = ⟨λ ∘ a_{N_p}(g⁻¹) ∘ γ_{N_p},id⟩` |
+
+The evaluation point is `ξ_{p,s}=ψ_p ∘ Spec(ε_s^{N_p})`, using the
+existing `Pi.evalAlgHom`, sheet algebra and SP99 isomorphism. Its projection
+formulas need finite dominant formally unramified `p` and integral `X/Y`,
+but no normality. The map `γ_{N_p}=ι_{η_Z} ∘ Spec(e_{N_p})` uses the
+old function-field comparison; it is an abbreviation, not a new carrier.
+It deliberately does not reuse the ring-inclusion notation `j_N`.
+
+The orbit identity into `Y` uses the existing normal-stalk input on `Y`
+for `λ`, finite dominance and integrality, but no formal unramifiedness.
+Its proof reuses generic-stalk naturality, the old inverse-action field
+comparison and the marked field comparison. The original fixing subgroup
+removes dependence on the chosen coset representative. The full pullback
+identity combines this with the two evaluation formulas and thus uses
+formal unramifiedness for SP99's splitting.
+
+No field, evaluator, action, normalization model, comparison isomorphism
+or target package is reconstructed. The two module-local instance bridges
+reuse existing surjectivity and the actual function-field algebra; there
+is no global instance or new separability proof. No base-normality,
+Noetherian or perfect-field hypothesis is added. No object is moved or
+removed; the full SP99 record below is preserved from `5b0572c`.
+
+This is an individual sheet/orbit comparison, not an unspecified action
+on the whole fiber, a `G`-deck action on `Y` for nonnormal `H`, an arbitrary
+geometric-fiber classification or a torsor theorem. Next follow the existing
+same-cover Chow--Betti work order. The current closed-immersion Chow
+pushforward and finite-discrete degree-zero Betti transfer are not the
+missing positive-dimensional finite-cover maps. First identify the actual
+graded cycle pushforward and its principal/norm descent obligation;
+introduce additional fiber machinery only for a named consumer.
+
+Validation passes: scoped build (2795 jobs); corrected focused suite
+(18 examples, four checks and four axiom audits); full build (3229 jobs,
+only the unchanged Challenge warnings at lines 33 and 46); dependency audit
+(six primary contracts and two supporting reports). Fresh SP99/SP93 suites
+pass 18/35 examples, four/19 checks and four/19 axiom audits respectively;
+SP99's two dependency-direction checks also pass. Every audited declaration
+in these three focused suites has exactly the standard three axioms, with
+no warnings. No additional neighbor-suite pass or full central replay is
+claimed.
+
+Independent scope review and all four API parity checks pass. The final
+96-page PDF (898680 bytes) has a clean log and visually checked pages 23,
+24, 71 and 84. The central static inventory is 1109 checks, 565 examples
+and 1001 axiom reports. The complete central-verification and geometric-audit
+prefixes, and the SP99-to-EOF queue suffix, remain byte-identical to
+`5b0572c`. SP100 is validated.
 
 SP99 (2026-09-29): **original marked split generic fiber**.
 Four public APIs in `Boundary/Normalization/GenericSplitFiber.lean`

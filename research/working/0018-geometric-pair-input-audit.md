@@ -1540,3 +1540,54 @@ PDF (893990 bytes) has a clean final log and passes visual review of pages
 and 997 axiom reports; its historical prefix was not re-elaborated in full.
 Both complete historical prefixes and the SP98-to-EOF queue record remain
 byte-identical to `4cf7b71`. SP99 is validated.
+
+## 36. SP100: sheet points and the original normalization action
+
+The four public theorems in `GenericSplitFiberAction.lean` retain the
+original normal-closure datum, sheet algebra, evaluation maps, split-fiber
+isomorphism and pullback. For any sheet `s`, evaluation followed by SP99
+has projections `Spec(D.sheetEmbedding s)` followed by the upstairs
+generic map, and the identity on `Spec N_p`. This uses finite dominance,
+formal unramifiedness and integrality, not normality.
+
+Using the original normal-stalk hypothesis on `Y`, set
+`γ_{N_p}=ι_{η_Z} ∘ Spec(e_{N_p})` with the old field comparison.
+The point labelled `gH` then has `Y`-projection
+`λ ∘ a_{N_p}(g⁻¹) ∘ γ_{N_p}`. Generic-stalk naturality and the old
+action/refinement field identities prove this equality without formal
+unramifiedness. The original fixing subgroup identifies the coset's
+embedding with `g ∘ ι`. The two projections give the full pullback-point
+identity; no new action or point carrier is supplied.
+
+The manuscript counterpart is `prop:split-fiber-sheet-action`, with
+notation `ε_s^{N_p}`, `ξ_{p,s}` and `γ_{N_p}`. No public construction,
+global instance, new algebra theory or separability proof is added.
+Two module-local derived instances provide existing base surjectivity
+and the actual function-field algebra. The original normalization and
+marked refinement are unchanged; no base-normality, Noetherian or
+perfect-field input is added.
+
+This is not a `G`-deck action on `Y` for nonnormal `H`, an unspecified
+whole-fiber equivariance statement, a torsor or a Chow--Betti generation
+result. The next live work is the actual same-cover cycle/Betti maps,
+starting with the finite-cover cycle pushforward and its descent through
+principal relations, not a second fiber presentation. No object is removed
+or archived. The complete audit prefix through SP99 is preserved from `5b0572c`.
+
+Scoped validation passes 2795 jobs. The corrected focused suite passes
+18 examples, four checks and four axiom audits, each observed set exactly
+`propext`, `Classical.choice` and `Quot.sound`, without warnings. The full
+build passes 3229 jobs with only the unchanged Challenge warnings at lines
+33 and 46. The dependency audit passes six primary contracts and two
+supporting reports. Fresh SP99/SP93 regressions pass 18/35 examples,
+four/19 checks and four/19 axiom audits respectively, each observed set
+exactly the standard three, without warnings. SP99's two dependency-direction
+checks pass as well. No additional neighbor-suite pass or full historical
+central replay is claimed.
+
+Independent production/manuscript/documentation scope review and all four
+API parity checks pass. The 96-page PDF (898680 bytes) has a clean final
+log and visually checked pages 23, 24, 71 and 84. The central static inventory
+is 1109 checks, 565 examples and 1001 axiom reports. Both complete historical
+prefixes and the SP99-to-EOF queue record remain byte-identical to `5b0572c`.
+SP100 is validated.

@@ -26,6 +26,7 @@ import HodgeConjecture.Boundary.Normalization.GenericFiberBaseChange
 import HodgeConjecture.Boundary.Normalization.SeparableFunctionField
 import HodgeConjecture.Boundary.Normalization.FunctionFieldNormalClosure
 import HodgeConjecture.Boundary.Normalization.GenericSplitFiber
+import HodgeConjecture.Boundary.Normalization.GenericSplitFiberAction
 import HodgeConjecture.Boundary.Normalization.FiniteNormalClosure
 import HodgeConjecture.Boundary.Normalization.NormalClosureTensor
 import HodgeConjecture.Boundary.Normalization.NormalizationTensor
@@ -124,6 +125,10 @@ Over that same normal closure, the existing tensor/sheet splitting identifies
 the spectrum of the sheet algebra with the original generic base change.
 The comparison preserves both projections, and its base-sheet point is the
 pullback point given by the original marked embedding and the identity.
+Evaluation at each coset gives its original embedded generic point. With
+normal stalks upstairs, that point is the original normalization's generic
+point followed by the inverse-labelled deck action and marked refinement.
+The full comparison retains the identity projection to the same base field.
 Fixed-field, tensor-sheet and trace-dual consumers use that same extension's
 separability. Core-freeness, full-visible separation and their inertia/extension
 consequences require neither separability nor perfectness; their geometric

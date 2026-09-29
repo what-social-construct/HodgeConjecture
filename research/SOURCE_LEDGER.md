@@ -17,8 +17,34 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-09-29 (SP99 marked split generic fiber, validated;
+Last source/interface review: 2026-09-29 (SP100 validated: sheet points and the original normalization action;
 earlier source records retain their original validation scope).
+
+### Sheet points and the original normalization action (SP100, 2026-09-29)
+
+No new literature premise, bibliography entry or source axiom is introduced.
+The two evaluation formulas compose SP99's original projections with
+Mathlib's existing `Pi.evalAlgHom`. The original fixing subgroup controls
+the chosen representative, giving `D.sheetEmbedding(gH)=g ∘ D.embedding`.
+The orbit comparison reuses `functionFieldMapOfDominant_fromSpecStalk`,
+`gluedNormalizationFunctionFieldEquiv_automorphism` and
+`gluedNormalClosureFunctionFieldEquiv_toCover`. The old inverse-pullback
+formula accounts for `g⁻¹` on the scheme side. The pullback universal
+property gives the full point identity.
+
+Four public theorems in `GenericSplitFiberAction.lean` correspond to
+`prop:split-fiber-sheet-action`. Finite dominance and integrality suffice
+for the original field package. Normal stalks of `Y` supply the original
+marked refinement; formal unramifiedness is used for the already proved
+split-fiber comparison, not for the orbit identity into `Y` alone.
+No new spectrum/coproduct presentation, action or evaluator is constructed.
+
+All four declarations pass the actual standard-three axiom audit, with
+each observed set exactly `propext`, `Classical.choice` and `Quot.sound`.
+Scoped and full builds, the corrected focused suite, the unchanged endpoint
+dependency audit, fresh SP99/SP93 regressions and four-API Lean--TeX parity
+pass. SP99's separability dependency-direction checks also pass. No full
+historical central replay or additional neighbor-suite rerun is claimed.
 
 ### Marked split generic fiber (SP99, 2026-09-29)
 

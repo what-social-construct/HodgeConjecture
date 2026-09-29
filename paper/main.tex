@@ -1963,6 +1963,63 @@ The augmentation identity in that theorem sends \(b_H\) to
 identity, so the pullback universal property gives the marked-point formula.
 \end{proof}
 
+\begin{proposition}[Sheet points and the normalization action]
+\label{prop:split-fiber-sheet-action}
+Retain the hypotheses and notation of
+Proposition~\ref{prop:marked-split-generic-fiber}. For \(s\in G/H\),
+let \(\iota_s:L\to N_p\) be the original sheet embedding and let
+\(\epsilon_s^{N_p}:N_p^{G/H}\to N_p\) be evaluation at \(s\).
+The point
+\[
+ \xi_{p,s}=\psi_p\circ\Spec(\epsilon_s^{N_p}):
+    \Spec N_p\longrightarrow Y\times_X\Spec N_p
+\]
+satisfies
+\[
+ \operatorname{pr}_Y\circ\xi_{p,s}
+   =\iota_{\eta_Y}\circ\Spec(\iota_s),\qquad
+ \operatorname{pr}_{N_p}\circ\xi_{p,s}=\mathrm{id}_{\Spec N_p}.
+\]
+Suppose in addition that every local ring of \(Y\) is normal, and retain
+the original \(Z_{N_p}\), refinement \(\lambda:Z_{N_p}\to Y\),
+field comparison \(e_{N_p}:K(Z_{N_p})\xrightarrow{\sim}N_p\), and
+action \(a_{N_p}\). Write
+\[
+ \gamma_{N_p}=\iota_{\eta_{Z_{N_p}}}\circ\Spec(e_{N_p}):
+       \Spec N_p\longrightarrow Z_{N_p}.
+\]
+For every \(g\in G\), one has
+\[
+ \lambda\circ a_{N_p}(g^{-1})\circ\gamma_{N_p}
+   =\iota_{\eta_Y}\circ\Spec(g\circ\iota)
+\]
+and, as points of the actual pullback,
+\[
+ \xi_{p,gH}
+   =\bigl\langle\lambda\circ a_{N_p}(g^{-1})\circ\gamma_{N_p},
+       \mathrm{id}_{\Spec N_p}\bigr\rangle.
+\]
+The displayed identity of morphisms to \(Y\) holds under finite dominance,
+integrality and normality of the local rings of \(Y\), without formal
+unramifiedness.
+\end{proposition}
+
+\begin{proof}
+Compose the two projection identities of
+Proposition~\ref{prop:marked-split-generic-fiber} with
+\(\Spec(\epsilon_s^{N_p})\). Evaluation gives \(\iota_s\) on the
+right tensor factor and the identity on constants. For \(s=gH\),
+the fixing-subgroup definition gives \(\iota_s=g\circ\iota\),
+independently of the coset representative.
+Naturality of the generic-stalk maps and
+Proposition~\ref{prop:normalization-function-field-comparison} identify
+pullback through \(a_{N_p}(g^{-1})\) with \(g\) under \(e_{N_p}\).
+Corollary~\ref{cor:normalization-marked-function-field} identifies
+pullback through \(\lambda\) with \(\iota\). This gives the identity
+of morphisms to \(Y\); the pullback universal property then gives the
+full point identity.
+\end{proof}
+
 The following algebraic criterion controls uniformly bounded section
 algebras inside a normalization's fraction field.
 
@@ -5905,6 +5962,12 @@ Marked split generic fiber \(\psi_p\) and base point \(b_H\) &
 \leanpath{functionFieldNormalClosureSplitFiberIso_hom_snd}\newline
 \leanpath{functionFieldNormalClosureSplitFiberIso_baseSheet}\newline
 \leanpath{Boundary/Normalization/GenericSplitFiber.lean}\\
+Sheet points \(\xi_{p,s}\) and normalization action &
+\leanpath{functionFieldNormalClosureSplitFiberIso_eval_fst}\newline
+\leanpath{functionFieldNormalClosureSplitFiberIso_eval_snd}\newline
+\leanpath{functionFieldNormalClosureSheetPoint_eq_normalizationOrbit}\newline
+{\footnotesize\leanpath{functionFieldNormalClosureSplitFiberIso_eval_eq_normalizationOrbit}}\newline
+\leanpath{Boundary/Normalization/GenericSplitFiberAction.lean}\\
 Separable generic extension through \(\kappa_p\) &
 \leanpath{functionFieldMapOfDominant_formallyUnramified}\newline
 \leanpath{functionFieldMapOfDominant_isSeparable}\newline
@@ -6720,6 +6783,11 @@ principal table, grouped by mathematical layer.
 \leanpath{functionFieldNormalClosureSplitFiberIso_hom_fst};
 \leanpath{functionFieldNormalClosureSplitFiberIso_hom_snd};
 \leanpath{functionFieldNormalClosureSplitFiberIso_baseSheet};
+\normsrc{GenericSplitFiberAction.lean};
+\leanpath{functionFieldNormalClosureSplitFiberIso_eval_fst};
+\leanpath{functionFieldNormalClosureSplitFiberIso_eval_snd};
+\leanpath{functionFieldNormalClosureSheetPoint_eq_normalizationOrbit};
+\leanpath{functionFieldNormalClosureSplitFiberIso_eval_eq_normalizationOrbit};
 \normsrc{FiniteNormalClosure.lean};
 \leanpath{normalizedCoordinateRing_finite_of_isSeparable};
 \leanpath{normalClosureNormalizationRing_finite};

@@ -120,8 +120,14 @@ equivalence. For finite dominant formally unramified `p`, it gives
 `Spec(N_p^{G/H}) ≅ Y ×_X Spec N_p`, with both projections and the marked
 base-sheet point identified using the original embedding. No new field,
 cover, evaluator or splitting is introduced.
-The next order is the remaining sheet-label/action comparison on that same
-generic split fiber, the actual same-cover Chow--Betti adapters, then
+SP100's
+[`GenericSplitFiberAction.lean`](HodgeConjecture/Boundary/Normalization/GenericSplitFiberAction.lean)
+identifies each coset's evaluation point with its original sheet embedding.
+With the existing normal-stalk hypothesis on `Y`, the label `gH` is the
+original normalization's generic point followed by `a_N(g⁻¹)` and the
+marked refinement. The full pullback-point identity keeps the projection
+to `Spec N_p` equal to the identity; no new action or cover is constructed.
+The next order is the actual same-cover Chow--Betti adapters, then
 generation for the intended `X,p`. Generic and arbitrary geometric fibers
 remain distinct steps.
 Pruning follows checked dependencies and mathematical roles; objects are

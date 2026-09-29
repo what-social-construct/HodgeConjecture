@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-09-29 (SP99 marked split generic fiber, validated;
+Last reviewed: 2026-09-29 (SP100 validated: sheet points and the original normalization action;
 earlier checkpoint records retain
 their original validation scope).
 
@@ -56,8 +56,9 @@ The live order is now:
    its base change with the actual tensor spectrum and both projections.
    SP99 composes the existing splitting to identify the sheet spectrum with
    that actual base change and carries its base-sheet point to the original
-   marked embedding. Next compare the individual coset labels with the
-   original geometric action, retaining the inverse-pullback convention.
+   marked embedding. SP100 identifies every coset evaluation point with
+   the original sheet embedding and, using normal stalks of `Y`, the
+   original inverse-labelled normalization action followed by the refinement.
 3. Instantiate Chow pushforward, Betti pullback/trace and their two
    compatibility laws for the same actual cover. Supply smooth-geometric
    normality where the construction needs it.
@@ -69,7 +70,7 @@ A parallel pruning queue records actual theorem dependencies and
 mathematical consumers before moving objects. The minimal cycle conclusion
 need not consume all projector/action machinery; that does not make the
 stronger existing endpoints or their dependencies redundant. No module is
-removed or archived at SP94, SP95, SP96, SP97, SP98 or SP99.
+removed or archived at SP94, SP95, SP96, SP97, SP98, SP99 or SP100.
 
 SP95 uses `Cycles/FunctionFieldExtensionality.lean` and
 `Boundary/Normalization/GluedNormalizationDeckComparison.lean`.
@@ -133,11 +134,24 @@ embedding and the identity. No normal-stalk, Noetherian, perfect-field or
 additional Galois premise is needed. The proof reuses the old splitting
 and augmentation square rather than constructing another evaluator.
 
-This is the split generic fiber and its marked point. The individual
-coset labels still need comparison with the original normalization's
-inverse-pullback action; it is not an action of `G` by deck maps on `Y`
-when `H` is not normal. Arbitrary geometric fibers, torsors and actual
-Chow--Betti realization/generation remain distinct obligations.
+SP100's four APIs in `GenericSplitFiberAction.lean` use SP99's existing
+comparison to identify the two projections of every evaluation point.
+The `Y`-projection uses `D.sheetEmbedding s`, and the `N_p`-projection
+is the identity. For `s=gH`, the old fixing subgroup identifies that
+embedding with `g ∘ ι`. Let `γ_{N_p}=ι_{η_Z} ∘ Spec(e_{N_p})` use
+the old function-field comparison of the same normalization. With the
+existing normal-stalk input for `Y`, the point is exactly
+`⟨λ ∘ a_{N_p}(g⁻¹) ∘ γ_{N_p}, id⟩` in the actual pullback.
+The equality of maps to `Y` alone needs no formal unramifiedness;
+that hypothesis belongs to the existing split-fiber comparison.
+
+This discharges the individual generic sheet/orbit comparison, not an
+action of `G` by deck maps on `Y` when `H` is not normal, nor an
+equivariance theorem for an unspecified action on the entire fiber.
+There is no new field, evaluator, carrier, action or splitting. Arbitrary
+geometric fibers, torsors and actual Chow--Betti realization/generation
+remain distinct obligations. Follow the live order with actual same-cover
+realization maps; add further fiber classification only for a named consumer.
 
 The [candidate comparison](TARGET_BRIDGE.md#g0-smooth-projective-setting-and-candidate-constructions)
 retains smooth projective complex varieties as the main setting. When a

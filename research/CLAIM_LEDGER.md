@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-29 (SP99 marked split generic fiber, validated;
+Last audited: 2026-09-29 (SP100 validated: sheet points and the original normalization action;
 earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,58 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Sheet points and the original normalization action (A11cf / SP100)
+
+Status: `FORMAL`. Four public theorems in `GenericSplitFiberAction.lean`
+compare individual evaluations in the existing sheet algebra with the
+original scheme maps. For finite dominant formally unramified `p:Y→X`
+between integral schemes, evaluation at `s` followed by SP99's isomorphism
+has `Y`-projection `Spec(D.sheetEmbedding s)` followed by the generic map,
+and `N_p`-projection the identity. These statements need no normality.
+
+With the existing normal-stalk input on `Y`, the sheet `gH` maps to `Y`
+by `λ ∘ a_{N_p}(g⁻¹) ∘ γ_{N_p}`, where
+`γ_{N_p}=ι_{η_Z} ∘ Spec(e_{N_p})` uses the original field comparison.
+This identity of maps to `Y` needs only finite dominance, integral schemes
+and normal stalks upstairs; no formal unramifiedness is used. Combining
+it with the evaluation projections identifies the full pullback point.
+
+All fields, markings, evaluators, actions, normalization models and the
+SP99 comparison remain unchanged. There is no new public construction or
+global instance, and no new commutative/tensor algebra or separability proof.
+Two module-local instance bridges reuse the existing base-surjectivity
+theorem and actual function-field algebra for elaboration.
+The manuscript counterpart is `prop:split-fiber-sheet-action`, with
+`ε_s^{N_p}`, `ξ_{p,s}`, `γ_{N_p}` and the existing `a_{N_p},λ,e_{N_p}`.
+The new generic map notation does not reuse `j_N`, already assigned to
+the normal closure's inclusion into the ambient algebraic closure.
+No base-normality, Noetherian or perfect-field premise is added.
+
+The result identifies the labelled points, not an unspecified action on
+the whole fiber or a `G`-deck action on `Y` for nonnormal `H`. It does not
+prove an arbitrary-geometric-fiber, torsor or Chow--Betti generation theorem.
+No object is removed or archived.
+
+Scoped validation passes 2795 jobs without warnings. The corrected focused
+suite passes 18 examples, four declaration checks and four axiom audits;
+each observed set is exactly `propext`, `Classical.choice` and `Quot.sound`.
+The full build passes 3229 jobs with only the unchanged Challenge warnings
+at lines 33 and 46. The dependency audit passes six primary contracts and
+two supporting reports.
+
+Fresh SP99 and SP93 regressions pass respectively 18 examples/four checks/
+four axiom audits and 35 examples/19 checks/19 axiom audits, without warnings;
+every observed axiom set is exactly the standard three. SP99's two
+dependency-direction checks also pass. No other fresh neighbor-suite pass
+or full historical central replay is claimed.
+
+Independent production/manuscript/documentation scope review and all four
+API parity checks pass. The 96-page PDF (898680 bytes) has a clean final
+log and passes visual review of pages 23, 24, 71 and 84. The central static
+inventory is 1109 checks, 565 examples and 1001 axiom reports. Both complete
+historical prefixes and the SP99-to-EOF queue record remain byte-identical
+to `5b0572c`. SP100 is validated.
 
 ## Marked split generic fiber (A11ce / SP99)
 
