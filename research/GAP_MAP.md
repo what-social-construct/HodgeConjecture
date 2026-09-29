@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-09-29 (SP98 tensor base change of the actual generic fiber, validated;
+Last reviewed: 2026-09-29 (SP99 marked split generic fiber, validated;
 earlier checkpoint records retain
 their original validation scope).
 
@@ -54,8 +54,10 @@ The live order is now:
    membership in the original fixing subgroup. SP97 identifies the actual
    generic fiber via its generic-stalk pullback square; SP98 identifies
    its base change with the actual tensor spectrum and both projections.
-   Next compare the split base change over the same normal-closure field with the existing
-   coset labels, keeping the chosen basepoint and action convention.
+   SP99 composes the existing splitting to identify the sheet spectrum with
+   that actual base change and carries its base-sheet point to the original
+   marked embedding. Next compare the individual coset labels with the
+   original geometric action, retaining the inverse-pullback convention.
 3. Instantiate Chow pushforward, Betti pullback/trace and their two
    compatibility laws for the same actual cover. Supply smooth-geometric
    normality where the construction needs it.
@@ -67,7 +69,7 @@ A parallel pruning queue records actual theorem dependencies and
 mathematical consumers before moving objects. The minimal cycle conclusion
 need not consume all projector/action machinery; that does not make the
 stronger existing endpoints or their dependencies redundant. No module is
-removed or archived at SP94, SP95, SP96, SP97 or SP98.
+removed or archived at SP94, SP95, SP96, SP97, SP98 or SP99.
 
 SP95 uses `Cycles/FunctionFieldExtensionality.lean` and
 `Boundary/Normalization/GluedNormalizationDeckComparison.lean`.
@@ -120,9 +122,22 @@ and the left tensor inclusion to `Spec E`. The existing
 `IsPullback.isoPullback` retains both projections. No new isomorphism
 wrapper, carrier or action is introduced. The result needs no
 separability and does not assert that this tensor algebra splits.
-Next specialize to `E=N_p` and apply the existing separable tensor/sheet
-equivalence and base-sheet augmentation comparison. This remains a
-generic split-fiber comparison, not a statement about all geometric fibers.
+SP99 performs the specialization to `E=N_p` in `GenericSplitFiber.lean`.
+Its four public APIs give the canonical isomorphism from the existing
+sheet spectrum, its two projection formulas and the marked-point identity.
+Separability is derived from finite formal unramifiedness of the original
+map. The map to `Y` evaluates the original sheet embeddings and then uses
+the generic-stalk map; the map to `Spec N_p` comes from constant functions.
+The base-sheet point is exactly the pullback lift of the original marked
+embedding and the identity. No normal-stalk, Noetherian, perfect-field or
+additional Galois premise is needed. The proof reuses the old splitting
+and augmentation square rather than constructing another evaluator.
+
+This is the split generic fiber and its marked point. The individual
+coset labels still need comparison with the original normalization's
+inverse-pullback action; it is not an action of `G` by deck maps on `Y`
+when `H` is not normal. Arbitrary geometric fibers, torsors and actual
+Chow--Betti realization/generation remain distinct obligations.
 
 The [candidate comparison](TARGET_BRIDGE.md#g0-smooth-projective-setting-and-candidate-constructions)
 retains smooth projective complex varieties as the main setting. When a

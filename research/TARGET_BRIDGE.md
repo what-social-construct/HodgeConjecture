@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-09-29 (SP98 tensor base change of the actual generic fiber, validated).
+Assessed: 2026-09-29 (SP99 marked split generic fiber, validated).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -79,8 +79,10 @@ The live continuation order supersedes the historical local “next” notes
 below:
 
 1. Following SP95/SP96's full base and marked deck-group equivalences
-   and SP97/SP98's actual generic-fiber and tensor base-change identifications, compare the generic
-   split fiber over the same `N` with the original coset/action model.
+   and SP97/SP98's actual generic-fiber and tensor base-change identifications,
+   SP99 identifies the split sheet spectrum over the same `N` with that
+   original fiber and identifies its marked point. Finish the comparison
+   of the individual coset labels with the original geometric action.
    Keep arbitrary geometric fibers as a separate subsequent statement.
 2. Build the actual same-cover Chow--Betti maps and prove the displayed
    degree and cycle-class laws; derive normal stalks from the selected
@@ -143,27 +145,61 @@ public isomorphism or associativity wrapper. The original scalar map
 `κ_p` is retained. No field, separability, finiteness or nontriviality
 condition is needed on `E`.
 
-Next specialize `E` to the original `N_p` and prove the split comparison:
-`SelectorComparison.lean` already supplies the separable tensor/sheet
-equivalence and the base-sheet augmentation identity. Apply `Spec`
-contravariantly to identify `Spec(N_p^{G/H})` with the actual split fiber
-and carry its marked point to the original embedding. Obtain separability
-from finite formal unramifiedness (in particular, finite etaleness) using
-`SeparableFunctionField.lean`. No example-module import is needed for
-this comparison. Further base change to a specified algebraic closure,
-or labeling individual geometric points, remains a separate step.
+**SP99:** `GenericSplitFiber.lean` specializes to the original `N_p`.
+It applies `Spec` contravariantly to the existing
+`normalClosureTensorGenericSheetsEquiv` in `SelectorComparison.lean`
+and composes with SP98, giving
+`ψ_p : Spec(N_p^{G/H}) ≅ Y ×_X Spec N_p`.
+The original `D=functionFieldNormalClosureData p`, field and marking
+are retained. Finite formal unramifiedness (in particular, finite
+etaleness) supplies actual separability via `SeparableFunctionField.lean`.
+The two projection formulas use the original sheet embeddings and the
+constant-function map. The old augmentation square proves that the
+base-sheet point maps to the pullback lift of
+`Spec D.embedding ≫ Y.fromSpecStalk η_Y` and the identity on `Spec N_p`.
+No new evaluator or splitting is defined; only the canonical geometric
+comparison and its map laws are added. No example-module import,
+normal-stalk, Noetherian or perfect-field premise is used.
+
+Dependency clarification (2026-09-29): the bare multiplication map
+`μ:L⊗_K L→L` and its diagonal ideal exist without separability. The
+normalized diagonal element satisfying `μ(e)=1` and
+`(1⊗ℓ-ℓ⊗1)e=0` for every `ℓ` is stronger. Mathlib's existing
+`Algebra.FormallyUnramified.iff_exists_tensorProduct` characterizes
+formal unramifiedness by these identities under essential finite type;
+`Algebra.FormallyUnramified.iff_isSeparable` gives its equivalence with
+separability for the finite field extension here. An arbitrary idempotent
+or an arbitrary splitting as vector spaces is not that condition.
+
+Our starting cover is formally unramified (in particular, finite etale
+in the selected geometric route). `SeparableFunctionField.lean` transfers
+this property to the actual generic extension by localization and derives
+separability using Mathlib. It does not use the project sheet splitting or
+collision decomposition. Those constructions then use the same input or
+its derived separability. Thus SP99 adds no independent separability
+assumption and claims no new proof of the separability criterion. Using a
+diagonal element obtained from separability to establish that same
+separability would not discharge a missing hypothesis; that is not this
+dependency chain.
+
+Next compare the points given by evaluation at individual cosets with
+the original normalization maps. Further base change to a specified
+algebraic closure remains separate.
+Use the existing evaluation maps; if an explicit disjoint-union
+presentation is needed, Mathlib's `AlgebraicGeometry.sigmaSpec`, its
+finite-index isomorphism instance and `ι_sigmaSpec` already supply it.
+Do not construct a second sheet scheme.
 Keep `ι` as the marked basepoint:
 the label `gH` means `g ∘ ι`, so the scheme-side map uses the original
 `a_N(g⁻¹)` before `λ`, with the generic point map included. This is a
-planned comparison, not an assertion about all geometric fibers or an
+planned action comparison, not an assertion about all geometric fibers or an
 action of `G` by deck maps on `Y` when `H` is not normal.
 
-The immediate consumer to implement is the spectrum of the existing
-`normalClosureTensorGenericSheetsEquiv`, composed with SP98 at `E=N_p`,
-and the existing augmentation identity for its marked point. Do not add
-a second tensor evaluator or reprove the splitting theorem. This supplies
-an actual geometric identification for the selected construction; it is
-not already a realization on Chow or Betti cohomology.
+SP99 discharges the previously named split-spectrum/marked-point consumer.
+Its next consumer must use this same comparison to track the original
+sheet labels and action, not replace it with another comparison package.
+This supplies an actual geometric identification for the selected
+construction; it is not already a realization on Chow or Betti cohomology.
 
 Keep the target obligations explicit. The graph-projector equivalence in
 `TateGraphProjector.lean` uses the actual construction and detection maps.

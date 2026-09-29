@@ -154,6 +154,68 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP96 | Full stabilizer of the original marked refinement | FIX / RECONSTRUCT / IDENTIFY | Detect exactly which original field automorphisms preserve the marked refinement; identify its original subgroup action with the full deck group over the cover. | PROVED / VALIDATED |
 | SP97 | Actual generic fiber of the original finite dominant map | LOCALIZE / DUALIZE / COMPOSE | Prove the original affine function-field pushout, pass to spectra, and compose with the actual chart pullback to identify the original generic-stalk square. | PROVED / VALIDATED |
 | SP98 | Tensor base change of the actual generic fiber | TENSOR / PASTE / RETAIN | Compose the tensor-spectrum square with the actual generic-stalk pullback, preserving the original scalar map, tensor order and both projections for any commutative base-field algebra. | PROVED / VALIDATED |
+| SP99 | Original marked split generic fiber | SPECIALIZE / COMPOSE / MARK | Apply the existing normal-closure tensor/sheet equivalence to the actual generic base change, retaining both projections and the original marked point. | PROVED / VALIDATED |
+
+SP99 (2026-09-29): **original marked split generic fiber**.
+Four public APIs in `Boundary/Normalization/GenericSplitFiber.lean`
+correspond to `prop:marked-split-generic-fiber`; the ledger checkpoint is A11ce.
+
+| Lean API | Mathematical role | TeX notation |
+| --- | --- | --- |
+| `functionFieldNormalClosureSplitFiberIso` | Existing sheet spectrum compared with the actual base change | `ψ_p = θ_{p,N_p} ∘ Spec(σ_𝒩)` |
+| `functionFieldNormalClosureSplitFiberIso_hom_fst` | Original projection to the cover | `pr_Y ∘ ψ_p = ι_{η_Y} ∘ Spec(j_p)` |
+| `functionFieldNormalClosureSplitFiberIso_hom_snd` | Original projection to the normal-closure base | `pr_{N_p} ∘ ψ_p = Spec(c_p)` |
+| `functionFieldNormalClosureSplitFiberIso_baseSheet` | Base-sheet point is the lift of the original embedding and identity | `ψ_p ∘ b_H = ⟨y_ι,id⟩` |
+
+Here `p:Y→X` is finite dominant formally unramified, with integral `X/Y`.
+The original field map `κ_p` and `D=functionFieldNormalClosureData p` fix
+`N_p`, `ι`, `G` and `H`. The tensor splitting is the existing
+`D.normalClosureTensorGenericSheetsEquiv`; actual separability is derived.
+The maps are `j_p(ℓ)(gH)=g(ι(ℓ))`, `c_p(n)(gH)=n`,
+`b_H=Spec(ε_H^{N_p})` and `y_ι=ι_{η_Y} ∘ Spec(ι)`.
+The augmentation identity and pullback universal property identify the
+marked point, not just its underlying field extension.
+
+There is no second field, tensor algebra, evaluator, splitting, cover,
+marking or action. The new isomorphism is precisely the geometric
+consumer of SP98 and the old splitting; its projection laws retain the
+same maps. No scheme-normality, Noetherian or perfect-base premise is added.
+No module is moved or removed. The complete SP98 record below is retained
+byte-for-byte from `4cf7b71`.
+
+Next compare individual coset evaluation points with the original
+normalization maps and inverse-pullback action. This does not assert a
+`G`-deck action on `Y` for nonnormal `H`. Arbitrary geometric fibers,
+torsors, actual Chow--Betti maps and generation remain separate; the
+target and its explicit construction/detection/factorization inputs are
+unchanged.
+
+Separability dependency audit: the original formally unramified cover
+supplies both the diagonal construction and separability of its finite
+generic extension. `SeparableFunctionField.lean` does not import or use
+the project's collision decomposition or sheet-splitting module. A
+normalized diagonal element with the multiplication/annihilation laws
+does characterize separability for this finite field extension, by the
+existing Mathlib criteria; a bare diagonal or arbitrary idempotent does
+not. Recovering a hypothesis from an element chosen using that same
+hypothesis is not an independent proof. No separability gap is claimed
+closed in SP99: it consumes the established actual-map theorem.
+
+SP99 validation: scoped build 2753 jobs; corrected focused suite 18 examples,
+four declaration checks, four exact standard-three axiom audits and two
+transitive dependency-direction checks. The full build passes 3228 jobs
+with only the unchanged Challenge warnings at lines 33 and 46. The endpoint
+dependency audit passes six primary contracts and two supporting reports.
+Fresh SP98/separability regressions pass 19 examples/one axiom audit and
+16 examples/three axiom audits respectively, each observed set exactly the
+standard three, without warnings. No other fresh neighbor pass is claimed.
+
+Independent scope review and four-API Lean--TeX parity pass. The 94-page
+PDF (893990 bytes) has a clean final log and passes visual review of pages
+23, 24, 70 and 82. The central static inventory is 1105 checks, 565 examples
+and 997 axiom reports; its historical prefix was not fully re-elaborated.
+Both complete historical prefixes and the SP98-to-EOF queue record are
+byte-identical to `4cf7b71`. SP99 is validated.
 
 SP98 (2026-09-29): **tensor base change of the actual generic fiber**.
 The single public API in `Boundary/Normalization/GenericFiberBaseChange.lean`

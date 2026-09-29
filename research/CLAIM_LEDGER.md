@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-29 (SP98 tensor base change of the actual generic fiber, validated;
+Last audited: 2026-09-29 (SP99 marked split generic fiber, validated;
 earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,54 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Marked split generic fiber (A11ce / SP99)
+
+Status: `FORMAL`. Four public APIs in `GenericSplitFiber.lean` identify
+the spectrum of the existing sheet algebra with the actual generic base
+change over the original `N_p`. The assumptions are finite dominant formally
+unramified `p:Y→X` and integral `X/Y`; the actual field algebra uses `κ_p`.
+The normal-closure datum, fixing subgroup and marked embedding are exactly
+those of `functionFieldNormalClosureData p`.
+
+The comparison is `Spec` of the existing tensor/sheet equivalence followed
+by SP98's canonical pullback comparison. Its two projections are the
+spectrum of the original sheet-embedding map followed by the generic-stalk
+map, and the spectrum of the constant-function map. The base-sheet point
+maps to the actual pullback lift of the marked embedding and the identity.
+Actual separability and the augmentation square are reused, not hypotheses
+to be supplied or results reproved here. No new tensor algebra, evaluator,
+field, cover, marking or action is introduced.
+
+The manuscript counterpart is `prop:marked-split-generic-fiber`, with
+comparison `ψ_p`, sheet map `j_p`, constant map `c_p`, base-sheet point
+`b_H` and marked generic map `y_ι`. No normality, Noetherianity, perfectness
+or separate Galois hypothesis is added. Individual sheet/action comparison,
+arbitrary geometric fibers, torsors and same-cover Chow--Betti generation
+are not consequences claimed here. No object is removed or archived.
+
+Scoped validation passes 2753 jobs. The corrected focused suite passes
+18 examples, four declaration checks and four axiom audits, each observed
+set exactly `propext`, `Classical.choice` and `Quot.sound`, without warnings.
+Two transitive declaration audits verify the dependency direction:
+actual separability uses the established unramifiedness/Mathlib inputs,
+not the named downstream collision or splitting declarations; the new
+isomorphism uses that separability and the existing tensor equivalence.
+
+The full build passes 3228 jobs with only the unchanged Challenge warnings
+at lines 33 and 46. The dependency audit passes six primary contracts and
+two supporting reports. Fresh SP98 and separability regressions pass
+19 examples/one axiom audit and 16 examples/three axiom audits respectively,
+each observed set exactly the standard three, without warnings. No other
+fresh neighbor-suite pass is claimed.
+
+Independent production/manuscript/documentation scope review and all four
+API parity checks pass. The 94-page PDF (893990 bytes) has a clean final
+log and passes visual review of pages 23, 24, 70 and 82. The central static
+inventory is 1105 checks, 565 examples and 997 axiom reports; its historical
+prefix was not re-elaborated in full. Both complete historical prefixes
+and the SP98-to-EOF queue record remain byte-identical to `4cf7b71`.
+SP99 is validated.
 
 ## Tensor base change of the actual generic fiber (A11cd / SP98)
 

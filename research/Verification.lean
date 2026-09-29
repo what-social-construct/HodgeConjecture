@@ -7905,3 +7905,15 @@ Focused regressions and enforced standard-axiom checks are in
 
 #check HodgeConjecture.CollisionFoundations.functionFieldMapOfDominant_baseChange_isPullback
 #print axioms HodgeConjecture.CollisionFoundations.functionFieldMapOfDominant_baseChange_isPullback
+
+/-! SP99: the original marked split generic fiber. -/
+
+#check HodgeConjecture.CollisionFoundations.functionFieldNormalClosureSplitFiberIso
+#check HodgeConjecture.CollisionFoundations.functionFieldNormalClosureSplitFiberIso_hom_fst
+#check HodgeConjecture.CollisionFoundations.functionFieldNormalClosureSplitFiberIso_hom_snd
+#check HodgeConjecture.CollisionFoundations.functionFieldNormalClosureSplitFiberIso_baseSheet
+
+#print axioms HodgeConjecture.CollisionFoundations.functionFieldNormalClosureSplitFiberIso
+#print axioms HodgeConjecture.CollisionFoundations.functionFieldNormalClosureSplitFiberIso_hom_fst
+#print axioms HodgeConjecture.CollisionFoundations.functionFieldNormalClosureSplitFiberIso_hom_snd
+#print axioms HodgeConjecture.CollisionFoundations.functionFieldNormalClosureSplitFiberIso_baseSheet

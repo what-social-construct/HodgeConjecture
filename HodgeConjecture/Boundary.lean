@@ -25,6 +25,7 @@ import HodgeConjecture.Boundary.Normalization.GenericFiber
 import HodgeConjecture.Boundary.Normalization.GenericFiberBaseChange
 import HodgeConjecture.Boundary.Normalization.SeparableFunctionField
 import HodgeConjecture.Boundary.Normalization.FunctionFieldNormalClosure
+import HodgeConjecture.Boundary.Normalization.GenericSplitFiber
 import HodgeConjecture.Boundary.Normalization.FiniteNormalClosure
 import HodgeConjecture.Boundary.Normalization.NormalClosureTensor
 import HodgeConjecture.Boundary.Normalization.NormalizationTensor
@@ -119,6 +120,10 @@ The resulting finite extension constructs the existing marked normal-closure
 datum inside the algebraic closure of the upstairs field. Separability of the
 marked extension gives separability and Galoisness of its normal closure,
 again without a perfect-base-field premise.
+Over that same normal closure, the existing tensor/sheet splitting identifies
+the spectrum of the sheet algebra with the original generic base change.
+The comparison preserves both projections, and its base-sheet point is the
+pullback point given by the original marked embedding and the identity.
 Fixed-field, tensor-sheet and trace-dual consumers use that same extension's
 separability. Core-freeness, full-visible separation and their inertia/extension
 consequences require neither separability nor perfectness; their geometric

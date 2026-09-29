@@ -113,8 +113,15 @@ identifies `Spec(E ⊗_{K(X)} K(Y))` with the actual base change
 uses the right tensor inclusion followed by the generic-stalk map; the
 map to `Spec E` uses the left inclusion. Both are retained by the canonical
 comparison, with no new fiber package or field hypothesis on `E`.
-The next order is the generic split-fiber/coset comparison over the same
-normal-closure field, the actual same-cover Chow--Betti adapters, then
+SP99's
+[`GenericSplitFiber.lean`](HodgeConjecture/Boundary/Normalization/GenericSplitFiber.lean)
+composes this identification with the existing normal-closure tensor/sheet
+equivalence. For finite dominant formally unramified `p`, it gives
+`Spec(N_p^{G/H}) ≅ Y ×_X Spec N_p`, with both projections and the marked
+base-sheet point identified using the original embedding. No new field,
+cover, evaluator or splitting is introduced.
+The next order is the remaining sheet-label/action comparison on that same
+generic split fiber, the actual same-cover Chow--Betti adapters, then
 generation for the intended `X,p`. Generic and arbitrary geometric fibers
 remain distinct steps.
 Pruning follows checked dependencies and mathematical roles; objects are

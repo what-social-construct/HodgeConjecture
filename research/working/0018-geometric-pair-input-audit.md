@@ -1491,3 +1491,52 @@ review of pages 9, 10, 11, 70 and 82. The static central inventory is
 1101 checks, 565 examples and 993 axiom reports; its historical prefix
 was not re-elaborated in full. Both complete historical prefixes and
 the SP97-to-EOF queue record are byte-identical to `cd3341a`. SP98 is validated.
+
+## 35. SP99: the original marked split generic fiber
+
+The four public APIs in `GenericSplitFiber.lean` retain finite dominant
+formally unramified `p:Y→X` between integral schemes. The actual `κ_p`
+defines the field extension; `functionFieldNormalClosureData p` retains
+the original normal closure `N_p`, fixing subgroup and marked embedding.
+Formal unramifiedness supplies the already proved actual separability.
+
+The comparison applies `Spec` to the existing tensor/sheet equivalence
+and composes with SP98's canonical pullback isomorphism. The projection
+to `Y` is the spectrum of the original sheet-embedding map followed by
+the generic-stalk map, and the projection to `Spec N_p` is the spectrum
+of constants. The old augmentation identity sends the base-sheet point
+to the actual pullback lift of the marked embedding and the identity.
+
+The manuscript counterpart is `prop:marked-split-generic-fiber`, with
+notation `ψ_p,j_p,c_p,b_H,y_ι`. No new commutative or tensor algebra is
+developed, and no field, cover, evaluator, splitting, marking or action
+is independently reconstructed. No normal-stalk, Noetherian or perfect-field
+input is used. The isomorphism and its map laws are the geometric consumer
+of the existing results, not a new target-equivalence package.
+
+Next compare the individual coset points with the original normalization
+action. Arbitrary geometric fibers, torsors and same-cover Chow--Betti
+realization/generation are not asserted here. No object is removed or
+archived. The complete audit prefix through SP98 is preserved from `4cf7b71`.
+
+The scoped build passes 2753 jobs. The corrected focused suite passes
+18 examples, four declaration checks and four exact standard-three axiom
+audits without warnings. Two transitive declaration checks confirm that
+actual separability is upstream of the project splitting/collision
+constructions, and that the new isomorphism uses established separability
+and the existing tensor equivalence. This is a geometric comparison
+checkpoint, not an independent proof of separability from its consequences.
+
+The full build passes 3228 jobs with only the unchanged Challenge warnings
+at lines 33 and 46. The endpoint dependency audit passes six primary
+contracts and two supporting reports. Fresh SP98/separability regressions
+pass 19 examples/one axiom audit and 16 examples/three axiom audits,
+respectively; all observed sets are exactly the standard three, without
+warnings. No other fresh neighbor-suite pass is claimed.
+
+Independent scope review and four-API Lean--TeX parity pass. The 94-page
+PDF (893990 bytes) has a clean final log and passes visual review of pages
+23, 24, 70 and 82. The central static inventory is 1105 checks, 565 examples
+and 997 axiom reports; its historical prefix was not re-elaborated in full.
+Both complete historical prefixes and the SP98-to-EOF queue record remain
+byte-identical to `4cf7b71`. SP99 is validated.

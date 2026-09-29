@@ -17,8 +17,36 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-09-29 (SP98 tensor base change of the actual generic fiber, validated;
+Last source/interface review: 2026-09-29 (SP99 marked split generic fiber, validated;
 earlier source records retain their original validation scope).
+
+### Marked split generic fiber (SP99, 2026-09-29)
+
+No new literature premise, bibliography entry or source axiom is introduced.
+The original `functionFieldNormalClosureData` and the proved
+`functionFieldMapOfDominant_isSeparable` supply the existing
+`normalClosureTensorGenericSheetsEquiv`. Apply `Scheme.Spec.mapIso` to that
+equivalence, then compose with SP98's `IsPullback.isoPullback`.
+Functoriality and the existing tensor evaluation formulas give both
+projections. The marked-point proof uses the existing
+`NormalClosureData.sheetEmbedding_baseSheet`, these projection laws and
+`pullback.hom_ext`. This is the scheme-level form of the existing
+`normalClosureBaseSheetAugmentation_comp_tensorGenericSheetsEquiv`
+square; the manuscript can apply that square directly. No algebraic
+splitting or augmentation theorem is reproved.
+
+Four public APIs in `GenericSplitFiber.lean` correspond to
+`prop:marked-split-generic-fiber`. Formal unramifiedness is used to derive
+separability of the actual finite extension, not assumed as an additional
+field input. No normalization, splitting, evaluator or Galois datum is
+constructed a second time; no normal-stalk or Noetherian input is needed.
+
+All four declarations pass the actual standard-three axiom audit; each
+observed set is exactly `propext`, `Classical.choice` and `Quot.sound`.
+Scoped and full builds, the corrected focused suite, two transitive
+dependency-direction checks, the unchanged endpoint dependency audit,
+fresh SP98/separability regressions and four-API Lean--TeX parity pass.
+No historical central replay or additional neighbor-suite rerun is claimed.
 
 ### Tensor base change of the actual generic fiber (SP98, 2026-09-29)
 
