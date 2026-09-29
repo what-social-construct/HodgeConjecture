@@ -156,6 +156,70 @@ same PDF. No proof-status change follows from this editorial reorganization.
 | SP98 | Tensor base change of the actual generic fiber | TENSOR / PASTE / RETAIN | Compose the tensor-spectrum square with the actual generic-stalk pullback, preserving the original scalar map, tensor order and both projections for any commutative base-field algebra. | PROVED / VALIDATED |
 | SP99 | Original marked split generic fiber | SPECIALIZE / COMPOSE / MARK | Apply the existing normal-closure tensor/sheet equivalence to the actual generic base change, retaining both projections and the original marked point. | PROVED / VALIDATED |
 | SP100 | Sheet points and the original normalization action | EVALUATE / LABEL / COMPARE | Identify individual coset evaluations in the existing split fiber with the original generic normalization orbit, preserving both pullback projections and the inverse convention. | PROVED / VALIDATED |
+| SP101 | Degree-weighted finite cycle pushforward | IMAGE / WEIGHT / RESTRICT | Use the actual mapped ideal and positive function-field degree to extend closed-immersion pushforward to finite morphisms, retaining compatible existing gradings and coefficient extension. | PROVED / VALIDATED |
+
+SP101 (2026-09-29): **degree-weighted finite cycle pushforward**.
+Thirteen public APIs in `Cycles/FinitePushforward.lean` and seven in
+`Cycles/GradedFinitePushforward.lean` correspond to
+`prop:finite-cycle-pushforward`; the ledger checkpoint is A11cg.
+
+| Lean API | Mathematical role / notation |
+| --- | --- |
+| `imageSubscheme` | The actual integral image `f(W)` |
+| `imageSubscheme_val` | Its ideal is literally the existing `I_W.map f` |
+| `imageSubscheme_eq_closedImageSubscheme` | Agreement with the old closed image |
+| `ambientGenericPoint_imageSubscheme` | `ξ_{f(W)}=f(ξ_W)` |
+| `finiteImage_toImage_isFinite` | The original map `q_W:W→f(W)` is finite |
+| `finitePushforwardDegree` | `d_f(W)=[K(W):K(f(W))]` using actual `q_W^*` |
+| `finitePushforwardDegree_pos` | `0<d_f(W)` |
+| `finitePushforwardDegree_of_isClosedImmersion` | `d_f(W)=1` for a closed support map |
+| `finitePushforward` | Linear extension `f_{*,cyc}` on existing finite cycles |
+| `finitePushforward_single` | `f_*(r[W])=r d_f(W)[f(W)]` |
+| `finitePushforward_fundamentalCycle` | `f_*[W]=d_f(W)[f(W)]` |
+| `finitePushforward_eq_closedImmersionPushforward` | Equality with the old closed-immersion map |
+| `finitePushforward_id` | Identity morphism gives identity cycles |
+| `supportDegree_imageSubscheme` | `deg_δ(f(W))=δ(f(ξ_W))` |
+| `finitePushforward_mem_cyclesOfDegree` | Preservation of explicitly compatible homogeneous degrees |
+| `gradedFinitePushforward` | Restriction of `f_{*,cyc}` to existing degree submodules |
+| `gradedFinitePushforward_val` | Literal equality of underlying cycle maps |
+| `gradedFinitePushforward_eq_closedImmersionPushforward` | Graded agreement with the old map |
+| `finitePushforward_rationalize` | Raw integer/rational coefficient square |
+| `gradedFinitePushforward_rationalize` | The same square on homogeneous cycles |
+
+The integral image and its generic-point formula apply to any ambient map.
+The degree APIs require only the support composite to be finite; the raw
+linear map requires the ambient morphism to be finite. No ambient
+integrality, dominance, normality, Noetherianity, etaleness or separability
+is added. Finiteness and positivity reuse the actual `toImage`, the existing
+finite-cancellation lemma and actual function-field finiteness. Any semiring
+of coefficients is allowed. The graded map retains an explicit equality
+of source/image support degrees, not a hidden canonical-grading or
+codimension theorem. No second cycle carrier, field or relation package
+is introduced; closed-image and pushforward agreement are proved.
+
+The next comparison is preservation of the existing structural field
+grading by a finite map, followed by the general length-order principal/norm
+identity on actual relation carriers. Smoothness and etaleness of the
+ambient cover do not make those carriers normal. No general finite Chow
+pushforward, norm descent, composition, Betti square or generation theorem
+is claimed here. No object is moved or removed. Preserve the entire SP100
+record below from `85662d0`.
+
+Raw and graded scoped builds pass 2779/2820 jobs. The corrected focused
+suite passes thirty examples, twenty checks and twenty axiom audits;
+all observed sets are exactly the standard three, without warnings.
+The full build passes 3231 jobs with only the unchanged Challenge warnings
+at lines 33 and 46. The dependency audit passes six primary contracts and
+two supporting reports. Fresh SP72/SP88 regressions pass 18/20 examples
+and eleven/two axiom audits respectively, each observed set exactly the
+standard three, without warnings. No other fresh regression or full
+historical central replay is claimed.
+
+Independent scope review and twenty-API parity pass. The 96-page PDF
+(901510 bytes) has a clean final log and visually checked pages 40, 41,
+75 and 88. The central static inventory is 1129 checks, 565 examples and
+1021 axiom reports. Both complete historical prefixes and the SP100-to-EOF
+queue suffix remain byte-identical to `85662d0`. SP101 is validated.
 
 SP100 (2026-09-29): **sheet points and the original normalization action**.
 Four public theorems in `Boundary/Normalization/GenericSplitFiberAction.lean`

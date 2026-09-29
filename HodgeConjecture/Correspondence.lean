@@ -15,6 +15,8 @@ import HodgeConjecture.Correspondence.GraphBaseComparison
 import HodgeConjecture.Correspondence.GraphCycleBaseComparison
 import HodgeConjecture.Cycles.IntegralMultiplicity
 import HodgeConjecture.Cycles.ClosedImmersionPushforward
+import HodgeConjecture.Cycles.FinitePushforward
+import HodgeConjecture.Cycles.GradedFinitePushforward
 import HodgeConjecture.Cycles.IsomorphismTransport
 import HodgeConjecture.Cycles.LocalOrder
 import HodgeConjecture.Cycles.LocalOrderTransport
@@ -220,6 +222,9 @@ Chow/cohomological realization:
     in generic degree for any integral scheme with a dimension function,
     vanishing of its Noetherian relation span, and an equality criterion
     for rational equivalence in that degree.
+47. actual degree-weighted finite-morphism pushforward on the existing cycles,
+    with positive function-field degrees, agreement with closed immersions,
+    restriction to explicitly compatible gradings and coefficient extension.
 
 The free span algebra is not identified with a Chow ring. General proper
 cycle extraction, flat/Gysin operations and their rational-equivalence

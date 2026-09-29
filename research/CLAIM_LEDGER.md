@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-29 (SP100 validated: sheet points and the original normalization action;
+Last audited: 2026-09-29 (SP101 finite cycle pushforward, validated;
 earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,52 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Degree-weighted finite cycle pushforward (A11cg / SP101)
+
+Status: `FORMAL`. `Cycles/FinitePushforward.lean` and
+`GradedFinitePushforward.lean` provide twenty public APIs on the existing
+cycle carrier. The general integral image is literally `W.val.map f`,
+identified with the reduced closure of `f(ξ_W)` and with the old closed
+image whenever that construction applies. For a finite support map, its
+original `toImage` map is finite and dominant. The actual function-field
+extension supplies the positive degree, rather than a chosen multiplicity.
+
+The raw map for any finite `f` sends `[W]` to `[K(W):K(f(W))] [f(W)]` over
+any coefficient semiring. It agrees with closed-immersion pushforward and
+the identity map. Ambient integrality, normality, dominance, Noetherianity,
+etaleness and separability are not required. The graded map is the literal
+restriction to existing `cyclesOfDegree` for explicitly compatible
+dimension functions. Integer-to-rational coefficient extension commutes
+with both raw and graded maps.
+
+The manuscript counterpart is `prop:finite-cycle-pushforward`, with
+`q_W`, `d_f(W)` and the existing `f_{*,cyc}` notation. No replacement cycle
+module, relation space, field or degree is supplied, and no project axiom
+or literature hypothesis is introduced. The raw map is new because the
+old map was limited to closed immersions; their agreement is proved.
+Canonical field-grading compatibility, finite-map composition and norm
+preservation of the actual principal relations are not proved here.
+Neither a general Chow map nor Betti compatibility or generation follows
+from this checkpoint. No object is removed or archived.
+
+Scoped raw and graded builds pass 2779 and 2820 jobs respectively, without
+warnings. The corrected focused suite passes 30 examples, twenty declaration
+checks and twenty axiom audits; every observed set is exactly `propext`,
+`Classical.choice` and `Quot.sound`. The full build passes 3231 jobs with
+only the unchanged Challenge warnings at lines 33 and 46. The dependency
+audit passes six primary contracts and two supporting reports.
+
+Fresh SP72 and SP88 regressions pass respectively 18 examples/eleven axiom
+audits and twenty examples/two axiom audits, without warnings. Every observed
+axiom set is exactly the standard three. No other fresh neighbor-suite pass
+or full historical central replay is claimed.
+
+Independent scope review and twenty-API parity pass. The 96-page PDF
+(901510 bytes) has a clean final log and visually checked pages 40, 41,
+75 and 88. The central static inventory is 1129 checks, 565 examples and
+1021 axiom reports. Both complete historical prefixes and the SP100-to-EOF
+queue record remain byte-identical to `85662d0`. SP101 is validated.
 
 ## Sheet points and the original normalization action (A11cf / SP100)
 

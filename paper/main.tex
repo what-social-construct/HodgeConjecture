@@ -3420,6 +3420,59 @@ and composition laws. For an arbitrary ambient map \(f\), the same
 generator construction applies whenever \(f|_Z\) is a closed immersion;
 write \(f_{*,Z}[Z]\) for this supportwise image.
 
+\begin{proposition}[Degree-weighted finite pushforward]
+\label{prop:finite-cycle-pushforward}
+Let \(f:X\to Y\) be finite and let \(R\) be a semiring.
+For an integral closed support \(W\subseteq X\), let \(f(W)\)
+denote its actual scheme-theoretic image. This image is integral,
+its ambient generic point is \(f(\xi_W)\), and the canonical map
+\(q_W:W\to f(W)\) is finite and dominant. Define
+\[
+ d_f(W)=[K(W):K(f(W))]>0,
+ \qquad
+ f_{*,\mathrm{cyc}}[W]=d_f(W)[f(W)],
+\]
+where the field extension is induced by the actual pullback \(q_W^*\).
+Linear extension gives
+\[
+ f_{*,\mathrm{cyc}}:Z_{\mathrm{fin}}(X;R)
+       \longrightarrow Z_{\mathrm{fin}}(Y;R).
+\]
+For a closed immersion this is the preceding coefficient-one operation;
+in particular, the identity morphism induces the identity on cycles.
+The construction commutes with integer-to-rational coefficient extension.
+This is the finite-morphism cycle formula of
+\cite{StacksProperCyclePushforward}.
+
+If dimension functions \(\delta_X,\delta_Y\) satisfy
+\[
+ \delta_Y(f(\xi_W))=\delta_X(\xi_W)
+ \qquad(W\in\operatorname{IntSub}(X)),
+\]
+then the same map restricts, for every \(n\in\mathbf Z\), to
+\[
+ f_{*,\mathrm{cyc}}:Z^{\delta_X}_{\mathrm{fin},n}(X;R)
+       \longrightarrow Z^{\delta_Y}_{\mathrm{fin},n}(Y;R).
+\]
+These are the homogeneous submodules defined in
+Proposition~\ref{prop:principal-divisor-degree}; both closed-immersion
+agreement and coefficient extension retain their underlying cycle maps.
+\end{proposition}
+
+\begin{proof}
+The mapped ideal of \(W\) is the vanishing ideal of the closure of
+\(f(\xi_W)\); the point-support construction therefore identifies
+its integral scheme structure and generic point. Factoring the finite
+map \(W\to Y\) through the closed inclusion \(f(W)\hookrightarrow Y\)
+makes \(q_W\) finite. Its scheme-theoretic image factorization is dominant,
+so the existing finite function-field comparison supplies the positive
+degree \(d_f(W)\). For a closed immersion \(q_W\) is an isomorphism
+and this degree is one. Extend these generator identities linearly.
+Coefficient extension preserves the integer degree weights, and the
+displayed dimension equality places every image generator in the same
+homogeneous submodule.
+\end{proof}
+
 \begin{proposition}[Graph-slice cycle pull--push]
 \label{prop:graph-cycle-composition}
 In Proposition~\ref{prop:graph-composition}, assume that \(Y\) is integral.
@@ -6207,6 +6260,12 @@ Graph-slice cycle pull--push &
 \leanpath{graphIntersectionCycle_image_p13}\newline
 \leanpath{Correspondence/GraphCycleComposition.lean}\newline
 \leanpath{Cycles/ClosedImmersionPushforward.lean}\\
+Degree-weighted finite cycle pushforward &
+\leanpath{finitePushforward}; \leanpath{finitePushforwardDegree_pos}\newline
+\leanpath{finitePushforward_eq_closedImmersionPushforward}\newline
+\leanpath{gradedFinitePushforward}; \leanpath{gradedFinitePushforward_rationalize}\newline
+\leanpath{Cycles/FinitePushforward.lean}\newline
+\leanpath{Cycles/GradedFinitePushforward.lean}\\
 Structural-base comparison of graph cycles &
 \leanpath{forgetDeckBase_injective}\newline
 \leanpath{graphCycleLinearMap_baseComparison}\newline
@@ -7173,6 +7232,28 @@ principal table, grouped by mathematical layer.
 \leanpath{closedImageCycle};
 \leanpath{closedImmersionPushforward};
 \leanpath{Cycles/ResidueDegree.lean};
+\leanpath{Cycles/FinitePushforward.lean};
+\leanpath{imageSubscheme};
+\leanpath{imageSubscheme_val};
+\leanpath{imageSubscheme_eq_closedImageSubscheme};
+\leanpath{ambientGenericPoint_imageSubscheme};
+\leanpath{finiteImage_toImage_isFinite};
+\leanpath{finitePushforwardDegree};
+\leanpath{finitePushforwardDegree_pos};
+\leanpath{finitePushforwardDegree_of_isClosedImmersion};
+\leanpath{finitePushforward};
+\leanpath{finitePushforward_single};
+\leanpath{finitePushforward_fundamentalCycle};
+\leanpath{finitePushforward_eq_closedImmersionPushforward};
+\leanpath{finitePushforward_id};
+\leanpath{Cycles/GradedFinitePushforward.lean};
+\leanpath{supportDegree_imageSubscheme};
+\leanpath{finitePushforward_mem_cyclesOfDegree};
+\leanpath{gradedFinitePushforward};
+\leanpath{gradedFinitePushforward_val};
+\leanpath{gradedFinitePushforward_eq_closedImmersionPushforward};
+\leanpath{finitePushforward_rationalize};
+\leanpath{gradedFinitePushforward_rationalize};
 \corrsrc{EtaleGraphIntersection.lean};
 \leanpath{graphSlice_isPullback};
 \corrsrc{GraphSlice.lean};

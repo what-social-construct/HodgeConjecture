@@ -17,8 +17,45 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-09-29 (SP100 validated: sheet points and the original normalization action;
+Last source/interface review: 2026-09-29 (SP101 finite cycle pushforward, validated;
 earlier source records retain their original validation scope).
+
+### Degree-weighted finite cycle pushforward (SP101, 2026-09-29)
+
+The cycle formula reuses the existing bibliography input
+[Stacks Definition 42.12.1, 02R4](https://stacks.math.columbia.edu/tag/02R4).
+The source treats proper maps in its base-induced dimension-function and
+locally finite cycle setting. The new direct Lean construction covers finite
+maps and finite sums on existing integral closed supports; restriction to
+the existing homogeneous submodules retains an explicit degree-compatibility
+hypothesis. It does not claim the full proper-map or canonical-grading theorem.
+
+Image integrality reuses `pointSupport_ambientGenericPoint`,
+`IdealSheafData.map_vanishingIdeal` and `closure_image_closure`; the image
+ideal is literally the old mapped ideal. Finiteness of the actual `toImage`
+uses `isFinite_of_comp_of_isSeparated`; positivity of its field degree uses
+`functionFieldMapOfDominant_finiteDimensional`. Closed-immersion agreement
+uses the existing actual function-field isomorphism. Linear extension,
+supported-submodule restriction and coefficient cast use Mathlib's existing
+Finsupp and module APIs. No new commutative-algebra theorem, source axiom,
+bibliography entry or hypothesis package is introduced.
+
+The next geometric generator law is precisely the finite specialization of
+[Stacks Lemma 42.18.1, 02RT](https://stacks.math.columbia.edu/tag/02RT):
+proper dominant integral equal-dimension maps send a principal divisor to
+the divisor of the actual function-field norm. Its local proof uses general
+Noetherian length-orders. The current ambient smooth/etale setting does not
+make all integral relation carriers normal; a DVR-only law is insufficient.
+That law and canonical grading compatibility are recorded obligations, not
+assumptions silently consumed by SP101. Quotient preservation remains the
+later [02S2](https://stacks.math.columbia.edu/tag/02S2) consumer.
+
+All twenty public declarations pass the actual standard-three axiom audit,
+each observed set exactly `propext`, `Classical.choice` and `Quot.sound`.
+The raw/graded scoped builds, corrected focused suite, full build, endpoint
+dependency audit and fresh SP72/SP88 regressions pass. Independent scope
+review and twenty-API Lean--TeX parity pass. No full historical central
+replay or additional neighbor-suite rerun is claimed.
 
 ### Sheet points and the original normalization action (SP100, 2026-09-29)
 

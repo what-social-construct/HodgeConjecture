@@ -1591,3 +1591,52 @@ log and visually checked pages 23, 24, 71 and 84. The central static inventory
 is 1109 checks, 565 examples and 1001 axiom reports. Both complete historical
 prefixes and the SP99-to-EOF queue record remain byte-identical to `5b0572c`.
 SP100 is validated.
+
+## 37. SP101: degree-weighted finite cycle pushforward
+
+The thirteen APIs in `Cycles/FinitePushforward.lean` use the existing
+integral support and Finsupp cycle carriers. The generalized image is
+literally `W.val.map f`, with generic point `f(ξ_W)`, and equals the old
+closed-image object when the latter applies. For a finite support map,
+the original `toImage` map is finite and dominant. Its actual generic
+pullback, not a replacement field algebra, supplies the positive degree
+`d_f(W)=[K(W):K(f(W))]` through existing function-field finiteness.
+
+For finite ambient `f`, linear extension sends `[W]` to `d_f(W)[f(W)]`
+over any semiring. It agrees with old closed-immersion pushforward and
+the identity. The seven APIs in `GradedFinitePushforward.lean` restrict
+the same operation to the existing homogeneous submodules for explicitly
+compatible dimension functions, and commute with integral/rational
+coefficient extension. Neither ambient integrality nor normality,
+dominance, Noetherianity, etaleness or separability is needed.
+
+The manuscript counterpart is `prop:finite-cycle-pushforward`, with
+`q_W`, `d_f(W)` and the existing `f_{*,cyc}` notation. The new raw map
+extends a previously closed-immersion-only operation by a proved
+agreement; it is not a parallel cycle construction. The raw/graded
+scope and the explicit degree-comparison premise are retained in TeX.
+
+Next prove the canonical structural-grading comparison and the actual
+principal/norm identity before quotient descent. Relation carriers can
+be nonnormal inside a smooth ambient scheme; the local law must apply
+to their actual Noetherian length-orders. Finite-map composition, flat
+pullback/degree, Betti transfer, cycle-class compatibility and generation
+remain separate. No source hypothesis package, project axiom or new
+commutative-algebra theory is introduced. No object is moved or removed.
+The complete audit prefix through SP100 is preserved from `85662d0`.
+
+Raw/graded scoped builds pass 2779/2820 jobs without warnings. The corrected
+focused suite passes thirty examples, twenty checks and twenty axiom audits,
+every observed set exactly `propext`, `Classical.choice` and `Quot.sound`.
+The full build passes 3231 jobs with only the unchanged Challenge warnings
+at lines 33 and 46. The dependency audit passes six primary contracts and
+two supporting reports. Fresh SP72/SP88 regressions pass 18/20 examples
+and eleven/two axiom audits respectively, with exactly the standard three
+and no warnings. No additional fresh regression or full historical central
+replay is claimed.
+
+Independent scope review and twenty-API parity pass. The final 96-page PDF
+(901510 bytes) has a clean log and visually checked pages 40, 41, 75 and 88.
+The central static inventory is 1129 checks, 565 examples and 1021 axiom
+reports. Both complete historical prefixes and the SP100-to-EOF queue
+record remain byte-identical to `85662d0`. SP101 is validated.

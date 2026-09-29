@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-09-29 (SP100 validated: sheet points and the original normalization action).
+Assessed: 2026-09-29 (SP101 finite cycle pushforward, validated).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -85,7 +85,11 @@ below:
    individual coset evaluation points with the original geometric orbits,
    using the existing normal-stalk input for the marked refinement.
    Keep arbitrary geometric fibers as a separate subsequent statement.
-2. Build the actual same-cover Chow--Betti maps and prove the displayed
+2. SP101 builds degree-weighted finite pushforward on actual finite cycles,
+   with graded restriction for explicitly compatible dimension functions.
+   Prove canonical grading compatibility and the principal/norm identity,
+   then descend this same map to Chow groups. Build the remaining actual
+   same-cover Chow--Betti maps and prove the displayed
    degree and cycle-class laws; derive normal stalks from the selected
    smooth geometry where required.
 3. Construct the recipes and prove generation for the intended `X,p`.
@@ -217,25 +221,59 @@ not normal, nor establish equivariance for an unspecified action on the
 whole base-changed fiber.
 
 SP99/SP100 discharge the named split-spectrum, marked-point and individual
-sheet/orbit consumers. The next checkpoint follows the existing live order:
-inventory actual same-cover Chow pushforward and Betti pullback/trace,
-then construct the missing map and prove its degree or cycle-class law.
+sheet/orbit consumers. SP101 starts the next stage of the existing live order
+with actual finite cycle pushforward. Continue to same-cover Chow
+pushforward and Betti pullback/trace, proving their degree and cycle-class laws.
 Do not substitute another abstract compatibility package for that geometric
 work. Degree-zero split examples remain examples, not arbitrary-codimension
 realization. Introduce an all-points classification or torsor theorem only
 when its precise consumer needs it. These geometric identifications do
 not themselves prove a Chow--Betti generation statement.
 
-The immediate reuse inventory is specific: `Cycles/ChowPushforward.lean`
+The reuse inventory remains specific: `Cycles/ChowPushforward.lean`
 and `Cycles/RationalChowPushforward.lean` descend pushforward along
 closed immersions, not a general finite etale map. `Betti/FiniteTransfer.lean`
 constructs transfer in the finite-discrete degree-zero model, not arbitrary
-Betti degree for a positive-dimensional cover. The next bounded geometric
-task should fix the graded cycle source and target for the same finite
-cover, construct its degree-weighted cycle pushforward using existing
-field-degree results, and identify the principal/norm compatibility
-needed to descend through the existing Chow quotient. Do not treat either
-of the current specialized pushforwards as that missing general map.
+Betti degree for a positive-dimensional cover. SP101 now constructs
+the degree-weighted raw cycle map and its explicit-compatible-grading
+restriction using existing field-degree results; neither
+specialized Chow pushforward is treated as the missing general Chow map.
+
+**SP101:** `Cycles/FinitePushforward.lean` extends the existing operation on
+the same `Cycles` carrier. For every integral closed support `W`, the object
+`imageSubscheme f W` has exactly ideal `W.val.map f` and ambient generic
+point `f(ξ_W)`; it equals `closedImageSubscheme f W` whenever the latter
+applies. Finiteness of `f` makes the original `toImage` map finite and
+dominant. Its actual generic pullback gives
+`d_f(W)=[K(W):K(f(W))]>0`, and the map is the linear extension of
+`f_*[W]=d_f(W)[f(W)]` over any semiring. Its closed-immersion specialization
+and identity agree with the existing maps. `GradedFinitePushforward.lean`
+restricts the same map to the existing degree submodules for supplied
+`δX,δY` satisfying `δY(f(ξ_W))=δX(ξ_W)`, and proves integral/rational
+coefficient compatibility. No canonical-grading theorem is hidden in that
+explicit equality; the degree index is dimension, not an unproved
+codimension identification.
+
+The next bounded comparison is finite-map preservation of the canonical
+`DimensionFunction.ofLocallyOfFiniteType`, retaining its structural residue
+field actions. Then handle the actual relation carriers with
+`f_*(div_W u)=div_{f(W)}(Norm_{K(W)/K(f(W))}u)` in the ambient cycle modules.
+The source is [Stacks 02RT](https://stacks.math.columbia.edu/tag/02RT),
+followed by the existing quotient construction. These carriers can be
+singular and nonnormal even when the ambient cover is finite etale and
+smooth; the law must match the existing length-order divisors, not only
+DVR valuations. The current checkpoint constructs no finite Chow map,
+assumes no norm compatibility, and adds no literature hypothesis package.
+
+For the grading comparison, install the actual residue-field algebra from
+`f.residueFieldMap x` alongside the two existing structural base algebras.
+`residueFieldBaseMap_comp` supplies their scalar tower. Algebraicity of
+that residue extension is enough: reuse Mathlib's transcendence-degree
+tower formula and vanishing for algebraic extensions, then the existing
+dimension-function evaluation and image-generic-point formula. The affine
+route uses the finite coordinate map and existing prime-residue algebraicity,
+transported through the actual residue-field/chart comparisons. Do not
+infer that a pointwise stalk map is module-finite merely from finite `f`.
 
 Keep the target obligations explicit. The graph-projector equivalence in
 `TateGraphProjector.lean` uses the actual construction and detection maps.

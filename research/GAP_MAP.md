@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-09-29 (SP100 validated: sheet points and the original normalization action;
+Last reviewed: 2026-09-29 (SP101 finite cycle pushforward, validated;
 earlier checkpoint records retain
 their original validation scope).
 
@@ -59,7 +59,10 @@ The live order is now:
    marked embedding. SP100 identifies every coset evaluation point with
    the original sheet embedding and, using normal stalks of `Y`, the
    original inverse-labelled normalization action followed by the refinement.
-3. Instantiate Chow pushforward, Betti pullback/trace and their two
+3. SP101 constructs actual degree-weighted finite cycle pushforward and its
+   restriction to explicitly compatible existing gradings. Next derive
+   compatibility for the canonical field grading and prove the principal/norm
+   identity needed for Chow descent. Instantiate Betti pullback/trace and their two
    compatibility laws for the same actual cover. Supply smooth-geometric
    normality where the construction needs it.
 4. Construct named upstairs cycle recipes and prove generation of the
@@ -70,7 +73,28 @@ A parallel pruning queue records actual theorem dependencies and
 mathematical consumers before moving objects. The minimal cycle conclusion
 need not consume all projector/action machinery; that does not make the
 stronger existing endpoints or their dependencies redundant. No module is
-removed or archived at SP94, SP95, SP96, SP97, SP98, SP99 or SP100.
+removed or archived at SP94, SP95, SP96, SP97, SP98, SP99, SP100 or SP101.
+
+SP101 uses `Cycles/FinitePushforward.lean` and `GradedFinitePushforward.lean`.
+Its generalized image is literally the existing `W.val.map f`; comparison
+with the old closed-image object is proved, not a choice of another carrier.
+The actual support-to-image map gives a positive finite function-field
+degree, so `[W]` maps to `[K(W):K(f(W))] [f(W)]`. No ambient integrality,
+normality, dominance or etaleness is required. Coefficients may lie in any
+semiring. Grading uses an explicit support-degree equality, not an automatic
+codimension assertion or a new free module.
+
+The next relation obligation is
+`f_*(ambientPrincipalDivisor W u) = ambientPrincipalDivisor f(W) (Norm u)`
+for the actual field norm. Arbitrary integral carriers need not be normal,
+even for a finite etale cover of smooth varieties, and their maps to their
+images need not be etale. A DVR-only argument will not establish preservation
+of the repository's general length-order principal relations. The exact
+source is [Stacks 02RT](https://stacks.math.columbia.edu/tag/02RT); quotient
+descent must use that geometric identity, not assume preservation of the
+relation submodule. Canonical finite-map grading preservation, this norm
+law, finite pushforward composition, flat pullback/degree, Betti transfer,
+the cycle-class square and class-dependent generation remain separate.
 
 SP95 uses `Cycles/FunctionFieldExtensionality.lean` and
 `Boundary/Normalization/GluedNormalizationDeckComparison.lean`.

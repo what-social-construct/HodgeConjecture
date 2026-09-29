@@ -127,7 +127,16 @@ With the existing normal-stalk hypothesis on `Y`, the label `gH` is the
 original normalization's generic point followed by `a_N(g⁻¹)` and the
 marked refinement. The full pullback-point identity keeps the projection
 to `Spec N_p` equal to the identity; no new action or cover is constructed.
-The next order is the actual same-cover Chow--Betti adapters, then
+SP101's [`FinitePushforward.lean`](HodgeConjecture/Cycles/FinitePushforward.lean)
+constructs degree-weighted pushforward on the existing finite cycles for
+any finite morphism. Each support uses its actual mapped ideal and actual
+function-field degree; the operation agrees with the existing closed-immersion
+map. [`GradedFinitePushforward.lean`](HodgeConjecture/Cycles/GradedFinitePushforward.lean)
+restricts that same map to explicitly compatible dimension functions and
+proves integer-to-rational coefficient compatibility. This does not yet
+descend through the principal relations defining Chow groups.
+The next order is canonical grading compatibility, the general principal/norm
+identity for the actual support maps, and the same-cover Chow--Betti adapters, then
 generation for the intended `X,p`. Generic and arbitrary geometric fibers
 remain distinct steps.
 Pruning follows checked dependencies and mathematical roles; objects are
