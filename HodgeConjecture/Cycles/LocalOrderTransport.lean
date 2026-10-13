@@ -1,4 +1,4 @@
-import Mathlib.RingTheory.OrderOfVanishing
+import HodgeConjecture.Cycles.LocalOrder
 import Mathlib.RingTheory.Localization.FractionRing
 
 /-!
@@ -64,6 +64,36 @@ theorem ordFrac_ringEquiv {K L : Type*} [Field K] [Field L]
         Ring.ordFrac_eq_ord (R := R) (K := K) a ha, ordMonoidWithZeroHom_ringEquiv]
   obtain ⟨a, b, _, rfl⟩ := IsFractionRing.div_surjective (A := R) f
   simp only [map_div₀, hbase]
+
+/-- The signed local orders are preserved by the same compatible ring and field isomorphisms. -/
+theorem localOrder_ringEquiv {K L : Type*} [Field K] [Field L]
+    [IsDomain R] [IsDomain S]
+    [IsNoetherianRing R] [Ring.KrullDimLE 1 R]
+    [IsNoetherianRing S] [Ring.KrullDimLE 1 S]
+    [Algebra R K] [IsFractionRing R K] [Algebra S L] [IsFractionRing S L]
+    (eR : R ≃+* S) (eK : K ≃+* L)
+    (h : ∀ a : R, eK (algebraMap R K a) = algebraMap S L (eR a)) (f : Kˣ) :
+    localOrder S (Units.map eK.toMonoidHom f) = localOrder R f :=
+  congrArg WithZero.log (ordFrac_ringEquiv eR eK h (f : K))
+
+/-- An equivalence of localizations preserves local orders in the original common field.
+Compatibility of the field embeddings follows from the localization universal property. -/
+theorem localOrder_algEquiv_of_isLocalization
+    {A L : Type*} [CommRing A] [Field L] (M : Submonoid A)
+    [IsDomain R] [IsDomain S]
+    [IsNoetherianRing R] [Ring.KrullDimLE 1 R]
+    [IsNoetherianRing S] [Ring.KrullDimLE 1 S]
+    [Algebra A R] [IsLocalization M R] [Algebra A S] [Algebra A L]
+    [Algebra R L] [IsFractionRing R L] [IsScalarTower A R L]
+    [Algebra S L] [IsFractionRing S L] [IsScalarTower A S L]
+    (e : R ≃ₐ[A] S) (f : Lˣ) : localOrder S f = localOrder R f := by
+  have h : (algebraMap S L).comp e.toRingHom = algebraMap R L := by
+    apply IsLocalization.ringHom_ext M
+    ext a
+    change algebraMap S L (e (algebraMap A R a)) = algebraMap R L (algebraMap A R a)
+    rw [e.commutes, ← IsScalarTower.algebraMap_apply, ← IsScalarTower.algebraMap_apply]
+  simpa using localOrder_ringEquiv e.toRingEquiv (RingEquiv.refl L)
+    (fun a => (RingHom.congr_fun h a).symm) f
 
 end
 

@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-09-29 (SP102 canonical finite-map grading validated;
+Last reviewed: 2026-10-13 (SP108 conditional boundary correction;
 earlier checkpoint records retain
 their original validation scope).
 
@@ -45,6 +45,15 @@ positive-degree transfer and cycle-class compatibility, the normalized
 Chow pushforward represents `α`; this conditional implication is proved.
 The geometric generation hypothesis itself has not been discharged.
 
+SP108 proves the additive boundary-correction implication on the existing
+Chow groups. An open representative lifts by proved Chow surjectivity, and
+a boundary cycle corrects its class using explicit Betti comparison squares,
+a supported Hodge lift, and boundary algebraicity. In the smooth-divisor
+case the last input can be induction in codimension. General Betti/Gysin
+instantiation, suitable boundary geometry and construction of the open
+representative remain open; this does not close the generation gap.
+See `Realization/Chow/BoundaryCorrection.lean` and G2b in the target sketch.
+
 The live order is now:
 
 1. **Completed SP94:** the arbitrary-class condition and its conditional
@@ -61,8 +70,16 @@ The live order is now:
    original inverse-labelled normalization action followed by the refinement.
 3. SP101 constructs actual degree-weighted finite cycle pushforward and its
    restriction to explicitly compatible existing gradings. SP102 supplies
-   compatibility for the canonical field grading. Next prove the principal/norm
-   identity needed for Chow descent. Instantiate Betti pullback/trace and their two
+   compatibility for the canonical field grading. SP103 proves local
+   residue-degree weighting of lengths. SP104 proves the semilocal sum,
+   the lattice/determinant comparison and the norm's principal-quotient
+   length formula. SP105 identifies the localized principal quotients and
+   their lengths with the existing local orders. SP106 derives the automatic
+   finite-extension hypotheses and proves 02MJ for every nonzero fraction.
+   SP107 proves the actual scheme principal/norm identity and descends the
+   same finite cycle map to integral and rational Chow groups, using
+   constructed norms on actual image carriers. Next establish finite-map
+   composition, flat pullback/degree, and Betti pullback/trace with their
    compatibility laws for the same actual cover. Supply smooth-geometric
    normality where the construction needs it.
 4. Construct named upstairs cycle recipes and prove generation of the
@@ -73,7 +90,7 @@ A parallel pruning queue records actual theorem dependencies and
 mathematical consumers before moving objects. The minimal cycle conclusion
 need not consume all projector/action machinery; that does not make the
 stronger existing endpoints or their dependencies redundant. No module is
-removed or archived at SP94, SP95, SP96, SP97, SP98, SP99, SP100, SP101 or SP102.
+removed or archived at SP94, SP95, SP96, SP97, SP98, SP99, SP100, SP101, SP102, SP103, SP104, SP105, SP106 or SP107.
 
 SP101 uses `Cycles/FinitePushforward.lean` and `GradedFinitePushforward.lean`.
 Its generalized image is literally the existing `W.val.map f`; comparison
@@ -97,25 +114,54 @@ is constructed; arbitrary independently chosen dimension functions still
 require SP101's explicit comparison. Dimension degree is not relabelled
 as codimension without its existing complementary-degree hypotheses.
 
-The next relation obligation is
+SP107 proves the relation identity
 `f_*(ambientPrincipalDivisor W u) = ambientPrincipalDivisor f(W) (Norm u)`
-for the actual field norm. Arbitrary integral carriers need not be normal,
-even for a finite etale cover of smooth varieties, and their maps to their
-images need not be etale. A DVR-only argument will not establish preservation
-of the repository's general length-order principal relations. The exact
-source is [Stacks 02RT](https://stacks.math.columbia.edu/tag/02RT); quotient
-descent must use that geometric identity, not assume preservation of the
-relation submodule. This norm law, finite pushforward composition,
-flat pullback/degree, Betti transfer,
-the cycle-class square and class-dependent generation remain separate.
+for finite maps of Noetherian schemes locally of finite type over a field.
+The norm uses the actual finite dominant carrier-to-image map. Arbitrary
+integral carriers need not be normal, even for finite etale covers of smooth
+varieties; their maps to their images need not be etale. The proof therefore
+uses the existing length orders, not a DVR-only replacement. It implements
+the finite specialization of [Stacks 02RT](https://stacks.math.columbia.edu/tag/02RT).
+The integral and rational Chow maps follow by proved preservation of the
+existing principal-relation spans. Both use the canonical field grading.
 
-The first local norm obligation is the weighted length-order formula of
-[Stacks 02MJ](https://stacks.math.columbia.edu/tag/02MJ) for a finite
-extension of domains over a one-dimensional Noetherian local domain.
-Reuse `Algebra.norm`; the missing assertion is its compatibility with
-those local orders, not the existence of a norm operation. The pinned
-norm-localization API assumes freeness and is insufficient on its own
-for the potentially nonnormal relation carriers.
+`FiniteAffineFiber`, `FiniteAffineStalk`, `FiniteAffineResidue` and
+`FinitePushforwardResidue` retain the actual fibers, stalks, function fields
+and cycle weights. The existing codimension formula gives the codimension-one
+comparison. No individual source stalk is assumed finite over a target
+stalk. The final quotient maps need neither integral ambient schemes nor
+dominance. Their representative squares, integral closed-immersion
+agreement, and rationalization compatibility are proved.
+
+General finite-pushforward composition, flat pullback/degree, Betti transfer,
+the cycle-class square and class-dependent generation remain separate.
+The general proper-map version of 02RT is not claimed.
+
+SP103 proves the local-ring case of
+[Stacks 02M0](https://stacks.math.columbia.edu/tag/02M0) in
+`CommutativeAlgebra/LocalLength.lean`: for a local homomorphism with finite
+residue degree and a finite-length upstairs module,
+`length_A M = [κ(B):κ(A)] * length_B M`. Restriction has finite length.
+`Cycles/LocalOrderLength.lean` applies this directly to the existing
+principal quotients and signed fraction orders. The length theorem needs
+neither Noetherianity nor normality; its order consumer uses the existing
+Noetherian domain and dimension-at-most-one hypotheses on `B`.
+
+SP104 completes the **semilocal** localization sum of 02M0 and the
+**lattice/determinant** comparison of
+[Stacks 02MI](https://stacks.math.columbia.edu/tag/02MI), using actual
+localizations, actual finite quotients and `Submodule.IsLattice`. It proves
+`ord_R(Norm(b)) = length_R(B/bB)` and the corresponding signed fraction
+formula for finite domain extensions; neither freeness nor normality is
+assumed. It also combines this with the semilocal sum. SP105 identifies the
+localized principal quotients with principal quotients of localizations,
+including their actual fraction representatives, and interprets their
+lengths as the existing local orders. SP106 derives the
+semilocal/lying-over/residue-degree and localization-tower data from the
+finite extension, as well as upstairs Noetherianity and dimension at most
+one. `localOrder_norm_eq_sum` proves the full 02MJ formula for every unit
+of the original fraction field. SP107 transports this formula to the
+actual scheme relation carriers for the finite case of 02RT.
 
 SP102 validation passes the residue/grading scoped builds, full build,
 twenty-example focused suite, endpoint dependency audit and fresh SP101

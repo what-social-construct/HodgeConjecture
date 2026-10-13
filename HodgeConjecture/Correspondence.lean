@@ -20,6 +20,10 @@ import HodgeConjecture.Cycles.GradedFinitePushforward
 import HodgeConjecture.Cycles.FiniteGrading
 import HodgeConjecture.Cycles.IsomorphismTransport
 import HodgeConjecture.Cycles.LocalOrder
+import HodgeConjecture.Cycles.LocalOrderLength
+import HodgeConjecture.Cycles.LocalOrderNorm
+import HodgeConjecture.Cycles.LocalOrderLocalization
+import HodgeConjecture.Cycles.LocalOrderNormFormula
 import HodgeConjecture.Cycles.LocalOrderTransport
 import HodgeConjecture.Cycles.FunctionFieldTransport
 import HodgeConjecture.Cycles.FunctionFieldMap
@@ -47,6 +51,9 @@ import HodgeConjecture.Cycles.GradedPushforward
 import HodgeConjecture.Cycles.PrincipalRelations
 import HodgeConjecture.Cycles.PrincipalRelationRestriction
 import HodgeConjecture.Cycles.ChowPushforward
+import HodgeConjecture.Cycles.FinitePrincipalDivisor
+import HodgeConjecture.Cycles.FiniteChowPushforward
+import HodgeConjecture.Cycles.RationalFiniteChowPushforward
 import HodgeConjecture.Cycles.ChowOpenRestriction
 import HodgeConjecture.Cycles.ChowIsomorphism
 import HodgeConjecture.Cycles.SupportDimension

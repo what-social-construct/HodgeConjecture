@@ -7,6 +7,17 @@ them; old planning documents live under `archive/planning/`.
 
 The current reading order is [TARGET_BRIDGE.md](TARGET_BRIDGE.md),
 `GAP_MAP.md`, `CLAIM_LEDGER.md`, then the single manuscript.
+The [semantic parity registry](working/0005-semantic-parity-cleanup.md#proof-role-index-core-objects-and-objects-under-investigation)
+separates core target/Chow objects from candidate-route objects, with separate
+LaTeX notation, Lean representation and implementation-status columns. Its
+realization inventory distinguishes active unfinished work, proved examples
+and archived branches; the proposed boundary induction remains conditional.
+SP108 proves the boundary-correction consumer on actual Chow groups;
+`lake env lean research/BoundaryCorrectionVerification.lean` checks nonzero
+correction, the necessary boundary-algebraicity hypothesis, composition with
+normalized descent, and the three production theorems' axiom dependencies.
+The SP107 check is `lake env lean research/FiniteNormChowVerification.lean`;
+it audits its 67 public declarations against the standard-three axiom allowlist.
 The [object bench](bench/README.md) holds valid but currently non-spine
 diagnostics for reconsideration; it is distinct from deprecated provenance
 in `archive/` and publication candidates in `queue/`.

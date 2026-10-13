@@ -10,6 +10,7 @@ import HodgeConjecture.Realization.Chow.Presentation
 import HodgeConjecture.Realization.Chow.TateGraphProjector
 import HodgeConjecture.Realization.Chow.TransferProjector
 import HodgeConjecture.Realization.Chow.UpstairsGeneration
+import HodgeConjecture.Realization.Chow.BoundaryCorrection
 import HodgeConjecture.Realization.Chow.Examples.SplitPoints
 import HodgeConjecture.Realization.Chow.Examples.SplitSpanRealization
 import HodgeConjecture.Realization.Chow.Examples.SplitSpanQuotient
@@ -76,6 +77,13 @@ Existing positive-degree transfer data and explicit cycle-class/pushforward
 compatibility give the normalized representative downstairs. This conditional
 criterion needs no projector, deck action, or surjective residual map;
 constructing the geometric maps and proving generation remain separate tasks.
+
+Boundary correction uses the actual rational Chow restriction and closed
+pushforward: an open-locus representative gives an ambient representative
+under explicit cycle-class comparison squares, a supported Hodge lift, and
+algebraicity on the boundary. The latter can be a lower-codimension induction
+hypothesis. General Betti/Gysin maps and the open-locus construction remain
+separate geometric obligations.
 
 The superseded commutative selector-generated specialization is also
 archived outside the library, not available through its former import path.

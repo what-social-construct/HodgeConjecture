@@ -1,6 +1,7 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-09-29 (SP102 canonical finite-map grading validated).
+Assessed: 2026-10-13 (SP108 conditional boundary correction, following SP107
+finite scheme norms and Chow descent).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -87,8 +88,15 @@ below:
    Keep arbitrary geometric fibers as a separate subsequent statement.
 2. SP101 builds degree-weighted finite pushforward on actual finite cycles,
    with graded restriction for explicitly compatible dimension functions.
-   SP102 discharges canonical grading compatibility. Prove the principal/norm identity,
-   then descend this same map to Chow groups. Build the remaining actual
+   SP102 discharges canonical grading compatibility. SP103 proves local
+   residue-degree weighting for the existing length-orders. SP104 proves the
+   semilocal sum, determinant comparison and norm/principal-quotient length
+   formula without a free-module assumption. SP105 identifies the localized
+   quotients and interprets their lengths as the existing local orders.
+   SP106 derives the semilocal hypotheses and compatible localization actions
+   and proves 02MJ for every nonzero fraction. SP107 proves the finite scheme
+   principal/norm identity and integral/rational Chow descent of this same
+   map. Next prove finite-map composition and flat pullback/degree. Build the actual
    same-cover Chow--Betti maps and prove the displayed
    degree and cycle-class laws; derive normal stalks from the selected
    smooth geometry where required.
@@ -272,14 +280,23 @@ homogeneous submodules for any semiring. No new dimension function,
 pushforward wrapper, cycle carrier or global instance is introduced.
 Independently chosen gradings still require explicit compatibility.
 
-The next bounded step handles the actual relation carriers with
-`f_*(div_W u)=div_{f(W)}(Norm_{K(W)/K(f(W))}u)` in the ambient cycle modules.
-The source is [Stacks 02RT](https://stacks.math.columbia.edu/tag/02RT),
-followed by the existing quotient construction. These carriers can be
-singular and nonnormal even when the ambient cover is finite etale and
-smooth; the law must match the existing length-order divisors, not only
-DVR valuations. The current checkpoint constructs no finite Chow map,
-assumes no norm compatibility, and adds no literature hypothesis package.
+SP107 completes the finite relation-carrier step:
+`f_*(div_W u)=div_{f(W)}(Norm_{K(W)/K(f(W))}u)` in the existing ambient cycles.
+This is the finite specialization of [Stacks 02RT](https://stacks.math.columbia.edu/tag/02RT).
+The carriers may be singular and nonnormal, so the proof uses the existing
+length-order divisors. The source-stalk, residue-degree and cycle-weight
+comparisons preserve all original maps; codimension is supplied by the
+established finite-type dimension formula.
+
+`PrincipalRelationData.finiteImage` constructs the target carrier and norm
+function. The actual generator identity proves relation-span preservation,
+which constructs `chowFinitePushforward` and `rationalChowFinitePushforward`
+on the existing canonically graded quotients. The quotient maps need
+Noetherian ambient schemes locally of finite type over a field, with a
+finite map; they require neither ambient integrality nor dominance.
+They introduce no assumed norm identity or relation-preservation package.
+Finite-pushforward composition and flat pullback/degree remain next, along
+with the actual Betti comparisons and geometric generation.
 
 The first substantive local input is
 [Stacks Lemma 10.121.8, 02MJ](https://stacks.math.columbia.edu/tag/02MJ):
@@ -290,10 +307,19 @@ Noetherian local domain and fraction fields `K ⊂ L`, for `u ∈ Lˣ` the order
 freeness or separability. The pinned Mathlib already supplies `Algebra.norm`
 and its units map, but its norm-localization theorem requires freeness;
 no general weighted norm–order law was found in the local API audit.
-Formalize that missing standard local identity, then connect it to the
-existing `principalDivisor_apply` and `localOrder_fraction` consumers.
-Do not count a new norm package or assumed relation preservation as progress
-on this identity.
+SP104 now proves the determinant comparison and
+`ord_A(Norm(b)) = length_A(B/bB)`, plus the signed fraction formula and
+the weighted sum of localized quotient lengths. The actual image of `B`
+in `L` is proved to be a lattice and finite dimensionality over `K` is
+derived. SP105 identifies those localized quotients with principal quotients
+of `B`'s localizations and interprets their lengths as the existing local
+orders, including the signed fraction formula. SP106 now derives the
+semilocal, lying-over, residue-finiteness and compatible localization-tower
+data from the finite extension, including upstairs Noetherianity and the
+dimension bound. `localOrder_norm_eq_sum` proves the complete formula for
+every unit of the original fraction field; its `∑ᶠ` is finite by proof.
+SP107 connects this identity to the existing principal-divisor coefficients
+and finite cycle pushforward, then proves quotient descent on actual carriers.
 
 The SP102 proof uses algebraicity, not a new theorem asserting finite
 dimensionality or separability of the residue extension. It does not infer
@@ -318,6 +344,108 @@ endpoint, example-only, or bench candidate in the semantic-parity queue.
 Do not equate absence from the minimal descent proof with redundancy;
 retain the stronger marked/projector branch while it has live consumers.
 SP94 performs this initial audit without moving or deleting modules.
+
+### G2b. Geometric construction before projector selection (2026-10-13)
+
+Keep the target arbitrary: a smooth projective complex variety \(X\), a
+codimension \(p\), and a prescribed rational Hodge class \(\alpha\).
+The ambient Chow realization and correspondence action stay fixed.
+Investigate a uniform geometric rule producing an auxiliary cover and
+actual cycles; the witness may depend on \(\alpha\). No dimension-specific
+abelian construction is selected as the route.
+
+One useful restriction follows directly from functoriality. For a Galois
+cover \(f:Y\to X\), every deck transformation fixes \(f^*\alpha\). If
+\(q=\sum_g c_g[g]\) and \(\rho(g)=(g^{-1})^*\), then
+\[
+ \rho(q)f^*\alpha=\left(\sum_g c_g\right)f^*\alpha.
+\]
+For an idempotent \(q\), its augmentation \(\sum_g c_g\) is zero or one.
+Thus deck projectors for this cover cannot separate individual classes
+within the pulled-back downstairs subspace. Under the usual pushforward
+compatibilities one likewise has
+\(f_*\rho(q)z=(\sum_g c_g)f_*z\).
+This does not exclude correspondences outside that deck algebra or group
+actions over a different auxiliary base. Marked sheet selectors remain
+distinct from convolution idempotents.
+
+The constructive obligation is still to produce \(Z_\alpha\) by geometry
+and prove \(\operatorname{cl}(Z_\alpha)=f_\alpha^*\alpha\).
+For a positive-degree finite cover with the required Chow--Betti
+compatibilities, the output is then
+\[
+ z_\alpha=\frac{1}{\deg(f_\alpha)}(f_\alpha)_*Z_\alpha.
+\]
+See [Stacks 02RH](https://stacks.math.columbia.edu/tag/02RH) for the cycle
+degree law and [0FHA](https://stacks.math.columbia.edu/tag/0FHA) for the
+cohomological and cycle-class comparisons. The repo's existing SP94
+theorem records this conditional descent. Choosing a representative of
+the desired class as an input would not supply the construction.
+
+Two elementary candidate checks sharpen this obligation without choosing
+a dimension or a new projector:
+
+- **Incidence families.** Let \(S\) be a smooth connected complex variety
+  and \(\mathcal Z\subset S\times X\) a flat family of pure codimension-\(p\)
+  closed subschemes of \(X\). Then \(\operatorname{cl}(\mathcal Z_s)\) is
+  independent of \(s\). Indeed, cycle classes restrict to the fiber classes,
+  and the inclusions \(X\hookrightarrow S\times X\) at two complex points
+  are homotopic along a path in \(S(\mathbf C)\). Varying a point in this
+  family therefore cannot account for distinct prescribed Betti classes.
+  This does not exclude constructions using different components or
+  rational combinations of several families.
+- **Zero loci of sections.** For an algebraic rank-\(p\) bundle \(E\) on
+  \(X\) and a regular section with zero locus of codimension \(p\),
+  \([Z(s)]=c_p(E)\cap[X]\) in Chow, by
+  [Stacks 0FA9](https://stacks.math.columbia.edu/tag/0FA9).
+  Varying the regular section leaves this class fixed. Constructing a
+  suitable \(E_\alpha\) would be substantive new input; Hodge type alone
+  has not supplied it here. More generally, rational combinations of
+  products of Chern classes of algebraic bundles give exactly the
+  algebraic cycle classes; see
+  [Deligne, §2(ii)](https://www.claymath.org/wp-content/uploads/2022/06/hodge.pdf).
+  Merely assuming such a Chern-class expression for \(\alpha\) would
+  assume the desired algebraicity.
+
+These checks apply on a fixed smooth projective auxiliary variety as well.
+They leave class-dependent covers available, but the rule selecting the
+cover and its cycles must still establish the prescribed class identity.
+Neither check supplies that rule or rules out a geometric construction.
+
+There is a standard conditional boundary reduction worth keeping separate
+from those construction questions. For $p\geq1$ and an auxiliary map
+$f:Y\to X$ with $Y$ smooth projective, suppose $D\subset Y$
+is a smooth divisor and a cycle on $U=Y\setminus D$ already represents the
+restricted target, a closure has discrepancy
+$\delta=f^*\alpha-\operatorname{cl}(\bar z)$ with $\delta|_U=0$.
+Gysin exactness and polarizability give a Hodge lift
+$\gamma\in\operatorname{Hdg}^{p-1}(D)$ with $i_*\gamma=\delta$.
+An induction hypothesis for all smooth projective varieties in codimension
+$p-1$ supplies a cycle $b$ representing $\gamma$, after which
+$\bar z+i_*b$ has the required class. The open-locus construction and the
+boundary hypotheses remain obligations; this does not make arbitrary
+lower-codimension Hodge classes algebraic by standard ring algebra.
+The [proof-role registry](working/0005-semantic-parity-cleanup.md#proof-role-index-core-objects-and-objects-under-investigation)
+records each object, the classical sources, and the missing geometric Lean
+instances. Its induction parameter is codimension, with dimension arbitrary.
+
+SP108 implements the correction consumer in
+[`Realization/Chow/BoundaryCorrection.lean`](../HodgeConjecture/Realization/Chow/BoundaryCorrection.lean).
+`exists_boundary_correction` produces $b$ from an existing ambient lift;
+`isAlgebraicHodgeClass_of_openRestriction` first lifts the open cycle.
+`isAlgebraicHodgeClass_of_schemeOpenRestriction` specializes to the actual
+rational Chow groups, proved open-restriction surjectivity, and closed
+pushforward with the induced dimension function. Full Chow localization
+exactness is not needed for this implication. The Betti maps, their two
+cycle-class squares, the supported Hodge lift, and boundary algebraicity
+remain explicit inputs. The same dimension grading $\dim Y-p$ becomes
+codimension $p-1$ on a smooth divisor; no dimension is selected.
+
+Retain Galois closure, norms and projectors where they serve a named
+geometric step. A new projector is warranted when a concrete geometric
+correspondence needs a summand isolated; idempotence alone does not supply
+a cycle. The general construction of \(Z_\alpha\) remains unresolved.
+The correction adds no realization record or geometric coverage claim.
 
 ### B0. Boundary-section algebra and uniform trace landing
 

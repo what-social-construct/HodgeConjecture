@@ -13,6 +13,10 @@ For the intended statement and its existing Lean equivalence, start with the
 [target bridge sketch](research/TARGET_BRIDGE.md). For component evidence, use the
 [gap map](research/GAP_MAP.md) and
 [proof-dependency/archive audit](research/working/0017-proof-spine-and-archive.md).
+The [semantic parity registry](research/working/0005-semantic-parity-cleanup.md#proof-role-index-core-objects-and-objects-under-investigation)
+separates core target/Chow objects from objects specific to candidate proof routes,
+with LaTeX notation, Lean representations, and independent implementation status.
+It also distinguishes the active unfinished realization from archived branches.
 The [claim ledger](research/CLAIM_LEDGER.md) records theorem scope; dated
 checkpoints and [archived plans](research/archive/planning/README.md) are not
 alternative current proof outlines.
@@ -86,6 +90,16 @@ Chow pushforward with cycle classes, the normalized cycle
 `degree_i⁻¹ • pushCH_i (recipe_i c)` represents `α`. These maps and laws
 are explicit inputs, not a construction of geometric transfer or a proof
 of recipe generation. No new projector or Galois witness package is added.
+
+SP108 adds conditional boundary correction in
+[`Realization/Chow/BoundaryCorrection.lean`](HodgeConjecture/Realization/Chow/BoundaryCorrection.lean).
+It lifts an open cycle using the existing Chow restriction and corrects its
+class by closed pushforward, given the supported Hodge lift, boundary
+algebraicity and cycle-class comparison squares. These geometric inputs and
+the open-cycle construction remain to be supplied. For a smooth divisor,
+boundary algebraicity can be an induction hypothesis in codimension; the
+ambient dimension stays arbitrary.
+
 SP95 now proves the full deck-group comparison in
 [`GluedNormalizationDeckComparison.lean`](HodgeConjecture/Boundary/Normalization/GluedNormalizationDeckComparison.lean).
 For integral `X` and finite `N/K(X)`, the original action is an explicit
@@ -133,18 +147,57 @@ any finite morphism. Each support uses its actual mapped ideal and actual
 function-field degree; the operation agrees with the existing closed-immersion
 map. [`GradedFinitePushforward.lean`](HodgeConjecture/Cycles/GradedFinitePushforward.lean)
 restricts that same map to explicitly compatible dimension functions and
-proves integer-to-rational coefficient compatibility. This does not yet
-descend through the principal relations defining Chow groups.
+proves integer-to-rational coefficient compatibility. SP107 below descends
+this map through the principal relations defining Chow groups.
 SP102's [`FiniteResidueField.lean`](HodgeConjecture/Cycles/FiniteResidueField.lean)
 and [`FiniteGrading.lean`](HodgeConjecture/Cycles/FiniteGrading.lean) identify
 the actual finite-map residue extension as algebraic and retain both
 structural field actions. The existing transcendence-degree tower formula
 then gives canonical field-grading compatibility, discharging that premise
 of the same finite cycle pushforward without defining a replacement map.
-The next order is the general principal/norm identity for the actual
-support maps, and the same-cover Chow--Betti adapters, then
-generation for the intended `X,p`. Generic and arbitrary geometric fibers
-remain distinct steps.
+SP103's [`LocalLength.lean`](HodgeConjecture/CommutativeAlgebra/LocalLength.lean)
+proves the local residue-degree length formula and finite-length descent.
+[`LocalOrderLength.lean`](HodgeConjecture/Cycles/LocalOrderLength.lean) applies
+it to the existing principal quotients and signed orders.
+SP104 proves the actual semilocal localization sum in
+[`SemilocalLength.lean`](HodgeConjecture/CommutativeAlgebra/SemilocalLength.lean).
+[`LatticeIndex.lean`](HodgeConjecture/CommutativeAlgebra/LatticeIndex.lean) and
+[`LocalOrderDeterminant.lean`](HodgeConjecture/Cycles/LocalOrderDeterminant.lean)
+prove the lattice-independent determinant comparison. The resulting
+[`LocalOrderNorm.lean`](HodgeConjecture/Cycles/LocalOrderNorm.lean) identifies
+the order of the actual field norm with the base length of `B/bB`, and with
+its residue-degree-weighted localized lengths. Freeness, normality and
+separability are not assumed. SP105's
+[`LocalizedPrincipalQuotient.lean`](HodgeConjecture/CommutativeAlgebra/LocalizedPrincipalQuotient.lean)
+proves the canonical comparison with the principal quotient of the localized
+ring, including its formula on fractions and length equality.
+[`LocalOrderLocalization.lean`](HodgeConjecture/Cycles/LocalOrderLocalization.lean)
+identifies these lengths with the existing local orders in the same fraction
+field. SP106's
+[`FiniteSemilocal.lean`](HodgeConjecture/CommutativeAlgebra/FiniteSemilocal.lean)
+derives the semilocal hypotheses and dimension bound from the finite extension;
+[`AtPrimeFractionField.lean`](HodgeConjecture/CommutativeAlgebra/AtPrimeFractionField.lean)
+supplies the canonical compatible localization actions. Together,
+[`LocalOrderNormFormula.lean`](HodgeConjecture/Cycles/LocalOrderNormFormula.lean)
+proves the full weighted norm--order identity of
+[Stacks 02MJ](https://stacks.math.columbia.edu/tag/02MJ) for every nonzero
+fraction, with no extra semilocal or local-action premises.
+SP107 transports this formula through the actual affine fibers and stalks.
+[`FinitePrincipalDivisor.lean`](HodgeConjecture/Cycles/FinitePrincipalDivisor.lean)
+proves `f_*(div_X g) = div_Y(Norm_f g)` for finite dominant maps of integral,
+locally Noetherian, quasi-compact schemes locally of finite type over a field.
+The established codimension comparison and cycle modules are reused.
+[`FiniteChowPushforward.lean`](HodgeConjecture/Cycles/FiniteChowPushforward.lean)
+and [`RationalFiniteChowPushforward.lean`](HodgeConjecture/Cycles/RationalFiniteChowPushforward.lean)
+construct the induced maps on the existing integral and rational Chow
+quotients for finite maps of Noetherian schemes locally of finite type over
+a field. Each image relation uses the actual support-to-image norm;
+grading and relation preservation are proved. The integral map agrees
+with the existing closed-immersion map, and rationalization commutes.
+The next obligations are finite-pushforward composition, flat pullback and
+its degree law, and the same-cover Chow--Betti comparisons, followed by
+class-dependent generation for the intended `X,p`. Generic and arbitrary
+geometric fibers remain distinct steps.
 Pruning follows checked dependencies and mathematical roles; objects are
 queued before any move to the bench. See [the live plan](research/TARGET_BRIDGE.md#0-operative-plan-chow-to-betti-first).
 

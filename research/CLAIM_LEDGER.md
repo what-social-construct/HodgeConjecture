@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-09-29 (SP102 canonical finite-map grading validated;
+Last audited: 2026-10-13 (SP108 conditional boundary correction;
 earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,220 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Conditional boundary correction on actual Chow groups (SP108)
+
+Status: `CONDITIONAL`. In `Realization/Chow/BoundaryCorrection.lean`,
+`exists_boundary_correction` proves that an ambient cycle agreeing with a
+prescribed Hodge class on the open can be corrected by a boundary cycle.
+Its inputs are a supported Hodge lift, algebraicity on the boundary, and
+cycle-class compatibility with boundary pushforward.
+`isAlgebraicHodgeClass_of_openRestriction` first lifts an open cycle;
+`isAlgebraicHodgeClass_of_schemeOpenRestriction` uses the actual rational
+Chow groups, open restriction and its proved surjectivity, and closed
+pushforward with the induced dimension function. No new quotient, model
+record, projector or Chow-exactness hypothesis is introduced.
+
+For a smooth divisor, boundary algebraicity can be the codimension-$p-1$
+induction hypothesis, uniformly in dimension. The open representative,
+general Betti/Gysin realization and comparison squares, supported Hodge
+lift, and suitable boundary geometry remain application obligations. This
+does not complete the induction or cover a new class of varieties.
+Validation: `lake build` passes (3266 jobs; only the two pre-existing
+`Challenge.lean` placeholder warnings). `BoundaryCorrectionVerification.lean`
+passes eight checks, including a nonzero correction through a noninjective
+boundary map, failure without boundary algebraicity, and composition with
+normalized descent. All three new production theorems pass the enforced
+standard-three axiom allowlist. The notation tables, public-object name
+coverage, local links and new-file proof-placeholder scan pass. The earlier
+full `research/Verification.lean` run is the SP107 checkpoint below; it was
+not repeated for this addition.
+
+## Finite scheme norm identity and Chow descent (SP107)
+
+Status: `FORMAL`. `Cycles/FinitePrincipalDivisor.lean` proves
+`finitePushforward_principalDivisor`:
+`finitePushforward ℤ f (principalDivisor X g) = principalDivisor Y (functionFieldNorm f g)`.
+Here `f : X → Y` is finite and dominant, both schemes are integral,
+locally Noetherian and quasi-compact, and `Y → Spec k` is locally of finite
+type for a field `k`. This is the finite specialization of
+[Stacks 02RT](https://stacks.math.columbia.edu/tag/02RT), using the proved
+02MJ identity. No normality, freeness or separability is assumed.
+
+The proof localizes the whole affine inverse-image algebra at the target
+prime. Its maximal localizations identify with actual source stalks, with
+compatible embeddings into the original function field. Quotient residue
+degrees identify with actual scheme residue degrees and with the existing
+support-to-image weights. The existing finite-type codimension formula
+supplies the codimension-one comparison. Individual source stalks are not
+assumed module-finite over the target stalk.
+
+`finitePushforward_ambientPrincipalDivisor` applies this identity to the
+actual finite dominant support-to-image map. `PrincipalRelationData.finiteImage`
+constructs its norm relation. `FiniteChowPushforward.lean` and
+`RationalFiniteChowPushforward.lean` prove relation-span preservation and
+construct `chowFinitePushforward` and `rationalChowFinitePushforward` on the
+existing canonically graded quotients. These maps require Noetherian
+ambient schemes and a locally finite-type structural map to a field;
+ambient integrality and dominance are unnecessary. They take no supplied
+grade-compatibility or relation-preservation premise. The class-map
+squares, agreement with the integral closed-immersion map, and commutation
+with `chowRationalize` are proved.
+
+Validation: the full build passes (3265 jobs), with only the two
+pre-existing `Challenge.lean` placeholder warnings.
+`research/FiniteNormChowVerification.lean` passes signed inverse-divisor,
+rational-equivalence and quotient-hypothesis checks, and an enforced
+standard-three axiom allowlist for all 67 new public declarations.
+The SP106 numerical norm regressions (including orders `1` and `-1`)
+and their nine-declaration audit also pass. The main root-import inventory
+passes all 1255 declaration checks, 565 examples and 1147 axiom reports,
+without warnings or errors; its reported axioms stay within the standard
+three. The semantic table structure, LaTeX delimiters, source links and
+project proof-token scan pass. These are working-tree checks, not a
+clean-clone or human release sign-off.
+
+Status: `OPEN`. General finite-pushforward composition, flat pullback and
+its degree law, actual Betti transfer and cycle-class compatibility, and
+class-dependent geometric generation. This checkpoint does not prove the
+general proper-morphism version of 02RT or a Hodge-conjecture instance.
+
+## Full weighted norm--order formula (SP106)
+
+Status: `FORMAL`. `Cycles/LocalOrderNormFormula.lean` proves
+`localOrder_norm_eq_sum`: for a finite domain extension over a Noetherian
+local domain of dimension at most one, and every unit `y` of the original
+fraction field `L`,
+`ord_R(Norm_L/K(y)) = ∑ᶠ q, [B/q : R/m] * ord_Bq(y)`.
+This is [Stacks 02MJ](https://stacks.math.columbia.edu/tag/02MJ), also
+allowing a field as the base. Both sides use the existing `Algebra.norm`
+and `localOrder`; the right-hand sum is proved finite.
+
+`CommutativeAlgebra/FiniteSemilocal.lean` derives contraction of maximal
+ideals, finite residue degrees and semilocality from module-finiteness over
+the local base. Its semilocal proof needs neither Noetherianity nor a domain.
+The dimension bound for integral domain extensions is also proved.
+`CommutativeAlgebra/AtPrimeFractionField.lean` constructs scoped canonical
+actions of each prime localization on the original fraction field and
+proves their scalar towers and fraction-field properties. The endpoint
+derives upstairs Noetherianity and the dimension bound; it requires no
+supplied semilocal enumeration, residue-finiteness proof or localization
+action, and no normality, freeness or separability assumption.
+
+Validation: `research/NormLocalOrderVerification.lean` checks derived
+semilocality for the nonlocal finite algebra `ℚ × ℚ`, then applies the
+complete formula at the localization of `ℤ` at `(2)` to obtain weighted
+sums `1` and `-1` for `2` and its inverse. All nine new public declarations
+pass the standard-three axiom allowlist. The full build passes (3246 jobs),
+as does the refreshed SP105 localized-quotient suite and its eight-declaration
+axiom audit. Only the pre-existing `Challenge.lean` placeholder warnings remain.
+
+Status at SP106: `OPEN`; SP107 above completes the finite scheme identity
+and integral/rational Chow descent. Fixed-target realization and
+class-dependent geometric generation remain separate.
+
+## Localized principal quotients (SP105)
+
+Status: `FORMAL`. `CommutativeAlgebra/LocalizedPrincipalQuotient.lean`
+proves the canonical `Localization S`-linear equivalence
+`LocalizedModule S (B/(b)) ≃ Localization S/(b/1)`, its formulas on
+representatives and arbitrary fractions, and length preservation. It
+specializes Mathlib's module-quotient localization, corresponding to
+[Stacks 02C8](https://stacks.math.columbia.edu/tag/02C8). This part holds
+for every commutative ring, submonoid and generator, including zero
+divisors and zero localizations. Inverting the generator gives length zero.
+
+`Cycles/LocalOrderLocalization.lean` proves that each such length at a
+prime computes the existing `localOrder`, and gives the signed fraction
+formula and vanishing outside the prime. Here `B` is a Noetherian domain
+of dimension at most one. The dimension bound after localization and the
+fraction-field property are derived; the supplied localization action on
+the original fraction field must form the actual scalar tower. Normality
+and valuation-ring assumptions are not used.
+
+Validation: the focused suite
+`research/LocalizedPrincipalQuotientVerification.lean` checks an actual
+denominator, inversion in `ZMod 4`, and length one for the localized integer
+quotient at `(2)`. All eight public declarations pass the standard-three
+axiom allowlist. The full build passes; its only proof-placeholder warnings
+are the pre-existing ones in `Challenge.lean`.
+
+Status at SP105: `OPEN` (the local formula is completed in SP106 above).
+Derive the semilocal, lying-over, residue-degree and
+localization-tower data from the finite extension, and assemble the full
+02MJ statement before transporting it to the scheme divisor identity 02RT.
+Chow descent and class-dependent generation remain separate.
+
+## Semilocal lengths and determinant/norm comparison (SP104)
+
+Status: `FORMAL`. `CommutativeAlgebra/SemilocalLength.lean` proves the full
+finite-length sum of [Stacks 02M0](https://stacks.math.columbia.edu/tag/02M0)
+over the actual `LocalizedModule`s. For a local base, maximal ideals lying
+over its maximal ideal and finite residue extensions, the weights are the
+canonical quotient-field degrees. No Noetherian or domain assumption is
+needed for this length formula.
+
+`CommutativeAlgebra/LatticeIndex.lean` proves finiteness of the relevant
+quotients, the relative-index addition law, invariance under linear
+equivalence and independence from the lattice. `Cycles/LocalOrderDeterminant.lean`
+proves `latticeIndex_eq_localOrder_det` and the stable-lattice cokernel
+formula. This is the comparison of
+[Stacks 02MI](https://stacks.math.columbia.edu/tag/02MI), using the existing
+`Submodule.IsLattice` and existing `localOrder`. Its Lean hypotheses allow
+any Noetherian domain of dimension at most one with its fraction field.
+
+`Cycles/LocalOrderNorm.lean` constructs the actual image of a finite algebra
+`B` in its fraction field `L` as a lattice over `R`, and derives finite
+dimensionality over `K = Frac(R)`. It proves
+`ord_R(Norm(b)) = length_R(B/bB)` for nonzero `b`, the signed fraction
+formula, and the residue-degree-weighted sum of localized quotient lengths.
+The semilocal consumer explicitly takes finiteness of the maximal spectrum,
+the lying-over conditions and finite residue degrees. At SP104 these were
+not yet derived automatically; SP106 above now supplies them. Freeness,
+normality and separability are absent from the hypotheses; the norm is
+Mathlib's actual `Algebra.norm`.
+
+At SP104, status: `OPEN`. Identify localized principal quotients with principal
+quotients of localized rings, assemble the full weighted local-order law
+02MJ under its finite-extension hypotheses, and transport it to the actual
+scheme principal-divisor pushforward 02RT. Finite Chow descent, the same-cover
+Betti compatibility laws and class-dependent generation remain separate.
+
+Validation: the full build passes (3241 jobs), with only the pre-existing
+`Challenge.lean` proof-placeholder warnings. The focused suite in
+`research/SemilocalNormVerification.lean` checks a two-component semilocal
+ring, an arbitrary lattice's inverse sign and stable quotient, and the
+actual norm orders of `2` and `1/2` over `ℤ ⊂ ℚ`. All 31 public declarations
+in the four modules pass the standard-three axiom allowlist. The central
+declaration inventory is extended; no manuscript update is claimed.
+
+## Local residue-degree length comparison (SP103)
+
+Status: `FORMAL`. `CommutativeAlgebra/LocalLength.lean` proves restriction
+of finite length along a local homomorphism with finite residue degree:
+`length_A M = [κ(B):κ(A)] * length_B M`, with finiteness over `A`.
+The rings may have nilpotents and need not be Noetherian. The residue
+degree uses Mathlib's canonical map of residue fields.
+
+`Cycles/LocalOrderLength.lean` applies this to the existing principal
+quotients and signed fraction orders when `B` is a Noetherian domain of
+dimension at most one. Normality, separability and freeness are not premises.
+The six public declarations introduce no replacement order, cycle carrier,
+norm operation or source-input proposition.
+
+At SP103, status: `OPEN`. The semilocal localization sum, lattice/determinant
+comparison, norm-order identity, principal-divisor pushforward and resulting
+finite Chow pushforward remain unproved. SP103 establishes the local length
+component, not those subsequent results or class-dependent generation.
+
+Validation: the scoped build and full `lake build` pass (3235 jobs for the
+full build), with only the existing `Challenge.lean` warnings. The five
+examples in `research/LocalLengthVerification.lean` check finite-algebra
+specialization, principal-quotient finiteness, the inverse-order sign and
+agreement with field degree and dimension. All six public declarations
+pass the axiom allowlist, each using exactly `propext`, `Classical.choice`
+and `Quot.sound`. The central declaration inventory is extended; no full
+historical verification replay or manuscript update is claimed.
 
 ## Canonical finite-map grading (A11ch / SP102)
 
