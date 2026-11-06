@@ -16,6 +16,15 @@ relations, and multiplicative passage to the absolute product realized by
 closed Chow pushforward. This is the graph-generated algebra; the
 general ambient intersection product and prescribed Hodge action remain open.
 
+The [positive-degree checkpoint](working/0026-positive-degree-cycle-realization.md)
+constructs all-degree affine cohomology, logarithmic maps and an actual
+ordinary projective-line Chow-to-Čech-de Rham degree-two cycle map.
+`ProjectiveLineChow` derives principal invariance from the actual local
+orders and chart/infinity decomposition. `ProjectiveLineCycleClass` retains
+the existing integral/rational Chow source and point normalization;
+`ProjectiveLineCohomology` computes the entire constructed Čech target.
+General scheme/singular realization and Hodge-class coverage remain open.
+
 
 This Lean project develops collision ideals as scheme-theoretic input to
 algebraic correspondences, with boundary inertia measuring whether a generic

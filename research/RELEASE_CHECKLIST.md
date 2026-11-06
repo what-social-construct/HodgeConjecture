@@ -211,3 +211,17 @@ scope and remaining prescribed-realization gap. README and module accounts
 distinguish these results from the two fixed-ring Challenge statements;
 historical/build exclusion is not treated as submission exclusion. Release
 sign-offs and candidate selection remain unchanged.
+
+The ordinary positive-degree checkpoint (2026-11-06) passes its combined
+3,318-job focused build, 34 permanent examples and 48 enforced standard-three
+axiom audits. The full default build passes 4,215 jobs; root verification
+passes 1,334 declaration checks, 574 examples and 1,226 axiom reports, all
+within the standard three (one report needs no axioms). All 421 library
+modules plus the root pass proof-token/external-import scanning. Eight
+import boundaries, three indirect-negative checks, pins, local links and
+whitespace checks pass; the main README remains 69 lines. The actual
+ordinary projective-line Chow-source cycle map lands in the constructed
+and computed Čech–de Rham H². Scheme/singular/Hodge comparison and general
+prescribed-class coverage remain open. See
+[0026](working/0026-positive-degree-cycle-realization.md). Existing release
+sign-offs, comparator selection and submission packaging remain unchanged.

@@ -9,6 +9,7 @@ PYTHON ?= python3
         check-derham-components check-comparison check-integration \
         build-affine-line-comparison check-affine-line-comparison \
         build-graph-chow check-graph-chow \
+        build-positive-degree check-positive-degree \
         build-palomar check-palomar-proofs check-palomar
 
 help:
@@ -18,6 +19,7 @@ help:
 	@echo "build-affine-line-comparison  Actual affine-line degree-zero Betti comparison"
 	@echo "build-chow           Finite flat cycle/Chow transfer"
 	@echo "build-graph-chow     Actual graph Chow convolution and absolute-product comparison"
+	@echo "build-positive-degree  Positive-degree forms and ordinary projective-line cycle classes"
 	@echo "build-betti          Existing singular Betti realization"
 	@echo "build-comparison     De Rham, geometry and Chow/Betti squares"
 	@echo "check-layers         Enforce project import boundaries"
@@ -26,6 +28,7 @@ help:
 	@echo "check-affine-line-comparison  Topology, cocycles, tensors and pullback checks"
 	@echo "check-chow           Chow build, rank and quotient regressions"
 	@echo "check-graph-chow     Graph actions, quotient projectors and axiom audits"
+	@echo "check-positive-degree  Cocycles, trivializations, nonzero H2 and axiom audits"
 	@echo "check-comparison     Comparison build, examples and axiom audits"
 	@echo "check-integration    Full build and root-import inventory"
 	@echo "check                All checks above"
@@ -54,6 +57,9 @@ build-chow:
 build-graph-chow:
 	$(LAKE) build HodgeConjecture.Correspondence.GraphChowBaseComparison
 
+build-positive-degree:
+	$(LAKE) build HodgeConjecture.Realization.DeRham.PositiveDegree HodgeConjecture.Realization.DeRham.ProjectiveLineCycleClass
+
 build-betti:
 	$(LAKE) build HodgeConjecture.Realization.Betti
 
@@ -79,6 +85,9 @@ check-chow: build-chow
 check-graph-chow: check-layers build-graph-chow
 	$(LAKE) env lean research/GraphChowVerification.lean
 
+check-positive-degree: check-layers build-positive-degree
+	$(LAKE) env lean research/HigherDegreeVerification.lean
+
 check-comparison: build-comparison
 	$(LAKE) env lean research/DeRhamVerification.lean
 
@@ -94,4 +103,4 @@ check-palomar-proofs: build-palomar
 check-palomar:
 	$(PYTHON) scripts/check_palomar.py
 
-check: check-derham-core check-derham-components check-affine-line-comparison check-chow check-graph-chow check-comparison check-integration
+check: check-derham-core check-derham-components check-affine-line-comparison check-positive-degree check-chow check-graph-chow check-comparison check-integration

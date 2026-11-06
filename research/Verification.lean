@@ -4,6 +4,7 @@ import HodgeConjecture
 import Solution
 import HodgeConjecture.CommutativeAlgebra.SplitFieldQuotient
 import Mathlib.AlgebraicGeometry.Morphisms.Flat
+import Mathlib.Analysis.Complex.Polynomial.Basic
 
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
@@ -20,6 +21,84 @@ It is intentionally outside the library's default import tree.
 -/
 
 -- These declarations must be exported by the public root import above.
+#check HodgeConjecture.SchemeCycles.exists_ambientPrincipalDivisor_eq_principalDivisor
+#check HodgeConjecture.ProjectiveLineCycles.coefficientSum_principalDivisor_eq_zero
+#check HodgeConjecture.ProjectiveLineCycles.rationalPrincipalRelations_le_ker_rationalDegree
+#check HodgeConjecture.ProjectiveLineCycles.integralChowDegree
+#check HodgeConjecture.ProjectiveLineCycles.rationalChowDegree
+#check HodgeConjecture.ProjectiveLineCycles.rationalChowDegree_chowRationalize
+#check HodgeConjecture.ProjectiveLineCycleClass.integralCycleClass
+#check HodgeConjecture.ProjectiveLineCycleClass.cycleClass
+#check HodgeConjecture.ProjectiveLineCycleClass.cycleClass_pointCycle
+#check HodgeConjecture.ProjectiveLineCycleClass.residue_cycleClass
+#check HodgeConjecture.ProjectiveLineCycleClass.cycleClass_chowRationalize
+#check HodgeConjecture.ProjectiveLineCycleClass.cycleClass_ne_zero
+#check HodgeConjecture.ProjectiveLineCycleClass.scalar_chernCoordinate_not_mem_cycleClass_range
+#check HodgeConjecture.ProjectiveLineDeRham.cechResidueEquiv
+#check HodgeConjecture.ProjectiveLineDeRham.cechCohomologyTwoCoordinates
+
+#print axioms HodgeConjecture.SchemeCycles.exists_ambientPrincipalDivisor_eq_principalDivisor
+#print axioms HodgeConjecture.ProjectiveLineCycles.coefficientSum_principalDivisor_eq_zero
+#print axioms HodgeConjecture.ProjectiveLineCycles.rationalPrincipalRelations_le_ker_rationalDegree
+#print axioms HodgeConjecture.ProjectiveLineCycles.integralChowDegree
+#print axioms HodgeConjecture.ProjectiveLineCycles.rationalChowDegree
+#print axioms HodgeConjecture.ProjectiveLineCycles.rationalChowDegree_chowRationalize
+#print axioms HodgeConjecture.ProjectiveLineCycleClass.integralCycleClass
+#print axioms HodgeConjecture.ProjectiveLineCycleClass.cycleClass
+#print axioms HodgeConjecture.ProjectiveLineCycleClass.cycleClass_pointCycle
+#print axioms HodgeConjecture.ProjectiveLineCycleClass.residue_cycleClass
+#print axioms HodgeConjecture.ProjectiveLineCycleClass.cycleClass_chowRationalize
+#print axioms HodgeConjecture.ProjectiveLineCycleClass.cycleClass_ne_zero
+#print axioms HodgeConjecture.ProjectiveLineCycleClass.scalar_chernCoordinate_not_mem_cycleClass_range
+#print axioms HodgeConjecture.ProjectiveLineDeRham.cechResidueEquiv
+#print axioms HodgeConjecture.ProjectiveLineDeRham.cechCohomologyTwoCoordinates
+
+#check HodgeConjecture.AffineDeRham.cohomologyIso
+#check HodgeConjecture.AffineDeRham.cohomologyClass_succ_eq_zero_iff
+#check HodgeConjecture.AffineDeRham.cupOne_class_class
+#check HodgeConjecture.AffineDeRham.cupOne_swap
+#check HodgeConjecture.AffineDeRham.logarithmicForm_closed
+#check HodgeConjecture.AffineDeRham.logarithmicRegulator
+#check HodgeConjecture.AffineDeRham.map_logarithmicDifferential
+#check HodgeConjecture.LaurentDeRham.kaehlerCoordinates
+#check HodgeConjecture.LaurentDeRham.kaehlerResidue_D
+#check HodgeConjecture.LaurentDeRham.coordinateClass_ne_zero
+#check HodgeConjecture.AffineDeRham.logarithmicSymbolForm_steinberg
+#check HodgeConjecture.AffineDeRham.milnorRegulator_symbol
+#check HodgeConjecture.TorusDeRham.twoFormResidue_differential_one
+#check HodgeConjecture.TorusDeRham.twoFormResidue_coordinateTwoForm
+#check HodgeConjecture.ProjectiveLineDeRham.cechChartRingMaps_isPullback
+#check HodgeConjecture.ProjectiveLineDeRham.cechDifferential_comp
+#check HodgeConjecture.ProjectiveLineDeRham.cechCohomologyTwoIso
+#check HodgeConjecture.ProjectiveLineDeRham.firstChern
+#check HodgeConjecture.ProjectiveLineDeRham.firstChernTransition_changeTrivialization
+#check HodgeConjecture.ProjectiveLineDeRham.cechResidue_chernCoordinate
+#check HodgeConjecture.ProjectiveLineDeRham.firstChern_ne_zero
+#check HodgeConjecture.ProjectiveLineDeRham.chernCoordinateLinearMap_injective
+
+#print axioms HodgeConjecture.AffineDeRham.cohomologyIso
+#print axioms HodgeConjecture.AffineDeRham.cohomologyClass_succ_eq_zero_iff
+#print axioms HodgeConjecture.AffineDeRham.cupOne_class_class
+#print axioms HodgeConjecture.AffineDeRham.cupOne_swap
+#print axioms HodgeConjecture.AffineDeRham.logarithmicForm_closed
+#print axioms HodgeConjecture.AffineDeRham.logarithmicRegulator
+#print axioms HodgeConjecture.AffineDeRham.map_logarithmicDifferential
+#print axioms HodgeConjecture.LaurentDeRham.kaehlerCoordinates
+#print axioms HodgeConjecture.LaurentDeRham.kaehlerResidue_D
+#print axioms HodgeConjecture.LaurentDeRham.coordinateClass_ne_zero
+#print axioms HodgeConjecture.AffineDeRham.logarithmicSymbolForm_steinberg
+#print axioms HodgeConjecture.AffineDeRham.milnorRegulator_symbol
+#print axioms HodgeConjecture.TorusDeRham.twoFormResidue_differential_one
+#print axioms HodgeConjecture.TorusDeRham.twoFormResidue_coordinateTwoForm
+#print axioms HodgeConjecture.ProjectiveLineDeRham.cechChartRingMaps_isPullback
+#print axioms HodgeConjecture.ProjectiveLineDeRham.cechDifferential_comp
+#print axioms HodgeConjecture.ProjectiveLineDeRham.cechCohomologyTwoIso
+#print axioms HodgeConjecture.ProjectiveLineDeRham.firstChern
+#print axioms HodgeConjecture.ProjectiveLineDeRham.firstChernTransition_changeTrivialization
+#print axioms HodgeConjecture.ProjectiveLineDeRham.cechResidue_chernCoordinate
+#print axioms HodgeConjecture.ProjectiveLineDeRham.firstChern_ne_zero
+#print axioms HodgeConjecture.ProjectiveLineDeRham.chernCoordinateLinearMap_injective
+
 #check HodgeConjecture.SchemeCorrespondence.graphIntegralSubscheme_supportDegree
 #check HodgeConjecture.SchemeCorrespondence.gradedGraphCycleLinearMap_subtype
 #check HodgeConjecture.SchemeCorrespondence.graphChowClass
@@ -106,6 +185,41 @@ example [IsSeparated b]
   rw [graphChowLinearMap_baseComparison, absoluteGraphChowLinearMap_eq]
 
 end ActualGraphChowRootExports
+
+-- The public root exposes genuine positive-degree classes and their independent detector.
+example : HodgeConjecture.ProjectiveLineDeRham.chernCoordinate ℂ ≠ 0 :=
+  HodgeConjecture.ProjectiveLineDeRham.chernCoordinate_ne_zero ℂ
+
+example : HodgeConjecture.ProjectiveLineDeRham.cechResidue ℚ
+    ((-5 / 2 : ℚ) • HodgeConjecture.ProjectiveLineDeRham.chernCoordinate ℚ) = -5 / 2 := by
+  rw [map_smul, HodgeConjecture.ProjectiveLineDeRham.cechResidue_chernCoordinate,
+    smul_eq_mul, mul_one]
+
+example (ω : ⋀[ℂ]^1 Ω[ℂ⁄ℚ]) :
+    exteriorPower.wedgeMul 1 1 ω ω = 0 := exteriorPower.wedgeMul_one_self ω
+
+-- This endpoint has the original ordinary rational Chow quotient as its source.
+example : HodgeConjecture.ProjectiveLineCycleClass.cycleClass ℂ ≠ 0 :=
+  HodgeConjecture.ProjectiveLineCycleClass.cycleClass_ne_zero ℂ
+
+example : HodgeConjecture.ProjectiveLineDeRham.cechResidue ℂ
+    (RestrictScalars.addEquiv ℚ ℂ (HodgeConjecture.ProjectiveLineDeRham.CechH2 ℂ)
+      (HodgeConjecture.ProjectiveLineCycleClass.cycleClass ℂ
+        ((-7 / 4 : ℚ) • HodgeConjecture.ProjectiveLineCycleClass.rationalInfinityClass ℂ))) =
+      (-7 / 4 : ℂ) := by
+  rw [HodgeConjecture.ProjectiveLineCycleClass.residue_cycleClass, map_smul,
+    HodgeConjecture.ProjectiveLineCycleClass.rationalChowDegree_infinity, smul_eq_mul, mul_one]
+  norm_num
+
+example (d : HodgeConjecture.SchemeCycles.PrincipalRelationData
+    (HodgeConjecture.ProjectiveLineCycles.dimensionFunction ℂ) 0) :
+    HodgeConjecture.ProjectiveLineCycles.rationalChowDegree ℂ
+      (HodgeConjecture.SchemeCycles.rationalClassMap _ 0
+        (HodgeConjecture.SchemeCycles.cyclesOfDegreeRationalize _ 0
+          (HodgeConjecture.SchemeCycles.principalRelation _ 0 d))) = 0 := by
+  rw [HodgeConjecture.ProjectiveLineCycles.rationalChowDegree_classMap,
+    HodgeConjecture.ProjectiveLineCycles.rationalDegree_rationalize,
+    HodgeConjecture.ProjectiveLineCycles.integralDegree_principalRelation, Int.cast_zero]
 
 #check HodgeConjecture.SingularDegreeZero.eval_eq_of_joined
 #check HodgeConjecture.SingularDegreeZero.equivConstants
@@ -2785,20 +2899,20 @@ example (X : Scheme) (h : topologicalKrullDim X ≤ 1) {x y : X} (hxy : x < y) :
 example (k : Type) [Field k] :
     topologicalKrullDim (affineLine k) = 1 ∧
       affineLineDimensionFunction k (genericPoint (affineLine k)) = 1 ∧
-      affineLineDimensionFunction k (affineLineOrigin k) = 0 :=
+      affineLineDimensionFunction k (Examples.affineLineOrigin k) = 0 :=
   ⟨affineLine_dimension k, affineLineDimensionFunction_genericPoint k,
     affineLineDimensionFunction_origin k⟩
 
 -- The origin is the actual constant-coefficient kernel, not an auxiliary label.
 example (k : Type) [Field k] :
-    (affineLineOrigin k).asIdeal =
+    (Examples.affineLineOrigin k).asIdeal =
       RingHom.ker (Polynomial.constantCoeff : Polynomial k →+* k) := rfl
 
 -- Existing cycle grading specializes to the actual generic carrier and actual origin.
 example (k : Type) [Field k] :
     fundamentalCycle ℤ (pointSupport (affineLine k) (genericPoint (affineLine k))) ∈
         cyclesOfDegree ℤ (affineLineDimensionFunction k) 1 ∧
-      fundamentalCycle ℤ (pointSupport (affineLine k) (affineLineOrigin k)) ∈
+      fundamentalCycle ℤ (pointSupport (affineLine k) (Examples.affineLineOrigin k)) ∈
         cyclesOfDegree ℤ (affineLineDimensionFunction k) 0 := by
   constructor
   · apply fundamentalCycle_mem_cyclesOfDegree

@@ -5,10 +5,10 @@ Hodge classes on smooth projective complex varieties. The current work starts
 with actual Chow groups and their cycle maps; correspondences, collision
 geometry, and boundary inertia provide supporting construction tools.
 
-**Current status:** the repository proves algebraic mechanisms and a finite
-split degree-zero Chow/Betti/Hodge example. The general Betti realization and
-construction of cycles for prescribed Hodge classes remain open. No new case
-of the Hodge conjecture is claimed.
+**Current status:** proved mechanisms include finite split Chow/Betti/Hodge
+comparison and an ordinary projective-line Chow-to-Čech-de Rham `H²` map.
+General Betti realization and prescribed-class generation remain open.
+No new case of the Hodge conjecture is claimed.
 
 ## Start here
 

@@ -1,7 +1,7 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-10-27 (through SP113 finite cycle/Chow pushforward
-functoriality; SP108--SP112 retain their stated conditional and research scope).
+Assessed: 2026-11-06 (ordinary projective-line Chow-to-Čech de Rham degree-two
+cycle map; SP108--SP113 retain their stated conditional and research scope).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -34,7 +34,18 @@ higher-degree realization and prescribed-class coverage remain open.
 Galois actions, projectors and compactification are construction mechanisms
 to introduce when the chosen geometry needs them.
 
-Current implementation step (2026-11-05): resume the original marked-Galois
+The current [positive-degree implementation](working/0026-positive-degree-cycle-realization.md)
+prioritizes the ordinary cycle map. The actual two-chart projective line
+now carries a Čech first-Chern map, invariant under both local
+trivializations and nonzero by Laurent residue in actual total degree-two
+homology. Its ordinary Chow-source map is now constructed directly through
+the original principal-relation quotient on the actual projective line,
+using the proved global principal-divisor degree cancellation.
+Scheme/singular target comparisons and generality beyond this example
+remain explicit next obligations. Logarithmic
+higher-Chow ideas are supporting methods for this selected ordinary target.
+
+Completed graph-Chow step (2026-11-05): resume the original marked-Galois
 spine recorded in the [canonical diagram](archive/planning/0006-lean-spine-manuscript-outline.md)
 and [algebraic decomposition](archive/planning/0003-hodge-target-equivalence.md).
 The sheet algebra decomposes multiplicatively as `ℚ × E_corner`; the later

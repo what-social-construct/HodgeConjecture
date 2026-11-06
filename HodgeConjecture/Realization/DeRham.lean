@@ -3,13 +3,15 @@ module
 public import HodgeConjecture.Realization.DeRham.Core
 public import HodgeConjecture.Realization.DeRham.AffineComponents
 public import HodgeConjecture.Realization.DeRham.AffineLineComparison
+public import HodgeConjecture.Realization.DeRham.PositiveDegree
+public import HodgeConjecture.Realization.DeRham.ProjectiveLineCycleClass
 public import HodgeConjecture.Realization.DeRham.AffineGeometricDegree
 public import HodgeConjecture.Realization.DeRham.SplitComparison
 
 @[expose] public section
 
 /-!
-# Constructed affine de Rham objects and degree-zero comparison
+# Constructed algebraic de Rham objects and bounded realizations
 
 The affine de Rham complex is constructed for every commutative algebra.
 Its degree-zero homology is identified with the actual universal-derivation
@@ -25,4 +27,15 @@ general positive-dimensional Betti/Hodge comparison remain separate construction
 For the complex affine line, the degree-zero comparison with genuine
 complexified rational singular cohomology is constructed and agrees with
 point evaluation, multiplication and polynomial pullback.
+
+Positive degrees now have actual closed/exact quotients identified with
+categorical homology, an H¹ × H¹ cup product, and nonzero logarithmic
+regulators. The actual projective-line cover carries an ordinary Čech
+first-Chern map into total degree two, invariant under both local
+trivializations and detected by Laurent residue. On the actual projective
+line over an algebraically closed field, the principal-divisor degree law
+now descends through the original integral/rational Chow quotients. Over
+characteristic zero the resulting rational cycle map has the actual Čech
+degree-two target and coefficient-one point normalization. General
+scheme/singular-target comparisons and prescribed-class coverage remain open.
 -/

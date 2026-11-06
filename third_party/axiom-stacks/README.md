@@ -10,6 +10,12 @@ relative to the upstream repository; each adapted file also records its source.
 | Project files | Upstream sources |
 | --- | --- |
 | `CommutativeAlgebra/DeRham/{Differential,Complex}.lean` | `StacksFrontier/RingTheory/DeRham/{Basic,Complex}.lean` (actual differential, uniqueness, square-zero and cochain packaging; base change and quotient descent omitted) |
+| `CommutativeAlgebra/DeRham/WedgeProduct.lean` | `StacksFrontier/LinearAlgebra/ExteriorPower/Wedge.lean`, `RingTheory/DeRham/WedgeLeibniz.lean`, and scalar Leibniz in `RingTheory/DeRham/PolynomialQuasiIso.lean` |
+| `Realization/DeRham/{LaurentResidue,LaurentDifferentials}.lean` | `StacksFrontier/RingTheory/DeRham/LaurentHomotopy.lean` (selected Euler, integer-power and differential-coordinate proofs) |
+| `Geometry/ProjectiveLine.lean`, `Geometry/ProjectiveLineProperties.lean`, `Geometry/ProjectiveLinePoints.lean` | `StacksFrontier/AlgebraicGeometry/Scheme/Glueing/ProjectiveLine{,Integral,FiniteType,Points}.lean` (selected actual gluing, cover, property and point proofs) |
+| `Cycles/ProjectiveLinePrincipalDegree.lean`, `Cycles/ProjectiveLineOrderDictionary.lean` | `StacksFrontier/AlgebraicGeometry/Chow/ProperPushforwardDivisor.lean` and `ProjectiveLineDivisorDegree/SpecOrder.lean` (selected rational-function and actual local-order proofs) |
+| `Cycles/ProjectiveLineInversionOrder.lean` | `StacksFrontier/AlgebraicGeometry/Chow/ProjectiveLineDivisorDegree/Inversion.lean` (selected rational-function inversion/order proof) |
+| `Cycles/ProjectiveLineFunctionField.lean` | `StacksFrontier/AlgebraicGeometry/Chow/ProperPushforwardPrincipal/{ProjectiveLineFunctionField,ProjectiveLineInfinity}.lean` (actual chart/function-field comparison and gluing inversion) |
 | `Cycles/FiberResidueField.lean` | `StacksFrontier/AlgebraicGeometry/F6Rank128/FiberResidueField.lean` |
 | `CommutativeAlgebra/Multiplicity/HomologicalComplexAbelian.lean` | `StacksCore/Algebra/Homology/HomologicalComplexAbelian.lean` |
 | `Multiplicity/{ModuleOrder,Multiplication,SupportLength,TwoPeriodic,RestrictedDivisors}.lean` | `StacksFrontier/AlgebraicGeometry/Chow/CalculationMultiplicities/{LocalOrder,Multiplication,SupportLength,TwoPeriodic,RestrictedDivisors}.lean` |

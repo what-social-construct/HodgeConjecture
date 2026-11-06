@@ -36,6 +36,9 @@ manuscript. Do not combine old checkpoint descriptions into a proof plan.
   resumed marked-Galois spine, actual graph Chow algebra and absolute-product
   comparison, keeping prescribed realization and class coverage open.
 - `PALOMAR_FIXED_RING_HANDOFF.md` records the separate submission boundary.
+- [0026-positive-degree-cycle-realization.md](0026-positive-degree-cycle-realization.md)
+  records actual positive-degree cohomology and the nonzero ordinary Čech
+  first-Chern construction, with the source/target comparisons explicit.
 - `../bench/` holds the standalone matrix-restriction diagnostic outside
   active imports; this is not an obstruction in the intended target route.
 

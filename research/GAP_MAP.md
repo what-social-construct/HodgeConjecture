@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-11-05 (actual graph Chow convolution and absolute-product comparison;
+Last reviewed: 2026-11-06 (ordinary projective-line cycle classes in total degree two;
 earlier checkpoint records retain
 their original validation scope).
 
@@ -62,7 +62,19 @@ for an independently prescribed higher Hodge class.
 
 ## Current work order
 
-The current bounded implementation resumes the original marked-Galois
+The current positive-degree task follows the ordinary cycle-map direction
+selected by the user. A nonzero ordinary Čech first-Chern map on the actual
+two-chart projective line is constructed, invariant under both chart
+trivializations and detected by Laurent residue. The local algebraic
+pieces selectively adapt pinned Axiom objects and use Saito's logarithmic
+and boundary ideas. The ordinary Chow-source map is now also constructed
+for the actual projective line: its principal-divisor degree theorem kills
+every original relation and descends through the existing integral/rational
+Chow quotients, with point normalization in total degree two.
+Scheme/singular realization and general-variety/codimension comparisons
+remain open. See [0026](working/0026-positive-degree-cycle-realization.md).
+
+The preceding graph-Chow implementation resumed the original marked-Galois
 algebraic decomposition spine, as explained in the target sketch. Actual
 deck graphs now descend to the existing rational Chow quotient with their
 canonical field grading. Their genuine pair-isomorphism pullbacks preserve

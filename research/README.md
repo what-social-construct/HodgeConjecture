@@ -23,6 +23,9 @@ The [affine-line comparison](working/0024-affine-line-betti-comparison.md)
 connects that kernel to genuine complexified rational singular cohomology.
 The [graph-Chow checkpoint](working/0025-graph-chow-convolution.md) resumes the
 marked-Galois spine with actual graph-generated Chow convolution.
+The [positive-degree construction](working/0026-positive-degree-cycle-realization.md)
+builds the ordinary Čech first-Chern map and an actual ordinary Chow-source
+cycle map on the projective line, keeping scheme/singular comparisons explicit.
 [Focused build commands](BUILDING.md) separate the algebraic core, Chow,
 Betti, comparison and integration checks.
 

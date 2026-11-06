@@ -12,11 +12,12 @@ repository. Existing build artifacts are reused.
 | Complex affine-line topology and degree-zero Betti comparison | `make build-affine-line-comparison` | `make check-affine-line-comparison` |
 | Finite flat cycles and Chow transfer | `make build-chow` | `make check-chow` |
 | Graph-generated Chow convolution and absolute products | `make build-graph-chow` | `make check-graph-chow` |
+| Positive-degree forms and ordinary projective-line cycle classes | `make build-positive-degree` | `make check-positive-degree` |
 | Existing singular Betti realization | `make build-betti` | Covered by comparison and integration checks |
 | De Rham/geometric degree and Chow–Betti squares | `make build-comparison` | `make check-comparison` |
 | Complete library and public imports | `make build` | `make check-integration` |
 
-`make help` lists the commands. `make check` runs all seven verification groups
+`make help` lists the commands. `make check` runs all eight verification groups
 and checks the import boundaries. Make runs the groups sequentially; Lake
 retains its own build parallelism. A failed command stops the checks.
 
@@ -28,6 +29,8 @@ lake build HodgeConjecture.Realization.DeRham.AffineComponents
 lake build HodgeConjecture.Realization.DeRham.AffineLineComparison
 lake build HodgeConjecture.Realization.Chow.FiniteFlatTransfer
 lake build HodgeConjecture.Correspondence.GraphChowBaseComparison
+lake build HodgeConjecture.Realization.DeRham.PositiveDegree
+lake build HodgeConjecture.Realization.DeRham.ProjectiveLineCycleClass
 lake build HodgeConjecture.Realization.Betti
 lake build HodgeConjecture.Realization.DeRham
 ```
@@ -60,7 +63,16 @@ It excludes project collision schemes and all project realization modules.
 Its dimension-function construction retains the normalization algebra it
 actually uses; it has no dependency on Betti or de Rham comparison.
 
-`make check-layers` enforces six transitive project-import boundaries:
+The algebraic positive-degree entry point has 18 project modules. It includes the actual
+projective-line cover, logarithmic forms, quotient cup product and nonzero
+Čech first-Chern class. It excludes project Betti/Chow realization,
+correspondence and boundary machinery. The build command also builds the
+separate ordinary projective-line cycle-class entry point. That target uses
+111 project modules: the actual Chow quotient, grading and normalization algebra, while excluding
+Betti, the old assumed Chow-realization layer and graph-Chow convolution.
+Its actual principal-divisor degree theorem discharges relation invariance.
+
+`make check-layers` enforces eight transitive project-import boundaries:
 
 - The de Rham core excludes scheme cycles, Chow, Betti and comparison modules.
 - Polynomial/component calculations have the same exclusions as the core.
@@ -68,6 +80,8 @@ actually uses; it has no dependency on Betti or de Rham comparison.
 - Finite flat Chow transfer excludes Betti and de Rham realization.
 - Betti realization excludes de Rham realization.
 - Graph Chow convolution excludes collision geometry and project realization.
+- Positive-degree algebraic realization excludes Betti, existing Chow realization and boundary/correspondence machinery.
+- Ordinary projective-line cycle classes exclude Betti, the assumed Chow-realization layer, collision geometry and graph-Chow convolution.
 
 This remains one Lake package and one dependency lockfile. A smaller target
 still builds all of its actual dependencies: the upstream general Stacks

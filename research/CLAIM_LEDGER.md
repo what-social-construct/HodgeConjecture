@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-11-05 (actual graph Chow convolution and absolute-product comparison;
+Last audited: 2026-11-06 (ordinary projective-line Chow-to-Čech de Rham cycle classes;
 earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,47 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Positive-degree realization and ordinary projective-line cycle classes (2026-11-06)
+
+Status: `FORMAL` in the following scope. `AffineCohomology.lean` constructs
+actual closed/exact quotients in every degree and identifies them with
+categorical homology of the original Kähler de Rham complex.
+`CohomologyProduct.lean` proves actual `H¹ × H¹ → H²` quotient cup descent.
+The logarithmic unit map has proved closedness and group/power/pullback
+laws. Laurent residue kills all actual exacts and detects a nonzero `H¹`
+class. The auxiliary Milnor-symbol map into actual `H²` kills its
+multiplicativity and Steinberg relations; no Bloch comparison is claimed.
+
+The actual glued projective-line cover has a proved overlap pullback.
+Its coordinate-ring Čech–de Rham complex uses the original Kähler maps,
+proved square zero and proved vanishing of higher polynomial chart forms.
+`cechCohomologyTwoIso` identifies `CechH2` with categorical total degree-two
+homology. `firstChern` descends from actual transition units modulo both
+chart coboundaries; their logarithmic forms are explicit total boundaries.
+The coordinate transition has residue one, proving nonvanishing.
+
+The first-Chern source is explicitly the Čech transition quotient.
+Separately, the actual projective-line principal divisor now has proved
+coefficient degree zero over an algebraically closed field. Actual point,
+stalk, function-field and chart-inversion comparisons derive that theorem;
+top-degree carrier transport covers every original principal relation.
+`ProjectiveLineChow.lean` therefore descends degree through the existing
+integral/rational Chow groups. `ProjectiveLineCycleClass.lean` constructs
+the ordinary rational Chow-source map into scalar restriction of `CechH2`
+in characteristic zero, with all coefficient-one points mapping to the
+nonzero first-Chern class. The integral map, rationalization compatibility,
+actual principal invariance and residue degree recovery are proved.
+`ProjectiveLineCohomology.lean` computes the entire actual Čech degree-two
+target by residue over every commutative base ring, with a corresponding
+categorical homology isomorphism. Positive/negative Laurent monomials are
+proved actual chart boundaries; no integer division is used.
+
+Identification of the entire transition quotient with geometric Picard or
+Chow groups and comparison of the Čech target with scheme hypercohomology
+or singular/Hodge cohomology remain `OPEN`. No Chow-degree injectivity or
+coverage of prescribed Hodge classes follows. See
+[0026](working/0026-positive-degree-cycle-realization.md).
 
 ## Actual graph-generated rational Chow convolution (2026-11-05)
 
@@ -77,7 +118,7 @@ categorical homology of the constructed de Rham complex with the same target.
 The class with coordinate `I` is proved outside the rational embedding.
 
 This establishes a positive-dimensional degree-zero comparison. Higher
-cohomology, general scheme/analytic comparison, positive-codimension cycle
+cohomology, general scheme/analytic comparison, general positive-codimension cycle
 classes and prescribed-Hodge-class generation remain `OPEN`. Pullback
 naturality is asserted on the actual closed-function model; no general
 cochain map on exterior powers is supplied. See the

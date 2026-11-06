@@ -17,11 +17,35 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-11-05 (affine de Rham, finite flat Chow transfer and scoped references).
+Last source/interface review: 2026-11-06 (ordinary projective-line cycle classes and selective positive-degree reuse).
 Earlier source records retain their original
 validation scope.
 
-### Further de Rham references (2026-11-05)
+### Ordinary positive-degree cycle-map construction (2026-11-06)
+
+The selected target is ordinary `CH^p → H^(2p)`. Saito's higher-Chow
+results motivate logarithmic and boundary formulas; they are not assumed
+as ordinary-cycle algebraicity theorems.
+
+The pinned Axiom snapshot has a genuine
+[relative de Rham first Chern class](https://github.com/AxiomMath/Stacks/blob/f8e70c5dd04bfabcb423d5e325461f527c85a5d6/StacksFrontier/AlgebraicGeometry/DeRham/FirstChernClass/DeRhamCohomologyFirstChernClass.lean),
+formed by logarithmic differentiation and an actual hypercohomology
+comparison. It is a source candidate, not a new project hypothesis or an
+imported dependency. The local construction selectively adapts its
+[exterior Leibniz proofs](https://github.com/AxiomMath/Stacks/blob/f8e70c5dd04bfabcb423d5e325461f527c85a5d6/StacksFrontier/RingTheory/DeRham/WedgeLeibniz.lean),
+[Laurent Euler calculations](https://github.com/AxiomMath/Stacks/blob/f8e70c5dd04bfabcb423d5e325461f527c85a5d6/StacksFrontier/RingTheory/DeRham/LaurentHomotopy.lean)
+and [actual projective-line gluing](https://github.com/AxiomMath/Stacks/blob/f8e70c5dd04bfabcb423d5e325461f527c85a5d6/StacksFrontier/AlgebraicGeometry/Scheme/Glueing/ProjectiveLine.lean).
+The resulting ordinary Čech first-Chern map has actual boundary descent
+and nonzero residue normalization. The original ordinary projective-line
+Chow-source map now descends through the proved actual principal-divisor
+degree law. General-variety and scheme/singular comparisons remain
+separate. Exact scope is recorded in
+[0026](working/0026-positive-degree-cycle-realization.md), with the
+[attribution inventory](../third_party/axiom-stacks/README.md).
+
+Status: **LOCAL FORMAL CONSTRUCTION WITH ACTUAL ORDINARY P¹ CHOW SOURCE / GENERAL REALIZATION COMPARISON OPEN**.
+
+### Further de Rham references (earlier 2026-11-05 survey)
 
 These papers are references, not added dependencies or Lean theorem inputs.
 The applicability assessments below concern the current realization gaps.

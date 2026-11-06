@@ -42,6 +42,26 @@ RULES["HodgeConjecture.Correspondence.GraphChowBaseComparison"] = (
     "HodgeConjecture.Collision",
     "HodgeConjecture.Realization",
 )
+RULES["HodgeConjecture.Realization.DeRham.PositiveDegree"] = (
+    "HodgeConjecture.Boundary",
+    "HodgeConjecture.Collision",
+    "HodgeConjecture.Correspondence",
+    "HodgeConjecture.Realization.Chow",
+    "HodgeConjecture.Realization.Betti",
+    "HodgeConjecture.Realization.DeRham.AffineGeometricDegree",
+    "HodgeConjecture.Realization.DeRham.AffineLineComparison",
+    "HodgeConjecture.Realization.DeRham.SplitComparison",
+)
+RULES["HodgeConjecture.Realization.DeRham.ProjectiveLineCycleClass"] = (
+    "HodgeConjecture.Collision",
+    "HodgeConjecture.Correspondence.GraphChowAlgebra",
+    "HodgeConjecture.Correspondence.GraphChowBaseComparison",
+    "HodgeConjecture.Realization.Chow",
+    "HodgeConjecture.Realization.Betti",
+    "HodgeConjecture.Realization.DeRham.AffineGeometricDegree",
+    "HodgeConjecture.Realization.DeRham.AffineLineComparison",
+    "HodgeConjecture.Realization.DeRham.SplitComparison",
+)
 
 
 def without_comments(source):
