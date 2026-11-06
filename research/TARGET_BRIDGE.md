@@ -1,7 +1,7 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-11-06 (ordinary projective-line Chow-to-Čech de Rham degree-two
-cycle map; SP108--SP113 retain their stated conditional and research scope).
+Assessed: 2026-11-06 (projective-line scheme de Rham comparison and ordinary
+degree-two cycle map; SP108--SP113 retain their stated conditional and research scope).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -41,9 +41,15 @@ trivializations and nonzero by Laurent residue in actual total degree-two
 homology. Its ordinary Chow-source map is now constructed directly through
 the original principal-relation quotient on the actual projective line,
 using the proved global principal-divisor degree cancellation.
-Scheme/singular target comparisons and generality beyond this example
-remain explicit next obligations. Logarithmic
-higher-Chow ideas are supporting methods for this selected ordinary target.
+The [scheme checkpoint](working/0027-projective-line-scheme-comparison.md)
+now identifies this same target with actual scheme de Rham hypercohomology
+over a field. The comparison is fixed by actual restrictions, affine
+acyclicity, the signed Mayer–Vietoris boundary and the derived inclusion;
+the original ordinary cycle maps commute with it. Next construct P¹(ℂ)'s
+actual point topology and rational singular H², then prove the normalized
+cycle-class comparison. Generality beyond P¹ and Hodge-class coverage remain
+open. Logarithmic higher-Chow ideas are supporting methods for this selected
+ordinary target.
 
 Completed graph-Chow step (2026-11-05): resume the original marked-Galois
 spine recorded in the [canonical diagram](archive/planning/0006-lean-spine-manuscript-outline.md)

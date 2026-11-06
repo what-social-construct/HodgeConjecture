@@ -225,3 +225,18 @@ and computed Čech–de Rham H². Scheme/singular/Hodge comparison and general
 prescribed-class coverage remain open. See
 [0026](working/0026-positive-degree-cycle-realization.md). Existing release
 sign-offs, comparator selection and submission packaging remain unchanged.
+
+The projective-line scheme checkpoint (2026-11-06) passes its 3,693-job
+focused Make build, 38 permanent examples, a named logarithmic representative
+regression and 58 enforced standard-three axiom audits, with no focused-suite
+warnings. The full default build passes 4,578 jobs; root verification passes
+1,350 declaration checks, 574 examples and 1,236 axiom reports within the
+standard three (one report needs no axioms). All 460 library modules plus
+the root pass proof-token/external-import scanning. Ten import boundaries,
+three indirect-negative checks, pins, local documentation links and whitespace
+checks pass. The main README remains 69 lines; existing warning scope remains.
+The actual ordinary P¹ Chow map now lands in actual scheme de Rham H²,
+through the proved sheaf/derived comparison. Singular/Betti realization,
+generality and prescribed Hodge-class coverage remain open. See
+[0027](working/0027-projective-line-scheme-comparison.md). Existing release
+sign-offs, comparator selection and submission packaging remain unchanged.

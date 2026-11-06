@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-11-06 (ordinary projective-line cycle classes in total degree two;
+Last reviewed: 2026-11-06 (projective-line scheme comparison and ordinary degree-two cycle classes;
 earlier checkpoint records retain
 their original validation scope).
 
@@ -71,8 +71,19 @@ and boundary ideas. The ordinary Chow-source map is now also constructed
 for the actual projective line: its principal-divisor degree theorem kills
 every original relation and descends through the existing integral/rational
 Chow quotients, with point normalization in total degree two.
-Scheme/singular realization and general-variety/codimension comparisons
-remain open. See [0026](working/0026-positive-degree-cycle-realization.md).
+The [scheme bridge](working/0027-projective-line-scheme-comparison.md)
+now identifies that original target with actual sheaf de Rham hypercohomology
+on the same P¹ over a field. Canonical chart sections, affine acyclicity,
+signed Mayer–Vietoris and the two-term derived triangle are proved; the
+ordinary Chow maps commute with this comparison.
+
+The next bounded obligation is P¹(ℂ) with its actual complex-point topology,
+independently constructed rational singular H², and the comparison square
+with the correct Chern-class period normalization. The existing Betti layer
+computes H⁰. General varieties/codimensions and prescribed-class coverage
+remain open; no higher Betti comparison follows from the scalar coordinate
+calculation alone. The preceding algebraic checkpoint remains
+[0026](working/0026-positive-degree-cycle-realization.md).
 
 The preceding graph-Chow implementation resumed the original marked-Galois
 algebraic decomposition spine, as explained in the target sketch. Actual

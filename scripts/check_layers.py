@@ -62,6 +62,24 @@ RULES["HodgeConjecture.Realization.DeRham.ProjectiveLineCycleClass"] = (
     "HodgeConjecture.Realization.DeRham.AffineLineComparison",
     "HodgeConjecture.Realization.DeRham.SplitComparison",
 )
+RULES["HodgeConjecture.Realization.DeRham.ProjectiveLineSchemeComparison"] = (
+    "HodgeConjecture.Cycles",
+    "HodgeConjecture.Collision",
+    "HodgeConjecture.Correspondence",
+    "HodgeConjecture.Realization.Chow",
+    "HodgeConjecture.Realization.Betti",
+)
+RULES["HodgeConjecture.Realization.DeRham.ProjectiveLineSchemeCycleClass"] = RULES[
+    "HodgeConjecture.Realization.DeRham.ProjectiveLineCycleClass"
+]
+for entry in (
+    "HodgeConjecture.Realization.DeRham.Core",
+    "HodgeConjecture.Realization.DeRham.AffineComponents",
+    "HodgeConjecture.Realization.DeRham.AffineLineComparison",
+    "HodgeConjecture.Realization.DeRham.PositiveDegree",
+    "HodgeConjecture.Realization.DeRham.ProjectiveLineCycleClass",
+):
+    RULES[entry] += ("HodgeConjecture.SheafCohomology",)
 
 
 def without_comments(source):

@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-11-06 (ordinary projective-line Chow-to-Čech de Rham cycle classes;
+Last audited: 2026-11-06 (projective-line scheme de Rham comparison and ordinary cycle classes;
 earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,31 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Projective-line scheme de Rham comparison (2026-11-06)
+
+Status: `FORMAL`. For the same glued P¹ over a field,
+`ProjectiveLineSchemeComparison.lean` identifies the original Čech H²
+linearly over that field with actual degree-two derived global sections
+of the constructed sheaf de Rham complex. Section scalars and restrictions
+come from the original structural morphism. The canonical affine
+sheafification units, local one-form bases and higher-form vanishing are
+proved. Actual affine acyclicity, the signed Mayer–Vietoris boundary and
+the two-term derived inclusion fix the comparison on overlap representatives.
+No comparison or acyclicity premise is supplied at this P¹ endpoint.
+
+`ProjectiveLineSchemeCycleClass.lean` carries the original integral and
+rational Chow maps into this actual scheme target and proves the original
+comparison square, point normalization, principal invariance,
+rationalization, nonvanishing and rational coefficient bound. The integral
+source requires an algebraically closed field; rational classes additionally
+require characteristic zero. The scheme comparison itself needs only a field.
+
+Singular/Betti realization, an independent positive-degree Hodge structure,
+general varieties/codimensions and identification with a separately
+formalized general Picard/Chern API remain `OPEN`. No prescribed Hodge-class
+coverage or new Hodge-conjecture case is claimed. See
+[0027](working/0027-projective-line-scheme-comparison.md).
 
 ## Positive-degree realization and ordinary projective-line cycle classes (2026-11-06)
 
@@ -55,8 +80,8 @@ categorical homology isomorphism. Positive/negative Laurent monomials are
 proved actual chart boundaries; no integer division is used.
 
 Identification of the entire transition quotient with geometric Picard or
-Chow groups and comparison of the Čech target with scheme hypercohomology
-or singular/Hodge cohomology remain `OPEN`. No Chow-degree injectivity or
+Chow groups and singular/Hodge comparison remain `OPEN`. The separate P¹
+scheme-hypercohomology comparison is now formalized above. No Chow-degree injectivity or
 coverage of prescribed Hodge classes follows. See
 [0026](working/0026-positive-degree-cycle-realization.md).
 

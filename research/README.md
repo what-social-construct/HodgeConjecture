@@ -25,9 +25,12 @@ The [graph-Chow checkpoint](working/0025-graph-chow-convolution.md) resumes the
 marked-Galois spine with actual graph-generated Chow convolution.
 The [positive-degree construction](working/0026-positive-degree-cycle-realization.md)
 builds the ordinary Čech first-Chern map and an actual ordinary Chow-source
-cycle map on the projective line, keeping scheme/singular comparisons explicit.
+cycle map on the projective line.
+The [scheme comparison checkpoint](working/0027-projective-line-scheme-comparison.md)
+connects that target to actual sheaf de Rham hypercohomology on the same P¹;
+integration validation passes, and the singular comparison remains open.
 [Focused build commands](BUILDING.md) separate the algebraic core, Chow,
-Betti, comparison and integration checks.
+scheme comparison, Betti and integration checks.
 
 The current library includes finite cycle/Chow pushforward composition,
 finite flat Chow pullback and degree, an actual affine de Rham complex and

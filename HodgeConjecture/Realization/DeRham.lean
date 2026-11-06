@@ -5,6 +5,7 @@ public import HodgeConjecture.Realization.DeRham.AffineComponents
 public import HodgeConjecture.Realization.DeRham.AffineLineComparison
 public import HodgeConjecture.Realization.DeRham.PositiveDegree
 public import HodgeConjecture.Realization.DeRham.ProjectiveLineCycleClass
+public import HodgeConjecture.Realization.DeRham.ProjectiveLineSchemeCycleClass
 public import HodgeConjecture.Realization.DeRham.AffineGeometricDegree
 public import HodgeConjecture.Realization.DeRham.SplitComparison
 

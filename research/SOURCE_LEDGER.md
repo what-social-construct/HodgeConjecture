@@ -17,9 +17,30 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-11-06 (ordinary projective-line cycle classes and selective positive-degree reuse).
+Last source/interface review: 2026-11-06 (verified projective-line sheaf/derived comparison and selective foundational reuse).
 Earlier source records retain their original
 validation scope.
+
+### Projective-line scheme de Rham bridge (2026-11-06)
+
+The [0027 checkpoint](working/0027-projective-line-scheme-comparison.md)
+connects the original Čech target to hypercohomology of the constructed
+sheaf de Rham complex on the same glued P¹. The scheme bridge uses a field
+of any characteristic. Integral Chow classes retain algebraic closure;
+rational Chow classes additionally retain characteristic zero.
+
+| Source-matched step | Source and local construction | Scope |
+| --- | --- | --- |
+| Sheaf forms and actual derived sections | Mathlib's Kähler modules, sheafification and `Functor.rightDerivedFunctorPlus`; local `SheafComplex.lean` and `SheafHypercohomology.lean` | The original structure morphism fixes scalars and restrictions. Hypercohomology is constructed in the actual category of fixed-ring sheaves. No realization or comparison is supplied as a premise. |
+| Affine acyclicity | Selected proofs from pinned Axiom [standard-cover vanishing](https://github.com/AxiomMath/Stacks/blob/f8e70c5dd04bfabcb423d5e325461f527c85a5d6/StacksFrontier/AlgebraicGeometry/Cohomology/Cech/StandardCoverVanishing.lean), [affine vanishing](https://github.com/AxiomMath/Stacks/blob/f8e70c5dd04bfabcb423d5e325461f527c85a5d6/StacksFrontier/AlgebraicGeometry/Cohomology/Cech/AffineVanishing.lean) and their local algebra/basis helpers | Local rewrites use native Mathlib sheaves and the original section maps. A localized criterion and actual differential bases discharge all P¹ chart/overlap acyclicity inputs in the original coefficient category. |
+| Degree-two scheme comparison | Mathlib's homology sequence, derived short-exact-sequence triangles and exact coefficient forgetting; local `TwoOpenModules.lean`, `TwoTermHypercohomology.lean` and `ProjectiveLineSchemeComparison.lean` | The comparison follows actual overlap representatives through the signed Mayer–Vietoris boundary and derived inclusion. It does not choose an isomorphism from matching dimensions. |
+| Ordinary Chow-source realization | The original maps from [0026](working/0026-positive-degree-cycle-realization.md), composed with the scheme bridge | Principal invariance, point normalization, rationalization and the rational coefficient bound retain their original ordinary Chow sources. Singular/Betti comparison and general varieties/codimensions remain open. |
+
+This is selective local proof adaptation, with pinned attribution and license
+in the [reuse inventory](../third_party/axiom-stacks/README.md). Irrelevant
+arithmetic/analysis imports inherited in the restriction helper were pruned.
+There is no external Axiom/Stacks Lake dependency and no imported source axiom.
+Focused and integration validation of the final bridge remain pending.
 
 ### Ordinary positive-degree cycle-map construction (2026-11-06)
 
@@ -38,8 +59,8 @@ and [actual projective-line gluing](https://github.com/AxiomMath/Stacks/blob/f8e
 The resulting ordinary Čech first-Chern map has actual boundary descent
 and nonzero residue normalization. The original ordinary projective-line
 Chow-source map now descends through the proved actual principal-divisor
-degree law. General-variety and scheme/singular comparisons remain
-separate. Exact scope is recorded in
+degree law. The P¹ scheme bridge is developed in 0027 above; general-variety
+and singular comparisons remain separate. Exact scope is recorded in
 [0026](working/0026-positive-degree-cycle-realization.md), with the
 [attribution inventory](../third_party/axiom-stacks/README.md).
 
@@ -74,7 +95,7 @@ status above; none is supplied as a Lean premise.
 | Source-matched step | Exact source | Project proof and scope |
 | --- | --- | --- |
 | Affine differential and actual cochain complex | [Stacks 0FKF](https://stacks.math.columbia.edu/tag/0FKF) and the defining [equation 0FKG](https://stacks.math.columbia.edu/tag/0FKG) | `CommutativeAlgebra/DeRham/{Differential,Complex}.lean` adapts the construction, uniqueness and square-zero proofs from the pinned Axiom Stacks files. General base change and quotient descent are omitted. The existing Mathlib exterior powers and Kähler modules remain the terms. |
-| Degree-zero algebra trace | [Stacks 0FLC, property (1)](https://stacks.math.columbia.edu/tag/0FLC); Mathlib `Algebra.trace_algebraMap_of_basis` | `Realization/DeRham/FiniteUnramifiedTrace.lean` uses the actual algebra trace when source and target are formally unramified over the base, so all functions are closed. A finite basis proves the degree law; the same affine map's geometric rank and computed cycle degree are identified. General maps on forms and scheme hypercohomology are not ported. |
+| Degree-zero algebra trace | [Stacks 0FLC, property (1)](https://stacks.math.columbia.edu/tag/0FLC); Mathlib `Algebra.trace_algebraMap_of_basis` | `Realization/DeRham/FiniteUnramifiedTrace.lean` uses the actual algebra trace when source and target are formally unramified over the base, so all functions are closed. A finite basis proves the degree law; the same affine map's geometric rank and computed cycle degree are identified. This trace construction does not supply a general map on forms or a scheme-hypercohomology trace. |
 | Finite split Chow/de Rham/Betti squares | Direct comparison of existing finite split geometry and singular cohomology | `SplitComparison.lean` constructs cycle class from actual point coefficients and compares it to `ℂ ⊗[ℚ] H⁰_B`. Pullback, trace, intersection and reduced-point normalization are proved. This supplies no positive-dimensional analytic comparison or class-generation theorem. |
 | Complex affine-line degree-zero comparison | Direct proof from Mathlib polynomial evaluation/topology, standard simplices and tensor products | `AffineLineComplexPoints`, `SingularPathConnected` and `AffineLineComparison` construct the actual topology, path-induced cocycle equality, genuine complexification and evaluation/multiplication/polynomial pullback squares. This is the bounded `H⁰` comparison for `ℂ[X]`, not a formalization of general analytic de Rham comparison or positive-codimension cycle classes. |
 

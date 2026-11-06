@@ -13,11 +13,12 @@ repository. Existing build artifacts are reused.
 | Finite flat cycles and Chow transfer | `make build-chow` | `make check-chow` |
 | Graph-generated Chow convolution and absolute products | `make build-graph-chow` | `make check-graph-chow` |
 | Positive-degree forms and ordinary projective-line cycle classes | `make build-positive-degree` | `make check-positive-degree` |
+| Projective-line scheme de Rham comparison and ordinary cycle classes | `make build-scheme-comparison` | `make check-scheme-comparison` |
 | Existing singular Betti realization | `make build-betti` | Covered by comparison and integration checks |
 | De Rham/geometric degree and Chow–Betti squares | `make build-comparison` | `make check-comparison` |
 | Complete library and public imports | `make build` | `make check-integration` |
 
-`make help` lists the commands. `make check` runs all eight verification groups
+`make help` lists the commands. `make check` runs all nine verification groups
 and checks the import boundaries. Make runs the groups sequentially; Lake
 retains its own build parallelism. A failed command stops the checks.
 
@@ -31,6 +32,8 @@ lake build HodgeConjecture.Realization.Chow.FiniteFlatTransfer
 lake build HodgeConjecture.Correspondence.GraphChowBaseComparison
 lake build HodgeConjecture.Realization.DeRham.PositiveDegree
 lake build HodgeConjecture.Realization.DeRham.ProjectiveLineCycleClass
+lake build HodgeConjecture.Realization.DeRham.ProjectiveLineSchemeComparison
+lake build HodgeConjecture.Realization.DeRham.ProjectiveLineSchemeCycleClass
 lake build HodgeConjecture.Realization.Betti
 lake build HodgeConjecture.Realization.DeRham
 ```
@@ -68,11 +71,21 @@ projective-line cover, logarithmic forms, quotient cup product and nonzero
 Čech first-Chern class. It excludes project Betti/Chow realization,
 correspondence and boundary machinery. The build command also builds the
 separate ordinary projective-line cycle-class entry point. That target uses
-111 project modules: the actual Chow quotient, grading and normalization algebra, while excluding
+112 project modules: the actual Chow quotient, grading and normalization algebra, while excluding
 Betti, the old assumed Chow-realization layer and graph-Chow convolution.
 Its actual principal-divisor degree theorem discharges relation invariance.
 
-`make check-layers` enforces eight transitive project-import boundaries:
+The pure scheme-comparison target has 50 project modules. It constructs the
+actual sheaf complex, derived sections and the P¹ Čech comparison while
+excluding project cycles, Chow realization, correspondences, collision
+geometry and Betti. The separate ordinary-source target has 150 project
+modules and composes that bridge with the original Chow maps.
+`make build-scheme-comparison` builds this latter entry point;
+`make check-scheme-comparison` also runs `SchemeComparisonVerification.lean`.
+The [scheme checkpoint](working/0027-projective-line-scheme-comparison.md)
+records the scope and completed integration validation.
+
+`make check-layers` enforces ten transitive project-import boundaries:
 
 - The de Rham core excludes scheme cycles, Chow, Betti and comparison modules.
 - Polynomial/component calculations have the same exclusions as the core.
@@ -82,12 +95,21 @@ Its actual principal-divisor degree theorem discharges relation invariance.
 - Graph Chow convolution excludes collision geometry and project realization.
 - Positive-degree algebraic realization excludes Betti, existing Chow realization and boundary/correspondence machinery.
 - Ordinary projective-line cycle classes exclude Betti, the assumed Chow-realization layer, collision geometry and graph-Chow convolution.
+- Pure projective-line scheme comparison excludes project cycles, Chow realization, correspondences, collision geometry and Betti.
+- Ordinary projective-line scheme cycle classes exclude Betti, the assumed Chow-realization layer, collision geometry and graph-Chow convolution.
+
+The existing core, polynomial/component, affine-line, positive-degree and
+ordinary Čech cycle-class entry points also exclude the new sheaf-cohomology
+foundation. Import-closure counts above are read from source by
+`scripts/check_layers.py`; they are not build-job or verification counts.
 
 This remains one Lake package and one dependency lockfile. A smaller target
 still builds all of its actual dependencies: the upstream general Stacks
 de Rham trace would still require its roughly 4,000-module dependency chain.
 There is no Axiom/Stacks package import in this repository: selected proofs
 are adapted locally, with citations and the upstream license retained.
+Irrelevant arithmetic and analysis imports inherited in the selected sheaf
+restriction helper were pruned from the local adaptation.
 The selective affine adaptation avoids that dependency; it does not establish
 the general scheme trace or general positive-dimensional Betti comparison.
 

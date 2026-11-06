@@ -6,7 +6,7 @@ with actual Chow groups and their cycle maps; correspondences, collision
 geometry, and boundary inertia provide supporting construction tools.
 
 **Current status:** proved mechanisms include finite split Chow/Betti/Hodge
-comparison and an ordinary projective-line Chow-to-Čech-de Rham `H²` map.
+comparison and ordinary projective-line cycle classes in scheme de Rham `H²`.
 General Betti realization and prescribed-class generation remain open.
 No new case of the Hodge conjecture is claimed.
 

@@ -37,8 +37,12 @@ manuscript. Do not combine old checkpoint descriptions into a proof plan.
   comparison, keeping prescribed realization and class coverage open.
 - `PALOMAR_FIXED_RING_HANDOFF.md` records the separate submission boundary.
 - [0026-positive-degree-cycle-realization.md](0026-positive-degree-cycle-realization.md)
-  records actual positive-degree cohomology and the nonzero ordinary Čech
-  first-Chern construction, with the source/target comparisons explicit.
+  records actual positive-degree cohomology, the nonzero ordinary Čech
+  first-Chern construction and its original ordinary Chow-source map.
+- [0027-projective-line-scheme-comparison.md](0027-projective-line-scheme-comparison.md)
+  records actual sheaf forms, affine acyclicity and the derived P¹ comparison,
+  with a separate ordinary Chow-source entry point and completed integration
+  validation. Betti and general-variety comparisons remain open.
 - `../bench/` holds the standalone matrix-restriction diagnostic outside
   active imports; this is not an obstruction in the intended target route.
 

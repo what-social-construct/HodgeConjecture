@@ -5,6 +5,11 @@ Started: 2026-11-05. Validation completed: 2026-11-06. The selected target is th
 are proof ideas for this task. No identification with Bloch higher Chow
 groups or new Hodge-conjecture case is claimed.
 
+Subsequent progress: [0027](0027-projective-line-scheme-comparison.md)
+constructs the P¹ scheme-hypercohomology comparison recorded as open below.
+This document retains the scope and validation of the preceding Čech checkpoint;
+the singular/Betti comparison remains separate.
+
 ## Pinned Axiom objects and selective reuse
 
 The source audit retains AxiomMath/Stacks revision

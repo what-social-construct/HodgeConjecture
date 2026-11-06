@@ -23,7 +23,14 @@ ordinary projective-line Chow-to-Čech-de Rham degree-two cycle map.
 orders and chart/infinity decomposition. `ProjectiveLineCycleClass` retains
 the existing integral/rational Chow source and point normalization;
 `ProjectiveLineCohomology` computes the entire constructed Čech target.
-General scheme/singular realization and Hodge-class coverage remain open.
+The [scheme checkpoint](working/0027-projective-line-scheme-comparison.md)
+adds actual fixed-ring form sheaves, canonical affine section comparisons,
+proved local affine acyclicity and a two-term derived comparison.
+`ProjectiveLineSchemeComparison` identifies the original Čech target with
+actual scheme de Rham H² over a field; `ProjectiveLineSchemeCycleClass`
+retains the original ordinary Chow source and comparison square. The
+comparison is fixed on actual logarithmic representatives. Singular/Betti
+realization, general varieties/codimensions and Hodge-class coverage remain open.
 
 
 This Lean project develops collision ideals as scheme-theoretic input to
