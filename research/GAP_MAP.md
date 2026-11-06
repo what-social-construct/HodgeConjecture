@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-11-06 (exact rational dualization and full singular Mayer–Vietoris;
+Last reviewed: 2026-11-06 (actual circle H¹ and projective-line singular H²;
 earlier checkpoint records retain
 their original validation scope).
 
@@ -101,8 +101,19 @@ and the initial degree-zero injection are proved. Chart and intersection
 groups use their actual subtype topologies; original continuous pullback
 formulas fix the restriction and first-minus-second difference.
 
-The next obligation is the actual circle and P¹ singular calculations,
-followed by the oriented generator and cycle-class period comparison.
+The [circle/P¹ checkpoint](working/0032-circle-projective-line-singular-cohomology.md)
+now proves homotopy invariance of the actual rational cochains, positive-degree
+vanishing for contractible spaces, and the two original circle-chart
+contractions. The overlap has two proved path components. Its actual H⁰
+boundary quotient computes circle H¹ as ℚ, with a nonzero cover generator.
+The original P¹ affine charts are contractible; their original native
+connecting map is an isomorphism from overlap H¹ to P¹ H². Actual radial
+pullback therefore computes this independent rational singular H² as ℚ.
+
+The next obligation is to compare the cover generator with a standard
+oriented loop and the analytic period, retaining the two cover-sign
+conventions and complex scalar extension. This will supply the oriented
+cycle-class period comparison; a rational coordinate alone does not do so.
 The [degeneration audit](working/0030-hodge-derham-degeneration-audit.md)
 also records the missing general characteristic-zero spectral-sequence
 theorem; the existing bounded P¹ de Rham computation does not supply it.

@@ -17,9 +17,23 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-11-06 (verified projective-line sheaf/derived comparison and selective foundational reuse).
+Last source/interface review: 2026-11-06 (actual circle/P¹ singular cohomology and native foundational reuse).
 Earlier source records retain their original
 validation scope.
+
+### Actual circle and projective-line singular calculations (2026-11-06)
+
+The [0032 checkpoint](working/0032-circle-projective-line-singular-cohomology.md)
+uses pinned native Mathlib results and local proofs; no Stacks or other
+source conclusion is assumed at the concrete endpoints.
+
+| Source-matched step | Source and local construction | Scope |
+| --- | --- | --- |
+| Actual cochain homotopy | `Mathlib.AlgebraicTopology.SingularHomology.HomotopyInvariance`; local `SingularHomotopy.lean` transposes the actual chain homotopy through the proved cochain comparison | Original continuous homotopies induce equal actual rational cohomology pullbacks in every degree. |
+| Contractible positive-degree vanishing | Native `singularChainComplexFunctor_exactAt_of_totallyDisconnectedSpace`, exact rational dualization, and native `ContractibleSpace.hequiv_unit`; local `SingularContractible.lean` | The original point-chain exactness proves point cohomology vanishes; actual topological contractions give vanishing without finite-dimensionality. |
+| Actual circle two-arc calculation | Native complex argument/exponential and interval convexity; local `CircleTopology.lean`, `SingularComponents.lean` and `CircleCohomology.lean` | Actual component evaluation and original continuous pullbacks compute the kernel and image of the actual Mayer–Vietoris boundary. Its quotient gives H¹ as ℚ. |
+| Actual P¹ overlap and connecting isomorphism | Native `homeomorphUnitSphereProd`, explicit radial homotopy, and the original P¹ charts; local `PuncturedComplexCircle.lean`, `ProjectiveLineAnalyticCover.lean` and `ProjectiveLineSingularCohomology.lean` | Contractible-chart vanishing proves the native boundary itself is an isomorphism. The forward circle-to-P¹ map is the actual radial pullback followed by this boundary. |
+| Rational H² coordinate | The preceding proved maps and the local circle H¹ quotient; `Betti/ProjectiveLineCohomology.lean` | Actual H² of the original complex-point space is ℚ with a nonzero cover generator. Standard oriented-loop pairing, de Rham period agreement and ordinary Betti cycle compatibility remain open. |
 
 ### Projective-line scheme de Rham bridge (2026-11-06)
 
@@ -40,7 +54,8 @@ This is selective local proof adaptation, with pinned attribution and license
 in the [reuse inventory](../third_party/axiom-stacks/README.md). Irrelevant
 arithmetic/analysis imports inherited in the restriction helper were pruned.
 There is no external Axiom/Stacks Lake dependency and no imported source axiom.
-Focused and integration validation of the final bridge remain pending.
+Focused and integration validation of that bridge passed as recorded in
+[0027](working/0027-projective-line-scheme-comparison.md).
 
 ### Ordinary positive-degree cycle-map construction (2026-11-06)
 

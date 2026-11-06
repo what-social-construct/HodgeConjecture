@@ -86,6 +86,18 @@ RULES["HodgeConjecture.Realization.Betti.SmallChains"] = RULES[
 RULES["HodgeConjecture.Realization.Betti.SingularMayerVietorisMaps"] = RULES[
     "HodgeConjecture.Realization.Betti.SingularCochains"
 ]
+RULES["HodgeConjecture.Realization.Betti.Examples.CircleCohomology"] = RULES[
+    "HodgeConjecture.Realization.Betti.SingularCochains"
+]
+RULES["HodgeConjecture.Realization.Betti.Examples.ProjectiveLineSingularCohomology"] = (
+    "HodgeConjecture.Correspondence",
+    "HodgeConjecture.Realization.Chow",
+    "HodgeConjecture.Realization.DeRham",
+    "HodgeConjecture.SheafCohomology",
+)
+RULES["HodgeConjecture.Realization.Betti.ProjectiveLineCohomology"] = RULES[
+    "HodgeConjecture.Realization.Betti.Examples.ProjectiveLineSingularCohomology"
+]
 RULES["HodgeConjecture.Realization.DeRham.LaurentPeriods"] = (
     "HodgeConjecture.Geometry",
     "HodgeConjecture.Cycles",

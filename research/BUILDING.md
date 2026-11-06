@@ -18,11 +18,13 @@ repository. Existing build artifacts are reused.
 | Analytic Laurent integrals, scheme periods and ordinary cycle normalization | `make build-projective-line-periods` | `make check-projective-line-periods` |
 | Rational singular subdivision and two-open small-chain comparison | `make build-small-chains` | `make check-small-chains` |
 | Exact rational dualization and full singular Mayer–Vietoris | `make build-singular-cohomology` | `make check-singular-cohomology` |
+| Actual circle singular H¹ and its cover generator | `make build-circle-cohomology` | `make check-circle-cohomology` |
+| Actual projective-line singular H² and its cover generator | `make build-projective-line-cohomology` | `make check-projective-line-cohomology` |
 | Existing singular Betti realization | `make build-betti` | Covered by comparison and integration checks |
 | De Rham/geometric degree and Chow–Betti squares | `make build-comparison` | `make check-comparison` |
 | Complete library and public imports | `make build` | `make check-integration` |
 
-`make help` lists the commands. `make check` runs all thirteen verification groups
+`make help` lists the commands. `make check` runs all fifteen verification groups
 and checks the import boundaries. Make runs the groups sequentially; Lake
 retains its own build parallelism. A failed command stops the checks.
 
@@ -42,6 +44,8 @@ lake build HodgeConjecture.Realization.Betti.ProjectiveLine
 lake build HodgeConjecture.Realization.DeRham.ProjectiveLinePeriods
 lake build HodgeConjecture.Realization.Betti.SmallChains
 lake build HodgeConjecture.Realization.Betti.SingularMayerVietorisMaps
+lake build HodgeConjecture.Realization.Betti.Circle
+lake build HodgeConjecture.Realization.Betti.ProjectiveLineCohomology
 lake build HodgeConjecture.Realization.Betti
 lake build HodgeConjecture.Realization.DeRham
 ```
@@ -122,7 +126,22 @@ topology separately. The pure library entry point has the same exclusions
 as the small-chain target. See
 [0031](working/0031-singular-cohomology-mayer-vietoris.md).
 
-`make check-layers` enforces fourteen transitive project-import boundaries:
+The circle entry point has 36 project modules, including its umbrella.
+Its three suites check actual homotopy invariance, contractible-space
+vanishing, original circle-chart homeomorphisms and components, and the
+actual Mayer–Vietoris H¹ boundary quotient. It excludes project geometry,
+cycles, Chow, correspondences, de Rham and sheaf cohomology.
+
+The separate P¹ singular H² entry point has 52 project modules. It includes
+the original scheme and complex-point geometry, including its foundational
+finite-type dimension dependency. It excludes Chow realization,
+correspondences, de Rham and sheaf cohomology. Its three suites check the
+actual affine charts, radial homotopy, original connecting isomorphism and
+nonzero rational generator of actual H². The original Betti-input target
+remains separate. See
+[0032](working/0032-circle-projective-line-singular-cohomology.md).
+
+`make check-layers` enforces seventeen transitive project-import boundaries:
 
 - The de Rham core excludes scheme cycles, Chow, Betti and comparison modules.
 - Polynomial/component calculations have the same exclusions as the core.
@@ -137,6 +156,9 @@ as the small-chain target. See
 - All-degree singular cochains exclude project geometry, cycles, correspondences, Chow, de Rham and sheaf cohomology.
 - Small-chain subdivision and cover comparison have the same exclusions.
 - Exact rational dualization and full singular Mayer–Vietoris have the same exclusions.
+- The circle H¹ calculation has the same exclusions.
+- The original P¹ connecting calculation excludes Chow realization, correspondences, de Rham and sheaf cohomology.
+- The final P¹ H² entry point has those same exclusions.
 - Analytic Laurent periods exclude project geometry, cycles, correspondences, Chow, Betti and sheaf cohomology.
 
 The existing core, polynomial/component, affine-line, positive-degree and

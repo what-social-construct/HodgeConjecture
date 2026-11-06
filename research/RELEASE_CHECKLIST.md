@@ -288,3 +288,20 @@ Hodge–de Rham degeneration proof, so no outside submission copy was made.
 See [0031](working/0031-singular-cohomology-mayer-vietoris.md) and
 [0030](working/0030-hodge-derham-degeneration-audit.md). Release sign-offs,
 comparator selection and submission packaging remain unchanged.
+
+The circle/projective-line singular cohomology checkpoint (2026-11-06)
+passes its 2,689-job circle and 3,256-job actual P¹ focused builds. Six
+suites pass 52 examples, 16 named mathematical checks and 165 enforced
+standard-three axiom audits with zero suite warnings. The full default
+build passes 5,068 jobs; root verification passes 1,512 declaration checks,
+574 examples and 1,376 axiom reports within the standard three (one report
+needs no axioms). All 505 library modules plus the root pass source scans;
+seventeen import boundaries, three indirect-negative checks, pins, local
+links and whitespace checks pass. Existing warning scope remains, including
+92 root-verification style warnings; the main README remains 69 lines.
+Actual circle H¹ and original P¹ singular H² are computed as rational
+lines, with nonzero generators from original Mayer–Vietoris boundaries.
+The standard oriented-loop/de Rham period comparison and ordinary Betti
+cycle compatibility remain open. See
+[0032](working/0032-circle-projective-line-singular-cohomology.md).
+Release sign-offs, comparator selection and submission packaging remain unchanged.

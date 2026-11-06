@@ -17,5 +17,7 @@ This entry point provides the genuine singular H² target. It does not
 compute that target or compare it with scheme de Rham H². The separate
 `SmallChains` entry point proves the rational chain-homology cover comparison.
 The separate singular Mayer–Vietoris layer supplies full-cochain dualization
-and the cover sequence. Computing H² and its oriented normalization remain open.
+and the cover sequence. `ProjectiveLineCohomology` separately computes actual
+rational H² and its cover generator. The oriented analytic period comparison
+remains open.
 -/

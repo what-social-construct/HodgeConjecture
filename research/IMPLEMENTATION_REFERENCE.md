@@ -39,8 +39,9 @@ the H⁰ bridge and the affine-atlas homeomorphism to native `OnePoint ℂ`.
 `DeRham.LaurentPeriods` proves the actual circle-integral residue formula;
 `DeRham.ProjectiveLinePeriods` descends it to the original Čech and scheme
 targets and proves normalized ordinary Chow period equals degree.
-The singular H² computation, oriented Betti comparison, general
-varieties/codimensions and Hodge-class coverage remain open.
+The singular H² computation is completed in the current checkpoint below.
+Oriented Betti comparison, general varieties/codimensions and Hodge-class
+coverage remain open.
 
 The [small-chain checkpoint](working/0029-small-singular-chains.md) adds the
 focused `Betti.SmallChains` entry point. `SingularSubcomplexes` and native
@@ -59,8 +60,20 @@ dualization and native chain/cochain quasi-isomorphism preservation.
 cochains and the canonical full-to-small restriction. `CochainPair` and
 `SingularMayerVietoris` construct the full cover sequence on actual subtype
 cohomologies; `SingularMayerVietorisMaps` proves the original continuous
-pullback formulas and first-minus-second difference. The circle/P¹ group
-calculations and oriented period comparison remain open.
+pullback formulas and first-minus-second difference.
+
+The [circle/P¹ checkpoint](working/0032-circle-projective-line-singular-cohomology.md)
+adds `SingularHomotopy`, `SingularContractible`, `SingularDegreeZeroNaturality`
+and `SingularComponents`. The focused `Betti.Circle` entry point computes
+actual circle H¹ by the original two-chart boundary quotient, using native
+circle topology and actual path components. `TwoComponentBoundary` supplies
+the proved quotient by constant pairs. The focused
+`Betti.ProjectiveLineCohomology` entry point combines this with actual radial
+pullback and the original P¹ affine-chart connecting isomorphism.
+`ProjectiveLineBettiCohomology.h2Equiv` computes actual singular H² as ℚ;
+`coverGenerator_eq_connecting` retains the original maps, and
+`eq_smul_coverGenerator` expresses every actual class in that basis.
+The oriented period and ordinary Betti cycle-class comparison remain open.
 
 
 This Lean project develops collision ideals as scheme-theoretic input to

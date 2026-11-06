@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-11-06 (exact rational dualization and full singular Mayer–Vietoris;
+Last audited: 2026-11-06 (actual circle H¹ and projective-line singular H²;
 earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,39 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Actual circle H¹ and projective-line singular H² (2026-11-06)
+
+Status: `FORMAL`. Actual rational singular cochains are homotopy invariant
+through the dual of the original native chain homotopy. Native point-chain
+exactness and exact rational dualization prove positive-degree cohomology
+vanishes on contractible spaces. Canonical H⁰ coordinates commute with
+original continuous pullback.
+
+For native `Circle`, the two punctured opens have actual interval
+homeomorphisms and contractions. Their overlap is homeomorphic to the
+disjoint union of the negative and positive argument intervals. Proved
+path-component evaluation identifies its actual H⁰ with `Bool → ℚ`.
+Original chart pullback has exactly the constant-pair image. Exactness
+makes the actual boundary onto with that kernel, proving
+`H¹(Circle, ℚ) ≃ₗ[ℚ] ℚ`. Its nonzero cover generator is the boundary of
+the upper-component indicator.
+
+For the original over-ℂ points of P¹, the actual affine-chart ranges are
+contractible. Their original native Mayer–Vietoris boundary
+`H¹(U ∩ V) → H²(P¹)` is itself an isomorphism. A proved radial homotopy
+equivalence of the actual overlap with `Circle` gives the actual pullback.
+Composing these maps computes `H²(P¹(ℂ), ℚ) ≃ₗ[ℚ] ℚ`; every actual class
+is a unique rational multiple of the resulting boundary generator.
+
+These statements supply no topological or cohomological computation as a
+premise at the concrete endpoints. The identification with a standard
+oriented loop pairing, complex scalar extension and agreement with the
+analytic de Rham `2πi` period remain `OPEN`. A rank-one isomorphism alone
+does not establish those comparisons or an ordinary Betti cycle map.
+General Hodge-class coverage and general characteristic-zero degeneration
+also remain `OPEN`. See
+[0032](working/0032-circle-projective-line-singular-cohomology.md).
 
 ## Exact rational dualization and full singular Mayer–Vietoris (2026-11-06)
 
@@ -39,8 +72,9 @@ the difference. The connecting morphism comes from the original native
 short exact sequence and proved small-cochain comparison.
 
 This uses literal ℚ coefficients and universe-zero topological spaces,
-including the original P¹(ℂ). Computing circle/P¹ groups, the oriented
-Betti period comparison and prescribed Hodge-class coverage remain `OPEN`.
+including the original P¹(ℂ). The circle H¹/P¹ H² calculations are now
+proved above; the oriented Betti period comparison and prescribed
+Hodge-class coverage remain `OPEN`.
 General characteristic-zero Hodge–de Rham degeneration is also `OPEN`
 here: no Hodge filtration/spectral-sequence construction or closed general
 degeneration endpoint is supplied. See the
@@ -74,8 +108,8 @@ Rational cochains on an arbitrary simplicial union carry the actual short
 exact gluing sequence and connecting maps. Its first term for a topological
 cover is cochains on the small singular subcomplex. Exact rational
 dualization and full singular Mayer–Vietoris are now formalized in the
-entry above. P¹ H² computation, oriented Betti comparison and Hodge-class
-coverage remain `OPEN`. See
+entry above. The P¹ H² computation is proved in the current checkpoint;
+oriented Betti comparison and Hodge-class coverage remain `OPEN`. See
 [0029](working/0029-small-singular-chains.md).
 
 ## Projective-line Betti inputs and analytic periods (2026-11-06)
@@ -99,8 +133,8 @@ scheme comparison. The original scheme Chern coordinate has period `2πi`;
 the normalized period of every ordinary rational Chow class is its actual
 rational degree embedded in ℂ.
 
-Computing P¹'s rational singular H² and identifying an oriented singular
-generator with the analytic period remain `OPEN`. The two-open small-chain
+P¹'s rational singular H² is now computed above. Identifying its cover
+generator with the oriented analytic period remains `OPEN`. The two-open small-chain
 comparison and full singular cohomology Mayer–Vietoris are now formalized
 above. The analytic functional does not define an independent rational
 singular lattice or establish positive-degree Betti comparison. General

@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-11-06 (exact rational dualization and full singular Mayer–Vietoris;
+Assessed: 2026-11-06 (actual circle H¹ and projective-line singular H²;
 SP108--SP113 retain their stated conditional and research scope).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
@@ -62,8 +62,14 @@ now proves exact unrestricted rational dualization, identifies dual chains
 with the original cochains and constructs full singular Mayer–Vietoris.
 Its maps are the original continuous pullbacks on actual subtype spaces,
 with the first-minus-second difference and degree-zero injection proved.
-Next compute the circle and this independent P¹ rational H², then match
-the oriented generator to the analytic period. The singular functor still does not carry a topological cover
+The [circle/P¹ calculation](working/0032-circle-projective-line-singular-cohomology.md)
+now computes actual rational singular H¹ of the circle and H² of this
+original P¹ as rational lines. Both generators are actual Mayer–Vietoris
+boundaries; the P¹ map uses the original affine charts and radial overlap
+pullback. Next match this cover generator with the standard oriented loop
+and analytic period, including the cover-sign convention and complex scalar
+extension. A rank-one calculation alone does not prove that comparison.
+The singular functor still does not carry a topological cover
 directly to a union of all singular simplices; the proved subdivision
 argument supplies that comparison on homology. Generality beyond P¹ and
 Hodge-class coverage remain open. Logarithmic higher-Chow ideas support

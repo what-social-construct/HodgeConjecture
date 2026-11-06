@@ -15,6 +15,8 @@ PYTHON ?= python3
         build-projective-line-periods check-projective-line-periods \
         build-small-chains check-small-chains \
         build-singular-cohomology check-singular-cohomology \
+        build-circle-cohomology check-circle-cohomology \
+        build-projective-line-cohomology check-projective-line-cohomology \
         build-palomar check-palomar-proofs check-palomar
 
 help:
@@ -30,6 +32,8 @@ help:
 	@echo "build-projective-line-periods  Actual analytic Laurent and scheme periods"
 	@echo "build-small-chains    Rational singular subdivision and small-chain comparison"
 	@echo "build-singular-cohomology  Exact rational duals and full singular Mayer-Vietoris"
+	@echo "build-circle-cohomology  Actual circle singular H1 and cover generator"
+	@echo "build-projective-line-cohomology  Actual P1 rational singular H2 and cover generator"
 	@echo "build-betti          Existing singular Betti realization"
 	@echo "build-comparison     De Rham, geometry and Chow/Betti squares"
 	@echo "check-layers         Enforce project import boundaries"
@@ -44,6 +48,8 @@ help:
 	@echo "check-projective-line-periods  Analytic integrals, quotient descent and cycle normalization"
 	@echo "check-small-chains    Subdivision, shrinking, actual inclusion and axiom audits"
 	@echo "check-singular-cohomology  Duality, original restriction maps and full cover sequence"
+	@echo "check-circle-cohomology  Homotopy, contractible charts and the actual H1 boundary quotient"
+	@echo "check-projective-line-cohomology  Original affine charts, radial pullback and actual H2"
 	@echo "check-comparison     Comparison build, examples and axiom audits"
 	@echo "check-integration    Full build and root-import inventory"
 	@echo "check                All checks above"
@@ -89,6 +95,12 @@ build-small-chains:
 
 build-singular-cohomology:
 	$(LAKE) build HodgeConjecture.Realization.Betti.SingularMayerVietorisMaps
+
+build-circle-cohomology:
+	$(LAKE) build HodgeConjecture.Realization.Betti.Circle
+
+build-projective-line-cohomology:
+	$(LAKE) build HodgeConjecture.Realization.Betti.ProjectiveLineCohomology
 
 build-betti:
 	$(LAKE) build HodgeConjecture.Realization.Betti
@@ -149,6 +161,16 @@ check-singular-cohomology: check-layers build-singular-cohomology
 	$(LAKE) env lean research/SingularMayerVietorisVerification.lean
 	$(LAKE) env lean research/SingularMayerVietorisMapsVerification.lean
 
+check-circle-cohomology: check-layers build-circle-cohomology
+	$(LAKE) env lean research/SingularHomotopyVerification.lean
+	$(LAKE) env lean research/CircleTopologyVerification.lean
+	$(LAKE) env lean research/CircleCohomologyVerification.lean
+
+check-projective-line-cohomology: check-layers build-projective-line-cohomology
+	$(LAKE) env lean research/ProjectiveLineAnalyticCoverVerification.lean
+	$(LAKE) env lean research/ProjectiveLineSingularCohomologyVerification.lean
+	$(LAKE) env lean research/ProjectiveLineCohomologyVerification.lean
+
 check-comparison: build-comparison
 	$(LAKE) env lean research/DeRhamVerification.lean
 
@@ -164,4 +186,4 @@ check-palomar-proofs: build-palomar
 check-palomar:
 	$(PYTHON) scripts/check_palomar.py
 
-check: check-derham-core check-derham-components check-affine-line-comparison check-positive-degree check-scheme-comparison check-projective-line-betti check-projective-line-periods check-small-chains check-singular-cohomology check-chow check-graph-chow check-comparison check-integration
+check: check-derham-core check-derham-components check-affine-line-comparison check-positive-degree check-scheme-comparison check-projective-line-betti check-projective-line-periods check-small-chains check-singular-cohomology check-circle-cohomology check-projective-line-cohomology check-chow check-graph-chow check-comparison check-integration
