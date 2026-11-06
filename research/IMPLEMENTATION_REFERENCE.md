@@ -29,8 +29,18 @@ proved local affine acyclicity and a two-term derived comparison.
 `ProjectiveLineSchemeComparison` identifies the original Čech target with
 actual scheme de Rham H² over a field; `ProjectiveLineSchemeCycleClass`
 retains the original ordinary Chow source and comparison square. The
-comparison is fixed on actual logarithmic representatives. Singular/Betti
-realization, general varieties/codimensions and Hodge-class coverage remain open.
+comparison is fixed on actual logarithmic representatives.
+
+The [Betti-input checkpoint](working/0028-projective-line-betti-inputs.md)
+adds `Betti.SingularCochains`, `Betti.Examples.OnePointComplexInversion` and
+`Betti.Examples.ProjectiveLineComplexPoints`, with the focused entry point
+`Betti.ProjectiveLine`. These construct actual all-degree rational cochains,
+the H⁰ bridge and the affine-atlas homeomorphism to native `OnePoint ℂ`.
+`DeRham.LaurentPeriods` proves the actual circle-integral residue formula;
+`DeRham.ProjectiveLinePeriods` descends it to the original Čech and scheme
+targets and proves normalized ordinary Chow period equals degree.
+The singular H² computation, oriented Betti comparison, general
+varieties/codimensions and Hodge-class coverage remain open.
 
 
 This Lean project develops collision ideals as scheme-theoretic input to

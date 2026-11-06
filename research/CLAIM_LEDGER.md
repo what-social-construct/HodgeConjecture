@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-11-06 (projective-line scheme de Rham comparison and ordinary cycle classes;
+Last audited: 2026-11-06 (projective-line Betti inputs and analytic periods;
 earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,34 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Projective-line Betti inputs and analytic periods (2026-11-06)
+
+Status: `FORMAL` in the following scope. Actual over-ℂ morphisms
+`Spec ℂ ⟶ projectiveLine ℂ` are covered by the original affine evaluation
+charts. Their final atlas topology is proved homeomorphic to native
+`OnePoint ℂ`, using the original Laurent gluing map and native complex
+inversion at zero and infinity. Both charts are open embeddings.
+
+`SingularCochains.lean` constructs rational cochains in every degree from
+actual continuous standard simplices, the alternating face differential,
+its square-zero law and contravariant continuous pullback. The concrete
+closed/coboundary quotient is identified with categorical cohomology;
+H⁰ agrees with the existing singular kernel construction.
+
+`LaurentPeriods.lean` evaluates actual Kähler forms and proves their actual
+unit-circle integral is `2πi` times residue. `ProjectiveLinePeriods.lean`
+descends this integral through all original total boundaries and the proved
+scheme comparison. The original scheme Chern coordinate has period `2πi`;
+the normalized period of every ordinary rational Chow class is its actual
+rational degree embedded in ℂ.
+
+Computing P¹'s rational singular H², singular excision/Mayer–Vietoris and
+identifying an oriented singular generator with the analytic period remain
+`OPEN`. The analytic functional does not define an independent rational
+singular lattice or establish positive-degree Betti comparison. General
+Hodge-class coverage remains `OPEN`. See
+[0028](working/0028-projective-line-betti-inputs.md).
 
 ## Projective-line scheme de Rham comparison (2026-11-06)
 
@@ -38,7 +66,7 @@ rationalization, nonvanishing and rational coefficient bound. The integral
 source requires an algebraically closed field; rational classes additionally
 require characteristic zero. The scheme comparison itself needs only a field.
 
-Singular/Betti realization, an independent positive-degree Hodge structure,
+Singular/Betti comparison, an independent positive-degree Hodge structure,
 general varieties/codimensions and identification with a separately
 formalized general Picard/Chern API remain `OPEN`. No prescribed Hodge-class
 coverage or new Hodge-conjecture case is claimed. See

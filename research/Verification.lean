@@ -8529,3 +8529,33 @@ Focused regressions and enforced standard-axiom checks are in
 #print axioms HodgeConjecture.ProjectiveLineSchemeCycleClass.cycleClass_comparison
 #print axioms HodgeConjecture.ProjectiveLineSchemeCycleClass.cycleClass_ne_zero
 #print axioms HodgeConjecture.ProjectiveLineSchemeCycleClass.scalar_chernCoordinate_not_mem_cycleClass_range
+
+/-! Actual P¹ complex topology, full singular cochains and analytic scheme periods. -/
+#check HodgeConjecture.OnePointComplex.inversionHomeomorph
+#check HodgeConjecture.ProjectiveLineComplexPoints.Point
+#check HodgeConjecture.ProjectiveLineComplexPoints.charts_cover
+#check HodgeConjecture.ProjectiveLineComplexPoints.onePointHomeomorph
+#check HodgeConjecture.ProjectiveLineComplexPoints.isOpenEmbedding_finite
+#check HodgeConjecture.ProjectiveLineComplexPoints.isOpenEmbedding_reciprocal
+#check HodgeConjecture.SingularCochains.complex
+#check HodgeConjecture.SingularCochains.differential_squared
+#check HodgeConjecture.SingularCochains.Cohomology
+#check HodgeConjecture.SingularCochains.cohomologyPullback
+#check HodgeConjecture.SingularCochains.cohomologyZeroIso
+#check HodgeConjecture.SingularCochains.cohomologyQuotientIso
+#check HodgeConjecture.LaurentPeriods.coefficientFunction_eq_eval₂
+#check HodgeConjecture.LaurentPeriods.integral_eq_two_pi_I_mul_residue
+#check HodgeConjecture.ProjectiveLinePeriods.cechIntegral_overlapClass
+#check HodgeConjecture.ProjectiveLinePeriods.schemeIntegral_overlapClass
+#check HodgeConjecture.ProjectiveLinePeriods.schemeIntegral_chernCoordinate
+#check HodgeConjecture.ProjectiveLinePeriods.normalizedSchemeIntegral_cycleClass
+#print axioms HodgeConjecture.OnePointComplex.inversionHomeomorph
+#print axioms HodgeConjecture.ProjectiveLineComplexPoints.onePointHomeomorph
+#print axioms HodgeConjecture.ProjectiveLineComplexPoints.isOpenEmbedding_reciprocal
+#print axioms HodgeConjecture.SingularCochains.differential_squared
+#print axioms HodgeConjecture.SingularCochains.cohomologyZeroIso
+#print axioms HodgeConjecture.SingularCochains.cohomologyQuotientIso
+#print axioms HodgeConjecture.LaurentPeriods.integral_eq_two_pi_I_mul_residue
+#print axioms HodgeConjecture.ProjectiveLinePeriods.cechBoundaries_le_ker_integral
+#print axioms HodgeConjecture.ProjectiveLinePeriods.schemeIntegral_overlapClass
+#print axioms HodgeConjecture.ProjectiveLinePeriods.normalizedSchemeIntegral_cycleClass

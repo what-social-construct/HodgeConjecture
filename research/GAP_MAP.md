@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-11-06 (projective-line scheme comparison and ordinary degree-two cycle classes;
+Last reviewed: 2026-11-06 (projective-line Betti inputs and analytic periods;
 earlier checkpoint records retain
 their original validation scope).
 
@@ -77,12 +77,24 @@ on the same P¹ over a field. Canonical chart sections, affine acyclicity,
 signed Mayer–Vietoris and the two-term derived triangle are proved; the
 ordinary Chow maps commute with this comparison.
 
-The next bounded obligation is P¹(ℂ) with its actual complex-point topology,
-independently constructed rational singular H², and the comparison square
-with the correct Chern-class period normalization. The existing Betti layer
-computes H⁰. General varieties/codimensions and prescribed-class coverage
-remain open; no higher Betti comparison follows from the scalar coordinate
-calculation alone. The preceding algebraic checkpoint remains
+The [Betti-input checkpoint](working/0028-projective-line-betti-inputs.md)
+now constructs P¹(ℂ) from actual over-base scheme morphisms and the final
+topology of its original affine evaluation charts, proving a homeomorphism
+to native `OnePoint ℂ`. The actual rational singular cochain complex exists
+in every degree, with continuous pullback and its H⁰ bridge. Actual Laurent
+circle integration also descends through the full Čech boundaries to scheme
+H², with Chern period `2πi` and normalized ordinary Chow period equal to degree.
+
+The remaining bounded obligation is to compute this independent rational
+singular H² and prove the oriented cycle-class comparison. Mathlib and the
+pinned Axiom sources supply no sphere homology or singular excision result.
+The next construction is barycentric chain subdivision, its chain homotopy
+to the identity and shrinking into an open cover, giving small-chain
+comparison and then singular Mayer–Vietoris. A direct pushout argument on
+all singular simplices would omit simplices crossing the cover. The analytic
+functional alone does not supply an oriented singular generator or rational
+lattice. General varieties/codimensions and prescribed-class coverage remain
+open. The preceding algebraic checkpoint remains
 [0026](working/0026-positive-degree-cycle-realization.md).
 
 The preceding graph-Chow implementation resumed the original marked-Galois

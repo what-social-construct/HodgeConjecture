@@ -14,11 +14,13 @@ repository. Existing build artifacts are reused.
 | Graph-generated Chow convolution and absolute products | `make build-graph-chow` | `make check-graph-chow` |
 | Positive-degree forms and ordinary projective-line cycle classes | `make build-positive-degree` | `make check-positive-degree` |
 | Projective-line scheme de Rham comparison and ordinary cycle classes | `make build-scheme-comparison` | `make check-scheme-comparison` |
+| Actual P¹ complex topology and all-degree singular cochains | `make build-projective-line-betti` | `make check-projective-line-betti` |
+| Analytic Laurent integrals, scheme periods and ordinary cycle normalization | `make build-projective-line-periods` | `make check-projective-line-periods` |
 | Existing singular Betti realization | `make build-betti` | Covered by comparison and integration checks |
 | De Rham/geometric degree and Chow–Betti squares | `make build-comparison` | `make check-comparison` |
 | Complete library and public imports | `make build` | `make check-integration` |
 
-`make help` lists the commands. `make check` runs all nine verification groups
+`make help` lists the commands. `make check` runs all eleven verification groups
 and checks the import boundaries. Make runs the groups sequentially; Lake
 retains its own build parallelism. A failed command stops the checks.
 
@@ -34,6 +36,8 @@ lake build HodgeConjecture.Realization.DeRham.PositiveDegree
 lake build HodgeConjecture.Realization.DeRham.ProjectiveLineCycleClass
 lake build HodgeConjecture.Realization.DeRham.ProjectiveLineSchemeComparison
 lake build HodgeConjecture.Realization.DeRham.ProjectiveLineSchemeCycleClass
+lake build HodgeConjecture.Realization.Betti.ProjectiveLine
+lake build HodgeConjecture.Realization.DeRham.ProjectiveLinePeriods
 lake build HodgeConjecture.Realization.Betti
 lake build HodgeConjecture.Realization.DeRham
 ```
@@ -85,7 +89,16 @@ modules and composes that bridge with the original Chow maps.
 The [scheme checkpoint](working/0027-projective-line-scheme-comparison.md)
 records the scope and completed integration validation.
 
-`make check-layers` enforces ten transitive project-import boundaries:
+The Betti-input target keeps actual complex-point topology and all-degree
+singular cochains separate from de Rham. Its checks include the new H⁰
+bridge and actual chart inversion at infinity. The analytic Laurent period
+target has three project modules and excludes scheme geometry and sheaf
+cohomology. Its integration into P¹ scheme H² is a separate target;
+the algebraic positive-degree and scheme entry points exclude both new
+period modules. These inputs do not compute P¹'s singular H² or establish
+a Betti comparison. See [0028](working/0028-projective-line-betti-inputs.md).
+
+`make check-layers` enforces twelve transitive project-import boundaries:
 
 - The de Rham core excludes scheme cycles, Chow, Betti and comparison modules.
 - Polynomial/component calculations have the same exclusions as the core.
@@ -97,6 +110,8 @@ records the scope and completed integration validation.
 - Ordinary projective-line cycle classes exclude Betti, the assumed Chow-realization layer, collision geometry and graph-Chow convolution.
 - Pure projective-line scheme comparison excludes project cycles, Chow realization, correspondences, collision geometry and Betti.
 - Ordinary projective-line scheme cycle classes exclude Betti, the assumed Chow-realization layer, collision geometry and graph-Chow convolution.
+- All-degree singular cochains exclude project geometry, cycles, correspondences, Chow, de Rham and sheaf cohomology.
+- Analytic Laurent periods exclude project geometry, cycles, correspondences, Chow, Betti and sheaf cohomology.
 
 The existing core, polynomial/component, affine-line, positive-degree and
 ordinary Čech cycle-class entry points also exclude the new sheaf-cohomology

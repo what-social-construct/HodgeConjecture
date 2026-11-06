@@ -240,3 +240,18 @@ through the proved sheaf/derived comparison. Singular/Betti realization,
 generality and prescribed Hodge-class coverage remain open. See
 [0027](working/0027-projective-line-scheme-comparison.md). Existing release
 sign-offs, comparator selection and submission packaging remain unchanged.
+
+The projective-line Betti-input checkpoint (2026-11-06) passes its 3,049-job
+topology/cochain and 4,397-job analytic-period focused Make builds. Its three
+suites pass 39 examples, five named calculations and 82 enforced
+standard-three axiom audits, with zero suite warnings. The full default
+build passes 4,976 jobs; root verification passes 1,368 declaration checks,
+574 examples and 1,246 axiom reports within the standard three (one report
+needs no axioms). The 466 library modules plus the root pass source scans;
+twelve import boundaries, three indirect-negative checks, pins, local links
+and whitespace checks pass. Existing warning scope remains; the main README
+remains 69 lines. Actual P¹ complex topology, full rational singular
+cochains and analytic scheme periods are constructed. Singular H²
+computation, the oriented Betti comparison and general prescribed-class
+coverage remain open. See [0028](working/0028-projective-line-betti-inputs.md).
+Release sign-offs, comparator selection and submission packaging remain unchanged.

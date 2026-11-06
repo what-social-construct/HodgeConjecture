@@ -6,6 +6,7 @@ public import HodgeConjecture.Realization.DeRham.AffineLineComparison
 public import HodgeConjecture.Realization.DeRham.PositiveDegree
 public import HodgeConjecture.Realization.DeRham.ProjectiveLineCycleClass
 public import HodgeConjecture.Realization.DeRham.ProjectiveLineSchemeCycleClass
+public import HodgeConjecture.Realization.DeRham.ProjectiveLinePeriods
 public import HodgeConjecture.Realization.DeRham.AffineGeometricDegree
 public import HodgeConjecture.Realization.DeRham.SplitComparison
 
@@ -38,5 +39,9 @@ line over an algebraically closed field, the principal-divisor degree law
 now descends through the original integral/rational Chow quotients. Over
 characteristic zero the resulting rational cycle map has the actual Čech
 degree-two target and coefficient-one point normalization. General
-scheme/singular-target comparisons and prescribed-class coverage remain open.
+singular-target comparison and prescribed-class coverage remain open.
+For P¹ the original Čech target is now compared with actual scheme de Rham
+hypercohomology. Its analytic Laurent unit-circle integral descends through
+the original boundaries and this scheme comparison, with Chern period
+`2πi` and normalized rational Chow period equal to rational degree.
 -/

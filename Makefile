@@ -11,6 +11,8 @@ PYTHON ?= python3
         build-graph-chow check-graph-chow \
         build-positive-degree check-positive-degree \
         build-scheme-comparison check-scheme-comparison \
+        build-projective-line-betti check-projective-line-betti \
+        build-projective-line-periods check-projective-line-periods \
         build-palomar check-palomar-proofs check-palomar
 
 help:
@@ -22,6 +24,8 @@ help:
 	@echo "build-graph-chow     Actual graph Chow convolution and absolute-product comparison"
 	@echo "build-positive-degree  Positive-degree forms and ordinary projective-line cycle classes"
 	@echo "build-scheme-comparison  Projective-line scheme de Rham comparison and cycle classes"
+	@echo "build-projective-line-betti  Actual P1 complex topology and all-degree singular cochains"
+	@echo "build-projective-line-periods  Actual analytic Laurent and scheme periods"
 	@echo "build-betti          Existing singular Betti realization"
 	@echo "build-comparison     De Rham, geometry and Chow/Betti squares"
 	@echo "check-layers         Enforce project import boundaries"
@@ -32,6 +36,8 @@ help:
 	@echo "check-graph-chow     Graph actions, quotient projectors and axiom audits"
 	@echo "check-positive-degree  Cocycles, trivializations, nonzero H2 and axiom audits"
 	@echo "check-scheme-comparison  Actual sheaves, derived sections and ordinary cycle compatibility"
+	@echo "check-projective-line-betti  Atlas topology, actual cochains, H0 bridge and axiom audits"
+	@echo "check-projective-line-periods  Analytic integrals, quotient descent and cycle normalization"
 	@echo "check-comparison     Comparison build, examples and axiom audits"
 	@echo "check-integration    Full build and root-import inventory"
 	@echo "check                All checks above"
@@ -66,6 +72,12 @@ build-positive-degree:
 build-scheme-comparison:
 	$(LAKE) build HodgeConjecture.Realization.DeRham.ProjectiveLineSchemeCycleClass
 
+build-projective-line-betti:
+	$(LAKE) build HodgeConjecture.Realization.Betti.ProjectiveLine
+
+build-projective-line-periods:
+	$(LAKE) build HodgeConjecture.Realization.DeRham.ProjectiveLinePeriods
+
 build-betti:
 	$(LAKE) build HodgeConjecture.Realization.Betti
 
@@ -97,6 +109,13 @@ check-positive-degree: check-layers build-positive-degree
 check-scheme-comparison: check-layers build-scheme-comparison
 	$(LAKE) env lean research/SchemeComparisonVerification.lean
 
+check-projective-line-betti: check-layers build-projective-line-betti
+	$(LAKE) env lean research/SingularCochainsVerification.lean
+	$(LAKE) env lean research/ProjectiveLineTopologyVerification.lean
+
+check-projective-line-periods: check-layers build-projective-line-periods
+	$(LAKE) env lean research/ProjectiveLinePeriodVerification.lean
+
 check-comparison: build-comparison
 	$(LAKE) env lean research/DeRhamVerification.lean
 
@@ -112,4 +131,4 @@ check-palomar-proofs: build-palomar
 check-palomar:
 	$(PYTHON) scripts/check_palomar.py
 
-check: check-derham-core check-derham-components check-affine-line-comparison check-positive-degree check-scheme-comparison check-chow check-graph-chow check-comparison check-integration
+check: check-derham-core check-derham-components check-affine-line-comparison check-positive-degree check-scheme-comparison check-projective-line-betti check-projective-line-periods check-chow check-graph-chow check-comparison check-integration

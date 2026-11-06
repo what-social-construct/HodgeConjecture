@@ -1,7 +1,7 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-11-06 (projective-line scheme de Rham comparison and ordinary
-degree-two cycle map; SP108--SP113 retain their stated conditional and research scope).
+Assessed: 2026-11-06 (projective-line Betti inputs and analytic periods;
+SP108--SP113 retain their stated conditional and research scope).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -45,11 +45,20 @@ The [scheme checkpoint](working/0027-projective-line-scheme-comparison.md)
 now identifies this same target with actual scheme de Rham hypercohomology
 over a field. The comparison is fixed by actual restrictions, affine
 acyclicity, the signed Mayer–Vietoris boundary and the derived inclusion;
-the original ordinary cycle maps commute with it. Next construct P¹(ℂ)'s
-actual point topology and rational singular H², then prove the normalized
-cycle-class comparison. Generality beyond P¹ and Hodge-class coverage remain
-open. Logarithmic higher-Chow ideas are supporting methods for this selected
-ordinary target.
+the original ordinary cycle maps commute with it.
+The [Betti-input checkpoint](working/0028-projective-line-betti-inputs.md)
+constructs the actual affine-atlas topology on P¹(ℂ), proves its homeomorphism
+with native `OnePoint ℂ`, and constructs rational singular cochains in every
+degree with the existing H⁰ identification. Separately, actual Laurent
+circle integration descends to scheme H² and has Chern period `2πi`;
+its normalized ordinary rational Chow period is rational degree.
+Next prove small-chain comparison for an open cover, obtain singular
+Mayer–Vietoris, compute this independent rational H² and match its oriented
+generator to the analytic period. The singular functor does not carry an
+open-cover union directly to a union of singular simplices: subdivision
+and shrinking are substantive missing inputs. Generality beyond P¹ and
+Hodge-class coverage remain open. Logarithmic higher-Chow ideas support
+this selected ordinary target.
 
 Completed graph-Chow step (2026-11-05): resume the original marked-Galois
 spine recorded in the [canonical diagram](archive/planning/0006-lean-spine-manuscript-outline.md)

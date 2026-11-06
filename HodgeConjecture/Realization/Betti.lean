@@ -4,6 +4,7 @@ public import HodgeConjecture.Realization.Betti.Examples.SplitGaloisAction
 public import HodgeConjecture.Realization.Betti.ZeroSimplexTransfer
 public import HodgeConjecture.Realization.Betti.SingularPathConnected
 public import HodgeConjecture.Realization.Betti.Examples.AffineLineComplexPoints
+public import HodgeConjecture.Realization.Betti.ProjectiveLine
 
 @[expose] public section
 
@@ -13,6 +14,11 @@ public import HodgeConjecture.Realization.Betti.Examples.AffineLineComplexPoints
 For path-connected spaces, actual paths and singular one-simplices prove
 that degree-zero cocycles are constant. The complex affine line has the
 topology of regular-function evaluations, proved homeomorphic to `ℂ`.
+The actual projective-line complex points have the final affine-atlas
+topology, proved homeomorphic to `OnePoint ℂ`. Singular cochains in every
+degree use the original simplices and alternating faces; their H⁰ agrees
+with the existing kernel construction. P¹'s singular H² computation and
+positive-degree comparison remain open.
 
 The finite split complex example uses actual complex-algebra points with
 their evaluation topology, actual continuous singular simplices and faces,
