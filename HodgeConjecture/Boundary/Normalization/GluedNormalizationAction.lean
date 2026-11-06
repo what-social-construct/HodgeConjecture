@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Normalization.GluedNormalization
-import HodgeConjecture.Boundary.Normalization.DeckAction
+module
+
+public import HodgeConjecture.Boundary.Normalization.GluedNormalization
+public import HodgeConjecture.Boundary.Normalization.DeckAction
+
+@[expose] public section
 
 /-!
 # Gluing the original normalization action
@@ -118,14 +122,14 @@ theorem gluedNormalizationAutomorphism_mul (σ τ : N ≃ₐ[X.functionField] N)
 /-- The fixed field-extension automorphisms act over the original structural map. -/
 def gluedNormalizationDeckAction :
     (N ≃ₐ[X.functionField] N) →* DeckTransformation (gluedNormalizationToBase X N) where
-  toFun σ := Over.isoMk (gluedNormalizationAutomorphism X N σ)
+  toFun σ := CategoryTheory.Aut.of <| Over.isoMk (gluedNormalizationAutomorphism X N σ)
     (gluedNormalizationAutomorphism_comp_toBase X N σ)
   map_one' := by
-    apply CategoryTheory.Aut.ext
+    apply CategoryTheory.Aut.hom_ext
     apply Over.OverMorphism.ext
     exact gluedNormalizationAutomorphism_one X N
   map_mul' σ τ := by
-    apply CategoryTheory.Aut.ext
+    apply CategoryTheory.Aut.hom_ext
     apply Over.OverMorphism.ext
     exact gluedNormalizationAutomorphism_mul X N σ τ
 

@@ -1,6 +1,10 @@
-import Mathlib.AlgebraicGeometry.IdealSheaf.Subscheme
-import Mathlib.AlgebraicGeometry.Properties
-import Mathlib.LinearAlgebra.Finsupp.LSum
+module
+
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Subscheme
+public import Mathlib.AlgebraicGeometry.Properties
+public import Mathlib.LinearAlgebra.Finsupp.LSum
+
+@[expose] public section
 
 /-!
 # Finite cycles on actual integral closed subschemes

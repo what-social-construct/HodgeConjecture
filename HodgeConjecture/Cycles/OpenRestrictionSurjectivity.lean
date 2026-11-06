@@ -1,4 +1,8 @@
-import HodgeConjecture.Cycles.OpenGrading
+module
+
+public import HodgeConjecture.Cycles.OpenGrading
+
+@[expose] public section
 
 /-!
 # Surjectivity of actual open restriction on finite cycles

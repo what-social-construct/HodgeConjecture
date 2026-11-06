@@ -1,7 +1,11 @@
-import Mathlib.Data.Matrix.Basis
-import Mathlib.Algebra.Algebra.Rat
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Algebra.BigOperators.Ring.Finset
+module
+
+public import Mathlib.Data.Matrix.Basis
+public import Mathlib.Algebra.Algebra.Rat
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+
+@[expose] public section
 
 /-!
 # Matrices of finite spans

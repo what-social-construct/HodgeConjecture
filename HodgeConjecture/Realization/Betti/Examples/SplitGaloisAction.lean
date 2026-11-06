@@ -1,4 +1,8 @@
-import HodgeConjecture.Realization.Betti.Examples.SplitGaloisMarkedComparison
+module
+
+public import HodgeConjecture.Realization.Betti.Examples.SplitGaloisMarkedComparison
+
+@[expose] public section
 
 /-!
 # The full marked sheet-algebra action on actual Betti cohomology

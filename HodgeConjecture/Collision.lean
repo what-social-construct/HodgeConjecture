@@ -1,11 +1,15 @@
-import HodgeConjecture.Collision.Algebra
-import HodgeConjecture.Collision.ClopenDecomposition
-import HodgeConjecture.Collision.ComponentSelectors
-import HodgeConjecture.Collision.CollisionDiagonal
-import HodgeConjecture.Collision.EtaleDecomposition
-import HodgeConjecture.Collision.GlobalGeometry
-import HodgeConjecture.Collision.PolynomialFiberProduct
-import HodgeConjecture.Collision.SchemeDecomposition
+module
+
+public import HodgeConjecture.Collision.Algebra
+public import HodgeConjecture.Collision.ClopenDecomposition
+public import HodgeConjecture.Collision.ComponentSelectors
+public import HodgeConjecture.Collision.CollisionDiagonal
+public import HodgeConjecture.Collision.EtaleDecomposition
+public import HodgeConjecture.Collision.GlobalGeometry
+public import HodgeConjecture.Collision.PolynomialFiberProduct
+public import HodgeConjecture.Collision.SchemeDecomposition
+
+@[expose] public section
 
 /-!
 # Collision stage

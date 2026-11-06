@@ -1,6 +1,10 @@
-import HodgeConjecture.Cycles.DimensionFunction
-import HodgeConjecture.Cycles.ClosedImmersionPushforward
-import Mathlib.LinearAlgebra.Finsupp.Supported
+module
+
+public import HodgeConjecture.Cycles.DimensionFunction
+public import HodgeConjecture.Cycles.ClosedImmersionPushforward
+public import Mathlib.LinearAlgebra.Finsupp.Supported
+
+@[expose] public section
 
 /-!
 # Degree submodules of the existing finite-cycle module

@@ -1,4 +1,8 @@
-import HodgeConjecture.Realization.Betti.FiniteTransfer
+module
+
+public import HodgeConjecture.Realization.Betti.FiniteTransfer
+
+@[expose] public section
 
 /-!
 # Transfer as a sum over actual singular-simplex lifts
@@ -33,7 +37,11 @@ def zeroSimplexLiftEquiv (f : C(X, Y)) (σ : Simplex Y 0) :
   toFun τ := ⟨τ.val default, congrArg (fun t : Simplex Y 0 ↦ t default) τ.property⟩
   invFun x := ⟨pointSimplex X x.val, by
     ext t
-    exact x.property.trans (congrArg σ (Subsingleton.elim default t))⟩
+    apply x.property.trans
+    apply congrArg σ
+    apply Convexity.StdSimplex.ext
+    ext i
+    simp⟩
   left_inv τ := Subtype.ext (pointSimplex_eq X τ.val)
   right_inv _ := Subtype.ext rfl
 

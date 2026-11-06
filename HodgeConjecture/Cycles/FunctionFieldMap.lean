@@ -1,5 +1,9 @@
-import HodgeConjecture.Cycles.FunctionFieldTransport
-import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
+module
+
+public import HodgeConjecture.Cycles.FunctionFieldTransport
+public import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
+
+@[expose] public section
 
 /-!
 # Function fields of actual dominant morphisms
@@ -50,6 +54,25 @@ theorem functionFieldMapOfDominant_injective (p : Y ⟶ X) [IsDominant p] :
     Function.Injective (functionFieldMapOfDominant p) :=
   (functionFieldMapOfDominant p).hom.injective
 
+/-- The generic-stalk map commutes with the original specialization maps from every stalk. -/
+theorem functionFieldMapOfDominant_stalkSpecializes (p : Y ⟶ X) [IsDominant p] (y : Y) :
+    X.presheaf.stalkSpecializes (genericPoint_specializes (p.base y)) ≫
+      functionFieldMapOfDominant p =
+        p.stalkMap y ≫ Y.presheaf.stalkSpecializes (genericPoint_specializes y) := by
+  unfold functionFieldMapOfDominant
+  simp only [TopCat.Presheaf.stalkCongr_hom, ← Category.assoc,
+    TopCat.Presheaf.stalkSpecializes_comp]
+  exact Scheme.Hom.stalkSpecializes_stalkMap p (genericPoint Y) y
+    (genericPoint_specializes y)
+
+/-- The function-field map retains the canonical embeddings of the actual local rings. -/
+theorem functionFieldMapOfDominant_algebraMap (p : Y ⟶ X) [IsDominant p] (y : Y)
+    (a : X.presheaf.stalk (p.base y)) :
+    functionFieldMapOfDominant p (algebraMap (X.presheaf.stalk (p.base y)) X.functionField a) =
+      algebraMap (Y.presheaf.stalk y) Y.functionField ((p.stalkMap y).hom a) := by
+  exact DFunLike.congr_fun
+    (CommRingCat.hom_ext_iff.mp (functionFieldMapOfDominant_stalkSpecializes p y)) a
+
 /-- Generic germs commute with the actual pullback of sections. -/
 theorem functionFieldMapOfDominant_germ (p : Y ⟶ X) [IsDominant p]
     (U : X.Opens) [Nonempty U] :
@@ -60,7 +83,7 @@ theorem functionFieldMapOfDominant_germ (p : Y ⟶ X) [IsDominant p]
   unfold functionFieldMapOfDominant Scheme.germToFunctionField
   rw [← Category.assoc, TopCat.Presheaf.stalkCongr_hom,
     TopCat.Presheaf.germ_stalkSpecializes]
-  exact Scheme.stalkMap_germ p U (genericPoint Y) _
+  exact Scheme.Hom.germ_stalkMap p U (genericPoint Y) _
 
 /-- On an open immersion, the generic map is the existing stalk isomorphism. -/
 theorem functionFieldMapOfDominant_eq_openImmersion (p : Y ⟶ X)
@@ -79,8 +102,8 @@ theorem functionFieldMapOfDominant_comp [IsIntegral Z]
     functionFieldMapOfDominant (q ≫ p) =
       functionFieldMapOfDominant p ≫ functionFieldMapOfDominant q := by
   simp only [functionFieldMapOfDominant, TopCat.Presheaf.stalkCongr_hom,
-    Scheme.stalkMap_comp, Category.assoc]
-  rw [← Scheme.stalkSpecializes_stalkMap_assoc,
+    Scheme.Hom.stalkMap_comp, Category.assoc]
+  rw [← Scheme.Hom.stalkSpecializes_stalkMap_assoc,
     TopCat.Presheaf.stalkSpecializes_comp_assoc]
 
 

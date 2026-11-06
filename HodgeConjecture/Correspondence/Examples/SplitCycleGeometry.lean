@@ -1,6 +1,10 @@
-import HodgeConjecture.Correspondence.Examples.SplitIntegralSubschemes
-import HodgeConjecture.Correspondence.Examples.SplitSpanGeometry
-import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
+module
+
+public import HodgeConjecture.Correspondence.Examples.SplitIntegralSubschemes
+public import HodgeConjecture.Correspondence.Examples.SplitSpanGeometry
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
+
+@[expose] public section
 
 /-!
 # Images of actual integral subschemes under split-scheme maps

@@ -1,6 +1,11 @@
+module
+
 import HodgeConjecture.Boundary
 import HodgeConjecture.Correspondence
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP72 regressions for the actual function fields of dominant finite morphisms.
@@ -46,7 +51,7 @@ variable (p : Y ⟶ X) [IsDominant p]
 
 example : Function.Injective (functionFieldMapOfDominant p) := by
   fail_if_success have _ : IsFinite p := inferInstance
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   exact functionFieldMapOfDominant_injective p
 
 example (a : X.functionField) (ha : a ≠ 0) :
@@ -118,7 +123,7 @@ example (U : X.Opens) [Nonempty U] :
 example [IsFinite p] (U : X.Opens) [Nonempty U] (hU : IsAffineOpen U) :
     letI := (functionFieldMapOfDominant p).hom.toAlgebra
     FiniteDimensional X.functionField Y.functionField := by
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   fail_if_success have _ : IsIntegrallyClosed Γ(X, U) := inferInstance
   fail_if_success have _ : IsNoetherianRing Γ(X, U) := inferInstance
   exact functionFieldMapOfDominant_finiteDimensional_of_affine p U hU
@@ -171,8 +176,8 @@ run_cmd do
       `HodgeConjecture.CollisionFoundations.functionFieldMapOfDominant_finiteDimensional] do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    for axiomName in state.axioms do
+    let axioms ← Lean.collectAxioms declaration
+    for axiomName in axioms do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"
-    logInfo m!"PASS standard-axiom boundary: {declaration}; {state.axioms.toList}"
+    logInfo m!"PASS standard-axiom boundary: {declaration}; {axioms.toList}"

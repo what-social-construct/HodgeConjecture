@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.HeightOneDifferent
-import HodgeConjecture.Boundary.Sheets.InertiaSaturation
+module
+
+public import HodgeConjecture.Boundary.HeightOneDifferent
+public import HodgeConjecture.Boundary.Sheets.InertiaSaturation
+
+@[expose] public section
 
 /-!
 # Boundary inertia as the projector-extension obstruction

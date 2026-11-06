@@ -1,6 +1,10 @@
-import HodgeConjecture.Boundary.Normalization.GluedNormalizationDeckComparison
-import HodgeConjecture.Boundary.Normalization.GluedNormalClosureAction
-import HodgeConjecture.Boundary.Normalization.GluedNormalClosureFunctionField
+module
+
+public import HodgeConjecture.Boundary.Normalization.GluedNormalizationDeckComparison
+public import HodgeConjecture.Boundary.Normalization.GluedNormalClosureAction
+public import HodgeConjecture.Boundary.Normalization.GluedNormalClosureFunctionField
+
+@[expose] public section
 
 /-!
 # The full stabilizer of the original marked refinement
@@ -70,7 +74,8 @@ theorem gluedNormalizationAutomorphism_comp_toCover_iff :
     rw [gluedNormalizationFunctionFieldEquiv_automorphism,
       gluedNormalClosureFunctionFieldEquiv_toCover] at hc
     have hs := congrArg σ hc
-    simpa only [AlgEquiv.apply_symm_apply] using hs.symm
+    simpa only [AlgEquiv.apply_symm_apply, AlgHom.toRingHom_eq_coe,
+      AlgHom.coe_toRingHom] using hs.symm
   · intro h
     exact gluedNormalizationAutomorphism_comp_toCover p hY ⟨σ, h⟩
 
@@ -109,11 +114,11 @@ theorem gluedNormalClosureMarkedDeckAction_injective :
   intro σ τ h
   apply Subtype.ext
   apply gluedNormalizationDeckAction_injective X Nₚ
-  apply CategoryTheory.Aut.ext
+  apply CategoryTheory.Aut.hom_ext
   apply Over.OverMorphism.ext
   exact congrArg (fun d => d.hom.left) h
 
-private def markedDeckToBase :
+def markedDeckToBase :
     letI : Algebra X.functionField Y.functionField :=
       (functionFieldMapOfDominant p).hom.toAlgebra
     DeckTransformation (gluedNormalClosureToCover p hY) →
@@ -121,13 +126,13 @@ private def markedDeckToBase :
   letI : Algebra X.functionField Y.functionField :=
     (functionFieldMapOfDominant p).hom.toAlgebra
   intro d
-  refine Over.isoMk ((Over.forget Y).mapIso d) ?_
+  refine CategoryTheory.Aut.of (Over.isoMk ((Over.forget Y).mapIso d.asIso) ?_)
   change d.hom.left ≫ gluedNormalizationToBase X Nₚ = gluedNormalizationToBase X Nₚ
   have hd : d.hom.left ≫ gluedNormalClosureToCover p hY =
       gluedNormalClosureToCover p hY := Over.w d.hom
   rw [← gluedNormalClosureToCover_comp_toBase p hY, ← Category.assoc, hd]
 
-private def markedDeckFieldElement :
+def markedDeckFieldElement :
     letI : Algebra X.functionField Y.functionField :=
       (functionFieldMapOfDominant p).hom.toAlgebra
     DeckTransformation (gluedNormalClosureToCover p hY) →
@@ -143,7 +148,7 @@ private def markedDeckFieldElement :
   change d.hom.left ≫ gluedNormalClosureToCover p hY = gluedNormalClosureToCover p hY
   exact Over.w d.hom
 
-private theorem markedDeckAction_fieldElement :
+theorem markedDeckAction_fieldElement :
     letI : Algebra X.functionField Y.functionField :=
       (functionFieldMapOfDominant p).hom.toAlgebra
     ∀ d : DeckTransformation (gluedNormalClosureToCover p hY),
@@ -153,7 +158,7 @@ private theorem markedDeckAction_fieldElement :
   letI : FiniteDimensional X.functionField Nₚ :=
     (functionFieldNormalClosureData p).finiteNormal
   intro d
-  apply CategoryTheory.Aut.ext
+  apply CategoryTheory.Aut.hom_ext
   apply Over.OverMorphism.ext
   exact congrArg (fun e => e.hom.left)
     (gluedNormalizationDeckAction_fieldAutomorphism X Nₚ (markedDeckToBase p hY d))

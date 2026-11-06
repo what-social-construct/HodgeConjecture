@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-10-13 (SP108 conditional boundary correction;
+Last reviewed: 2026-11-05 (actual graph Chow convolution and absolute-product comparison;
 earlier checkpoint records retain
 their original validation scope).
 
@@ -25,7 +25,59 @@ named exactly, proved arrows are separated from parameterized arrows, and a
 geometric interface is not treated as a theorem merely because later record
 assembly is formal.
 
+Finite flat pullback now preserves the actual principal relations and
+descends to the existing integral and rational Chow quotients. The computed
+fiber degree equals the geometric rank of the same map. Constant rank `d`
+gives the actual Chow degree law; positive rank supplies the existing
+rational transfer interface, injectivity and normalized projector. The
+proof retains nonreduced fiber multiplicities. See the current finite-fiber
+entry in the claim ledger and the [checkpoint](working/0021-finite-flat-chow-transfer.md).
+General Betti/purity comparison and prescribed-class generation remain open.
+
+The [affine de Rham checkpoint](working/0022-affine-derham-trace-comparison.md)
+constructs the actual Kähler de Rham complex and identifies its degree-zero
+homology. Algebra trace supplies degree-zero transfer for finite free
+formally unramified algebras; its degree matches the existing geometric rank
+and cycle-fiber degree. Finite split complex schemes now have compatible
+de Rham, existing Chow and genuinely complexified Betti maps. General
+scheme hypercohomology, finite-syntomic trace and positive-dimensional
+Betti comparison remain open. [Granular checks](BUILDING.md) keep the affine
+core independent of those geometric layers.
+
+The [polynomial/component calculation](working/0023-polynomial-derham-components.md)
+now proves `H0 k A[X] ≃ₐ[k] H0 k A` when `A` has no additive torsion,
+using the original constant inclusion and evaluation. Finite products of
+affine-line coordinate rings have the component-idempotent basis, including
+the empty case. These are degree-zero calculations on the actual complex;
+the general positive-dimensional Betti and cycle-class comparisons remain open.
+
+The [complex affine-line checkpoint](working/0024-affine-line-betti-comparison.md)
+now constructs the degree-zero Betti–de Rham comparison for an actual
+positive-dimensional coordinate ring and complex-point topology. It proves
+evaluation, multiplication and polynomial pullback compatibility, including
+genuine complex coefficients beyond the rational image. The path-connected
+singular calculation is general. Higher degrees, positive-codimension cycle
+classes and general comparison remain open; this does not construct a cycle
+for an independently prescribed higher Hodge class.
+
 ## Current work order
+
+The current bounded implementation resumes the original marked-Galois
+algebraic decomposition spine, as explained in the target sketch. Actual
+deck graphs now descend to the existing rational Chow quotient with their
+canonical field grading. Their genuine pair-isomorphism pullbacks preserve
+principal relations, making the exact graph-to-Chow kernel two-sided.
+The quotient algebra embeds linearly into actual Chow with exactly the
+graph-generated image. Averaging idempotents and their orthogonal
+complements therefore produce graph-generated Chow projectors. Relative
+graphs also have their actual closed Chow pushforward into the absolute
+product. See [0025](working/0025-graph-chow-convolution.md).
+
+This does not provide a full ambient Chow intersection product, a
+nonvanishing theorem, or a prescribed Betti/Hodge action. Next identify the
+chosen normal-cover/compactification and its open graph comparison, then
+address the residual map and prescribed action square. Additional normal
+closure or coordinate decomposition alone would not discharge those inputs.
 
 Follow the [Chow--Betti-first plan](TARGET_BRIDGE.md#0-operative-plan-chow-to-betti-first).
 Start from the actual cycle map and the independently defined Hodge
@@ -54,6 +106,74 @@ instantiation, suitable boundary geometry and construction of the open
 representative remain open; this does not close the generation gap.
 See `Realization/Chow/BoundaryCorrection.lean` and G2b in the target sketch.
 
+SP109 constructs `MarkedSheetChow.chowMap` from supplied actual homogeneous
+cycles on a fixed ambient scheme. Its image, and its image under a supplied
+realization, are exactly the spans of the nonmarked cycle classes. It
+commutes with actual open restriction and finite Chow pushforward. This
+provides a concrete recipe for the existing generation predicate, with no
+new target or realization record. Constructing a geometric family with
+the prescribed-class coverage remains open; reweighting or sheet labels
+do not supply that family. See `Realization/Chow/MarkedCycleMap.lean`.
+
+The fiber-product dependency audit distinguishes two existing auxiliary
+constructions. `Collision/GlobalGeometry.lean` defines the actual
+`collisionSpace f = pullback f f`; `Collision/EtaleDecomposition.lean`
+constructs its clopen diagonal/off-diagonal decomposition for separated
+étale maps. `Correspondence/Collision.lean` uses it as an actual scheme
+span, and `Correspondence/GaloisCollision.lean` identifies its normalized
+class with an averaging projector under a supplied Galois decomposition
+and `FiniteEtaleAlgebraModel`. Separately, the finite indexed tensor
+evaluation in `Boundary/Normalization/NormalClosureTensor.lean` and
+`NormalizationTensor.lean` constructs the normal-closure refinement via
+the selected component, used in `FiniteEtaleNormalClosure.lean`. These are
+existing consumers, but neither constructs SP109's input cycle family
+with the required Betti image. SP94's generation/descent theorem and
+SP108's boundary-correction theorem do not require a collision
+decomposition. Keep these constructions as **ROUTE** objects until a
+specific cycle recipe uses them; an additional decomposition alone would
+not discharge the open-representative obligation.
+
+SP110 completes the auxiliary L1--L3 localization stream: actual reduced
+complement, raw/graded cycle exactness, open principal-relation lifting,
+and integral/rational Chow kernel=image. `ChowLocalization.ofOpenComplement`
+proves the existing localization package for these geometric maps. The
+two-lift boundary ambiguity is therefore available without a supplied Chow
+exactness premise. Betti/Gysin comparison, suitable boundary geometry and
+the prescribed open cycle remain separate obligations. Further generic
+localization expansion is not the next task.
+
+The [smooth ample boundary calculation](TARGET_BRIDGE.md#open-representative-the-smooth-ample-boundary-calculation)
+now tests the simplest open representative. Classically, $z_U=0$ works
+when $2p>\dim Y$, by affine cohomological vanishing. For $2p\leq\dim Y$,
+the restriction kernel is the Lefschetz image and restriction is injective
+on primitive cohomology. Varying the smooth divisor within powers of the
+same polarization does not change this kernel; a nonzero primitive class
+also survives finite pullback with the pulled-back polarization. These
+are mathematical deductions, not new Lean geometric instances. The
+nonzero primitive open representative remains to be constructed. With
+SP108's other inputs, open representability is equivalent to ambient
+algebraicity, so naming an open preimage cannot close this gap.
+
+SP111 implements [supported-class extraction](TARGET_BRIDGE.md#supported-class-extraction-sp111)
+on the existing actual cycles and Chow quotient. A supplied component basis
+and its fundamental-class comparison turn a cohomological support lift into
+an explicit rational cycle. Actual closed/open cycle exactness proves zero
+restriction; the cohomological restriction square supplies the reverse
+criterion. Geometric Betti localization, the component basis from the
+codimension bound, and construction of a suitable support for each class
+remain open. This is a conditional consumer of those precise inputs, with
+no new geometric realization or Hodge-algebraicity claim.
+
+The [Chern-character trial](TARGET_BRIDGE.md#chern-character-trial-within-the-cycle-induction-sp112)
+keeps this induction: algebraic complexes on the open extend to perfect
+complexes on the smooth ambient variety, whose Chow Chern characters can
+feed SP108. The first candidate, a bundle trivialized by a finite étale
+cover, has zero positive rational Chern character. SP112 proves the transfer
+cancellation in Lean; the bundle/Chern construction and geometric degree
+comparison are still uninstantiated. A nonzero prescribed open class needs
+additional algebraic data. Cover representations or boundary-supported
+complexes alone do not provide it.
+
 The live order is now:
 
 1. **Completed SP94:** the arbitrary-class condition and its conditional
@@ -78,8 +198,9 @@ The live order is now:
    finite-extension hypotheses and proves 02MJ for every nonzero fraction.
    SP107 proves the actual scheme principal/norm identity and descends the
    same finite cycle map to integral and rational Chow groups, using
-   constructed norms on actual image carriers. Next establish finite-map
-   composition, flat pullback/degree, and Betti pullback/trace with their
+   constructed norms on actual image carriers. SP113 proves finite-map
+   composition and identity on the same cycle and Chow maps. Next establish
+   flat pullback/degree and Betti pullback/trace with their
    compatibility laws for the same actual cover. Supply smooth-geometric
    normality where the construction needs it.
 4. Construct named upstairs cycle recipes and prove generation of the
@@ -133,8 +254,19 @@ stalk. The final quotient maps need neither integral ambient schemes nor
 dominance. Their representative squares, integral closed-immersion
 agreement, and rationalization compatibility are proved.
 
-General finite-pushforward composition, flat pullback/degree, Betti transfer,
-the cycle-class square and class-dependent generation remain separate.
+SP113 proves finite-pushforward composition via the actual residue-field
+scalar tower and composition of the original mapped ideal sheaves.
+`FinitePushforwardComposition.lean` proves multiplication of the existing
+weights and functoriality over any coefficient semiring, then restricts
+the same law to compatible homogeneous cycles. No ambient integrality,
+Noetherianity or field base is needed for raw cycles.
+`FiniteChowPushforwardComposition.lean` descends composition and identity
+to the existing integral and rational Chow quotients over a field, using
+the already proved canonical grading and relation preservation. This is
+the finite case of [Stacks 02R5](https://stacks.math.columbia.edu/tag/02R5).
+
+Flat pullback/degree, Betti transfer, the cycle-class square and
+class-dependent generation remain separate.
 The general proper-map version of 02RT is not claimed.
 
 SP103 proves the local-ring case of
@@ -1184,12 +1316,11 @@ The main target is unchanged. Nonempty-boundary geometry remains an
 alternative if needed; Chow--Betti generation and convolution compatibility
 remain separate.
 
-In the separate localization stream, the next bounded checkpoint is L1's
-actual closed-complement cycle kernel/image comparison. It can run alongside
-the boundary-section construction when it has a named consumer; additive localization
-is not a prerequisite for every
-direct geometric projector construction. L2 and L3 then address relation
-lifting and quotient exactness. None of these checkpoints replaces the
+SP110 completes the separate localization stream: L1's actual
+closed-complement cycle comparison, L2's relation lifting and L3's quotient
+exactness. The existing two-lift boundary consumer is instantiated on these
+maps. Additive localization remains auxiliary to the selected construction.
+None of these results replaces the
 prescribed-class action/generation argument or supplies a reduction from
 the full Hodge conjecture to abelian varieties.
 
@@ -2400,15 +2531,11 @@ or surjectivity hypothesis is introduced. The closure lift is kept private
 at the cycle layer: its preservation of rational equivalence is neither
 assumed nor asserted, and it is not descended as a Chow right inverse.
 
-**The next bounded Lean checkpoint in the localization stream is the
-closed-complement cycle kernel/image comparison (L1).** Identify the
-integral supports disjoint from the open with
-the actual closed-complement supports, and compare their finite cycles
-and homogeneous submodules under the existing closed pushforward.
-Quotient-level localization exactness then requires its own
-principal-relation lifting argument. SP63 proves surjectivity, not the
-remaining kernel/image equality, a localization sequence or general
-flat pullback.
+**SP110 completes the subsequent L1--L3 work.** The actual closed-complement
+support comparison proves cycle kernel=image, and principal-relation
+lifting descends it to both Chow quotients. SP63's earlier result remains
+surjectivity alone; SP110 supplies the additional proofs. General flat
+pullback remains separate.
 
 Comparison with the prescribed target rational Chow groups and its
 intersection/Betti structure remains a separate geometric identification.

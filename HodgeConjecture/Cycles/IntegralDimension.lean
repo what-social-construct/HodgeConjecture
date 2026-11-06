@@ -1,6 +1,10 @@
-import Mathlib.RingTheory.Ideal.GoingUp
-import Mathlib.RingTheory.KrullDimension.Basic
-import Mathlib.RingTheory.Spectrum.Prime.RingHom
+module
+
+public import Mathlib.RingTheory.Ideal.GoingUp
+public import Mathlib.RingTheory.KrullDimension.Basic
+public import Mathlib.RingTheory.Spectrum.Prime.RingHom
+
+@[expose] public section
 
 /-!
 # Krull dimension under integral extensions
@@ -24,7 +28,7 @@ variable (R : Type u) (S : Type v) [CommRing R] [CommRing S]
 
 /-- Incomparability gives strict contraction along an integral extension. -/
 theorem integral_specComap_strictMono :
-    StrictMono (algebraMap R S).specComap := by
+    StrictMono (PrimeSpectrum.comap (algebraMap R S)) := by
   intro P Q hPQ
   change P.asIdeal < Q.asIdeal at hPQ
   obtain ⟨hle, x, hxQ, hxP⟩ := SetLike.lt_iff_le_and_exists.mp hPQ
@@ -39,7 +43,7 @@ theorem ringKrullDim_le_of_integral : ringKrullDim S ≤ ringKrullDim R :=
 theorem exists_primeSeries_lift_of_injective_integral
     (hinj : Function.Injective (algebraMap R S)) (s : LTSeries (PrimeSpectrum R)) :
     ∃ t : LTSeries (PrimeSpectrum S), t.length = s.length ∧
-      (algebraMap R S).specComap t.last = s.last := by
+      (PrimeSpectrum.comap (algebraMap R S)) t.last = s.last := by
   induction s using RelSeries.inductionOn' with
   | singleton P =>
       have hbot : (⊥ : Ideal S).comap (algebraMap R S) ≤ P.asIdeal := by
@@ -53,17 +57,17 @@ theorem exists_primeSeries_lift_of_injective_integral
   | snoc s P hP ih =>
       obtain ⟨t, hlen, hlast⟩ := ih
       have hle : t.last.asIdeal.comap (algebraMap R S) ≤ P.asIdeal := by
-        change (algebraMap R S).specComap t.last ≤ P
+        change (PrimeSpectrum.comap (algebraMap R S)) t.last ≤ P
         rw [hlast]
         exact hP.le
       obtain ⟨Q, htQ, hQ, hQP⟩ :=
         Ideal.exists_ideal_over_prime_of_isIntegral_of_isPrime P.asIdeal t.last.asIdeal hle
       let Q' : PrimeSpectrum S := ⟨Q, hQ⟩
-      have hQP' : (algebraMap R S).specComap Q' = P := PrimeSpectrum.ext_iff.mpr hQP
+      have hQP' : (PrimeSpectrum.comap (algebraMap R S)) Q' = P := PrimeSpectrum.ext_iff.mpr hQP
       have hlt : t.last < Q' := by
         refine lt_of_le_of_ne htQ ?_
         intro heq
-        have := congrArg (algebraMap R S).specComap heq
+        have := congrArg (PrimeSpectrum.comap (algebraMap R S)) heq
         rw [hlast, hQP'] at this
         exact hP.ne this
       refine ⟨t.snoc Q' hlt, ?_, ?_⟩

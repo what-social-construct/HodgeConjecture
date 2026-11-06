@@ -1,7 +1,11 @@
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Mathlib.LinearAlgebra.Matrix.Charpoly.LinearMap
-import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
-import Mathlib.RingTheory.Ideal.Maps
+module
+
+public import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.LinearMap
+public import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
+public import Mathlib.RingTheory.Ideal.Maps
+
+@[expose] public section
 
 /-!
 # Annihilating polynomials for elements of extended ideals
@@ -57,7 +61,7 @@ theorem exists_monic_annihilator_coeff_mem_pow_of_mem_map
     rw [Ideal.smul_top_eq_map]
     rintro _ ⟨b, rfl⟩
     exact (I.map (algebraMap R C)).mul_mem_right b hzI
-  obtain ⟨F, hmonic, hcoeff, hroot⟩ :=
+  obtain ⟨F, hmonic, _, hcoeff, hroot⟩ :=
     LinearMap.exists_monic_and_coeff_mem_pow_and_aeval_eq_zero_of_range_le_smul
       R (Algebra.lmul R C z) I hrange
   have hzroot : Polynomial.aeval z F = 0 := by
@@ -66,7 +70,7 @@ theorem exists_monic_annihilator_coeff_mem_pow_of_mem_map
     exact hroot
   refine ⟨F, hmonic, ?_, hcoeff⟩
   have h := congrArg C.val hzroot
-  simpa only [← Polynomial.aeval_algHom_apply, map_zero] using h
+  simpa only [← Polynomial.aeval_algHom_apply, map_zero, z, Subalgebra.val_apply] using h
 
 /-- In particular, every lower coefficient belongs to the original ideal. -/
 theorem exists_monic_annihilator_of_mem_map

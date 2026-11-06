@@ -1,6 +1,10 @@
-import HodgeConjecture.Boundary.Normalization.GluedNormalizationChart
-import Mathlib.AlgebraicGeometry.Morphisms.Finite
-import Mathlib.AlgebraicGeometry.Morphisms.Etale
+module
+
+public import HodgeConjecture.Boundary.Normalization.GluedNormalizationChart
+public import Mathlib.AlgebraicGeometry.Morphisms.Finite
+public import Mathlib.AlgebraicGeometry.Morphisms.Etale
+
+@[expose] public section
 
 /-!
 # Target-local properties of the original glued normalization
@@ -75,10 +79,10 @@ theorem gluedNormalizationToBase_isFinite_iff :
 
 /-- Scheme étaleness is equivalent to scheme étaleness of those same chart maps. -/
 theorem gluedNormalizationToBase_isEtale_iff :
-    IsEtale (gluedNormalizationToBase X N) ↔
+    Etale (gluedNormalizationToBase X N) ↔
       ∀ U : NonemptyAffineChart X,
-        IsEtale (normalizedModelToBase Γ(X, U.val) N ≫ U.property.1.isoSpec.inv) :=
-  gluedNormalizationToBase_property_iff X N (@IsEtale)
+        Etale (normalizedModelToBase Γ(X, U.val) N ≫ U.property.1.isoSpec.inv) :=
+  gluedNormalizationToBase_property_iff X N (@Etale)
 
 end
 

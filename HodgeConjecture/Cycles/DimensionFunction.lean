@@ -1,5 +1,9 @@
-import HodgeConjecture.Cycles.DivisorSupport
-import Mathlib.Order.Cover
+module
+
+public import HodgeConjecture.Cycles.DivisorSupport
+public import Mathlib.Order.Cover
+
+@[expose] public section
 
 /-!
 # Explicit dimension functions and degrees of actual supports

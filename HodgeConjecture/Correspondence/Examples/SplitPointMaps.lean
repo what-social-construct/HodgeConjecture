@@ -1,5 +1,9 @@
-import HodgeConjecture.Correspondence.Examples.SplitPoints
-import Mathlib.RingTheory.Spectrum.Prime.RingHom
+module
+
+public import HodgeConjecture.Correspondence.Examples.SplitPoints
+public import Mathlib.RingTheory.Spectrum.Prime.RingHom
+
+@[expose] public section
 
 /-!
 # Intrinsic points of finite split schemes
@@ -33,7 +37,7 @@ def labelEquivSpectrum (I : Type u) [Finite I] : I ≃ PrimeSpectrum (I → K) :
 @[simp]
 theorem labelEquivSpectrum_apply (I : Type u) [Finite I] (i : I) :
     labelEquivSpectrum K I i =
-      (Pi.evalRingHom (fun _ : I ↦ K) i).specComap (default : PrimeSpectrum K) := rfl
+      PrimeSpectrum.comap (Pi.evalRingHom (fun _ : I ↦ K) i) (default : PrimeSpectrum K) := rfl
 
 /-- The same equivalence, with the scheme's underlying point type as target. -/
 def labelEquivScheme (I : Type u) [Finite I] : I ≃ scheme K I :=
@@ -47,7 +51,7 @@ theorem labelEquivScheme_apply (I : Type u) [Finite I] (i : I) :
 /-- Naturality of the label equivalence under a function's pullback on coordinates. -/
 theorem labelEquivSpectrum_natural {S I : Type u} [Finite S] [Finite I]
     (f : S → I) (s : S) :
-    (Pi.ringHom (fun s ↦ Pi.evalRingHom (fun _ : I ↦ K) (f s))).specComap
+    PrimeSpectrum.comap (Pi.ringHom (fun s ↦ Pi.evalRingHom (fun _ : I ↦ K) (f s)))
         (labelEquivSpectrum K S s) = labelEquivSpectrum K I (f s) := by
   rfl
 

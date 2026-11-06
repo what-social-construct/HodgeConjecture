@@ -1,5 +1,9 @@
-import HodgeConjecture.Realization.Chow.GaloisProjector
-import HodgeConjecture.Realization.Chow.TateGraphProjector
+module
+
+public import HodgeConjecture.Realization.Chow.GaloisProjector
+public import HodgeConjecture.Realization.Chow.TateGraphProjector
+
+@[expose] public section
 
 /-!
 # From prescribed deck-action projectors to Hodge classes

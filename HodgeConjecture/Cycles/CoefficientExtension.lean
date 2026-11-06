@@ -1,6 +1,10 @@
-import HodgeConjecture.Cycles.CycleDegree
-import Mathlib.LinearAlgebra.DirectSum.Finsupp
-import Mathlib.Algebra.Module.LinearMap.Rat
+module
+
+public import HodgeConjecture.Cycles.CycleDegree
+public import Mathlib.LinearAlgebra.DirectSum.Finsupp
+public import Mathlib.Algebra.Module.LinearMap.Rat
+
+@[expose] public section
 
 /-!
 # Rational coefficients on the existing homogeneous cycles
@@ -68,7 +72,7 @@ def cyclesOfDegreeRationalizationEquiv (δ : DimensionFunction X) (n : ℤ) :
     (ℚ ⊗[ℤ] cyclesOfDegree ℤ δ n) ≃ₗ[ℚ] cyclesOfDegree ℚ δ n := by
   classical
   let s := {Z : IntegralClosedSubscheme X | supportDegree δ Z = n}
-  let e := TensorProduct.finsuppScalarRight ℤ ℚ s
+  let e := TensorProduct.finsuppScalarRight ℤ ℚ ℚ s
   let eQ : (ℚ ⊗[ℤ] (s →₀ ℤ)) ≃ₗ[ℚ] (s →₀ ℚ) :=
     { e.toAddEquiv with map_smul' := map_rat_smul e }
   exact (LinearEquiv.baseChange ℤ ℚ _ _
@@ -85,7 +89,7 @@ theorem cyclesOfDegreeRationalizationEquiv_tmul (δ : DimensionFunction X) (n : 
     {Z : IntegralClosedSubscheme X | supportDegree δ Z = n}).injective
   change (Finsupp.supportedEquivFinsupp _)
     ((Finsupp.supportedEquivFinsupp _).symm
-      (TensorProduct.finsuppScalarRight ℤ ℚ _
+      (TensorProduct.finsuppScalarRight ℤ ℚ ℚ _
         (q ⊗ₜ[ℤ] (Finsupp.supportedEquivFinsupp _) c))) = _
   rw [LinearEquiv.apply_symm_apply, map_smul]
   ext Z

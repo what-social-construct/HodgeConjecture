@@ -1,6 +1,10 @@
-import HodgeConjecture.Realization.Chow.Examples.SplitCycleOperations
-import HodgeConjecture.Correspondence.Examples.SplitProductGeometry
-import Mathlib.Data.Matrix.Mul
+module
+
+public import HodgeConjecture.Realization.Chow.Examples.SplitCycleOperations
+public import HodgeConjecture.Correspondence.Examples.SplitProductGeometry
+public import Mathlib.Data.Matrix.Mul
+
+@[expose] public section
 
 /-!
 # Composition of rational Chow correspondences on finite split schemes

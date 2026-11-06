@@ -1,4 +1,8 @@
-import HodgeConjecture.Correspondence.EtaleGraphIntersection
+module
+
+public import HodgeConjecture.Correspondence.EtaleGraphIntersection
+
+@[expose] public section
 
 /-!
 # Graph slices in the relative triple product
@@ -65,7 +69,7 @@ theorem graphSliceMorphism_p13 (τ : DeckTransformation pX) :
   apply pullback.hom_ext <;> simp [Category.assoc]
 
 /-- The slice is open when the structural morphism is étale. -/
-instance graphSliceMorphism_isOpenImmersion [IsEtale pX]
+instance graphSliceMorphism_isOpenImmersion [Etale pX]
     (τ : DeckTransformation pX) : IsOpenImmersion (graphSliceMorphism pX τ) := by
   letI : IsOpenImmersion (graphSliceMorphism pX τ ≫ tripleProductP23 pX) := by
     rw [graphSliceMorphism_p23]
@@ -112,7 +116,9 @@ theorem graphSlice_isPullback (τ : DeckTransformation pX) :
   · intro m hm _
     change m ≫ graphSliceMorphism pX τ = s.fst at hm
     have h := congrArg (fun f ↦ f ≫ tripleProductP13 pX) hm
-    simpa only [Category.assoc, graphSliceMorphism_p13, Category.comp_id] using h
+    change m = s.fst ≫ tripleProductP13 pX
+    rw [Category.assoc, graphSliceMorphism_p13] at h
+    exact (Category.comp_id m).symm.trans h
 
 instance graphSliceMorphism_isClosedImmersion [IsSeparated pX]
     (τ : DeckTransformation pX) : IsClosedImmersion (graphSliceMorphism pX τ) := by

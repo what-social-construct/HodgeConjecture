@@ -1,8 +1,12 @@
-import HodgeConjecture.Correspondence.Examples.SplitGaloisSheets
-import HodgeConjecture.Realization.Chow.Examples.SplitGaloisResidual
-import HodgeConjecture.Realization.Chow.Examples.SplitChowDiagonal
-import HodgeConjecture.Realization.Chow.MultiplicativeResidualRigidity
-import HodgeConjecture.Realization.Betti.Examples.SplitChowShear
+module
+
+public import HodgeConjecture.Correspondence.Examples.SplitGaloisSheets
+public import HodgeConjecture.Realization.Chow.Examples.SplitGaloisResidual
+public import HodgeConjecture.Realization.Chow.Examples.SplitChowDiagonal
+public import HodgeConjecture.Realization.Chow.MultiplicativeResidualRigidity
+public import HodgeConjecture.Realization.Betti.Examples.SplitChowShear
+
+@[expose] public section
 
 /-!
 # The geometric marked-sheet residual/action comparison

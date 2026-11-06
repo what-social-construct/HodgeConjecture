@@ -1,4 +1,8 @@
-import HodgeConjecture.Realization.Chow.Examples.SplitTateBlock
+module
+
+public import HodgeConjecture.Realization.Chow.Examples.SplitTateBlock
+
+@[expose] public section
 
 /-!
 # Constant-marked coordinates by an invertible actual Chow correspondence

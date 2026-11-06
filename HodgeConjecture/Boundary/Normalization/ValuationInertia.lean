@@ -1,6 +1,10 @@
-import Mathlib.NumberTheory.RamificationInertia.Basic
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.Valuation.RamificationGroup
+module
+
+public import Mathlib.NumberTheory.RamificationInertia.Basic
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.RingTheory.Valuation.RamificationGroup
+
+@[expose] public section
 
 /-!
 # Valuation inertia

@@ -1,4 +1,8 @@
-import HodgeConjecture.LinearAlgebra.UniversalIdempotentAlgebra
+module
+
+public import HodgeConjecture.LinearAlgebra.UniversalIdempotentAlgebra
+
+@[expose] public section
 
 /-!
 # Morphisms between representations of one idempotent

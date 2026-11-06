@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Normalization.GluedNormalizationAction
-import HodgeConjecture.Boundary.Normalization.GluedNormalClosureRefinement
+module
+
+public import HodgeConjecture.Boundary.Normalization.GluedNormalizationAction
+public import HodgeConjecture.Boundary.Normalization.GluedNormalClosureRefinement
+
+@[expose] public section
 
 /-!
 # The marked subgroup action on the original glued refinement
@@ -121,15 +125,15 @@ def gluedNormalClosureMarkedDeckAction :
   letI : Algebra X.functionField Y.functionField :=
     (functionFieldMapOfDominant p).hom.toAlgebra
   refine
-    { toFun := fun σ => Over.isoMk (gluedNormalizationAutomorphism X Nₚ σ.val)
+    { toFun := fun σ => CategoryTheory.Aut.of <| Over.isoMk (gluedNormalizationAutomorphism X Nₚ σ.val)
         (gluedNormalizationAutomorphism_comp_toCover p hY σ)
       map_one' := ?_
       map_mul' := ?_ }
-  · apply CategoryTheory.Aut.ext
+  · apply CategoryTheory.Aut.hom_ext
     apply Over.OverMorphism.ext
     exact gluedNormalizationAutomorphism_one X Nₚ
   · intro σ τ
-    apply CategoryTheory.Aut.ext
+    apply CategoryTheory.Aut.hom_ext
     apply Over.OverMorphism.ext
     exact gluedNormalizationAutomorphism_mul X Nₚ σ.val τ.val
 

@@ -1,4 +1,8 @@
-import HodgeConjecture.Cycles.AffineSchemeResidueDegree
+module
+
+public import HodgeConjecture.Cycles.AffineSchemeResidueDegree
+
+@[expose] public section
 
 /-!
 # Pointwise residue degrees and affine-chart values

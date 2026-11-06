@@ -1,7 +1,11 @@
-import HodgeConjecture.Boundary.Normalization.GluedNormalizationIntegrality
-import HodgeConjecture.Boundary.Normalization.GluedNormalizationSurjectivity
-import HodgeConjecture.Cycles.FunctionFieldComparison
-import Mathlib.RingTheory.Localization.Integral
+module
+
+public import HodgeConjecture.Boundary.Normalization.GluedNormalizationIntegrality
+public import HodgeConjecture.Boundary.Normalization.GluedNormalizationSurjectivity
+public import HodgeConjecture.Cycles.FunctionFieldComparison
+public import Mathlib.RingTheory.Localization.Integral
+
+@[expose] public section
 
 /-!
 # The function field of the original glued normalization
@@ -207,7 +211,7 @@ theorem gluedNormalizationFunctionFieldEquivAt_toBase
     rfl
   exact DFunLike.congr_fun h a
 
-private def functionFieldComparisonChart : NonemptyAffineChart X :=
+def functionFieldComparisonChart : NonemptyAffineChart X :=
   Classical.choose (show ∃ U : NonemptyAffineChart X, True from by
     obtain ⟨U, hU, hx, _⟩ := exists_isAffineOpen_mem_and_subset
       (X := X) (U := ⊤) (x := genericPoint X) (by trivial)

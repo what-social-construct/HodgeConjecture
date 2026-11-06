@@ -1,5 +1,10 @@
+module
+
 import HodgeConjecture.Boundary.Normalization.FiniteEtaleGluedNormalClosure
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP86 regressions for target-local properties of the original glued normalization.
@@ -145,30 +150,30 @@ example (h : IsFinite (gluedNormalizationToBase X N)) (V : X.Opens) :
   IsZariskiLocalAtTarget.restrict (P := @IsFinite) h V
 
 example :
-    IsEtale (gluedNormalizationToBase X N) ↔
+    Etale (gluedNormalizationToBase X N) ↔
       ∀ U : NonemptyAffineChart X,
-        IsEtale (normalizedModelToBase Γ(X, U.val) N ≫ U.property.1.isoSpec.inv) :=
+        Etale (normalizedModelToBase Γ(X, U.val) N ≫ U.property.1.isoSpec.inv) :=
   gluedNormalizationToBase_isEtale_iff X N
 
-example (h : IsEtale (gluedNormalizationToBase X N)) (U : NonemptyAffineChart X) :
-    IsEtale (normalizedModelToBase Γ(X, U.val) N ≫ U.property.1.isoSpec.inv) :=
+example (h : Etale (gluedNormalizationToBase X N)) (U : NonemptyAffineChart X) :
+    Etale (normalizedModelToBase Γ(X, U.val) N ≫ U.property.1.isoSpec.inv) :=
   (gluedNormalizationToBase_isEtale_iff X N).mp h U
 
 example (h : ∀ U : NonemptyAffineChart X,
-    IsEtale (normalizedModelToBase Γ(X, U.val) N ≫ U.property.1.isoSpec.inv)) :
-    IsEtale (gluedNormalizationToBase X N) :=
+    Etale (normalizedModelToBase Γ(X, U.val) N ≫ U.property.1.isoSpec.inv)) :
+    Etale (gluedNormalizationToBase X N) :=
   (gluedNormalizationToBase_isEtale_iff X N).mpr h
 
-example (h : IsEtale (gluedNormalizationToBase X N)) (V : X.Opens) :
-    IsEtale (gluedNormalizationToBase X N ∣_ V) :=
-  IsZariskiLocalAtTarget.restrict (P := @IsEtale) h V
+example (h : Etale (gluedNormalizationToBase X N)) (V : X.Opens) :
+    Etale (gluedNormalizationToBase X N ∣_ V) :=
+  IsZariskiLocalAtTarget.restrict (P := @Etale) h V
 
 end OriginalStructuralMaps
 
 section ActualNormalClosure
 
 variable {X Y : Scheme.{u}} [IsIntegral X] [IsIntegral Y]
-variable (p : Y ⟶ X) [IsDominant p] [IsFinite p] [IsEtale p]
+variable (p : Y ⟶ X) [IsDominant p] [IsFinite p] [Etale p]
 
 set_option quotPrecheck false in
 local notation "Nₚ" => IntermediateField.normalClosure X.functionField Y.functionField
@@ -194,7 +199,7 @@ example :
     letI : Algebra X.functionField Y.functionField :=
       (functionFieldMapOfDominant p).hom.toAlgebra
     IsFinite (gluedNormalizationToBase X Nₚ) ∧
-      IsEtale (gluedNormalizationToBase X Nₚ) := by
+      Etale (gluedNormalizationToBase X Nₚ) := by
   fail_if_success have _ : IsNoetherian X := inferInstance
   fail_if_success have _ : IsNoetherian Y := inferInstance
   fail_if_success have _ : PerfectField X.functionField := inferInstance
@@ -209,19 +214,19 @@ example :
 example :
     letI : Algebra X.functionField Y.functionField :=
       (functionFieldMapOfDominant p).hom.toAlgebra
-    IsEtale (gluedNormalizationToBase X Nₚ) :=
+    Etale (gluedNormalizationToBase X Nₚ) :=
   (functionFieldNormalClosure_glued_finite_etale p hX hY).2
 
 example (V : X.Opens) :
     letI : Algebra X.functionField Y.functionField :=
       (functionFieldMapOfDominant p).hom.toAlgebra
     IsFinite (gluedNormalizationToBase X Nₚ ∣_ V) ∧
-      IsEtale (gluedNormalizationToBase X Nₚ ∣_ V) := by
+      Etale (gluedNormalizationToBase X Nₚ ∣_ V) := by
   letI : Algebra X.functionField Y.functionField :=
     (functionFieldMapOfDominant p).hom.toAlgebra
   have h := functionFieldNormalClosure_glued_finite_etale p hX hY
   exact ⟨IsZariskiLocalAtTarget.restrict (P := @IsFinite) h.1 V,
-    IsZariskiLocalAtTarget.restrict (P := @IsEtale) h.2 V⟩
+    IsZariskiLocalAtTarget.restrict (P := @Etale) h.2 V⟩
 
 example (U : NonemptyAffineChart X) :
     letI : Algebra X.functionField Y.functionField :=
@@ -229,7 +234,7 @@ example (U : NonemptyAffineChart X) :
     letI : Algebra Γ(X, U.val) Nₚ :=
       ((algebraMap X.functionField Nₚ).comp (X.germToFunctionField U.val).hom).toAlgebra
     IsFinite (normalizedModelToBase Γ(X, U.val) Nₚ ≫ U.property.1.isoSpec.inv) ∧
-      IsEtale (normalizedModelToBase Γ(X, U.val) Nₚ ≫ U.property.1.isoSpec.inv) := by
+      Etale (normalizedModelToBase Γ(X, U.val) Nₚ ≫ U.property.1.isoSpec.inv) := by
   letI : Algebra X.functionField Y.functionField :=
     (functionFieldMapOfDominant p).hom.toAlgebra
   letI : Algebra Γ(X, U.val) Nₚ :=
@@ -260,9 +265,9 @@ run_cmd do
   for declaration in declarations do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    for axiomName in state.axioms do
+    let axioms ← Lean.collectAxioms declaration
+    for axiomName in axioms do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"
-    logInfo m!"PASS standard-axiom boundary: {declaration}; {state.axioms.toList}"
+    logInfo m!"PASS standard-axiom boundary: {declaration}; {axioms.toList}"
   logInfo "PASS SP86 audit registry: 6 distinct public declarations"

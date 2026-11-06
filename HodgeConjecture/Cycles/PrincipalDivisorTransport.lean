@@ -1,6 +1,10 @@
-import HodgeConjecture.Cycles.PrincipalDivisor
-import HodgeConjecture.Cycles.IsomorphismTransport
-import HodgeConjecture.Cycles.OpenSupport
+module
+
+public import HodgeConjecture.Cycles.PrincipalDivisor
+public import HodgeConjecture.Cycles.IsomorphismTransport
+public import HodgeConjecture.Cycles.OpenSupport
+
+@[expose] public section
 
 /-!
 # Actual open restriction and isomorphism transport of principal divisors

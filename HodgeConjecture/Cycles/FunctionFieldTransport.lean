@@ -1,4 +1,8 @@
-import Mathlib.AlgebraicGeometry.FunctionField
+module
+
+public import Mathlib.AlgebraicGeometry.FunctionField
+
+@[expose] public section
 
 /-!
 # Function fields through actual open immersions
@@ -46,7 +50,7 @@ theorem functionFieldIsoOfOpenImmersion_stalkSpecializes
   unfold functionFieldIsoOfOpenImmersion
   simp only [Iso.trans_hom, TopCat.Presheaf.stalkCongr_hom, asIso_hom,
     ← Category.assoc, TopCat.Presheaf.stalkSpecializes_comp]
-  exact Scheme.stalkSpecializes_stalkMap j (genericPoint X) x
+  exact Scheme.Hom.stalkSpecializes_stalkMap j (genericPoint X) x
     ((genericPoint_spec X).specializes (Set.mem_univ x))
 
 /-- Compatibility with the canonical algebra maps from actual local rings

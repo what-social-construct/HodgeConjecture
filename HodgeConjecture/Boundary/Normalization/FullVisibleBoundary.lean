@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
-import HodgeConjecture.Boundary.Sheets.GaloisSheets
+module
+
+public import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
+public import HodgeConjecture.Boundary.Sheets.GaloisSheets
+
+@[expose] public section
 
 /-!
 # Boundary separation for a fully visible normalization

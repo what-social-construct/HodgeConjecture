@@ -1,5 +1,9 @@
-import HodgeConjecture.Realization.HodgeClasses
-import HodgeConjecture.Realization.Chow.TransferProjector
+module
+
+public import HodgeConjecture.Realization.HodgeClasses
+public import HodgeConjecture.Realization.Chow.TransferProjector
+
+@[expose] public section
 
 /-!
 # Upstairs cycle recipes and prescribed Hodge classes

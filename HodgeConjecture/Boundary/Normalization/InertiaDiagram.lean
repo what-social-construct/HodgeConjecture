@@ -1,13 +1,18 @@
-import HodgeConjecture.Boundary.Normalization.Model
-import HodgeConjecture.Boundary.Normalization.NormalClosure
-import HodgeConjecture.Boundary.Normalization.ValuationInertia
-import HodgeConjecture.Boundary.Normalization.VisibleRamification
-import HodgeConjecture.Boundary.Sheets.DecompositionSheets
-import Mathlib.AlgebraicGeometry.Morphisms.OpenImmersion
-import Mathlib.NumberTheory.RamificationInertia.Unramified
-import Mathlib.RingTheory.Ideal.Height
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.Unramified.Locus
+module
+
+public import HodgeConjecture.MathlibCompat.Ramification
+public import HodgeConjecture.Boundary.Normalization.Model
+public import HodgeConjecture.Boundary.Normalization.NormalClosure
+public import HodgeConjecture.Boundary.Normalization.ValuationInertia
+public import HodgeConjecture.Boundary.Normalization.VisibleRamification
+public import HodgeConjecture.Boundary.Sheets.DecompositionSheets
+public import Mathlib.AlgebraicGeometry.Morphisms.OpenImmersion
+public import Mathlib.NumberTheory.RamificationInertia.Unramified
+public import Mathlib.RingTheory.Ideal.Height
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.Unramified.Locus
+
+@[expose] public section
 
 /-!
 # Abstract normalization–inertia diagrams
@@ -151,7 +156,7 @@ def NoCodimensionOneRamification : Prop :=
   ∀ q :
       PrimeSpectrum
         (NormalClosureNormalizationRing (B := B) (N := N)),
-    q.asIdeal.primeHeight = 1 →
+    q.asIdeal.height = 1 →
       Algebra.IsUnramifiedAt B q.asIdeal
 
 /-- A ramified height-one point of the normal-closure normalization. -/
@@ -159,7 +164,7 @@ def RamifiedCodimensionOnePoint :=
   { q :
       PrimeSpectrum
         (NormalClosureNormalizationRing (B := B) (N := N)) //
-      q.asIdeal.primeHeight = 1 ∧
+      q.asIdeal.height = 1 ∧
         ¬ Algebra.IsUnramifiedAt B q.asIdeal }
 
 /-- Universal codimension-one unramifiedness rules out ramified height-one
@@ -438,16 +443,8 @@ instance centerPrime_isPrime
 noncomputable def geometricRamificationIndex
     (E : RamifiedCodimensionOnePoint (B := B) (N := N))
     (q : D.sheetClasses E) : ℕ :=
-  Ideal.ramificationIdx
-    (R := B)
-    (S := IntermediateNormalizationRing (B := B) (L := L))
-    ((algebraMap B
-      (IntermediateNormalizationRing (B := B) (L := L))) :
-        B →+* IntermediateNormalizationRing (B := B) (L := L))
-    (Ideal.under
-      (B := IntermediateNormalizationRing (B := B) (L := L))
-      B (D.centerPrime E q))
-    (D.centerPrime E q)
+  Ideal.ramificationIdx'
+    ((D.centerPrime E q).under B) (D.centerPrime E q)
 
 /--
 The valuation-theoretic bridge between double-coset inertia and the
@@ -514,8 +511,8 @@ theorem geometricRamificationIndex_eq_one_of_visible
       Algebra.IsUnramifiedAt B (D.centerPrime E q) :=
     D.centerPrime_isUnramifiedAt_of_visible E q hFormal hVisible
   exact
-    Ideal.ramificationIdx_eq_one_of_isUnramifiedAt
-      (R.center_ne_bot E q)
+    HodgeConjecture.CommutativeAlgebra.ramificationIdx'_eq_one_of_isUnramifiedAt
+      (D.centerPrime E q) (R.center_ne_bot E q)
 
 omit [IsFractionRing B K] in
 /-- Formal unramifiedness sends every positive-inertia center to the boundary. -/

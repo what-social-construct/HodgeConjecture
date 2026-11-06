@@ -1,6 +1,10 @@
-import HodgeConjecture.Collision.AffineGeometry
-import HodgeConjecture.Collision.SheafColon
-import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
+module
+
+public import HodgeConjecture.Collision.AffineGeometry
+public import HodgeConjecture.Collision.SheafColon
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
+
+@[expose] public section
 
 /-!
 # The relative diagonal ideal sheaf
@@ -116,7 +120,7 @@ theorem affineRelativeDiagonalIdealSheaf_eq_ker :
     Scheme.IdealSheafData.map_ker]
   congr 1
   unfold affineCollisionMap collisionMultiplication
-  rw [AlgebraicGeometry.diagonal_Spec_map, Category.assoc,
+  rw [AlgebraicGeometry.diagonal_SpecMap, Category.assoc,
     Iso.inv_hom_id, Category.comp_id]
   rfl
 
@@ -142,7 +146,7 @@ theorem affineRelativeDiagonalIdealSheaf_top :
                 (CommRingCat.ofHom
                   (collisionMultiplication B A).toRingHom)).appTop.hom)) =
       _
-  rw [OrderIso.apply_symm_apply]
+  rw [OrderRingIso.apply_symm_apply]
   unfold collisionObstructionIdeal collisionMultiplication
     CollisionFoundations.diagonalMultiplication KaehlerDifferential.ideal
   change

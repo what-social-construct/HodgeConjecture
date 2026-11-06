@@ -1,5 +1,9 @@
-import Mathlib.AlgebraicGeometry.ResidueField
-import Mathlib.LinearAlgebra.Dimension.Finite
+module
+
+public import Mathlib.AlgebraicGeometry.ResidueField
+public import Mathlib.LinearAlgebra.Dimension.Finite
+
+@[expose] public section
 
 /-! # Degree one through the actual residue map of a scheme isomorphism -/
 
@@ -27,7 +31,9 @@ theorem residueFieldMap_finrank_of_isIso {X Y : Scheme.{u}}
   obtain ⟨c, hc⟩ :=
     (asIso (f.residueFieldMap x)).commRingCatIsoToRingEquiv.surjective w
   refine ⟨c, ?_⟩
-  simpa [Algebra.smul_def] using hc
+  change f.residueFieldMap x c = w at hc
+  change f.residueFieldMap x c * 1 = w
+  exact (mul_one _).trans hc
 
 end
 

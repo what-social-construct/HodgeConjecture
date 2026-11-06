@@ -1,4 +1,8 @@
-import HodgeConjecture.Cycles.SchemeLocalOrder
+module
+
+public import HodgeConjecture.Cycles.SchemeLocalOrder
+
+@[expose] public section
 
 /-!
 # Affine presentations of actual rational functions

@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Normalization.HeightOneBoundaryPole
-import HodgeConjecture.Boundary.Normalization.NormalizationTraceBound
+module
+
+public import HodgeConjecture.Boundary.Normalization.HeightOneBoundaryPole
+public import HodgeConjecture.Boundary.Normalization.NormalizationTraceBound
+
+@[expose] public section
 
 /-!
 # Actual boundary poles and the separation criterion
@@ -44,7 +48,7 @@ local notation "T₀" => NormalClosureNormalizationRing (B := B) (N := N)
 strictly larger than the normalization ring. -/
 theorem boundarySectionSubalgebra_ne_bot_of_heightOne
     (I : Subgroup C.GaloisGroup) (hI : I ≠ ⊥)
-    (p : PrimeSpectrum T₀) (hp : p.asIdeal.primeHeight = 1)
+    (p : PrimeSpectrum T₀) (hp : p.asIdeal.height = 1)
     (hJp : fixedMovingBoundaryIdeal C I ≤ p.asIdeal) :
     boundarySectionSubalgebra C I hI ≠ ⊥ := by
   letI : IsNoetherianRing T₀ := normalization_isNoetherianRing C
@@ -74,7 +78,7 @@ theorem conjugateBoundarySeparation_of_boundarySectionSubalgebra_eq_bot
 section when the boundary contains a height-one prime. -/
 theorem boundarySection_tracePoleWitness [Algebra.IsSeparable K L]
     (I : Subgroup C.GaloisGroup) (hI : I ≠ ⊥)
-    (p : PrimeSpectrum T₀) (hp : p.asIdeal.primeHeight = 1)
+    (p : PrimeSpectrum T₀) (hp : p.asIdeal.height = 1)
     (hJp : fixedMovingBoundaryIdeal C I ≤ p.asIdeal)
     (s : T₀) (hs : s ≠ 0) :
     ∃ z : BoundarySectionRing C I,
@@ -90,7 +94,7 @@ theorem boundarySection_tracePoleWitness [Algebra.IsSeparable K L]
 of the actual section algebra to be zero. -/
 theorem normalizationTraceDual_colon_eq_bot_of_heightOne [Algebra.IsSeparable K L]
     (I : Subgroup C.GaloisGroup) (hI : I ≠ ⊥)
-    (p : PrimeSpectrum T₀) (hp : p.asIdeal.primeHeight = 1)
+    (p : PrimeSpectrum T₀) (hp : p.asIdeal.height = 1)
     (hJp : fixedMovingBoundaryIdeal C I ≤ p.asIdeal) :
     (normalizationTraceDual C).colon
       (boundarySectionSubalgebra C I hI).toSubmodule = ⊥ :=

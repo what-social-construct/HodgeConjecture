@@ -1,6 +1,10 @@
-import HodgeConjecture.Collision.Basic
-import Mathlib.RingTheory.Ideal.Colon
-import Mathlib.RingTheory.Ideal.Quotient.Operations
+module
+
+public import HodgeConjecture.Collision.Basic
+public import Mathlib.RingTheory.Ideal.Colon
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+
+@[expose] public section
 
 /-!
 # Residual off-diagonal ideals
@@ -29,7 +33,7 @@ The usual ideal saturation `I : J^∞`, indexed by strictly positive
 powers of `J`.
 -/
 def idealSaturation (I J : Ideal A) : Ideal A :=
-  ⨆ n : ℕ, I.colon (J ^ (n + 1))
+  ⨆ n : ℕ, I.colon ((J ^ (n + 1) : Ideal A) : Set A)
 
 /--
 The pullback of the annihilator of `J/I` is the colon ideal `I : J`.
@@ -135,7 +139,7 @@ theorem colon_power_eq_colon_of_isClopenModulo
     (I J : Ideal A) (q : A ⧸ I)
     (h : IsClopenModulo I J q)
     (n : ℕ) :
-    I.colon (J ^ (n + 1)) = I.colon J := by
+    I.colon ((J ^ (n + 1) : Ideal A) : Set A) = I.colon J := by
   rw [← comap_annihilator_map_quotient_eq_colon I (J ^ (n + 1)),
     Ideal.map_pow, h.2.2, Ideal.span_singleton_pow,
     h.2.1.pow_eq (Nat.succ_ne_zero n),

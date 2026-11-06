@@ -1,4 +1,8 @@
-import Mathlib.AlgebraicGeometry.FunctionField
+module
+
+public import Mathlib.AlgebraicGeometry.FunctionField
+
+@[expose] public section
 
 /-!
 # Actual affine sections in a specified fraction field
@@ -41,10 +45,10 @@ def affineSectionsToFractionField
       (IsLocalization.algEquiv (nonZeroDivisors T)
         (Spec T).functionField N)
         (((Spec T).germToFunctionField U)
-          (StructureSheaf.toOpen T U t)) = _
-    have h : ((Spec T).germToFunctionField U) (StructureSheaf.toOpen T U t) =
+          (algebraMap T Γ(Spec T, U) t)) = _
+    have h : ((Spec T).germToFunctionField U) (algebraMap T Γ(Spec T, U) t) =
         algebraMap T (Spec T).functionField t :=
-      StructureSheaf.germ_toOpen T U _ _ t
+      StructureSheaf.algebraMap_germ_apply U _ _ t
     rw [h]
     exact AlgEquiv.commutes _ t
 

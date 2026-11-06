@@ -1,5 +1,10 @@
+module
+
 import HodgeConjecture.Boundary.Normalization.GenericSplitFiberAction
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP100 focused checks for the original sheet evaluations and normalization
@@ -77,7 +82,7 @@ example :
         pullback.fst p bN = mₚ s := by
   letI : Algebra X.functionField Y.functionField :=
     (functionFieldMapOfDominant p).hom.toAlgebra
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   fail_if_success have _ : PerfectField X.functionField := inferInstance
   fail_if_success have _ : IsNoetherian X := inferInstance
   fail_if_success have _ : IsNoetherian Y := inferInstance
@@ -175,7 +180,7 @@ example :
   letI : FiniteDimensional X.functionField Nₚ :=
     (functionFieldNormalClosureData p).finiteNormal
   fail_if_success have _ : FormallyUnramified p := inferInstance
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   fail_if_success have _ : PerfectField X.functionField := inferInstance
   fail_if_success have _ : IsNoetherian X := inferInstance
   fail_if_success
@@ -338,7 +343,7 @@ end SplitOrbit
 
 section Etale
 
-variable [IsEtale p]
+variable [Etale p]
 
 example :
     letI : Algebra X.functionField Y.functionField :=
@@ -393,8 +398,8 @@ run_cmd do
   for declaration in declarations do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    let actual := state.axioms.toList
+    let axioms ← Lean.collectAxioms declaration
+    let actual := axioms.toList
     for axiomName in actual do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"

@@ -1,4 +1,8 @@
-import HodgeConjecture.Boundary.Normalization.GluedNormalization
+module
+
+public import HodgeConjecture.Boundary.Normalization.GluedNormalization
+
+@[expose] public section
 
 /-!
 # The original charts as actual global inverse images
@@ -32,14 +36,14 @@ theorem normalizationChartToGlued_range (U : NonemptyAffineChart X) :
   · rintro ⟨a, rfl⟩
     change (gluedNormalizationToBase X N).base
       ((normalizationChartToGlued X N U).base a) ∈ (U.val : Set X)
-    rw [← Scheme.comp_base_apply, normalizationChartToGlued_comp_toBase]
+    rw [← Scheme.Hom.comp_apply, normalizationChartToGlued_comp_toBase]
     rw [← U.property.1.range_fromSpec]
     exact ⟨_, rfl⟩
   · intro hz
     obtain ⟨V, b, rfl⟩ := (gluedNormalizationOpenCover X N).exists_eq z
     change (gluedNormalizationToBase X N).base
       ((normalizationChartToGlued X N V).base b) ∈ (U.val : Set X) at hz
-    rw [← Scheme.comp_base_apply, normalizationChartToGlued_comp_toBase] at hz
+    rw [← Scheme.Hom.comp_apply, normalizationChartToGlued_comp_toBase] at hz
     let μV := (affineNormalizationBaseCocone X N).ι.app V
     have hxV : μV.base b ∈ (V.val : Set X) := by
       rw [← V.property.1.range_fromSpec]
@@ -59,7 +63,7 @@ theorem normalizationChartToGlued_range (U : NonemptyAffineChart X) :
       (((affineNormalizationDiagram X N).map fWU).base w) =
       (normalizationChartToGlued X N V).base b
     rw [← hw]
-    simp only [← Scheme.comp_base_apply, normalizationChartToGlued_naturality]
+    simp only [← Scheme.Hom.comp_apply, normalizationChartToGlued_naturality]
 
 /-- The corresponding equality holds as actual opens of the glued scheme. -/
 theorem normalizationChartToGlued_opensRange (U : NonemptyAffineChart X) :

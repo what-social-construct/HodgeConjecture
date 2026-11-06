@@ -1,7 +1,11 @@
-import HodgeConjecture.Boundary.ExtensionCriterion
-import HodgeConjecture.Boundary.NoetherDifferentRamification
-import HodgeConjecture.Boundary.Normalization.InertiaDiagram
-import HodgeConjecture.Boundary.Sheets.GenericProjector
+module
+
+public import HodgeConjecture.Boundary.ExtensionCriterion
+public import HodgeConjecture.Boundary.NoetherDifferentRamification
+public import HodgeConjecture.Boundary.Normalization.InertiaDiagram
+public import HodgeConjecture.Boundary.Sheets.GenericProjector
+
+@[expose] public section
 
 /-!
 # From normalization inertia to projector extension
@@ -122,8 +126,8 @@ theorem baseClass_inertiaSaturated_of_different_not_le
     hUnramified
   have hGeometric :
       D.geometricRamificationIndex E (D.baseClass E) = 1 :=
-    Ideal.ramificationIdx_eq_one_of_isUnramifiedAt
-      (R.center_ne_bot E (D.baseClass E))
+    HodgeConjecture.CommutativeAlgebra.ramificationIdx'_eq_one_of_isUnramifiedAt
+      (D.centerPrime E (D.baseClass E)) (R.center_ne_bot E (D.baseClass E))
   apply
     (inertiaIndexAtBaseSheet_eq_one_iff_saturated
       (CollisionFoundations.inertiaGroupAt K

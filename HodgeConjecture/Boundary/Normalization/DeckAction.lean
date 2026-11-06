@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Normalization.InertiaDiagram
-import HodgeConjecture.Correspondence.FiniteGroupProjector
+module
+
+public import HodgeConjecture.Boundary.Normalization.InertiaDiagram
+public import HodgeConjecture.Correspondence.FiniteGroupProjector
+
+@[expose] public section
 
 /-!
 # The normal-closure deck action
@@ -101,7 +105,7 @@ def normalClosureDeckTransformation
     (σ : N ≃ₐ[K] N) :
     SchemeCorrespondence.DeckTransformation
       (normalClosureNormalizationToBase (B := B) (N := N)) :=
-  Over.isoMk
+  CategoryTheory.Aut.of <| Over.isoMk
     (normalClosureNormalizationSchemeIso (B := B) σ)
     (normalClosureNormalizationSchemeIso_hom_comp_toBase
       (B := B) σ)
@@ -123,7 +127,7 @@ def normalClosureFiniteDeckAction
       D.galoisGroup where
   toFun := normalClosureDeckTransformation (B := B)
   map_one' := by
-    apply CategoryTheory.Aut.ext
+    apply CategoryTheory.Aut.hom_ext
     apply Over.OverMorphism.ext
     change (normalClosureNormalizationSchemeIso
       (B := B) (1 : D.galoisGroup)).hom = 𝟙 _
@@ -135,7 +139,7 @@ def normalClosureFiniteDeckAction
     congr 1
   map_mul' := by
     intro σ τ
-    apply CategoryTheory.Aut.ext
+    apply CategoryTheory.Aut.hom_ext
     apply Over.OverMorphism.ext
     change (normalClosureNormalizationSchemeIso (B := B) (σ * τ)).hom =
       (normalClosureDeckTransformation (B := B) τ).hom.left ≫

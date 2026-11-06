@@ -1,8 +1,12 @@
-import Mathlib.Algebra.MvPolynomial.Equiv
-import Mathlib.AlgebraicGeometry.AffineScheme
-import Mathlib.RingTheory.FiniteType
-import Mathlib.RingTheory.KrullDimension.Field
-import Mathlib.RingTheory.KrullDimension.Polynomial
+module
+
+public import Mathlib.Algebra.MvPolynomial.Equiv
+public import Mathlib.AlgebraicGeometry.AffineScheme
+public import Mathlib.RingTheory.FiniteType
+public import Mathlib.RingTheory.KrullDimension.Field
+public import Mathlib.RingTheory.KrullDimension.Polynomial
+
+@[expose] public section
 
 /-!
 # Finite dimension for finite-type algebras over a field

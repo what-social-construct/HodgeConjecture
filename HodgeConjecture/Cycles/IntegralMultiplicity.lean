@@ -1,7 +1,11 @@
-import HodgeConjecture.Cycles.Basic
-import Mathlib.AlgebraicGeometry.FunctionField
-import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
-import Mathlib.RingTheory.Length
+module
+
+public import HodgeConjecture.Cycles.Basic
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Mathlib.RingTheory.Length
+
+@[expose] public section
 
 /-!
 # Generic multiplicity of an integral closed subscheme

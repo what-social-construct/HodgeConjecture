@@ -1,7 +1,11 @@
-import HodgeConjecture.Correspondence.Graph
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
+module
+
+public import HodgeConjecture.Correspondence.Graph
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
+
+@[expose] public section
 
 /-!
 # Closed graph subschemes of deck transformations

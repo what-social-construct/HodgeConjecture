@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Normalization.AffineNormalizationOpenImmersion
-import Mathlib.AlgebraicGeometry.Gluing
+module
+
+public import HodgeConjecture.Boundary.Normalization.AffineNormalizationOpenImmersion
+public import Mathlib.AlgebraicGeometry.Gluing
+
+@[expose] public section
 
 /-!
 # The locally directed diagram of actual normalization charts
@@ -50,7 +54,8 @@ def affineNormalizationBaseCocone : Cocone (affineNormalizationDiagram X N) wher
   ι :=
     { app := fun U => normalizedModelToBase Γ(X, U.val) N ≫ U.property.1.fromSpec
       naturality := fun U V f => by
-        simpa only [Category.comp_id] using
+        simpa only [affineNormalizationDiagram, Functor.const_obj_map,
+          Functor.const_obj_obj, Category.comp_id] using
           (affineNormalizationRestriction_comp_toX V.val U.val N
             (leOfHom f) V.property.1 U.property.1) }
 
@@ -74,9 +79,9 @@ instance affineNormalizationDiagram_isLocallyDirected :
     ((affineNormalizationDiagram X N) ⋙ Scheme.forget).IsLocallyDirected := by
   constructor
   intro U V T f g a b hab
-  let μU := (affineNormalizationBaseCocone X N).ι.app U
-  let μV := (affineNormalizationBaseCocone X N).ι.app V
-  let μT := (affineNormalizationBaseCocone X N).ι.app T
+  let μU : (affineNormalizationDiagram X N).obj U ⟶ X := (affineNormalizationBaseCocone X N).ι.app U
+  let μV : (affineNormalizationDiagram X N).obj V ⟶ X := (affineNormalizationBaseCocone X N).ι.app V
+  let μT : (affineNormalizationDiagram X N).obj T ⟶ X := (affineNormalizationBaseCocone X N).ι.app T
   have hU : (affineNormalizationDiagram X N).map f ≫ μT = μU :=
     (affineNormalizationBaseCocone X N).w f
   have hV : (affineNormalizationDiagram X N).map g ≫ μT = μV :=
@@ -84,7 +89,7 @@ instance affineNormalizationDiagram_isLocallyDirected :
   change ((affineNormalizationDiagram X N).map f).base a =
     ((affineNormalizationDiagram X N).map g).base b at hab
   have hx : μU.base a = μV.base b := by
-    simpa only [← Scheme.comp_base_apply, hU, hV] using congrArg μT.base hab
+    simpa only [← Scheme.Hom.comp_apply, hU, hV] using congrArg μT.base hab
   have hxU : μU.base a ∈ U.val := by
     change μU.base a ∈ (U.val : Set X)
     rw [← U.property.1.range_fromSpec]
@@ -112,7 +117,7 @@ instance affineNormalizationDiagram_isLocallyDirected :
         (((affineNormalizationDiagram X N).map fWV).base w) =
         ((affineNormalizationDiagram X N).map f).base
           (((affineNormalizationDiagram X N).map fWU).base w) := by
-      simp only [← Scheme.comp_base_apply, ← Functor.map_comp]
+      simp only [← Scheme.Hom.comp_apply, ← Functor.map_comp]
       congr 2
     _ = ((affineNormalizationDiagram X N).map g).base b := by rw [hw, hab]
 

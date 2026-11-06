@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-05",
+  "kind": "archived dependency and compatibility experiment",
+  "upstream_repository": "https://github.com/AxiomMath/Stacks",
+  "upstream_revision": "f8e70c5dd04bfabcb423d5e325461f527c85a5d6",
+  "upstream_lean": "4.34.0-rc2",
+  "tested_lean": "4.35.0",
+  "tested_mathlib": "56a005855ea17e0b0958f73ec801ae140b0a1679",
+  "target": "StacksFrontier.AlgebraicGeometry.WeilDeRham.FiniteFlatDeRhamTrace",
+  "dependency_closure": {
+    "stacks_modules": 4080,
+    "stacks_source_lines": 1401575,
+    "approximate_source_megabytes": 75.7
+  },
+  "outcome": "The dependency build encountered API incompatibilities before reaching the trace theorem. No general Stacks trace was imported into the project.",
+  "observed_incompatibilities": [
+    "PresheafOfModules monoidal and symmetric namespace changes",
+    "Commutative section-ring and tensor-product instance elaboration",
+    "Ringed-space sheaf limits instance",
+    "Symmetric-power polynomial coefficient rewriting"
+  ],
+  "selected_local_adaptations": [
+    "HodgeConjecture/CommutativeAlgebra/DeRham/Differential.lean",
+    "HodgeConjecture/CommutativeAlgebra/DeRham/Complex.lean"
+  ],
+  "attribution": "third_party/axiom-stacks/README.md and LICENSE",
+  "checkpoint": "research/working/0022-affine-derham-trace-comparison.md",
+  "retention": "The pinned upstream checkout, generated build cache and raw scratch logs in /tmp are disposable. This record and the repository checkpoint retain the useful findings."
+}

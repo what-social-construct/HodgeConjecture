@@ -1,4 +1,8 @@
-import HodgeConjecture.Correspondence.GraphSubscheme
+module
+
+public import HodgeConjecture.Correspondence.GraphSubscheme
+
+@[expose] public section
 
 /-!
 # Scheme-theoretic composition of closed graphs

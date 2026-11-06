@@ -1,7 +1,11 @@
-import HodgeConjecture.Realization.Chow.Examples.SplitChowAlgebra
-import HodgeConjecture.Correspondence.Examples.SplitSpanCoproduct
-import Mathlib.Data.Complex.Basic
-import Mathlib.Logic.Equiv.Option
+module
+
+public import HodgeConjecture.Realization.Chow.Examples.SplitChowAlgebra
+public import HodgeConjecture.Correspondence.Examples.SplitSpanCoproduct
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Logic.Equiv.Option
+
+@[expose] public section
 
 /-!
 # An actual Chow graph block on a point plus a finite split scheme

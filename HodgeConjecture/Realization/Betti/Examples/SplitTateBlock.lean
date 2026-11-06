@@ -1,8 +1,12 @@
-import HodgeConjecture.Realization.Betti.Examples.SplitCorrespondenceAction
-import HodgeConjecture.Realization.Betti.Examples.SplitHodgeStructure
-import HodgeConjecture.Realization.Chow.Examples.SplitTateBlock
-import HodgeConjecture.Realization.Chow.TateGraphProjector
-import Mathlib.LinearAlgebra.Pi
+module
+
+public import HodgeConjecture.Realization.Betti.Examples.SplitCorrespondenceAction
+public import HodgeConjecture.Realization.Betti.Examples.SplitHodgeStructure
+public import HodgeConjecture.Realization.Chow.Examples.SplitTateBlock
+public import HodgeConjecture.Realization.Chow.TateGraphProjector
+public import Mathlib.LinearAlgebra.Pi
+
+@[expose] public section
 
 /-!
 # The actual finite split Tate-augmented Betti block

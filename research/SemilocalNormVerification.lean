@@ -1,6 +1,11 @@
+module
+
 import HodgeConjecture.Cycles.LocalOrderNorm
 import HodgeConjecture.Cycles.Examples.LocalOrder
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP104: semilocal length sums and the determinant/norm comparison.
@@ -72,8 +77,9 @@ example : localOrder ℤ
   have h := localOrder_norm_fraction_eq_length ℤ ℚ ℚ ℤ 1 2 one_ne_zero (by norm_num)
   have hz : Module.length ℤ (ℤ ⧸ Ideal.span {(1 : ℤ)}) = 0 := by
     letI : Subsingleton (ℤ ⧸ Ideal.span {(1 : ℤ)}) :=
-      (Submodule.Quotient.subsingleton_iff _).mpr (fun x => by
-        rw [Ideal.span_singleton_one]; trivial)
+      Submodule.Quotient.subsingleton_iff.mpr (by
+        change Ideal.span ({(1 : ℤ)} : Set ℤ) = ⊤
+        exact Ideal.span_singleton_one)
     exact Module.length_eq_zero
   simpa [HodgeConjecture.SchemeCycles.Examples.int_two_quotient_length, hz] using h
 
@@ -118,8 +124,8 @@ run_cmd do
   for declaration in declarations do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    let actual := state.axioms.toList
+    let axioms ← Lean.collectAxioms declaration
+    let actual := axioms.toList
     for axiomName in actual do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"

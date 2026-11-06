@@ -1,5 +1,9 @@
-import HodgeConjecture.CommutativeAlgebra.LocalLength
-import HodgeConjecture.Cycles.LocalOrder
+module
+
+public import HodgeConjecture.CommutativeAlgebra.LocalLength
+public import HodgeConjecture.Cycles.LocalOrder
+
+@[expose] public section
 
 /-!
 # Residue-degree weighting of the existing local order

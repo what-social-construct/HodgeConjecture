@@ -1,9 +1,13 @@
-import HodgeConjecture.Cycles.LocalOrder
-import HodgeConjecture.CommutativeAlgebra.LocalizedPrincipalQuotient
-import HodgeConjecture.CommutativeAlgebra.AtPrimeFractionField
-import Mathlib.RingTheory.Localization.LocalizationLocalization
-import Mathlib.RingTheory.Localization.Submodule
-import Mathlib.RingTheory.Ideal.Height
+module
+
+public import HodgeConjecture.Cycles.LocalOrder
+public import HodgeConjecture.CommutativeAlgebra.LocalizedPrincipalQuotient
+public import HodgeConjecture.CommutativeAlgebra.AtPrimeFractionField
+public import Mathlib.RingTheory.Localization.LocalizationLocalization
+public import Mathlib.RingTheory.Localization.Submodule
+public import Mathlib.RingTheory.Ideal.Height
+
+@[expose] public section
 
 /-!
 # Localized principal quotients compute the existing local order
@@ -33,7 +37,7 @@ variable (B L : Type*) [CommRing B] [IsDomain B] [IsNoetherianRing B]
   [Algebra (Localization.AtPrime q) L] [IsScalarTower B (Localization.AtPrime q) L]
 
 omit [IsNoetherianRing B] [Ring.KrullDimLE 1 B] in
-private theorem atPrimeFractionRing : IsFractionRing (Localization.AtPrime q) L :=
+theorem atPrimeFractionRing : IsFractionRing (Localization.AtPrime q) L :=
   IsFractionRing.isFractionRing_of_isDomain_of_isLocalization q.primeCompl
     (Localization.AtPrime q) L
 

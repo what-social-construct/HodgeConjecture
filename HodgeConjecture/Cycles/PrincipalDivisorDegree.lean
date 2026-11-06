@@ -1,6 +1,10 @@
-import HodgeConjecture.Cycles.CycleDegree
-import HodgeConjecture.Cycles.DimensionFunctionRestriction
-import HodgeConjecture.Cycles.PrincipalDivisor
+module
+
+public import HodgeConjecture.Cycles.CycleDegree
+public import HodgeConjecture.Cycles.DimensionFunctionRestriction
+public import HodgeConjecture.Cycles.PrincipalDivisor
+
+@[expose] public section
 
 /-!
 # Homogeneous principal divisors and their ambient closed images

@@ -1,6 +1,10 @@
-import HodgeConjecture.Boundary.Normalization.FixedRingUnramified
-import HodgeConjecture.Boundary.Normalization.InvariantIntermediate
-import Mathlib.RingTheory.Ideal.Pointwise
+module
+
+public import HodgeConjecture.Boundary.Normalization.FixedRingUnramified
+public import HodgeConjecture.Boundary.Normalization.InvariantIntermediate
+public import Mathlib.RingTheory.Ideal.Pointwise
+
+@[expose] public section
 
 /-!
 # Prime inertia and the valuation-inertia comparison

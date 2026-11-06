@@ -1,5 +1,10 @@
-import HodgeConjecture.Inputs.FixedInertia
-import Mathlib.RingTheory.Localization.LocalizationLocalization
+module
+
+public import HodgeConjecture.Inputs.FixedInertia
+public import Mathlib.RingTheory.Localization.LocalizationLocalization
+public import Mathlib.RingTheory.DedekindDomain.Instances
+
+@[expose] public section
 
 /-!
 # Unramified intermediate fixed rings
@@ -40,7 +45,7 @@ private theorem localRingHom_injective_of_injective
     Function.Injective (Localization.localRingHom p P f hpP) := by
   rw [RingHom.injective_iff_ker_eq_bot, RingHom.ker_eq_bot_iff_eq_zero]
   intro x hx
-  obtain ⟨r, s, rfl⟩ := IsLocalization.mk'_surjective p.primeCompl x
+  obtain ⟨⟨r, s⟩, rfl⟩ := IsLocalization.mk'_surjective p.primeCompl x
   rw [Localization.localRingHom_mk'] at hx
   rw [IsLocalization.mk'_eq_zero_iff] at hx ⊢
   obtain ⟨t, ht⟩ := hx
@@ -174,18 +179,19 @@ theorem fixedRing_isUnramifiedAt_of_inertia_le_localized
   let qI := Q.under SI
   let SHq := Localization.AtPrime qH
   let SIq := Localization.AtPrime qI
+  letI := Localization.AtPrime.algebraOfLiesOver qH qI
   letI : IsLocalHom (algebraMap SHq SIq) :=
     fixedPointsLocalRingHom_isLocalHom I H hIH Q
   have hlocal_injective : Function.Injective (algebraMap SHq SIq) :=
     fixedPointsLocalRingHom_injective I H hIH Q
   letI : FaithfulSMul SHq SIq :=
     (faithfulSMul_iff_algebraMap_injective SHq SIq).mpr hlocal_injective
-  letI : NoZeroSMulDivisors SHq SIq :=
-    NoZeroSMulDivisors.iff_algebraMap_injective.mpr hlocal_injective
+  letI : Module.IsTorsionFree SHq SIq :=
+    (Module.isTorsionFree_iff_algebraMap_injective).mpr hlocal_injective
   letI : (IsLocalRing.maximalIdeal SIq).LiesOver
       (IsLocalRing.maximalIdeal SHq) := by
     constructor
-    exact (((IsLocalRing.local_hom_TFAE (algebraMap SHq SIq)).out 0 4 rfl rfl).mp
+    exact (((IsLocalRing.local_hom_TFAE (algebraMap SHq SIq)).out 1 5 rfl rfl).mp
       (inferInstance : IsLocalHom (algebraMap SHq SIq))).symm
   letI : Algebra.IsUnramifiedAt A (Q.under SI) :=
     hI.isUnramifiedAt

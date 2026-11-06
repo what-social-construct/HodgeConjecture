@@ -1,7 +1,11 @@
-import HodgeConjecture.Correspondence.CollisionEtale
-import HodgeConjecture.Correspondence.FiniteCoproduct
-import HodgeConjecture.Correspondence.FiniteEtaleModel
-import HodgeConjecture.Correspondence.FiniteGroupProjector
+module
+
+public import HodgeConjecture.Correspondence.CollisionEtale
+public import HodgeConjecture.Correspondence.FiniteCoproduct
+public import HodgeConjecture.Correspondence.FiniteEtaleModel
+public import HodgeConjecture.Correspondence.FiniteGroupProjector
+
+@[expose] public section
 
 /-!
 # Galois collision sheets and averaging projectors
@@ -145,7 +149,7 @@ theorem graphCorrespondence_hasFiniteEtaleLegs
     SchemeCorrespondence.graph_hasFiniteEtaleLegs
       (f ≫ g) (D.actionOverBase g a)
 
-variable [Fintype G] [IsFinite f] [IsEtale f]
+variable [Fintype G] [IsFinite f] [Etale f]
 
 /--
 Every finite-étale algebra model sends the geometric Galois sheet
@@ -243,7 +247,7 @@ end FiniteAverage
 
 section Finite
 
-variable [Fintype G] [IsFinite f] [IsEtale f]
+variable [Fintype G] [IsFinite f] [Etale f]
 
 /-- The normalized collision class in a chosen finite-étale realization. -/
 def normalizedCollisionClass

@@ -1,5 +1,9 @@
-import Mathlib.AlgebraicGeometry.FunctionField
-import Mathlib.RingTheory.LocalProperties.IntegrallyClosed
+module
+
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Mathlib.RingTheory.LocalProperties.IntegrallyClosed
+
+@[expose] public section
 
 /-!
 # Affine normality from actual local rings

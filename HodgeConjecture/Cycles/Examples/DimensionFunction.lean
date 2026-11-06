@@ -1,6 +1,10 @@
-import HodgeConjecture.Cycles.LowDimensionalDimensionFunction
-import Mathlib.Algebra.Polynomial.FieldDivision
-import Mathlib.RingTheory.KrullDimension.PID
+module
+
+public import HodgeConjecture.Cycles.LowDimensionalDimensionFunction
+public import Mathlib.Algebra.Polynomial.FieldDivision
+public import Mathlib.RingTheory.KrullDimension.PID
+
+@[expose] public section
 
 /-!
 # A dimension function on the actual affine line

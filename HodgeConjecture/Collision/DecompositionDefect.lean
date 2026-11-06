@@ -1,6 +1,11 @@
-import HodgeConjecture.Collision.Algebra
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.RingTheory.Unramified.Finite
+module
+
+public import Mathlib.RingTheory.Ideal.IdempotentFG
+public import HodgeConjecture.Collision.Algebra
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.RingTheory.Unramified.Finite
+
+@[expose] public section
 
 /-!
 # Decomposition defects

@@ -1,7 +1,11 @@
-import HodgeConjecture.Boundary.ExtensionCriterion
-import HodgeConjecture.Boundary.SheetProjectorExtension
-import HodgeConjecture.Correspondence.GaloisCollision
-import HodgeConjecture.LinearAlgebra.UniversalIdempotentAlgebra
+module
+
+public import HodgeConjecture.Boundary.ExtensionCriterion
+public import HodgeConjecture.Boundary.SheetProjectorExtension
+public import HodgeConjecture.Correspondence.GaloisCollision
+public import HodgeConjecture.LinearAlgebra.UniversalIdempotentAlgebra
+
+@[expose] public section
 
 /-!
 # Boundary extension of Galois subgroup projectors

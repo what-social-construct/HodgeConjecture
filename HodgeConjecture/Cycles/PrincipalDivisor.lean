@@ -1,4 +1,8 @@
-import HodgeConjecture.Cycles.DivisorFiniteness
+module
+
+public import HodgeConjecture.Cycles.DivisorFiniteness
+
+@[expose] public section
 
 /-!
 # Principal divisors in the existing finite-cycle module
@@ -41,7 +45,7 @@ theorem principalDivisor_apply_prime (X : Scheme.{u})
     [IsIntegral X] [IsLocallyNoetherian X] [CompactSpace X]
     (f : X.functionFieldˣ) (Z : PrimeDivisor X) :
     principalDivisor X f Z.val = primeDivisorOrder X Z f := by
-  exact Finsupp.embDomain_apply _ _ Z
+  exact Finsupp.embDomain_apply_self _ _ Z
 
 /-- Integral generators outside codimension one have zero coefficient. -/
 @[simp]
@@ -79,9 +83,14 @@ theorem principalDivisor_support (X : Scheme.{u})
     have h : supportCodimension Z = 1 := by
       by_contra hn
       exact hZ (principalDivisor_apply_of_not_prime X f Z hn)
-    exact ⟨⟨Z, h⟩, by simpa only [principalDivisor_apply_prime X f ⟨Z, h⟩] using hZ, rfl⟩
+    refine ⟨⟨Z, h⟩, ?_, rfl⟩
+    change primeDivisorOrder X ⟨Z, h⟩ f ≠ 0
+    change principalDivisor X f (⟨Z, h⟩ : PrimeDivisor X).val ≠ 0 at hZ
+    rwa [principalDivisor_apply_prime] at hZ
   · rintro ⟨W, hW, rfl⟩
-    simpa only [principalDivisor_apply_prime] using hW
+    change primeDivisorOrder X W f ≠ 0 at hW
+    rw [principalDivisor_apply_prime]
+    exact hW
 
 /-- Vanishing of this cycle means all existing prime-divisor orders vanish;
 it does not assert that the rational function is a global unit. -/

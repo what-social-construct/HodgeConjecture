@@ -1,4 +1,8 @@
-import HodgeConjecture.Boundary.Normalization.GenericFiber
+module
+
+public import HodgeConjecture.Boundary.Normalization.GenericFiber
+
+@[expose] public section
 
 /-!
 # Base change of the actual generic fiber
@@ -45,7 +49,7 @@ theorem functionFieldMapOfDominant_baseChange_isPullback
         X.fromSpecStalk (genericPoint X)) := by
   letI : Algebra X.functionField Y.functionField :=
     (functionFieldMapOfDominant p).hom.toAlgebra
-  exact (isPullback_Spec_map_isPushout _ _ _ _
+  exact (isPullback_SpecMap_of_isPushout _ _ _ _
     (CommRingCat.isPushout_tensorProduct X.functionField E Y.functionField)).flip.paste_horiz
       (functionFieldMapOfDominant_isPullback p)
 

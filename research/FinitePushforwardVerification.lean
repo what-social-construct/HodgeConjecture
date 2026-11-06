@@ -1,5 +1,10 @@
+module
+
 import HodgeConjecture.Cycles.GradedFinitePushforward
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP101 focused checks for degree-weighted finite pushforward on the existing
@@ -84,7 +89,7 @@ example (Z : IntegralClosedSubscheme X) [IsFinite (Z.val.subschemeι ≫ f)] :
     IsFinite (Z.val.subschemeι ≫ f).toImage := by
   fail_if_success have _ : IsFinite f := inferInstance
   fail_if_success have _ : IsDominant f := inferInstance
-  fail_if_success have _ : IsEtale f := inferInstance
+  fail_if_success have _ : Etale f := inferInstance
   fail_if_success have _ : IsIntegral X := inferInstance
   fail_if_success have _ : IsIntegral Y := inferInstance
   exact finiteImage_toImage_isFinite f Z
@@ -118,7 +123,7 @@ example (R : Type v) [Semiring R] (Z : IntegralClosedSubscheme X) :
     finitePushforward R f (fundamentalCycle R Z) =
       finitePushforwardDegree f Z • fundamentalCycle R (imageSubscheme f Z) := by
   fail_if_success have _ : IsDominant f := inferInstance
-  fail_if_success have _ : IsEtale f := inferInstance
+  fail_if_success have _ : Etale f := inferInstance
   fail_if_success have _ : IsIntegral X := inferInstance
   fail_if_success have _ : IsNoetherian X := inferInstance
   fail_if_success have _ : Nontrivial R := inferInstance
@@ -198,7 +203,7 @@ example (R : Type v) [Semiring R] (n : ℤ) (c : cyclesOfDegree R δX n) :
   fail_if_success have _ : IsIntegral Y := inferInstance
   fail_if_success have _ : IsNoetherian X := inferInstance
   fail_if_success have _ : IsNoetherian Y := inferInstance
-  fail_if_success have _ : IsEtale f := inferInstance
+  fail_if_success have _ : Etale f := inferInstance
   fail_if_success have _ : Nontrivial R := inferInstance
   exact gradedFinitePushforward_val R δX δY f hdeg n c
 
@@ -293,8 +298,8 @@ run_cmd do
   for declaration in declarations do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    let actual := state.axioms.toList
+    let axioms ← Lean.collectAxioms declaration
+    let actual := axioms.toList
     for axiomName in actual do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"

@@ -1,6 +1,10 @@
-import HodgeConjecture.Cycles.RationalChow
-import HodgeConjecture.Cycles.CoefficientRestriction
-import HodgeConjecture.Cycles.ChowOpenRestriction
+module
+
+public import HodgeConjecture.Cycles.RationalChow
+public import HodgeConjecture.Cycles.CoefficientRestriction
+public import HodgeConjecture.Cycles.ChowOpenRestriction
+
+@[expose] public section
 
 /-!
 # Actual open restriction on rational Chow groups

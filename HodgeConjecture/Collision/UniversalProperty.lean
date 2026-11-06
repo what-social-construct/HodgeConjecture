@@ -1,4 +1,8 @@
-import HodgeConjecture.Collision.Basic
+module
+
+public import HodgeConjecture.Collision.Basic
+
+@[expose] public section
 
 /-!
 # Universal property of the collision quotient

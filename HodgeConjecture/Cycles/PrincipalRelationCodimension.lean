@@ -1,5 +1,9 @@
-import HodgeConjecture.Cycles.IntegralCodimension
-import HodgeConjecture.Cycles.PrincipalRelations
+module
+
+public import HodgeConjecture.Cycles.IntegralCodimension
+public import HodgeConjecture.Cycles.PrincipalRelations
+
+@[expose] public section
 
 /-!
 # Actual codimension indexing of principal relations

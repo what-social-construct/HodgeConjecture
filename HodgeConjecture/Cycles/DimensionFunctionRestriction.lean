@@ -1,4 +1,8 @@
-import HodgeConjecture.Cycles.DimensionFunction
+module
+
+public import HodgeConjecture.Cycles.DimensionFunction
+
+@[expose] public section
 
 /-!
 # Restriction of dimension functions to actual closed subschemes
@@ -21,7 +25,7 @@ noncomputable section
 
 universe u
 
-private def closedImmersionPointOrderEmbedding {X Y : Scheme.{u}}
+def closedImmersionPointOrderEmbedding {X Y : Scheme.{u}}
     (i : X ⟶ Y) [IsClosedImmersion i] : X ↪o Y where
   toFun := i.base
   inj' := i.isClosedEmbedding.injective

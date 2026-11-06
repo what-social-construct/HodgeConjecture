@@ -1,5 +1,10 @@
+module
+
 import HodgeConjecture.Boundary.Normalization.GluedNormalizationChart
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP85 regressions for the original normalization charts as actual global inverse images.
@@ -146,13 +151,13 @@ example (a : (affineNormalizationDiagram X N).obj U) :
     (((gluedNormalizationToBase X N) ⁻¹ᵁ U.val).ι).base
         ((normalizationChartPreimageIso X N U).hom.base a) =
       (normalizationChartToGlued X N U).base a := by
-  rw [← Scheme.comp_base_apply, normalizationChartPreimageIso_hom_comp_inclusion]
+  rw [← Scheme.Hom.comp_apply, normalizationChartPreimageIso_hom_comp_inclusion]
 
 example (z : ((gluedNormalizationToBase X N) ⁻¹ᵁ U.val).toScheme) :
     (normalizationChartToGlued X N U).base
         ((normalizationChartPreimageIso X N U).inv.base z) =
       (((gluedNormalizationToBase X N) ⁻¹ᵁ U.val).ι).base z := by
-  rw [← Scheme.comp_base_apply, normalizationChartPreimageIso_inv_comp_chart]
+  rw [← Scheme.Hom.comp_apply, normalizationChartPreimageIso_inv_comp_chart]
 
 example (a : (affineNormalizationDiagram X N).obj U) :
     (gluedNormalizationToBase X N).base ((normalizationChartToGlued X N U).base a) ∈
@@ -177,7 +182,7 @@ example (a : (affineNormalizationDiagram X N).obj U) :
         ((normalizationChartPreimageIso X N U).hom.base a) =
       (normalizedModelToBase Γ(X, U.val) N ≫ U.property.1.isoSpec.inv).base a := by
   dsimp only
-  rw [← Scheme.comp_base_apply, normalizationChartPreimageIso_hom_comp_restrict]
+  rw [← Scheme.Hom.comp_apply, normalizationChartPreimageIso_hom_comp_restrict]
   rfl
 
 example :
@@ -224,7 +229,7 @@ example (f : U ⟶ V) (a : (affineNormalizationDiagram X N).obj U) :
           intro z hz
           exact (show U.val ≤ V.val from leOfHom f) hz)).base
         ((normalizationChartPreimageIso X N U).hom.base a) := by
-  rw [← Scheme.comp_base_apply, ← Scheme.comp_base_apply,
+  rw [← Scheme.Hom.comp_apply, ← Scheme.Hom.comp_apply,
     normalizationChartPreimageIso_naturality]
 
 example (U : NonemptyAffineChart X) :
@@ -294,9 +299,9 @@ run_cmd do
   for declaration in declarations do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    for axiomName in state.axioms do
+    let axioms ← Lean.collectAxioms declaration
+    for axiomName in axioms do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"
-    logInfo m!"PASS standard-axiom boundary: {declaration}; {state.axioms.toList}"
+    logInfo m!"PASS standard-axiom boundary: {declaration}; {axioms.toList}"
   logInfo "PASS SP85 audit registry: 7 distinct public declarations"

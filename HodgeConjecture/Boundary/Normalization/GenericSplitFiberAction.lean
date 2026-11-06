@@ -1,7 +1,11 @@
-import HodgeConjecture.Boundary.Normalization.GenericSplitFiber
-import HodgeConjecture.Boundary.Normalization.GluedNormalizationFunctionFieldAction
-import HodgeConjecture.Boundary.Normalization.GluedNormalClosureFunctionField
-import HodgeConjecture.Cycles.FunctionFieldExtensionality
+module
+
+public import HodgeConjecture.Boundary.Normalization.GenericSplitFiber
+public import HodgeConjecture.Boundary.Normalization.GluedNormalizationFunctionFieldAction
+public import HodgeConjecture.Boundary.Normalization.GluedNormalClosureFunctionField
+public import HodgeConjecture.Cycles.FunctionFieldExtensionality
+
+@[expose] public section
 
 /-!
 # Generic sheet points and the original normalization action
@@ -147,7 +151,7 @@ theorem functionFieldNormalClosureSheetPoint_eq_normalizationOrbit :
     gluedNormalClosureFunctionFieldEquiv_toCover, sheetEmbedding_mk]
   rfl
 
-private theorem normalizationOrbit_commutes :
+theorem normalizationOrbit_commutes :
     letI : Algebra X.functionField Y.functionField :=
       (functionFieldMapOfDominant p).hom.toAlgebra
     letI : FiniteDimensional X.functionField Nₚ :=

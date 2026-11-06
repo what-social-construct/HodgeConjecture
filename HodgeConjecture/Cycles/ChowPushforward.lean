@@ -1,5 +1,9 @@
-import HodgeConjecture.Cycles.PrincipalRelations
-import HodgeConjecture.Cycles.GradedPushforward
+module
+
+public import HodgeConjecture.Cycles.PrincipalRelations
+public import HodgeConjecture.Cycles.GradedPushforward
+
+@[expose] public section
 
 /-!
 # Closed pushforward on actual principal relations and their quotient

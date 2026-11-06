@@ -1,12 +1,16 @@
-import HodgeConjecture.Cycles.FiniteAffineFiber
-import HodgeConjecture.Cycles.FiniteLocalizationNorm
-import HodgeConjecture.Cycles.FunctionFieldNorm
-import HodgeConjecture.Cycles.SchemeLocalOrder
-import HodgeConjecture.CommutativeAlgebra.LocalizedResidueDegree
-import HodgeConjecture.Cycles.FiniteAffineStalk
-import HodgeConjecture.Cycles.FiniteAffineResidue
-import HodgeConjecture.Cycles.FiniteDivisorPoints
-import HodgeConjecture.Cycles.FunctionFieldResidue
+module
+
+public import HodgeConjecture.Cycles.FiniteAffineFiber
+public import HodgeConjecture.Cycles.FiniteLocalizationNorm
+public import HodgeConjecture.Cycles.FunctionFieldNorm
+public import HodgeConjecture.Cycles.SchemeLocalOrder
+public import HodgeConjecture.CommutativeAlgebra.LocalizedResidueDegree
+public import HodgeConjecture.Cycles.FiniteAffineStalk
+public import HodgeConjecture.Cycles.FiniteAffineResidue
+public import HodgeConjecture.Cycles.FiniteDivisorPoints
+public import HodgeConjecture.Cycles.FunctionFieldResidue
+
+@[expose] public section
 
 /-!
 # Norm coefficients over an actual target stalk

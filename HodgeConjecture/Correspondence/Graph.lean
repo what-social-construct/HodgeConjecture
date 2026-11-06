@@ -1,6 +1,11 @@
-import HodgeConjecture.Correspondence.EtaleClasses
-import Mathlib.CategoryTheory.Comma.Over.Basic
-import Mathlib.CategoryTheory.Endomorphism
+module
+
+public import HodgeConjecture.MathlibCompat.Automorphism
+public import HodgeConjecture.Correspondence.EtaleClasses
+public import Mathlib.CategoryTheory.Comma.Over.Basic
+public import Mathlib.CategoryTheory.Endomorphism
+
+@[expose] public section
 
 /-!
 # Graph correspondences over a base
@@ -123,12 +128,12 @@ theorem graph_hasFiniteEtaleLegs
     HasFiniteEtaleLegs (graph pX σ) := by
   refine ⟨?_, ?_, ?_⟩
   · constructor
-    · change IsEtale (𝟙 X)
-      exact MorphismProperty.id_mem @IsEtale X
-    · change IsEtale σ.toSchemeHom
+    · change Etale (𝟙 X)
+      exact MorphismProperty.id_mem @Etale X
+    · change Etale σ.toSchemeHom
       exact
         MorphismProperty.of_isIso
-          @IsEtale σ.toSchemeHom
+          @Etale σ.toSchemeHom
   · change IsFinite (𝟙 X)
     exact MorphismProperty.id_mem @IsFinite X
   · change IsFinite σ.toSchemeHom

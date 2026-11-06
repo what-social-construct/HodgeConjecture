@@ -1,7 +1,11 @@
-import HodgeConjecture.Collision.IdealSheaf
-import HodgeConjecture.Collision.SheafColon
-import Mathlib.AlgebraicGeometry.IdealSheaf.Subscheme
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
+module
+
+public import HodgeConjecture.Collision.IdealSheaf
+public import HodgeConjecture.Collision.SheafColon
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Subscheme
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+
+@[expose] public section
 
 /-!
 # Global collision geometry

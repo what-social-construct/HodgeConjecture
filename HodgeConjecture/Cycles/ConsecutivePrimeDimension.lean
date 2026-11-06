@@ -1,6 +1,10 @@
-import HodgeConjecture.CommutativeAlgebra.PrimeQuotientCover
-import HodgeConjecture.Cycles.AffinePrimeDimension
-import Mathlib.RingTheory.Ideal.Quotient.Operations
+module
+
+public import HodgeConjecture.CommutativeAlgebra.PrimeQuotientCover
+public import HodgeConjecture.Cycles.AffinePrimeDimension
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+
+@[expose] public section
 
 /-!
 # The unit dimension drop between consecutive primes

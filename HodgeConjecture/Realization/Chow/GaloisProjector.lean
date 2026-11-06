@@ -1,6 +1,10 @@
-import HodgeConjecture.Boundary.GaloisProjectorExtension
-import HodgeConjecture.Boundary.NoetherDifferentRamification
-import HodgeConjecture.Realization.Chow.Model
+module
+
+public import HodgeConjecture.Boundary.GaloisProjectorExtension
+public import HodgeConjecture.Boundary.NoetherDifferentRamification
+public import HodgeConjecture.Realization.Chow.Model
+
+@[expose] public section
 
 /-!
 # Prescribed Chow projectors from the Galois boundary bridge

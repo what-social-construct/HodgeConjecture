@@ -1,5 +1,10 @@
+module
+
 import HodgeConjecture.Boundary.Normalization.GluedNormalClosureAction
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP90 regressions for the compatible action on the original glued normalization.
@@ -87,7 +92,7 @@ example (σ : N ≃ₐ[X.functionField] N) (U : NonemptyAffineChart X)
         ((normalizationChartToGlued X N U).base a) =
       (normalizationChartToGlued X N U).base
         ((affineNormalizationChartAutomorphism X N σ U).hom.base a) := by
-  rw [← Scheme.comp_base_apply, normalizationChartToGlued_comp_automorphism]
+  rw [← Scheme.Hom.comp_apply, normalizationChartToGlued_comp_automorphism]
   rfl
 
 example (σ : N ≃ₐ[X.functionField] N) :
@@ -98,7 +103,7 @@ example (σ : N ≃ₐ[X.functionField] N) :
 example (σ : N ≃ₐ[X.functionField] N) (z : gluedNormalizationModel X N) :
     (gluedNormalizationToBase X N).base ((gluedNormalizationAutomorphism X N σ).hom.base z) =
       (gluedNormalizationToBase X N).base z := by
-  rw [← Scheme.comp_base_apply, gluedNormalizationAutomorphism_comp_toBase]
+  rw [← Scheme.Hom.comp_apply, gluedNormalizationAutomorphism_comp_toBase]
 
 example : (gluedNormalizationAutomorphism X N 1).hom = 𝟙 _ :=
   gluedNormalizationAutomorphism_one X N
@@ -113,7 +118,7 @@ example (σ τ : N ≃ₐ[X.functionField] N) (z : gluedNormalizationModel X N) 
     (gluedNormalizationAutomorphism X N (σ * τ)).hom.base z =
       (gluedNormalizationAutomorphism X N σ).hom.base
         ((gluedNormalizationAutomorphism X N τ).hom.base z) := by
-  rw [← Scheme.comp_base_apply, ← gluedNormalizationAutomorphism_mul]
+  rw [← Scheme.Hom.comp_apply, ← gluedNormalizationAutomorphism_mul]
 
 example (σ : N ≃ₐ[X.functionField] N) :
     (gluedNormalizationAutomorphism X N σ).hom ≫
@@ -141,7 +146,7 @@ example (σ : N ≃ₐ[X.functionField] N) (V : X.Opens) (z : gluedNormalization
   change (gluedNormalizationToBase X N).base
       ((gluedNormalizationAutomorphism X N σ).hom.base z) ∈ V ↔
     (gluedNormalizationToBase X N).base z ∈ V
-  rw [← Scheme.comp_base_apply, gluedNormalizationAutomorphism_comp_toBase]
+  rw [← Scheme.Hom.comp_apply, gluedNormalizationAutomorphism_comp_toBase]
 
 end ArbitraryFieldExtension
 
@@ -198,7 +203,7 @@ example (U : NonemptyAffineChart X) :
             (fun y => hY y.val) =
         finiteEtaleAffineNormalClosureToPreimage p U.val U.property.1
           (fun y => hY y.val) := by
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   fail_if_success have _ : IsIntegrallyClosed Γ(X, U.val) := inferInstance
   exact affineNormalizationChartAutomorphism_comp_toPreimage p hY U
 
@@ -208,7 +213,7 @@ example :
     ∀ σ : (functionFieldNormalClosureData p).intermediateFixingSubgroup,
       (gluedNormalizationAutomorphism X Nₚ σ.val).hom ≫ gluedNormalClosureToCover p hY =
         gluedNormalClosureToCover p hY := by
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   fail_if_success have _ : IsNoetherian X := inferInstance
   fail_if_success have _ : IsNoetherian Y := inferInstance
   fail_if_success have _ : PerfectField X.functionField := inferInstance
@@ -225,7 +230,7 @@ example :
   letI : Algebra X.functionField Y.functionField :=
     (functionFieldMapOfDominant p).hom.toAlgebra
   intro σ z
-  rw [← Scheme.comp_base_apply, gluedNormalizationAutomorphism_comp_toCover]
+  rw [← Scheme.Hom.comp_apply, gluedNormalizationAutomorphism_comp_toCover]
 
 example :
     letI : Algebra X.functionField Y.functionField :=
@@ -314,9 +319,9 @@ run_cmd do
   for declaration in declarations do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    for axiomName in state.axioms do
+    let axioms ← Lean.collectAxioms declaration
+    for axiomName in axioms do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"
-    logInfo m!"PASS standard-axiom boundary: {declaration}; {state.axioms.toList}"
+    logInfo m!"PASS standard-axiom boundary: {declaration}; {axioms.toList}"
   logInfo "PASS SP90 audit registry: 15 distinct public declarations"

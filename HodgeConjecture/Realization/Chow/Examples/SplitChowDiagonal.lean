@@ -1,4 +1,8 @@
-import HodgeConjecture.Realization.Chow.Examples.SplitChowAlgebra
+module
+
+public import HodgeConjecture.Realization.Chow.Examples.SplitChowAlgebra
+
+@[expose] public section
 
 /-!
 # The geometric diagonal embedding of split point functions

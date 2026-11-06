@@ -1,6 +1,13 @@
-import HodgeConjecture.Boundary.Normalization.RegularPairBoundary
-import Mathlib.RingTheory.Polynomial.Basic
-import Lean.Util.CollectAxioms
+module
+
+public import HodgeConjecture.Boundary.Normalization.RegularPairBoundary
+public import Mathlib.RingTheory.Polynomial.Basic
+public import Lean.Util.CollectAxioms
+
+@[expose] public section
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 # Research controls for choosing fixed--moving regular pairs
@@ -52,7 +59,7 @@ theorem not_regular_of_mem_factor [IsDomain T]
       exact ⟨c, by ring⟩)
   obtain ⟨d, hd⟩ := Ideal.mem_span_singleton.mp haMem
   apply hb
-  apply isUnit_of_mul_eq_one b d
+  apply IsUnit.of_mul_eq_one d
   apply (mul_left_cancel₀ ha)
   simpa only [mul_assoc, mul_one] using hd.symm
 
@@ -82,7 +89,7 @@ theorem coordinate_pair_regular :
 /-- The existing production criterion excludes height-one containment
 for the sum of the two coordinate ideals. -/
 theorem coordinate_sum_not_le_heightOne (p : PrimeSpectrum P)
-    (hp : p.asIdeal.primeHeight = 1) :
+    (hp : p.asIdeal.height = 1) :
     ¬ Ideal.span {x} + Ideal.span {y} ≤ p.asIdeal := by
   apply not_le_heightOne_of_regularPair _ x y
     (Ideal.mem_sup_left (Ideal.mem_span_singleton_self x))
@@ -133,8 +140,8 @@ run_cmd do
       `HodgeConjecture.Research.RegularPairGeometryControls.product_choice_no_regular_moving] do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    for axiomName in state.axioms do
+    let axioms ← Lean.collectAxioms declaration
+    for axiomName in axioms do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"
-    logInfo m!"PASS standard-axiom boundary: {declaration}; {state.axioms.toList}"
+    logInfo m!"PASS standard-axiom boundary: {declaration}; {axioms.toList}"

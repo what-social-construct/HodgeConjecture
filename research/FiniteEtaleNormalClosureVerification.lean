@@ -1,5 +1,10 @@
+module
+
 import HodgeConjecture.Boundary.Normalization.FiniteEtaleNormalClosure
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP81 regressions for the actual finite étale affine normal-closure refinement.
@@ -42,21 +47,21 @@ example
     P (algebraMap B (⨂[B] _ : ι, A)) :=
   piTensorProduct_ringHomProperty P hIso hId hComp hBase ι hA
 
-variable (hA : IsEtale (Spec.map (CommRingCat.ofHom (algebraMap B A))))
+variable (hA : Etale (Spec.map (CommRingCat.ofHom (algebraMap B A))))
 
 include hA
 
 example (ι : Type u) [Finite ι] :
-    IsEtale (Spec.map (CommRingCat.ofHom (algebraMap B (⨂[B] _ : ι, A)))) := by
+    Etale (Spec.map (CommRingCat.ofHom (algebraMap B (⨂[B] _ : ι, A)))) := by
   fail_if_success have _ : Nonempty ι := inferInstance
   fail_if_success have _ : IsNoetherianRing B := inferInstance
   exact piTensorProduct_isEtale ι hA
 
-example : IsEtale (Spec.map (CommRingCat.ofHom
+example : Etale (Spec.map (CommRingCat.ofHom
     (algebraMap B (⨂[B] _ : PEmpty.{u+1}, A)))) :=
   piTensorProduct_isEtale PEmpty hA
 
-example : IsEtale (Spec.map (CommRingCat.ofHom
+example : Etale (Spec.map (CommRingCat.ofHom
     (algebraMap B (⨂[B] _ : PUnit.{u+1}, A)))) :=
   piTensorProduct_isEtale PUnit hA
 
@@ -81,8 +86,8 @@ example : IsOpenImmersion (Spec.map (CommRingCat.ofHom
   fail_if_success have _ : PerfectField K := inferInstance
   exact D.normalizationTensorEvaluation_isOpenImmersion (B := B) (A := A)
 
-example (hL : IsEtale (normalizedModelToBase B L)) :
-    IsEtale (normalizedModelToBase B N) := by
+example (hL : Etale (normalizedModelToBase B L)) :
+    Etale (normalizedModelToBase B N) := by
   fail_if_success have _ : IsNoetherianRing B := inferInstance
   fail_if_success have _ : PerfectField K := inferInstance
   exact D.normalizationToBase_isEtale_of_etaleModel (B := B) (A := A) hL
@@ -92,7 +97,7 @@ end GenericIntegralComponent
 section ActualAffineChart
 
 variable {X Y : Scheme.{u}} [IsIntegral X] [IsIntegral Y]
-variable (p : Y ⟶ X) [IsDominant p] [IsFinite p] [IsEtale p]
+variable (p : Y ⟶ X) [IsDominant p] [IsFinite p] [Etale p]
 variable (U : X.Opens) [Nonempty U]
 
 local instance : Nonempty (p ⁻¹ᵁ U) := nonempty_preimage_of_isDominant p U
@@ -104,14 +109,14 @@ local notation "Nₚ" => IntermediateField.normalClosure X.functionField Y.funct
 
 variable (hU : IsAffineOpen U)
 
-omit [IsFinite p] [IsEtale p] in
+omit [IsFinite p] [Etale p] in
 example : Function.Surjective (finiteEtaleAffineNormalClosureToChart p U hU).base := by
   fail_if_success have _ : IsNoetherianRing Γ(X, U) := inferInstance
   exact (finiteEtaleAffineNormalClosureToChart_surjective p U hU).surj
 
 -- The chart map and its canonical scalar action already exist before
 -- either normal-stalk input is introduced.
-omit [IsFinite p] [IsEtale p] in
+omit [IsFinite p] [Etale p] in
 example (b : Γ(X, U)) :
     letI : Algebra X.functionField Y.functionField :=
       (functionFieldMapOfDominant p).hom.toAlgebra
@@ -130,7 +135,7 @@ example (b : Γ(X, U)) :
     algebraMap Γ(X, U) Nₚ b =
     algebraMap X.functionField Nₚ ((X.germToFunctionField U) b) := rfl
 
-omit [IsFinite p] [IsEtale p] in
+omit [IsFinite p] [Etale p] in
 example :
     letI : Algebra X.functionField Y.functionField :=
       (functionFieldMapOfDominant p).hom.toAlgebra
@@ -149,7 +154,7 @@ example :
     finiteEtaleAffineNormalClosureToChart p U hU =
     normalClosureNormalizationToBase (B := Γ(X, U)) (N := Nₚ) ≫ hU.isoSpec.inv := rfl
 
-omit [IsFinite p] [IsEtale p] in
+omit [IsFinite p] [Etale p] in
 example :
     letI : Algebra X.functionField Y.functionField :=
       (functionFieldMapOfDominant p).hom.toAlgebra
@@ -171,13 +176,13 @@ example :
 
 variable (hY : ∀ y : p ⁻¹ᵁ U, IsIntegrallyClosed (Y.presheaf.stalk y.val))
 
-omit [IsEtale p] in
+omit [Etale p] in
 example : Function.Surjective (finiteEtaleAffineNormalClosureToPreimage p U hU hY).base :=
   (finiteEtaleAffineNormalClosureToPreimage_surjective p U hU hY).surj
 
 -- These canonical factorization identities do not require normality of
 -- the base chart; its normal-stalk input is introduced below.
-omit [IsEtale p] in
+omit [Etale p] in
 example :
     letI : Algebra X.functionField Y.functionField :=
       (functionFieldMapOfDominant p).hom.toAlgebra
@@ -197,7 +202,7 @@ example :
     normalClosureToIntermediateNormalization (B := Γ(X, U)) (functionFieldNormalClosureData p) ≫
       (finiteAffinePreimageNormalizationIso p U hU hY).inv := rfl
 
-omit [IsEtale p] in
+omit [Etale p] in
 example :
     letI : Algebra X.functionField Y.functionField :=
       (functionFieldMapOfDominant p).hom.toAlgebra
@@ -218,7 +223,7 @@ example :
     normalClosureToIntermediateNormalization (B := Γ(X, U)) (functionFieldNormalClosureData p) :=
   finiteEtaleAffineNormalClosureToPreimage_comp_normalizationIso p U hU hY
 
-omit [IsEtale p] in
+omit [Etale p] in
 example :
     letI : Algebra X.functionField Y.functionField :=
       (functionFieldMapOfDominant p).hom.toAlgebra
@@ -238,7 +243,7 @@ example :
     normalClosureNormalizationToBase (B := Γ(X, U)) (N := Nₚ) ≫ hU.fromSpec :=
   finiteEtaleAffineNormalClosureToPreimage_comp_toBase p U hU hY
 
-omit [IsEtale p] in
+omit [Etale p] in
 example :
     letI : Algebra X.functionField Y.functionField :=
       (functionFieldMapOfDominant p).hom.toAlgebra
@@ -258,7 +263,7 @@ example :
     finiteEtaleAffineNormalClosureToChart p U hU :=
   finiteEtaleAffineNormalClosureToPreimage_comp_restrict p U hU hY
 
-omit [IsEtale p] in
+omit [Etale p] in
 example :
     letI : Algebra X.functionField Y.functionField :=
       (functionFieldMapOfDominant p).hom.toAlgebra
@@ -446,7 +451,7 @@ example :
     letI : IsFractionRing Γ(X, U) X.functionField :=
       functionField_isFractionRing_of_isAffineOpen X U hU
     IsFinite (normalClosureNormalizationToBase (B := Γ(X, U)) (N := Nₚ)) ∧
-    IsEtale (normalClosureNormalizationToBase (B := Γ(X, U)) (N := Nₚ)) := by
+    Etale (normalClosureNormalizationToBase (B := Γ(X, U)) (N := Nₚ)) := by
   fail_if_success have _ : IsNoetherianRing Γ(X, U) := inferInstance
   fail_if_success have _ : PerfectField X.functionField := inferInstance
   exact finiteEtaleAffineNormalClosureToBase_finite_etale p U hU hX hY
@@ -467,7 +472,7 @@ example :
     letI : IsFractionRing Γ(X, U) X.functionField :=
       functionField_isFractionRing_of_isAffineOpen X U hU
     IsFinite (finiteEtaleAffineNormalClosureToChart p U hU) ∧
-    IsEtale (finiteEtaleAffineNormalClosureToChart p U hU) :=
+    Etale (finiteEtaleAffineNormalClosureToChart p U hU) :=
   finiteEtaleAffineNormalClosureToChart_finite_etale p U hU hX hY
 
 example :
@@ -486,7 +491,7 @@ example :
     letI : IsFractionRing Γ(X, U) X.functionField :=
       functionField_isFractionRing_of_isAffineOpen X U hU
     IsFinite (finiteEtaleAffineNormalClosureToPreimage p U hU hY) ∧
-    IsEtale (finiteEtaleAffineNormalClosureToPreimage p U hU hY) := by
+    Etale (finiteEtaleAffineNormalClosureToPreimage p U hU hY) := by
   fail_if_success have _ : IsNoetherianRing Γ(X, U) := inferInstance
   fail_if_success have _ : PerfectField X.functionField := inferInstance
   exact finiteEtaleAffineNormalClosureToPreimage_finite_etale p U hU hX hY
@@ -526,9 +531,9 @@ run_cmd do
   for declaration in declarations do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    for axiomName in state.axioms do
+    let axioms ← Lean.collectAxioms declaration
+    for axiomName in axioms do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"
-    logInfo m!"PASS standard-axiom boundary: {declaration}; {state.axioms.toList}"
+    logInfo m!"PASS standard-axiom boundary: {declaration}; {axioms.toList}"
   logInfo "PASS SP81 audit registry: 19 distinct public declarations"

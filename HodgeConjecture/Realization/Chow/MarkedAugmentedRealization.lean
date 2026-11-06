@@ -1,7 +1,11 @@
-import HodgeConjecture.Boundary.GaloisProjectorExtension
-import HodgeConjecture.LinearAlgebra.MarkedAugmentedAlgebra
-import HodgeConjecture.Realization.Chow.IdempotentRepresentation
-import HodgeConjecture.Realization.Chow.TateGraphProjector
+module
+
+public import HodgeConjecture.Boundary.GaloisProjectorExtension
+public import HodgeConjecture.LinearAlgebra.MarkedAugmentedAlgebra
+public import HodgeConjecture.Realization.Chow.IdempotentRepresentation
+public import HodgeConjecture.Realization.Chow.TateGraphProjector
+
+@[expose] public section
 
 /-!
 # Realization of a marked augmented algebra

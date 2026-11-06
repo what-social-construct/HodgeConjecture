@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-10-13 (SP108 conditional boundary correction;
+Last audited: 2026-11-05 (actual graph Chow convolution and absolute-product comparison;
 earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,340 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Actual graph-generated rational Chow convolution (2026-11-05)
+
+Status: `FORMAL`. For a separated `p : X → S` with integral `X`, a field
+structure `b : S → Spec k`, locally finite-type source/pair structures and
+a Noetherian pair product, `Correspondence/GraphChow.lean` derives graph
+homogeneity from the actual graph-subscheme isomorphism. `graphChowClass`
+and `graphChowLinearMap` use the existing principal-relation quotient;
+no graph-degree or relation-preservation premise is supplied.
+
+`GraphChowAction.lean` constructs the actual pair-isomorphism pullbacks on
+all Chow degrees. Preservation of principal relations and the formulas
+`R_τ[Γ_σ] = [Γ_(στ)]`, `L_τ[Γ_σ] = [Γ_(τσ)]` are proved, including their
+respective reversed/ordinary multiplication laws and weighted extensions.
+`GraphChowAlgebra.lean` proves that the exact `graphChowLinearMap` kernel is
+two-sided, then forms its rational quotient algebra. `graphChowRealization`
+is injective and its range is exactly the graph-generated Chow submodule.
+Multiplication there is characterized by the actual left/right pullbacks.
+Finite-group and subgroup averages yield idempotents; the complementary
+idempotent is orthogonal on both sides and their sum realizes the diagonal.
+
+`GraphChowBaseComparison.lean`, under separated `b` and the corresponding
+absolute-product finite-type/Noetherian hypotheses, proves degree
+preservation and actual closed Chow pushforward of relative graph classes
+to their absolute graphs. The weighted assembly square carries the exact
+relative Chow kernel into the absolute kernel. `graphChowBaseAlgHom` is
+therefore an actual algebra map, its realization is that closed Chow
+pushforward (after the proved degree equality), and it preserves idempotents.
+
+No product on the whole ambient Chow group, nonvanishing, compactification
+existence, general Betti realization, or prescribed-class coverage is
+claimed. These last geometric/realization obligations remain `OPEN`.
+This extends the original marked-Galois proof spine at its actual Chow
+bridge, rather than closing the Hodge target. See the
+[checkpoint](working/0025-graph-chow-convolution.md).
+
+## Complex affine-line Betti–de Rham comparison in degree zero (2026-11-05)
+
+Status: `FORMAL`. `Betti/Examples/AffineLineComplexPoints.lean` uses actual
+complex-algebra points `ℂ[X] →ₐ[ℂ] ℂ` and the topology induced by all regular
+function evaluations. `coordinateHomeomorph` identifies it with ordinary
+`ℂ`; path connectedness follows. Polynomial substitution gives continuous
+point maps, corresponding to the original affine-scheme morphisms.
+
+`Betti/SingularPathConnected.lean` turns actual paths into standard singular
+one-simplices with the existing face convention. The coboundary equation
+proves equal evaluations on joined points. `equivConstants` computes the
+rational singular `H0` of a path-connected space, independently of cycles.
+
+`DeRham/AffineLineComparison.lean` constructs `bettiComparison`, an algebra
+equivalence from the actual closed-function kernel of `ℂ[X]` to the genuine
+tensor product `ℂ ⊗[ℚ] H0_B`. Independently extended singular evaluation at
+every actual point agrees with evaluation of the original closed polynomial.
+Complex and rational normalizations, multiplication and actual polynomial
+pullback naturality are proved. `cohomologyZeroComparison` identifies
+categorical homology of the constructed de Rham complex with the same target.
+The class with coordinate `I` is proved outside the rational embedding.
+
+This establishes a positive-dimensional degree-zero comparison. Higher
+cohomology, general scheme/analytic comparison, positive-codimension cycle
+classes and prescribed-Hodge-class generation remain `OPEN`. Pullback
+naturality is asserted on the actual closed-function model; no general
+cochain map on exterior powers is supplied. See the
+[checkpoint](working/0024-affine-line-betti-comparison.md).
+
+## Polynomial degree-zero de Rham cohomology and components (2026-11-05)
+
+Status: `FORMAL`. `Realization/DeRham/Polynomial.lean` proves
+`closed_polynomial_iff` for a commutative `k`-algebra `A` with no additive
+torsion (`HasUniqueDiv A`): a polynomial is closed precisely when it is
+constant with a closed coefficient. The original constant inclusion and
+evaluation at zero construct `polynomialCoordinates : H0 k A[X] ≃ₐ[k] H0 k A`.
+`polynomialCohomologyZeroIso` identifies categorical homology of the same
+constructed complexes. Every evaluation agrees on closed functions.
+Neither a field assumption nor reducedness of `A` is required.
+
+`Realization/DeRham/AffineComponents.lean` computes the actual kernel for
+finite products `I → k[X]` over an additively torsion-free commutative base.
+`affineLinesCoordinates` identifies it with `I → k`, and
+`affineLinesCohomologyZeroIso` identifies categorical homology.
+`affineLinesBasis` is the actual component-characteristic-function basis,
+with `affineLinesBasis_isIdempotent` and the characteristic-zero field
+dimension formula `affineLines_finrank`. Empty products are included.
+Independently, `idempotent_closed` holds in every characteristic for every
+commutative algebra, without a reducedness hypothesis.
+
+This is an algebraic degree-zero result for positive-dimensional coordinate
+rings. Higher cohomology, a general positive-dimensional Betti or cycle comparison,
+general component theorems and prescribed-class generation remain `OPEN`.
+See the [implementation record](working/0023-polynomial-derham-components.md).
+
+## Affine de Rham complex and degree-zero trace/comparison (2026-11-05)
+
+Status: `FORMAL`. `CommutativeAlgebra/DeRham/Differential.lean` constructs
+the differential on exterior powers of actual Kähler differentials for any
+commutative algebra, proves its defining rule, uniqueness and square-zero
+identity. `Complex.lean` packages it as a cochain complex. The selected proof
+adaptations use the pinned Axiom Stacks source and retain its attribution.
+
+`Realization/DeRham/AffineDegreeZero.lean` identifies the actual categorical
+homology in degree zero with the universal-derivation kernel. For source and
+target formally unramified over the base, `FiniteUnramifiedTrace.lean`
+restricts the ordinary algebra trace to these kernels. An actual finite basis
+proves its degree identity. Over ℚ, a nonzero finite degree supplies the
+existing rational transfer, injectivity and normalized projector.
+`AffineGeometricDegree.lean` identifies the degree with the original affine
+scheme map's geometric rank and the existing computed cycle-fiber degree.
+
+For finite split complex schemes, `SplitComparison.lean` constructs a
+normalized cycle-class map from the existing finite split Chow quotient.
+Its pullback, pushforward and intersection squares are proved. Evaluation
+gives a linear equivalence with the genuine tensor complexification of
+existing rational singular cohomology. Both pullback and trace intertwine;
+the algebra trace is identified componentwise for split projections.
+
+Status: `OPEN` for scheme-hypercohomology comparison, general finite-syntomic
+trace, positive-dimensional Chow–Betti realization and prescribed-class
+generation. No new general Hodge-conjecture case is claimed. Scope and
+validation are recorded in [the checkpoint](working/0022-affine-derham-trace-comparison.md).
+
+## Finite-fiber cycle pullback (2026-11-05)
+
+Status: `FORMAL`. `Cycles/FiniteFiberPullback.lean` constructs a linear map
+on the existing `Cycles` module for every finite scheme morphism, using
+actual local fiber lengths as multiplicities. It proves finite support,
+positive multiplicities, identity, equality with the existing restriction
+for finite open immersions, integer-to-rational coefficient compatibility,
+and preservation of the canonical field dimension grading.
+`Cycles/FiberResidueField.lean` adapts the pinned Axiom Stacks proof to
+identify the actual fiber residue field with the source residue field,
+retaining the independent structural scalar actions.
+
+`Cycles/FiniteFiberDegree.lean` proves the weighted length formula for
+the actual fiber degree, then identifies the existing finite pushforward
+after this pullback with pointwise multiplication by that computed degree.
+A constant value of the computed degree gives the cycle degree law.
+Coefficients may be any commutative semiring, including rings with zero
+divisors; neither an operator degree law nor a residue comparison is assumed.
+
+Status: `FORMAL` for finite flat Chow pullback and its degree law.
+`Cycles/FiniteFlatRank.lean` identifies the computed fiber degree with
+Mathlib's geometric rank of the same finite flat morphism, without a
+Noetherian or field-base assumption. The raw degree law holds over every
+commutative semiring, including rings with zero divisors.
+
+`FiniteFlatPrincipalDivisor.lean` proves the weighted sum over actual reduced
+source components, retaining the original nilpotent multiplicities.
+`FiniteFiberClosedBaseChange.lean` proves compatibility with the existing
+closed pushforward. `FiniteFlatPrincipalRelations.lean` then proves
+preservation of the existing genuine principal-relation span.
+`FiniteFlatChowPullback.lean` descends the same pullback to the existing
+integral and rational quotients and proves compatibility with rationalization.
+These Chow maps require Noetherian source and target schemes and a locally
+finite-type target structural map to a field; ambient integrality is unnecessary.
+
+`FiniteFlatChowDegree.lean` proves `f_* f^* = d • id` on both quotients from
+constant geometric rank `d`, including `d = 0`. With `d ≠ 0`,
+`Realization/Chow/FiniteFlatTransfer.lean` instantiates the existing
+`RationalDegreeTransfer` using these actual maps, proving rational pullback
+injectivity and idempotence of normalized pull--push. No relation-preservation
+or operator degree law is supplied as a hypothesis.
+
+Status: `OPEN` for flat pullback beyond the finite case, general Betti/purity
+comparison, and prescribed Hodge-class generation. Validation and source
+attribution are recorded in the [finite flat checkpoint](working/0021-finite-flat-chow-transfer.md).
+
+## Finite pushforward functoriality (SP113)
+
+Status: `FORMAL`. `Cycles/FinitePushforwardComposition.lean` proves the
+degree tower law for the actual scheme residue maps, composition of the
+original integral scheme-theoretic images, multiplication of the existing
+finite pushforward weights, and covariant composition of the original
+finite cycle maps over every coefficient semiring. It also proves identity
+and composition after restriction to compatible homogeneous submodules.
+Raw cycle functoriality needs no ambient integrality, Noetherianity, field
+base, dominance or etaleness assumption. The residue `finrank` identity
+itself needs no finiteness assumption; its interpretation as a positive
+pushforward weight uses the existing finite-map theorem.
+
+`Cycles/FiniteChowPushforwardComposition.lean` proves identity and
+composition for the existing integral and rational Chow maps, with their
+canonical field dimension functions and principal-relation quotients.
+Its inputs are Noetherian schemes, finite morphisms and a target structural
+map locally of finite type over a field. Grading compatibility is already
+proved; no new map, quotient, source axiom or cycle-class hypothesis is
+introduced. This proves the finite specialization of
+[Stacks 02R5](https://stacks.math.columbia.edu/tag/02R5), not the general
+proper-map case.
+
+Validation (2026-10-27): full `lake build` passes (3273 jobs; only the two
+deliberate `Challenge.lean` statement-hole warnings). The root-import
+`research/FinitePushforwardCompositionVerification.lean` passes ten
+regressions and ten enforced standard-three axiom audits. The existing
+integrated verification passes 1255 declaration checks, 565 examples and
+1147 axiom reports without warnings or errors; all reported axioms are
+within `propext`, `Classical.choice` and `Quot.sound`. The finite norm/Chow,
+localization, marked-cycle, supported-class and proof-dependency suites
+also pass. Local links, notation-table widths, the active-library
+proof-placeholder scan and `git diff --check` pass. These are working-tree
+checks; release sign-offs remain in `RELEASE_CHECKLIST.md`.
+
+Status: `OPEN`. Flat pullback and its degree law, general Betti pullback/trace
+and the same-cover cycle-class square, and prescribed Hodge-class generation
+remain unfinished. Functorial pushforward alone supplies none of these inputs.
+
+## Chern-character trial (SP112)
+
+Status: `FORMAL` from explicit transfer data. `RationalDegreeTransfer.pull_injective`
+and `pull_eq_zero_iff` derive injectivity and zero detection from the existing
+positive-degree law. No new public object or source axiom is introduced.
+
+Status: `LITERATURE` and mathematical deduction. Algebraic bounded coherent
+complexes on the open extend to perfect complexes on smooth projective $X$.
+Their Chern characters can therefore feed SP108. The tested finite-monodromy
+bundles have zero positive rational Chern character, by trivialization and
+transfer. This rules out that particular source of a nonzero open class.
+
+Status: `OPEN`. Constructing the algebraic complex with the prescribed open
+class, general Chern/Betti comparison, and geometric flat pullback remain
+unimplemented. A holomorphic complex on a Stein open is not supplied with
+an algebraic extension. See the [trial](TARGET_BRIDGE.md#chern-character-trial-within-the-cycle-induction-sp112).
+
+Validation: full `lake build` passes (3271 jobs; the two existing
+`Challenge.lean` placeholder warnings remain). Both new transfer theorems
+pass the enforced standard-three axiom audit; notation and local-link checks
+also pass.
+
+## Supported-class extraction (SP111)
+
+Status: `CONDITIONAL`. `Realization/Chow/SupportedClass.lean` proves the
+component-expansion class formula, extraction of an actual homogeneous
+cycle on a closed support from open vanishing, and the reverse implication
+under the cycle-class/restriction square. The cohomological basis,
+localization equality and fundamental-class comparison are explicit
+hypotheses. Finite expansion, graded closed pushforward, the ambient Chow
+quotient and cycle-level zero restriction use existing constructed objects.
+The three theorems introduce no new public object or source axiom.
+
+Validation: full `lake build` passes (3271 jobs; the two existing
+`Challenge.lean` placeholder warnings remain). The focused verification
+passes four examples and three enforced axiom audits.
+
+Status: `OPEN`. Constructing general supported Betti cohomology, deriving
+its component basis from a codimension bound, and finding an algebraic
+support off which the prescribed class vanishes remain unfinished.
+
+## Open representative investigation (2026-10-13)
+
+Status: `LITERATURE` and mathematical deductions, **not new Lean theorems**.
+The [smooth ample boundary calculation](TARGET_BRIDGE.md#open-representative-the-smooth-ample-boundary-calculation)
+constructs the zero open cycle when $2p>\dim Y$. In the complementary
+range, weak Lefschetz, Gysin exactness and hard Lefschetz identify the
+restriction kernel with the Lefschetz image and prove injectivity on the
+primitive summand. This excludes killing a nonzero primitive class by
+varying smooth divisors in powers of a fixed polarization, including after
+finite pullback with the pulled-back polarization. It does not exclude
+nonzero open cycles or other auxiliary constructions.
+
+Status: `OPEN`. A cycle representing an arbitrary prescribed primitive
+open class has not been constructed. Under the remaining SP108 hypotheses,
+existence of an open representative is equivalent to algebraicity of the
+ambient class. The general realization, degree comparisons and supported
+Hodge lift remain uninstantiated. No new assumptions, production objects or
+formal coverage claims are added by this investigation.
+
+## Actual open/closed Chow localization (SP110)
+
+Status: `FORMAL`. The L1--L3 stream is implemented on the existing cycles,
+principal relations and Chow quotients. `Cycles/OpenClosedLocalization.lean`
+constructs the reduced closed complement of the actual open image and
+proves boundary image equals restriction kernel on raw and homogeneous
+cycles. This works over any coefficient semiring, without Noetherianity or
+ambient reducedness. Closed pushforward preserves the original coefficients;
+the source dimension function is the actual restricted grading.
+
+`Cycles/PrincipalRelationLifting.lean` lifts an open relation carrier by
+reduced closure and its unit by the inverse of the actual function-field
+equivalence. Restriction recovers the original datum. The integral and
+rational relation spans therefore map onto the open relation spans.
+`Cycles/ChowLocalization.lean` subtracts a lifted relation and applies
+cycle exactness to prove kernel equals boundary image on both actual Chow
+quotients. Only the ambient scheme is assumed Noetherian; both sources
+inherit it. Existing open surjectivity completes the right-exact sequences.
+This is [Stacks 02RX](https://stacks.math.columbia.edu/tag/02RX) for the
+repository's Noetherian, dimension-function-graded convention.
+
+`ChowLocalization.ofOpenComplement` proves the existing input package for
+these exact rational maps, enabling its two-lift consumer without a supplied
+exactness premise. It is a named theorem, not a blanket instance. Closure
+does not descend to a Chow section; closed Chow pushforward need not be
+injective. This additive result neither constructs Betti/Gysin maps nor
+proves projector idempotence or prescribed Hodge-class generation.
+
+Validation: full `lake build` passes (3270 jobs; only the two pre-existing
+`Challenge.lean` warnings). `research/ChowLocalizationVerification.lean`
+passes seven focused checks and the standard-three axiom allowlist for all
+twenty new public declarations. Checks cover full/empty opens, reduction of
+a possibly nonreduced ambient scheme, a nonzero boundary cycle, trivial
+coefficients, integral full-open exactness, the existing rational two-lift
+consumer and marked-recipe boundary ambiguity. The registry covers all 909
+public object declarations in 1040 classified rows; table structure, local
+links, new-file placeholder scan and `git diff --check` pass. Historical
+full `research/Verification.lean` results retain their SP107 scope.
+
+## Marked cycle-to-Chow map (SP109)
+
+Status: `FORMAL` for the construction from supplied cycles. In
+`Realization/Chow/MarkedCycleMap.lean`, `MarkedSheetChow.cycleMap` forms a
+finite rational combination of actual homogeneous cycles on a fixed
+ambient scheme; `chowMap` takes its class in the existing principal-relation
+quotient. The marked element gives $[C_{s_0}]-\sum_s[C_s]$. The image is
+exactly the rational span of the nonmarked cycle classes. Componentwise
+rational equivalence preserves the whole map. Open restriction and finite
+Chow pushforward commute with it, using the actual scheme maps already
+constructed. Degree and dimension remain arbitrary.
+
+The image after any supplied linear realization is also computed exactly.
+Reweighting the supplied cycles realizes any residual input at the canonical
+marked vector. These are linear constructions; they assume neither a
+multiplicative residual map nor a new correspondence algebra. The family
+of cycles, a geometric Betti realization, and selection for a prescribed
+Hodge class remain inputs or `OPEN` obligations. No cover or incidence
+family is inferred from the sheet labels, and no new Hodge case is proved.
+
+Validation: the full `lake build` passes (3267 jobs; only the two
+pre-existing `Challenge.lean` placeholder warnings). The five checks in
+`research/MarkedCycleMapVerification.lean` pass: marked-support vanishing,
+signed rational weighting, actual principal-relation invariance, nonzero
+generic-degree output on an arbitrary integral Noetherian scheme, and the
+exact existing generation condition. All twelve new public declarations
+pass the standard-three axiom allowlist. The notation registry covers all
+908 public object declarations, with 1036 classified rows; table structure,
+local links and the new-file placeholder scan pass. The earlier full
+`research/Verification.lean` run retains its SP107 scope.
 
 ## Conditional boundary correction on actual Chow groups (SP108)
 
@@ -91,9 +425,11 @@ three. The semantic table structure, LaTeX delimiters, source links and
 project proof-token scan pass. These are working-tree checks, not a
 clean-clone or human release sign-off.
 
-Status: `OPEN`. General finite-pushforward composition, flat pullback and
-its degree law, actual Betti transfer and cycle-class compatibility, and
-class-dependent geometric generation. This checkpoint does not prove the
+At SP107, finite-pushforward composition remained open; SP113 now proves it
+for these same maps. The finite flat checkpoint above also proves Chow
+pullback and its degree law. Status: `OPEN` for more general flat pullback,
+actual Betti transfer and cycle-class compatibility, and class-dependent
+geometric generation. This checkpoint does not prove the
 general proper-morphism version of 02RT or a Hodge-conjecture instance.
 
 ## Full weighted norm--order formula (SP106)
@@ -2147,8 +2483,8 @@ conjecture.
 | A11ar | FORMAL | For an open immersion of arbitrary schemes, the actual reduced closure of an integral closed support in the source is the existing pointSupport of its ambient image generic point. Its actual ideal-sheaf comap recovers the original support. Conversely, reduced closure recovers every ambient integral support with nonempty restriction; nonemptiness is equivalent to its generic point lying in the open image. The generic-point formulas and actual stalk isomorphism preserve existing chain codimension and identify the closure of a prime support with the A11aq divisor-point embedding. Over any semiring, the existing finite-cycle restriction reads exactly the original coefficient at this reduced closure; generators with empty inverse image contribute zero. This support/coefficient layer has no ambient integrality, Noetherianity, quasi-compactness, grading or field-base premise. For integral source and target with target locally Noetherian, the signed order on a source prime support is the target order on its actual reduced closure after the actual generic-stalk function-field pullback. With target quasi-compactness, source local Noetherianity and compactness are derived, and actual openRestriction ℤ carries the existing finite principal divisor to the principal divisor of that pullback. The old isomorphism restriction theorem keeps its signature as a specialization. No carrier is replaced by an arbitrary chosen closure, and the open immersion is not treated as a closed-image pushforward. A11as proves graded open restriction from actual δ∘j and compatibility of the actual open/closed finite-cycle square. A11at proves restriction of ambientPrincipalDivisor in its nonempty and empty branches, then preservation of graded generators, the integer relation span and rational equivalence. A11au proves integral and rational open quotient restriction, representative formulas, contravariant functoriality and both rationalization squares. A11av proves actual raw/graded cycle surjectivity via reduced closure and integral/rational Chow restriction surjectivity; closed-complement kernel/image and localization exactness remain separate. General proper/flat/Gysin laws and geometric target identification remain separate. | `openClosureSubscheme`, `openClosureSubscheme_ambientGenericPoint`, `ambientGenericPoint_openRestrictionSubscheme`, `nonempty_openRestrictionSubscheme_iff`, `openClosureSubscheme_comap`, `openClosureSubscheme_openRestrictionSubscheme`, `supportCodimension_openClosureSubscheme`, `supportCodimension_openRestrictionSubscheme`, `openClosureSubscheme_divisorPoint`, `openRestriction_apply` in `Cycles/OpenSupport.lean`; `primeDivisorOrder_openImmersion`, `openRestriction_principalDivisor_of_isOpenImmersion` in `Cycles/PrincipalDivisorTransport.lean`. |
 | A11as | FORMAL | For an open immersion of arbitrary schemes and a supplied dimension function, literal composition with the actual point map is again a dimension function: both strict specialization monotonicity and the immediate-specialization unit step are proved using the order-convex open image. Restriction respects identity and composition and agrees with the existing closed restriction when the map is also closed. Actual reduced open closure and nonempty ideal-comap restriction preserve support degree. Over every semiring, the existing finite-cycle restriction therefore preserves the existing homogeneous submodules and defines the graded open map with its unchanged underlying representative and identity/composition laws. No new cycle carrier, dimension convention or relation predicate is introduced. For each actual integral closed carrier Z in X, the literal ideal-comap subscheme Z_U and its existing map to Z form the Cartesian open/closed square. Actual finite-cycle open restriction commutes with the two closed pushforwards around that square, including empty Z_U and empty inverse images of individual generators. The carrier inclusion equation itself holds even for arbitrary scheme maps. No ambient integrality, Noetherianity, quasi-compactness, finite-type, field-base or nonempty-source premise is used in these results. A11at proves restriction of ambientPrincipalDivisor with both nonempty and empty carrier branches, graded relation-generator transport and integer relation-span/rational-equivalence preservation. A11au proves integral and rational open quotient restriction, representative formulas, contravariant functoriality and both rationalization squares. A11av proves actual raw/graded cycle surjectivity via reduced closure and integral/rational Chow restriction surjectivity; closed-complement kernel/image and localization exactness remain separate. Localization, general proper/flat/Gysin laws, geometric target identification and reducible/componentwise conventions remain separate. | `openImmersion_covBy`, `DimensionFunction.comapOpenImmersion`, `DimensionFunction.comapOpenImmersion_apply`, `DimensionFunction.comapOpenImmersion_id`, `DimensionFunction.comapOpenImmersion_comp`, `DimensionFunction.comapOpenImmersion_eq_comapClosedImmersion`, `supportDegree_openClosureSubscheme`, `supportDegree_openRestrictionSubscheme`, `openRestriction_mem_cyclesOfDegree`, `gradedOpenRestriction`, `gradedOpenRestriction_val`, `gradedOpenRestriction_id`, `gradedOpenRestriction_comp` in `Cycles/OpenGrading.lean`; `openRestrictionSubschemeMap_subschemeι` in `Cycles/OpenSupport.lean`; `openRestriction_closedImmersionPushforward_subscheme` in `Cycles/OpenClosedBaseChange.lean`. |
 | A11at | FORMAL | For an actual open immersion j:U→X, the existing ambient principal divisor on an integral closed carrier W restricts through the actual Cartesian carrier square. Only W is assumed locally Noetherian and quasi-compact; the ambient schemes need not be integral or finite. When the ideal-comap carrier W_U is nonempty, its integrality and finiteness are derived and the restricted cycle is the existing ambient principal divisor of the actual contravariant generic-stalk pullback of f. When W_U is empty, the restricted cycle is zero, without constructing a function field or replacement relation datum on the empty carrier. For an arbitrary supplied δ and degree m, genuine principal-relation data restrict on the nonempty branch to the literal W_U and actual pulled-back function, retaining carrier degree m+1; this data construction has no finiteness hypothesis. If X is Noetherian, U is proved Noetherian and the existing graded open map sends each actual principal generator to that restricted generator or zero. Therefore it preserves the existing integer relation span and the actual rational-equivalence predicate. This is a proved consequence of the two geometric carrier identities, not a supplied relation-preservation hypothesis. A11au proves integral and rational open quotient restriction, representative formulas, contravariant functoriality and both rationalization squares. A11av proves actual raw/graded cycle surjectivity via reduced closure and integral/rational Chow restriction surjectivity; closed-complement kernel/image and localization exactness remain separate. Localization, general proper/flat/Gysin laws, geometric target identification and reducible/componentwise conventions remain separate; the quotient maps are supplied by A11au rather than this generator checkpoint. | `openRestriction_ambientPrincipalDivisor_of_nonempty`, `openRestriction_ambientPrincipalDivisor_of_isEmpty` in `Cycles/PrincipalDivisorRestriction.lean`; `openImmersion_isNoetherian`, `PrincipalRelationData.openRestriction`, `PrincipalRelationData.openRestriction_carrier`, `PrincipalRelationData.openRestriction_function`, `gradedOpenRestriction_principalRelation_of_nonempty`, `gradedOpenRestriction_principalRelation_of_isEmpty`, `principalRelations_le_comap_openRestriction`, `rationallyEquivalent_openRestriction` in `Cycles/PrincipalRelationRestriction.lean`. |
-| A11au | FORMAL | The existing graded open restriction descends through the proved integer principal-relation span inclusion to the existing integral Chow quotient. Only the target scheme is assumed Noetherian; the source and intermediate open schemes inherit that property, and their dimension functions are the literal restrictions δ∘j. The map preserves the actual cycle representative and satisfies identity and contravariant composition. Independently of all finiteness hypotheses, raw and homogeneous finite-cycle open restriction commute with coefficientwise ℤ→ℚ extension. This coefficient compatibility and the genuine nonempty/empty relation-generator identities preserve the rational principal-relation span. The resulting rational Chow restriction is defined on the existing rational quotient, keeps the actual representative formula and is contravariantly functorial. It commutes with the integral-to-rational Chow map, and under the existing tensor comparisons it is exactly scalar extension of integral restriction on every tensor element. No new cycle, relation or quotient carrier, no additional descent hypothesis and no injectivity of Chow rationalization are introduced. A11av proves raw/graded cycle and integral/rational Chow restriction surjectivity via actual reduced support closures and class representatives. The actual closed-complement support/kernel/image comparisons and localization exactness require subsequent proofs. General proper/flat/Gysin laws, geometric target identification and reducible/componentwise conventions remain separate. | `chowOpenRestriction`, `chowOpenRestriction_classMap`, `chowOpenRestriction_id`, `chowOpenRestriction_comp` in `Cycles/ChowOpenRestriction.lean`; `openRestriction_rationalize`, `gradedOpenRestriction_rationalize` in `Cycles/CoefficientRestriction.lean`; `rationalPrincipalRelations_le_comap_openRestriction`, `rationalChowOpenRestriction`, `rationalChowOpenRestriction_classMap`, `rationalChowOpenRestriction_id`, `rationalChowOpenRestriction_comp`, `rationalChowOpenRestriction_chowRationalize`, `rationalChowOpenRestriction_chowRationalizationEquiv` in `Cycles/RationalChowOpenRestriction.lean`. |
-| A11av | FORMAL | For an open immersion of arbitrary schemes, every finite cycle over any semiring lifts by taking the actual reduced ambient closures of its integral supports with unchanged coefficients. The actual ideal-comap identities prove that restriction recovers the original cycle. The proved support-degree comparison makes this lift homogeneous for the supplied dimension function and its literal restriction, so the existing raw and graded restriction maps are surjective. No ambient integrality, Noetherianity, quasi-compactness, field-base or nonempty-source hypothesis is needed at cycle level. For a Noetherian target, the source is derived Noetherian; choosing an actual homogeneous cycle representative and lifting it proves surjectivity of both the existing integral and rational Chow restriction maps. Closure is used to lift cycles and is not asserted to preserve rational equivalence or define a Chow right inverse. No new cycle or quotient carrier is introduced. The next bounded step is the actual closed-complement support/kernel/image comparison; localization exactness requires that additional argument. General proper/flat/Gysin laws, geometric target identification and reducible/componentwise conventions remain separate. | `openRestriction_surjective`, `gradedOpenRestriction_surjective` in `Cycles/OpenRestrictionSurjectivity.lean`; `chowOpenRestriction_surjective` in `Cycles/ChowOpenRestriction.lean`; `rationalChowOpenRestriction_surjective` in `Cycles/RationalChowOpenRestriction.lean`. |
+| A11au | FORMAL | The existing graded open restriction descends through the proved integer principal-relation span inclusion to the existing integral Chow quotient. Only the target scheme is assumed Noetherian; the source and intermediate open schemes inherit that property, and their dimension functions are the literal restrictions δ∘j. The map preserves the actual cycle representative and satisfies identity and contravariant composition. Independently of all finiteness hypotheses, raw and homogeneous finite-cycle open restriction commute with coefficientwise ℤ→ℚ extension. This coefficient compatibility and the genuine nonempty/empty relation-generator identities preserve the rational principal-relation span. The resulting rational Chow restriction is defined on the existing rational quotient, keeps the actual representative formula and is contravariantly functorial. It commutes with the integral-to-rational Chow map, and under the existing tensor comparisons it is exactly scalar extension of integral restriction on every tensor element. No new cycle, relation or quotient carrier, no additional descent hypothesis and no injectivity of Chow rationalization are introduced. A11av proves raw/graded cycle and integral/rational Chow restriction surjectivity via actual reduced support closures and class representatives. SP110 now proves the actual closed-complement support/kernel/image comparisons and integral/rational Chow localization exactness; see the current localization entry above. General proper/flat/Gysin laws, geometric target identification and reducible/componentwise conventions remain separate. | `chowOpenRestriction`, `chowOpenRestriction_classMap`, `chowOpenRestriction_id`, `chowOpenRestriction_comp` in `Cycles/ChowOpenRestriction.lean`; `openRestriction_rationalize`, `gradedOpenRestriction_rationalize` in `Cycles/CoefficientRestriction.lean`; `rationalPrincipalRelations_le_comap_openRestriction`, `rationalChowOpenRestriction`, `rationalChowOpenRestriction_classMap`, `rationalChowOpenRestriction_id`, `rationalChowOpenRestriction_comp`, `rationalChowOpenRestriction_chowRationalize`, `rationalChowOpenRestriction_chowRationalizationEquiv` in `Cycles/RationalChowOpenRestriction.lean`. |
+| A11av | FORMAL | For an open immersion of arbitrary schemes, every finite cycle over any semiring lifts by taking the actual reduced ambient closures of its integral supports with unchanged coefficients. The actual ideal-comap identities prove that restriction recovers the original cycle. The proved support-degree comparison makes this lift homogeneous for the supplied dimension function and its literal restriction, so the existing raw and graded restriction maps are surjective. No ambient integrality, Noetherianity, quasi-compactness, field-base or nonempty-source hypothesis is needed at cycle level. For a Noetherian target, the source is derived Noetherian; choosing an actual homogeneous cycle representative and lifting it proves surjectivity of both the existing integral and rational Chow restriction maps. Closure is used to lift cycles and is not asserted to preserve rational equivalence or define a Chow right inverse. No new cycle or quotient carrier is introduced. SP110 now supplies the actual closed-complement support/kernel/image comparison and integral/rational Chow localization exactness; see the current localization entry above. General proper/flat/Gysin laws, geometric target identification and reducible/componentwise conventions remain separate. | `openRestriction_surjective`, `gradedOpenRestriction_surjective` in `Cycles/OpenRestrictionSurjectivity.lean`; `chowOpenRestriction_surjective` in `Cycles/ChowOpenRestriction.lean`; `rationalChowOpenRestriction_surjective` in `Cycles/RationalChowOpenRestriction.lean`. |
 | A12 | CONDITIONAL | Given the exact local input that the selected prime of the inertia fixed ring is unramified, containment `I ≤ H` implies unramifiedness of the selected prime in the `H`-fixed ring. The basic theorem imposes Dedekind only on the selected localization. For a finite group and a height-one prime, invariant-theoretic going down preserves height one; normality and Noetherianity therefore make that localization a DVR. The normal-closure endpoint composes this with the formal valuation-to-prime-inertia comparison and remains based over the literal full invariant ring `S^G`; it does not silently replace `S^G` by `B`. The former global-Dedekind theorem remains as a wrapper. This controls one selected branch, not the entire `G/H` cover, and Tag `0BST` remains an explicit premise. | `NormalizationInertia.InertiaFixedRingUnramifiedAt` in `Inputs/FixedInertia.lean`; `fixedPointsLocalRingHom`, `fixedPointsLocalRingHom_injective`, and `fixedRing_isUnramifiedAt_of_inertia_le_localized` in `Boundary/Normalization/FixedRingUnramified.lean`; `fixedPoints_primeHeight_under_eq_one` and `fixedRing_isUnramifiedAt_of_inertia_le_of_primeHeight_eq_one` in `Boundary/Normalization/FixedRingLocalization.lean`; `normalizationFixedRing_isUnramifiedAt_of_primeInertia_le` and `Diagram.fixedRing_isUnramifiedAt_of_valuationInertia_le` in `Boundary/Normalization/PrimeInertiaDescent.lean` |
 | A13 | FORMAL | Rational pull and push maps satisfying `push ∘ pull = d · id`, with nonzero integral degree `d`, define an idempotent normalized pull--push operator. The theorem proves the algebraic transfer calculation but does not construct Chow groups or the geometric pull/push maps. | `normalizedPullPush_isIdempotent` and `RationalDegreeTransfer.normalizedProjector_isIdempotent` in `Realization/Chow/TransferProjector.lean` |
 | A14 | FORMAL | Ring-theoretic prime inertia is realized as the stabilizer kernel of the residue action. A selected prime is the unique prime above its contraction to its own inertia-fixed ring; this needs only finiteness of the acting group. For every centered valuation in a normalization diagram, valuation inertia acts trivially modulo the center and is contained in prime inertia. For marked finite normal-closure data with separable `L/K`, an affine base integrally closed in that field is equivalent to the full invariant normalization ring. | `primeInertiaSubgroup`, `eq_of_under_primeInertiaSubgroup_eq`, `mem_primeInertiaSubgroup_iff`, `baseEquivFullInvariantNormalizationRing`, `Diagram.valuationInertia_sub_centerPrime`, and `Diagram.valuationInertia_le_normalizationPrimeInertiaGroup` in `Boundary/Normalization/PrimeInertia.lean` |

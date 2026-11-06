@@ -1,4 +1,8 @@
-import HodgeConjecture.Realization.Chow.MarkedAugmentedRealization
+module
+
+public import HodgeConjecture.Realization.Chow.MarkedAugmentedRealization
+
+@[expose] public section
 
 /-!
 # Rigidity of a multiplicative residual realization

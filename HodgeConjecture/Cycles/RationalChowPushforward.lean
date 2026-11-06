@@ -1,6 +1,10 @@
-import HodgeConjecture.Cycles.RationalChow
-import HodgeConjecture.Cycles.CoefficientPushforward
-import HodgeConjecture.Cycles.ChowPushforward
+module
+
+public import HodgeConjecture.Cycles.RationalChow
+public import HodgeConjecture.Cycles.CoefficientPushforward
+public import HodgeConjecture.Cycles.ChowPushforward
+
+@[expose] public section
 
 /-!
 # Rational Chow pushforward along actual closed immersions

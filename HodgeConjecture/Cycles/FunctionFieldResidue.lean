@@ -1,7 +1,11 @@
-import HodgeConjecture.Cycles.PointSupport
-import HodgeConjecture.Cycles.FunctionFieldMap
-import Mathlib.AlgebraicGeometry.ResidueField
-import Mathlib.AlgebraicGeometry.Morphisms.SurjectiveOnStalks
+module
+
+public import HodgeConjecture.Cycles.PointSupport
+public import HodgeConjecture.Cycles.FunctionFieldMap
+public import Mathlib.AlgebraicGeometry.ResidueField
+public import Mathlib.AlgebraicGeometry.Morphisms.SurjectiveOnStalks
+
+@[expose] public section
 
 /-!
 # Function fields of supports and actual ambient residue fields

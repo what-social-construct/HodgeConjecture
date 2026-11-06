@@ -1,7 +1,11 @@
-import Mathlib.AlgebraicGeometry.Limits
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.Assoc
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.Iso
+module
+
+public import Mathlib.AlgebraicGeometry.Limits
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.Assoc
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.Iso
+
+@[expose] public section
 
 /-!
 # Scheme correspondences over a base

@@ -1,6 +1,11 @@
+module
+
 import HodgeConjecture.Boundary.Normalization.GluedNormalizationDeckComparison
 import HodgeConjecture.Boundary.Normalization.GluedNormalClosureFunctionField
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP95 focused checks for generic-pullback extensionality and the full deck group.
@@ -52,7 +57,7 @@ example (f g : X ⟶ Y) [IsDominant f] [IsDominant g]
     (s : Y ⟶ S) [IsSeparated s] (hb : f ≫ s = g ≫ s)
     (hf : functionFieldMapOfDominant f = functionFieldMapOfDominant g) : f = g := by
   fail_if_success have _ : IsFinite f := inferInstance
-  fail_if_success have _ : IsEtale f := inferInstance
+  fail_if_success have _ : Etale f := inferInstance
   fail_if_success have _ : IsNoetherian X := inferInstance
   fail_if_success
     have _ : ∀ x : X, IsIntegrallyClosed (X.presheaf.stalk x) := fun _ => inferInstance
@@ -215,7 +220,7 @@ example :
     (functionFieldMapOfDominant p).hom.toAlgebra
   letI : FiniteDimensional X.functionField Nₚ :=
     (functionFieldNormalClosureData p).finiteNormal
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   fail_if_success have _ : Algebra.IsSeparable X.functionField Y.functionField := inferInstance
   fail_if_success
     have _ : ∀ x : X, IsIntegrallyClosed (X.presheaf.stalk x) := fun _ => inferInstance
@@ -282,8 +287,8 @@ run_cmd do
   for declaration in declarations do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    let actual := state.axioms.toList
+    let axioms ← Lean.collectAxioms declaration
+    let actual := axioms.toList
     for axiomName in actual do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"

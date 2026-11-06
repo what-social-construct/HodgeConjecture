@@ -1,5 +1,9 @@
-import HodgeConjecture.Cycles.NormalizationLocalDimension
-import HodgeConjecture.Cycles.SupportCodimension
+module
+
+public import HodgeConjecture.Cycles.NormalizationLocalDimension
+public import HodgeConjecture.Cycles.SupportCodimension
+
+@[expose] public section
 
 /-!
 # Closed-point local dimensions of finite-type affine domains

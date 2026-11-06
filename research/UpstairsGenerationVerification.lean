@@ -1,5 +1,10 @@
+-- This dependency audit loads private imported proof bodies (legacy import mode).
 import HodgeConjecture.Realization.Chow.UpstairsGeneration
 import Lean.Util.CollectAxioms
+import HodgeConjecture.MathlibCompat.DeclarationDependencies
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP94 focused checks for specified upstairs recipes and normalized descent.
@@ -308,8 +313,8 @@ run_cmd do
   for declaration in declarations do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    let actual := state.axioms.toList
+    let axioms ← Lean.collectAxioms declaration
+    let actual := axioms.toList
     for axiomName in actual do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"
@@ -323,14 +328,14 @@ run_cmd do
     `HodgeConjecture.Boundary,
     `HodgeConjecture.Correspondence]
   for endpoint in endpoints do
-    let (_, state) := ((CollectAxioms.collect endpoint).run env).run {}
-    for declaration in state.visited.toList do
+    let dependencies := HodgeConjecture.Research.declarationDependencies env endpoint
+    for declaration in dependencies.toList do
       if let some idx := env.getModuleIdxFor? declaration then
         let origin := env.header.moduleNames[idx]!
         unless !excludedModules.any (fun modulePrefix => modulePrefix.isPrefixOf origin) do
           throwError "Unexpected branch dependency {declaration} from {origin} in {endpoint}"
       if declaration == `HodgeConjecture.RationalDegreeTransfer.normalizedProjector then
         throwError "Normalized projector unexpectedly consumed by {endpoint}"
-    unless state.visited.contains `HodgeConjecture.RationalDegreeTransfer.push_comp_pull do
+    unless dependencies.contains `HodgeConjecture.RationalDegreeTransfer.push_comp_pull do
       throwError "Expected positive-degree transfer law not consumed by {endpoint}"
     logInfo m!"PASS direct-descent dependency boundary: {endpoint}; consumes degree law, no projector or excluded branch"

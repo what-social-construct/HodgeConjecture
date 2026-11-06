@@ -1,7 +1,11 @@
-import HodgeConjecture.Correspondence.GraphSlice
-import HodgeConjecture.Correspondence.GraphCycles
-import HodgeConjecture.Cycles.OpenRestriction
-import HodgeConjecture.Cycles.ClosedImmersionPushforward
+module
+
+public import HodgeConjecture.Correspondence.GraphSlice
+public import HodgeConjecture.Correspondence.GraphCycles
+public import HodgeConjecture.Cycles.OpenRestriction
+public import HodgeConjecture.Cycles.ClosedImmersionPushforward
+
+@[expose] public section
 
 /-!
 # Graph-slice pull–push on actual finite cycles

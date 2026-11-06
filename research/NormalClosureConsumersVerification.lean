@@ -1,5 +1,10 @@
+module
+
 import HodgeConjecture.Boundary
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP75 regressions for the consumers of constructed marked normal closures.
@@ -198,7 +203,7 @@ example [FormallyUnramified p] :
   letI := functionFieldMapOfDominant_isSeparable p
   exact (functionFieldNormalClosureData p).normalClosureTensorToGenericSheets_bijective
 
-example [IsEtale p] :
+example [Etale p] :
     letI := (functionFieldMapOfDominant p).hom.toAlgebra
     letI := functionFieldMapOfDominant_isSeparable p
     (functionFieldNormalClosureData p).normalClosureBaseSheetAugmentation.comp
@@ -248,8 +253,8 @@ run_cmd do
       `HodgeConjecture.NormalizationInertia.Diagram.compactifiedSubgroupProjectorLift_nonempty_of_formallyUnramified] do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    for axiomName in state.axioms do
+    let axioms ← Lean.collectAxioms declaration
+    for axiomName in axioms do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"
-    logInfo m!"PASS standard-axiom boundary: {declaration}; {state.axioms.toList}"
+    logInfo m!"PASS standard-axiom boundary: {declaration}; {axioms.toList}"

@@ -1,7 +1,11 @@
-import HodgeConjecture.Cycles.FiniteAffineFiber
-import HodgeConjecture.Cycles.SchemeLocalOrder
-import HodgeConjecture.CommutativeAlgebra.FiniteLocalizationFractionField
-import HodgeConjecture.CommutativeAlgebra.AtPrimeFractionField
+module
+
+public import HodgeConjecture.Cycles.FiniteAffineFiber
+public import HodgeConjecture.Cycles.SchemeLocalOrder
+public import HodgeConjecture.CommutativeAlgebra.FiniteLocalizationFractionField
+public import HodgeConjecture.CommutativeAlgebra.AtPrimeFractionField
+
+@[expose] public section
 
 /-!
 # The semilocal orders are the actual source-stalk orders

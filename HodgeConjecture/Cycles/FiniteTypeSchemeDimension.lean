@@ -1,8 +1,12 @@
-import HodgeConjecture.Cycles.FiniteTypeDimension
-import HodgeConjecture.Cycles.SupportDimension
-import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
-import Mathlib.AlgebraicGeometry.Morphisms.QuasiCompact
-import Mathlib.Data.Finset.Lattice.Fold
+module
+
+public import HodgeConjecture.Cycles.FiniteTypeDimension
+public import HodgeConjecture.Cycles.SupportDimension
+public import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
+public import Mathlib.AlgebraicGeometry.Morphisms.QuasiCompact
+public import Mathlib.Data.Finset.Lattice.Fold
+
+@[expose] public section
 
 /-!
 # Finite dimension for actual finite-type schemes over a field

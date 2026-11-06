@@ -1,5 +1,9 @@
-import Mathlib.RingTheory.Trace.Basic
-import Mathlib.LinearAlgebra.TensorProduct.Finiteness
+module
+
+public import Mathlib.RingTheory.Trace.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Finiteness
+
+@[expose] public section
 
 /-!
 # Trace contraction of a separability tensor

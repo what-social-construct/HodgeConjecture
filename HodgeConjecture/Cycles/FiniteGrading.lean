@@ -1,7 +1,11 @@
-import HodgeConjecture.Cycles.FiniteResidueField
-import HodgeConjecture.Cycles.FieldDimensionFunction
-import HodgeConjecture.Cycles.GradedFinitePushforward
-import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
+module
+
+public import HodgeConjecture.Cycles.FiniteResidueField
+public import HodgeConjecture.Cycles.FieldDimensionFunction
+public import HodgeConjecture.Cycles.GradedFinitePushforward
+public import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
+
+@[expose] public section
 
 /-!
 # Finite maps preserve the existing field-induced grading

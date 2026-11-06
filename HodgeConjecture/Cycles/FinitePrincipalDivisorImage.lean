@@ -1,6 +1,10 @@
-import HodgeConjecture.Cycles.FinitePrincipalDivisor
-import HodgeConjecture.Cycles.FinitePushforwardSquare
-import HodgeConjecture.Cycles.PrincipalRelations
+module
+
+public import HodgeConjecture.Cycles.FinitePrincipalDivisor
+public import HodgeConjecture.Cycles.FinitePushforwardSquare
+public import HodgeConjecture.Cycles.PrincipalRelations
+
+@[expose] public section
 
 /-!
 # Norms on the actual image carriers of principal relations

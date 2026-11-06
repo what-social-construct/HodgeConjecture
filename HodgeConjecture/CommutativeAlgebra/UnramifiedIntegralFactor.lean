@@ -1,6 +1,10 @@
-import HodgeConjecture.CommutativeAlgebra.SeparabilityTrace
-import Mathlib.RingTheory.Unramified.Finite
-import Mathlib.RingTheory.IntegralClosure.IntegralRestrict
+module
+
+public import HodgeConjecture.CommutativeAlgebra.SeparabilityTrace
+public import Mathlib.RingTheory.Unramified.Finite
+public import Mathlib.RingTheory.IntegralClosure.IntegralRestrict
+
+@[expose] public section
 
 /-!
 # The integral factor selected by an unramified evaluation

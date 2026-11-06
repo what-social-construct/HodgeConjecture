@@ -1,4 +1,8 @@
-import HodgeConjecture.Correspondence.Linearized
+module
+
+public import HodgeConjecture.Correspondence.Linearized
+
+@[expose] public section
 
 /-!
 # Additive and convolution-compatible correspondence classes
@@ -113,7 +117,8 @@ def classMonoidHom
     Class pX pX →* Γ where
   toFun := classValue pX Γ χ
   map_one' := by
-    simpa [classOne] using χ.classOf_identity
+    change χ.classOf (identity pX) = 1
+    exact χ.classOf_identity
   map_mul' := by
     intro a b
     refine Quotient.inductionOn₂ a b ?_
@@ -127,7 +132,7 @@ scheme-correspondence algebra.
 def freeAlgebraMap
     (χ : AlgebraModel pX Γ) :
     FreeAlgebra pX →ₐ[ℚ] Γ :=
-  MonoidAlgebra.lift ℚ (Class pX pX) Γ
+  MonoidAlgebra.lift ℚ Γ (Class pX pX)
     (classMonoidHom pX Γ χ)
 
 @[simp]

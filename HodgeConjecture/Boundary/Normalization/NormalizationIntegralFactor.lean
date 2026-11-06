@@ -1,7 +1,11 @@
-import HodgeConjecture.Boundary.Normalization.NormalizationBaseChange
-import HodgeConjecture.Boundary.Normalization.NormalClosureFactor
-import HodgeConjecture.CommutativeAlgebra.UnramifiedIntegralFactor
-import Mathlib.RingTheory.Localization.Away.Basic
+module
+
+public import HodgeConjecture.Boundary.Normalization.NormalizationBaseChange
+public import HodgeConjecture.Boundary.Normalization.NormalClosureFactor
+public import HodgeConjecture.CommutativeAlgebra.UnramifiedIntegralFactor
+public import Mathlib.RingTheory.Localization.Away.Basic
+
+@[expose] public section
 
 /-!
 # The integral factor of normal-closure tensor evaluation
@@ -196,7 +200,7 @@ theorem normalization_etale_of_etaleModel (D : NormalClosureData K L N) :
       (D.normalizationTensorIdempotent_spec (B := B) (A := A)).2.2.2
       (D.normalizationTensorEvaluation_surjective (B := B) (A := A))
   letI : Algebra.Etale P (normalizedCoordinateRing B N) :=
-    Algebra.Etale.of_isLocalization_Away e
+    Algebra.Etale.of_isLocalizationAway e
   letI : Algebra.Etale B P := D.normalizationTensor_etale (B := B) (A := A)
   exact Algebra.Etale.comp B P (normalizedCoordinateRing B N)
 

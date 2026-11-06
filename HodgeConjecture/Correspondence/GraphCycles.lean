@@ -1,7 +1,11 @@
-import HodgeConjecture.Correspondence.GraphSubscheme
-import HodgeConjecture.Cycles.Basic
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Mathlib.Topology.KrullDimension
+module
+
+public import HodgeConjecture.Correspondence.GraphSubscheme
+public import HodgeConjecture.Cycles.Basic
+public import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+public import Mathlib.Topology.KrullDimension
+
+@[expose] public section
 
 /-!
 # Integral graph cycles
@@ -76,14 +80,16 @@ theorem graphCycle_ne_zero (R : Type v) [Semiring R] [Nontrivial R]
 def graphCycleLinearMap [hSeparated : IsSeparated pX] [hIntegral : IsIntegral X] :
     MonoidAlgebra ℚ (DeckTransformation pX) →ₗ[ℚ]
       SchemeCycles.Cycles (pullback pX pX) ℚ :=
-  Finsupp.linearCombination ℚ (graphCycle pX ℚ)
+  (Finsupp.linearCombination ℚ (graphCycle pX ℚ)).comp
+    (MonoidAlgebra.coeffLinearEquiv ℚ).toLinearMap
 
 @[simp]
 theorem graphCycleLinearMap_single
     [hSeparated : IsSeparated pX] [hIntegral : IsIntegral X]
     (σ : DeckTransformation pX) (q : ℚ) :
     graphCycleLinearMap pX (MonoidAlgebra.single σ q) = q • graphCycle pX ℚ σ := by
-  exact Finsupp.linearCombination_single ℚ q σ
+  simpa [graphCycleLinearMap] using
+    (Finsupp.linearCombination_single ℚ (graphCycle pX ℚ) σ q)
 
 end SchemeCorrespondence
 

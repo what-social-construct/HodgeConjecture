@@ -1,7 +1,11 @@
-import Mathlib.AlgebraicGeometry.AffineScheme
-import Mathlib.AlgebraicGeometry.Properties
-import Mathlib.RingTheory.Ideal.Height
-import Mathlib.Topology.KrullDimension
+module
+
+public import Mathlib.AlgebraicGeometry.AffineScheme
+public import Mathlib.AlgebraicGeometry.Properties
+public import Mathlib.RingTheory.Ideal.Height
+public import Mathlib.Topology.KrullDimension
+
+@[expose] public section
 
 /-!
 # Topological codimension and local dimension
@@ -74,11 +78,10 @@ theorem point_coheight_eq_stalkDim (X : Scheme.{u}) (x : X) :
   letI := hU.isLocalization_stalk y
   change (Order.coheight y.val : WithBot ℕ∞) = ringKrullDim (X.presheaf.stalk y.val)
   rw [IsLocalization.AtPrime.ringKrullDim_eq_height (hU.primeIdealOf y).asIdeal,
-    Ideal.height_eq_primeHeight]
+    PrimeSpectrum.height_eq_orderHeight]
   have h := Order.coheight_orderIso (affinePointOrderIso X hU) y
   have h' : Order.coheight y = Order.height (hU.primeIdealOf y) := h.symm
   rw [← open_coheight X U y, h']
-  rfl
 
 /-- Codimension by chains of irreducible closed supersets equals local
 dimension at the actual generic point of that support. -/

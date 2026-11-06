@@ -1,6 +1,10 @@
-import HodgeConjecture.Boundary.GraphRestriction
-import HodgeConjecture.Correspondence.GraphCycles
-import HodgeConjecture.Cycles.OpenRestriction
+module
+
+public import HodgeConjecture.Boundary.GraphRestriction
+public import HodgeConjecture.Correspondence.GraphCycles
+public import HodgeConjecture.Cycles.OpenRestriction
+
+@[expose] public section
 
 /-!
 # Restriction of actual integral graph cycles
@@ -73,6 +77,7 @@ theorem graphCycleLinearMap_restriction (E : FiniteEtaleExtension j p)
   letI := E.original_isFinite
   letI := E.original_isIntegral
   letI := E.pairInclusion_isOpenImmersion
+  apply (LinearMap.cancel_right (MonoidAlgebra.coeffLinearEquiv ℚ).symm.surjective).mp
   apply Finsupp.lhom_ext
   intro σ q
   change openRestriction ℚ E.pairInclusion
@@ -80,7 +85,7 @@ theorem graphCycleLinearMap_restriction (E : FiniteEtaleExtension j p)
     graphCycleLinearMap p
       (MonoidAlgebra.mapDomainAlgHom ℚ ℚ E.restriction (MonoidAlgebra.single σ q))
   simp only [graphCycleLinearMap_single, MonoidAlgebra.mapDomainAlgHom_apply,
-    Finsupp.mapDomain_single, map_smul]
+    MonoidAlgebra.mapDomain_single, map_smul]
   rw [E.graphCycle_restriction ℚ σ]
 
 end

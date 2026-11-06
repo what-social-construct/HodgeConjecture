@@ -1,6 +1,10 @@
-import HodgeConjecture.Correspondence.GroupAlgebraProjector
-import Mathlib.GroupTheory.DoubleCoset
-import Mathlib.RingTheory.Idempotents
+module
+
+public import HodgeConjecture.Correspondence.GroupAlgebraProjector
+public import Mathlib.GroupTheory.DoubleCoset
+public import Mathlib.RingTheory.Idempotents
+
+@[expose] public section
 
 /-!
 # Subgroup Hecke corners and double-coset correspondences

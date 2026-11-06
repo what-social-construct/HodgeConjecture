@@ -1,26 +1,33 @@
-import HodgeConjecture.Realization.Chow.GaloisProjector
-import HodgeConjecture.Realization.Chow.GaloisHodgeTarget
-import HodgeConjecture.Realization.Chow.IdempotentRepresentation
-import HodgeConjecture.Realization.Chow.MarkedAugmentedRealization
-import HodgeConjecture.Realization.Chow.MultiplicativeResidualRigidity
-import HodgeConjecture.Realization.Chow.GaloisMarkedBlock
-import HodgeConjecture.Realization.Chow.GaloisMarkedRealization
-import HodgeConjecture.Realization.Chow.Model
-import HodgeConjecture.Realization.Chow.Presentation
-import HodgeConjecture.Realization.Chow.TateGraphProjector
-import HodgeConjecture.Realization.Chow.TransferProjector
-import HodgeConjecture.Realization.Chow.UpstairsGeneration
-import HodgeConjecture.Realization.Chow.BoundaryCorrection
-import HodgeConjecture.Realization.Chow.Examples.SplitPoints
-import HodgeConjecture.Realization.Chow.Examples.SplitSpanRealization
-import HodgeConjecture.Realization.Chow.Examples.SplitSpanQuotient
-import HodgeConjecture.Realization.Chow.Examples.SplitRationalEquivalence
-import HodgeConjecture.Realization.Chow.Examples.SplitCycleMultiplicity
-import HodgeConjecture.Realization.Chow.Examples.SplitChowAction
-import HodgeConjecture.Realization.Chow.Examples.GeometricSplitPoints
-import HodgeConjecture.Realization.Chow.Examples.SplitGaloisResidual
-import HodgeConjecture.Realization.Chow.Examples.SplitChowDiagonal
-import HodgeConjecture.Realization.Chow.Examples.SplitChowShear
+module
+
+public import HodgeConjecture.Realization.Chow.GaloisProjector
+public import HodgeConjecture.Realization.Chow.GaloisHodgeTarget
+public import HodgeConjecture.Realization.Chow.IdempotentRepresentation
+public import HodgeConjecture.Realization.Chow.MarkedAugmentedRealization
+public import HodgeConjecture.Realization.Chow.MultiplicativeResidualRigidity
+public import HodgeConjecture.Realization.Chow.GaloisMarkedBlock
+public import HodgeConjecture.Realization.Chow.GaloisMarkedRealization
+public import HodgeConjecture.Realization.Chow.Model
+public import HodgeConjecture.Realization.Chow.Presentation
+public import HodgeConjecture.Realization.Chow.TateGraphProjector
+public import HodgeConjecture.Realization.Chow.TransferProjector
+public import HodgeConjecture.Realization.Chow.FiniteFlatTransfer
+public import HodgeConjecture.Realization.Chow.UpstairsGeneration
+public import HodgeConjecture.Realization.Chow.BoundaryCorrection
+public import HodgeConjecture.Realization.Chow.MarkedCycleMap
+public import HodgeConjecture.Realization.Chow.SupportedClass
+public import HodgeConjecture.Realization.Chow.Examples.SplitPoints
+public import HodgeConjecture.Realization.Chow.Examples.SplitSpanRealization
+public import HodgeConjecture.Realization.Chow.Examples.SplitSpanQuotient
+public import HodgeConjecture.Realization.Chow.Examples.SplitRationalEquivalence
+public import HodgeConjecture.Realization.Chow.Examples.SplitCycleMultiplicity
+public import HodgeConjecture.Realization.Chow.Examples.SplitChowAction
+public import HodgeConjecture.Realization.Chow.Examples.GeometricSplitPoints
+public import HodgeConjecture.Realization.Chow.Examples.SplitGaloisResidual
+public import HodgeConjecture.Realization.Chow.Examples.SplitChowDiagonal
+public import HodgeConjecture.Realization.Chow.Examples.SplitChowShear
+
+@[expose] public section
 
 /-!
 # Rational Chow-correspondence realization
@@ -85,6 +92,20 @@ algebraicity on the boundary. The latter can be a lower-codimension induction
 hypothesis. General Betti/Gysin maps and the open-locus construction remain
 separate geometric obligations.
 
+The marked cycle map assembles actual homogeneous cycles on an arbitrary
+ambient scheme using residual sheet coefficients, then takes their existing
+rational Chow class. Its generated class and exact image are computed, and
+the map commutes with actual open restriction and finite pushforward. The
+family of cycles is geometric input; selecting one for a prescribed Hodge
+class and constructing the general Betti/action comparisons remain open.
+
 The superseded commutative selector-generated specialization is also
 archived outside the library, not available through its former import path.
+
+Supported-class extraction expands a supplied cohomological component basis
+into actual homogeneous cycles on a closed scheme and pushes them into the
+ambient Chow group. Its comparison and vanishing criterion are proved from
+explicit cohomological exactness and fundamental-class comparisons. The
+geometric supported-cohomology basis and construction of a support for each
+Hodge class remain open; the extraction introduces no new object types.
 -/

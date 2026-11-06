@@ -1,5 +1,9 @@
-import Mathlib.Algebra.Algebra.Prod
-import Mathlib.RingTheory.Idempotents
+module
+
+public import Mathlib.Algebra.Algebra.Prod
+public import Mathlib.RingTheory.Idempotents
+
+@[expose] public section
 
 /-!
 # The universal algebra of one idempotent

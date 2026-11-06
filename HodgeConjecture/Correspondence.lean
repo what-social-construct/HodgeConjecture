@@ -1,118 +1,130 @@
-import HodgeConjecture.Correspondence.CollisionEtale
-import HodgeConjecture.Correspondence.EtaleClasses
-import HodgeConjecture.Correspondence.FiniteCoproduct
-import HodgeConjecture.Correspondence.FiniteEtaleModel
-import HodgeConjecture.Correspondence.Graph
-import HodgeConjecture.Correspondence.GraphSubscheme
-import HodgeConjecture.Correspondence.GraphCycles
-import HodgeConjecture.Correspondence.GraphComposition
-import HodgeConjecture.Correspondence.EtaleGraphIntersection
-import HodgeConjecture.Correspondence.GraphSlice
-import HodgeConjecture.Correspondence.GraphCycleComposition
-import HodgeConjecture.Correspondence.DeckBaseChange
-import HodgeConjecture.Correspondence.RelativeProductComparison
-import HodgeConjecture.Correspondence.GraphBaseComparison
-import HodgeConjecture.Correspondence.GraphCycleBaseComparison
-import HodgeConjecture.Cycles.IntegralMultiplicity
-import HodgeConjecture.Cycles.ClosedImmersionPushforward
-import HodgeConjecture.Cycles.FinitePushforward
-import HodgeConjecture.Cycles.GradedFinitePushforward
-import HodgeConjecture.Cycles.FiniteGrading
-import HodgeConjecture.Cycles.IsomorphismTransport
-import HodgeConjecture.Cycles.LocalOrder
-import HodgeConjecture.Cycles.LocalOrderLength
-import HodgeConjecture.Cycles.LocalOrderNorm
-import HodgeConjecture.Cycles.LocalOrderLocalization
-import HodgeConjecture.Cycles.LocalOrderNormFormula
-import HodgeConjecture.Cycles.LocalOrderTransport
-import HodgeConjecture.Cycles.FunctionFieldTransport
-import HodgeConjecture.Cycles.FunctionFieldMap
-import HodgeConjecture.Cycles.SchemeLocalOrder
-import HodgeConjecture.Cycles.Examples.LocalOrder
-import HodgeConjecture.Cycles.PointSupport
-import HodgeConjecture.Cycles.SupportCodimension
-import HodgeConjecture.Cycles.DivisorSupport
-import HodgeConjecture.Cycles.OpenSupport
-import HodgeConjecture.Cycles.OpenClosedBaseChange
-import HodgeConjecture.Cycles.HeightOneFiniteness
-import HodgeConjecture.Cycles.RationalFunctionPresentation
-import HodgeConjecture.Cycles.DivisorFiniteness
-import HodgeConjecture.Cycles.PrincipalDivisor
-import HodgeConjecture.Cycles.PrincipalDivisorTransport
-import HodgeConjecture.Cycles.DimensionFunction
-import HodgeConjecture.Cycles.DimensionFunctionRestriction
-import HodgeConjecture.Cycles.CycleDegree
-import HodgeConjecture.Cycles.OpenGrading
-import HodgeConjecture.Cycles.OpenRestrictionSurjectivity
-import HodgeConjecture.Cycles.PrincipalDivisorDegree
-import HodgeConjecture.Cycles.PrincipalDivisorImage
-import HodgeConjecture.Cycles.PrincipalDivisorRestriction
-import HodgeConjecture.Cycles.GradedPushforward
-import HodgeConjecture.Cycles.PrincipalRelations
-import HodgeConjecture.Cycles.PrincipalRelationRestriction
-import HodgeConjecture.Cycles.ChowPushforward
-import HodgeConjecture.Cycles.FinitePrincipalDivisor
-import HodgeConjecture.Cycles.FiniteChowPushforward
-import HodgeConjecture.Cycles.RationalFiniteChowPushforward
-import HodgeConjecture.Cycles.ChowOpenRestriction
-import HodgeConjecture.Cycles.ChowIsomorphism
-import HodgeConjecture.Cycles.SupportDimension
-import HodgeConjecture.Cycles.FiniteTypeDimension
-import HodgeConjecture.Cycles.FiniteTypeSchemeDimension
-import HodgeConjecture.Cycles.LowDimensionalDimensionFunction
-import HodgeConjecture.Cycles.Examples.DimensionFunction
-import HodgeConjecture.Cycles.TranscendenceDegreeDrop
-import HodgeConjecture.Cycles.IntegralDimension
-import HodgeConjecture.Cycles.NormalizationDimension
-import HodgeConjecture.Cycles.AffineDimension
-import HodgeConjecture.Cycles.AffineSupportDimension
-import HodgeConjecture.Cycles.PolynomialPrimeHeight
-import HodgeConjecture.Cycles.PolynomialMaximalHeight
-import HodgeConjecture.Cycles.PolynomialClosedPointDimension
-import HodgeConjecture.CommutativeAlgebra.IntegralIdealPolynomial
-import HodgeConjecture.CommutativeAlgebra.MonicPrimeCoefficients
-import HodgeConjecture.CommutativeAlgebra.NormalGoingDown
-import HodgeConjecture.Cycles.NormalizationLocalDimension
-import HodgeConjecture.Cycles.AffineClosedPointDimension
-import HodgeConjecture.CommutativeAlgebra.GenericFiberAlgebra
-import HodgeConjecture.CommutativeAlgebra.ResidueLocalization
-import HodgeConjecture.Cycles.ResidueNormalizationLift
-import HodgeConjecture.Cycles.ResidueNormalizationLocalization
-import HodgeConjecture.Cycles.LocalizationTranscendenceDegree
-import HodgeConjecture.Cycles.AffinePrimeDimension
-import HodgeConjecture.CommutativeAlgebra.PrimeQuotientCover
-import HodgeConjecture.Cycles.ConsecutivePrimeDimension
-import HodgeConjecture.Cycles.AffineDimensionFunction
-import HodgeConjecture.Cycles.AffineSchemeDimensionFunction
-import HodgeConjecture.Cycles.StructuralResidueField
-import HodgeConjecture.Cycles.AffineResidueField
-import HodgeConjecture.Cycles.AffineResidueFieldDimension
-import HodgeConjecture.Cycles.AffineSchemeResidueDegree
-import HodgeConjecture.Cycles.ChartResidueDegree
-import HodgeConjecture.Cycles.FieldDimensionFunction
-import HodgeConjecture.Cycles.FieldSupportDimension
-import HodgeConjecture.Cycles.IntegralCodimension
-import HodgeConjecture.Cycles.PrincipalRelationCodimension
-import HodgeConjecture.Cycles.RationalChow
-import HodgeConjecture.Cycles.CoefficientRestriction
-import HodgeConjecture.Cycles.RationalChowOpenRestriction
-import HodgeConjecture.Cycles.RationalChowIsomorphism
-import HodgeConjecture.Correspondence.TransposeAlgebra
-import HodgeConjecture.Correspondence.ProjectorDefect
-import HodgeConjecture.Correspondence.ProjectorLift
-import HodgeConjecture.Correspondence.Examples.SplitPoints
-import HodgeConjecture.Correspondence.Examples.SplitPointMaps
-import HodgeConjecture.Correspondence.Examples.SplitIntegralSubschemes
-import HodgeConjecture.Correspondence.Examples.SplitCycleGeometry
-import HodgeConjecture.Correspondence.Examples.SplitProductGeometry
-import HodgeConjecture.Correspondence.Examples.SplitPointMultiplicity
-import HodgeConjecture.Correspondence.Examples.SplitSpanGeometry
-import HodgeConjecture.Correspondence.Examples.SplitSpanCoproduct
-import HodgeConjecture.Correspondence.Examples.SplitGaloisSheets
-import HodgeConjecture.Correspondence.FiniteGroupProjector
-import HodgeConjecture.Correspondence.GroupAlgebraProjector
-import HodgeConjecture.Correspondence.HeckeProjector
-import HodgeConjecture.Correspondence.GaloisCollision
+module
+
+public import HodgeConjecture.Correspondence.CollisionEtale
+public import HodgeConjecture.Correspondence.EtaleClasses
+public import HodgeConjecture.Correspondence.FiniteCoproduct
+public import HodgeConjecture.Correspondence.FiniteEtaleModel
+public import HodgeConjecture.Correspondence.Graph
+public import HodgeConjecture.Correspondence.GraphSubscheme
+public import HodgeConjecture.Correspondence.GraphCycles
+public import HodgeConjecture.Correspondence.GraphComposition
+public import HodgeConjecture.Correspondence.EtaleGraphIntersection
+public import HodgeConjecture.Correspondence.GraphSlice
+public import HodgeConjecture.Correspondence.GraphCycleComposition
+public import HodgeConjecture.Correspondence.DeckBaseChange
+public import HodgeConjecture.Correspondence.RelativeProductComparison
+public import HodgeConjecture.Correspondence.GraphBaseComparison
+public import HodgeConjecture.Correspondence.GraphCycleBaseComparison
+public import HodgeConjecture.Correspondence.GraphChow
+public import HodgeConjecture.Correspondence.GraphChowAction
+public import HodgeConjecture.Correspondence.GraphChowAlgebra
+public import HodgeConjecture.Correspondence.GraphChowBaseComparison
+public import HodgeConjecture.Cycles.IntegralMultiplicity
+public import HodgeConjecture.Cycles.ClosedImmersionPushforward
+public import HodgeConjecture.Cycles.FinitePushforward
+public import HodgeConjecture.Cycles.GradedFinitePushforward
+public import HodgeConjecture.Cycles.FiniteFiberDegree
+public import HodgeConjecture.Cycles.FiniteFlatChowDegree
+public import HodgeConjecture.Cycles.FiniteGrading
+public import HodgeConjecture.Cycles.IsomorphismTransport
+public import HodgeConjecture.Cycles.LocalOrder
+public import HodgeConjecture.Cycles.LocalOrderLength
+public import HodgeConjecture.Cycles.LocalOrderNorm
+public import HodgeConjecture.Cycles.LocalOrderLocalization
+public import HodgeConjecture.Cycles.LocalOrderNormFormula
+public import HodgeConjecture.Cycles.LocalOrderTransport
+public import HodgeConjecture.Cycles.FunctionFieldTransport
+public import HodgeConjecture.Cycles.FunctionFieldMap
+public import HodgeConjecture.Cycles.SchemeLocalOrder
+public import HodgeConjecture.Cycles.Examples.LocalOrder
+public import HodgeConjecture.Cycles.PointSupport
+public import HodgeConjecture.Cycles.SupportCodimension
+public import HodgeConjecture.Cycles.DivisorSupport
+public import HodgeConjecture.Cycles.OpenSupport
+public import HodgeConjecture.Cycles.OpenClosedBaseChange
+public import HodgeConjecture.Cycles.HeightOneFiniteness
+public import HodgeConjecture.Cycles.RationalFunctionPresentation
+public import HodgeConjecture.Cycles.DivisorFiniteness
+public import HodgeConjecture.Cycles.PrincipalDivisor
+public import HodgeConjecture.Cycles.PrincipalDivisorTransport
+public import HodgeConjecture.Cycles.DimensionFunction
+public import HodgeConjecture.Cycles.DimensionFunctionRestriction
+public import HodgeConjecture.Cycles.CycleDegree
+public import HodgeConjecture.Cycles.OpenGrading
+public import HodgeConjecture.Cycles.OpenRestrictionSurjectivity
+public import HodgeConjecture.Cycles.PrincipalDivisorDegree
+public import HodgeConjecture.Cycles.PrincipalDivisorImage
+public import HodgeConjecture.Cycles.PrincipalDivisorRestriction
+public import HodgeConjecture.Cycles.GradedPushforward
+public import HodgeConjecture.Cycles.PrincipalRelations
+public import HodgeConjecture.Cycles.PrincipalRelationRestriction
+public import HodgeConjecture.Cycles.ChowPushforward
+public import HodgeConjecture.Cycles.FinitePrincipalDivisor
+public import HodgeConjecture.Cycles.FiniteChowPushforward
+public import HodgeConjecture.Cycles.RationalFiniteChowPushforward
+public import HodgeConjecture.Cycles.FiniteChowPushforwardComposition
+public import HodgeConjecture.Cycles.ChowOpenRestriction
+public import HodgeConjecture.Cycles.ChowIsomorphism
+public import HodgeConjecture.Cycles.SupportDimension
+public import HodgeConjecture.Cycles.FiniteTypeDimension
+public import HodgeConjecture.Cycles.FiniteTypeSchemeDimension
+public import HodgeConjecture.Cycles.LowDimensionalDimensionFunction
+public import HodgeConjecture.Cycles.Examples.DimensionFunction
+public import HodgeConjecture.Cycles.TranscendenceDegreeDrop
+public import HodgeConjecture.Cycles.IntegralDimension
+public import HodgeConjecture.Cycles.NormalizationDimension
+public import HodgeConjecture.Cycles.AffineDimension
+public import HodgeConjecture.Cycles.AffineSupportDimension
+public import HodgeConjecture.Cycles.PolynomialPrimeHeight
+public import HodgeConjecture.Cycles.PolynomialMaximalHeight
+public import HodgeConjecture.Cycles.PolynomialClosedPointDimension
+public import HodgeConjecture.CommutativeAlgebra.IntegralIdealPolynomial
+public import HodgeConjecture.CommutativeAlgebra.MonicPrimeCoefficients
+public import HodgeConjecture.CommutativeAlgebra.NormalGoingDown
+public import HodgeConjecture.Cycles.NormalizationLocalDimension
+public import HodgeConjecture.Cycles.AffineClosedPointDimension
+public import HodgeConjecture.CommutativeAlgebra.GenericFiberAlgebra
+public import HodgeConjecture.CommutativeAlgebra.ResidueLocalization
+public import HodgeConjecture.Cycles.ResidueNormalizationLift
+public import HodgeConjecture.Cycles.ResidueNormalizationLocalization
+public import HodgeConjecture.Cycles.LocalizationTranscendenceDegree
+public import HodgeConjecture.Cycles.AffinePrimeDimension
+public import HodgeConjecture.CommutativeAlgebra.PrimeQuotientCover
+public import HodgeConjecture.Cycles.ConsecutivePrimeDimension
+public import HodgeConjecture.Cycles.AffineDimensionFunction
+public import HodgeConjecture.Cycles.AffineSchemeDimensionFunction
+public import HodgeConjecture.Cycles.StructuralResidueField
+public import HodgeConjecture.Cycles.AffineResidueField
+public import HodgeConjecture.Cycles.AffineResidueFieldDimension
+public import HodgeConjecture.Cycles.AffineSchemeResidueDegree
+public import HodgeConjecture.Cycles.ChartResidueDegree
+public import HodgeConjecture.Cycles.FieldDimensionFunction
+public import HodgeConjecture.Cycles.FieldSupportDimension
+public import HodgeConjecture.Cycles.IntegralCodimension
+public import HodgeConjecture.Cycles.PrincipalRelationCodimension
+public import HodgeConjecture.Cycles.RationalChow
+public import HodgeConjecture.Cycles.CoefficientRestriction
+public import HodgeConjecture.Cycles.RationalChowOpenRestriction
+public import HodgeConjecture.Cycles.ChowLocalization
+public import HodgeConjecture.Cycles.RationalChowIsomorphism
+public import HodgeConjecture.Correspondence.TransposeAlgebra
+public import HodgeConjecture.Correspondence.ProjectorDefect
+public import HodgeConjecture.Correspondence.ProjectorLift
+public import HodgeConjecture.Correspondence.Examples.SplitPoints
+public import HodgeConjecture.Correspondence.Examples.SplitPointMaps
+public import HodgeConjecture.Correspondence.Examples.SplitIntegralSubschemes
+public import HodgeConjecture.Correspondence.Examples.SplitCycleGeometry
+public import HodgeConjecture.Correspondence.Examples.SplitProductGeometry
+public import HodgeConjecture.Correspondence.Examples.SplitPointMultiplicity
+public import HodgeConjecture.Correspondence.Examples.SplitSpanGeometry
+public import HodgeConjecture.Correspondence.Examples.SplitSpanCoproduct
+public import HodgeConjecture.Correspondence.Examples.SplitGaloisSheets
+public import HodgeConjecture.Correspondence.FiniteGroupProjector
+public import HodgeConjecture.Correspondence.GroupAlgebraProjector
+public import HodgeConjecture.Correspondence.HeckeProjector
+public import HodgeConjecture.Correspondence.GaloisCollision
+
+@[expose] public section
 
 /-!
 # Scheme correspondences and algebraic projector lifting
@@ -237,12 +249,15 @@ Chow/cohomological realization:
     preserving the original structural transcendence degrees and canonical
     field-induced grading used by that same cycle pushforward.
 
-The free span algebra is not identified with a Chow ring. General proper
-cycle extraction, flat/Gysin operations and their rational-equivalence
-descent, and compatibility with refined intersection remain geometric
-inputs to a `FiniteEtaleAlgebraModel` (or to another explicitly chosen
-admissible system). The constructed closed-pushforward quotient is additive;
-it does not supply Chow convolution or its target realization.
+The free span algebra is not identified with a Chow ring. Actual deck graph
+classes now generate a rational convolution algebra, quotienting the group
+algebra by its exact Chow kernel. Genuine pair-isomorphism pullbacks prove
+that kernel two-sided, and its realization into the actual Chow group is
+injective. This supplies graph-generated convolution, not an intersection
+product on the entire ambient Chow group. General proper cycle extraction,
+flat/Gysin operations and compatibility with refined intersection remain
+geometric inputs to a `FiniteEtaleAlgebraModel` (or another explicitly chosen
+admissible system). The prescribed Betti/Hodge action remains separate.
 The affine dimension-function construction is now proved in all dimensions.
 Structural residue-field compatibility and open-immersion degree invariance
 are also proved, as are the structural residue-degree values on arbitrary
@@ -255,7 +270,7 @@ dimension, without a global dimension bound. On integral schemes, actual
 chain codimension now gives the degree d-n convention in the existing
 cycle module. Principal-relation data now have the matching codimension
 indexing, and generic-degree relations vanish under the existing quotient
-hypotheses. Rational coefficient extension of the general homogeneous
-quotient, comparison with the target rational Chow groups, and extension
-to pure-dimensional or componentwise targets remain separate steps.
+hypotheses. Rational coefficient extension and its actual closed/open
+quotient maps are proved. Extension to pure-dimensional or componentwise
+targets and general cycle-class realization remain separate steps.
 -/

@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Normalization.FixedRingLocalization
-import HodgeConjecture.Boundary.Normalization.LocalizationBridge
+module
+
+public import HodgeConjecture.Boundary.Normalization.FixedRingLocalization
+public import HodgeConjecture.Boundary.Normalization.LocalizationBridge
+
+@[expose] public section
 
 /-!
 # Prime-inertia descent in a normalization diagram
@@ -43,7 +47,7 @@ theorem normalizationFixedRing_isUnramifiedAt_of_primeInertia_le
     [Module.Finite B
       (NormalClosureNormalizationRing (B := B) (N := N))]
     (Q : Ideal (NormalClosureNormalizationRing (B := B) (N := N)))
-    [Q.IsPrime] (hQ : Q.primeHeight = 1)
+    [Q.IsPrime] (hQ : Q.height = 1)
     (H : Subgroup (N ≃ₐ[K] N))
     (hIH : normalizationPrimeInertiaGroup
       (B := B) (K := K) Q ≤ H)

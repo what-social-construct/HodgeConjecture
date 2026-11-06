@@ -1,4 +1,8 @@
-import HodgeConjecture.Cycles.FieldDimensionFunction
+module
+
+public import HodgeConjecture.Cycles.FieldDimensionFunction
+
+@[expose] public section
 
 /-!
 # Global dimension values and actual closed carriers

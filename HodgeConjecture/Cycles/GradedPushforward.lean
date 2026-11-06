@@ -1,4 +1,8 @@
-import HodgeConjecture.Cycles.PrincipalDivisorDegree
+module
+
+public import HodgeConjecture.Cycles.PrincipalDivisorDegree
+
+@[expose] public section
 
 /-!
 # Existing closed pushforward on homogeneous cycles

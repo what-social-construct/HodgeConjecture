@@ -1,7 +1,11 @@
-import HodgeConjecture.Collision.FiberProduct
-import HodgeConjecture.Collision.UniversalProperty
-import Mathlib.Algebra.Algebra.Tower
-import Mathlib.RingTheory.TensorProduct.Basic
+module
+
+public import HodgeConjecture.Collision.FiberProduct
+public import HodgeConjecture.Collision.UniversalProperty
+public import Mathlib.Algebra.Algebra.Tower
+public import Mathlib.RingTheory.TensorProduct.Basic
+
+@[expose] public section
 
 /-!
 # Polynomial collision quotient as a self-fiber product

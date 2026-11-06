@@ -1,8 +1,12 @@
-import HodgeConjecture.Collision
-import HodgeConjecture.Correspondence
-import HodgeConjecture.Boundary
-import HodgeConjecture.Realization
-import HodgeConjecture.Inputs
+module
+
+public import HodgeConjecture.Collision
+public import HodgeConjecture.Correspondence
+public import HodgeConjecture.Boundary
+public import HodgeConjecture.Realization
+public import HodgeConjecture.Inputs
+
+@[expose] public section
 
 /-!
 # Collision decompositions and correspondence projector lifting
@@ -21,9 +25,10 @@ composite proof of the Hodge conjecture:
    target's Tate-block graph-projector reformulation, under explicit
    construction, detection, comparison, and coverage inputs.
 
-The second stage deliberately separates the formal span algebra from its
-eventual Chow realization.  Thus a clopen component selector is not silently
-treated as a convolution projector.  The marked-sheet calculation identifies
+The second stage separates the formal span algebra from actual Chow classes.
+Deck graphs now generate a convolution algebra with injective realization
+into the existing rational Chow group; this does not construct an ambient
+intersection product or a prescribed cohomological action. The marked-sheet calculation identifies
 selector multiplication with a graph operator only after an explicit change
 of linear coordinates.  A conditional endpoint keeps the generic sheet
 algebra separate from a noncommutative compactified correspondence algebra;

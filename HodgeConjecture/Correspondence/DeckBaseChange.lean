@@ -1,4 +1,8 @@
-import HodgeConjecture.Correspondence.Graph
+module
+
+public import HodgeConjecture.Correspondence.Graph
+
+@[expose] public section
 
 /-!
 # Forgetting a deck transformation's base
@@ -44,7 +48,7 @@ theorem forgetDeckBase_mul_toSchemeHom (σ τ : DeckTransformation p) :
 /-- Forgetting the base does not identify distinct deck transformations. -/
 theorem forgetDeckBase_injective : Function.Injective (forgetDeckBase p b) := by
   intro σ τ h
-  apply Iso.ext
+  apply CategoryTheory.Aut.hom_ext
   apply Over.OverMorphism.ext
   exact congrArg (fun γ : DeckTransformation (p ≫ b) ↦ γ.toSchemeHom) h
 

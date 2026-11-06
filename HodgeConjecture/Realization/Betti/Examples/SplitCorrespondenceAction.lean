@@ -1,5 +1,9 @@
-import HodgeConjecture.Realization.Betti.Examples.SplitCycleClass
-import HodgeConjecture.Correspondence.ProjectorLift
+module
+
+public import HodgeConjecture.Realization.Betti.Examples.SplitCycleClass
+public import HodgeConjecture.Correspondence.ProjectorLift
+
+@[expose] public section
 
 /-!
 # Geometric correspondence action on finite split Betti cohomology

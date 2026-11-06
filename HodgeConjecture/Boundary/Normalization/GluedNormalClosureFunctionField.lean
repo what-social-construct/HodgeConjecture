@@ -1,4 +1,8 @@
-import HodgeConjecture.Boundary.Normalization.GluedNormalizationFunctionField
+module
+
+public import HodgeConjecture.Boundary.Normalization.GluedNormalizationFunctionField
+
+@[expose] public section
 
 /-!
 # The original marked refinement on function fields

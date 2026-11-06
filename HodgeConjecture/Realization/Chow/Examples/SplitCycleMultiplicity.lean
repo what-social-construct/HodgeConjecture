@@ -1,6 +1,10 @@
-import HodgeConjecture.Realization.Chow.Examples.SplitCycleOperations
-import HodgeConjecture.Correspondence.Examples.SplitProductGeometry
-import HodgeConjecture.Correspondence.Examples.SplitPointMultiplicity
+module
+
+public import HodgeConjecture.Realization.Chow.Examples.SplitCycleOperations
+public import HodgeConjecture.Correspondence.Examples.SplitProductGeometry
+public import HodgeConjecture.Correspondence.Examples.SplitPointMultiplicity
+
+@[expose] public section
 
 /-!
 # Geometric coefficients of split cycle operations

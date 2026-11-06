@@ -1,9 +1,13 @@
-import HodgeConjecture.Boundary.Normalization.SectionLocalization
-import Mathlib.RingTheory.Finiteness.Ideal
-import Mathlib.RingTheory.Ideal.Height
-import Mathlib.RingTheory.KrullDimension.Basic
-import Mathlib.RingTheory.Localization.Finiteness
-import Mathlib.RingTheory.Localization.Ideal
+module
+
+public import HodgeConjecture.Boundary.Normalization.SectionLocalization
+public import Mathlib.RingTheory.Finiteness.Ideal
+public import Mathlib.RingTheory.Ideal.Height
+public import Mathlib.RingTheory.KrullDimension.Basic
+public import Mathlib.RingTheory.Localization.Finiteness
+public import Mathlib.RingTheory.Localization.Ideal
+
+@[expose] public section
 
 /-!
 # Sections with a pole along a removed divisor
@@ -30,8 +34,8 @@ private theorem exists_denominator_mul_mem_of_map_le
     (hIJ : I.map (algebraMap T S) ≤ J.map (algebraMap T S)) :
     ∃ t ∈ M, ∀ x ∈ I, t * x ∈ J := by
   revert hIJ
-  refine Submodule.fg_induction T T
-    (fun K : Ideal T =>
+  refine Submodule.fg_induction
+    (motive := fun (K : Ideal T) _ =>
       K.map (algebraMap T S) ≤ J.map (algebraMap T S) →
         ∃ t ∈ M, ∀ x ∈ K, t * x ∈ J) ?_ ?_ I hI
   · intro x hMap
@@ -43,7 +47,7 @@ private theorem exists_denominator_mul_mem_of_map_le
     intro y hy
     obtain ⟨a, rfl⟩ := Submodule.mem_span_singleton.mp hy
     simpa only [smul_eq_mul, mul_left_comm t a x] using J.mul_mem_left a htx
-  · intro K L hK hL hMap
+  · intro K L _ _ hK hL hMap
     obtain ⟨t, ht, htx⟩ := hK ((Ideal.map_mono le_sup_left).trans hMap)
     obtain ⟨u, hu, hux⟩ := hL ((Ideal.map_mono le_sup_right).trans hMap)
     refine ⟨t * u, M.mul_mem ht hu, ?_⟩
@@ -62,14 +66,14 @@ variable {T : Type*} [CommRing T] [IsDomain T] [IsNoetherianRing T]
 at a height-one prime containing `J`; its clearing multiplier avoids that prime. -/
 theorem exists_heightOne_boundary_denominator_of_ne_zero
     (J : Ideal T) (p : PrimeSpectrum T)
-    (hp : p.asIdeal.primeHeight = 1) (hJp : J ≤ p.asIdeal)
+    (hp : p.asIdeal.height = 1) (hJp : J ≤ p.asIdeal)
     (f : T) (hf0 : f ≠ 0) :
     ∃ (t : T) (n : ℕ), t ∉ p.asIdeal ∧
       ∀ x ∈ J ^ n, t * x ∈ Ideal.span {f} := by
   let A := Localization.AtPrime p.asIdeal
   have hdim : ringKrullDim A ≤ (1 : WithBot ℕ∞) := by
     rw [IsLocalization.AtPrime.ringKrullDim_eq_height p.asIdeal A,
-      Ideal.height_eq_primeHeight, hp]
+      hp]
     exact_mod_cast le_rfl
   letI : Ring.KrullDimLE 1 A := Ring.krullDimLE_iff.mpr hdim
   have hfA : algebraMap T A f ≠ 0 := by
@@ -106,7 +110,7 @@ theorem exists_heightOne_boundary_denominator_of_ne_zero
 whose numerator is outside that prime. -/
 theorem exists_heightOne_boundary_denominator
     (J : Ideal T) (hJ : J ≠ ⊥) (p : PrimeSpectrum T)
-    (hp : p.asIdeal.primeHeight = 1) (hJp : J ≤ p.asIdeal) :
+    (hp : p.asIdeal.height = 1) (hJp : J ≤ p.asIdeal) :
     ∃ (f t : T) (n : ℕ), f ∈ J ∧ f ≠ 0 ∧ t ∉ p.asIdeal ∧
       ∀ x ∈ J ^ n, t * x ∈ Ideal.span {f} := by
   obtain ⟨f, hf, hf0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hJ
@@ -130,7 +134,7 @@ theorem affineSectionSubalgebra_ne_bot_of_heightOne
     (U : (Spec T).Opens) [Nonempty U]
     (J : Ideal T) (hJ : J ≠ ⊥)
     (hU : ∀ x : U, ¬ J ≤ x.1.asIdeal)
-    (p : PrimeSpectrum T) (hp : p.asIdeal.primeHeight = 1)
+    (p : PrimeSpectrum T) (hp : p.asIdeal.height = 1)
     (hJp : J ≤ p.asIdeal) :
     affineSectionSubalgebra (N := N) U ≠ ⊥ := by
   obtain ⟨f, t, n, hf, hf0, htp, hclear⟩ :=

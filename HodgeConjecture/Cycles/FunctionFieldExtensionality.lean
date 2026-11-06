@@ -1,6 +1,10 @@
-import HodgeConjecture.Cycles.FunctionFieldMap
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.AlgebraicGeometry.Stalk
+module
+
+public import HodgeConjecture.Cycles.FunctionFieldMap
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.AlgebraicGeometry.Stalk
+
+@[expose] public section
 
 /-!
 # Extensionality from actual function-field pullbacks
@@ -27,8 +31,8 @@ theorem functionFieldMapOfDominant_fromSpecStalk (f : X ⟶ Y) [IsDominant f] :
     Spec.map (functionFieldMapOfDominant f) ≫ Y.fromSpecStalk (genericPoint Y) =
       X.fromSpecStalk (genericPoint X) ≫ f := by
   simp only [functionFieldMapOfDominant, TopCat.Presheaf.stalkCongr_hom,
-    Spec.map_comp, Category.assoc, Scheme.Spec_map_stalkSpecializes_fromSpecStalk,
-    Scheme.Spec_map_stalkMap_fromSpecStalk]
+    Spec.map_comp, Category.assoc, Scheme.SpecMap_stalkSpecializes_fromSpecStalk,
+    Scheme.SpecMap_stalkMap_fromSpecStalk]
 
 private theorem isDominant_fromSpecGenericPoint :
     IsDominant (X.fromSpecStalk (genericPoint X)) := by

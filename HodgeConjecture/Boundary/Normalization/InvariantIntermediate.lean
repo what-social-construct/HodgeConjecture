@@ -1,4 +1,8 @@
-import HodgeConjecture.Boundary.Normalization.DeckAction
+module
+
+public import HodgeConjecture.Boundary.Normalization.DeckAction
+
+@[expose] public section
 
 /-!
 # Intermediate normalizations as fixed rings

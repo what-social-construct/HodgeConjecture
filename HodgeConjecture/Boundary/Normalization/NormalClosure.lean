@@ -1,8 +1,12 @@
-import Mathlib.Algebra.Group.Subgroup.Pointwise
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.FieldTheory.Normal.Closure
-import Mathlib.FieldTheory.Perfect
-import Mathlib.FieldTheory.SeparableClosure
+module
+
+public import Mathlib.Algebra.Group.Subgroup.Pointwise
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.FieldTheory.Normal.Closure
+public import Mathlib.FieldTheory.Perfect
+public import Mathlib.FieldTheory.SeparableClosure
+
+@[expose] public section
 
 /-!
 # Marked normal closures
@@ -252,7 +256,7 @@ theorem extensionTrivial_of_intermediateExtensionTrivial
   have hz : z ∈ (⊥ : IntermediateField K N) := by
     rw [hbot]
     trivial
-  simpa only [IntermediateField.mem_bot] using hz
+  simpa only [IntermediateField.mem_bot, Set.mem_range] using hz
 
 /--
 If the supplied normal closure is already `K`, then the marked

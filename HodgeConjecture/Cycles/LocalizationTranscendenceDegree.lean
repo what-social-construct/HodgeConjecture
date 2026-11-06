@@ -1,6 +1,10 @@
-import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
-import Mathlib.RingTheory.Localization.Basic
-import Mathlib.SetTheory.Cardinal.ToNat
+module
+
+public import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
+public import Mathlib.RingTheory.Localization.Basic
+public import Mathlib.SetTheory.Cardinal.ToNat
+
+@[expose] public section
 
 /-!
 # Transcendence degree of an actual localization

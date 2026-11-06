@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Sheets.DecompositionSheets
-import Mathlib.Algebra.Pointwise.Stabilizer
+module
+
+public import HodgeConjecture.Boundary.Sheets.DecompositionSheets
+public import Mathlib.Algebra.Pointwise.Stabilizer
+
+@[expose] public section
 
 /-!
 # Inertia-saturated sheet selections

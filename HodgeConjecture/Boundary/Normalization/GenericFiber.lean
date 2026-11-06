@@ -1,6 +1,10 @@
-import HodgeConjecture.Boundary.Normalization.FiniteFunctionField
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Mathlib.AlgebraicGeometry.Stalk
+module
+
+public import HodgeConjecture.Boundary.Normalization.FiniteFunctionField
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.AlgebraicGeometry.Stalk
+
+@[expose] public section
 
 /-!
 # The actual generic fiber of a finite dominant morphism
@@ -38,7 +42,7 @@ private theorem affinePreimage_isPullback {X Y : Scheme.{u}}
     IsPullback (Spec.map (p.app U)) (hU.preimage p).fromSpec hU.fromSpec p := by
   have hp : Spec.map (p.app U) ≫ hU.fromSpec = (hU.preimage p).fromSpec ≫ p := by
     simpa only [Scheme.Hom.appLE_eq_app] using
-      IsAffineOpen.Spec_map_appLE_fromSpec p hU (hU.preimage p) le_rfl
+      IsAffineOpen.SpecMap_appLE_fromSpec p hU (hU.preimage p) le_rfl
   refine (isPullback_morphismRestrict p U).of_iso (hU.preimage p).isoSpec
     hU.isoSpec (Iso.refl Y) (Iso.refl X) ?_ ?_ ?_ ?_
   · apply (cancel_mono hU.fromSpec).mp
@@ -77,7 +81,7 @@ theorem functionFieldMapOfDominant_isPullback :
       (Spec.map (Y.germToFunctionField (p ⁻¹ᵁ U)))
       (Spec.map (functionFieldMapOfDominant p))
       (Spec.map (p.app U)) (Spec.map (X.germToFunctionField U)) :=
-    isPullback_Spec_map_isPushout _ _ _ _
+    isPullback_SpecMap_of_isPushout _ _ _ _
       (CommRingCat.isPushout_of_isPushout Γ(X, U) Γ(Y, p ⁻¹ᵁ U)
         X.functionField Y.functionField)
   have h := hfields.flip.paste_vert (affinePreimage_isPullback p U hU)

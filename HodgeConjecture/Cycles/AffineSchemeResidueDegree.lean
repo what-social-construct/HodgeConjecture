@@ -1,5 +1,9 @@
-import HodgeConjecture.Cycles.AffineSchemeDimensionFunction
-import HodgeConjecture.Cycles.AffineResidueFieldDimension
+module
+
+public import HodgeConjecture.Cycles.AffineSchemeDimensionFunction
+public import HodgeConjecture.Cycles.AffineResidueFieldDimension
+
+@[expose] public section
 
 /-!
 # Structural residue degrees on actual affine schemes
@@ -48,7 +52,7 @@ private theorem affine_residueDegree_and_pointHeight
     simp only [q, ← Category.assoc, Iso.hom_inv_id, Category.id_comp]
   have hdeg := residueFieldBase_trdeg_eq_of_isOpenImmersion k
     (Spec.map φ) X.isoSpec.hom x
-  simp only [hcomp] at hdeg
+  rw [hcomp] at hdeg
   constructor
   · rw [← hdeg]
     exact spec_schemeResidueField_trdeg_lt_aleph0 k Γ(X, ⊤) (X.isoSpec.hom.base x)

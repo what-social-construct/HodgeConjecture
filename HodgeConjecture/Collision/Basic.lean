@@ -1,4 +1,8 @@
-import HodgeConjecture.Collision.Diagonal
+module
+
+public import HodgeConjecture.Collision.Diagonal
+
+@[expose] public section
 
 /-!
 # Polynomial collision and obstruction ideals

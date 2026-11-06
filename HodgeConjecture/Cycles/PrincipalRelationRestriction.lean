@@ -1,6 +1,10 @@
-import HodgeConjecture.Cycles.PrincipalDivisorRestriction
-import HodgeConjecture.Cycles.PrincipalRelations
-import HodgeConjecture.Cycles.OpenGrading
+module
+
+public import HodgeConjecture.Cycles.PrincipalDivisorRestriction
+public import HodgeConjecture.Cycles.PrincipalRelations
+public import HodgeConjecture.Cycles.OpenGrading
+
+@[expose] public section
 
 /-!
 # Actual open restriction of principal relations

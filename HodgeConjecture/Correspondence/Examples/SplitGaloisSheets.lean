@@ -1,7 +1,11 @@
-import HodgeConjecture.Boundary.Sheets.GaloisSheets
-import HodgeConjecture.Correspondence.Examples.SplitProductGeometry
-import HodgeConjecture.Correspondence.GaloisCollision
-import Mathlib.Data.Complex.Basic
+module
+
+public import HodgeConjecture.Boundary.Sheets.GaloisSheets
+public import HodgeConjecture.Correspondence.Examples.SplitProductGeometry
+public import HodgeConjecture.Correspondence.GaloisCollision
+public import Mathlib.Data.Complex.Basic
+
+@[expose] public section
 
 /-!
 # Actual split torsors and homogeneous sheets
@@ -29,7 +33,7 @@ namespace SplitGaloisSheets
 
 variable (G : Type) [Group G]
 
-private def translationEquiv (S : Type) [MulAction G S] (a : G) : S ≃ S where
+def translationEquiv (S : Type) [MulAction G S] (a : G) : S ≃ S where
   toFun s := a • s
   invFun s := a⁻¹ • s
   left_inv s := by simp [smul_smul]
@@ -38,16 +42,20 @@ private def translationEquiv (S : Type) [MulAction G S] (a : G) : S ≃ S where
 /-- Any action on split components gives actual scheme automorphisms over the field. -/
 def deckAction (S : Type) [MulAction G S] :
     SchemeCorrespondence.FiniteDeckAction (toBase ℂ S) G where
-  toFun a := Over.isoMk (isoOfEquiv ℂ (translationEquiv G S a)) (by
+  toFun a := CategoryTheory.Aut.of <| Over.isoMk (isoOfEquiv ℂ (translationEquiv G S a)) (by
     exact mapOfFunction_toBase ℂ _)
   map_one' := by
-    apply CategoryTheory.Aut.ext
+    apply CategoryTheory.Aut.hom_ext
     apply Over.OverMorphism.ext
     change mapOfFunction ℂ (fun s : S ↦ (1 : G) • s) = 𝟙 _
-    simpa only [one_smul] using mapOfFunction_id ℂ (I := S)
+    have he : (fun s : S ↦ (1 : G) • s) = id := by
+      funext s
+      exact one_smul G s
+    rw [he]
+    exact mapOfFunction_id ℂ (I := S)
   map_mul' := by
     intro a b
-    apply CategoryTheory.Aut.ext
+    apply CategoryTheory.Aut.hom_ext
     apply Over.OverMorphism.ext
     change mapOfFunction ℂ (fun s : S ↦ (a * b) • s) =
       mapOfFunction ℂ (fun s : S ↦ b • s) ≫
@@ -96,7 +104,7 @@ instance quotientMap_isFinite (D : Subgroup G) : IsFinite (quotientMap G D) := b
   unfold quotientMap
   infer_instance
 
-instance quotientMap_isEtale (D : Subgroup G) : IsEtale (quotientMap G D) := by
+instance quotientMap_isEtale (D : Subgroup G) : Etale (quotientMap G D) := by
   unfold quotientMap
   infer_instance
 
@@ -132,7 +140,7 @@ theorem regularAction_existsUnique (x y : scheme ℂ G) :
     change labelEquivScheme ℂ G (a * g) = labelEquivScheme ℂ G h at ha
     exact eq_mul_inv_iff_mul_eq.mpr ((labelEquivScheme ℂ G).injective ha)
 
-private def curryRingEquiv : ((G × G) → ℂ) ≃+* (G → G → ℂ) where
+def curryRingEquiv : ((G × G) → ℂ) ≃+* (G → G → ℂ) where
   toFun f a x := f (a, x)
   invFun f p := f p.1 p.2
   left_inv _ := rfl

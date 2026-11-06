@@ -1,6 +1,10 @@
-import HodgeConjecture.Boundary.Normalization.GluedNormalClosureRefinement
-import HodgeConjecture.Boundary.Normalization.FiniteEtaleGluedNormalClosure
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
+module
+
+public import HodgeConjecture.Boundary.Normalization.GluedNormalClosureRefinement
+public import HodgeConjecture.Boundary.Normalization.FiniteEtaleGluedNormalClosure
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+
+@[expose] public section
 
 /-!
 # Finite étaleness of the original glued marked refinement
@@ -34,7 +38,7 @@ theorem isFinite_of_comp_of_isSeparated {Z Y X : Scheme.{u}}
   infer_instance
 
 variable {X Y : Scheme.{u}} [IsIntegral X] [IsIntegral Y]
-variable (p : Y ⟶ X) [IsDominant p] [IsFinite p] [IsEtale p]
+variable (p : Y ⟶ X) [IsDominant p] [IsFinite p] [Etale p]
 
 /-- The original glued marked refinement is finite étale under the same
 explicit normal-stalk inputs as the global normal-closure structural map. -/
@@ -42,18 +46,18 @@ theorem gluedNormalClosureToCover_finite_etale
     (hX : ∀ x : X, IsIntegrallyClosed (X.presheaf.stalk x))
     (hY : ∀ y : Y, IsIntegrallyClosed (Y.presheaf.stalk y)) :
     IsFinite (gluedNormalClosureToCover p hY) ∧
-      IsEtale (gluedNormalClosureToCover p hY) := by
+      Etale (gluedNormalClosureToCover p hY) := by
   letI : Algebra X.functionField Y.functionField :=
     (functionFieldMapOfDominant p).hom.toAlgebra
   have h := functionFieldNormalClosure_glued_finite_etale p hX hY
   haveI : IsFinite (gluedNormalClosureToCover p hY ≫ p) := by
     rw [gluedNormalClosureToCover_comp_toBase]
     exact h.1
-  haveI : IsEtale (gluedNormalClosureToCover p hY ≫ p) := by
+  haveI : Etale (gluedNormalClosureToCover p hY ≫ p) := by
     rw [gluedNormalClosureToCover_comp_toBase]
     exact h.2
   exact ⟨isFinite_of_comp_of_isSeparated (gluedNormalClosureToCover p hY) p,
-    IsEtale.of_comp (gluedNormalClosureToCover p hY) p⟩
+    Etale.of_comp (gluedNormalClosureToCover p hY) p⟩
 
 end
 

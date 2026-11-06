@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Normalization.BoundaryPole
-import Mathlib.RingTheory.Regular.IsSMulRegular
+module
+
+public import HodgeConjecture.Boundary.Normalization.BoundaryPole
+public import Mathlib.RingTheory.Regular.IsSMulRegular
+
+@[expose] public section
 
 /-!
 # Regular pairs in the fixed--moving boundary ideal
@@ -30,7 +34,7 @@ is contained in no height-one prime. -/
 theorem not_le_heightOne_of_regularPair
     (J : Ideal T) (f g : T) (hf : f ∈ J) (hg : g ∈ J) (hf0 : f ≠ 0)
     (hRegular : IsSMulRegular (T ⧸ Ideal.span {f}) g)
-    (p : PrimeSpectrum T) (hp : p.asIdeal.primeHeight = 1) :
+    (p : PrimeSpectrum T) (hp : p.asIdeal.height = 1) :
     ¬ J ≤ p.asIdeal := by
   intro hJp
   obtain ⟨t, n, htp, hclear⟩ :=

@@ -1,9 +1,13 @@
-import HodgeConjecture.Correspondence.Examples.SplitPointMaps
-import HodgeConjecture.Cycles.ResidueDegree
-import Mathlib.AlgebraicGeometry.Stalk
-import Mathlib.AlgebraicGeometry.ResidueField
-import Mathlib.LinearAlgebra.Dimension.Finite
-import Mathlib.RingTheory.Length
+module
+
+public import HodgeConjecture.Correspondence.Examples.SplitPointMaps
+public import HodgeConjecture.Cycles.ResidueDegree
+public import Mathlib.AlgebraicGeometry.Stalk
+public import Mathlib.AlgebraicGeometry.ResidueField
+public import Mathlib.LinearAlgebra.Dimension.Finite
+public import Mathlib.RingTheory.Length
+
+@[expose] public section
 
 /-!
 # Multiplicity one at actual split rational points
@@ -41,7 +45,8 @@ the base field. -/
 def pointStalkIso (i : I) :
     (scheme K I).presheaf.stalk (labelEquivScheme K I i) ≅ CommRingCat.of K := by
   rw [labelEquivScheme_apply]
-  exact asIso ((pointInclusion K I i).stalkMap default) ≪≫ baseStalkIso K default
+  let x : Spec (.of K) := (default : PrimeSpectrum K)
+  exact asIso ((pointInclusion K I i).stalkMap x) ≪≫ baseStalkIso K x
 
 /-- Every local ring of the split finite scheme is a field. -/
 theorem pointStalk_isField (i : I) :

@@ -1,6 +1,11 @@
+module
+
 import HodgeConjecture.Boundary.Normalization.GluedNormalizationSurjectivity
 import HodgeConjecture.Boundary.Normalization.FiniteEtaleGluedRefinement
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP89 regressions for surjectivity of the original global normalization maps.
@@ -115,7 +120,7 @@ example (a : Y.functionField) :
   functionFieldNormalClosureData_embedding_apply p a
 
 example : Surjective (gluedNormalClosureToCover p hY) := by
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   fail_if_success have _ : IsNoetherian X := inferInstance
   fail_if_success have _ : IsNoetherian Y := inferInstance
   fail_if_success have _ : PerfectField X.functionField := inferInstance
@@ -167,7 +172,7 @@ example (U : NonemptyAffineChart X) (y : Y) (hy : p.base y ∈ U.val) :
     p U.val U.property.1 (fun y => hY y.val)
   obtain ⟨a, ha⟩ := hq.surj ⟨y, hy⟩
   refine ⟨a, ?_⟩
-  rw [← Scheme.comp_base_apply, normalizationChartToGlued_comp_toCover]
+  rw [← Scheme.Hom.comp_apply, normalizationChartToGlued_comp_toCover]
   change (p ⁻¹ᵁ U.val).ι.base (q.base a) = y
   rw [ha]
   rfl
@@ -182,11 +187,11 @@ example :
 
 section FiniteEtale
 
-variable [IsEtale p]
+variable [Etale p]
 variable (hX : ∀ x : X, IsIntegrallyClosed (X.presheaf.stalk x))
 
 example : IsFinite (gluedNormalClosureToCover p hY) ∧
-    IsEtale (gluedNormalClosureToCover p hY) ∧
+    Etale (gluedNormalClosureToCover p hY) ∧
     Surjective (gluedNormalClosureToCover p hY) := by
   have h := gluedNormalClosureToCover_finite_etale p hX hY
   exact ⟨h.1, h.2, gluedNormalClosureToCover_surjective p hY⟩
@@ -195,7 +200,7 @@ example :
     letI : Algebra X.functionField Y.functionField :=
       (functionFieldMapOfDominant p).hom.toAlgebra
     IsFinite (gluedNormalizationToBase X Nₚ) ∧
-      IsEtale (gluedNormalizationToBase X Nₚ) ∧
+      Etale (gluedNormalizationToBase X Nₚ) ∧
       Surjective (gluedNormalizationToBase X Nₚ) := by
   letI : Algebra X.functionField Y.functionField :=
     (functionFieldMapOfDominant p).hom.toAlgebra
@@ -203,11 +208,11 @@ example :
   exact ⟨h.1, h.2, gluedNormalizationToBase_surjective X Nₚ⟩
 
 example (V : Y.Opens) : IsFinite (gluedNormalClosureToCover p hY ∣_ V) ∧
-    IsEtale (gluedNormalClosureToCover p hY ∣_ V) ∧
+    Etale (gluedNormalClosureToCover p hY ∣_ V) ∧
     Surjective (gluedNormalClosureToCover p hY ∣_ V) := by
   have h := gluedNormalClosureToCover_finite_etale p hX hY
   exact ⟨IsZariskiLocalAtTarget.restrict (P := @IsFinite) h.1 V,
-    IsZariskiLocalAtTarget.restrict (P := @IsEtale) h.2 V,
+    IsZariskiLocalAtTarget.restrict (P := @Etale) h.2 V,
     IsZariskiLocalAtTarget.restrict (P := @Surjective)
       (gluedNormalClosureToCover_surjective p hY) V⟩
 
@@ -231,9 +236,9 @@ run_cmd do
   for declaration in declarations do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    for axiomName in state.axioms do
+    let axioms ← Lean.collectAxioms declaration
+    for axiomName in axioms do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"
-    logInfo m!"PASS standard-axiom boundary: {declaration}; {state.axioms.toList}"
+    logInfo m!"PASS standard-axiom boundary: {declaration}; {axioms.toList}"
   logInfo "PASS SP89 audit registry: 2 distinct public declarations"

@@ -2,6 +2,51 @@
 
 Status: **packaging draft, not yet submittable**.
 
+## Preparation refresh (2026-11-05)
+
+The [current toolchain minimum](https://github.com/PalomarRegistry/PalomarSubmission/blob/main/toolchains.json)
+is `v4.35.0-rc2`; this checkout's `v4.35.0` matches its pinned Mathlib.
+The [current source rules](https://github.com/PalomarRegistry/PalomarPolicy/blob/main/CONTRIBUTING.md#lean-source-requirements)
+also apply to unused research and archived `.lean` files.
+
+Repeatable local commands now separate the candidate from the full library:
+
+- `make build-palomar`: build the existing Challenge/Solution pair (3,066 jobs,
+  including cached dependencies).
+- `make check-palomar-proofs`: load Challenge in a separate Lean environment,
+  compare both theorem types with Solution and enforce the standard-three axiom
+  boundary on both proofs. Both checks pass. This is a local diagnostic,
+  not Comparator or independent kernel replay.
+- `make check-palomar`: inspect the prospective Git file set and report local
+  preparation blockers. `python3 scripts/check_palomar.py --json` emits details.
+  This bounded check is not an official metadata, licence or dependency verifier.
+
+The initial refresh scan covered 460 Lean files, all below 10,000 lines;
+its largest was `research/Verification.lean` at 8,279 lines. Sixteen research,
+bench and archived files lacked module headers. Preserve the historical snapshots while deciding
+their final archival format; active diagnostics need a checked module-system
+port. Root licensing, completed metadata and a reviewed immutable commit are
+also pending. No root metadata file with placeholders has been installed.
+
+The Lean distribution includes `leanexport`, `leanchecker`, `nanoda_bin` and
+`con-ron`. A direct Comparator attempt exits 2 on this macOS host because
+`bwrap` requires Linux namespaces. Use a Linux runner for the
+[template's sandboxed replay](https://github.com/PalomarRegistry/PalomarTemplate/blob/main/scripts/verify-comparator.sh);
+no independent replay success is claimed here.
+
+The compared scope remains the two fixed-ring results below. The broader
+finite flat Chow and de Rham work is not silently added to that selection.
+Final result-family selection, specialist value, provenance, human metadata
+and review disclosure need to be settled before freezing a submission.
+
+The user-supplied review-stage message (2026-11-05) says automated review
+compares formal statements with informal accounts in module documentation,
+docstrings, README and metadata, and assesses mathematical interest. Before
+freezing the candidate, audit every included account against its exact
+statements and label historical material consistently. An archive directory
+or build exclusion does not itself exclude its contents from review.
+This message does not establish why the separate Jacobian review takes time.
+
 The repository now has a Mathlib-only `Challenge.lean`, a matching
 `Solution.lean`, and `comparator.json` for two generic results:
 
@@ -47,11 +92,11 @@ listed at the end, and must be rechecked before submission.
   choose a standard SPDX licence and authorize adding its exact text.
   Palomar requires exactly one conventional root licence file and an exact
   match with `project.license`; this is not a choice an agent should make.
-- **Toolchain:** the repository uses Lean `v4.24.0`, while Palomar's current
-  minimum is `v4.28.0`.  Upgrade Lean and the matching Mathlib revision, then
-  rebuild the full project and both wrappers before submission.  The official
-  template currently uses Lean `v4.32.0`; using the minimum `v4.28.0` may be
-  the smaller port, but either choice needs a real migration check.
+- **Toolchain:** the [2026-11-05 migration](0020-lean-4-35-migration.md)
+  upgrades this repository to Lean `v4.35.0` and matching Mathlib. The policy
+  snapshot below recorded a `v4.28.0` minimum and a `v4.32.0` template; recheck
+  current submission requirements and run Comparator/NanoDa before submission.
+  The working-tree build does not certify external submission compatibility.
 - **Public immutable snapshot:** confirm that the GitHub repository is
   public, commit every submitted file (including `lake-manifest.json`), and
   submit a full 40-character commit SHA rather than a branch or tag.

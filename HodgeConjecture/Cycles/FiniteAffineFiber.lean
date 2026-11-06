@@ -1,5 +1,9 @@
-import HodgeConjecture.CommutativeAlgebra.FiniteLocalization
-import HodgeConjecture.Boundary.Normalization.FiniteAffineChart
+module
+
+public import HodgeConjecture.CommutativeAlgebra.FiniteLocalization
+public import HodgeConjecture.Boundary.Normalization.FiniteAffineChart
+
+@[expose] public section
 
 /-!
 # The maximal ideals over a target point are the actual source fiber
@@ -41,7 +45,7 @@ theorem finiteAffine_primeIdealOf_comap (x : X) (hx : f.base x ∈ U) :
   apply hU.fromSpec.isOpenEmbedding.injective
   change (Spec.map (f.app U) ≫ hU.fromSpec).base
     ((hU.preimage f).primeIdealOf ⟨x, hx⟩) = _
-  rw [Scheme.Hom.app_eq_appLE, IsAffineOpen.Spec_map_appLE_fromSpec f hU (hU.preimage f) le_rfl]
+  rw [Scheme.Hom.app_eq_appLE, IsAffineOpen.SpecMap_appLE_fromSpec f hU (hU.preimage f) le_rfl]
   change f.base ((hU.preimage f).fromSpec.base ((hU.preimage f).primeIdealOf ⟨x, hx⟩)) = _
   rw [(hU.preimage f).fromSpec_primeIdealOf, hU.fromSpec_primeIdealOf]
 
@@ -53,7 +57,7 @@ def finiteAffine_primesOverEquivFiber (y : U) :
         hU.primeIdealOf y := PrimeSpectrum.ext (Ideal.over_def q.val (hU.primeIdealOf y).asIdeal).symm
     have hsq : Spec.map (f.app U) ≫ hU.fromSpec = (hU.preimage f).fromSpec ≫ f := by
       simpa only [Scheme.Hom.app_eq_appLE] using
-        (IsAffineOpen.Spec_map_appLE_fromSpec f hU (hU.preimage f) le_rfl)
+        (IsAffineOpen.SpecMap_appLE_fromSpec f hU (hU.preimage f) le_rfl)
     have h := congrArg (fun g : Spec (.of B) ⟶ Y => g.base ⟨q.val, q.property.1⟩) hsq
     change hU.fromSpec.base (PrimeSpectrum.comap (f.app U).hom ⟨q.val, q.property.1⟩) =
       f.base ((hU.preimage f).fromSpec.base ⟨q.val, q.property.1⟩) at h

@@ -1,6 +1,10 @@
-import HodgeConjecture.Correspondence.RelativeProductComparison
-import HodgeConjecture.Correspondence.DeckBaseChange
-import HodgeConjecture.Correspondence.GraphSlice
+module
+
+public import HodgeConjecture.Correspondence.RelativeProductComparison
+public import HodgeConjecture.Correspondence.DeckBaseChange
+public import HodgeConjecture.Correspondence.GraphSlice
+
+@[expose] public section
 
 /-!
 # Graph geometry under a change of structural base

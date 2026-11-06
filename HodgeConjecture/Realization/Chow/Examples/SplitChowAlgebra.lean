@@ -1,5 +1,9 @@
-import HodgeConjecture.Realization.Chow.Examples.SplitChowComposition
-import HodgeConjecture.Realization.Chow.Examples.SplitSpanQuotient
+module
+
+public import HodgeConjecture.Realization.Chow.Examples.SplitChowComposition
+public import HodgeConjecture.Realization.Chow.Examples.SplitSpanQuotient
+
+@[expose] public section
 
 /-!
 # The finite split Chow correspondence algebra

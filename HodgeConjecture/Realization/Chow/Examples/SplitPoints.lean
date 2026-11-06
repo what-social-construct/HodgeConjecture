@@ -1,7 +1,11 @@
-import HodgeConjecture.Realization.Chow.MarkedAugmentedRealization
-import Mathlib.LinearAlgebra.Matrix.ToLin
-import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.Tactic.FinCases
+module
+
+public import HodgeConjecture.Realization.Chow.MarkedAugmentedRealization
+public import Mathlib.LinearAlgebra.Matrix.ToLin
+public import Mathlib.LinearAlgebra.Matrix.Notation
+public import Mathlib.Tactic.FinCases
+
+@[expose] public section
 
 /-!
 # Two split points: a finite zero-cycle and correspondence calculation
@@ -171,7 +175,7 @@ idempotent and its action were proved by matrix computation above. -/
 def projectorLift :
     AlgebraicProjectorLift correspondenceAction
       (ClassGraphProjector.operator (-1 : ℚ)) := by
-  simpa only [markedComparison_generatedClass] using
+  simpa only [markedComparison_generatedClass, correspondenceAction] using
     markedComparison.toAlgebraicProjectorLift
       firstPointProjector_isIdempotent residualEvaluation_surjective
 
@@ -184,7 +188,7 @@ theorem palomarTargetSquare :
       UniversalIdempotentAlgebra.mapOfIdempotent
         (ClassGraphProjector.operator (-1 : ℚ))
         (ClassGraphProjector.operator_isIdempotent (-1 : ℚ)) := by
-  simpa only [markedComparison_generatedClass] using
+  simpa only [markedComparison_generatedClass, correspondenceAction] using
     markedComparison.action_comp_idempotentMap_eq_classGraph
       firstPointProjector_isIdempotent residualEvaluation_surjective
 

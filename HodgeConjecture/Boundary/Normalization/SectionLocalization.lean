@@ -1,4 +1,8 @@
-import HodgeConjecture.Boundary.Normalization.AffineSections
+module
+
+public import HodgeConjecture.Boundary.Normalization.AffineSections
+
+@[expose] public section
 
 /-!
 # Constructing actual sections from local fractions
@@ -62,7 +66,10 @@ theorem mem_affineSectionSubalgebra_of_localFractions
         (show U ⊓ PrimeSpectrum.basicOpen (b x) ≤ U from inf_le_left).hom,
         a x, b x, ?_⟩
       intro y
-      exact ⟨y.2.2, hlocal x ⟨y.1, y.2.1⟩⟩⟩
+      refine ⟨y.2.2, ?_⟩
+      change _ = Localization.mk (a x) (⟨b x, y.2.2⟩ : y.1.asIdeal.primeCompl)
+      rw [Localization.mk_eq_mk'_apply]
+      exact IsLocalization.eq_mk'_iff_mul_eq.mpr (hlocal x ⟨y.1, y.2.1⟩)⟩
   let x : U := Classical.choice (by assumption)
   have hs : b x • s = algebraMap T Γ(Spec T, U) (a x) := by
     rw [Algebra.smul_def]

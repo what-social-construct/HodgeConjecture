@@ -1,6 +1,10 @@
-import HodgeConjecture.Realization.Betti.Examples.SplitComplexPoints
-import HodgeConjecture.Realization.Betti.FiniteTransfer
-import HodgeConjecture.Realization.Chow.Examples.SplitChowAction
+module
+
+public import HodgeConjecture.Realization.Betti.Examples.SplitComplexPoints
+public import HodgeConjecture.Realization.Betti.FiniteTransfer
+public import HodgeConjecture.Realization.Chow.Examples.SplitChowAction
+
+@[expose] public section
 
 /-!
 # The cycle-class comparison for finite split complex schemes

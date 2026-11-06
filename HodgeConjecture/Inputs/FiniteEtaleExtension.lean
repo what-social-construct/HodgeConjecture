@@ -1,5 +1,9 @@
-import HodgeConjecture.Correspondence.FiniteGroupProjector
-import Mathlib.CategoryTheory.Comma.Over.Pullback
+module
+
+public import HodgeConjecture.Correspondence.FiniteGroupProjector
+public import Mathlib.CategoryTheory.Comma.Over.Pullback
+
+@[expose] public section
 
 /-!
 # Selected finite-étale extension and deck-extension inputs
@@ -50,7 +54,7 @@ structure FiniteEtaleExtension (j : U ⟶ X) (p : Y ⟶ U) where
   carrier : Scheme.{u}
   toBase : carrier ⟶ X
   finite : IsFinite toBase
-  etale : IsEtale toBase
+  etale : Etale toBase
   comparison : Over.mk p ≅ (Over.pullback j).obj (Over.mk toBase)
 
 /-- The selected existence conclusion of a finite étale extension theorem.
@@ -84,9 +88,9 @@ theorem original_isFinite (E : FiniteEtaleExtension j p) : IsFinite p := by
     (MorphismProperty.pullback_snd E.toBase j E.finite)
 
 /-- The comparison likewise certifies that the original cover is étale. -/
-theorem original_isEtale (E : FiniteEtaleExtension j p) : IsEtale p := by
+theorem original_isEtale (E : FiniteEtaleExtension j p) : Etale p := by
   rw [← E.comparisonIso_hom_snd]
-  exact MorphismProperty.comp_mem @IsEtale _ _ inferInstance
+  exact MorphismProperty.comp_mem @Etale _ _ inferInstance
     (MorphismProperty.pullback_snd E.toBase j E.etale)
 
 /-- The morphism from the original cover into its extension. -/

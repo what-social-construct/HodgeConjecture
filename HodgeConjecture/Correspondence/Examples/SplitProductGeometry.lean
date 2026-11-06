@@ -1,7 +1,11 @@
-import HodgeConjecture.Correspondence.Examples.SplitSpanGeometry
-import HodgeConjecture.Correspondence.Examples.SplitIntegralSubschemes
-import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
-import Mathlib.AlgebraicGeometry.Morphisms.Flat
+module
+
+public import HodgeConjecture.Correspondence.Examples.SplitSpanGeometry
+public import HodgeConjecture.Correspondence.Examples.SplitIntegralSubschemes
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
+public import Mathlib.AlgebraicGeometry.Morphisms.Flat
+
+@[expose] public section
 
 /-!
 # Products of actual finite split schemes
@@ -32,6 +36,7 @@ theorem pointInclusion_toBase (i : I) :
   unfold pointInclusion toBase
   rw [← Spec.map_comp]
   convert Spec.map_id (CommRingCat.of K) using 1
+  congr 1 <;> first | rfl | (ext a; rfl)
 
 /-- The canonical comparison from pair labels to the actual scheme product. -/
 def productComparison :

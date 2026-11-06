@@ -1,5 +1,9 @@
-import HodgeConjecture.Cycles.PointSupport
-import HodgeConjecture.Cycles.SupportCodimension
+module
+
+public import HodgeConjecture.Cycles.PointSupport
+public import HodgeConjecture.Cycles.SupportCodimension
+
+@[expose] public section
 
 /-!
 # The actual dimension of integral closed carriers
@@ -28,9 +32,11 @@ universe u
 ambient generic point. -/
 def integralSubschemePointOrderIso {X : Scheme.{u}} (W : IntegralClosedSubscheme X) :
     W.val.subscheme ≃o Set.Iic (ambientGenericPoint W) where
-  toEquiv := Equiv.setCongr (by
-    ext x
-    exact (ambientGenericPoint_isGenericPoint W).specializes_iff_mem.symm)
+  toEquiv := W.val.subschemeι.isClosedEmbedding.isEmbedding.toHomeomorph.toEquiv.trans
+    (Set.equivOfEq (by
+      rw [Scheme.IdealSheafData.range_subschemeι]
+      ext x
+      exact (ambientGenericPoint_isGenericPoint W).specializes_iff_mem.symm))
   map_rel_iff' := by
     intro x y
     change W.val.subschemeι.base y ⤳ W.val.subschemeι.base x ↔ y ⤳ x

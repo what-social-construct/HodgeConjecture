@@ -1,7 +1,12 @@
+module
+
 import HodgeConjecture.Boundary.Normalization.NormalizationIntegralFactor
 import HodgeConjecture.Boundary.Normalization.FunctionFieldNormalClosure
 import Mathlib.Algebra.Ring.Fin
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP80 regressions for the integral normal-closure factor.
@@ -244,7 +249,7 @@ section ActualFiniteEtaleScheme
 open AlgebraicGeometry CategoryTheory HodgeConjecture.SchemeCycles
 
 variable {X Y : Scheme.{u}} [IsIntegral X] [IsIntegral Y]
-variable (p : Y ⟶ X) [IsDominant p] [IsFinite p] [IsEtale p]
+variable (p : Y ⟶ X) [IsDominant p] [IsFinite p] [Etale p]
 variable (U : X.Opens) [Nonempty U] (hU : IsAffineOpen U)
 
 example
@@ -335,9 +340,9 @@ run_cmd do
   for declaration in declarations do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    for axiomName in state.axioms do
+    let axioms ← Lean.collectAxioms declaration
+    for axiomName in axioms do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"
-    logInfo m!"PASS standard-axiom boundary: {declaration}; {state.axioms.toList}"
+    logInfo m!"PASS standard-axiom boundary: {declaration}; {axioms.toList}"
   logInfo "PASS SP80 audit registry: 28 distinct public declarations"

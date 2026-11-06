@@ -2,10 +2,28 @@
 
 Status: OBJECT ROLES AND NOTATION UPDATED; HISTORICAL CHECKPOINTS RETAINED; HUMAN RELEASE GATES OPEN.
 
-Object-registry refresh: 2026-10-13. Historical validation statements below
+Object-registry refresh: 2026-10-27. Historical validation statements below
 describe their named checkpoints. SP107 finite norm/Chow descent is complete
 as recorded below. SP108 adds conditional boundary correction on the existing
-Chow groups. Proof-role classification and name coverage are separate from
+Chow groups. SP109 constructs a marked Chow map from supplied actual cycles;
+geometric selection for a prescribed class remains open.
+SP110 completes the actual open/closed Chow localization sequence and its
+two-lift consumer; this auxiliary machinery now has proved status.
+SP111 proves conditional supported-class extraction using the existing
+cycle and Chow objects. General Betti localization and the component-basis
+comparison remain supplied; class-dependent support construction stays open.
+SP112 tests Chern characters within the same induction. Algebraic complexes
+and their extension remain research objects; finite-monodromy bundles give
+zero positive rational Chern character. Only the transfer cancellation is
+newly formalized, using the existing degree-transfer object.
+SP113 proves identity and composition of the existing finite cycle and
+integral/rational Chow maps, with multiplication of their actual residue
+degrees. These are compatibility theorems, **prose only**: no new map,
+quotient, independent notation or public object declaration is introduced.
+The subsequent open-representative calculation records a classical partial
+construction and the remaining primitive-class problem; it adds no Lean
+objects or theorem claims.
+Proof-role classification and name coverage are separate from
 the Lean checks recorded for each checkpoint; neither is a release audit.
 
 Opened: 2026-09-11.
@@ -112,10 +130,26 @@ hypotheses remain authoritative for what is proved.
 | --- | --- | --- | --- | --- |
 | Prescribed family of auxiliary covers, degree and class-dependent choice | $\{f_j:Y_j\to X\}_{j\in J},\ d_j>0,\ j=j(\alpha)$ | `Index`, `ChowY`, `HY`, `Coeff`, `recipe`, `clY`, `pull`; actual maps are separate scheme data | Abstract indexed recipe exists; a geometric family with the required coverage has not been constructed | ROUTE |
 | Upstairs cycle and same-cover class identity | $Z_\alpha,\ \operatorname{cl}_{Y_j}(Z_\alpha)=f_j^*\alpha$ | `ClassDependentChowBettiGeneration`; `recipe j c` | Explicit generation obligation; not an inhabited geometric instance | ROUTE |
-| Finite norm, cycle/Chow pushforward, transfer and normalized descent | $N_f,\ f_*,\ f_*f^*=d\,\mathrm{id},\ d^{-1}f_*Z_\alpha$ | `functionFieldNorm`, `rationalChowFinitePushforward`, `RationalDegreeTransfer`, `normalizedPushforward_cycleClass` | Actual finite Chow map proved in SP107; same-cover Betti degree law and cycle-class square still need geometric instantiation | ROUTE |
+| Supplied sheet-indexed homogeneous cycle family | $C_s\in Z_n(X)_{\mathbf Q},\ s\in G/H,\ s_0=H$ | `C : CollisionFoundations.GaloisSheets H → SchemeCycles.cyclesOfDegree ℚ δ n`; `baseSheet H` | SP109 input of actual cycles; no current construction supplies this family from the collision fiber product or the normal-closure tensor component with the required Betti image | ROUTE |
+| Residual coefficients assembled into an actual cycle | $t_C:E_H\to Z_n(X)_{\mathbf Q},\ x\mapsto\sum_s x(s)C_s$ | `MarkedSheetChow.cycleMap` | SP109 constructed; fixed ambient scheme and degree, arbitrary dimension; [source](../../HodgeConjecture/Realization/Chow/MarkedCycleMap.lean) | ROUTE |
+| Chow class of the assembled cycle | $\eta_C:E_H\to CH_n(X)_{\mathbf Q},\ \eta_C(x)=[t_C(x)]$ | `MarkedSheetChow.chowMap`; `chowMap_residualClass`; `chowMap_congr` | SP109 constructed on the existing quotient; principal-relation invariance and actual open/finite naturality proved | ROUTE |
+| Realization of the supplied cycle recipe and exact image | $\theta_C=\operatorname{cl}\circ\eta_C,\ \operatorname{im}\theta_C=\operatorname{span}_{\mathbf Q}\{\operatorname{cl}[C_s]:s\ne s_0\}$ | `cl.comp (MarkedSheetChow.chowMap H δ n C)`; `range_chowMap`; `range_cycleClass_chowMap` | SP109 image formula proved for a supplied linear realization; prescribed Hodge-class coverage remains open | ROUTE |
+| Reweighted family evaluated at the canonical marked vector | $C'_s=-x(s)C_s,\ \eta_{C'}(q_H-1)=\eta_C(x)$ | `MarkedSheetChow.chowMap_residualClass_reweight` | SP109 proved; only rational coefficients change; this does not select cycles from a Hodge class | ROUTE |
+| Finite norm, cycle/Chow pushforward, transfer and normalized descent | $N_f,\ f_*,\ f_*f^*=d\,\mathrm{id},\ d^{-1}f_*Z_\alpha$ | `functionFieldNorm`, `rationalChowFinitePushforward`, `RationalDegreeTransfer`, `normalizedPushforward_cycleClass` | Actual finite Chow map proved in SP107; identity and composition proved in SP113; same-cover Betti degree law and cycle-class square still need geometric instantiation | ROUTE |
 | Open locus and boundary inclusion in a smooth projective auxiliary variety | $j:U\hookrightarrow Y,\ i:D=Y\setminus U\hookrightarrow Y$ | `j`, `i` as scheme morphisms; `SchemeCycles.rationalChowOpenRestriction` | Chow restriction and its surjectivity are constructed; smoothness of $D$ is an additional hypothesis, not automatic | ROUTE |
+| Actual reduced closed complement and its ideal | $I_Z=\mathcal I((X\setminus U)_{\mathrm{red}}),\ Z=V(I_Z),\ i:Z\hookrightarrow X$ | `SchemeCycles.openComplementIdeal j`; `(openComplementIdeal j).subscheme`; `(openComplementIdeal j).subschemeι` | **PROVED / CONSTRUCTED, SP110**; reducedness and complementary point image proved; no ambient reducedness or finiteness needed; [source](../../HodgeConjecture/Cycles/OpenClosedLocalization.lean) | ROUTE |
+| Boundary-supported cycle submodule and restriction kernel | $Z_{*,Z}(X;R)=\operatorname{im}i_*=\ker j^*$, also in degree $n$ | `Finsupp.supported R R {W \| ambientGenericPoint W ∉ Set.range j.base}`; `range_openComplementPushforward_eq_ker` | **PROVED, SP110**; actual raw and graded maps, any coefficient semiring, actual restricted dimension functions | ROUTE |
+| Class-dependent algebraic support and vanishing target | $Z_\alpha\subset X,\ \operatorname{codim}_X Z_\alpha\geq p,\ \alpha\vert_{X\setminus Z_\alpha}=0$ | Actual closed/open scheme maps `i`, `j`; `hcomp`, `hα` in `SupportedClass.exists_supported_cycle_of_vanishing` | **RESEARCH / OPEN CONSTRUCTION**; the consumer accepts a chosen support; it does not find one or establish its codimension bound | ROUTE |
+| Supported cohomology, support lift and localization | $H_Z^{2p}(X,\mathbf Q),\ \gamma\mapsto\alpha,\ \operatorname{im}(\mathrm{forget})=\ker j^*$ | Supplied `HZ`, `forgetSupport`, `restrictH`, `hExact` | **GEOMETRIC INSTANCE OPEN**; SP111 keeps localization explicit, separate from proved cycle/Chow exactness | ROUTE |
+| Top-component basis and fundamental-class comparison | $b_k=[W_k]_{\mathrm{supp}},\ \deg_\delta W_k=n=\dim X-p$ | `W : ι → SchemeCycles.IntegralClosedSubscheme Z`, `hW`, `b : Module.Basis ι ℚ HZ`, `hBasis` | **GEOMETRIC INSTANCE OPEN**; deriving this basis from codimension remains unformalized; singular/reducible support is allowed by the consumer | ROUTE |
+| Extracted component cycle and its actual ambient Chow class | $c_\gamma=\sum_k(b.\mathrm{repr}\,\gamma)_k[W_k],\ z_\gamma=i_{*,\mathrm{cyc}}c_\gamma,\ \operatorname{cl}[z_\gamma]=\alpha$ | Existing `Module.Basis.constr`, `gradedClosedImmersionPushforwardWithCoefficients`, `rationalClassMap`; `SupportedClass.cycleClass_componentExpansion`, `exists_supported_cycle_of_vanishing`, `vanishing_iff_supported_cycle` | **CONDITIONAL / PROVED, SP111**; finite expansion and actual cycle-level zero restriction proved; converse uses `hRestrict`; [source](../../HodgeConjecture/Realization/Chow/SupportedClass.lean) | ROUTE |
+| Lifted relation carrier and rational function | $\bar W\subset X,\ \bar f\in K(\bar W)^\times,\ (\bar W,\bar f)\vert_U=(W,f)$ | `SchemeCycles.exists_openRestriction_principalRelationData`; `openClosureSubscheme`; inverse `functionFieldEquivOfOpenImmersion` | **PROVED, SP110**; carrier degree $n+1$ retained, data lifting needs no Noetherianity; [source](../../HodgeConjecture/Cycles/PrincipalRelationLifting.lean) | ROUTE |
+| Integral and rational relation-span images | $j^*\mathcal R_n(X;\mathbf Z)=\mathcal R_n(U;\mathbf Z),\ j^*\mathcal R_n(X;\mathbf Q)=\mathcal R_n(U;\mathbf Q)$ | `SchemeCycles.principalRelations_map_openRestriction`; `rationalPrincipalRelations_map_openRestriction` | **PROVED, SP110**; actual principal generators, ambient Noetherianity; closure is not asserted to descend to Chow | ROUTE |
 | Cycle on the open and a closure lift | $z_U\in CH^p(U)_{\mathbf Q},\ \bar z\in CH^p(Y)_{\mathbf Q},\ j^*\bar z=z_U$ | `SchemeCycles.rationalChowOpenRestriction_surjective`; `zU`, `z` in `BoundaryCorrection.isAlgebraicHodgeClass_of_openRestriction` | SP108 uses proved Chow lifting; construction with $\operatorname{cl}(z_U)=j^*f^*\alpha$ is unresolved | ROUTE |
-| Additive Chow localization and boundary ambiguity | $CH_{n-p}(D)_{\mathbf Q}\to CH_{n-p}(Y)_{\mathbf Q}\to CH_{n-p}(U)_{\mathbf Q}\to0$ | `ChowLocalizationHypotheses`, `ChowLocalization.two_lifts_differ_by_boundary` | Conditional interface; full exactness for actual general scheme maps remains the L1--L3 work in `TARGET_BRIDGE.md` | ROUTE |
+| Auxiliary polarization and smooth ample boundary | $A,\ h=c_1(A),\ L=h\cup-,\ D\in\vert A^{\otimes m}\vert,\ m>0$ | No general geometric Chern-class/Lefschetz operator or Bertini construction here; scheme maps `i`, `j` remain supplied | **CLASSICAL CANDIDATE**; sufficiently large $m$ permits a smooth divisor; auxiliary choices do not change the fixed target or correspondence action | ROUTE |
+| Primitive open target and killed Lefschetz summand | $P_h^{2p}(Y)=\ker L^{d-2p+1},\ \beta=\beta_{\mathrm{prim}}+L\gamma,\ j^*\beta=j^*\beta_{\mathrm{prim}}$ for $2p\leq d=\dim Y$ | No geometric primitive-cohomology implementation; `restrictH` is supplied in `BoundaryCorrection` | **CLASSICAL DEDUCTION / OPEN CONSTRUCTION**; $\ker j^*=L H^{2p-2}$ and $j^*$ is injective on the primitive summand; its prescribed algebraic open representative is unresolved, including after finite pullback with the pulled-back polarization | ROUTE |
+| Zero open representative in the vanishing range | $z_U=0,\ H^{2p}(U,\mathbf Q)=0$ for $2p>\dim Y$ | `0 : SchemeCycles.RationalChowGroup (δ.comapOpenImmersion j) n`; `clU.map_zero`; geometric cohomological vanishing not implemented | **CLASSICAL PARTIAL CONSTRUCTION**; smooth affine complement; completing boundary correction still requires SP108's other inputs; [calculation and sources](../TARGET_BRIDGE.md#open-representative-the-smooth-ample-boundary-calculation) | ROUTE |
+| Additive Chow localization and boundary ambiguity | $CH_{n-p}(D)_{\mathbf Q}\to CH_{n-p}(Y)_{\mathbf Q}\to CH_{n-p}(U)_{\mathbf Q}\to0$ | `SchemeCycles.range_rationalChowOpenComplementPushforward_eq_ker`; `ChowLocalization.ofOpenComplement`; `ChowLocalization.two_lifts_differ_by_boundary` | **PROVED FOR ACTUAL MAPS, SP110**; integral and rational exactness, target Noetherianity, both sources derived; generic `ChowLocalizationHypotheses` still requires evidence for other maps; [source](../../HodgeConjecture/Cycles/ChowLocalization.lean) | ROUTE |
 | Cohomological discrepancy of a closure | $\delta=f^*\alpha-\operatorname{cl}_Y(\bar z),\ j^*\delta=0$ | `α - M.cycleClass z`, with Hodge membership and zero restriction proved inside `BoundaryCorrection.exists_boundary_correction`; `α` there is the ambient target | SP108 conditional consumer; not the Chow idempotence defect $\Pi^2-\Pi$ | ROUTE |
 | Cohomology with support, restriction and Gysin map | $H_D^{2p}(Y,\mathbf Q),\ j^*,\ i_*:H^{2p-2}(D,\mathbf Q)(-1)\to H^{2p}(Y,\mathbf Q)$ | Supplied modules `HX`, `HD`, `HU` and maps `restrictH`, `pushH` in `BoundaryCorrection`; no general supported Betti construction | SP108 keeps cycle-class squares explicit; no pure Hodge structure on the nonproper open is assumed | ROUTE |
 | Lower-codimension Hodge lift | $\gamma\in\operatorname{Hdg}^{p-1}(D),\ i_*\gamma=\delta$ | Explicit `hBoundaryLift` premise of `BoundaryCorrection.exists_boundary_correction` and its consumers | Geometric proof still needed in Lean; for smooth projective $D$, follows classically from Gysin exactness and polarizability; does not yet give a cycle | ROUTE |
@@ -125,8 +159,12 @@ hypotheses remain authoritative for what is proved.
 | Parameter space for effective cycles of fixed dimension and degree | $\operatorname{Chow}_{n-p,e}(X)$ | No Chow-variety implementation here; distinct from `SchemeCycles.ChowGroup` | Research candidate; degree $e$ is measured against a fixed polarization; rational cycles require rational combinations | ROUTE |
 | Incidence family and fibers | $S,\ \mathcal Z\subset S\times X,\ Z_s$ | No selected general incidence-family construction | On a smooth connected base a flat family's Betti cycle class is constant; selecting relevant components remains substantive | ROUTE |
 | Algebraic bundle, regular section, zero locus and Chern class | $E,\ s,\ Z(s),\ c_p(E)$ | No class-dependent bundle/Chern-cycle construction in this repo | Research candidate; fixed $E$ gives fixed zero-locus class under the regularity hypotheses | ROUTE |
+| Algebraic perfect complexes, rational virtual class and ambient extension | $E_\alpha^\bullet,\ \xi_\alpha\in K_0^{\mathrm{alg}}(U)_{\mathbf Q},\ \bar E_\alpha^\bullet$ | No geometric perfect-complex or algebraic K-group construction in this repo | **RESEARCH / CLASSICAL EXTENSION**; Stacks 08EC and 08E0 supply extension once the algebraic open object exists; prescribed-class construction remains open | ROUTE |
+| Additive Chern-character recipe and required open class | $z_U=\operatorname{ch}^{CH}_p(\xi_\alpha),\ \operatorname{cl}_U(z_U)=j^*\alpha$ | No implemented Chern map; intended output is the existing open `RationalChowGroup` consumed by `BoundaryCorrection` | **RESEARCH / UNCONSTRUCTED**; fixed ambient realization; Stacks 0ESY; no assumed Chern preimage is treated as a construction | ROUTE |
+| Finite-monodromy bundle, trace-zero summand and splitting cover | $E_\rho,\ \ker(\operatorname{Tr}_f),\ q:T\to U,\ q^*E_\rho\simeq\mathcal O_T^{\oplus r}$ | Geometric bundles unconstructed; `RationalDegreeTransfer.pull_injective`, `pull_eq_zero_iff` prove the cancellation step | **TESTED CANDIDATE / SP112**; positive rational Chern character is zero; cannot supply a nonzero open target; does not exclude arbitrary bundle idempotents | ROUTE |
+| Boundary-supported perfect complex and localized Chern character | $E_D^\bullet,\ \operatorname{ch}_p(D\to X,E_D^\bullet)\cap[X]$ | No localized Chern construction; its proposed pushforward lands in the existing Chow group | **RESEARCH / CLASSICAL**; Stacks 0FB0; supplies boundary corrections and has zero open restriction | ROUTE |
 | Separable function-field extension and normal-closure splitting | $L/K,\ N/K,\ N\otimes_KL\simeq\prod_{\sigma:L\hookrightarrow N}N$ | `NormalClosureData`, `normalClosureTensorGenericSheetsEquiv`, `functionFieldNormalClosureSplitFiberIso` | Constructed for the stated hypotheses; labels sheets of an existing cover, not points of a prescribed-class cycle parameter space | ROUTE |
-| Collision algebra, diagonal ideal, complementary component and selectors | $C=A\otimes_BA,\ J=\ker\mu,\ C\simeq C/J\times C/\operatorname{Ann}(J)$ | `CollisionAlgebra`, `collisionObstructionIdeal`, `CollisionSelectorPair`, `CollisionSchemeDecomposition` | Actual algebra/scheme decompositions are proved under explicit hypotheses; no automatic identification with a target Hodge summand | ROUTE |
+| Collision algebra, diagonal ideal, complementary component and selectors | $C=A\otimes_BA,\ J=\ker\mu,\ C\simeq C/J\times C/\operatorname{Ann}(J)$ | `CollisionAlgebra`, `collisionObstructionIdeal`, `CollisionSelectorPair`, `CollisionSchemeDecomposition` | Proved under explicit hypotheses and used by `collisionSchemeCorrespondence` and its span decomposition; the generation/descent and boundary-correction endpoints do not require this object, and no prescribed Hodge-class cycle is extracted from it | ROUTE |
 | Marked sheet algebra, residual corner and algebra decomposition | $A_H=\mathbf Q^{G/H},\ q_H,\ E_H^{\mathrm{corner}},\ A_H\simeq\mathbf Q\times E_H^{\mathrm{corner}}$ | `GenericSheetAlgebra`, `MarkedSheetProjector.selector`, `MarkedAugmentedAlgebra.selectorAlgebraDecomposition` | Proved; multiplicative selector coordinates differ from the linear constant-unit graph coordinates | ROUTE |
 | Galois/deck action, group average and Hecke corner | $G,H,\ e_H,\ e_H\mathbf Q[G]e_H$ | `FiniteDeckAction`, `SchemeCorrespondence.subgroupAverage`, `SubgroupHeckeAlgebra` | Constructed algebraic machinery; choice and prescribed geometric action remain under investigation | ROUTE |
 | Class graph, algebraic projector, residual realization and action comparison | $P_\alpha,\ \Pi_\alpha,\ \theta:E_H\to H,\ \Theta=\mathrm{id}\oplus\theta$ | `BlockGraphProjector`, `AlgebraicProjectorLift`, `MarkedGaloisSelectorComparison` | Active conditional branch; a linear assignment $\theta(q_H-1)=\alpha$ alone does not supply the geometric comparison | ROUTE |
@@ -167,11 +205,58 @@ public object declarations. Table structure, math delimiters, local links and
 the new-file proof-placeholder scan pass. Name coverage is not a semantic
 equivalence proof, and the conditional inputs remain explicit.
 
+SP109 registry audit (2026-10-13): 77 notation tables contain 1036 classified
+rows (309 CORE, 727 ROUTE). All 908 public object declarations have exact
+identifier coverage in inline Lean code. The six added rows distinguish
+the supplied cycles, constructed maps, realized image, reweighting and
+realization lifecycle. Table widths, math delimiters, local links and the
+new-file proof-placeholder scan pass; coverage does not assert geometric
+instantiation of the remaining inputs.
+
 #### Realization lifecycle: active, unfinished, example, archived
+
+SP110 validation (2026-10-13): full build passes (3270 jobs; the two existing
+`Challenge.lean` warnings only), as do seven focused localization checks and
+twenty enforced axiom audits. The registry has 77 tables and 1040 rows
+(309 CORE, 731 ROUTE), covering all 909 public object declarations by name.
+The new complement object and its support, relation-lifting and exactness
+comparisons have explicit LaTeX/Lean entries and proved auxiliary status.
+Table structure, local links and new-file placeholder scans pass.
+
+Open-representative registry update (2026-10-13): three research rows record
+the auxiliary polarization, primitive target and zero open cycle. There are
+at that checkpoint 77 tables and 1043 rows (309 CORE, 734 ROUTE); the 909 public Lean object
+declarations are unchanged. These classical calculations are distinguished
+from formal implementations and from the unresolved cycle construction.
+
+SP111 registry update (2026-10-13): four rows distinguish the support
+construction problem, supplied supported cohomology, supplied component
+basis, and proved extraction consumer. At that checkpoint there are 77 tables and 1047
+rows (309 CORE, 738 ROUTE). All 909 public object declarations remain
+unchanged: the three new production declarations are theorems using the
+existing Mathlib basis and scheme-cycle constructions.
+
+Validation: the full `lake build` passes (3271 jobs), with the two existing
+`Challenge.lean` placeholder warnings. The focused SP111 verification passes
+four examples and three enforced axiom audits. Table structure, local links,
+new-file placeholder scans and `git diff --check` also pass.
+
+SP112 registry update (2026-10-14): four research rows distinguish the
+algebraic complex, Chern recipe, tested finite-monodromy bundle and localized
+boundary class. There are now 77 tables and 1051 rows (309 CORE, 742 ROUTE).
+The 909 public object declarations are unchanged; the two new Lean
+declarations are cancellation theorems on the existing transfer structure.
+
+SP112 validation: full `lake build` passes (3271 jobs; the two existing
+`Challenge.lean` placeholder warnings). Both new theorems pass an enforced
+standard-three axiom audit. All 77 table headers, 1051 classified rows,
+table widths, math delimiters and 240 local links pass validation, as do
+the modified Lean file's placeholder scan and `git diff --check`.
 
 | Object / mathematical role | LaTeX notation | Lean representation | Implementation status / source | Proof role |
 | --- | --- | --- | --- | --- |
 | General Chow--Betti/Hodge realization | $\operatorname{cl}_X:CH^p(X)_{\mathbf Q}\to H^{2p}(X,\mathbf Q)$ | `RationalHodgeCycleClassModel` | **ACTIVE / GEOMETRIC INSTANCE UNFINISHED**; [HodgeClasses](../../HodgeConjecture/Realization/HodgeClasses.lean), [active umbrella](../../HodgeConjecture/Realization.lean) | CORE |
+| Marked map into actual Chow, before Betti realization | $\eta_C:E_H\to CH_n(X)_{\mathbf Q}$ | `MarkedSheetChow.chowMap` | **ACTIVE / PROVED FROM SUPPLIED CYCLES**; [source](../../HodgeConjecture/Realization/Chow/MarkedCycleMap.lean); family selection and general Betti instance remain unfinished | ROUTE |
 | Existing conditional correction, descent and marked realization interfaces | $\bar z+i_*b,\ d^{-1}f_*Z,\ \mathscr R_{\alpha,x}$ | `BoundaryCorrection`, `UpstairsGeneration`, `MarkedGaloisSelectorComparison`, `ClassDependentMarkedGaloisSelectorCoverage` | **ACTIVE / CONDITIONAL**; explicit geometry and comparison maps still required | ROUTE |
 | Concrete finite split degree-zero realization | $CH_0(Z_I)_{\mathbf Q}\simeq H^0(Z_I(\mathbf C),\mathbf Q)$ | `SplitBetti.cycleClass`, `SplitBettiTateBlock`, `SplitGaloisMarkedComparison` | **ACTIVE / PROVED EXAMPLE**; [Betti umbrella](../../HodgeConjecture/Realization/Betti.lean); not a general higher-codimension realization | ROUTE |
 | Earlier commutative selector-realization chain | Historical selector-generated realization; no new notation | Archived `SelectorRealization.lean`, `BoundaryProjector.lean`, `CohomologicalProjector.lean`, `CompactificationProjector.lean` | **ARCHIVED / SUPERSEDED**; [legacy realization directory](../archive/legacy-lean/HodgeConjecture/Realization/); excluded from active library | ROUTE |
@@ -245,8 +330,8 @@ they do not rename the earlier normalization objects globally.
 | Homogeneous finite cycle pushforward | $f_{*,\mathrm{cyc}}:Z_n^{\delta_X}\to Z_n^{\delta_Y}$ | `SchemeCycles.gradedFinitePushforward Λ δX δY f hdeg n` | Existing; [GradedFinitePushforward](../../HodgeConjecture/Cycles/GradedFinitePushforward.lean) | ROUTE |
 | Norm on an actual image carrier | $N_{q_W}:K(W)^\times\to K(f(W))^\times$ | `SchemeCycles.finiteImageNorm f W` | SP107; [FinitePrincipalDivisorImage](../../HodgeConjecture/Cycles/FinitePrincipalDivisorImage.lean) | ROUTE |
 | Image principal-relation datum | $(f(W),N_{q_W}g)$ | `SchemeCycles.PrincipalRelationData.finiteImage δX δY f hdeg n d` | SP107; actual carrier and constructed norm | ROUTE |
-| Integral finite Chow pushforward | $f_*:\mathrm{CH}_n(X)\to\mathrm{CH}_n(Y)$ | `SchemeCycles.chowFinitePushforward k pY f n` | SP107; [FiniteChowPushforward](../../HodgeConjecture/Cycles/FiniteChowPushforward.lean) | ROUTE |
-| Rational finite Chow pushforward | $f_*:\mathrm{CH}_n(X;\mathbf Q)\to\mathrm{CH}_n(Y;\mathbf Q)$ | `SchemeCycles.rationalChowFinitePushforward k pY f n` | SP107; [RationalFiniteChowPushforward](../../HodgeConjecture/Cycles/RationalFiniteChowPushforward.lean) | ROUTE |
+| Integral finite Chow pushforward | $f_*:\mathrm{CH}_n(X)\to\mathrm{CH}_n(Y)$ | `SchemeCycles.chowFinitePushforward k pY f n` | SP107 constructed; SP113 `chowFinitePushforward_id`, `chowFinitePushforward_comp` proved; [FiniteChowPushforward](../../HodgeConjecture/Cycles/FiniteChowPushforward.lean), [composition](../../HodgeConjecture/Cycles/FiniteChowPushforwardComposition.lean) | ROUTE |
+| Rational finite Chow pushforward | $f_*:\mathrm{CH}_n(X;\mathbf Q)\to\mathrm{CH}_n(Y;\mathbf Q)$ | `SchemeCycles.rationalChowFinitePushforward k pY f n` | SP107 constructed; SP113 `rationalChowFinitePushforward_id`, `rationalChowFinitePushforward_comp` proved; [RationalFiniteChowPushforward](../../HodgeConjecture/Cycles/RationalFiniteChowPushforward.lean), [composition](../../HodgeConjecture/Cycles/FiniteChowPushforwardComposition.lean) | ROUTE |
 
 Codimension is already established: `supportCodimension_eq_stalkDim`
 identifies it with the local-ring dimension, and
@@ -5626,8 +5711,9 @@ restrictions by extending each actual integral support to its reduced
 ambient closure and preserving its degree. Surjectivity of the integral
 and rational Chow restriction maps follows through their representative
 formulas. The actual closed-complement image/kernel identification and
-localization exactness require later proofs; they do not follow just
-from these surjectivity assertions. Proper
+localization exactness were later proved at SP110 by support comparison
+and principal-relation lifting; they do not follow just
+from these SP63 surjectivity assertions. Proper
 pushforward's norm comparison, flat/Gysin operations, general Chow
 convolution and prescribed target identification/realization/coverage
 remain separate, as recorded in `GAP_MAP.md` and `TARGET_BRIDGE.md`.
@@ -5736,7 +5822,7 @@ the hypotheses of their geometric applications.
 | Valuation identification with the selected prime localization and stabilizer transport | $V_E\simeq(\widetilde B_N)_Q$; comparison witness, not a second valuation ring | `ValuationLocalizationAt`; `HasValuationLocalizationAt`; `localRingEquivOfPrimeStabilizer` | Existing definitions/adapters; [source](../../HodgeConjecture/Boundary/Normalization/LocalizationBridge.lean) | ROUTE |
 | Normalization map induced contravariantly by a field embedding | $E\hookrightarrow E^\prime,\ \operatorname{Spec}\operatorname{IntCl}_B(E^\prime)\to\operatorname{Spec}\operatorname{IntCl}_B(E)$ | `normalizationDomination`; `normalizedCoordinateRing`; `normalizedAffineModel` | Existing definitions/adapters; [source](../../HodgeConjecture/Boundary/Normalization/Model.lean) | ROUTE |
 | Marked intermediate field and trivial-extension comparisons | $\iota(L)\subset N,\ L=K,\ N=K$; extension-triviality predicates and the corresponding field equivalence | `intermediateField`; `IntermediateExtensionTrivial`; `ExtensionTrivial`; `extensionEquivBase` | Existing definitions/adapters; [source](../../HodgeConjecture/Boundary/Normalization/NormalClosure.lean) | ROUTE |
-| Quotient of the conjugate tensor algebra by the evaluation kernel | $(\bigotimes_{\sigma:L\hookrightarrow N}L)/\ker\varepsilon\simeq N$ | `tensorEvaluationQuotientEquiv`; `tensorEvaluation` | Existing definitions/adapters; [source](../../HodgeConjecture/Boundary/Normalization/NormalClosureTensor.lean) | ROUTE |
+| Quotient of the conjugate tensor algebra by the evaluation kernel | $(\bigotimes_{\sigma:L\hookrightarrow N}L)/\ker\varepsilon\simeq N$ | `tensorEvaluationQuotientEquiv`; `tensorEvaluation` | Constructed evaluation and quotient comparison for the existing normal closure; used in the normalization refinement, not a prescribed Chow cycle; [source](../../HodgeConjecture/Boundary/Normalization/NormalClosureTensor.lean) | ROUTE |
 | Generic base change of normalization and its conjugate tensor | $K\otimes_B\operatorname{IntCl}_B(L)\simeq L,\ K\otimes_B(\bigotimes_B\operatorname{IntCl}_B(L))\simeq\bigotimes_K L$ | `normalizedCoordinateRingBaseChangeEquiv`; `normalizationTensorBaseChangeEquiv` | Existing definitions/adapters; [source](../../HodgeConjecture/Boundary/Normalization/NormalizationBaseChange.lean) | ROUTE |
 | Actual normalization prime inertia and comparison with valuation inertia | $I_Q^{\mathrm{pr}},\ \operatorname{Unram}_{Q\cap S^{I_Q}}(B\to S^{I_Q}),\ I_Q^{\mathrm{pr}}\leftrightarrow I_E,\ (\widetilde B_N)^G$ | `normalizationPrimeInertiaGroup`; `NormalizationPrimeInertiaFixedRingUnramifiedAt`; `PrimeInertiaComparisonAt`; `FullInvariantNormalizationRing` | Existing definitions/adapters; [source](../../HodgeConjecture/Boundary/Normalization/PrimeInertia.lean) | ROUTE |
 | Marked sheet algebra, embeddings, delta tensors and actual separable splitting | $A_H,\ G/H\simeq\operatorname{Hom}_K(L,N),\ L\otimes_KL\to N^{G/H},\ e_s\in N\otimes_KL,\ N\otimes_KL\simeq N^{G/H}$ | `NormalClosureData.rationalMarkedSheetAlgebra`; `NormalClosureData.sheetEmbedding`; `NormalClosureData.sheetEmbeddingEquiv`; `NormalClosureData.collisionToGenericSheets`; `NormalClosureData.sheetDeltaTensor`; `NormalClosureData.normalClosureTensorGenericSheetsEquiv`; `formallyUnramifiedMarkedAugmentedAlgebra` | Existing definitions/adapters; [source](../../HodgeConjecture/Boundary/Normalization/SelectorComparison.lean) | ROUTE |
@@ -5749,7 +5835,7 @@ the hypotheses of their geometric applications.
 | Inertia orbit index at the marked sheet | $[I:I\cap H]$ | `inertiaQuotientIndex` | Existing definitions/adapters; [source](../../HodgeConjecture/Boundary/Sheets/InertiaQuotient.lean) | ROUTE |
 | An inertia orbit crosses the selected-set boundary | $\exists g\in I,\ s\in A:\ gs\notin A$ | `InertiaCrosses`; `baseSheet` | Existing definitions/adapters; [source](../../HodgeConjecture/Boundary/Sheets/InertiaSaturation.lean) | ROUTE |
 | Marked evaluation/augmentation and selector-coordinate adapters | $\operatorname{ev}_H:A_H\to\mathbf Q,\ A_H\simeq\mathbf Q\oplus E_H,\ P_{q_H-1}$ | `baseEvaluation`; `baseAugmentation`; `markedAugmentedAlgebra`; `selectorDecomposition`; `graphOperator`; `decomposition`; `multiplication` | Existing definitions/adapters; [source](../../HodgeConjecture/Boundary/Sheets/MarkedBlockProjector.lean) | ROUTE |
-| Integral conjugate-tensor evaluation into the same normalization | $\varepsilon_B:\bigotimes_{\sigma:L\hookrightarrow N}\operatorname{IntCl}_B(L)\to\operatorname{IntCl}_B(N)$ | `normalizationTensorEvaluation` | Existing definitions/adapters; [source](../../HodgeConjecture/Boundary/Normalization/NormalizationTensor.lean) | ROUTE |
+| Integral conjugate-tensor evaluation into the same normalization | $\varepsilon_B:\bigotimes_{\sigma:L\hookrightarrow N}\operatorname{IntCl}_B(L)\to\operatorname{IntCl}_B(N)$ | `normalizationTensorEvaluation` | Used by the selected-component construction in `FiniteEtaleNormalClosure.lean`; its output is the normal-closure refinement, not SP109's cycle family; [source](../../HodgeConjecture/Boundary/Normalization/NormalizationTensor.lean) | ROUTE |
 
 #### Collision: retained auxiliary objects
 
@@ -5852,7 +5938,7 @@ the hypotheses of their geometric applications.
 | Existing two-point free split-span source | $\mathcal C_{\mathrm{sp}}^{\mathrm{free}}(Z_{\{0,1\}})$ | `Source` | Existing definitions/adapters; [source](../../HodgeConjecture/Realization/Chow/Examples/GeometricSplitPoints.lean) | ROUTE |
 | Complement of a cohomological projector | $1-P$ | `complement` | Existing definitions/adapters; [source](../../HodgeConjecture/Realization/Chow/Model.lean) | ROUTE |
 
-Coverage audit (2026-10-13): all 906 entries found by the comment-stripped,
+Coverage audit (2026-10-13): all 909 entries found by the comment-stripped,
 public line-start declaration scan have an exact identifier occurrence in
 inline Lean code in this registry. The scan covers
 `def`/`abbrev`/`structure`/`class`, including source-linked presentation rows.

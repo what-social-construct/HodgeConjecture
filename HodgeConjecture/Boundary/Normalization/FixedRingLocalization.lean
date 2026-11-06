@@ -1,8 +1,12 @@
-import HodgeConjecture.Boundary.Normalization.FixedRingUnramified
-import HodgeConjecture.Boundary.Normalization.InvariantIntermediate
-import Mathlib.RingTheory.DedekindDomain.Dvr
-import Mathlib.RingTheory.Ideal.GoingDown
-import Mathlib.RingTheory.Ideal.Height
+module
+
+public import HodgeConjecture.Boundary.Normalization.FixedRingUnramified
+public import HodgeConjecture.Boundary.Normalization.InvariantIntermediate
+public import Mathlib.RingTheory.DedekindDomain.Dvr
+public import Mathlib.RingTheory.Ideal.GoingDown
+public import Mathlib.RingTheory.Ideal.Height
+
+@[expose] public section
 
 /-!
 # Height-one localization of fixed rings
@@ -96,9 +100,11 @@ theorem primeHeight_under_le_of_hasGoingDown
     {R T : Type*} [CommRing R] [CommRing T] [Algebra R T]
     [Algebra.HasGoingDown R T]
     (Q : Ideal T) [Q.IsPrime] :
-    (Q.under R).primeHeight ≤ Q.primeHeight := by
+    (Q.under R).height ≤ Q.height := by
   letI : Q.LiesOver (Q.under R) := ⟨rfl⟩
-  rw [Ideal.primeHeight, Ideal.primeHeight]
+  change (⟨Q.under R, inferInstance⟩ : PrimeSpectrum R).asIdeal.height ≤
+    (⟨Q, inferInstance⟩ : PrimeSpectrum T).asIdeal.height
+  rw [PrimeSpectrum.height_eq_orderHeight, PrimeSpectrum.height_eq_orderHeight]
   apply Order.height_le
   intro l hl
   letI : Q.LiesOver l.last.asIdeal :=
@@ -112,8 +118,8 @@ theorem primeHeight_under_le_of_hasGoingDown
 prime height. -/
 theorem fixedPoints_primeHeight_under_le
     (H : Subgroup G) (Q : Ideal S) [Q.IsPrime] :
-    (Q.under (FixedPoints.subalgebra A S H)).primeHeight ≤
-      Q.primeHeight := by
+    (Q.under (FixedPoints.subalgebra A S H)).height ≤
+      Q.height := by
   let SH := FixedPoints.subalgebra A S H
   letI : Algebra.HasGoingDown SH S := fixedPoints_hasGoingDown H
   exact primeHeight_under_le_of_hasGoingDown Q
@@ -122,8 +128,8 @@ theorem fixedPoints_primeHeight_under_le
 subgroup-fixed ring for a finite group action. -/
 theorem fixedPoints_primeHeight_under_eq_one
     (H : Subgroup G) (Q : Ideal S) [Q.IsPrime]
-    (hQ : Q.primeHeight = 1) :
-    (Q.under (FixedPoints.subalgebra A S H)).primeHeight = 1 := by
+    (hQ : Q.height = 1) :
+    (Q.under (FixedPoints.subalgebra A S H)).height = 1 := by
   let SH := FixedPoints.subalgebra A S H
   letI : SMulCommClass H SH S := by
     constructor
@@ -141,8 +147,8 @@ theorem fixedPoints_primeHeight_under_eq_one
   have hQne : Q ≠ ⊥ := by
     intro h
     subst h
-    have hzero : (⊥ : Ideal S).primeHeight = 0 := by
-      rw [Ideal.primeHeight_eq_zero_iff,
+    have hzero : (⊥ : Ideal S).height = 0 := by
+      rw [Ideal.height_eq_zero_iff,
         IsDomain.minimalPrimes_eq_singleton_bot]
       simp
     rw [hzero] at hQ
@@ -154,7 +160,7 @@ theorem fixedPoints_primeHeight_under_eq_one
   · simpa [hQ] using fixedPoints_primeHeight_under_le (A := A) H Q
   · rw [Order.one_le_iff_pos, pos_iff_ne_zero]
     intro hzero
-    have hmin := (Ideal.primeHeight_eq_zero_iff).mp hzero
+    have hmin := (Ideal.height_eq_zero_iff).mp hzero
     rw [IsDomain.minimalPrimes_eq_singleton_bot] at hmin
     exact hqne hmin
 
@@ -168,7 +174,7 @@ does not assert that the ambient ring is one-dimensional. -/
 theorem localizationAtPrime_isDiscreteValuationRing_of_primeHeight_eq_one
     {R : Type*} [CommRing R] [IsDomain R]
     [IsNoetherianRing R] [IsIntegrallyClosed R]
-    (P : Ideal R) [P.IsPrime] (hP : P.primeHeight = 1) :
+    (P : Ideal R) [P.IsPrime] (hP : P.height = 1) :
     IsDiscreteValuationRing (Localization.AtPrime P) := by
   let T := Localization.AtPrime P
   letI : IsNoetherianRing T :=
@@ -178,7 +184,7 @@ theorem localizationAtPrime_isDiscreteValuationRing_of_primeHeight_eq_one
       P.primeCompl_le_nonZeroDivisors
   have hdim : ringKrullDim T ≤ (1 : WithBot ℕ∞) := by
     rw [IsLocalization.AtPrime.ringKrullDim_eq_height P T,
-      Ideal.height_eq_primeHeight, hP]
+      hP]
     exact_mod_cast le_rfl
   letI : Ring.KrullDimLE 1 T := Ring.krullDimLE_iff.mpr hdim
   letI : Ring.DimensionLEOne T :=
@@ -193,20 +199,20 @@ theorem localizationAtPrime_isDiscreteValuationRing_of_primeHeight_eq_one
       IsLocalRing.eq_maximalIdeal
         (Ring.DimensionLEOne.maximalOfPrime hQ hPrime)⟩
   letI : ValuationRing T :=
-    ((tfae_of_isNoetherianRing_of_isLocalRing_of_isDomain T).out 3 1).mp
+    ((tfae_of_isNoetherianRing_of_isLocalRing_of_isDomain T).out 4 2).mp
       hvalCriterion
   have hPne : P ≠ ⊥ := by
     intro h
     subst h
-    have hzero : (⊥ : Ideal R).primeHeight = 0 := by
-      rw [Ideal.primeHeight_eq_zero_iff,
+    have hzero : (⊥ : Ideal R).height = 0 := by
+      rw [Ideal.height_eq_zero_iff,
         IsDomain.minimalPrimes_eq_singleton_bot]
       simp
     rw [hzero] at hP
     exact zero_ne_one hP
   have hnotfield : ¬ IsField T :=
     IsLocalization.AtPrime.not_isField R hPne T
-  exact ((IsDiscreteValuationRing.TFAE T hnotfield).out 1 0).mp
+  exact ((IsDiscreteValuationRing.TFAE T hnotfield).out 2 1).mp
     (inferInstance : ValuationRing T)
 
 end DVR
@@ -224,7 +230,7 @@ theorem fixedRing_isUnramifiedAt_of_inertia_le_of_primeHeight_eq_one
     [IsNoetherianRing A] [Module.Finite A S]
     (I H : Subgroup G) (hIH : I ≤ H)
     [IsIntegrallyClosed (FixedPoints.subalgebra A S H)]
-    (Q : Ideal S) [Q.IsPrime] (hQ : Q.primeHeight = 1)
+    (Q : Ideal S) [Q.IsPrime] (hQ : Q.height = 1)
     (hI : InertiaFixedRingUnramifiedAt (A := A) (S := S) I Q) :
     Algebra.IsUnramifiedAt A
       (Q.under (FixedPoints.subalgebra A S H)) := by
@@ -232,7 +238,7 @@ theorem fixedRing_isUnramifiedAt_of_inertia_le_of_primeHeight_eq_one
   letI : Module.Finite A SH :=
     Module.Finite.of_injective SH.val.toLinearMap Subtype.val_injective
   letI : IsNoetherianRing SH := IsNoetherianRing.of_finite A SH
-  have hq : (Q.under SH).primeHeight = 1 :=
+  have hq : (Q.under SH).height = 1 :=
     fixedPoints_primeHeight_under_eq_one (A := A) H Q hQ
   letI : IsDiscreteValuationRing
       (Localization.AtPrime (Q.under SH)) :=
@@ -258,7 +264,7 @@ theorem fixedSubgroupNormalizationRing_localization_isDiscreteValuationRing
       (NormalClosureNormalizationRing (B := B) (N := N))]
     (H : Subgroup (N ≃ₐ[K] N))
     (Q : Ideal (NormalClosureNormalizationRing (B := B) (N := N)))
-    [Q.IsPrime] (hQ : Q.primeHeight = 1) :
+    [Q.IsPrime] (hQ : Q.height = 1) :
     IsDiscreteValuationRing
       (Localization.AtPrime
         (Q.under (FixedSubgroupNormalizationRing (B := B) H))) := by
@@ -276,7 +282,7 @@ theorem fixedSubgroupNormalizationRing_localization_isDiscreteValuationRing
   let e : R ≃+* SH :=
     (fixedFieldNormalizationEquivFixedRing (B := B) H).toRingEquiv
   letI : IsIntegrallyClosed SH := IsIntegrallyClosed.of_equiv e
-  have hq : (Q.under SH).primeHeight = 1 :=
+  have hq : (Q.under SH).height = 1 :=
     fixedPoints_primeHeight_under_eq_one (A := B) H Q hQ
   exact localizationAtPrime_isDiscreteValuationRing_of_primeHeight_eq_one
     (Q.under SH) hq
@@ -294,7 +300,7 @@ theorem fixedSubgroupNormalizationRing_isUnramifiedAt_of_inertia_le
       (NormalClosureNormalizationRing (B := B) (N := N))]
     (I H : Subgroup (N ≃ₐ[K] N)) (hIH : I ≤ H)
     (Q : Ideal (NormalClosureNormalizationRing (B := B) (N := N)))
-    [Q.IsPrime] (hQ : Q.primeHeight = 1)
+    [Q.IsPrime] (hQ : Q.height = 1)
     (hI : InertiaFixedRingUnramifiedAt
       (A := B)
       (S := NormalClosureNormalizationRing (B := B) (N := N)) I Q) :

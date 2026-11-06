@@ -1,5 +1,10 @@
+module
+
 import HodgeConjecture.Boundary.Normalization.BoundaryPole
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 Focused SP67 regressions. Run with
@@ -66,7 +71,7 @@ variable [IsNoetherianRing T]
 
 -- Normality is not needed to construct the ideal-power denominator.
 example (J : Ideal T) (hJ : J ≠ ⊥) (p : PrimeSpectrum T)
-    (hp : p.asIdeal.primeHeight = 1) (hJp : J ≤ p.asIdeal) :
+    (hp : p.asIdeal.height = 1) (hJp : J ≤ p.asIdeal) :
     ∃ (f t : T) (n : ℕ), f ∈ J ∧ f ≠ 0 ∧ t ∉ p.asIdeal ∧
       ∀ x ∈ J ^ n, t * x ∈ Ideal.span {f} := by
   fail_if_success have _ : IsIntegrallyClosed T := inferInstance
@@ -75,7 +80,7 @@ example (J : Ideal T) (hJ : J ≠ ⊥) (p : PrimeSpectrum T)
 -- The height-one prime constructs properness; no pole witness is assumed.
 example (U : (Spec T).Opens) [Nonempty U]
     (J : Ideal T) (hJ : J ≠ ⊥) (hU : ∀ x : U, ¬ J ≤ x.1.asIdeal)
-    (p : PrimeSpectrum T) (hp : p.asIdeal.primeHeight = 1)
+    (p : PrimeSpectrum T) (hp : p.asIdeal.height = 1)
     (hJp : J ≤ p.asIdeal) : affineSectionSubalgebra (N := N) U ≠ ⊥ := by
   fail_if_success have _ : IsIntegrallyClosed T := inferInstance
   exact affineSectionSubalgebra_ne_bot_of_heightOne U J hJ hU p hp hJp
@@ -100,14 +105,14 @@ variable [IsNoetherianRing B]
 local notation "T₀" => NormalClosureNormalizationRing (B := B) (N := N)
 
 example (I : Subgroup C.GaloisGroup) (hI : I ≠ ⊥)
-    (p : PrimeSpectrum T₀) (hp : p.asIdeal.primeHeight = 1)
+    (p : PrimeSpectrum T₀) (hp : p.asIdeal.height = 1)
     (hJp : fixedMovingBoundaryIdeal C I ≤ p.asIdeal) :
     boundarySectionSubalgebra C I hI ≠ ⊥ :=
   boundarySectionSubalgebra_ne_bot_of_heightOne C I hI p hp hJp
 
 -- Properness yields an actual section whose rational function is not in the base.
 example (I : Subgroup C.GaloisGroup) (hI : I ≠ ⊥)
-    (p : PrimeSpectrum T₀) (hp : p.asIdeal.primeHeight = 1)
+    (p : PrimeSpectrum T₀) (hp : p.asIdeal.height = 1)
     (hJp : fixedMovingBoundaryIdeal C I ≤ p.asIdeal) :
     ∃ z : BoundarySectionRing C I,
       boundarySectionsToNormalClosure C I hI z ∉ (algebraMap T₀ N).range := by
@@ -129,7 +134,7 @@ variable [Algebra.IsSeparable K L]
 
 -- For every proposed nonzero multiplier, a failing actual section is constructed.
 example (I : Subgroup C.GaloisGroup) (hI : I ≠ ⊥)
-    (p : PrimeSpectrum T₀) (hp : p.asIdeal.primeHeight = 1)
+    (p : PrimeSpectrum T₀) (hp : p.asIdeal.height = 1)
     (hJp : fixedMovingBoundaryIdeal C I ≤ p.asIdeal) (s : T₀) (hs : s ≠ 0) :
     ∃ z : BoundarySectionRing C I,
       (s : N) * boundarySectionsToNormalClosure C I hI z ∉
@@ -137,7 +142,7 @@ example (I : Subgroup C.GaloisGroup) (hI : I ≠ ⊥)
   boundarySection_tracePoleWitness C I hI p hp hJp s hs
 
 example (I : Subgroup C.GaloisGroup) (hI : I ≠ ⊥)
-    (p : PrimeSpectrum T₀) (hp : p.asIdeal.primeHeight = 1)
+    (p : PrimeSpectrum T₀) (hp : p.asIdeal.height = 1)
     (hJp : fixedMovingBoundaryIdeal C I ≤ p.asIdeal) :
     (normalizationTraceDual C).colon
       (boundarySectionSubalgebra C I hI).toSubmodule = ⊥ :=
@@ -171,8 +176,8 @@ run_cmd do
       `HodgeConjecture.NormalizationInertia.conjugateBoundarySeparation_of_traceLanding] do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    for axiomName in state.axioms do
+    let axioms ← Lean.collectAxioms declaration
+    for axiomName in axioms do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"
-    logInfo m!"PASS standard-axiom boundary: {declaration}; {state.axioms.toList}"
+    logInfo m!"PASS standard-axiom boundary: {declaration}; {axioms.toList}"

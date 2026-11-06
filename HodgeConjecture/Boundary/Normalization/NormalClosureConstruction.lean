@@ -1,4 +1,8 @@
-import HodgeConjecture.Boundary.Normalization.NormalClosure
+module
+
+public import HodgeConjecture.Boundary.Normalization.NormalClosure
+
+@[expose] public section
 
 /-!
 # Constructing marked finite normal closures

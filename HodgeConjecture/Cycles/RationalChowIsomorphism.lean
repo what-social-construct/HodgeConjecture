@@ -1,5 +1,9 @@
-import HodgeConjecture.Cycles.RationalChowPushforward
-import HodgeConjecture.Cycles.ChowIsomorphism
+module
+
+public import HodgeConjecture.Cycles.RationalChowPushforward
+public import HodgeConjecture.Cycles.ChowIsomorphism
+
+@[expose] public section
 
 /-!
 # Scheme isomorphisms on rational Chow groups

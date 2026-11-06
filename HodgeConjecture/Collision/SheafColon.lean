@@ -1,5 +1,9 @@
-import Mathlib.AlgebraicGeometry.IdealSheaf.Basic
-import Mathlib.RingTheory.Ideal.Colon
+module
+
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Basic
+public import Mathlib.RingTheory.Ideal.Colon
+
+@[expose] public section
 
 /-!
 # Sheaf-colon ideals
@@ -170,7 +174,7 @@ theorem annihilator_ideal_top
       (J.ideal
         ⟨⊤, AlgebraicGeometry.isAffineOpen_top X⟩).annihilator := by
   rw [annihilator, colon_ideal_top]
-  exact Submodule.colon_bot
+  exact Submodule.bot_colon
 
 end Scheme
 

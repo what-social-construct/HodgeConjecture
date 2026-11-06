@@ -1,7 +1,12 @@
+module
+
 import HodgeConjecture.Boundary.Normalization.GluedNormalizationNormality
 import HodgeConjecture.Boundary.Normalization.GluedNormalizationChart
 import HodgeConjecture.Boundary.Normalization.FunctionFieldNormalClosure
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP91 regressions for normal local rings of the original glued normalization.
@@ -193,7 +198,7 @@ example :
         IsIntegrallyClosed ((gluedNormalizationModel X Nₚ).presheaf.stalk z) := by
   letI : Algebra X.functionField Y.functionField :=
     (functionFieldMapOfDominant p).hom.toAlgebra
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   fail_if_success
     have _ : ∀ x : X, IsIntegrallyClosed (X.presheaf.stalk x) := fun _ => inferInstance
   fail_if_success
@@ -234,8 +239,8 @@ run_cmd do
   for declaration in declarations do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    let actual := state.axioms.toList
+    let axioms ← Lean.collectAxioms declaration
+    let actual := axioms.toList
     unless actual.length == permitted.length do
       throwError "Expected exactly the standard three axioms in {declaration}, got {actual}"
     for axiomName in actual do

@@ -1,7 +1,11 @@
-import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
-import Mathlib.RingTheory.Ideal.GoingDown
-import HodgeConjecture.CommutativeAlgebra.MonicPrimeCoefficients
-import HodgeConjecture.CommutativeAlgebra.IntegralIdealPolynomial
+module
+
+public import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
+public import Mathlib.RingTheory.Ideal.GoingDown
+public import HodgeConjecture.CommutativeAlgebra.MonicPrimeCoefficients
+public import HodgeConjecture.CommutativeAlgebra.IntegralIdealPolynomial
+
+@[expose] public section
 
 /-!
 # Going down over an integrally closed domain
@@ -30,8 +34,8 @@ private theorem mem_prime_of_scaled_annihilator
     (hb : IsIntegral R b) (F : R[X]) (hF : F.Monic)
     (hroot : aeval (algebraMap R S a * b) F = 0)
     (hcoeff : ∀ i < F.natDegree, F.coeff i ∈ p) : b ∈ Q := by
-  letI : NoZeroSMulDivisors R S :=
-    NoZeroSMulDivisors.iff_algebraMap_injective.mpr hinj
+  letI : Module.IsTorsionFree R S :=
+    Module.isTorsionFree_iff_algebraMap_injective.mpr hinj
   have hdiv : minpoly R b ∣ F.comp (C a * X) := by
     apply minpoly.isIntegrallyClosed_dvd hb
     simpa only [aeval_comp, aeval_mul, aeval_C, aeval_X] using hroot

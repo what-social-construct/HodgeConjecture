@@ -1,5 +1,9 @@
-import Mathlib.AlgebraicGeometry.Morphisms.Etale
-import Mathlib.RingTheory.RingHom.Smooth
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Etale
+public import Mathlib.RingTheory.RingHom.Smooth
+
+@[expose] public section
 
 /-!
 # Étale algebras on affine charts
@@ -25,37 +29,26 @@ variable {X Y : Scheme.{u}} (f : X ⟶ Y)
 
 /-- Scheme smoothness gives algebraic smoothness on any pair of affine
 charts for which the coordinate-ring map is defined. -/
-theorem affine_appLE_smooth [IsSmooth f]
+theorem affine_appLE_smooth [Smooth f]
     (U : Y.affineOpens) (V : X.affineOpens) (e : V.1 ≤ f ⁻¹ᵁ U.1) :
     (f.appLE U V e).hom.Smooth := by
-  have hlocal : Locally IsStandardSmooth (f.appLE U V e).hom :=
-    HasRingHomProperty.appLE (P := @IsSmooth) f inferInstance U V e
-  have hsmooth : Locally RingHom.Smooth (f.appLE U V e).hom := by
-    apply locally_of_locally _ hlocal
-    intro R S _ _ g hg
-    algebraize [g]
-    haveI : Algebra.IsStandardSmooth R S := hg
-    exact inferInstanceAs (Algebra.Smooth R S)
-  rwa [locally_iff_of_localizationSpanTarget
-    RingHom.Smooth.propertyIsLocal.respectsIso
-    RingHom.Smooth.ofLocalizationSpanTarget] at hsmooth
+  exact HasRingHomProperty.appLE (P := @Smooth) f inferInstance U V e
 
 /-- The canonical coordinate algebra of an affine source chart of an étale
 morphism, over an affine target chart, is étale. -/
-theorem affine_appLE_etale [IsEtale f]
+theorem affine_appLE_etale [Etale f]
     (U : Y.affineOpens) (V : X.affineOpens) (e : V.1 ≤ f ⁻¹ᵁ U.1) :
     letI := (f.appLE U V e).hom.toAlgebra
     Algebra.Etale Γ(Y, U) Γ(X, V) := by
   letI := (f.appLE U V e).hom.toAlgebra
   haveI : Algebra.Smooth Γ(Y, U) Γ(X, V) := affine_appLE_smooth f U V e
   haveI : Algebra.FormallyUnramified Γ(Y, U) Γ(X, V) :=
-    AlgebraicGeometry.FormallyUnramified.formallyUnramified_of_affine_subset
-      (f := f) U V e
-  exact ⟨Algebra.FormallyEtale.of_unramified_and_smooth, inferInstance⟩
+    f.formallyUnramified_appLE U.property V.property e
+  exact ⟨Algebra.FormallyEtale.of_formallyUnramified_and_formallySmooth, inferInstance⟩
 
 /-- An étale morphism between affine schemes induces an étale algebra map
 on global sections. -/
-theorem affine_appTop_etale [IsEtale f] [IsAffine X] [IsAffine Y] :
+theorem affine_appTop_etale [Etale f] [IsAffine X] [IsAffine Y] :
     letI := f.appTop.hom.toAlgebra
     Algebra.Etale Γ(Y, ⊤) Γ(X, ⊤) := by
   rw [Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE]

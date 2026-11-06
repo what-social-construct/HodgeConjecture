@@ -1,5 +1,10 @@
+module
+
 import HodgeConjecture.Boundary
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP74 regressions for constructing the marked finite normal closure of the
@@ -106,7 +111,7 @@ example :
     NormalClosureData X.functionField Y.functionField
       (IntermediateField.normalClosure X.functionField Y.functionField
         (AlgebraicClosure Y.functionField)) := by
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   fail_if_success have _ : FormallyUnramified p := inferInstance
   exact functionFieldNormalClosureData p
 
@@ -155,10 +160,10 @@ example [FormallyUnramified p] :
         (AlgebraicClosure Y.functionField)) := by
   fail_if_success have _ : PerfectField X.functionField := inferInstance
   fail_if_success have _ : CharZero X.functionField := inferInstance
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   exact functionFieldNormalClosure_isGalois p
 
-example [IsEtale p] :
+example [Etale p] :
     letI := (functionFieldMapOfDominant p).hom.toAlgebra
     IsGalois X.functionField
       (IntermediateField.normalClosure X.functionField Y.functionField
@@ -166,8 +171,8 @@ example [IsEtale p] :
   functionFieldNormalClosure_isGalois p
 
 -- Construct the marked Galois closure of an actual finite étale composite.
-example [IsEtale p] [IsIntegral Z] (q : Z ⟶ Y)
-    [IsDominant q] [IsFinite q] [IsEtale q] :
+example [Etale p] [IsIntegral Z] (q : Z ⟶ Y)
+    [IsDominant q] [IsFinite q] [Etale q] :
     letI := (functionFieldMapOfDominant (q ≫ p)).hom.toAlgebra
     IsGalois X.functionField
       (IntermediateField.normalClosure X.functionField Z.functionField
@@ -199,8 +204,8 @@ run_cmd do
       `HodgeConjecture.CollisionFoundations.functionFieldNormalClosure_isGalois] do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    for axiomName in state.axioms do
+    let axioms ← Lean.collectAxioms declaration
+    for axiomName in axioms do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"
-    logInfo m!"PASS standard-axiom boundary: {declaration}; {state.axioms.toList}"
+    logInfo m!"PASS standard-axiom boundary: {declaration}; {axioms.toList}"

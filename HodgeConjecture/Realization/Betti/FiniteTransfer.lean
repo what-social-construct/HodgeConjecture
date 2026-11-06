@@ -1,5 +1,10 @@
-import HodgeConjecture.Realization.Betti.SingularDegreeZero
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+module
+
+public import HodgeConjecture.Realization.Betti.SingularDegreeZero
+public import HodgeConjecture.Realization.FiberSum
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+
+@[expose] public section
 
 /-!
 # Degree-zero transfer on finite discrete spaces
@@ -24,20 +29,8 @@ universe u v w
 variable {X : Type u} {Y : Type v} {Z : Type w}
 
 /-- Summation over the actual fibers of a finite-domain map. -/
-def fiberSum [Fintype X] (f : X → Y) : (X → ℚ) →ₗ[ℚ] (Y → ℚ) where
-  toFun a y := ∑ x, if f x = y then a x else 0
-  map_add' a b := by
-    ext y
-    simp only [Pi.add_apply, ← Finset.sum_add_distrib]
-    apply Finset.sum_congr rfl
-    intro x _
-    split_ifs <;> simp
-  map_smul' r a := by
-    ext y
-    simp only [Pi.smul_apply, RingHom.id_apply, Finset.smul_sum]
-    apply Finset.sum_congr rfl
-    intro x _
-    split_ifs <;> simp
+abbrev fiberSum [Fintype X] (f : X → Y) : (X → ℚ) →ₗ[ℚ] (Y → ℚ) :=
+  finiteFiberSum ℚ f
 
 variable [TopologicalSpace X] [TopologicalSpace Y] [TopologicalSpace Z]
 variable [DiscreteTopology Y] [DiscreteTopology Z]

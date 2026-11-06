@@ -1,6 +1,10 @@
-import HodgeConjecture.Boundary.GaloisProjectorExtension
-import HodgeConjecture.Correspondence.GroupAlgebraProjector
-import HodgeConjecture.Correspondence.ProjectorDefect
+module
+
+public import HodgeConjecture.Boundary.GaloisProjectorExtension
+public import HodgeConjecture.Correspondence.GroupAlgebraProjector
+public import HodgeConjecture.Correspondence.ProjectorDefect
+
+@[expose] public section
 
 /-!
 # Supplied compactified graph projectors

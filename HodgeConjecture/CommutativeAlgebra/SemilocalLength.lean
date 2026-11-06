@@ -1,8 +1,12 @@
-import HodgeConjecture.CommutativeAlgebra.LocalLength
-import Mathlib.Algebra.Module.LocalizedModule.Exact
-import Mathlib.RingTheory.Localization.Module
-import Mathlib.RingTheory.Spectrum.Maximal.Basic
-import Mathlib.RingTheory.Ideal.Over
+module
+
+public import HodgeConjecture.CommutativeAlgebra.LocalLength
+public import Mathlib.Algebra.Module.LocalizedModule.Exact
+public import Mathlib.RingTheory.Localization.Module
+public import Mathlib.RingTheory.Spectrum.Maximal.Basic
+public import Mathlib.RingTheory.Ideal.Over
+
+@[expose] public section
 
 /-!
 # The semilocal length formula
@@ -145,7 +149,7 @@ theorem length_localized_atMaximal_ne_top
   apply ne_top_of_le_ne_top h
   exact Finset.single_le_sum (f := fun q : MaximalSpectrum B =>
     Module.length (Localization q.asIdeal.primeCompl) (LocalizedModule q.asIdeal.primeCompl M))
-    (fun _ _ => zero_le _) (Finset.mem_univ q)
+    (fun _ _ => zero_le) (Finset.mem_univ q)
 
 variable [IsLocalRing A]
   [∀ q : MaximalSpectrum B, q.asIdeal.LiesOver (IsLocalRing.maximalIdeal A)]

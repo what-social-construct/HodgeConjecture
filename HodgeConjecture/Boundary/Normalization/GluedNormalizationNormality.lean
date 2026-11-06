@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Normalization.GluedNormalization
-import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+module
+
+public import HodgeConjecture.Boundary.Normalization.GluedNormalization
+public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+
+@[expose] public section
 
 /-!
 # Normal local rings of the original glued normalization
@@ -46,7 +50,7 @@ theorem normalizedAffineModel_stalk_isIntegrallyClosed
     isIntegrallyClosed_of_isLocalization (Localization.AtPrime z.asIdeal)
       z.asIdeal.primeCompl z.asIdeal.primeCompl_le_nonZeroDivisors
   exact IsIntegrallyClosed.of_equiv
-    (StructureSheaf.stalkIso T z).symm.commRingCatIsoToRingEquiv
+    (StructureSheaf.stalkIso T z).toRingEquiv
 
 variable (X : Scheme.{u}) [IsIntegral X]
 variable (N : Type u) [Field N] [Algebra X.functionField N]
@@ -59,7 +63,7 @@ theorem gluedNormalizationModel_stalk_isDomain (z : gluedNormalizationModel X N)
     ((algebraMap X.functionField N).comp (X.germToFunctionField U.val).hom).toAlgebra
   let T := normalizedCoordinateRing Γ(X, U.val) N
   let e := (asIso ((normalizationChartToGlued X N U).stalkMap x)).commRingCatIsoToRingEquiv
-  let s := (StructureSheaf.stalkIso T x).commRingCatIsoToRingEquiv
+  let s := (StructureSheaf.stalkIso T x).symm.toRingEquiv
   exact (e.trans s).toMulEquiv.isDomain _
 
 /-- Every actual local ring of the same glued normalization is integrally closed. -/

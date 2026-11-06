@@ -1,4 +1,8 @@
-import HodgeConjecture.Correspondence.Algebra
+module
+
+public import HodgeConjecture.Correspondence.Algebra
+
+@[expose] public section
 
 /-!
 # Finite coproducts of scheme correspondences

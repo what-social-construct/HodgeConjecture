@@ -1,5 +1,9 @@
-import HodgeConjecture.Correspondence.GraphSubscheme
-import HodgeConjecture.Inputs.FiniteEtaleExtension
+module
+
+public import HodgeConjecture.Correspondence.GraphSubscheme
+public import HodgeConjecture.Inputs.FiniteEtaleExtension
+
+@[expose] public section
 
 /-!
 # Scheme-theoretic restriction of extended deck graphs
@@ -100,7 +104,8 @@ theorem graphRestriction_isPullback (E : FiniteEtaleExtension j p)
         _ = s.snd ≫ σ.toSchemeHom := by rw [hf]
         _ = (s.fst ≫ pullback.snd p p) ≫ E.inclusion := by
           simpa only [Category.assoc] using hs.symm
-  · simpa only [Category.assoc] using hf
+  · change (s.fst ≫ pullback.fst p p) ≫ E.inclusion = s.snd
+    simpa only [Category.assoc] using hf
   · intro m hm _
     have h := congrArg (fun f ↦ f ≫ pullback.fst p p) hm
     simpa [Category.assoc] using h

@@ -1,5 +1,9 @@
-import HodgeConjecture.Correspondence.Graph
-import HodgeConjecture.Correspondence.ProjectorLift
+module
+
+public import HodgeConjecture.Correspondence.Graph
+public import HodgeConjecture.Correspondence.ProjectorLift
+
+@[expose] public section
 
 /-!
 # Finite-group averaging projectors

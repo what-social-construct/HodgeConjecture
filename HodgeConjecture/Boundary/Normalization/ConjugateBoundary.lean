@@ -1,6 +1,10 @@
-import HodgeConjecture.Boundary.Normalization.ConjugateNormalization
-import HodgeConjecture.Boundary.Normalization.PrimeInertia
-import Mathlib.Algebra.Group.Subgroup.Pointwise
+module
+
+public import HodgeConjecture.Boundary.Normalization.ConjugateNormalization
+public import HodgeConjecture.Boundary.Normalization.PrimeInertia
+public import Mathlib.Algebra.Group.Subgroup.Pointwise
+
+@[expose] public section
 
 /-!
 # Conjugate boundaries and codimension-one separation
@@ -304,7 +308,7 @@ def ConjugateBoundarySeparation
     I ≠ ⊥ →
       ∀ p : PrimeSpectrum
           (NormalClosureNormalizationRing (B := B) (N := N)),
-        p.asIdeal.primeHeight = 1 →
+        p.asIdeal.height = 1 →
           ¬ fixedMovingBoundaryIdeal C I ≤ p.asIdeal
 
 end FixedMovingIdeals

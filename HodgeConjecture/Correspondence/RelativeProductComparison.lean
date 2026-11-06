@@ -1,4 +1,8 @@
-import HodgeConjecture.Correspondence.GraphComposition
+module
+
+public import HodgeConjecture.Correspondence.GraphComposition
+
+@[expose] public section
 
 /-!
 # Relative products under a change of structural base
@@ -80,7 +84,7 @@ theorem tripleBaseComparison_p13 :
 base morphism is separated. -/
 instance tripleBaseComparison_isClosedImmersion [IsSeparated b] :
     IsClosedImmersion (tripleBaseComparison p b) := by
-  exact MorphismProperty.pullback_map
+  exact MorphismProperty.pullbackMap
     (P := @IsClosedImmersion)
     (inferInstance : IsClosedImmersion (pairBaseComparison p b))
     (inferInstance : IsClosedImmersion (pairBaseComparison p b))

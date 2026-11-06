@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Different
-import Mathlib.RingTheory.DedekindDomain.Different
+module
+
+public import HodgeConjecture.Boundary.Different
+public import Mathlib.RingTheory.DedekindDomain.Different
+
+@[expose] public section
 
 /-!
 # The height-one different and ramification

@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Normalization.FiniteEtaleNormalClosure
-import HodgeConjecture.Boundary.Normalization.AffineNormalizationRestriction
+module
+
+public import HodgeConjecture.Boundary.Normalization.FiniteEtaleNormalClosure
+public import HodgeConjecture.Boundary.Normalization.AffineNormalizationRestriction
+
+@[expose] public section
 
 /-!
 # Restriction compatibility of the marked affine refinement

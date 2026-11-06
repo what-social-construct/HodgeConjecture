@@ -1,10 +1,14 @@
-import HodgeConjecture.Boundary.Sheets.GenericProjector
-import HodgeConjecture.LinearAlgebra.MarkedAugmentedAlgebraDecomposition
-import Mathlib.Algebra.Algebra.Bilinear
-import Mathlib.Algebra.Algebra.Pi
-import Mathlib.Algebra.Algebra.Rat
-import Mathlib.LinearAlgebra.Pi
-import Mathlib.Tactic.Ring
+module
+
+public import HodgeConjecture.Boundary.Sheets.GenericProjector
+public import HodgeConjecture.LinearAlgebra.MarkedAugmentedAlgebraDecomposition
+public import Mathlib.Algebra.Algebra.Bilinear
+public import Mathlib.Algebra.Algebra.Pi
+public import Mathlib.Algebra.Algebra.Rat
+public import Mathlib.LinearAlgebra.Pi
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 /-!
 # The marked-sheet block form of a Galois selector
@@ -391,10 +395,9 @@ is exactly the graph projector of `q - 1`.
 -/
 theorem decomposition_conj_multiplication :
     (decomposition H).conj (multiplication H) = graphOperator H := by
-  simpa only [markedAugmentedAlgebra_decomposition,
-    markedAugmentedAlgebra_multiplication,
-    markedAugmentedAlgebra_graphOperator] using
-      (markedAugmentedAlgebra H).decomposition_conj_multiplication
+  have h := (markedAugmentedAlgebra H).decomposition_conj_multiplication
+  rw [markedAugmentedAlgebra_decomposition, markedAugmentedAlgebra_multiplication, markedAugmentedAlgebra_graphOperator] at h
+  exact h
 
 /--
 In selector/CRT coordinates, multiplication by the base-sheet selector is
@@ -403,10 +406,9 @@ the diagonal projector `diag(1, 0)`.
 theorem selectorDecomposition_conj_multiplication :
     (selectorDecomposition H).conj (multiplication H) =
       diagonalOperator H := by
-  simpa only [markedAugmentedAlgebra_selectorDecomposition,
-    markedAugmentedAlgebra_multiplication,
-    markedAugmentedAlgebra_diagonalOperator] using
-      (markedAugmentedAlgebra H).selectorDecomposition_conj_multiplication
+  have h := (markedAugmentedAlgebra H).selectorDecomposition_conj_multiplication
+  rw [markedAugmentedAlgebra_selectorDecomposition, markedAugmentedAlgebra_multiplication, markedAugmentedAlgebra_diagonalOperator] at h
+  exact h
 
 /-- The two sheet splittings differ by the canonical lower shear. -/
 theorem selectorToMarked_eq_shear :

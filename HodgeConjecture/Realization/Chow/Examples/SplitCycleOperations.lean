@@ -1,5 +1,9 @@
-import HodgeConjecture.Realization.Chow.Examples.SplitRationalEquivalence
-import HodgeConjecture.Correspondence.Examples.SplitCycleGeometry
+module
+
+public import HodgeConjecture.Realization.Chow.Examples.SplitRationalEquivalence
+public import HodgeConjecture.Correspondence.Examples.SplitCycleGeometry
+
+@[expose] public section
 
 /-!
 # Pushforward, pullback, and diagonal intersection on split zero-cycles

@@ -1,6 +1,10 @@
-import HodgeConjecture.Realization.Chow.Examples.SplitZeroCycleBaseChange
-import Mathlib.AlgebraicGeometry.FunctionField
-import Mathlib.LinearAlgebra.Quotient.Basic
+module
+
+public import HodgeConjecture.Realization.Chow.Examples.SplitZeroCycleBaseChange
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Mathlib.LinearAlgebra.Quotient.Basic
+
+@[expose] public section
 
 /-!
 # Rational equivalence on finite split schemes

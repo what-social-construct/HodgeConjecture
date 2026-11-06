@@ -1,6 +1,10 @@
-import HodgeConjecture.Boundary.ExtensionCriterion
-import HodgeConjecture.Boundary.Sheets.GenericProjector
-import HodgeConjecture.Correspondence.FiniteGroupProjector
+module
+
+public import HodgeConjecture.Boundary.ExtensionCriterion
+public import HodgeConjecture.Boundary.Sheets.GenericProjector
+public import HodgeConjecture.Correspondence.FiniteGroupProjector
+
+@[expose] public section
 
 /-!
 # Boundary inertia acting through averaging correspondences

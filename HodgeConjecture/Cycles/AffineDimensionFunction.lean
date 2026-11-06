@@ -1,6 +1,10 @@
-import HodgeConjecture.Cycles.ConsecutivePrimeDimension
-import HodgeConjecture.Cycles.CycleDegree
-import HodgeConjecture.Cycles.FiniteTypeDimension
+module
+
+public import HodgeConjecture.Cycles.ConsecutivePrimeDimension
+public import HodgeConjecture.Cycles.CycleDegree
+public import HodgeConjecture.Cycles.FiniteTypeDimension
+
+@[expose] public section
 
 /-!
 # The actual dimension function on a finite-type affine spectrum
@@ -45,7 +49,7 @@ def DimensionFunction.ofSpecFiniteType : DimensionFunction (Spec (CommRingCat.of
     exact_mod_cast h
   map_covBy := by
     intro x y hxy
-    have hp := ((specPointOrderIso A).map_covBy.mpr hxy).ofDual
+    have hp := ((apply_covBy_apply_iff (specPointOrderIso A)).mpr hxy).ofDual
     exact_mod_cast (prime_residueField_trdeg_toNat_add_one_of_covBy k A y x hp).symm
 
 /-- Evaluation uses the literal prime-localization residue field. -/

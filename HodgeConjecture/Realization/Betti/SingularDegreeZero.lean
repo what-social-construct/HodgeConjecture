@@ -1,7 +1,11 @@
-import Mathlib.AlgebraicTopology.SingularSet
-import Mathlib.Algebra.Algebra.Subalgebra.Basic
-import Mathlib.Algebra.Algebra.Pi
-import Mathlib.LinearAlgebra.Quotient.Basic
+module
+
+public import Mathlib.AlgebraicTopology.SingularSet
+public import Mathlib.Algebra.Algebra.Subalgebra.Basic
+public import Mathlib.Algebra.Algebra.Pi
+public import Mathlib.LinearAlgebra.Quotient.Basic
+
+@[expose] public section
 
 /-!
 # Rational singular cohomology in degree zero
@@ -33,7 +37,7 @@ namespace SingularDegreeZero
 variable (X : Type u) [TopologicalSpace X]
 
 /-- Actual continuous singular simplices on the standard topological simplex. -/
-abbrev Simplex (n : ℕ) := C(SimplexCategory.toTopObj ⦋n⦌, X)
+abbrev Simplex (n : ℕ) := C(Convexity.StdSimplex ℝ (Fin (n + 1)), X)
 
 /-- These are precisely the simplices in Mathlib's singular simplicial set. -/
 def simplexEquivSingularSet (n : ℕ) :
@@ -44,20 +48,23 @@ def simplexEquivSingularSet (n : ℕ) :
 def pointSimplex (x : X) : Simplex X 0 := ContinuousMap.const _ x
 
 @[simp]
-theorem pointSimplex_apply (x : X) (t : SimplexCategory.toTopObj ⦋0⦌) :
+theorem pointSimplex_apply (x : X) (t : Convexity.StdSimplex ℝ (Fin 1)) :
     pointSimplex X x t = x := rfl
 
 /-- Every continuous zero-simplex is its point simplex. -/
 @[simp]
 theorem pointSimplex_eq (σ : Simplex X 0) : pointSimplex X (σ default) = σ := by
   ext t
-  exact congrArg σ (Subsingleton.elim default t)
+  apply congrArg σ
+  apply Convexity.StdSimplex.ext
+  ext i
+  simp
 
 /-- The actual two singular face restrictions. Face zero is the terminal
 vertex and face one is the initial vertex. -/
 def face (γ : Simplex X 1) (i : Fin 2) : Simplex X 0 :=
-  γ.comp ⟨SimplexCategory.toTopMap (SimplexCategory.δ i),
-    SimplexCategory.continuous_toTopMap _⟩
+  γ.comp ⟨Convexity.StdSimplex.map (SimplexCategory.δ i),
+    by fun_prop⟩
 
 /-- The continuous-map face is exactly the face in the singular set. -/
 theorem simplexEquivSingularSet_face (γ : Simplex X 1) (i : Fin 2) :

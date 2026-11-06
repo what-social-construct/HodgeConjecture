@@ -1,6 +1,11 @@
-import HodgeConjecture.Realization.Chow
-import HodgeConjecture.Realization.Betti
-import HodgeConjecture.Realization.HodgeTarget
+module
+
+public import HodgeConjecture.Realization.Chow
+public import HodgeConjecture.Realization.Betti
+public import HodgeConjecture.Realization.HodgeTarget
+public import HodgeConjecture.Realization.DeRham
+
+@[expose] public section
 
 /-!
 # Realization stage

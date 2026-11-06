@@ -1,7 +1,11 @@
-import HodgeConjecture.Realization.Chow.Model
-import HodgeConjecture.Realization.HodgeClasses
-import HodgeConjecture.LinearAlgebra.BlockGraphProjector
-import HodgeConjecture.LinearAlgebra.UniversalIdempotentAlgebra
+module
+
+public import HodgeConjecture.Realization.Chow.Model
+public import HodgeConjecture.Realization.HodgeClasses
+public import HodgeConjecture.LinearAlgebra.BlockGraphProjector
+public import HodgeConjecture.LinearAlgebra.UniversalIdempotentAlgebra
+
+@[expose] public section
 
 /-!
 # Tate-block graph projectors and the Hodge target

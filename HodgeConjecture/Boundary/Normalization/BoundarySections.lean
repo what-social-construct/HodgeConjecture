@@ -1,6 +1,10 @@
-import HodgeConjecture.Boundary.Normalization.AffineSections
-import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
-import Mathlib.RingTheory.Localization.Integral
+module
+
+public import HodgeConjecture.Boundary.Normalization.AffineSections
+public import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
+public import Mathlib.RingTheory.Localization.Integral
+
+@[expose] public section
 
 /-!
 # Sections outside the fixed--moving boundary
@@ -102,7 +106,7 @@ abbrev BoundarySectionRing (I : Subgroup C.GaloisGroup) :=
 local instance (I : Subgroup C.GaloisGroup) : Algebra T₀ (BoundarySectionRing C I) :=
   inferInstanceAs
     (Algebra T₀
-      ((Spec.structureSheaf T₀).val.obj (Opposite.op (fixedMovingBoundaryOpen C I))))
+      ((Spec.structureSheaf T₀).obj.obj (Opposite.op (fixedMovingBoundaryOpen C I))))
 
 /-- The generic-germ algebra map from boundary sections to the specified
 normal-closure field. -/

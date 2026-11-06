@@ -1,7 +1,12 @@
+-- This dependency audit loads private imported proof bodies (legacy import mode).
 import HodgeConjecture.Realization.Betti.Examples.SplitGaloisAction
 import HodgeConjecture.Realization.Chow.GaloisHodgeTarget
 import Solution
 import Lean.Util.CollectAxioms
+import HodgeConjecture.MathlibCompat.DeclarationDependencies
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 # Declaration dependencies of selected proof endpoints
@@ -9,7 +14,8 @@ import Lean.Util.CollectAxioms
 Run with `lake env lean research/ProofDependencies.lean`.
 
 This research diagnostic traverses Lean's checked constant declarations using
-the same traversal as `#print axioms`, retaining the visited declarations.
+a traversal of statement types and checked bodies, retaining every visited
+declaration independently of Lean's cached axiom collector.
 It inspects statement types and proof/definition bodies transitively, then
 reports the originating `HodgeConjecture.LinearAlgebra` modules. Importing a
 module alone does not count as using one of its declarations.
@@ -27,6 +33,8 @@ unused. This file is a diagnostic, not part of the library's proof spine.
 
 open Lean Elab Command
 
+meta section
+
 namespace HodgeConjecture.Research.ProofDependencies
 
 /-- The module that supplied an imported constant. -/
@@ -41,8 +49,7 @@ private def fromLinearAlgebra (env : Environment) (n : Name) : Bool :=
 
 /-- Origin modules of all transitive constant dependencies, including types. -/
 private def linearAlgebraModules (env : Environment) (endpoint : Name) : List Name :=
-  let (_, state) := ((CollectAxioms.collect endpoint).run env).run {}
-  let declarations := state.visited.toList.filter (fromLinearAlgebra env)
+  let declarations := (declarationDependencies env endpoint).toList.filter (fromLinearAlgebra env)
   let modules := declarations.foldl
     (fun acc n => acc.insert (origin env n)) ({} : NameSet)
   modules.toList.mergeSort (fun a b => decide (a.toString ≤ b.toString))

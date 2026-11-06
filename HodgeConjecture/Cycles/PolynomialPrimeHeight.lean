@@ -1,5 +1,9 @@
-import Mathlib.RingTheory.Ideal.Height
-import Mathlib.RingTheory.Polynomial.Quotient
+module
+
+public import Mathlib.RingTheory.Ideal.Height
+public import Mathlib.RingTheory.Polynomial.Quotient
+
+@[expose] public section
 
 /-!
 # Prime height under extension to a polynomial ring
@@ -43,7 +47,7 @@ theorem polynomial_comap_map_C (p : Ideal R) :
 
 /-- The actual prime extension map is an order embedding. -/
 def polynomialPrimeExtension : PrimeSpectrum R ↪o PrimeSpectrum (Polynomial R) where
-  toFun p := ⟨p.asIdeal.map C, Ideal.isPrime_map_C_of_isPrime p.isPrime⟩
+  toFun p := ⟨p.asIdeal.map C, inferInstance⟩
   inj' := by
     intro p q hpq
     apply PrimeSpectrum.ext
@@ -69,7 +73,7 @@ theorem polynomial_map_C_not_isMaximal (p : Ideal R) :
     ¬ (p.map (C : R →+* Polynomial R)).IsMaximal := by
   intro hp
   have hfield := (Ideal.Quotient.maximal_ideal_iff_isField_quotient _).mp hp
-  exact Ideal.polynomial_not_isField
+  exact Ideal.polynomial_not_isField _
     (MulEquiv.isField hfield p.polynomialQuotientEquivQuotientPolynomial.toMulEquiv)
 
 /-- The actual extension of a maximal ideal's contraction lies strictly below it. -/
@@ -84,14 +88,17 @@ theorem polynomial_map_comap_C_lt (m : Ideal (Polynomial R)) [m.IsMaximal] :
 /-- There is at least one extra prime-height step above the coefficient contraction. -/
 theorem polynomial_primeHeight_comap_add_one_le
     (m : Ideal (Polynomial R)) [m.IsMaximal] :
-    (m.comap (C : R →+* Polynomial R)).primeHeight + 1 ≤ m.primeHeight := by
+    (m.comap (C : R →+* Polynomial R)).height + 1 ≤ m.height := by
   letI : ((m.comap C).map (C : R →+* Polynomial R)).IsPrime :=
-    Ideal.isPrime_map_C_of_isPrime inferInstance
-  have hheight : (m.comap (C : R →+* Polynomial R)).primeHeight ≤
-      ((m.comap C).map (C : R →+* Polynomial R)).primeHeight :=
-    polynomialPrimeExtension_height_le R ⟨m.comap C, inferInstance⟩
-  exact (add_le_add_right hheight 1).trans
-    (Ideal.primeHeight_add_one_le_of_lt (polynomial_map_comap_C_lt R m))
+    inferInstance
+  have he (p : PrimeSpectrum R) :
+      (polynomialPrimeExtension R p).asIdeal = Ideal.map C p.asIdeal := rfl
+  have hheight : (m.comap (C : R →+* Polynomial R)).height ≤
+      ((m.comap C).map (C : R →+* Polynomial R)).height :=
+    by simpa only [← PrimeSpectrum.height_eq_orderHeight, he] using
+      polynomialPrimeExtension_height_le R ⟨m.comap C, inferInstance⟩
+  exact (add_le_add_left hheight 1).trans
+    (Ideal.height_add_one_le_of_lt_of_isPrime (polynomial_map_comap_C_lt R m))
 
 end
 

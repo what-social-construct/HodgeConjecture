@@ -1,4 +1,8 @@
-import HodgeConjecture.Boundary.Normalization.InertiaDiagram
+module
+
+public import HodgeConjecture.Boundary.Normalization.InertiaDiagram
+
+@[expose] public section
 
 /-!
 # Conjugate normalization legs

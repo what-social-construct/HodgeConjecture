@@ -1,4 +1,8 @@
-import HodgeConjecture.Boundary.Sheets.InertiaSaturation
+module
+
+public import HodgeConjecture.Boundary.Sheets.InertiaSaturation
+
+@[expose] public section
 
 /-!
 # Compatibility import for inertia saturation

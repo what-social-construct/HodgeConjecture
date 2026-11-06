@@ -1,5 +1,9 @@
-import HodgeConjecture.Cycles.PrincipalRelationRestriction
-import HodgeConjecture.Cycles.OpenRestrictionSurjectivity
+module
+
+public import HodgeConjecture.Cycles.PrincipalRelationRestriction
+public import HodgeConjecture.Cycles.OpenRestrictionSurjectivity
+
+@[expose] public section
 
 /-!
 # Actual open restriction on the integral Chow quotient

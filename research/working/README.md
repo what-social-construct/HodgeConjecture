@@ -21,6 +21,20 @@ manuscript. Do not combine old checkpoint descriptions into a proof plan.
   cover, a deleted-ramification boundary model, and standalone algebraic
   controls for choosing a regular pair. It separates the available criteria
   from the next geometric design choice; the manuscript is unchanged.
+- `0019-axiom-stacks-reuse-audit.md` compares the pinned Axiom Stacks release
+  with the current cycle/Chow and normalization objects. It identifies flat
+  pullback/degree and fixed inertia as reuse candidates, records overlap worth
+  retaining and toolchain/import costs, and leaves compiled gap statuses intact.
+- [0020-lean-4-35-migration.md](0020-lean-4-35-migration.md) records the current
+  toolchain port, bounded finite-fiber backport, and validation scope.
+- [0023-polynomial-derham-components.md](0023-polynomial-derham-components.md)
+  records degree-zero polynomial invariance and the affine-component basis.
+- [0024-affine-line-betti-comparison.md](0024-affine-line-betti-comparison.md)
+  records actual complex points, the path/cocycle calculation and degree-zero
+  comparison for the complex affine line.
+- [0025-graph-chow-convolution.md](0025-graph-chow-convolution.md) records the
+  resumed marked-Galois spine, actual graph Chow algebra and absolute-product
+  comparison, keeping prescribed realization and class coverage open.
 - `PALOMAR_FIXED_RING_HANDOFF.md` records the separate submission boundary.
 - `../bench/` holds the standalone matrix-restriction diagnostic outside
   active imports; this is not an obstruction in the intended target route.

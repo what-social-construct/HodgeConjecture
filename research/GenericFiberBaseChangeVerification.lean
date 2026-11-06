@@ -1,6 +1,11 @@
+module
+
 import HodgeConjecture.Boundary.Normalization.GenericFiberBaseChange
 import Mathlib.Algebra.Polynomial.Div
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP98 focused checks for base change of the actual generic fiber.
@@ -97,7 +102,7 @@ example :
     (functionFieldMapOfDominant p).hom.toAlgebra
   fail_if_success have _ : Field E := inferInstance
   fail_if_success have _ : IsDomain E := inferInstance
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   fail_if_success have _ : FormallyUnramified p := inferInstance
   fail_if_success have _ : Algebra.IsSeparable X.functionField Y.functionField := inferInstance
   fail_if_success have _ : IsNoetherian X := inferInstance
@@ -246,8 +251,8 @@ run_cmd do
   for declaration in declarations do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    let actual := state.axioms.toList
+    let axioms ← Lean.collectAxioms declaration
+    let actual := axioms.toList
     for axiomName in actual do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"

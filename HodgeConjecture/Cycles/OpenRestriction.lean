@@ -1,6 +1,10 @@
-import HodgeConjecture.Cycles.Basic
-import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+module
+
+public import HodgeConjecture.Cycles.Basic
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
+public import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+
+@[expose] public section
 
 /-!
 # Open restriction of finitely supported scheme cycles

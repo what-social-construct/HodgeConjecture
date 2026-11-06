@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Sheets.GaloisSheets
-import Mathlib.GroupTheory.Index
+module
+
+public import HodgeConjecture.Boundary.Sheets.GaloisSheets
+public import Mathlib.GroupTheory.Index
+
+@[expose] public section
 
 /-!
 # Relative inertia quotients

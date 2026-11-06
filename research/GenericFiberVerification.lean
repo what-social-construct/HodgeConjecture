@@ -1,5 +1,10 @@
+module
+
 import HodgeConjecture.Boundary.Normalization.GenericFiber
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP97 focused checks for the actual generic fiber of a finite dominant morphism.
@@ -69,7 +74,7 @@ example (hU : IsAffineOpen U) :
     letI : IsScalarTower Γ(X, U) X.functionField Y.functionField :=
       functionFieldMapOfDominant_sectionScalarTower p U
     Algebra.IsPushout Γ(X, U) Γ(Y, p ⁻¹ᵁ U) X.functionField Y.functionField := by
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   fail_if_success have _ : FormallyUnramified p := inferInstance
   fail_if_success have _ : IsIntegrallyClosed Γ(X, U) := inferInstance
   fail_if_success have _ : IsNoetherianRing Γ(X, U) := inferInstance
@@ -173,7 +178,7 @@ example : IsPullback (Y.fromSpecStalk (genericPoint Y))
     (Spec.map (functionFieldMapOfDominant p)) p (X.fromSpecStalk (genericPoint X)) := by
   letI : Algebra X.functionField Y.functionField :=
     (functionFieldMapOfDominant p).hom.toAlgebra
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   fail_if_success have _ : FormallyUnramified p := inferInstance
   fail_if_success have _ : Algebra.IsSeparable X.functionField Y.functionField := inferInstance
   fail_if_success have _ : IsNoetherian X := inferInstance
@@ -263,8 +268,8 @@ run_cmd do
   for declaration in declarations do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    let actual := state.axioms.toList
+    let axioms ← Lean.collectAxioms declaration
+    let actual := axioms.toList
     for axiomName in actual do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"

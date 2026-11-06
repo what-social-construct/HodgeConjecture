@@ -1,5 +1,9 @@
-import HodgeConjecture.Cycles.PolynomialMaximalHeight
-import HodgeConjecture.Cycles.SupportCodimension
+module
+
+public import HodgeConjecture.Cycles.PolynomialMaximalHeight
+public import HodgeConjecture.Cycles.SupportCodimension
+
+@[expose] public section
 
 /-!
 # Actual local dimensions at closed points of affine space

@@ -1,4 +1,8 @@
-import HodgeConjecture.Boundary.Normalization.AffineNormalizationDiagram
+module
+
+public import HodgeConjecture.Boundary.Normalization.AffineNormalizationDiagram
+
+@[expose] public section
 
 /-!
 # Gluing the original normalization charts

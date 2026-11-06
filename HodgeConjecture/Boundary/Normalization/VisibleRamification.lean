@@ -1,6 +1,10 @@
-import Mathlib.AlgebraicGeometry.Morphisms.FormallyUnramified
-import Mathlib.AlgebraicGeometry.Morphisms.OpenImmersion
-import Mathlib.RingTheory.Unramified.Locus
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.FormallyUnramified
+public import Mathlib.AlgebraicGeometry.Morphisms.OpenImmersion
+public import Mathlib.RingTheory.Unramified.Locus
+
+@[expose] public section
 
 /-!
 # Visible formally unramified loci
@@ -43,7 +47,7 @@ lemma ringHom_formallyUnramified_localRingHom
       (Localization.localRingHom_to_map _ _ _ rfl x).symm
   change Algebra.FormallyUnramified
     (Localization.AtPrime (J.comap f)) (Localization.AtPrime J)
-  exact Algebra.FormallyUnramified.of_comp R
+  exact Algebra.FormallyUnramified.of_restrictScalars R
     (Localization.AtPrime (J.comap (algebraMap R S)))
     (Localization.AtPrime J)
 
@@ -72,7 +76,7 @@ lemma isUnramifiedAt_of_openImmersion_comp_formallyUnramified
         AlgebraicGeometry.FormallyUnramified (j ≫ p)) x
   have hpstalk :
       RingHom.FormallyUnramified (p.stalkMap q).hom := by
-    rw [Scheme.stalkMap_comp, CommRingCat.hom_comp,
+    rw [Scheme.Hom.stalkMap_comp, CommRingCat.hom_comp,
       RingHom.FormallyUnramified.respectsIso.cancel_right_isIso] at hcomp
     exact hcomp
   have hlocal :

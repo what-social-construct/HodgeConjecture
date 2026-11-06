@@ -1,5 +1,9 @@
-import HodgeConjecture.Realization.Chow.Examples.SplitSpanQuotient
-import HodgeConjecture.Realization.Chow.Examples.SplitPoints
+module
+
+public import HodgeConjecture.Realization.Chow.Examples.SplitSpanQuotient
+public import HodgeConjecture.Realization.Chow.Examples.SplitPoints
+
+@[expose] public section
 
 /-!
 # The two-point realization square with a geometric source
@@ -108,7 +112,7 @@ realization. This is not a claim of Chow/Betti realization. -/
 def projectorLift :
     AlgebraicProjectorLift (correspondenceAction K)
       (ClassGraphProjector.operator (-1 : ℚ)) := by
-  simpa only [markedComparison_generatedClass] using
+  simpa only [markedComparison_generatedClass, correspondenceAction] using
     (markedComparison K).toAlgebraicProjectorLift
       (projector_isIdempotent K) SplitPointCorrespondence.residualEvaluation_surjective
 
@@ -121,7 +125,7 @@ theorem palomarTargetSquare :
       UniversalIdempotentAlgebra.mapOfIdempotent
         (ClassGraphProjector.operator (-1 : ℚ))
         (ClassGraphProjector.operator_isIdempotent (-1 : ℚ)) := by
-  simpa only [markedComparison_generatedClass] using
+  simpa only [markedComparison_generatedClass, correspondenceAction] using
     (markedComparison K).action_comp_idempotentMap_eq_classGraph
       (projector_isIdempotent K) SplitPointCorrespondence.residualEvaluation_surjective
 

@@ -1,5 +1,9 @@
-import HodgeConjecture.Realization.Chow.Examples.SplitZeroCycles
-import Mathlib.LinearAlgebra.TensorProduct.Pi
+module
+
+public import HodgeConjecture.Realization.Chow.Examples.SplitZeroCycles
+public import Mathlib.LinearAlgebra.TensorProduct.Pi
+
+@[expose] public section
 
 /-!
 # Rational scalar extension of split zero-cycles

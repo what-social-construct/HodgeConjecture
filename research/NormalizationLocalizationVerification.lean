@@ -1,8 +1,13 @@
+module
+
 import HodgeConjecture.Boundary.Normalization.NormalizationLocalization
 import HodgeConjecture.Boundary.Normalization.AffineNormalizationRestriction
 import HodgeConjecture.Boundary.Normalization.FiniteEtaleNormalClosureRestriction
 import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP82 regressions for localization in the original ambient overring.
@@ -370,7 +375,7 @@ example [IsFinite p] (hVU : V ≤ U) (hU : IsAffineOpen U) (hV : IsAffineOpen V)
       Y.homOfLE (show p ⁻¹ᵁ V ≤ p ⁻¹ᵁ U from fun _ h => hVU h) ≫
         (finiteAffinePreimageNormalizationIso p U hU hYU).hom := by
   fail_if_success have _ : IsNoetherianRing Γ(X, U) := inferInstance
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   exact finiteAffinePreimageNormalizationIso_restriction U V p hVU hU hV hYU hYV
 
 end ActualPreimageRestriction
@@ -401,7 +406,7 @@ example (hVU : V ≤ U) (hU : IsAffineOpen U) (hV : IsAffineOpen V) :
       finiteEtaleAffineNormalClosureToChart p U hU =
       finiteEtaleAffineNormalClosureToChart p V hV ≫ X.homOfLE hVU := by
   fail_if_success have _ : IsFinite p := inferInstance
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   exact finiteEtaleAffineNormalClosureToChart_restriction p U V hVU hU hV
 
 example [IsFinite p] (hVU : V ≤ U) (hU : IsAffineOpen U) (hV : IsAffineOpen V)
@@ -417,7 +422,7 @@ example [IsFinite p] (hVU : V ≤ U) (hU : IsAffineOpen U) (hV : IsAffineOpen V)
       finiteEtaleAffineNormalClosureToPreimage p U hU hYU =
       finiteEtaleAffineNormalClosureToPreimage p V hV hYV ≫
         Y.homOfLE (show p ⁻¹ᵁ V ≤ p ⁻¹ᵁ U from fun _ h => hVU h) := by
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   fail_if_success have _ : IsIntegrallyClosed Γ(X, U) := inferInstance
   exact finiteEtaleAffineNormalClosureToPreimage_restriction p U V hVU hU hV hYU hYV
 
@@ -483,9 +488,9 @@ run_cmd do
   for declaration in declarations do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    for axiomName in state.axioms do
+    let axioms ← Lean.collectAxioms declaration
+    for axiomName in axioms do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"
-    logInfo m!"PASS standard-axiom boundary: {declaration}; {state.axioms.toList}"
+    logInfo m!"PASS standard-axiom boundary: {declaration}; {axioms.toList}"
   logInfo "PASS SP82 audit registry: 28 distinct public declarations"

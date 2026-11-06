@@ -1,6 +1,10 @@
-import HodgeConjecture.Collision.DecompositionDefect
-import Mathlib.AlgebraicGeometry.Limits
-import Mathlib.RingTheory.Spectrum.Prime.Topology
+module
+
+public import HodgeConjecture.Collision.DecompositionDefect
+public import Mathlib.AlgebraicGeometry.Limits
+public import Mathlib.RingTheory.Spectrum.Prime.Topology
+
+@[expose] public section
 
 /-!
 # From ideal decompositions to affine scheme decompositions

@@ -1,6 +1,10 @@
-import HodgeConjecture.Correspondence.Examples.SplitPointMaps
-import Mathlib.AlgebraicGeometry.PullbackCarrier
-import Mathlib.AlgebraicGeometry.Morphisms.OpenImmersion
+module
+
+public import HodgeConjecture.Correspondence.Examples.SplitPointMaps
+public import Mathlib.AlgebraicGeometry.PullbackCarrier
+public import Mathlib.AlgebraicGeometry.Morphisms.OpenImmersion
+
+@[expose] public section
 
 /-!
 # Scheme realization of finite set spans
@@ -46,7 +50,7 @@ def mapOfFunction (f : S → I) : scheme K S ⟶ scheme K I :=
 theorem mapOfFunction_id :
     mapOfFunction K (id : I → I) = 𝟙 (scheme K I) := by
   change Spec.map _ = _
-  convert Spec.map_id (CommRingCat.of (I → K)) using 1
+  convert Spec.map_id (CommRingCat.of (I → K)) using 1 <;> first | rfl | congr 1; ext a i; rfl
 
 @[simp, reassoc]
 theorem mapOfFunction_comp (f : S → I) (g : I → J) :
@@ -86,12 +90,12 @@ instance [Finite S] (f : S → I) : IsFinite (mapOfFunction K f) := by
     IsScalarTower.of_algebraMap_eq (fun _ ↦ rfl)
   exact Module.Finite.of_restrictScalars_finite K (I → K) (S → K)
 
-instance [Finite S] (f : S → I) : IsEtale (mapOfFunction K f) := by
-  apply (MorphismProperty.cancel_left_of_respectsIso @IsEtale
+instance [Finite S] (f : S → I) : Etale (mapOfFunction K f) := by
+  apply (MorphismProperty.cancel_left_of_respectsIso @Etale
     (sigmaSpec (fun _ : S ↦ CommRingCat.of K)) (mapOfFunction K f)).mp
   rw [sigmaSpec_comp_mapOfFunction]
   exact IsZariskiLocalAtSource.sigmaDesc (fun s ↦
-    inferInstanceAs (IsEtale (pointInclusion K I (f s))))
+    inferInstanceAs (Etale (pointInclusion K I (f s))))
 
 /-- The actual scheme span associated with its two indexing functions. -/
 def span (left : S → I) (right : S → J) :
@@ -105,8 +109,8 @@ theorem span_hasFiniteEtaleLegs [Finite S] (left : S → I) (right : S → J) :
     SchemeCorrespondence.HasFiniteEtaleLegs (span K left right) := by
   constructor
   · constructor
-    · exact inferInstanceAs (IsEtale (mapOfFunction K left))
-    · exact inferInstanceAs (IsEtale (mapOfFunction K right))
+    · exact inferInstanceAs (Etale (mapOfFunction K left))
+    · exact inferInstanceAs (Etale (mapOfFunction K right))
   · exact inferInstanceAs (IsFinite (mapOfFunction K left))
   · exact inferInstanceAs (IsFinite (mapOfFunction K right))
 
@@ -154,10 +158,13 @@ def singletonIso : scheme K PUnit ≅ Spec (.of K) where
     unfold toBase pointInclusion
     rw [← Spec.map_comp]
     convert Spec.map_id (CommRingCat.of (PUnit → K)) using 1
+    · congr 1 <;> first | rfl | (ext a i; cases i; rfl)
+    · rfl
   inv_hom_id := by
     unfold toBase pointInclusion
     rw [← Spec.map_comp]
     convert Spec.map_id (CommRingCat.of K) using 1
+    congr 1 <;> first | rfl | (ext a; rfl)
 
 /-- A singleton diagonal indexing span is the existing geometric point span. -/
 def span_point_iso (I : Type u) (i : I) :
@@ -216,7 +223,7 @@ private def fiberComponentMap (f : S → I) (g : T → I) (p : Fiber f g) :
 
 private instance (f : S → I) (g : T → I) (p : Fiber f g) :
     IsOpenImmersion (fiberComponentMap K f g p) := by
-  apply MorphismProperty.pullback_map (P := @IsOpenImmersion)
+  apply MorphismProperty.pullbackMap (P := @IsOpenImmersion)
   · infer_instance
   · infer_instance
   · simp
@@ -260,7 +267,7 @@ private theorem fiberComponent_range (f : S → I) (g : T → I) (p : Fiber f g)
         Set.range (pointInclusion K S p.val.1).base ∩
       (pullback.snd (mapOfFunction K f) (mapOfFunction K g)).base ⁻¹'
         Set.range (pointInclusion K T p.val.2).base := by
-  rw [fiberComponent, Scheme.comp_base]
+  rw [fiberComponent, Scheme.Hom.comp_base]
   change Set.range ((fiberComponentMap K f g p).base ∘
     (inv (pullback.fst (pointInclusion K I (f p.val.1))
       (pointInclusion K I (f p.val.1)))).base) = _
@@ -292,10 +299,10 @@ private theorem fiberComponent_disjoint [Finite S] [Finite T] (f : S → I) (g :
   apply Prod.ext
   · apply (labelEquivScheme K S).injective
     have h' := congrArg (pullback.fst (mapOfFunction K f) (mapOfFunction K g)).base h
-    simpa only [← Scheme.comp_base_apply, fiberComponent_fst, pointInclusion_base] using h'
+    simpa only [← Scheme.Hom.comp_apply, fiberComponent_fst, pointInclusion_base] using h'
   · apply (labelEquivScheme K T).injective
     have h' := congrArg (pullback.snd (mapOfFunction K f) (mapOfFunction K g)).base h
-    simpa only [← Scheme.comp_base_apply, fiberComponent_snd, pointInclusion_base] using h'
+    simpa only [← Scheme.Hom.comp_apply, fiberComponent_snd, pointInclusion_base] using h'
 
 private theorem fiberComponent_covers [Finite S] [Finite T] [Finite I]
     (f : S → I) (g : T → I)
@@ -308,14 +315,18 @@ private theorem fiberComponent_covers [Finite S] [Finite T] [Finite I]
   have hst : f s = g t := by
     apply (labelEquivScheme K I).injective
     rw [← mapOfFunction_label K f, ← mapOfFunction_label K g]
-    simp only [s, t, Equiv.apply_symm_apply, ← Scheme.comp_base_apply, pullback.condition]
+    simp only [s, t, Equiv.apply_symm_apply, ← Scheme.Hom.comp_apply, pullback.condition]
   refine ⟨⟨(s, t), hst⟩, ?_⟩
   rw [fiberComponent_range]
   constructor
   · refine ⟨default, ?_⟩
+    change (pointInclusion K S s) _ = _
+    rw [show (default : Spec (.of K)) = (default : PrimeSpectrum K) from Subsingleton.elim _ _]
     change labelEquivScheme K S s = _
     exact (labelEquivScheme K S).apply_symm_apply _
   · refine ⟨default, ?_⟩
+    change (pointInclusion K T t) _ = _
+    rw [show (default : Spec (.of K)) = (default : PrimeSpectrum K) from Subsingleton.elim _ _]
     change labelEquivScheme K T t = _
     exact (labelEquivScheme K T).apply_symm_apply _
 
@@ -325,14 +336,14 @@ private instance [Finite S] [Finite T] (f : S → I) (g : T → I) :
 
 private instance [Finite S] [Finite T] [Finite I] (f : S → I) (g : T → I) :
     IsIso (Sigma.desc (fiberComponent K f g)) := by
-  apply (isIso_iff_isOpenImmersion _).2
+  apply (isIso_iff_isOpenImmersion_and_epi_base _).2
   constructor
   · infer_instance
   · apply (TopCat.epi_iff_surjective _).mpr
     intro z
     obtain ⟨p, x, hx⟩ := fiberComponent_covers K f g z
     refine ⟨(Sigma.ι (fun _ : Fiber f g ↦ Spec (.of K)) p).base x, ?_⟩
-    simpa only [← Scheme.comp_base_apply, Sigma.ι_desc] using hx
+    simpa only [← Scheme.Hom.comp_apply, Sigma.ι_desc] using hx
 
 /-- The set-theoretic matching-pair construction computes the actual scheme pullback. -/
 instance [Finite S] [Finite T] [Finite I] (f : S → I) (g : T → I) :

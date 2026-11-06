@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Normalization.FiniteFunctionField
-import Mathlib.RingTheory.Unramified.Field
+module
+
+public import HodgeConjecture.Boundary.Normalization.FiniteFunctionField
+public import Mathlib.RingTheory.Unramified.Field
+
+@[expose] public section
 
 /-!
 # Separability of the actual generic extension
@@ -50,14 +54,14 @@ theorem functionFieldMapOfDominant_formallyUnramified_of_affine [IsAffineHom p]
   letI : IsFractionRing Γ(Y, p ⁻¹ᵁ U) Y.functionField :=
     functionField_isFractionRing_of_isAffineOpen Y _ (hU.preimage p)
   letI : Algebra.FormallyUnramified Γ(X, U) Γ(Y, p ⁻¹ᵁ U) := by
-    have h := AlgebraicGeometry.FormallyUnramified.formallyUnramified_of_affine_subset
-      (f := p) ⟨U, hU⟩ ⟨p ⁻¹ᵁ U, hU.preimage p⟩ le_rfl
-    simpa only [Scheme.Hom.appLE_eq_app] using h
+    change (p.app U).hom.FormallyUnramified
+    simpa only [Scheme.Hom.appLE_eq_app] using
+      p.formallyUnramified_appLE hU (hU.preimage p) le_rfl
   letI : Algebra.FormallyUnramified Γ(Y, p ⁻¹ᵁ U) Y.functionField :=
     Algebra.FormallyUnramified.of_isLocalization (Rₘ := Y.functionField) Γ(Y, p ⁻¹ᵁ U)⁰
   letI : Algebra.FormallyUnramified Γ(X, U) Y.functionField :=
     Algebra.FormallyUnramified.comp Γ(X, U) Γ(Y, p ⁻¹ᵁ U) Y.functionField
-  exact Algebra.FormallyUnramified.of_comp Γ(X, U) X.functionField Y.functionField
+  exact Algebra.FormallyUnramified.of_restrictScalars Γ(X, U) X.functionField Y.functionField
 
 /-- An affine formally unramified dominant morphism induces formal
 unramifiedness on its actual function fields. -/

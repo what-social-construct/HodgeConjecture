@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.HeightOneDifferent
-import Mathlib.LinearAlgebra.Matrix.Charpoly.LinearMap
+module
+
+public import HodgeConjecture.Boundary.HeightOneDifferent
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.LinearMap
+
+@[expose] public section
 
 /-!
 # The collision Noether different detects the unramified locus
@@ -62,7 +66,7 @@ theorem collisionNoetherDifferentIdeal_le_kaehlerDifferential_annihilator :
     rw [RingHom.mem_ker]
     simp [μ, collisionMultiplication, CollisionFoundations.diagonalMultiplication]
   have htann : ∀ y ∈ collisionKernel R S, t * y = 0 := by
-    simpa [Submodule.mem_annihilator, mul_comm] using ht
+    simpa [Submodule.mem_annihilator, mul_comm, collisionKernel, collisionMultiplication, CollisionFoundations.diagonalMultiplication] using ht
   convert Ideal.mul_mem_mul hdiff x.2 using 1
   simp only [Submodule.coe_smul_of_tower, Algebra.smul_def]
   rw [sub_mul, htann x x.2, sub_zero]
@@ -105,7 +109,7 @@ theorem kaehlerDifferential_annihilator_le_collisionNoetherDifferentIdeal_radica
   let μ : C →+* S := (collisionMultiplication R S).toRingHom
   let c : C := algebraMap S C d
   letI : Module.Finite C I := Module.Finite.iff_fg.mpr <| by
-    simpa [C, I, collisionKernel] using KaehlerDifferential.ideal_fg R S
+    simpa [C, I, collisionKernel, Submodule.FG, Ideal.FG, Ideal.submodule_span_eq] using KaehlerDifferential.ideal_fg R S
   let f : Module.End C I := algebraMap C (Module.End C I) c
   have hrange : LinearMap.range f ≤ I • (⊤ : Submodule C I) := by
     rintro y ⟨x, rfl⟩
@@ -123,7 +127,7 @@ theorem kaehlerDifferential_annihilator_le_collisionNoetherDifferentIdeal_radica
       Ideal.toCotangent_eq_zero, pow_two] at hzero
     simpa [C, I, c, collisionKernel, Submodule.coe_smul_of_tower,
       Algebra.smul_def] using hzero
-  obtain ⟨p, hpmonic, hpcoeff, hpaeval⟩ :=
+  obtain ⟨p, hpmonic, _, hpcoeff, hpaeval⟩ :=
     LinearMap.exists_monic_and_coeff_mem_pow_and_aeval_eq_zero_of_range_le_smul
       C f I hrange
   let e : C := Polynomial.eval c p

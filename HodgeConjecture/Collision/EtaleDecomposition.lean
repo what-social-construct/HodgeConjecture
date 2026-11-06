@@ -1,6 +1,10 @@
-import HodgeConjecture.Collision.ClopenDecomposition
-import Mathlib.AlgebraicGeometry.Morphisms.Etale
-import Mathlib.AlgebraicGeometry.Morphisms.Finite
+module
+
+public import HodgeConjecture.Collision.ClopenDecomposition
+public import Mathlib.AlgebraicGeometry.Morphisms.Etale
+public import Mathlib.AlgebraicGeometry.Morphisms.Finite
+
+@[expose] public section
 
 /-!
 # Global collision decomposition for separated étale morphisms
@@ -33,7 +37,7 @@ variable {X Y : Scheme.{u}}
 
 /-- The open complement of the diagonal in the collision space. -/
 noncomputable def collisionOffDiagonalOpen
-    (f : X ⟶ Y) [IsSeparated f] [IsEtale f] :
+    (f : X ⟶ Y) [IsSeparated f] [Etale f] :
     (collisionSpace f).Opens :=
   ⟨((collisionDiagonal f).opensRange :
       Set (collisionSpace f))ᶜ,
@@ -44,7 +48,7 @@ The diagonal and its open complement form a coproduct presentation of the
 collision space.
 -/
 noncomputable def collisionDecompositionCofanIsColimit
-    (f : X ⟶ Y) [IsSeparated f] [IsEtale f] :
+    (f : X ⟶ Y) [IsSeparated f] [Etale f] :
     IsColimit
       (BinaryCofan.mk
         (collisionDiagonal f)
@@ -66,7 +70,7 @@ The global diagonal/off-diagonal collision decomposition of a separated
 étale morphism.
 -/
 noncomputable def separatedEtaleCollisionSchemeDecomposition
-    (f : X ⟶ Y) [IsSeparated f] [IsEtale f] :
+    (f : X ⟶ Y) [IsSeparated f] [Etale f] :
     CollisionSchemeDecomposition f where
   offDiagonal := collisionOffDiagonalOpen f
   decomposition :=
@@ -87,7 +91,7 @@ Finite étale morphisms canonically enter the separated-étale collision
 decomposition.
 -/
 noncomputable def finiteEtaleCollisionSchemeDecomposition
-    (f : X ⟶ Y) [IsFinite f] [IsEtale f] :
+    (f : X ⟶ Y) [IsFinite f] [Etale f] :
     CollisionSchemeDecomposition f :=
   separatedEtaleCollisionSchemeDecomposition f
 

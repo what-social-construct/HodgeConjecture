@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Normalization.NormalClosureConstruction
-import HodgeConjecture.Boundary.Normalization.SeparableFunctionField
+module
+
+public import HodgeConjecture.Boundary.Normalization.NormalClosureConstruction
+public import HodgeConjecture.Boundary.Normalization.SeparableFunctionField
+
+@[expose] public section
 
 /-!
 # The marked normal closure of an actual function-field extension

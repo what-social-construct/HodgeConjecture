@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.GaloisProjectorExtension
-import HodgeConjecture.Correspondence.ProjectorDefect
+module
+
+public import HodgeConjecture.Boundary.GaloisProjectorExtension
+public import HodgeConjecture.Correspondence.ProjectorDefect
+
+@[expose] public section
 
 /-!
 # Closure classes and their idempotence defect

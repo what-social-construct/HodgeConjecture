@@ -1,5 +1,9 @@
-import HodgeConjecture.Correspondence.GraphComposition
-import Mathlib.AlgebraicGeometry.Morphisms.Etale
+module
+
+public import HodgeConjecture.Correspondence.GraphComposition
+public import Mathlib.AlgebraicGeometry.Morphisms.Etale
+
+@[expose] public section
 
 /-!
 # Open graph intersections for an étale structural morphism
@@ -26,42 +30,42 @@ universe u
 /-- If postcomposition by an étale map is an open immersion, then the
 original map is an open immersion. This applies in particular to sections. -/
 theorem isOpenImmersion_of_comp_isEtale {A B C : Scheme.{u}}
-    (f : A ⟶ B) (g : B ⟶ C) [IsEtale g] [IsOpenImmersion (f ≫ g)] :
+    (f : A ⟶ B) (g : B ⟶ C) [Etale g] [IsOpenImmersion (f ≫ g)] :
     IsOpenImmersion f := by
   letI : MorphismProperty.HasOfPostcompProperty
-      @IsOpenImmersion @IsEtale := by
+      @IsOpenImmersion @Etale := by
     rw [MorphismProperty.hasOfPostcompProperty_iff_le_diagonal]
     intro X Y h hh
     letI := hh
     exact inferInstanceAs (IsOpenImmersion (pullback.diagonal h))
   exact MorphismProperty.of_postcomp @IsOpenImmersion f g
-    (inferInstance : IsEtale g) (inferInstance : IsOpenImmersion (f ≫ g))
+    (inferInstance : Etale g) (inferInstance : IsOpenImmersion (f ≫ g))
 
 variable {S X : Scheme.{u}} (pX : X ⟶ S)
 
 /-- The first pair projection of the triple is étale by base change. -/
-instance tripleProductP12_isEtale [IsEtale pX] : IsEtale (tripleProductP12 pX) :=
+instance tripleProductP12_isEtale [Etale pX] : Etale (tripleProductP12 pX) :=
   MorphismProperty.pullback_fst _ _
-    (MorphismProperty.pullback_fst pX pX (inferInstance : IsEtale pX))
+    (MorphismProperty.pullback_fst pX pX (inferInstance : Etale pX))
 
 /-- The last pair projection of the triple is étale by base change. -/
-instance tripleProductP23_isEtale [IsEtale pX] : IsEtale (tripleProductP23 pX) :=
+instance tripleProductP23_isEtale [Etale pX] : Etale (tripleProductP23 pX) :=
   MorphismProperty.pullback_snd _ _
-    (MorphismProperty.pullback_snd pX pX (inferInstance : IsEtale pX))
+    (MorphismProperty.pullback_snd pX pX (inferInstance : Etale pX))
 
 /-- A deck graph is open when its structural morphism is étale.
 Separatedness is not needed for this open-immersion statement. -/
-instance graphMorphism_isOpenImmersion [IsEtale pX]
+instance graphMorphism_isOpenImmersion [Etale pX]
     (σ : DeckTransformation pX) : IsOpenImmersion (graphMorphism pX σ) := by
-  letI : IsEtale (pullback.fst pX pX) :=
-    MorphismProperty.pullback_fst pX pX (inferInstance : IsEtale pX)
+  letI : Etale (pullback.fst pX pX) :=
+    MorphismProperty.pullback_fst pX pX (inferInstance : Etale pX)
   haveI : IsOpenImmersion (graphMorphism pX σ ≫ pullback.fst pX pX) := by
     rw [graphMorphism_fst]
     infer_instance
   exact isOpenImmersion_of_comp_isEtale (graphMorphism pX σ) (pullback.fst pX pX)
 
 /-- The canonical closed graph subscheme is also open in the relative pair. -/
-instance graphIdeal_subschemeι_isOpenImmersion [IsEtale pX] [IsSeparated pX]
+instance graphIdeal_subschemeι_isOpenImmersion [Etale pX] [IsSeparated pX]
     (σ : DeckTransformation pX) : IsOpenImmersion (graphIdeal pX σ).subschemeι := by
   have h : (graphIdeal pX σ).subschemeι =
       (graphSubschemeIso pX σ).inv ≫ graphMorphism pX σ := by
@@ -71,13 +75,13 @@ instance graphIdeal_subschemeι_isOpenImmersion [IsEtale pX] [IsSeparated pX]
 
 /-- The graph-composition parametrization is a section of an étale
 first-coordinate projection, and is therefore an open immersion. -/
-instance graphCompositionMorphism_isOpenImmersion [IsEtale pX]
+instance graphCompositionMorphism_isOpenImmersion [Etale pX]
     (σ τ : DeckTransformation pX) :
     IsOpenImmersion (graphCompositionMorphism pX σ τ) := by
-  letI : IsEtale (pullback.fst pX pX) :=
-    MorphismProperty.pullback_fst pX pX (inferInstance : IsEtale pX)
-  letI : IsEtale (tripleProductP12 pX ≫ pullback.fst pX pX) :=
-    MorphismProperty.comp_mem @IsEtale _ _ inferInstance inferInstance
+  letI : Etale (pullback.fst pX pX) :=
+    MorphismProperty.pullback_fst pX pX (inferInstance : Etale pX)
+  letI : Etale (tripleProductP12 pX ≫ pullback.fst pX pX) :=
+    MorphismProperty.comp_mem @Etale _ _ inferInstance inferInstance
   haveI : IsOpenImmersion (graphCompositionMorphism pX σ τ ≫
       tripleProductP12 pX ≫ pullback.fst pX pX) := by
     simp only [← Category.assoc, graphCompositionMorphism_p12, graphMorphism_fst]
@@ -87,7 +91,7 @@ instance graphCompositionMorphism_isOpenImmersion [IsEtale pX]
 
 /-- The actual closed graph intersection is open in the relative triple. -/
 instance graphIntersectionIdeal_subschemeι_isOpenImmersion
-    [IsEtale pX] [IsSeparated pX] (σ τ : DeckTransformation pX) :
+    [Etale pX] [IsSeparated pX] (σ τ : DeckTransformation pX) :
     IsOpenImmersion (graphIntersectionIdeal pX σ τ).subschemeι := by
   have h : (graphIntersectionIdeal pX σ τ).subschemeι =
       (graphIntersectionIso pX σ τ).inv ≫ graphCompositionMorphism pX σ τ := by
@@ -97,14 +101,14 @@ instance graphIntersectionIdeal_subschemeι_isOpenImmersion
 
 /-- The inverse-image graph on the first two coordinates is open in the triple. -/
 instance graphIdeal_comap_p12_subschemeι_isOpenImmersion
-    [IsEtale pX] [IsSeparated pX] (τ : DeckTransformation pX) :
+    [Etale pX] [IsSeparated pX] (τ : DeckTransformation pX) :
     IsOpenImmersion ((graphIdeal pX τ).comap (tripleProductP12 pX)).subschemeι := by
   rw [← Scheme.IdealSheafData.comapIso_hom_fst]
   infer_instance
 
 /-- The inverse-image graph on the last two coordinates is open in the triple. -/
 instance graphIdeal_comap_p23_subschemeι_isOpenImmersion
-    [IsEtale pX] [IsSeparated pX] (σ : DeckTransformation pX) :
+    [Etale pX] [IsSeparated pX] (σ : DeckTransformation pX) :
     IsOpenImmersion ((graphIdeal pX σ).comap (tripleProductP23 pX)).subschemeι := by
   rw [← Scheme.IdealSheafData.comapIso_hom_fst]
   infer_instance

@@ -1,6 +1,10 @@
-import HodgeConjecture.Cycles.CoefficientExtension
-import HodgeConjecture.Cycles.PrincipalRelations
-import HodgeConjecture.Cycles.ScalarExtensionQuotient
+module
+
+public import HodgeConjecture.Cycles.CoefficientExtension
+public import HodgeConjecture.Cycles.PrincipalRelations
+public import HodgeConjecture.Cycles.ScalarExtensionQuotient
+
+@[expose] public section
 
 /-!
 # Rational coefficients on the actual principal-relation quotient

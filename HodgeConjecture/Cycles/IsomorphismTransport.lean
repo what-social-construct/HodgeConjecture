@@ -1,5 +1,9 @@
-import HodgeConjecture.Cycles.OpenRestriction
-import HodgeConjecture.Cycles.ClosedImmersionPushforward
+module
+
+public import HodgeConjecture.Cycles.OpenRestriction
+public import HodgeConjecture.Cycles.ClosedImmersionPushforward
+
+@[expose] public section
 
 /-!
 # Cycle transport through actual scheme isomorphisms
@@ -67,7 +71,7 @@ theorem closedImmersionPushforward_iso_apply_image (R : Type v) [Semiring R]
     (e : X ≅ Y) (c : Cycles X R) (Z : IntegralClosedSubscheme X) :
     closedImmersionPushforward R e.hom c (closedImageSubscheme e.hom Z) = c Z := by
   rw [closedImmersionPushforward_iso_eq_lmapDomain, Finsupp.lmapDomain_apply]
-  exact Finsupp.mapDomain_apply (closedImageSubschemeEquiv e).injective c Z
+  exact Finsupp.mapDomain_apply_of_injective (closedImageSubschemeEquiv e).injective c Z
 
 /-- At an arbitrary target support, pushforward reads the coefficient of
 its actual image under the inverse scheme isomorphism. -/

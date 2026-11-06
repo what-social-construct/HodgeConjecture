@@ -1,7 +1,11 @@
-import HodgeConjecture.Cycles.LocalOrder
-import Mathlib.RingTheory.Ideal.Int
-import Mathlib.RingTheory.KrullDimension.PID
-import Mathlib.RingTheory.Localization.FractionRing
+module
+
+public import HodgeConjecture.Cycles.LocalOrder
+public import Mathlib.RingTheory.Ideal.Int
+public import Mathlib.RingTheory.KrullDimension.PID
+public import Mathlib.RingTheory.Localization.FractionRing
+
+@[expose] public section
 
 /-!
 # A computed nonzero signed order

@@ -1,5 +1,9 @@
-import HodgeConjecture.Cycles.FinitePushforwardCoefficients
-import HodgeConjecture.Cycles.DivisorSupport
+module
+
+public import HodgeConjecture.Cycles.FinitePushforwardCoefficients
+public import HodgeConjecture.Cycles.DivisorSupport
+
+@[expose] public section
 
 /-!
 # Finite pushforward through actual closed carriers

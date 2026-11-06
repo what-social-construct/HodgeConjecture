@@ -1,4 +1,8 @@
-import HodgeConjecture.CommutativeAlgebra.FiniteTensorProduct
+module
+
+public import HodgeConjecture.CommutativeAlgebra.FiniteTensorProduct
+
+@[expose] public section
 
 /-!
 # Base change of finite tensor products of algebras
@@ -69,7 +73,7 @@ variable {ι : Type uI} {B : Type uB} {A : Type uA} {K : Type uK}
 variable [Fintype ι] [CommRing B] [CommRing A] [CommRing K]
 variable [Algebra B A] [Algebra B K]
 
-private def piTensorBaseChangeForward :
+def piTensorBaseChangeForward :
     (K ⊗[B] (⨂[B] _ : ι, A)) →ₐ[K] (⨂[K] _ : ι, K ⊗[B] A) :=
   Algebra.TensorProduct.lift (Algebra.ofId K _)
     (piTensorProductEvaluation (R := B) (A := A) (S := ⨂[K] _ : ι, K ⊗[B] A) fun i =>
@@ -79,7 +83,7 @@ private def piTensorBaseChangeForward :
       intro k z
       exact Algebra.commutes k _)
 
-private def piTensorBaseChangeBackward :
+def piTensorBaseChangeBackward :
     (⨂[K] _ : ι, K ⊗[B] A) →ₐ[K] (K ⊗[B] (⨂[B] _ : ι, A)) :=
   piTensorProductEvaluation fun i =>
     Algebra.TensorProduct.lift (Algebra.ofId K _)
@@ -160,7 +164,7 @@ private theorem tprod_eq_prod_singleAlgHom
     {R : Type*} {C : Type*} [CommRing R] [CommRing C] [Algebra R C]
     (x : ι → C) :
     PiTensorProduct.tprod R x = ∏ i, PiTensorProduct.singleAlgHom i (x i) := by
-  simpa only [Finset.univ_prod_mulSingle] using
+  simpa only [Finset.univ_prod_mulSingle, PiTensorProduct.singleAlgHom_apply, MonoidHom.mulSingle_apply] using
     (PiTensorProduct.tprod_prod (R := R) Finset.univ fun i => Pi.mulSingle i (x i))
 
 /-- On pure tensors the canonical comparison only extends the scalars in each factor. -/

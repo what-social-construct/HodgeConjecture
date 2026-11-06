@@ -1,5 +1,9 @@
-import HodgeConjecture.Cycles.AffineResidueField
-import HodgeConjecture.Cycles.AffineDimensionFunction
+module
+
+public import HodgeConjecture.Cycles.AffineResidueField
+public import HodgeConjecture.Cycles.AffineDimensionFunction
+
+@[expose] public section
 
 /-!
 # Dimension values in the actual scheme residue fields
@@ -44,7 +48,7 @@ theorem spec_schemeResidueField_trdeg_lt_aleph0 [Algebra.FiniteType k A]
     Algebra.trdeg k ((Spec (CommRingCat.of A)).residueField x) < Cardinal.aleph0 := by
   letI := residueFieldBaseAlgebra k (Spec.map (CommRingCat.ofHom (algebraMap k A))) x
   rw [spec_schemeResidueField_trdeg_eq, ← primeQuotient_trdeg_eq_residueField k A x]
-  exact trdeg_lt_aleph0 (R := k) (S := A ⧸ x.asIdeal)
+  exact trdeg_lt_aleph0_of_finiteType (R := k) (S := A ⧸ x.asIdeal)
 
 /-- The existing affine dimension function is the degree of the actual
 scheme residue field with its independently defined structural action. -/

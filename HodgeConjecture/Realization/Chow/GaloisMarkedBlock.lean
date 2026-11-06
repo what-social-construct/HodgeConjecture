@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Sheets.MarkedBlockProjector
-import HodgeConjecture.Realization.Chow.MarkedAugmentedRealization
+module
+
+public import HodgeConjecture.Boundary.Sheets.MarkedBlockProjector
+public import HodgeConjecture.Realization.Chow.MarkedAugmentedRealization
+
+@[expose] public section
 
 /-!
 # The marked Galois sheet block as a Tate graph projector

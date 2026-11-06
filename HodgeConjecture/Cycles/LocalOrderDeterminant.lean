@@ -1,8 +1,12 @@
-import HodgeConjecture.CommutativeAlgebra.LatticeIndex
-import HodgeConjecture.Cycles.LocalOrder
-import Mathlib.LinearAlgebra.Quotient.Pi
-import Mathlib.LinearAlgebra.Determinant
-import Mathlib.LinearAlgebra.Matrix.Transvection
+module
+
+public import HodgeConjecture.CommutativeAlgebra.LatticeIndex
+public import HodgeConjecture.Cycles.LocalOrder
+public import Mathlib.LinearAlgebra.Quotient.Pi
+public import Mathlib.LinearAlgebra.Determinant
+public import Mathlib.LinearAlgebra.Matrix.Transvection
+
+@[expose] public section
 
 /-!
 # Determinants and relative lattice lengths
@@ -181,7 +185,7 @@ private theorem index_diag (d : n → K) (hd : ∀ i, d i ≠ 0) :
   rw [← he, map_mul, map_mul, hB] at h
   exact mul_right_cancel h
 
-private def matrixEquiv (A : Matrix n n K) (hA : A.det ≠ 0) : (n → K) ≃ₗ[K] (n → K) :=
+def matrixEquiv (A : Matrix n n K) (hA : A.det ≠ 0) : (n → K) ≃ₗ[K] (n → K) :=
   (Matrix.toLin' A).equivOfDetNeZero (by rw [LinearMap.det_toLin']; exact hA)
 
 @[simp] theorem matrixEquiv_coe (A : Matrix n n K) (hA : A.det ≠ 0) :

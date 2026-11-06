@@ -1,6 +1,10 @@
-import HodgeConjecture.Cycles.FiniteAffineLocalOrder
-import HodgeConjecture.Cycles.FinitePushforwardCoefficients
-import HodgeConjecture.Cycles.PrincipalDivisor
+module
+
+public import HodgeConjecture.Cycles.FiniteAffineLocalOrder
+public import HodgeConjecture.Cycles.FinitePushforwardCoefficients
+public import HodgeConjecture.Cycles.PrincipalDivisor
+
+@[expose] public section
 
 /-!
 # Finite pushforward of the existing principal divisor

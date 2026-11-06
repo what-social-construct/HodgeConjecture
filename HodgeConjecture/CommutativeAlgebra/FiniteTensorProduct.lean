@@ -1,8 +1,12 @@
-import Mathlib.RingTheory.PiTensorProduct
-import Mathlib.RingTheory.TensorProduct.Finite
-import Mathlib.RingTheory.Etale.Basic
-import Mathlib.Data.Fintype.Option
-import Mathlib.RingTheory.LocalProperties.Basic
+module
+
+public import Mathlib.RingTheory.PiTensorProduct
+public import Mathlib.RingTheory.TensorProduct.Finite
+public import Mathlib.RingTheory.Etale.Basic
+public import Mathlib.Data.Fintype.Option
+public import Mathlib.RingTheory.LocalProperties.Basic
+
+@[expose] public section
 
 /-!
 # Finite étale tensor products indexed by a finite type
@@ -129,12 +133,7 @@ theorem piTensorProduct_etale (ι : Type u) [Finite ι] [Algebra.Etale B A] :
       letI := ih
       exact Algebra.Etale.of_equiv (tensorReindex (B := B) (A := A) e)
   | h_empty =>
-      letI : Algebra.Etale B B :=
-        { formallyEtale := by
-            constructor
-            intro Q _ _ I _
-            exact ⟨fun _ _ _ => Subsingleton.elim _ _,
-              fun _ => ⟨Algebra.ofId B Q, Subsingleton.elim _ _⟩⟩ }
+      letI : Algebra.Etale B B := inferInstance
       exact Algebra.Etale.of_equiv (tensorEmpty (B := B) (A := A) PEmpty).symm
   | @h_option ι _ ih =>
       letI := ih

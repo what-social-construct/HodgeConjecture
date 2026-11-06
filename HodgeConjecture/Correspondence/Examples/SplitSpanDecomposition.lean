@@ -1,5 +1,9 @@
-import HodgeConjecture.Correspondence.Examples.SplitSpanCoproduct
-import HodgeConjecture.Correspondence.FiniteCoproduct
+module
+
+public import HodgeConjecture.Correspondence.Examples.SplitSpanCoproduct
+public import HodgeConjecture.Correspondence.FiniteCoproduct
+
+@[expose] public section
 
 /-!
 # Actual finite point decomposition of split scheme spans

@@ -1,5 +1,10 @@
-import Mathlib.RingTheory.Length
-import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+module
+
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.RingTheory.Length
+public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+
+@[expose] public section
 
 /-!
 # Length under a local homomorphism

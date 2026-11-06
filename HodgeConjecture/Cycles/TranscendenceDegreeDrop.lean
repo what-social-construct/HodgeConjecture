@@ -1,8 +1,12 @@
-import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
-import Mathlib.RingTheory.Ideal.GoingUp
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.RingTheory.Spectrum.Prime.Basic
-import Mathlib.SetTheory.Cardinal.ToNat
+module
+
+public import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
+public import Mathlib.RingTheory.Ideal.GoingUp
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.RingTheory.Spectrum.Prime.Basic
+public import Mathlib.SetTheory.Cardinal.ToNat
+
+@[expose] public section
 
 /-!
 # Strict transcendence-degree drop under a proper domain quotient
@@ -54,7 +58,7 @@ private theorem kernel_comap_adjoin_eq_bot
     rwa [hp]
   have hp0 := hx.eq_zero_of_aeval_eq_zero p hpzero
   apply Subtype.ext
-  simpa only [hp0, map_zero] using hp.symm
+  simpa only [hp0, map_zero, Subalgebra.coe_zero] using hp.symm
 
 /-- A noninjective surjection between domains strictly lowers finite
 transcendence degree, by its actual nonzero kernel. -/
@@ -96,7 +100,7 @@ theorem primeQuotient_trdeg_strictAnti (k : Type u) [Field k]
     Ideal.Quotient.lift_surjective_of_surjective _ _ Ideal.Quotient.mk_surjective
   have hnot : ¬ Function.Injective f := by
     intro hinj
-    obtain ⟨a, haq, hap⟩ := SetLike.exists_of_lt hpq
+    obtain ⟨a, haq, hap⟩ := SetLike.exists_of_lt (show p.asIdeal < q.asIdeal from hpq)
     apply hap
     apply Ideal.Quotient.eq_zero_iff_mem.mp
     apply hinj
@@ -104,7 +108,7 @@ theorem primeQuotient_trdeg_strictAnti (k : Type u) [Field k]
     rw [map_zero]
     exact Ideal.Quotient.eq_zero_iff_mem.mpr haq
   exact trdeg_lt_of_surjective_of_not_injective k f hf hnot
-    (trdeg_lt_aleph0 (R := k) (S := A ⧸ p.asIdeal))
+    (trdeg_lt_aleph0_of_finiteType (R := k) (S := A ⧸ p.asIdeal))
 
 /-- The finite natural-valued quotient transcendence degrees retain
 strict antitonicity; conversion to natural numbers is lossless here. -/
@@ -113,7 +117,7 @@ theorem primeQuotient_trdeg_toNat_strictAnti (k : Type u) [Field k]
     StrictAnti (fun p : PrimeSpectrum A ↦ (Algebra.trdeg k (A ⧸ p.asIdeal)).toNat) := by
   intro p q hpq
   exact Cardinal.toNat_lt_toNat (primeQuotient_trdeg_strictAnti k A hpq)
-    (trdeg_lt_aleph0 (R := k) (S := A ⧸ p.asIdeal))
+    (trdeg_lt_aleph0_of_finiteType (R := k) (S := A ⧸ p.asIdeal))
 
 end
 

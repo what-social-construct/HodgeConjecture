@@ -1,7 +1,11 @@
-import HodgeConjecture.Cycles.CoefficientExtension
-import HodgeConjecture.Cycles.GradedPushforward
-import HodgeConjecture.Cycles.IsomorphismTransport
-import HodgeConjecture.Cycles.OpenGrading
+module
+
+public import HodgeConjecture.Cycles.CoefficientExtension
+public import HodgeConjecture.Cycles.GradedPushforward
+public import HodgeConjecture.Cycles.IsomorphismTransport
+public import HodgeConjecture.Cycles.OpenGrading
+
+@[expose] public section
 
 /-!
 # Coefficient extension and actual closed pushforward

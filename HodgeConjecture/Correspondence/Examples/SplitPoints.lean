@@ -1,7 +1,11 @@
-import HodgeConjecture.Correspondence.EtaleClasses
-import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.Mono
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+module
+
+public import HodgeConjecture.Correspondence.EtaleClasses
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.Mono
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+
+@[expose] public section
 
 /-!
 # Split finite schemes and point-supported projectors
@@ -64,12 +68,12 @@ theorem sigmaSpec_comp_toBase :
     rfl
   rw [h, Spec.map_id]
 
-instance : IsEtale (toBase K I) := by
-  apply (MorphismProperty.cancel_left_of_respectsIso @IsEtale
+instance : Etale (toBase K I) := by
+  apply (MorphismProperty.cancel_left_of_respectsIso @Etale
     (sigmaSpec (fun _ : I ↦ CommRingCat.of K)) (toBase K I)).mp
   rw [sigmaSpec_comp_toBase]
   exact IsZariskiLocalAtSource.sigmaDesc
-    (fun _ ↦ MorphismProperty.id_mem @IsEtale (Spec (.of K)))
+    (fun _ ↦ MorphismProperty.id_mem @Etale (Spec (.of K)))
 
 /-- A finite split scheme is already proper; no boundary is needed. -/
 instance : IsProper (toBase K I) := inferInstance
@@ -87,7 +91,7 @@ instance (i : I) : IsClosedImmersion (pointInclusion K I i) :=
 
 instance (i : I) : IsFinite (pointInclusion K I i) := inferInstance
 
-instance (i : I) : IsEtale (pointInclusion K I i) :=
+instance (i : I) : Etale (pointInclusion K I i) :=
   IsZariskiLocalAtSource.of_isOpenImmersion _
 
 /-- The actual scheme span supported on a single diagonal point. -/
@@ -101,7 +105,7 @@ omit [Finite I] in
 theorem pointSpan_hasFiniteEtaleLegs (i : I) :
     SchemeCorrespondence.HasFiniteEtaleLegs (pointSpan K I i) := by
   constructor
-  · constructor <;> exact inferInstanceAs (IsEtale (pointInclusion K I i))
+  · constructor <;> exact inferInstanceAs (Etale (pointInclusion K I i))
   · exact inferInstanceAs (IsFinite (pointInclusion K I i))
   · exact inferInstanceAs (IsFinite (pointInclusion K I i))
 

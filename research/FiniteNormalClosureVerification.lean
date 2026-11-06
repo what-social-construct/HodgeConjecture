@@ -1,5 +1,10 @@
+module
+
 import HodgeConjecture.Boundary
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP76 regressions for finite normalization in a marked normal closure.
@@ -150,12 +155,12 @@ example [FormallyUnramified p] :
     letI : Algebra Γ(X, U) N :=
       ((algebraMap X.functionField N).comp (X.germToFunctionField U).hom).toAlgebra
     Module.Finite Γ(X, U) (normalizedCoordinateRing Γ(X, U) N) := by
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   fail_if_success have _ : PerfectField X.functionField := inferInstance
   fail_if_success have _ : IsDedekindDomain Γ(X, U) := inferInstance
   exact functionFieldNormalClosure_normalization_finite p U hU
 
-example [IsEtale p] :
+example [Etale p] :
     letI := (functionFieldMapOfDominant p).hom.toAlgebra
     let N := IntermediateField.normalClosure X.functionField Y.functionField
       (AlgebraicClosure Y.functionField)
@@ -253,11 +258,11 @@ example [FormallyUnramified p]
       functionFieldMapOfDominant_sectionScalarTower p U
     letI : IsScalarTower Γ(X, U) X.functionField N := IsScalarTower.of_algebraMap_eq' rfl
     ConjugateBoundarySeparation (finiteAffinePreimageNormalizedCover p U hU hNormal) := by
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   fail_if_success have _ : PerfectField X.functionField := inferInstance
   exact conjugateBoundarySeparation_finiteAffinePreimageNormalizedCover p U hU hNormal
 
-example [IsEtale p]
+example [Etale p]
     (hNormal : ∀ y : p ⁻¹ᵁ U, IsIntegrallyClosed (Y.presheaf.stalk y.val)) :
     letI := nonempty_preimage_of_isDominant p U
     letI : Algebra Γ(X, U) Y.functionField :=
@@ -291,8 +296,8 @@ run_cmd do
       `HodgeConjecture.CollisionFoundations.conjugateBoundarySeparation_finiteAffinePreimageNormalizedCover] do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    for axiomName in state.axioms do
+    let axioms ← Lean.collectAxioms declaration
+    for axiomName in axioms do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"
-    logInfo m!"PASS standard-axiom boundary: {declaration}; {state.axioms.toList}"
+    logInfo m!"PASS standard-axiom boundary: {declaration}; {axioms.toList}"

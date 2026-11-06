@@ -1,10 +1,14 @@
-import HodgeConjecture.Boundary.Normalization.NormalClosure
-import HodgeConjecture.Boundary.Sheets.MarkedBlockProjector
-import HodgeConjecture.LinearAlgebra.MarkedAugmentedAlgebra
-import Mathlib.FieldTheory.PrimitiveElement
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.RingTheory.Unramified.Field
+module
+
+public import HodgeConjecture.Boundary.Normalization.NormalClosure
+public import HodgeConjecture.Boundary.Sheets.MarkedBlockProjector
+public import HodgeConjecture.LinearAlgebra.MarkedAugmentedAlgebra
+public import Mathlib.FieldTheory.PrimitiveElement
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.RingTheory.Unramified.Field
+
+@[expose] public section
 
 /-!
 # Generic collision selectors from a marked normal closure
@@ -222,7 +226,7 @@ theorem NormalClosureData.collisionToGenericSheets_elem_apply_of_ne
           D.collisionToGenericSheets
             (Algebra.FormallyUnramified.elem K L) s = 0 := by
     simpa only [map_mul, map_sub, map_zero,
-      Pi.mul_apply, Pi.sub_apply, Pi.zero_apply,
+      Pi.mul_apply, Pi.sub_apply, Pi.zero_apply, AlgHom.id_apply,
       NormalClosureData.collisionToGenericSheets_tmul_apply,
       map_one, one_mul, mul_one] using hzero
   exact
@@ -401,7 +405,7 @@ theorem NormalClosureData.sheetDeltaTensor_maps_to_selector
       simpa only [map_mul, map_sub, map_zero,
         Algebra.TensorProduct.map_tmul,
         NormalClosureData.normalClosureTensorToGenericSheets_tmul_apply,
-        Pi.mul_apply, Pi.sub_apply, Pi.zero_apply,
+        Pi.mul_apply, Pi.sub_apply, Pi.zero_apply, AlgHom.id_apply, NormalClosureData.sheetDeltaTensor,
         map_one, one_mul, mul_one] using hzero
     rw [(mul_eq_zero.mp hmul).resolve_left (sub_ne_zero.mpr hx)]
     simp [HodgeConjecture.genericSheetSelector, hts]
@@ -492,7 +496,7 @@ theorem NormalClosureData.normalClosureBaseSheetAugmentation_comp_tensorGenericS
     D.normalClosureBaseSheetAugmentation.comp
         D.normalClosureTensorGenericSheetsEquiv.toAlgHom =
       D.normalClosureTensorDiagonal := by
-  simpa only [NormalClosureData.normalClosureTensorGenericSheetsEquiv] using
+  simpa only [NormalClosureData.normalClosureTensorGenericSheetsEquiv, AlgEquiv.toAlgHom_ofBijective] using
     D.normalClosureBaseSheetAugmentation_comp_tensorToGenericSheets
 
 universe uR uS

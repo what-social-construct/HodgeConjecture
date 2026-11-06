@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Normalization.GluedNormalizationFunctionFieldAction
-import HodgeConjecture.Cycles.FunctionFieldExtensionality
+module
+
+public import HodgeConjecture.Boundary.Normalization.GluedNormalizationFunctionFieldAction
+public import HodgeConjecture.Cycles.FunctionFieldExtensionality
+
+@[expose] public section
 
 /-!
 # The full deck group of the original glued normalization
@@ -37,7 +41,7 @@ theorem gluedNormalizationDeckTransformation_ext
     (d e : DeckTransformation (gluedNormalizationToBase X N))
     (h : functionFieldMapOfDominant d.hom.left =
       functionFieldMapOfDominant e.hom.left) : d = e := by
-  apply CategoryTheory.Aut.ext
+  apply CategoryTheory.Aut.hom_ext
   apply Over.OverMorphism.ext
   exact eq_of_functionFieldMapOfDominant_eq d.hom.left e.hom.left
     (gluedNormalizationToBase X N) ((Over.w d.hom).trans (Over.w e.hom).symm) h

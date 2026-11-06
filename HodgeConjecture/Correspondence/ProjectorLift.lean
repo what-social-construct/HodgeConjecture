@@ -1,7 +1,11 @@
-import HodgeConjecture.Correspondence.Algebra
-import HodgeConjecture.LinearAlgebra.UniversalIdempotentAlgebra
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.LinearAlgebra.Projection
+module
+
+public import HodgeConjecture.Correspondence.Algebra
+public import HodgeConjecture.LinearAlgebra.UniversalIdempotentAlgebra
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.LinearAlgebra.Projection
+
+@[expose] public section
 
 /-!
 # Algebraic lifts of cohomological projectors

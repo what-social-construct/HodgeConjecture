@@ -1,6 +1,10 @@
-import HodgeConjecture.Boundary.Normalization.FullVisibleBoundary
-import Mathlib.RingTheory.Etale.Basic
-import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+module
+
+public import HodgeConjecture.Boundary.Normalization.FullVisibleBoundary
+public import Mathlib.RingTheory.Etale.Basic
+public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+
+@[expose] public section
 
 /-!
 # Finite normal affine models as actual normalization covers

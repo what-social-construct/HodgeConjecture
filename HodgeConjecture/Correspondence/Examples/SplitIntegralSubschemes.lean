@@ -1,5 +1,9 @@
-import HodgeConjecture.Correspondence.Examples.SplitPointDimension
-import HodgeConjecture.Cycles.Basic
+module
+
+public import HodgeConjecture.Correspondence.Examples.SplitPointDimension
+public import HodgeConjecture.Cycles.Basic
+
+@[expose] public section
 
 /-!
 # Integral closed subschemes of finite split schemes

@@ -1,8 +1,12 @@
-import HodgeConjecture.Cycles.TranscendenceDegreeDrop
-import HodgeConjecture.Cycles.NormalizationDimension
-import Mathlib.AlgebraicGeometry.AffineScheme
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.KrullDimension.Basic
+module
+
+public import HodgeConjecture.Cycles.TranscendenceDegreeDrop
+public import HodgeConjecture.Cycles.NormalizationDimension
+public import Mathlib.AlgebraicGeometry.AffineScheme
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.KrullDimension.Basic
+
+@[expose] public section
 
 /-!
 # Affine dimension and transcendence degree
@@ -57,7 +61,7 @@ theorem ringKrullDim_le_trdeg_toNat_of_finiteType (k : Type u) [Field k]
   intro p
   exact Cardinal.toNat_le_toNat
     (trdeg_le_of_surjective (Ideal.Quotient.mkₐ k p.asIdeal) Ideal.Quotient.mk_surjective)
-    (trdeg_lt_aleph0 (R := k) (S := A))
+    (trdeg_lt_aleph0_of_finiteType (R := k) (S := A))
 
 /-- The actual Krull dimension of a finite-type domain is its finite
 transcendence degree. The two bounds are proved independently. -/

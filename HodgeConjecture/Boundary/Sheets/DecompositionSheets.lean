@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Sheets.InertiaQuotient
-import Mathlib.GroupTheory.DoubleCoset
+module
+
+public import HodgeConjecture.Boundary.Sheets.InertiaQuotient
+public import Mathlib.GroupTheory.DoubleCoset
+
+@[expose] public section
 
 /-!
 # Decomposition sheets
@@ -161,8 +165,8 @@ theorem inertiaIndexAtRepresentative_left_mul
   rw [MulAction.stabilizer_smul_eq_stabilizer_map_conj]
   have hJ :
       J.map (MulAut.conj d).toMonoidHom = J := by
-    simpa only [Subgroup.pointwise_smul_def] using
-      (Subgroup.Normal.conj_smul_eq_self d J)
+    change MulAut.conj d • J = J
+    exact Subgroup.Normal.conj_smul_eq_self d J
   conv_lhs =>
     rhs
     rw [← hJ]

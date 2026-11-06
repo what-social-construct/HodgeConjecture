@@ -1,4 +1,8 @@
-import HodgeConjecture.Cycles.PrincipalDivisorTransport
+module
+
+public import HodgeConjecture.Cycles.PrincipalDivisorTransport
+
+@[expose] public section
 
 /-!
 # Actual ambient images of carrier principal divisors

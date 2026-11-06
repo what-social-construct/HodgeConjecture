@@ -1,6 +1,10 @@
-import HodgeConjecture.Correspondence.Scheme
-import Mathlib.AlgebraicGeometry.Morphisms.Etale
-import Mathlib.AlgebraicGeometry.Morphisms.Finite
+module
+
+public import HodgeConjecture.Correspondence.Scheme
+public import Mathlib.AlgebraicGeometry.Morphisms.Etale
+public import Mathlib.AlgebraicGeometry.Morphisms.Finite
+
+@[expose] public section
 
 /-!
 # Étale scheme correspondences
@@ -39,8 +43,8 @@ variable {pX : X ⟶ S} {pY : Y ⟶ S} {pZ : Z ⟶ S}
 /-- Both legs of a scheme correspondence are étale. -/
 structure HasEtaleLegs
     (P : SchemeCorrespondence pX pY) : Prop where
-  left_etale : IsEtale P.left
-  right_etale : IsEtale P.right
+  left_etale : Etale P.left
+  right_etale : Etale P.right
 
 /-- Both legs of a scheme correspondence are finite étale. -/
 structure HasFiniteEtaleLegs
@@ -60,12 +64,12 @@ theorem of_isom
   constructor
   · apply
       (MorphismProperty.cancel_left_of_respectsIso
-        @IsEtale e.carrierIso.hom Q.left).mp
+        @Etale e.carrierIso.hom Q.left).mp
     rw [e.hom_left]
     exact hP.left_etale
   · apply
       (MorphismProperty.cancel_left_of_respectsIso
-        @IsEtale e.carrierIso.hom Q.right).mp
+        @Etale e.carrierIso.hom Q.right).mp
     rw [e.hom_right]
     exact hP.right_etale
 
@@ -80,7 +84,7 @@ theorem isom_iff
 theorem identity (pX : X ⟶ S) :
     HasEtaleLegs (SchemeCorrespondence.identity pX) := by
   constructor <;>
-    exact MorphismProperty.id_mem @IsEtale X
+    exact MorphismProperty.id_mem @Etale X
 
 /-- Reversing an étale correspondence preserves étaleness of its legs. -/
 theorem transpose
@@ -103,12 +107,12 @@ theorem comp
     (hP : HasEtaleLegs P) :
     HasEtaleLegs (Q.comp P) := by
   exact
-    ⟨MorphismProperty.comp_mem @IsEtale
+    ⟨MorphismProperty.comp_mem @Etale
         (pullback.fst P.right Q.left) P.left
         (MorphismProperty.pullback_fst
           P.right Q.left hQ.left_etale)
         hP.left_etale,
-      MorphismProperty.comp_mem @IsEtale
+      MorphismProperty.comp_mem @Etale
         (pullback.snd P.right Q.left) Q.right
         (MorphismProperty.pullback_snd
           P.right Q.left hP.right_etale)
@@ -200,7 +204,7 @@ theorem isProperSupport
     MorphismProperty.pullback_fst
       pX pY (inferInstance : IsSeparated pY)
   exact
-    IsProper.of_comp_of_isSeparated
+    IsProper.of_comp
       P.toAmbientProduct (pullback.fst pX pY)
 
 end HasFiniteEtaleLegs

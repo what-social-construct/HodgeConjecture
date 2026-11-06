@@ -1,6 +1,11 @@
-import Mathlib.RingTheory.Localization.BaseChange
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.RingHom.FiniteType
+module
+
+public import Mathlib.RingTheory.Localization.BaseChange
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.RingHom.FiniteType
+public import Mathlib.RingTheory.FiniteStability
+
+@[expose] public section
 
 /-!
 # The actual generic-fiber algebra

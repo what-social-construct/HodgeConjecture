@@ -1,5 +1,9 @@
-import Mathlib.RingTheory.DedekindDomain.Different
-import Mathlib.RingTheory.Localization.Integer
+module
+
+public import Mathlib.RingTheory.DedekindDomain.Different
+public import Mathlib.RingTheory.Localization.Integer
+
+@[expose] public section
 
 /-!
 # A uniform denominator for the normalization trace dual
@@ -87,7 +91,7 @@ theorem exists_nonzero_traceDual_unit_denominator :
     · intro a x hx ih
       rw [smul_smul, mul_comm, ← smul_smul]
       exact (1 : Submodule T N).smul_mem a ih
-  simpa only [Algebra.smul_def] using Submodule.mem_one.mp hcleared
+  simpa only [Algebra.smul_def, RingHom.mem_range] using Submodule.mem_one.mp hcleared
 
 end
 

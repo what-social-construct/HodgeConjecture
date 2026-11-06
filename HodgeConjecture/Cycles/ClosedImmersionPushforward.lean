@@ -1,8 +1,12 @@
-import HodgeConjecture.Cycles.Basic
-import HodgeConjecture.Cycles.ResidueDegree
-import Mathlib.AlgebraicGeometry.FunctionField
-import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+module
+
+public import HodgeConjecture.Cycles.Basic
+public import HodgeConjecture.Cycles.ResidueDegree
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
+public import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+
+@[expose] public section
 
 /-!
 # Finite-cycle pushforward along closed immersions

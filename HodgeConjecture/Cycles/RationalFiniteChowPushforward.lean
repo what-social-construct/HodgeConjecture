@@ -1,5 +1,9 @@
-import HodgeConjecture.Cycles.FiniteChowPushforward
-import HodgeConjecture.Cycles.RationalChow
+module
+
+public import HodgeConjecture.Cycles.FiniteChowPushforward
+public import HodgeConjecture.Cycles.RationalChow
+
+@[expose] public section
 
 /-!
 # Rational finite Chow pushforward

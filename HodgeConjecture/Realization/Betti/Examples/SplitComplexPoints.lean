@@ -1,7 +1,11 @@
-import HodgeConjecture.CommutativeAlgebra.SplitFieldQuotient
-import HodgeConjecture.Correspondence.Examples.SplitSpanGeometry
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Topology.Homeomorph.Lemmas
+module
+
+public import HodgeConjecture.CommutativeAlgebra.SplitFieldQuotient
+public import HodgeConjecture.Correspondence.Examples.SplitSpanGeometry
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Topology.Homeomorph.Lemmas
+
+@[expose] public section
 
 /-!
 # Actual complex points of finite split schemes

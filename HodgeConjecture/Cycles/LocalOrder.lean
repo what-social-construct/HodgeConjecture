@@ -1,4 +1,8 @@
-import Mathlib.RingTheory.OrderOfVanishing
+module
+
+public import Mathlib.RingTheory.OrderOfVanishing.Noetherian
+
+@[expose] public section
 
 /-!
 # Signed local orders from actual quotient lengths
@@ -57,10 +61,8 @@ theorem localOrder_algebraMap (a : R) (ha : a ≠ 0) :
       (by simpa only [map_zero] using (IsFractionRing.injective R K).ne ha)) =
       ((Module.length R (R ⧸ Ideal.span {a})).toNat : ℤ) := by
   classical
-  rw [localOrder, Units.val_mk0, Ring.ordFrac_eq_ord R a ha]
-  change WithZero.log (if a ∈ nonZeroDivisors R then
-    WithZero.map' (Nat.castAddMonoidHom ℤ).toMultiplicative (Ring.ord R a) else 0) = _
-  rw [if_pos (mem_nonZeroDivisors_of_ne_zero ha), Ring.ord]
+  rw [localOrder, Units.val_mk0, Ring.ordFrac_eq_ord R ha]
+  rw [Ring.ordMonoidWithZeroHom_eq_ord (mem_nonZeroDivisors_of_ne_zero ha), Ring.ord]
   have h := principalQuotient_length_ne_top R a ha
   conv_lhs => rw [← ENat.coe_toNat h]
   rfl
@@ -83,7 +85,7 @@ theorem localOrder_map_unit (a : Rˣ) :
     localOrder R (Units.map (algebraMap R K).toMonoidHom a) = 0 := by
   have hspan : Ideal.span {(a : R)} = ⊤ := Ideal.span_singleton_eq_top.mpr a.isUnit
   letI : Subsingleton (R ⧸ Ideal.span {(a : R)}) :=
-    (Submodule.Quotient.subsingleton_iff _).mpr (fun x ↦ by rw [hspan]; trivial)
+    Submodule.Quotient.subsingleton_iff.mpr hspan
   have h := localOrder_algebraMap (K := K) R (a : R) a.ne_zero
   have he : Units.mk0 (algebraMap R K (a : R))
       (by simpa only [map_zero] using (IsFractionRing.injective R K).ne a.ne_zero) =

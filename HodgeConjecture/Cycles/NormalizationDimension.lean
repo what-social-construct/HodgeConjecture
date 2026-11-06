@@ -1,8 +1,12 @@
-import HodgeConjecture.Cycles.IntegralDimension
-import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
-import Mathlib.RingTheory.KrullDimension.Field
-import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
-import Mathlib.RingTheory.NoetherNormalization
+module
+
+public import HodgeConjecture.Cycles.IntegralDimension
+public import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
+public import Mathlib.RingTheory.KrullDimension.Field
+public import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
+public import Mathlib.RingTheory.NoetherNormalization
+
+@[expose] public section
 
 /-!
 # The dimension lower bound from Noether normalization

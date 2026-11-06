@@ -1,5 +1,9 @@
-import Mathlib.AlgebraicGeometry.Scheme
-import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
+module
+
+public import Mathlib.AlgebraicGeometry.Scheme
+public import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
+
+@[expose] public section
 
 /-!
 # Affine normalization models

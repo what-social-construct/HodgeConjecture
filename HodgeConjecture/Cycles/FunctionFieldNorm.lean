@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Normalization.FiniteFunctionField
-import Mathlib.RingTheory.Norm.Defs
+module
+
+public import HodgeConjecture.Boundary.Normalization.FiniteFunctionField
+public import Mathlib.RingTheory.Norm.Defs
+
+@[expose] public section
 
 /-!
 # The norm along an actual finite dominant morphism

@@ -1,7 +1,11 @@
-import HodgeConjecture.Realization.Chow.Model
-import Mathlib.Algebra.RingQuot
-import Mathlib.RingTheory.TwoSidedIdeal.Kernel
-import Mathlib.RingTheory.TwoSidedIdeal.Operations
+module
+
+public import HodgeConjecture.Realization.Chow.Model
+public import Mathlib.Algebra.RingQuot
+public import Mathlib.RingTheory.TwoSidedIdeal.Kernel
+public import Mathlib.RingTheory.TwoSidedIdeal.Operations
+
+@[expose] public section
 
 /-!
 # Noncommutative presentations of rational Chow-correspondence algebras

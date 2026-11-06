@@ -1,5 +1,9 @@
-import Mathlib.Algebra.Algebra.Rat
-import Mathlib.LinearAlgebra.Prod
+module
+
+public import Mathlib.Algebra.Algebra.Rat
+public import Mathlib.LinearAlgebra.Prod
+
+@[expose] public section
 
 /-!
 # Abstract cycle-class models for the rational Hodge conjecture

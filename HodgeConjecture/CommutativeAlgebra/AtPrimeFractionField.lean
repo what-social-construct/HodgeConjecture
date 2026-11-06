@@ -1,5 +1,9 @@
-import Mathlib.RingTheory.Localization.AsSubring
-import Mathlib.RingTheory.Ideal.Height
+module
+
+public import Mathlib.RingTheory.Localization.AsSubring
+public import Mathlib.RingTheory.Ideal.Height
+
+@[expose] public section
 
 /-!
 # A prime localization in the original fraction field

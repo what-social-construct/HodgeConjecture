@@ -1,6 +1,10 @@
-import HodgeConjecture.Cycles.DimensionFunctionRestriction
-import HodgeConjecture.Cycles.CycleDegree
-import HodgeConjecture.Cycles.OpenSupport
+module
+
+public import HodgeConjecture.Cycles.DimensionFunctionRestriction
+public import HodgeConjecture.Cycles.CycleDegree
+public import HodgeConjecture.Cycles.OpenSupport
+
+@[expose] public section
 
 /-!
 # Actual open restriction of dimension functions and homogeneous cycles
@@ -23,7 +27,7 @@ noncomputable section
 
 universe u v
 
-private def openImmersionPointOrderEmbedding {X Y : Scheme.{u}}
+def openImmersionPointOrderEmbedding {X Y : Scheme.{u}}
     (j : X ⟶ Y) [IsOpenImmersion j] : X ↪o Y where
   toFun := j.base
   inj' := j.isOpenEmbedding.injective

@@ -1,4 +1,8 @@
-import HodgeConjecture.Boundary.Normalization.AffineNormalizationRestriction
+module
+
+public import HodgeConjecture.Boundary.Normalization.AffineNormalizationRestriction
+
+@[expose] public section
 
 /-!
 # Coherence of the actual normalization restrictions

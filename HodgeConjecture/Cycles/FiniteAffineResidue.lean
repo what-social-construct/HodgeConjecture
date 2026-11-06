@@ -1,4 +1,8 @@
-import HodgeConjecture.Cycles.FiniteAffineStalkMap
+module
+
+public import HodgeConjecture.Cycles.FiniteAffineStalkMap
+
+@[expose] public section
 
 /-!
 # Actual residue degrees in the affine norm sum

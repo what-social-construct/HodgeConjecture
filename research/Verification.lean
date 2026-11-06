@@ -1,7 +1,12 @@
+module
+
 import HodgeConjecture
 import Solution
 import HodgeConjecture.CommutativeAlgebra.SplitFieldQuotient
 import Mathlib.AlgebraicGeometry.Morphisms.Flat
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 # Release-candidate declaration checks
@@ -13,6 +18,136 @@ Run it with:
 
 It is intentionally outside the library's default import tree.
 -/
+
+-- These declarations must be exported by the public root import above.
+#check HodgeConjecture.SchemeCorrespondence.graphIntegralSubscheme_supportDegree
+#check HodgeConjecture.SchemeCorrespondence.gradedGraphCycleLinearMap_subtype
+#check HodgeConjecture.SchemeCorrespondence.graphChowClass
+#check HodgeConjecture.SchemeCorrespondence.graphChowLinearMap_single
+#check HodgeConjecture.SchemeCorrespondence.graphPairDimensionFunction_comap
+#check HodgeConjecture.SchemeCorrespondence.rationalPrincipalRelations_le_comap_graphPairPullback
+#check HodgeConjecture.SchemeCorrespondence.graphChowRightAction_graphChowClass
+#check HodgeConjecture.SchemeCorrespondence.graphChowLeftAction_graphChowClass
+#check HodgeConjecture.SchemeCorrespondence.graphChowRightLinearAction_isIdempotent
+#check HodgeConjecture.SchemeCorrespondence.graphChowLeftLinearAction_graphChowLinearMap
+#check HodgeConjecture.SchemeCorrespondence.graphChowKernelIdeal_isTwoSided
+#check HodgeConjecture.SchemeCorrespondence.graphChowAlgHom_eq_iff
+#check HodgeConjecture.SchemeCorrespondence.graphChowRangeEquiv
+#check HodgeConjecture.SchemeCorrespondence.graphChowRealization_mul_right
+#check HodgeConjecture.SchemeCorrespondence.graphChowRealization_averagingProjector
+#check HodgeConjecture.SchemeCorrespondence.graphChowAveragingProjector_isIdempotent
+#check HodgeConjecture.SchemeCorrespondence.graphChowRealization_average_add_complement
+#check HodgeConjecture.SchemeCorrespondence.graphChowBasePushforward_graphChowClass
+#check HodgeConjecture.SchemeCorrespondence.graphChowLinearMap_baseComparison
+#check HodgeConjecture.SchemeCorrespondence.absoluteGraphChowLinearMap_eq
+#check HodgeConjecture.SchemeCorrespondence.graphChowBaseAlgHom
+#check HodgeConjecture.SchemeCorrespondence.graphChowBaseAlgHom_realization
+#check HodgeConjecture.SchemeCorrespondence.graphChowBaseAlgHom_isIdempotent
+
+#print axioms HodgeConjecture.SchemeCorrespondence.graphIntegralSubscheme_supportDegree
+#print axioms HodgeConjecture.SchemeCorrespondence.gradedGraphCycleLinearMap_subtype
+#print axioms HodgeConjecture.SchemeCorrespondence.graphChowClass
+#print axioms HodgeConjecture.SchemeCorrespondence.graphChowLinearMap_single
+#print axioms HodgeConjecture.SchemeCorrespondence.graphPairDimensionFunction_comap
+#print axioms HodgeConjecture.SchemeCorrespondence.rationalPrincipalRelations_le_comap_graphPairPullback
+#print axioms HodgeConjecture.SchemeCorrespondence.graphChowRightAction_graphChowClass
+#print axioms HodgeConjecture.SchemeCorrespondence.graphChowLeftAction_graphChowClass
+#print axioms HodgeConjecture.SchemeCorrespondence.graphChowRightLinearAction_isIdempotent
+#print axioms HodgeConjecture.SchemeCorrespondence.graphChowLeftLinearAction_graphChowLinearMap
+#print axioms HodgeConjecture.SchemeCorrespondence.graphChowKernelIdeal_isTwoSided
+#print axioms HodgeConjecture.SchemeCorrespondence.graphChowAlgHom_eq_iff
+#print axioms HodgeConjecture.SchemeCorrespondence.graphChowRangeEquiv
+#print axioms HodgeConjecture.SchemeCorrespondence.graphChowRealization_mul_right
+#print axioms HodgeConjecture.SchemeCorrespondence.graphChowRealization_averagingProjector
+#print axioms HodgeConjecture.SchemeCorrespondence.graphChowAveragingProjector_isIdempotent
+#print axioms HodgeConjecture.SchemeCorrespondence.graphChowRealization_average_add_complement
+#print axioms HodgeConjecture.SchemeCorrespondence.graphChowBasePushforward_graphChowClass
+#print axioms HodgeConjecture.SchemeCorrespondence.graphChowLinearMap_baseComparison
+#print axioms HodgeConjecture.SchemeCorrespondence.absoluteGraphChowLinearMap_eq
+#print axioms HodgeConjecture.SchemeCorrespondence.graphChowBaseAlgHom
+#print axioms HodgeConjecture.SchemeCorrespondence.graphChowBaseAlgHom_realization
+#print axioms HodgeConjecture.SchemeCorrespondence.graphChowBaseAlgHom_isIdempotent
+
+noncomputable section ActualGraphChowRootExports
+
+open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+open HodgeConjecture.SchemeCycles HodgeConjecture.SchemeCorrespondence
+
+universe u
+
+variable (k : Type u) [Field k] {X S : Scheme.{u}}
+variable (p : X ⟶ S) (b : S ⟶ Spec (CommRingCat.of k))
+variable [IsSeparated p] [IsIntegral X] [LocallyOfFiniteType (p ≫ b)]
+variable [LocallyOfFiniteType (graphPairStructure k p b)] [IsNoetherian (pullback p p)]
+
+-- Root exports retain exactly the equalities of the actual Chow classes.
+example (a c : MonoidAlgebra ℚ (DeckTransformation p)) :
+    graphChowAlgHom k p b a = graphChowAlgHom k p b c ↔
+      graphChowLinearMap k p b a = graphChowLinearMap k p b c :=
+  graphChowAlgHom_eq_iff k p b a c
+
+-- The public API supplies both the graph-class projector and its geometric Chow operator.
+example (n : ℤ) (q : MonoidAlgebra ℚ (DeckTransformation p))
+    (hq : IsIdempotentElem q) :
+    IsIdempotentElem (graphChowAlgHom k p b q) ∧
+      IsIdempotentElem (graphChowRightLinearAction k p b n q) :=
+  ⟨graphChowAlgHom_isIdempotent k p b q hq,
+    graphChowRightLinearAction_isIdempotent k p b n q hq⟩
+
+-- The relative closed pushforward equals the original absolute assembly after degree normalization.
+example [IsSeparated b]
+    [LocallyOfFiniteType (graphPairStructure k (p ≫ b) (𝟙 _))]
+    [IsNoetherian (pullback (p ≫ b) (p ≫ b))] :
+    (graphChowBasePushforward k p b (graphChowDimension k p b)).comp
+        (graphChowLinearMap k p b) =
+      (graphChowAbsoluteDegreeEquiv k p b).toLinearMap.comp
+        ((graphChowLinearMap k (p ≫ b) (𝟙 _)).comp
+          (MonoidAlgebra.mapDomainAlgHom ℚ ℚ (forgetDeckBase p b)).toLinearMap) := by
+  rw [graphChowLinearMap_baseComparison, absoluteGraphChowLinearMap_eq]
+
+end ActualGraphChowRootExports
+
+#check HodgeConjecture.SingularDegreeZero.eval_eq_of_joined
+#check HodgeConjecture.SingularDegreeZero.equivConstants
+#check HodgeConjecture.AffineLineComplexPoints.coordinateHomeomorph
+#check HodgeConjecture.AffineLineDeRham.complexCoordinates
+#check HodgeConjecture.AffineLineDeRham.bettiComparison
+#check HodgeConjecture.AffineLineDeRham.bettiComparison_evaluation
+#check HodgeConjecture.AffineLineDeRham.bettiComparison_mul
+#check HodgeConjecture.AffineLineDeRham.bettiComparison_pullback
+#check HodgeConjecture.AffineLineDeRham.cohomologyZeroComparison
+#check HodgeConjecture.AffineLineDeRham.imaginaryClass_not_rational
+
+#print axioms HodgeConjecture.SingularDegreeZero.eval_eq_of_joined
+#print axioms HodgeConjecture.SingularDegreeZero.equivConstants
+#print axioms HodgeConjecture.AffineLineComplexPoints.coordinateHomeomorph
+#print axioms HodgeConjecture.AffineLineDeRham.complexCoordinates
+#print axioms HodgeConjecture.AffineLineDeRham.bettiComparison
+#print axioms HodgeConjecture.AffineLineDeRham.bettiComparison_evaluation
+#print axioms HodgeConjecture.AffineLineDeRham.bettiComparison_mul
+#print axioms HodgeConjecture.AffineLineDeRham.bettiComparison_pullback
+#print axioms HodgeConjecture.AffineLineDeRham.cohomologyZeroComparison
+#print axioms HodgeConjecture.AffineLineDeRham.imaginaryClass_not_rational
+
+#check HodgeConjecture.AffineDeRham.polynomialCoordinates
+#check HodgeConjecture.AffineDeRham.polynomialCohomologyZeroIso
+#check HodgeConjecture.AffineDeRham.affineLineCoordinates
+#check HodgeConjecture.AffineDeRham.idempotent_closed
+#check HodgeConjecture.AffineDeRham.affineLinesCoordinates
+#check HodgeConjecture.AffineDeRham.affineLinesCohomologyZeroIso
+#check HodgeConjecture.AffineDeRham.affineLinesBasis
+#check HodgeConjecture.AffineDeRham.affineLinesBasis_isIdempotent
+#check HodgeConjecture.AffineDeRham.affineLines_finrank
+
+#print axioms HodgeConjecture.AffineDeRham.polynomialCoordinates
+#print axioms HodgeConjecture.AffineDeRham.polynomialCohomologyZeroIso
+#print axioms HodgeConjecture.AffineDeRham.affineLineCoordinates
+#print axioms HodgeConjecture.AffineDeRham.idempotent_closed
+#print axioms HodgeConjecture.AffineDeRham.affineLinesCoordinates
+#print axioms HodgeConjecture.AffineDeRham.affineLinesCohomologyZeroIso
+#print axioms HodgeConjecture.AffineDeRham.affineLinesBasis
+#print axioms HodgeConjecture.AffineDeRham.affineLinesBasis_isIdempotent
+#print axioms HodgeConjecture.AffineDeRham.affineLines_finrank
 
 #check HodgeConjecture.SchemeCorrespondence.identityCompIsom
 #check HodgeConjecture.SchemeCorrespondence.compIdentityIsom
@@ -694,7 +829,7 @@ example :
 example :
     let D := MulAction.stabilizer (Equiv.Perm (Fin 3)) (0 : Fin 3)
     ¬D.Normal ∧
-      AlgebraicGeometry.IsEtale (SplitGaloisSheets.quotientMap (Equiv.Perm (Fin 3)) D) ∧
+      AlgebraicGeometry.Etale (SplitGaloisSheets.quotientMap (Equiv.Perm (Fin 3)) D) ∧
       AlgebraicGeometry.Surjective
         (SplitGaloisSheets.quotientMap (Equiv.Perm (Fin 3)) D) := by
   dsimp only
@@ -1273,7 +1408,7 @@ example {S X : Scheme} (pX : X ⟶ S) [IsSeparated pX] (τ : DeckTransformation 
   graphIdeal_comap_p12_eq_graphSlice_ker pX τ
 
 -- Openness is an étale conclusion; no finite-cover premise is installed.
-example {S X : Scheme} (pX : X ⟶ S) [IsEtale pX] [IsSeparated pX]
+example {S X : Scheme} (pX : X ⟶ S) [Etale pX] [IsSeparated pX]
     (τ : DeckTransformation pX) :
     IsOpenImmersion (graphSliceMorphism pX τ) ∧ IsClosedImmersion (graphSliceMorphism pX τ) := by
   fail_if_success
@@ -1355,7 +1490,7 @@ example {X S B : Scheme} (p : X ⟶ S) (b : S ⟶ B) [IsSeparated b] :
 example {X S B : Scheme} (p : X ⟶ S) (b : S ⟶ B) [IsSeparated b] :
     IsClosedImmersion (tripleBaseComparison p b) := by
   fail_if_success
-    have : IsEtale p := inferInstance
+    have : Etale p := inferInstance
   infer_instance
 
 -- Forgetting the base retains the actual maps and noncommutative order.
@@ -1408,7 +1543,7 @@ example {X S B : Scheme} (p : X ⟶ S) (b : S ⟶ B)
   fail_if_success
     have : IsIntegral X := inferInstance
   fail_if_success
-    have : IsEtale p := inferInstance
+    have : Etale p := inferInstance
   exact LinearMap.congr_fun (graphSlicePullPush_baseComparison p b R τ) z
 
 -- The weighted comparison applies to an arbitrary rational group-algebra element ζ.
@@ -1429,9 +1564,9 @@ example (k : Type) [Field k] {X S : Scheme} (p : X ⟶ S)
 
 -- Étaleness over S plus separatedness of S → B does not install étaleness over B.
 example {X S B : Scheme} (p : X ⟶ S) (b : S ⟶ B)
-    [IsEtale p] [IsSeparated b] : IsClosedImmersion (pairBaseComparison p b) := by
+    [Etale p] [IsSeparated b] : IsClosedImmersion (pairBaseComparison p b) := by
   fail_if_success
-    have : IsEtale (p ≫ b) := inferInstance
+    have : Etale (p ≫ b) := inferInstance
   infer_instance
 
 end RelativeProductCycleRegressions
@@ -2209,7 +2344,7 @@ example (K : Type) [Field K] :
     { toFun := fun _ ↦ 0
       strictMono := fun x y h ↦ False.elim (h.ne (Subsingleton.elim x y))
       map_covBy := fun {x y} h ↦ False.elim (h.lt.ne (Subsingleton.elim x y)) }
-  exact ⟨δ, (show X from (⟨⊥, Ideal.bot_prime⟩ : PrimeSpectrum K)), rfl⟩
+  exact ⟨δ, (show X from (⟨⊥, Ideal.isPrime_bot⟩ : PrimeSpectrum K)), rfl⟩
 
 -- The generic-point degree formula also applies when only the support composite is closed.
 example {X Y : Scheme} (δ : DimensionFunction Y) (f : X ⟶ Y)
@@ -2766,7 +2901,7 @@ example (k : Type) [Field k] :
     apply Polynomial.X_ne_zero (R := k)
     apply h
     simp [f]
-  · exact trdeg_lt_aleph0 (R := k) (S := Polynomial k)
+  · exact trdeg_lt_aleph0_of_finiteType (R := k) (S := Polynomial k)
 
 -- Actual prime quotients are domains even when their ambient algebra is not.
 example (k A : Type) [Field k] [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
@@ -2783,14 +2918,14 @@ example (k A : Type) [Field k] [CommRing A] [Algebra k A] [Algebra.FiniteType k 
 -- Incomparability needs integrality but not injectivity of the algebra map.
 example (R S : Type) [CommRing R] [CommRing S] [Algebra R S] [Algebra.IsIntegral R S]
     (p q : PrimeSpectrum S) (hpq : p < q) :
-    (algebraMap R S).specComap p < (algebraMap R S).specComap q :=
+    (PrimeSpectrum.comap (algebraMap R S)) p < (PrimeSpectrum.comap (algebraMap R S)) q :=
   integral_specComap_strictMono R S hpq
 
 -- Lying over and going up produce an actual finite prime chain of the same length.
 example (R S : Type) [CommRing R] [CommRing S] [Algebra R S] [Algebra.IsIntegral R S]
     (hi : Function.Injective (algebraMap R S)) (s : LTSeries (PrimeSpectrum R)) :
     ∃ t : LTSeries (PrimeSpectrum S), t.length = s.length ∧
-      (algebraMap R S).specComap t.last = s.last := by
+      (PrimeSpectrum.comap (algebraMap R S)) t.last = s.last := by
   fail_if_success
     have : IsDomain R := inferInstance
   fail_if_success
@@ -2992,7 +3127,7 @@ example (R : Type) [CommRing R] (m : Ideal (Polynomial R)) [m.IsMaximal] :
   exact polynomial_map_comap_C_lt R m
 
 example (R : Type) [CommRing R] (m : Ideal (Polynomial R)) [m.IsMaximal] :
-    (m.comap (Polynomial.C : R →+* Polynomial R)).primeHeight + 1 ≤ m.primeHeight := by
+    (m.comap (Polynomial.C : R →+* Polynomial R)).height + 1 ≤ m.height := by
   fail_if_success
     have : IsDomain R := inferInstance
   fail_if_success
@@ -3001,14 +3136,14 @@ example (R : Type) [CommRing R] (m : Ideal (Polynomial R)) [m.IsMaximal] :
 
 -- Every maximal ideal and every field characteristic are included.
 example (k : Type) [Field k] (n : ℕ) (m : Ideal (MvPolynomial (Fin n) k))
-    [m.IsMaximal] : m.primeHeight = (n : ℕ∞) := by
+    [m.IsMaximal] : m.height = (n : ℕ∞) := by
   fail_if_success
     have : CharZero k := inferInstance
   exact mvPolynomial_primeHeight_eq_card_of_isMaximal k n m
 
 -- The zero-variable base case concerns the actual zero-variable polynomial ring.
 example (k : Type) [Field k] (m : Ideal (MvPolynomial (Fin 0) k)) [m.IsMaximal] :
-    m.primeHeight = 0 := by
+    m.height = 0 := by
   simpa using mvPolynomial_primeHeight_eq_card_of_isMaximal k 0 m
 
 example (k : Type) [Field k] (m : Ideal (MvPolynomial (Fin 3) k)) [m.IsMaximal] :
@@ -3060,7 +3195,7 @@ example (k : Type) [Field k] :
   letI : (RingHom.ker e.toRingHom).IsMaximal :=
     RingHom.ker_isMaximal_of_surjective e.toRingHom he
   refine ⟨inferInstance, ?_⟩
-  simpa using mvPolynomial_stalk_dimension_of_isMaximal k 3
+  exact mvPolynomial_stalk_dimension_of_isMaximal k 3
     (⟨RingHom.ker e.toRingHom, inferInstance⟩ : PrimeSpectrum (MvPolynomial (Fin 3) k))
 
 -- The actual zero-variable localization/stalk endpoint has dimension zero.
@@ -3192,14 +3327,14 @@ example (R S : Type) [CommRing R] [CommRing S] [IsDomain R] [IsDomain S]
     (Q : Ideal S) [Q.IsPrime] [Q.LiesOver l.last.asIdeal] :
     ∃ L : LTSeries (PrimeSpectrum S), L.length = l.length ∧
       L.last = ⟨Q, inferInstance⟩ ∧
-      List.map (algebraMap R S).specComap L.toList = l.toList := by
+      List.map (PrimeSpectrum.comap (algebraMap R S)) L.toList = l.toList := by
   letI := hasGoingDown_of_isIntegrallyClosed R S hinj
   exact Ideal.exists_ltSeries_of_hasGoingDown l Q
 
 -- The height comparison itself requires no extra domain hypotheses.
 example (R S : Type) [CommRing R] [CommRing S] [Algebra R S]
     [Algebra.IsIntegral R S] [Algebra.HasGoingDown R S]
-    (Q : Ideal S) [Q.IsPrime] : Q.primeHeight = (Q.under R).primeHeight := by
+    (Q : Ideal S) [Q.IsPrime] : Q.height = (Q.under R).height := by
   fail_if_success
     have : IsDomain R := inferInstance
   fail_if_success
@@ -3210,7 +3345,7 @@ example (R S : Type) [CommRing R] [CommRing S] [Algebra R S]
 example (k A : Type) [Field k] [CommRing A] [IsDomain A] [Algebra k A]
     (s : ℕ) (g : MvPolynomial (Fin s) k →ₐ[k] A)
     (hinj : Function.Injective g) (hint : g.IsIntegral) (m : Ideal A) [m.IsMaximal] :
-    m.primeHeight = (s : ℕ∞) := by
+    m.height = (s : ℕ∞) := by
   fail_if_success
     have : Algebra.FiniteType k A := inferInstance
   fail_if_success
@@ -3220,7 +3355,7 @@ example (k A : Type) [Field k] [CommRing A] [IsDomain A] [Algebra k A]
 -- No normality, characteristic-zero, or rational-closed-point condition is required.
 example (k A : Type) [Field k] [CommRing A] [IsDomain A] [Algebra k A]
     [Algebra.FiniteType k A] (m : Ideal A) [m.IsMaximal] :
-    m.primeHeight = ((Algebra.trdeg k A).toNat : ℕ∞) ∧
+    m.height = ((Algebra.trdeg k A).toNat : ℕ∞) ∧
       m.height = ((Algebra.trdeg k A).toNat : ℕ∞) := by
   fail_if_success
     have : IsIntegrallyClosed A := inferInstance
@@ -3284,8 +3419,8 @@ example (k : Type) [Field k] :
   refine ⟨Algebra.isIntegral_of_surjective he, ?_⟩
   intro hdown
   letI := hdown
-  letI : (⊥ : Ideal (Polynomial k)).IsPrime := Ideal.bot_prime
-  letI : (⊥ : Ideal k).IsPrime := Ideal.bot_prime
+  letI : (⊥ : Ideal (Polynomial k)).IsPrime := Ideal.isPrime_bot
+  letI : (⊥ : Ideal k).IsPrime := Ideal.isPrime_bot
   have hX : Polynomial.X ∈ (⊥ : Ideal k).under (Polynomial k) := by
     change Polynomial.evalRingHom (0 : k) Polynomial.X ∈ (⊥ : Ideal k)
     simp
@@ -3487,7 +3622,7 @@ example : (q.map (algebraMap S S')).IsPrime ∧
 -- The whole prime height is unchanged, also without an integrality hypothesis.
 example :
     letI := residueLocalization_map_isPrime R S S' q hinj
-    (q.map (algebraMap S S')).primeHeight = q.primeHeight := by
+    (q.map (algebraMap S S')).height = q.height := by
   fail_if_success
     have : Algebra.IsIntegral R (S ⧸ q) := inferInstance
   exact residueLocalization_primeHeight_map R S S' q hinj
@@ -3566,7 +3701,7 @@ example (k B : Type) [Field k] [CommRing B] [IsDomain B] [Algebra k B]
     let B' := Localization
       (Algebra.algebraMapSubmonoid B (nonZeroDivisors (MvPolynomial (Fin n) k)))
     letI := genericFiberAlgebra (MvPolynomial (Fin n) k) B B'
-    q.primeHeight =
+    q.height =
       ((Algebra.trdeg (FractionRing (MvPolynomial (Fin n) k)) B').toNat : ℕ∞) := by
   fail_if_success
     have : IsIntegrallyClosed B := inferInstance
@@ -3654,7 +3789,7 @@ example (k B : Type) [Field k] [CommRing B] [IsDomain B] [Algebra k B]
 -- The affine formula is for every prime, with no normality or characteristic restriction.
 example (k B : Type) [Field k] [CommRing B] [IsDomain B] [Algebra k B]
     [Algebra.FiniteType k B] (q : Ideal B) [q.IsPrime] :
-    q.primeHeight + ((Algebra.trdeg k (B ⧸ q)).toNat : ℕ∞) =
+    q.height + ((Algebra.trdeg k (B ⧸ q)).toNat : ℕ∞) =
       ((Algebra.trdeg k B).toNat : ℕ∞) := by
   fail_if_success
     have : q.IsMaximal := inferInstance
@@ -3673,7 +3808,7 @@ example (k B : Type) [Field k] [CommRing B] [IsDomain B] [Algebra k B]
 -- The residue-field term is the actual Ideal.ResidueField of the selected prime.
 example (k B : Type) [Field k] [CommRing B] [IsDomain B] [Algebra k B]
     [Algebra.FiniteType k B] (q : Ideal B) [q.IsPrime] :
-    q.primeHeight + ((Algebra.trdeg k q.ResidueField).toNat : ℕ∞) =
+    q.height + ((Algebra.trdeg k q.ResidueField).toNat : ℕ∞) =
       ((Algebra.trdeg k B).toNat : ℕ∞) :=
   primeHeight_add_residueField_trdeg_eq k B q
 
@@ -3692,7 +3827,7 @@ example (k B : Type) [Field k] [CommRing B] [IsDomain B] [Algebra k B]
 example (k B : Type) [Field k] [CommRing B] [IsDomain B] [Algebra k B]
     [Algebra.FiniteType k B] :
     ringKrullDim (B ⧸ (⊥ : Ideal B)) = ringKrullDim B := by
-  letI : (⊥ : Ideal B).IsPrime := Ideal.bot_prime
+  letI : (⊥ : Ideal B).IsPrime := Ideal.isPrime_bot
   simpa only [Ideal.height_bot, WithBot.coe_zero, zero_add] using
     height_add_quotient_dimension_eq k B (⊥ : Ideal B)
 
@@ -3717,17 +3852,22 @@ example (k : Type) [Field k] :
   let q := m.map (Polynomial.C : Polynomial k →+* Polynomial (Polynomial k))
   letI : m.IsMaximal := RingHom.ker_isMaximal_of_surjective
     (Polynomial.evalRingHom (0 : k)) (fun a ↦ ⟨Polynomial.C a, by simp⟩)
-  letI : q.IsPrime := Ideal.isPrime_map_C_of_isPrime (inferInstance : m.IsPrime)
+  letI : q.IsPrime := Ideal.isPrime_map_C_of_isPrime
   refine ⟨inferInstance, polynomial_map_C_not_isMaximal (Polynomial k) m, ?_,
     height_add_quotient_dimension_eq k (Polynomial (Polynomial k)) q⟩
-  rw [Ideal.height_eq_primeHeight]
-  have hm : (1 : ℕ∞) ≤ m.primeHeight := by
+  have hm : (1 : ℕ∞) ≤ m.height := by
     calc
       1 = 0 + 1 := by simp
-      _ ≤ (m.comap (Polynomial.C : k →+* Polynomial k)).primeHeight + 1 :=
-        add_le_add_right (zero_le _) 1
-      _ ≤ m.primeHeight := polynomial_primeHeight_comap_add_one_le k m
-  exact hm.trans (polynomialPrimeExtension_height_le (Polynomial k) ⟨m, inferInstance⟩)
+      _ ≤ (m.comap (Polynomial.C : k →+* Polynomial k)).height + 1 :=
+        by
+          simpa only [add_comm] using
+            (add_le_add_right
+              (show (0 : ℕ∞) ≤ (m.comap (Polynomial.C : k →+* Polynomial k)).height
+                from zero_le) (1 : ℕ∞))
+      _ ≤ m.height := polynomial_primeHeight_comap_add_one_le k m
+  have he := polynomialPrimeExtension_height_le (Polynomial k) ⟨m, inferInstance⟩
+  rw [← PrimeSpectrum.height_eq_orderHeight, ← PrimeSpectrum.height_eq_orderHeight] at he
+  exact hm.trans he
 
 -- The actual zero-variable polynomial ring gives a zero-dimensional sum.
 example (k : Type) [Field k] (q : Ideal (MvPolynomial (Fin 0) k)) [q.IsPrime] :
@@ -3791,7 +3931,7 @@ example (B : Type) [CommRing B] (p q : PrimeSpectrum B) (hpq : p ⋖ q) :
 -- Height one in the quotient requires neither catenarity nor Noetherianity.
 example (B : Type) [CommRing B] (p q : PrimeSpectrum B) (hpq : p ⋖ q) :
     letI := primeQuotient_map_isPrime B p q hpq.le
-    (q.asIdeal.map (Ideal.Quotient.mk p.asIdeal)).primeHeight = 1 := by
+    (q.asIdeal.map (Ideal.Quotient.mk p.asIdeal)).height = 1 := by
   fail_if_success
     have : IsDomain B := inferInstance
   fail_if_success
@@ -3802,7 +3942,6 @@ example (B : Type) [CommRing B] (p q : PrimeSpectrum B) (hpq : p ⋖ q) :
 example (B : Type) [CommRing B] (p q : PrimeSpectrum B) (hpq : p ⋖ q) :
     (q.asIdeal.map (Ideal.Quotient.mk p.asIdeal)).height = 1 := by
   letI := primeQuotient_map_isPrime B p q hpq.le
-  rw [Ideal.height_eq_primeHeight]
   exact primeQuotient_primeHeight_eq_one_of_covBy B p q hpq
 
 -- The unit drop allows a non-domain and nonreduced ambient finite-type algebra.
@@ -3860,7 +3999,7 @@ example (k : Type) [Field k] :
   let m := RingHom.ker (Polynomial.evalRingHom (0 : k))
   letI : m.IsMaximal := RingHom.ker_isMaximal_of_surjective
     (Polynomial.evalRingHom (0 : k)) (fun a ↦ ⟨Polynomial.C a, by simp⟩)
-  let p : PrimeSpectrum (Polynomial k) := ⟨⊥, Ideal.bot_prime⟩
+  let p : PrimeSpectrum (Polynomial k) := ⟨⊥, Ideal.isPrime_bot⟩
   let q : PrimeSpectrum (Polynomial k) := ⟨m, inferInstance⟩
   have hm : m ≠ ⊥ := by
     intro heq
@@ -3878,8 +4017,8 @@ example (k : Type) [Field k] :
   let π := RingHom.fst (Polynomial k) k
   have hπ : Function.Surjective π := fun a ↦ ⟨(a, 0), rfl⟩
   let e : PrimeSpectrum (Polynomial k) ↪o PrimeSpectrum (Polynomial k × k) :=
-    { toFun := π.specComap
-      inj' := PrimeSpectrum.specComap_injective_of_surjective π hπ
+    { toFun := PrimeSpectrum.comap π
+      inj' := PrimeSpectrum.comap_injective_of_surjective π hπ
       map_rel_iff' := fun {x y} ↦
         Ideal.comap_le_comap_iff_of_surjective π hπ x.asIdeal y.asIdeal }
   have he : (Set.range e).OrdConnected := by
@@ -3962,7 +4101,7 @@ example (k A : Type) [Field k] [CommRing A] [Algebra k A] [Algebra.FiniteType k 
     DimensionFunction.ofSpecFiniteType k A p =
       DimensionFunction.ofSpecFiniteType k A q + 1 := by
   apply (DimensionFunction.ofSpecFiniteType k A).map_covBy
-  exact (specPointOrderIso A).map_covBy.mp hpq.toDual
+  exact (apply_covBy_apply_iff (specPointOrderIso A)).mp hpq.toDual
 
 example (k A : Type) [Field k] [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
     (x : Spec (CommRingCat.of A)) :
@@ -4185,10 +4324,10 @@ example (k : Type) [CommRing k] (X Y : Scheme)
 
 -- The affine ring comparison is induced by the actual stalk isomorphism.
 example (A : Type) [CommRing A] (x : Spec (CommRingCat.of A)) :
-    letI : IsLocalRing ((Spec.structureSheaf A).presheaf.stalk x) :=
+    letI : IsLocalRing ((structurePresheafInCommRingCat A).stalk x) :=
       inferInstanceAs (IsLocalRing ((Spec (CommRingCat.of A)).presheaf.stalk x))
     specResidueFieldEquiv A x = IsLocalRing.ResidueField.mapEquiv
-      (StructureSheaf.stalkIso A x).commRingCatIsoToRingEquiv := rfl
+      (StructureSheaf.stalkIso A x).symm.toRingEquiv := rfl
 
 example (A : Type) [CommRing A] (x : Spec (CommRingCat.of A)) (a : A) :
     specResidueFieldEquiv A x
@@ -4290,7 +4429,7 @@ example (k : Type) [Field k] (X Y : Scheme)
 
 -- At the zero prime of a countably generated polynomial algebra, the degree is genuinely infinite.
 example (k : Type) [Field k] :
-    let x : Spec (CommRingCat.of (MvPolynomial ℕ k)) := ⟨⊥, Ideal.bot_prime⟩
+    let x : Spec (CommRingCat.of (MvPolynomial ℕ k)) := ⟨⊥, Ideal.isPrime_bot⟩
     letI := residueFieldBaseAlgebra k
       (Spec.map (CommRingCat.ofHom (algebraMap k (MvPolynomial ℕ k)))) x
     Algebra.trdeg k ((Spec (CommRingCat.of (MvPolynomial ℕ k))).residueField x) =
@@ -4567,14 +4706,13 @@ example (k : Type) [Field k] (X : Scheme)
       DimensionFunction.ofAffineLocallyOfFiniteType k V (V.ι ≫ p) ⟨x, hxV⟩ :=
   affineChart_dimension_eq_of_eq_image k p U.ι V.ι ⟨x, hxU⟩ ⟨x, hxV⟩ rfl
 
--- The identity chart recovers the preceding affine structural-value theorem.
+-- The affine chart dimension is the actual structural residue-field value.
 example (k : Type) [Field k] (X : Scheme) [IsAffine X]
     (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] (x : X) :
     letI := residueFieldBaseAlgebra k p x
     DimensionFunction.ofAffineLocallyOfFiniteType k X p x =
-      ((Algebra.trdeg k (X.residueField x)).toNat : ℤ) := by
-  simpa only [Category.id_comp] using
-    affineChart_dimension_eq_schemeResidueField_trdeg k p (𝟙 X) x
+      ((Algebra.trdeg k (X.residueField x)).toNat : ℤ) :=
+  DimensionFunction.ofAffineLocallyOfFiniteType_eq_schemeResidueField_trdeg k X p x
 
 -- Empty schemes require no chosen residue point.
 example (k : Type) [Field k] :
@@ -5499,7 +5637,7 @@ example :
     rw [Submodule.span_le]
     rintro _ ⟨i, rfl⟩
     change ((2 : ℤ) : ZMod 2) = 0
-    simpa only [Int.cast_ofNat] using ZMod.natCast_self 2
+    exact (Int.cast_ofNat (R := ZMod 2) 2).trans (ZMod.natCast_self 2)
   have hc : c ≠ 0 := by
     intro h
     have hh := congrArg (P.liftQ f₂ hP) h
@@ -5915,7 +6053,7 @@ example (k : Type) [Field k] :
     PrimeSpectrum.basicOpen (Polynomial.X : Polynomial k)
   change (¬ Function.Surjective U.ι.base) ∧ _
   have hU : Nonempty (U : Scheme) := by
-    refine ⟨⟨⟨⊥, Ideal.bot_prime⟩, ?_⟩⟩
+    refine ⟨⟨⟨⊥, Ideal.isPrime_bot⟩, ?_⟩⟩
     change (Polynomial.X : Polynomial k) ∉ (⊥ : Ideal (Polynomial k))
     simpa only [Ideal.mem_bot] using (Polynomial.X_ne_zero : (Polynomial.X : Polynomial k) ≠ 0)
   letI := hU
@@ -6166,7 +6304,7 @@ example (k : Type) [Field k] (f : (Examples.affineLine k).functionFieldˣ) :
   let U : (Examples.affineLine k).Opens :=
     PrimeSpectrum.basicOpen (Polynomial.X : Polynomial k)
   have hU : Nonempty (U : Scheme) := by
-    refine ⟨⟨⟨⊥, Ideal.bot_prime⟩, ?_⟩⟩
+    refine ⟨⟨⟨⊥, Ideal.isPrime_bot⟩, ?_⟩⟩
     change (Polynomial.X : Polynomial k) ∉ (⊥ : Ideal (Polynomial k))
     simpa only [Ideal.mem_bot] using (Polynomial.X_ne_zero : (Polynomial.X : Polynomial k) ≠ 0)
   letI := hU

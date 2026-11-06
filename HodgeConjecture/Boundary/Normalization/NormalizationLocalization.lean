@@ -1,7 +1,11 @@
-import HodgeConjecture.Boundary.Normalization.Model
-import Mathlib.RingTheory.Localization.Integral
-import Mathlib.RingTheory.Localization.BaseChange
-import Mathlib.AlgebraicGeometry.AffineScheme
+module
+
+public import HodgeConjecture.Boundary.Normalization.Model
+public import Mathlib.RingTheory.Localization.Integral
+public import Mathlib.RingTheory.Localization.BaseChange
+public import Mathlib.AlgebraicGeometry.AffineScheme
+
+@[expose] public section
 
 /-!
 # Localization of the same normalization model

@@ -1,6 +1,10 @@
-import Mathlib.Algebra.Algebra.Pi
-import Mathlib.Algebra.Algebra.Prod
-import Mathlib.RingTheory.Artinian.Module
+module
+
+public import Mathlib.Algebra.Algebra.Pi
+public import Mathlib.Algebra.Algebra.Prod
+public import Mathlib.RingTheory.Artinian.Module
+
+@[expose] public section
 
 /-!
 # The factor selected by a field quotient
@@ -18,7 +22,7 @@ noncomputable section
 
 universe uK uP uN uI uA
 
-private def piSplitAtAlgEquiv
+def piSplitAtAlgEquiv
     {K : Type uK} [CommRing K] {ι : Type uI}
     (A : ι → Type uA) [∀ i, CommRing (A i)] [∀ i, Algebra K (A i)]
     [DecidableEq ι] (i : ι) :

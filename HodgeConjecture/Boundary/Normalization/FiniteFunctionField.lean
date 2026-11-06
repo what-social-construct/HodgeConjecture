@@ -1,7 +1,11 @@
-import HodgeConjecture.Cycles.FunctionFieldMap
-import HodgeConjecture.Boundary.Normalization.FiniteAffineChart
-import Mathlib.RingTheory.Algebraic.Integral
-import Mathlib.RingTheory.RingHom.Finite
+module
+
+public import HodgeConjecture.Cycles.FunctionFieldMap
+public import HodgeConjecture.Boundary.Normalization.FiniteAffineChart
+public import Mathlib.RingTheory.Algebraic.Integral
+public import Mathlib.RingTheory.RingHom.Finite
+
+@[expose] public section
 
 /-!
 # The finite extension of actual function fields

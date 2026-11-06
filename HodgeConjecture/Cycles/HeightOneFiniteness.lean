@@ -1,4 +1,9 @@
-import Mathlib.RingTheory.Ideal.Height
+module
+
+public import Mathlib.RingTheory.Ideal.Height
+public import Mathlib.RingTheory.Ideal.MinimalPrime.Noetherian
+
+@[expose] public section
 
 /-!
 # Height-one primes meeting a nonzero principal ideal
@@ -28,13 +33,13 @@ theorem heightOne_mem_minimalPrimes_span (a : A) (ha : a ≠ 0)
     have : a ∈ (⊥ : Ideal A) := h ▸ Ideal.subset_span (Set.mem_singleton a)
     exact ha (by simpa using this)
   letI : (⊥ : Ideal A).FiniteHeight := ⟨Or.inr (by simp)⟩
-  letI : (⊥ : Ideal A).IsPrime := Ideal.bot_prime
+  letI : (⊥ : Ideal A).IsPrime := inferInstance
   letI : P.FiniteHeight := ⟨Or.inr (by simp [hP])⟩
   apply Ideal.mem_minimalPrimes_of_height_eq
     ((Ideal.span_singleton_le_iff_mem P).mpr haP)
   rw [hP]
   apply Order.one_le_iff_pos.mpr
-  simpa using Ideal.height_strict_mono_of_is_prime (bot_lt_iff_ne_bot.mpr hspan)
+  simpa using Ideal.height_strict_mono_of_isPrime (bot_lt_iff_ne_bot.mpr hspan)
 
 /-- There are finitely many height-one prime ideals containing a given
 nonzero element of a Noetherian domain. -/

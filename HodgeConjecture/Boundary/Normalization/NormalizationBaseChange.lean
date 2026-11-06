@@ -1,6 +1,10 @@
-import HodgeConjecture.Boundary.Normalization.NormalizationTensor
-import HodgeConjecture.CommutativeAlgebra.PiTensorBaseChange
-import Mathlib.RingTheory.Localization.BaseChange
+module
+
+public import HodgeConjecture.Boundary.Normalization.NormalizationTensor
+public import HodgeConjecture.CommutativeAlgebra.PiTensorBaseChange
+public import Mathlib.RingTheory.Localization.BaseChange
+
+@[expose] public section
 
 /-!
 # Base change of the normalization tensor evaluation
@@ -124,14 +128,7 @@ theorem normalizationTensorEvaluation_baseChange (D : NormalClosureData K L N) :
   letI : FiniteDimensional K L := D.finiteIntermediate
   letI : FiniteDimensional K N := D.finiteNormal
   apply Algebra.TensorProduct.ext
-  · apply AlgHom.ext
-    intro k
-    change D.tensorEvaluation (D.normalizationTensorBaseChangeEquiv (B := B)
-        (algebraMap K (K ⊗[B] (⨂[B] _ : L →ₐ[K] N, normalizedCoordinateRing B L)) k)) =
-      normalizedCoordinateRingBaseChangeEquiv B K N
-        ((Algebra.TensorProduct.map (AlgHom.id K K)
-          (D.normalizationTensorEvaluation (B := B))) (algebraMap K _ k))
-    simp only [AlgHom.commutes, AlgEquiv.commutes]
+  · ext k
   · apply PiTensorProduct.algHom_ext
     intro σ
     apply AlgHom.ext

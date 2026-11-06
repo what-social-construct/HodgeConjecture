@@ -1,5 +1,9 @@
-import HodgeConjecture.CommutativeAlgebra.FiniteLocalization
-import Mathlib.RingTheory.Localization.AsSubring
+module
+
+public import HodgeConjecture.CommutativeAlgebra.FiniteLocalization
+public import Mathlib.RingTheory.Localization.AsSubring
+
+@[expose] public section
 
 /-!
 # The fraction field of the whole localized finite algebra

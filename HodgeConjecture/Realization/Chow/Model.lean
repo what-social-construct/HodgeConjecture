@@ -1,5 +1,9 @@
-import HodgeConjecture.Correspondence.EtaleClasses
-import HodgeConjecture.Correspondence.ProjectorLift
+module
+
+public import HodgeConjecture.Correspondence.EtaleClasses
+public import HodgeConjecture.Correspondence.ProjectorLift
+
+@[expose] public section
 
 /-!
 # Rational Chow-correspondence models

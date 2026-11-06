@@ -1,6 +1,10 @@
-import Mathlib.Algebra.Polynomial.FieldDivision
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.RingTheory.Localization.FractionRing
+module
+
+public import Mathlib.Algebra.Polynomial.FieldDivision
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.RingTheory.Localization.FractionRing
+
+@[expose] public section
 
 /-!
 # Prime-ideal coefficients of monic polynomial divisors

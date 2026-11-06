@@ -1,4 +1,8 @@
-import HodgeConjecture.Correspondence.FiniteGroupProjector
+module
+
+public import HodgeConjecture.Correspondence.FiniteGroupProjector
+
+@[expose] public section
 
 /-!
 # Projectors transported from rational group algebras

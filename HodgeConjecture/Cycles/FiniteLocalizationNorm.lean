@@ -1,5 +1,9 @@
-import HodgeConjecture.CommutativeAlgebra.FiniteLocalizationFractionField
-import HodgeConjecture.Cycles.LocalOrderNormFormula
+module
+
+public import HodgeConjecture.CommutativeAlgebra.FiniteLocalizationFractionField
+public import HodgeConjecture.Cycles.LocalOrderNormFormula
+
+@[expose] public section
 
 /-!
 # Applying the norm formula over a localized base

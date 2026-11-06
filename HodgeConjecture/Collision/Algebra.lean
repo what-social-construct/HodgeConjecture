@@ -1,6 +1,10 @@
-import HodgeConjecture.Collision.FiberProduct
-import HodgeConjecture.Collision.OffDiagonal
-import Mathlib.RingTheory.Kaehler.Basic
+module
+
+public import HodgeConjecture.Collision.FiberProduct
+public import HodgeConjecture.Collision.OffDiagonal
+public import Mathlib.RingTheory.Kaehler.Basic
+
+@[expose] public section
 
 /-!
 # Abstract collision algebras

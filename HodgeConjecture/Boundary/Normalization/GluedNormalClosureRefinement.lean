@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Normalization.GluedNormalization
-import HodgeConjecture.Boundary.Normalization.FiniteEtaleNormalClosureRestriction
+module
+
+public import HodgeConjecture.Boundary.Normalization.GluedNormalization
+public import HodgeConjecture.Boundary.Normalization.FiniteEtaleNormalClosureRestriction
+
+@[expose] public section
 
 /-!
 # Gluing the original marked normal-closure refinement
@@ -47,7 +51,8 @@ def affineNormalClosureRefinementCocone :
             (fun y => hY y.val) ≫ (p ⁻¹ᵁ U.val).ι
           naturality := ?_ } }
   intro U V f
-  simpa only [Category.comp_id, Category.assoc, Scheme.homOfLE_ι] using
+  simpa only [affineNormalizationDiagram, Functor.const_obj_map,
+    Functor.const_obj_obj, Category.comp_id, Category.assoc, Scheme.homOfLE_ι] using
     congrArg (fun k => k ≫ (p ⁻¹ᵁ V.val).ι)
       (finiteEtaleAffineNormalClosureToPreimage_restriction p V.val U.val
         (leOfHom f) V.property.1 U.property.1

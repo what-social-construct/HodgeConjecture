@@ -1,6 +1,10 @@
-import HodgeConjecture.Boundary.Normalization.NormalClosureTensor
-import HodgeConjecture.Boundary.Normalization.FiniteNormalClosure
-import HodgeConjecture.CommutativeAlgebra.FiniteTensorProduct
+module
+
+public import HodgeConjecture.Boundary.Normalization.NormalClosureTensor
+public import HodgeConjecture.Boundary.Normalization.FiniteNormalClosure
+public import HodgeConjecture.CommutativeAlgebra.FiniteTensorProduct
+
+@[expose] public section
 
 /-!
 # Integral tensor evaluation for a marked normal closure

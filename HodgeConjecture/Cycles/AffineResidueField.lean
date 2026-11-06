@@ -1,5 +1,9 @@
-import HodgeConjecture.Cycles.StructuralResidueField
-import Mathlib.RingTheory.LocalRing.ResidueField.Ideal
+module
+
+public import HodgeConjecture.Cycles.StructuralResidueField
+public import Mathlib.RingTheory.LocalRing.ResidueField.Ideal
+
+@[expose] public section
 
 /-!
 # Actual residue fields on an affine spectrum
@@ -17,6 +21,7 @@ not from defining the structural action by transport through the equivalence.
 -/
 
 set_option autoImplicit false
+set_option maxHeartbeats 800000
 
 namespace HodgeConjecture.SchemeCycles
 
@@ -32,7 +37,7 @@ def specResidueFieldEquiv (A : Type u) [CommRing A]
     (x : Spec (CommRingCat.of A)) :
     (Spec (CommRingCat.of A)).residueField x ≃+* x.asIdeal.ResidueField :=
   IsLocalRing.ResidueField.mapEquiv
-    (StructureSheaf.stalkIso A x).commRingCatIsoToRingEquiv
+    (StructureSheaf.stalkIso A x).symm.toRingEquiv
 
 /-- Under the actual residue-field comparison, evaluating a constant
 section is the existing algebra map into the prime residue field. -/
@@ -42,9 +47,9 @@ theorem specResidueFieldEquiv_evaluation (A : Type u) [CommRing A]
         ((Spec (CommRingCat.of A)).Γevaluation x ((Scheme.ΓSpecIso (.of A)).inv a)) =
       algebraMap A x.asIdeal.ResidueField a := by
   change IsLocalRing.residue (Localization.AtPrime x.asIdeal)
-    (StructureSheaf.stalkToFiberRingHom A x (StructureSheaf.toStalk A x a)) = _
-  rw [StructureSheaf.stalkToFiberRingHom_toStalk]
-  rfl
+    ((StructureSheaf.stalkIso A x).symm (StructureSheaf.toStalk A x a)) = _
+  exact congrArg (IsLocalRing.residue (Localization.AtPrime x.asIdeal))
+    ((StructureSheaf.stalkIso A x).symm.commutes a)
 
 /-- The affine residue-field comparison is linear over the actual
 structural base action, for any commutative base ring. -/

@@ -1,6 +1,10 @@
-import HodgeConjecture.Cycles.ResidueNormalizationLocalization
-import HodgeConjecture.Cycles.LocalizationTranscendenceDegree
-import HodgeConjecture.Cycles.AffineSupportDimension
+module
+
+public import HodgeConjecture.Cycles.ResidueNormalizationLocalization
+public import HodgeConjecture.Cycles.LocalizationTranscendenceDegree
+public import HodgeConjecture.Cycles.AffineSupportDimension
+
+@[expose] public section
 
 /-!
 # The prime dimension formula for finite-type domains
@@ -58,9 +62,9 @@ theorem polynomial_genericFiber_trdeg_toNat_add (n : ℕ)
       Cardinal.lift_natCast]
   have hfiniteK : Algebra.trdeg k K < Cardinal.aleph0 := by
     rw [hK]
-    exact Cardinal.nat_lt_aleph0 n
+    exact Cardinal.natCast_lt_aleph0 (n := n)
   have hfiniteB' : Algebra.trdeg K B' < Cardinal.aleph0 :=
-    trdeg_lt_aleph0 (R := K) (S := B')
+    trdeg_lt_aleph0_of_finiteType (R := K) (S := B')
   have h := congrArg Cardinal.toNat (lift_trdeg_add_eq k K B')
   rw [Cardinal.toNat_lift_add_lift hfiniteK hfiniteB', Cardinal.toNat_lift,
     ← hlocal, hK] at h
@@ -70,7 +74,7 @@ theorem polynomial_genericFiber_trdeg_toNat_add (n : ℕ)
 over the original field. Its height is not assumed finite: finiteness is
 a consequence of this equality with the finite transcendence degree. -/
 theorem primeHeight_add_quotient_trdeg_eq (q : Ideal B) [q.IsPrime] :
-    q.primeHeight + ((Algebra.trdeg k (B ⧸ q)).toNat : ℕ∞) =
+    q.height + ((Algebra.trdeg k (B ⧸ q)).toNat : ℕ∞) =
       ((Algebra.trdeg k B).toNat : ℕ∞) := by
   obtain ⟨n, f, hf, hinj, hint⟩ := exists_lifted_residue_normalization k B q
   have hheight := primeHeight_eq_residueNormalization_trdeg k B q n f hinj hint
@@ -83,13 +87,13 @@ theorem primeHeight_add_quotient_trdeg_eq (q : Ideal B) [q.IsPrime] :
 theorem height_add_quotient_trdeg_eq (q : Ideal B) [q.IsPrime] :
     q.height + ((Algebra.trdeg k (B ⧸ q)).toNat : ℕ∞) =
       ((Algebra.trdeg k B).toNat : ℕ∞) := by
-  rw [Ideal.height_eq_primeHeight]
+  skip
   exact primeHeight_add_quotient_trdeg_eq k B q
 
 /-- The residue field is the existing actual residue field of the prime
 localization, not an independently chosen field model. -/
 theorem primeHeight_add_residueField_trdeg_eq (q : Ideal B) [q.IsPrime] :
-    q.primeHeight + ((Algebra.trdeg k q.ResidueField).toNat : ℕ∞) =
+    q.height + ((Algebra.trdeg k q.ResidueField).toNat : ℕ∞) =
       ((Algebra.trdeg k B).toNat : ℕ∞) := by
   rw [← primeQuotient_trdeg_eq_residueField k B (⟨q, inferInstance⟩ : PrimeSpectrum B)]
   exact primeHeight_add_quotient_trdeg_eq k B q

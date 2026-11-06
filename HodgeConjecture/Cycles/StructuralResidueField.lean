@@ -1,5 +1,9 @@
-import Mathlib.AlgebraicGeometry.ResidueField
-import Mathlib.Algebra.Algebra.Equiv
+module
+
+public import Mathlib.AlgebraicGeometry.ResidueField
+public import Mathlib.Algebra.Algebra.Equiv
+
+@[expose] public section
 
 /-!
 # Structural base actions on actual scheme residue fields
@@ -52,7 +56,7 @@ theorem residueFieldBaseMap_comp
   change ((Scheme.ΓSpecIso (CommRingCat.of k)).inv ≫ p.appTop ≫
     Y.Γevaluation (f.base x) ≫ f.residueFieldMap x).hom = _
   rw [Scheme.Γevaluation_naturality]
-  simp only [residueFieldBaseMap, Scheme.comp_appTop, Category.assoc]
+  simp only [residueFieldBaseMap, Scheme.Hom.comp_appTop, Category.assoc]
 
 /-- The existing residue-field homomorphism, with its structural base
 compatibility proved rather than supplied. -/

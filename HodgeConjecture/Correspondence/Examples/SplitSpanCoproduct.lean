@@ -1,4 +1,8 @@
-import HodgeConjecture.Correspondence.Examples.SplitSpanGeometry
+module
+
+public import HodgeConjecture.Correspondence.Examples.SplitSpanGeometry
+
+@[expose] public section
 
 /-!
 # Disjoint unions of split scheme spans

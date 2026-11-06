@@ -1,5 +1,9 @@
-import Mathlib.LinearAlgebra.Prod
-import Mathlib.Tactic.Abel
+module
+
+public import Mathlib.LinearAlgebra.Prod
+public import Mathlib.Tactic.Abel
+
+@[expose] public section
 
 /-!
 # Block graph projectors

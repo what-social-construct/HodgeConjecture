@@ -1,6 +1,10 @@
-import Mathlib.RingTheory.LocalRing.ResidueField.Ideal
-import Mathlib.RingTheory.Ideal.Over
-import Mathlib.LinearAlgebra.Dimension.Finrank
+module
+
+public import Mathlib.RingTheory.LocalRing.ResidueField.Ideal
+public import Mathlib.RingTheory.Ideal.Over
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+
+@[expose] public section
 
 /-!
 # Residue degrees at actual maximal localizations
@@ -54,18 +58,25 @@ theorem residueDegree_eq_quotientDegree :
       (IsLocalRing.ResidueField.map (algebraMap R P)).toAlgebra
     Module.finrank (IsLocalRing.ResidueField R) (IsLocalRing.ResidueField P) =
       Module.finrank (R ⧸ IsLocalRing.maximalIdeal R) (B ⧸ q) := by
-  letI : Algebra (IsLocalRing.ResidueField R) (IsLocalRing.ResidueField P) :=
-    (IsLocalRing.ResidueField.map (algebraMap R P)).toAlgebra
-  letI : Algebra (R ⧸ IsLocalRing.maximalIdeal R) (IsLocalRing.ResidueField P) :=
-    (IsLocalRing.ResidueField.map (algebraMap R P)).toAlgebra
-  symm
-  apply Algebra.finrank_eq_of_equiv_equiv (RingEquiv.refl (R ⧸ IsLocalRing.maximalIdeal R))
-    (maximalQuotientResidueEquiv B P q)
-  apply Ideal.Quotient.ringHom_ext
-  ext r
-  change IsLocalRing.residue P (algebraMap R P r) =
-    maximalQuotientResidueEquiv B P q (Ideal.Quotient.mk q (algebraMap R B r))
-  rw [maximalQuotientResidueEquiv_mk, ← IsScalarTower.algebraMap_apply]
+  let eR : (R ⧸ IsLocalRing.maximalIdeal R) ≃+* IsLocalRing.ResidueField R :=
+    RingEquiv.refl _
+  have hc (a : R ⧸ IsLocalRing.maximalIdeal R) (b : B ⧸ q) :
+      (maximalQuotientResidueEquiv B P q).toAddEquiv (a • b) =
+        eR a • (maximalQuotientResidueEquiv B P q).toAddEquiv b := by
+    obtain ⟨r, rfl⟩ := Ideal.Quotient.mk_surjective (I := IsLocalRing.maximalIdeal R) a
+    obtain ⟨s, rfl⟩ := Ideal.Quotient.mk_surjective (I := q) b
+    simp only [Algebra.smul_def, Ideal.Quotient.algebraMap_mk_of_liesOver,
+      ← map_mul, eR, RingEquiv.refl_apply]
+    change maximalQuotientResidueEquiv B P q
+        (Ideal.Quotient.mk q (algebraMap R B r * s)) =
+      IsLocalRing.residue P (algebraMap R P r) *
+        maximalQuotientResidueEquiv B P q (Ideal.Quotient.mk q s)
+    rw [maximalQuotientResidueEquiv_mk, maximalQuotientResidueEquiv_mk,
+      map_mul, map_mul, ← IsScalarTower.algebraMap_apply]
+  have h := _root_.lift_rank_eq_of_equiv_equiv eR
+    (maximalQuotientResidueEquiv B P q).toAddEquiv eR.bijective hc
+  simpa only [Cardinal.toNat_lift, Module.finrank] using
+    (congrArg Cardinal.toNat h).symm
 
 end
 

@@ -1,4 +1,9 @@
-import HodgeConjecture.Boundary.ProjectorClosureDefect
+module
+
+public import HodgeConjecture.Boundary.ProjectorClosureDefect
+public import HodgeConjecture.Cycles.ChowLocalization
+
+@[expose] public section
 
 /-!
 # The selected rational-linear conclusion of Chow localization
@@ -8,6 +13,9 @@ under its stated hypotheses. This interface records only the rational-linear
 exactness and surjectivity needed by the consumers below. A geometric
 application must supply this named package for its actual maps; there is no
 automatic instance identifying arbitrary modules with Chow groups.
+`ChowLocalization.ofOpenComplement` now proves the package for the actual
+rational Chow maps of a Noetherian scheme and its constructed reduced
+closed complement. It is a named theorem, not a global source instance.
 
 Localization supplies raw class lifts and places the difference of two lifts
 in the boundary image. For projector closures, the multiplicative restriction
@@ -35,6 +43,23 @@ class ChowLocalizationHypotheses
   restriction_surjective : Function.Surjective r
 
 namespace ChowLocalization
+
+open AlgebraicGeometry CategoryTheory SchemeCycles in
+/-- Instantiate the existing localization consumers on the actual rational
+Chow sequence. All exactness and finiteness inputs are proved. -/
+theorem ofOpenComplement {X U : Scheme.{u}} [IsNoetherian X]
+    (δ : DimensionFunction X) (j : U ⟶ X) [IsOpenImmersion j] (n : ℤ) :
+    letI := openImmersion_isNoetherian j
+    ChowLocalizationHypotheses
+      (rationalChowClosedImmersionPushforward
+        (δ.comapClosedImmersion (openComplementIdeal j).subschemeι) δ
+        (openComplementIdeal j).subschemeι
+        (fun W ↦ (supportDegree_comapClosedImmersion δ _ W).symm) n)
+      (rationalChowOpenRestriction δ j n) := by
+  letI := openImmersion_isNoetherian j
+  exact {
+    range_eq_ker := range_rationalChowOpenComplementPushforward_eq_ker δ j n
+    restriction_surjective := rationalChowOpenRestriction_surjective δ j n }
 
 section Linear
 

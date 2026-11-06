@@ -1,6 +1,10 @@
-import HodgeConjecture.Boundary.Normalization.NormalClosureTensor
-import HodgeConjecture.CommutativeAlgebra.ReducedArtinianFactor
-import Mathlib.RingTheory.Etale.Field
+module
+
+public import HodgeConjecture.Boundary.Normalization.NormalClosureTensor
+public import HodgeConjecture.CommutativeAlgebra.ReducedArtinianFactor
+public import Mathlib.RingTheory.Etale.Field
+
+@[expose] public section
 
 /-!
 # The selected generic factor of a marked normal closure

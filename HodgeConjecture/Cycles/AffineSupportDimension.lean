@@ -1,7 +1,11 @@
-import HodgeConjecture.Cycles.AffineDimension
-import HodgeConjecture.Cycles.SupportDimension
-import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
-import Mathlib.RingTheory.LocalRing.ResidueField.Ideal
+module
+
+public import HodgeConjecture.Cycles.AffineDimension
+public import HodgeConjecture.Cycles.SupportDimension
+public import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
+public import Mathlib.RingTheory.LocalRing.ResidueField.Ideal
+
+@[expose] public section
 
 /-!
 # Actual affine point-closure dimensions

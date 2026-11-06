@@ -1,7 +1,11 @@
-import HodgeConjecture.LinearAlgebra.BlockGraphProjector
-import Mathlib.Algebra.Algebra.Bilinear
-import Mathlib.RingTheory.Ideal.Maps
-import Mathlib.Tactic.Ring
+module
+
+public import HodgeConjecture.LinearAlgebra.BlockGraphProjector
+public import Mathlib.Algebra.Algebra.Bilinear
+public import Mathlib.RingTheory.Ideal.Maps
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 /-!
 # Marked augmented commutative algebras

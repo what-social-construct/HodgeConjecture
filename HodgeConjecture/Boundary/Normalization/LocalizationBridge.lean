@@ -1,7 +1,11 @@
-import HodgeConjecture.Boundary.Normalization.PrimeInertia
-import Mathlib.RingTheory.DedekindDomain.IntegralClosure
-import Mathlib.RingTheory.Trace.Quotient
-import Mathlib.RingTheory.Valuation.LocalSubring
+module
+
+public import HodgeConjecture.Boundary.Normalization.PrimeInertia
+public import Mathlib.RingTheory.DedekindDomain.IntegralClosure
+public import Mathlib.RingTheory.Trace.Quotient
+public import Mathlib.RingTheory.Valuation.LocalSubring
+
+@[expose] public section
 
 /-!
 # Localizing a normalization at a valuation center
@@ -379,7 +383,7 @@ theorem hasValuationLocalizationAt_of_isNoetherianRing
       Q.primeCompl_le_nonZeroDivisors
   have hdim : ringKrullDim T ≤ (1 : WithBot ℕ∞) := by
     rw [IsLocalization.AtPrime.ringKrullDim_eq_height Q T,
-      Ideal.height_eq_primeHeight, E.2.1]
+      E.2.1]
     exact_mod_cast le_rfl
   letI : Ring.KrullDimLE 1 T := Ring.krullDimLE_iff.mpr hdim
   letI : Ring.DimensionLEOne T :=
@@ -394,7 +398,7 @@ theorem hasValuationLocalizationAt_of_isNoetherianRing
       IsLocalRing.eq_maximalIdeal
         (Ring.DimensionLEOne.maximalOfPrime hP hPrime)⟩
   letI : ValuationRing T :=
-    ((tfae_of_isNoetherianRing_of_isLocalRing_of_isDomain T).out 3 1).mp
+    ((tfae_of_isNoetherianRing_of_isLocalRing_of_isDomain T).out 4 2).mp
       hvalCriterion
   have hdenV : ∀ y : Q.primeCompl, IsUnit (centerMap y) := by
     intro y
@@ -414,9 +418,9 @@ theorem hasValuationLocalizationAt_of_isNoetherianRing
         IsLocalRing.maximalIdeal T := by
     apply (Localization.AtPrime.eq_maximalIdeal_iff_comap_eq
       (I := Q)).mp
-    rw [Ideal.comap_comap, hfcomp, hcomap]
+    rw [Ideal.under_def, Ideal.comap_comap, hfcomp, hcomap]
   letI : IsLocalHom f :=
-    ((IsLocalRing.local_hom_TFAE f).out 4 0).mp hflocalEq
+    ((IsLocalRing.local_hom_TFAE f).out 5 1).mp hflocalEq
   have hdenN :
       ∀ y : Q.primeCompl, IsUnit ((algebraMap S N) y) := by
     intro y

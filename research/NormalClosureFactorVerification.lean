@@ -1,7 +1,12 @@
+module
+
 import HodgeConjecture.Boundary.Normalization.NormalClosureFactor
 import HodgeConjecture.Boundary.Normalization.FunctionFieldNormalClosure
 import HodgeConjecture.Boundary.Normalization.NormalizationBaseChange
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP79 regressions for the factor selected by the original tensor evaluation.
@@ -158,7 +163,7 @@ example [FormallyUnramified p] :
         IntermediateField.normalClosure X.functionField Y.functionField
           (AlgebraicClosure Y.functionField), Y.functionField) := by
   fail_if_success have _ : PerfectField X.functionField := inferInstance
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   letI := (functionFieldMapOfDominant p).hom.toAlgebra
   letI := functionFieldMapOfDominant_isSeparable p
   exact (functionFieldNormalClosureData p).tensorSource_etale
@@ -231,8 +236,8 @@ run_cmd do
       `HodgeConjecture.CollisionFoundations.NormalClosureData.tensorEvaluationIdempotent_unique] do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    for axiomName in state.axioms do
+    let axioms ← Lean.collectAxioms declaration
+    for axiomName in axioms do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"
-    logInfo m!"PASS standard-axiom boundary: {declaration}; {state.axioms.toList}"
+    logInfo m!"PASS standard-axiom boundary: {declaration}; {axioms.toList}"

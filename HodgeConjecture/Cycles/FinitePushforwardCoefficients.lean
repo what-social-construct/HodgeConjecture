@@ -1,5 +1,9 @@
-import HodgeConjecture.Cycles.FinitePushforwardResidue
-import HodgeConjecture.Cycles.FiniteAffineFiber
+module
+
+public import HodgeConjecture.Cycles.FinitePushforwardResidue
+public import HodgeConjecture.Cycles.FiniteAffineFiber
+
+@[expose] public section
 
 /-!
 # Coefficients of the existing finite pushforward

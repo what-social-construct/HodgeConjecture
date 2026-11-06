@@ -1,4 +1,8 @@
-import HodgeConjecture.Boundary.Normalization.FixedRingLocalization
+module
+
+public import HodgeConjecture.Boundary.Normalization.FixedRingLocalization
+
+@[expose] public section
 
 /-!
 # Height-one fixed-ring descent: proved solutions
@@ -20,8 +24,8 @@ theorem fixedPoints_heightOne_contraction
     [IsDomain S] [Group G] [Finite G] [MulSemiringAction G S]
     [SMulCommClass G A S]
     (H : Subgroup G) (Q : Ideal S) [Q.IsPrime]
-    (hQ : Q.primeHeight = 1) :
-    (Q.under (FixedPoints.subalgebra A S H)).primeHeight = 1 := by
+    (hQ : Q.height = 1) :
+    (Q.under (FixedPoints.subalgebra A S H)).height = 1 := by
   exact
     NormalizationInertia.fixedPoints_primeHeight_under_eq_one
       (A := A) H Q hQ
@@ -33,7 +37,7 @@ theorem heightOne_fixedRing_unramified_descent
     [IsNoetherianRing A] [Module.Finite A S]
     (I H : Subgroup G) (hIH : I ≤ H)
     [IsIntegrallyClosed (FixedPoints.subalgebra A S H)]
-    (Q : Ideal S) [Q.IsPrime] (hQ : Q.primeHeight = 1)
+    (Q : Ideal S) [Q.IsPrime] (hQ : Q.height = 1)
     (hI : Algebra.IsUnramifiedAt A
       (Q.under (FixedPoints.subalgebra A S I))) :
     Algebra.IsUnramifiedAt A

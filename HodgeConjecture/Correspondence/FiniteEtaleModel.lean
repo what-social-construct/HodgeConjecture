@@ -1,5 +1,9 @@
-import HodgeConjecture.Correspondence.EtaleClasses
-import HodgeConjecture.Correspondence.FiniteCoproduct
+module
+
+public import HodgeConjecture.Correspondence.EtaleClasses
+public import HodgeConjecture.Correspondence.FiniteCoproduct
+
+@[expose] public section
 
 /-!
 # Realization models for finite étale correspondences

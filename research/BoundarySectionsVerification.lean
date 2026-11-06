@@ -1,7 +1,12 @@
+module
+
 import HodgeConjecture.Boundary.Normalization.AffineSections
 import HodgeConjecture.Boundary.Normalization.BoundarySections
 import HodgeConjecture.Boundary.Normalization.BoundedOverring
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 Focused SP65 regressions. Run with
@@ -106,7 +111,7 @@ local notation "T₀" => NormalClosureNormalizationRing (B := B) (N := N)
 
 local instance : Algebra T₀ (BoundarySectionRing C I) :=
   inferInstanceAs (Algebra T₀
-    ((Spec.structureSheaf T₀).val.obj (Opposite.op (fixedMovingBoundaryOpen C I))))
+    ((Spec.structureSheaf T₀).obj.obj (Opposite.op (fixedMovingBoundaryOpen C I))))
 
 example : IsFractionRing T₀ N := normalization_isFractionRing C
 
@@ -168,8 +173,8 @@ run_cmd do
       `HodgeConjecture.NormalizationInertia.normalization_mem_boundarySectionSubalgebra] do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    for axiomName in state.axioms do
+    let axioms ← Lean.collectAxioms declaration
+    for axiomName in axioms do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"
-    logInfo m!"PASS standard-axiom boundary: {declaration}; {state.axioms.toList}"
+    logInfo m!"PASS standard-axiom boundary: {declaration}; {axioms.toList}"

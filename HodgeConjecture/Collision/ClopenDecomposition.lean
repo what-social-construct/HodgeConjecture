@@ -1,5 +1,9 @@
-import HodgeConjecture.Collision.ComponentSelectors
-import HodgeConjecture.Collision.GlobalGeometry
+module
+
+public import HodgeConjecture.Collision.ComponentSelectors
+public import HodgeConjecture.Collision.GlobalGeometry
+
+@[expose] public section
 
 /-!
 # Literal clopen collision decompositions

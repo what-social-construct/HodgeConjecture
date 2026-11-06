@@ -1,7 +1,11 @@
-import HodgeConjecture.Boundary.Normalization.NormalizationIntegralFactor
-import HodgeConjecture.Boundary.Normalization.FunctionFieldNormalClosure
-import HodgeConjecture.Boundary.Normalization.EtaleTensorSource
-import Mathlib.AlgebraicGeometry.Morphisms.OpenImmersion
+module
+
+public import HodgeConjecture.Boundary.Normalization.NormalizationIntegralFactor
+public import HodgeConjecture.Boundary.Normalization.FunctionFieldNormalClosure
+public import HodgeConjecture.Boundary.Normalization.EtaleTensorSource
+public import Mathlib.AlgebraicGeometry.Morphisms.OpenImmersion
+
+@[expose] public section
 
 /-!
 # The actual finite étale affine normal-closure refinement
@@ -59,8 +63,8 @@ include A in
 the actual finite tensor source and its selected open component. -/
 theorem normalizationToBase_isEtale_of_etaleModel
     (D : NormalClosureData K L N)
-    (hL : IsEtale (normalizedModelToBase B L)) :
-    IsEtale (normalizedModelToBase B N) := by
+    (hL : Etale (normalizedModelToBase B L)) :
+    Etale (normalizedModelToBase B N) := by
   letI : FiniteDimensional K L := D.finiteIntermediate
   let P := ⨂[B] _ : L →ₐ[K] N, normalizedCoordinateRing B L
   let q := Spec.map (CommRingCat.ofHom
@@ -68,7 +72,7 @@ theorem normalizationToBase_isEtale_of_etaleModel
   let s := Spec.map (CommRingCat.ofHom (algebraMap B P))
   letI : IsOpenImmersion q :=
     D.normalizationTensorEvaluation_isOpenImmersion (B := B) (A := A)
-  letI : IsEtale s := piTensorProduct_isEtale (L →ₐ[K] N) hL
+  letI : Etale s := piTensorProduct_isEtale (L →ₐ[K] N) hL
   have hcomp : q ≫ s = normalizedModelToBase B N := by
     change Spec.map _ ≫ Spec.map _ = Spec.map _
     rw [← Spec.map_comp]
@@ -84,7 +88,7 @@ section ActualAffineChart
 open SchemeCycles NormalizationInertia
 
 variable {X Y : Scheme.{u}} [IsIntegral X] [IsIntegral Y]
-variable (p : Y ⟶ X) [IsDominant p] [IsFinite p] [IsEtale p]
+variable (p : Y ⟶ X) [IsDominant p] [IsFinite p] [Etale p]
 variable (U : X.Opens) [Nonempty U]
 
 local instance : Nonempty (p ⁻¹ᵁ U) := nonempty_preimage_of_isDominant p U
@@ -266,7 +270,7 @@ theorem finiteEtaleAffineNormalClosureToBase_finite_etale
     letI : IsScalarTower Γ(X, U) Γ(Y, p ⁻¹ᵁ U) Y.functionField :=
       IsScalarTower.of_algebraMap_eq' rfl
     IsFinite (normalClosureNormalizationToBase (B := Γ(X, U)) (N := Nₚ)) ∧
-      IsEtale (normalClosureNormalizationToBase (B := Γ(X, U)) (N := Nₚ)) := by
+      Etale (normalClosureNormalizationToBase (B := Γ(X, U)) (N := Nₚ)) := by
   letI : Algebra X.functionField Y.functionField :=
     (functionFieldMapOfDominant p).hom.toAlgebra
   letI : Algebra Γ(X, U) Y.functionField :=
@@ -296,11 +300,11 @@ theorem finiteEtaleAffineNormalClosureToBase_finite_etale
       (B := Γ(X, U)) (A := Γ(Y, p ⁻¹ᵁ U))
     let ν := finiteAffinePreimageNormalizationIso p U hU hY
     let μ := normalizedModelToBase Γ(X, U) Y.functionField
-    haveI : IsEtale ((ν.hom ≫ μ) ≫ hU.fromSpec) := by
+    haveI : Etale ((ν.hom ≫ μ) ≫ hU.fromSpec) := by
       rw [Category.assoc, finiteAffinePreimageNormalizationIso_hom_comp_toBase]
       infer_instance
-    haveI : IsEtale (ν.hom ≫ μ) := IsEtale.of_comp _ hU.fromSpec
-    have h : IsEtale (ν.inv ≫ (ν.hom ≫ μ)) := inferInstance
+    haveI : Etale (ν.hom ≫ μ) := Etale.of_comp _ hU.fromSpec
+    have h : Etale (ν.inv ≫ (ν.hom ≫ μ)) := inferInstance
     simpa only [Iso.inv_hom_id_assoc] using h
 
 /-- The normal-closure normalization maps to the actual affine open,
@@ -334,7 +338,7 @@ def finiteEtaleAffineNormalClosureToChart
     IsScalarTower.of_algebraMap_eq' rfl
   exact normalClosureNormalizationToBase (B := Γ(X, U)) (N := Nₚ) ≫ hU.isoSpec.inv
 
-omit [IsFinite p] [IsEtale p] in
+omit [IsFinite p] [Etale p] in
 /-- The chart structural map has the original composite to the base scheme. -/
 theorem finiteEtaleAffineNormalClosureToChart_comp_inclusion
     (hU : IsAffineOpen U) :
@@ -384,7 +388,7 @@ theorem finiteEtaleAffineNormalClosureToChart_finite_etale
     letI : IsScalarTower Γ(X, U) Γ(Y, p ⁻¹ᵁ U) Y.functionField :=
       IsScalarTower.of_algebraMap_eq' rfl
     IsFinite (finiteEtaleAffineNormalClosureToChart p U hU) ∧
-      IsEtale (finiteEtaleAffineNormalClosureToChart p U hU) := by
+      Etale (finiteEtaleAffineNormalClosureToChart p U hU) := by
   letI : Algebra X.functionField Y.functionField :=
     (functionFieldMapOfDominant p).hom.toAlgebra
   letI : Algebra Γ(X, U) Y.functionField :=
@@ -434,7 +438,7 @@ def finiteEtaleAffineNormalClosureToPreimage
   exact normalClosureToIntermediateNormalization (B := Γ(X, U)) (functionFieldNormalClosureData p) ≫
     (finiteAffinePreimageNormalizationIso p U hU hY).inv
 
-omit [IsEtale p] in
+omit [Etale p] in
 /-- The refinement recovers exactly the existing marked normalization leg. -/
 theorem finiteEtaleAffineNormalClosureToPreimage_comp_normalizationIso
     (hU : IsAffineOpen U)
@@ -470,7 +474,7 @@ theorem finiteEtaleAffineNormalClosureToPreimage_comp_normalizationIso
   simp only [finiteEtaleAffineNormalClosureToPreimage, Category.assoc, Iso.inv_hom_id,
     Category.comp_id]
 
-omit [IsEtale p] in
+omit [Etale p] in
 /-- The refinement is over the original base scheme and its original map. -/
 theorem finiteEtaleAffineNormalClosureToPreimage_comp_toBase
     (hU : IsAffineOpen U)
@@ -508,7 +512,7 @@ theorem finiteEtaleAffineNormalClosureToPreimage_comp_toBase
     (normalClosureToIntermediateNormalization_comp_toBase
       (B := Γ(X, U)) (functionFieldNormalClosureData p))
 
-omit [IsEtale p] in
+omit [Etale p] in
 /-- The marked refinement factors the structural morphism on the actual chart. -/
 theorem finiteEtaleAffineNormalClosureToPreimage_comp_restrict
     (hU : IsAffineOpen U)
@@ -563,7 +567,7 @@ theorem finiteEtaleAffineNormalClosureToPreimage_finite_etale
     letI : IsScalarTower Γ(X, U) Γ(Y, p ⁻¹ᵁ U) Y.functionField :=
       IsScalarTower.of_algebraMap_eq' rfl
     IsFinite (finiteEtaleAffineNormalClosureToPreimage p U hU hY) ∧
-      IsEtale (finiteEtaleAffineNormalClosureToPreimage p U hU hY) := by
+      Etale (finiteEtaleAffineNormalClosureToPreimage p U hU hY) := by
   letI : Algebra X.functionField Y.functionField :=
     (functionFieldMapOfDominant p).hom.toAlgebra
   letI : Algebra Γ(X, U) Y.functionField :=
@@ -591,13 +595,13 @@ theorem finiteEtaleAffineNormalClosureToPreimage_finite_etale
         (functionFieldNormalClosure_normalization_finite_etale p U hU hX hY).1
     change IsFinite (q ≫ (finiteAffinePreimageNormalizationIso p U hU hY).inv)
     infer_instance
-  · haveI : IsEtale (p ∣_ U) := IsZariskiLocalAtTarget.restrict (P := @IsEtale) inferInstance U
-    haveI : IsEtale (finiteEtaleAffineNormalClosureToPreimage p U hU hY ≫ (p ∣_ U)) := by
+  · haveI : Etale (p ∣_ U) := IsZariskiLocalAtTarget.restrict (P := @Etale) inferInstance U
+    haveI : Etale (finiteEtaleAffineNormalClosureToPreimage p U hU hY ≫ (p ∣_ U)) := by
       rw [finiteEtaleAffineNormalClosureToPreimage_comp_restrict]
       exact (finiteEtaleAffineNormalClosureToChart_finite_etale p U hU hX hY).2
-    exact IsEtale.of_comp _ (p ∣_ U)
+    exact Etale.of_comp _ (p ∣_ U)
 
-omit [IsFinite p] [IsEtale p] in
+omit [IsFinite p] [Etale p] in
 /-- Lying-over makes the structural map onto the actual affine chart. -/
 theorem finiteEtaleAffineNormalClosureToChart_surjective
     (hU : IsAffineOpen U) :
@@ -634,11 +638,11 @@ theorem finiteEtaleAffineNormalClosureToChart_surjective
     apply (algebraMap X.functionField Nₚ).injective
     exact congrArg (fun z : normalizedCoordinateRing Γ(X, U) Nₚ => (z : Nₚ)) h
   haveI : Surjective (normalClosureNormalizationToBase (B := Γ(X, U)) (N := Nₚ)) :=
-    ⟨hi.specComap_surjective hinj⟩
+    ⟨hi.comap_surjective hinj⟩
   unfold finiteEtaleAffineNormalClosureToChart
   infer_instance
 
-omit [IsEtale p] in
+omit [Etale p] in
 /-- The marked refinement is onto the original whole affine inverse image. -/
 theorem finiteEtaleAffineNormalClosureToPreimage_surjective
     (hU : IsAffineOpen U)
@@ -681,7 +685,7 @@ theorem finiteEtaleAffineNormalClosureToPreimage_surjective
     normalizationMap_injective Nₚ _
       (normalClosureEmbeddingOverBase (B := Γ(X, U)) (functionFieldNormalClosureData p)).injective
   haveI : Surjective (normalClosureToIntermediateNormalization (B := Γ(X, U))
-      (functionFieldNormalClosureData p)) := ⟨hInt.specComap_surjective hinj⟩
+      (functionFieldNormalClosureData p)) := ⟨hInt.comap_surjective hinj⟩
   unfold finiteEtaleAffineNormalClosureToPreimage
   infer_instance
 

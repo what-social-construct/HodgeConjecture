@@ -1,8 +1,18 @@
-import HodgeConjecture.Realization.Betti.Examples.SplitGaloisAction
-import HodgeConjecture.Realization.Betti.ZeroSimplexTransfer
+module
+
+public import HodgeConjecture.Realization.Betti.Examples.SplitGaloisAction
+public import HodgeConjecture.Realization.Betti.ZeroSimplexTransfer
+public import HodgeConjecture.Realization.Betti.SingularPathConnected
+public import HodgeConjecture.Realization.Betti.Examples.AffineLineComplexPoints
+
+@[expose] public section
 
 /-!
 # Constructed Betti realization
+
+For path-connected spaces, actual paths and singular one-simplices prove
+that degree-zero cocycles are constant. The complex affine line has the
+topology of regular-function evaluations, proved homeomorphic to `ℂ`.
 
 The finite split complex example uses actual complex-algebra points with
 their evaluation topology, actual continuous singular simplices and faces,

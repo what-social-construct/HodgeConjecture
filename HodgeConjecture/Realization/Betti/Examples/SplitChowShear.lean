@@ -1,5 +1,9 @@
-import HodgeConjecture.Realization.Betti.Examples.SplitTateBlock
-import HodgeConjecture.Realization.Chow.Examples.SplitChowShear
+module
+
+public import HodgeConjecture.Realization.Betti.Examples.SplitTateBlock
+public import HodgeConjecture.Realization.Chow.Examples.SplitChowShear
+
+@[expose] public section
 
 /-!
 # The Betti action of an actual Chow shear

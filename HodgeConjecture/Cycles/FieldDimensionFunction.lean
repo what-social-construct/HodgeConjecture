@@ -1,4 +1,8 @@
-import HodgeConjecture.Cycles.ChartResidueDegree
+module
+
+public import HodgeConjecture.Cycles.ChartResidueDegree
+
+@[expose] public section
 
 /-!
 # The structural dimension function over a field
@@ -35,7 +39,7 @@ theorem exists_isAffineOpen_mem_of_le (X : Scheme.{u}) {x y : X} (hxy : x ≤ y)
     exists_isAffineOpen_mem_and_subset (X := X) (U := ⊤) (x := x) (by trivial)
   exact ⟨U, hU, hxU, (Scheme.le_iff_specializes.mp hxy).mem_open U.isOpen hxU⟩
 
-private theorem residueDegree_dimensionLaws
+theorem residueDegree_dimensionLaws
     (k : Type u) [Field k] (X : Scheme.{u})
     (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] :
     let d : X → ℤ := fun x ↦
@@ -55,7 +59,7 @@ private theorem residueDegree_dimensionLaws
       exact ⟨U.ι.isOpenEmbedding.isInducing.specializes_iff.mp hxy.1,
         fun h ↦ hxy.2 (U.ι.isOpenEmbedding.isInducing.specializes_iff.mpr h)⟩
     have h := (DimensionFunction.ofAffineLocallyOfFiniteType k U (U.ι ≫ p)).strictMono hxyU
-    simpa only [affineChart_dimension_eq_schemeResidueField_trdeg k p U.ι] using h
+    simpa only [affineChart_dimension_eq_schemeResidueField_trdeg k p U.ι, Scheme.Opens.ι_apply] using h
   · intro x y hxy
     obtain ⟨U, hU, hxU, hyU⟩ := exists_isAffineOpen_mem_of_le X hxy.le
     letI : IsAffine (U : Scheme) := hU
@@ -79,7 +83,7 @@ private theorem residueDegree_dimensionLaws
           exact ⟨U.ι.isOpenEmbedding.isInducing.specializes_iff.mpr hzy.1,
             fun h ↦ hzy.2 (U.ι.isOpenEmbedding.isInducing.specializes_iff.mp h)⟩
     have h := (DimensionFunction.ofAffineLocallyOfFiniteType k U (U.ι ≫ p)).map_covBy hxyU
-    simpa only [affineChart_dimension_eq_schemeResidueField_trdeg k p U.ι] using h
+    simpa only [affineChart_dimension_eq_schemeResidueField_trdeg k p U.ι, Scheme.Opens.ι_apply] using h
 
 /-- The actual structural residue-degree dimension function on a scheme
 locally of finite type over a field, with both defining laws proved. -/

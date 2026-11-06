@@ -1,4 +1,8 @@
-import HodgeConjecture.Cycles.ChowPushforward
+module
+
+public import HodgeConjecture.Cycles.ChowPushforward
+
+@[expose] public section
 
 /-!
 # Actual scheme isomorphisms on the principal-relation quotient
@@ -20,7 +24,7 @@ noncomputable section
 
 universe u
 
-private theorem iso_inverse_supportDegree {X Y : Scheme.{u}}
+theorem iso_inverse_supportDegree {X Y : Scheme.{u}}
     (δ : DimensionFunction Y) (e : X ≅ Y) (W : IntegralClosedSubscheme Y) :
     supportDegree (δ.comapClosedImmersion e.hom) (closedImageSubscheme e.inv W) =
       supportDegree δ W := by

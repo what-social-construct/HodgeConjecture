@@ -1,5 +1,10 @@
+module
+
 import HodgeConjecture.Boundary.Normalization.SeparableFunctionField
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 Regressions for separability of the actual generic-stalk field extension.
@@ -32,7 +37,7 @@ example [IsAffineHom p] (U : X.Opens) [Nonempty U] (hU : IsAffineOpen U) :
     letI := (functionFieldMapOfDominant p).hom.toAlgebra
     Algebra.FormallyUnramified X.functionField Y.functionField := by
   fail_if_success have _ : IsFinite p := inferInstance
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   fail_if_success have _ : IsNoetherianRing Γ(X, U) := inferInstance
   exact functionFieldMapOfDominant_formallyUnramified_of_affine p U hU
 
@@ -46,7 +51,7 @@ example [IsAffineHom p] :
 example [IsFinite p] (U : X.Opens) [Nonempty U] (hU : IsAffineOpen U) :
     letI := (functionFieldMapOfDominant p).hom.toAlgebra
     Algebra.FormallyUnramified X.functionField Y.functionField := by
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   fail_if_success have _ : IsIntegrallyClosed Γ(X, U) := inferInstance
   exact functionFieldMapOfDominant_formallyUnramified_of_affine p U hU
 
@@ -55,7 +60,7 @@ example [IsFinite p] :
     Algebra.IsSeparable X.functionField Y.functionField := by
   fail_if_success have _ : PerfectField X.functionField := inferInstance
   fail_if_success have _ : CharZero X.functionField := inferInstance
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   exact functionFieldMapOfDominant_isSeparable p
 
 -- The class provides separability of each actual upstairs rational function.
@@ -71,7 +76,7 @@ end MinimalHypotheses
 section EtaleSpecialization
 
 variable {X Y : Scheme.{u}} [IsIntegral X] [IsIntegral Y]
-variable (p : Y ⟶ X) [IsDominant p] [IsFinite p] [IsEtale p]
+variable (p : Y ⟶ X) [IsDominant p] [IsFinite p] [Etale p]
 
 example :
     letI := (functionFieldMapOfDominant p).hom.toAlgebra
@@ -137,8 +142,9 @@ example [IsFinite p] [IsFinite q] :
     Algebra.IsSeparable X.functionField Z.functionField := by
   letI : FormallyUnramified (q ≫ p) :=
     MorphismProperty.comp_mem _ q p inferInstance inferInstance
-  simpa only [functionFieldMapOfDominant_comp, CommRingCat.hom_comp] using
-    functionFieldMapOfDominant_isSeparable (q ≫ p)
+  have h := functionFieldMapOfDominant_isSeparable (q ≫ p)
+  rw [functionFieldMapOfDominant_comp] at h
+  exact h
 
 end Composition
 
@@ -171,8 +177,8 @@ run_cmd do
       `HodgeConjecture.CollisionFoundations.functionFieldMapOfDominant_isSeparable] do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    for axiomName in state.axioms do
+    let axioms ← Lean.collectAxioms declaration
+    for axiomName in axioms do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"
-    logInfo m!"PASS standard-axiom boundary: {declaration}; {state.axioms.toList}"
+    logInfo m!"PASS standard-axiom boundary: {declaration}; {axioms.toList}"

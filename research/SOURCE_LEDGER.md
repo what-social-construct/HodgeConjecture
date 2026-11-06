@@ -17,9 +17,221 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-10-13 (SP108 conditional boundary correction
-and geometric candidate review). Earlier source records retain their original
+Last source/interface review: 2026-11-05 (affine de Rham, finite flat Chow transfer and scoped references).
+Earlier source records retain their original
 validation scope.
+
+### Further de Rham references (2026-11-05)
+
+These papers are references, not added dependencies or Lean theorem inputs.
+The applicability assessments below concern the current realization gaps.
+
+| Source | Exact material inspected | Relevance and limit |
+| --- | --- | --- |
+| [Scheiblechner, *Effective de Rham Cohomology — The General Case*, 1203.5706v2](https://arxiv.org/pdf/1203.5706v2) | Theorem 1.1 gives degree-bounded differential-form representatives on smooth affine varieties over an algebraically closed field of characteristic zero; §3 describes component idempotents in degree-zero cohomology. | Useful for later explicit computations and extending the component calculation. The representatives are differential forms; this does not construct cycles for arbitrary Hodge classes or formalize the analytic comparison. |
+| [Barz, *Logarithmic de Rham Stacks and Non-Abelian Hodge Theory*, 2512.04300v2](https://arxiv.org/html/2512.04300v2) | Theorems 1.9 and 1.16 concern logarithmic Cartier descent for smooth pairs with strict normal-crossing boundary in positive characteristic, and a torsor-twisted Higgs/connection correspondence for curves. | A later reference for logarithmic or characteristic-p work. These categorical correspondences do not supply the present characteristic-zero rational Chow–Betti comparison. |
+| [Kreuzer–Long, *On the De Rham Cohomology of Zero-Dimensional Schemes*, 2609.34819v1](https://arxiv.org/html/2609.34819v1) | Definition 2.1, Example 3.2 and Proposition 4.4 concern the naive Kähler complex. Example 3.2 is a one-point nonreduced local complete intersection with three-dimensional `ker d`. Proposition 4.4 uses a Galois extension to reduce to rational support. | Immediate scope reference and source of future counterexamples. Naive cohomology for arbitrary nonreduced algebras need not match topology. The current formally unramified trace and finite split complex comparison retain their stated scope. |
+| [Zhang, *The stacky approach to de Rham–Witt cohomology*, 2610.28149v1](https://arxiv.org/html/2610.28149v1) | Over a perfect field of characteristic p, a symmetric monoidal de Rham–Witt realization equivalence relates perfect F-gauges and coherent Raynaud-ring complexes; applications include Künneth and duality. | Relevant to a future p-adic/crystalline direction. It requires substantial additional infrastructure and does not directly fill the current complex Betti or cycle-generation gap. |
+
+Status: **SOURCE INSPECTED / NOT FORMALIZED**. Prioritize the zero-dimensional
+scope distinction and the effective affine reference. The two stack-theoretic
+papers are retained for later work; no change of the main proof route follows.
+
+The [polynomial/component implementation](working/0023-polynomial-derham-components.md)
+now proves a bounded degree-zero case directly from Mathlib's Kähler and
+polynomial APIs: adjoining a variable preserves the closed-function algebra
+over additively torsion-free coefficients, and finite products of affine
+lines have the component-idempotent basis. The papers' general component,
+degree-bound and nonreduced-counterexample results retain the source-only
+status above; none is supplied as a Lean premise.
+
+### Affine de Rham construction and bounded trace (2026-11-05)
+
+| Source-matched step | Exact source | Project proof and scope |
+| --- | --- | --- |
+| Affine differential and actual cochain complex | [Stacks 0FKF](https://stacks.math.columbia.edu/tag/0FKF) and the defining [equation 0FKG](https://stacks.math.columbia.edu/tag/0FKG) | `CommutativeAlgebra/DeRham/{Differential,Complex}.lean` adapts the construction, uniqueness and square-zero proofs from the pinned Axiom Stacks files. General base change and quotient descent are omitted. The existing Mathlib exterior powers and Kähler modules remain the terms. |
+| Degree-zero algebra trace | [Stacks 0FLC, property (1)](https://stacks.math.columbia.edu/tag/0FLC); Mathlib `Algebra.trace_algebraMap_of_basis` | `Realization/DeRham/FiniteUnramifiedTrace.lean` uses the actual algebra trace when source and target are formally unramified over the base, so all functions are closed. A finite basis proves the degree law; the same affine map's geometric rank and computed cycle degree are identified. General maps on forms and scheme hypercohomology are not ported. |
+| Finite split Chow/de Rham/Betti squares | Direct comparison of existing finite split geometry and singular cohomology | `SplitComparison.lean` constructs cycle class from actual point coefficients and compares it to `ℂ ⊗[ℚ] H⁰_B`. Pullback, trace, intersection and reduced-point normalization are proved. This supplies no positive-dimensional analytic comparison or class-generation theorem. |
+| Complex affine-line degree-zero comparison | Direct proof from Mathlib polynomial evaluation/topology, standard simplices and tensor products | `AffineLineComplexPoints`, `SingularPathConnected` and `AffineLineComparison` construct the actual topology, path-induced cocycle equality, genuine complexification and evaluation/multiplication/polynomial pullback squares. This is the bounded `H⁰` comparison for `ℂ[X]`, not a formalization of general analytic de Rham comparison or positive-codimension cycle classes. |
+
+Status: **FORMAL IN THE STATED BOUNDED SCOPE**. The general upstream
+finite-syntomic trace and concrete de Rham Weil theory remain external source
+candidates. See [the checkpoint](working/0022-affine-derham-trace-comparison.md)
+for the dependency experiment and the smaller integration choice.
+
+### Finite flat Chow pullback and degree (2026-11-05)
+
+| Source-matched step | Exact source | Project proof and scope |
+| --- | --- | --- |
+| Minimal-prime colength calculation | [Stacks, Lemma 42.3.2, Tag 02QG](https://stacks.math.columbia.edu/tag/02QG), second assertion | `CommutativeAlgebra/Multiplicity/RestrictedDivisors.lean` retains the regular-element quotient case, with one-dimensional quotient. `FlatLocalMultiplicity.lean` combines it with actual flat local base change. Nilpotents remain in the minimal-prime localization lengths. The general Cohen–Macaulay-module case is not claimed. |
+| Principal relations and quotient descent | [Stacks, Lemma 42.20.2, Tag 02S1](https://stacks.math.columbia.edu/tag/02S1), relative dimension zero | `FiniteFlatPrincipalDivisor.lean` proves the actual component sum; `FiniteFiberClosedBaseChange.lean` proves the actual closed pushforward square. `FiniteFlatPrincipalRelations.lean` and `FiniteFlatChowPullback.lean` preserve the existing relation spans and descend the same integral/rational maps. Scope: finite flat maps between Noetherian schemes locally of finite type over a field. No ambient integrality, reducedness, or supplied relation-preservation premise is needed. |
+| Rank, degree and positive-degree transfer | [Stacks, Lemma 42.15.2, Tag 02RH](https://stacks.math.columbia.edu/tag/02RH), with direct quotient descent | `FiniteFlatRank.lean` identifies the independently computed fiber degree with Mathlib's geometric rank. `FiniteFlatChowDegree.lean` proves the integral/rational Chow degree law from constant rank. `Realization/Chow/FiniteFlatTransfer.lean` instantiates the existing transfer interface when the rank is positive. The maps and operator law are proved, not supplied as input fields. General Betti transfer and Hodge-class coverage remain open. |
+
+Status: **FORMAL / SOURCE SCOPE MATCHED**. Proof adaptations use the pinned
+Axiom Stacks snapshot; the [attribution inventory](../third_party/axiom-stacks/README.md)
+records the selected source files and preserved license. Validation is in
+[the finite flat checkpoint](working/0021-finite-flat-chow-transfer.md).
+
+### Saito: higher Chow groups and open-boundary methods (2026-11-05)
+
+[Morihiko Saito, *Hodge-type conjecture for higher Chow groups*, v5](https://arxiv.org/pdf/math/0201113).
+Theorem 0.3 is conditional on projective Hodge algebraicity and Deligne-cycle-map
+injectivity. Section 4 uses localization and boundary strata; §5 gives explicit
+higher-Chow generators on certain hypersurface complements. Theorem 5.11 assumes
+positive `p > n`, `2p - n < dim X`, normal-crossing ample hypersurfaces, and
+codimension-`p-n` Hodge algebraicity on the compactification. Relevance to
+`BoundaryCorrection.lean` is methodological. Our ordinary Chow groups, general
+Betti/Gysin comparison, and prescribed-class generation remain separate obligations.
+Status: **SOURCE VERIFIED / NOT FORMALIZED**.
+
+### Analytic background suggested during review (2026-11-05)
+
+The [Mathlog overview of Helmholtz/Hodge decomposition and Poincaré duality](https://mathlog.info/articles/z1zXpvRhX5GibVySPENM)
+is background reading, not a source theorem used in Lean. Its displayed
+Hodge decomposition reverses the input degrees, its Stokes formula reverses
+the integral roles, and its quotient argument does not establish the claimed
+specific direct-sum complement. For instance, $(1,0,0)$ is both
+$\nabla x$ and $\nabla\times(0,0,y)$, so the claimed unrestricted direct
+sum on all smooth vector fields on $\mathbb R^3$ has a nonzero intersection.
+For the analytic statement use [Calegari, Theorem 2.3](https://math.uchicago.edu/~dannyc/courses/4manifolds_2018/4_manifolds_notes.pdf):
+on a closed oriented Riemannian manifold,
+$\Omega^k=d\Omega^{k-1}\oplus\delta\Omega^{k+1}\oplus\mathcal H^k$.
+[Deligne, §1](https://www.claymath.org/wp-content/uploads/2022/06/hodge.pdf)
+then distinguishes the Kähler $(p,q)$ decomposition and rational Hodge classes
+from the further algebraicity assertion. None supplies the missing general
+Chow-to-Betti comparison or class-coverage construction in this repository.
+
+### Axiom Stacks implementation survey (2026-11-04)
+
+The [pinned AxiomMath/Stacks release](https://github.com/AxiomMath/Stacks/tree/f8e70c5dd04bfabcb423d5e325461f527c85a5d6)
+contains source proofs of general flat Chow pullback (02S1), the finite locally
+free cycle degree formula with its fiber-degree premise discharged (02RH),
+and fixed-inertia local étaleness (0BST; separately 09EH in the DVR setting).
+[The reuse audit](working/0019-axiom-stacks-reuse-audit.md) records exact
+declarations, matches to existing interfaces, overlap, and import costs.
+The audit used this repository's former Lean 4.24 baseline; the current
+Lean 4.35 migration is recorded [separately](working/0020-lean-4-35-migration.md).
+The bounded fiber-residue comparison is now adapted and compiled, with
+Apache-2.0 attribution in `third_party/axiom-stacks/`. The actual finite-fiber
+cycle map and computed degree formula are proved on this library's existing
+objects. The upstream general Chow pullback and inertia results remain
+**EXTERNAL SOURCE INSPECTED / NOT PORTED HERE**. In particular,
+the current fixed-inertia input remains open in this library, and no general
+Chow--Betti or Hodge realization is obtained from the surveyed Weil interfaces.
+
+### Finite cycle/Chow pushforward functoriality (SP113, 2026-10-27)
+
+[Stacks Lemma 42.12.2, 02R5](https://stacks.math.columbia.edu/tag/02R5)
+states functoriality of proper cycle pushforward. The new
+`Cycles/FinitePushforwardComposition.lean` proves its finite-map case
+directly: `Scheme.residueFieldMap_comp` identifies the literal scalar tower,
+Mathlib's `Module.finrank_mul_finrank` gives the degree product, and
+`Scheme.IdealSheafData.map_comp` identifies the original image carrier.
+Finite maps preserve the existing canonical grading by SP102, so the
+dimension-dropping branch of general proper pushforward does not occur.
+Raw finite-cycle functoriality works over any semiring without a base-field
+or Noetherian hypothesis. Arbitrary dimension functions still require the
+existing compatibility premises on the graded maps.
+
+`Cycles/FiniteChowPushforwardComposition.lean` inherits composition and
+identity on the existing integral/rational quotients. Relation preservation
+uses SP107's finite specialization of
+[Stacks 02RT](https://stacks.math.columbia.edu/tag/02RT), already proved with
+actual image-carrier norms. The Chow theorems retain Noetherian ambient
+schemes and a target locally of finite type over a field. No literature
+conclusion is imported as an axiom or supplied functoriality premise.
+
+### Chern-character trial (SP112, 2026-10-14)
+
+- [Stacks 0ESY](https://stacks.math.columbia.edu/tag/0ESY), the defining
+  alternating-sum formula and Lemma 42.46.7: additivity permits rational
+  virtual complexes. The Chern map and its Betti comparison are not built.
+- [Stacks Lemma 36.13.2, 08EC](https://stacks.math.columbia.edu/tag/08EC)
+  extends bounded coherent complexes from an open of a Noetherian scheme;
+  [Lemma 36.11.8, 08E0](https://stacks.math.columbia.edu/tag/08E0) makes the
+  extension perfect when the ambient scheme is regular. This supplies a
+  classical Chow lift after Chern realization, not a construction of the
+  prescribed open object. No source axiom is added to Lean.
+- [Stacks 03SF](https://stacks.math.columbia.edu/tag/03SF), finite étale
+  Galois refinement, and [02UM](https://stacks.math.columbia.edu/tag/02UM),
+  Chern normalization, give zero after splitting pullback for the tested
+  finite-monodromy bundles. [02RH](https://stacks.math.columbia.edu/tag/02RH)
+  gives the degree identity on cycles, hence on Chow. Rational cancellation
+  yields the vanishing on the original open. Only this last linear step is
+  formalized by `RationalDegreeTransfer.pull_injective` and `pull_eq_zero_iff`;
+  their degree law remains an explicit premise.
+- [Stacks 0FB0](https://stacks.math.columbia.edu/tag/0FB0), Definition
+  42.50.3 and its pushforward identity: a perfect complex acyclic off the
+  boundary has a localized Chern character there. It supplies a boundary
+  class, not the required nonzero restriction to the open. This is a
+  classical candidate connection, not a formal localized-Chern construction.
+
+### Supported-class extraction (SP111, 2026-10-13)
+
+[Voisin, sections 4.1--4.2](https://webusers.imj-prg.fr/~claire.voisin/Articlesweb/JOMP_V01N01P02Paper.pdf),
+Definition 4.1 and the explanation after Conjecture 4.6, relate restriction
+vanishing, supported cohomology and component cycle classes. The geometric
+specialization is smooth projective complex $X$, degree $2p$, and closed
+support of codimension at least $p$.
+
+`Realization/Chow/SupportedClass.lean` proves the finite expansion and
+extraction consumer directly, and cites this source in its module docs.
+Its `hExact`, basis `b` and `hBasis` remain supplied: general Betti
+localization, the top-component basis and its cycle-class comparison are
+not formalized. `hRestrict` is the open cycle-class comparison for the
+converse. Actual complementary scheme maps prove cycle support via SP110.
+There is no imported source axiom or asserted support-existence theorem.
+
+### Smooth ample boundary and open representative (2026-10-13)
+
+This is a source-backed mathematical check in
+[TARGET_BRIDGE.md](TARGET_BRIDGE.md#open-representative-the-smooth-ample-boundary-calculation),
+not a formal implementation or an imported Lean premise.
+
+| Statement used | Exact source and specialization | Lean relationship / status |
+| --- | --- | --- |
+| Zero open representative above the affine dimension bound | [Voisin, Hodge Theory and Complex Algebraic Geometry II, Theorem 1.2](https://assets.cambridge.org/97805218/02833/sample/9780521802833ws.pdf): smooth affine complex $d$-folds have CW homotopy dimension at most $d$. Apply to the complement of a smooth ample divisor and degree $2p>d$. | Classical construction $z_U=0$; the required geometric vanishing and general open Betti cycle class are not implemented. |
+| Kernel of restriction to a smooth ample complement | [Voisin, II, Theorem 1.1 and equation (1.6)](https://assets.cambridge.org/97805218/02833/sample/9780521802833ws.pdf) give weak Lefschetz and $i_*i^*=[D]\cup-$. For $2p\leq d$, combine with the separately stated localization/Thom sequence to deduce $\ker j^*=L H^{2p-2}(Y)$. | Mathematical deduction; not supplied by actual Chow exactness. The existing SP108 `restrictH` and `pushH` remain explicit geometric inputs. |
+| Primitive classes survive this restriction | [Deligne, §4, Example 2](https://www.claymath.org/wp-content/uploads/2022/06/hodge.pdf) recalls hard Lefschetz. Its direct-sum consequence separates $P_h^{2p}=\ker L^{d-2p+1}$ from $L H^{2p-2}$; the kernel calculation then gives injectivity on $P_h^{2p}$. | Mathematical deduction, not an algebraic projector construction. The finite-cover extension additionally uses positive-degree transfer and cup-product functoriality, whose general geometric instances are not formalized here. |
+
+The remaining prescribed-class existence is not a conclusion of these
+sources. SP108 plus restriction proves a conditional equivalence with
+ambient algebraicity; this is a scope check on the proposed construction.
+
+### Actual Chow localization (SP110, 2026-10-13)
+
+[Stacks Lemma 42.19.3, 02RX](https://stacks.math.columbia.edu/tag/02RX)
+gives the localization sequence for the reduced closed complement of an
+open subscheme. `OpenClosedLocalization.lean`, `PrincipalRelationLifting.lean`
+and `ChowLocalization.lean` prove its support, relation-lifting and quotient
+steps directly. Each module cites the exact tag. The scheme input here is
+a Noetherian ambient scheme with a supplied dimension function; hence the
+existing finite-sum cycle convention applies. The carrier/function lifting
+and semiring-valued cycle exactness need no ambient finiteness. Rational
+exactness uses the same principal generators and coefficient compatibility.
+The old `ChowLocalizationHypotheses` is now proved by `ofOpenComplement`
+for these actual maps; arbitrary supplied maps still require their own
+instance. No cohomological localization theorem is imported by this result.
+
+### Marked cycle-to-Chow map (SP109, 2026-10-13)
+
+`Realization/Chow/MarkedCycleMap.lean` constructs a linear combination of
+supplied actual homogeneous cycles and applies the existing rational Chow
+quotient. Its image and marked-vector formula follow directly by finite
+linear algebra. There is no external theorem asserting that such a family
+represents an arbitrary Hodge class.
+
+Its finite-pushforward comparison uses the already proved degree-weighted
+map of [Stacks Definition 42.12.1, 02R4](https://stacks.math.columbia.edu/tag/02R4)
+and the finite specialization of principal/norm compatibility in
+[Stacks Lemma 42.18.1, 02RT](https://stacks.math.columbia.edu/tag/02RT).
+Both exact tags are cited in the Lean module. The comparison assumes
+Noetherian ambient schemes, a finite morphism and a target locally of
+finite type over a field, with the canonical field dimension functions.
+It uses SP107's proved relation preservation, not an imported premise.
+Open compatibility similarly uses the existing actual Chow restriction.
+The supplied realization map in the class formula is not asserted to be
+a constructed geometric Betti map.
 
 ### Geometric candidates and conditional boundary induction (2026-10-13)
 

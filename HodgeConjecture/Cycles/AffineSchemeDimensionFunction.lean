@@ -1,7 +1,11 @@
-import HodgeConjecture.Cycles.AffineDimensionFunction
-import HodgeConjecture.Cycles.DimensionFunctionRestriction
-import HodgeConjecture.Cycles.FiniteTypeSchemeDimension
-import HodgeConjecture.Cycles.CycleDegree
+module
+
+public import HodgeConjecture.Cycles.AffineDimensionFunction
+public import HodgeConjecture.Cycles.DimensionFunctionRestriction
+public import HodgeConjecture.Cycles.FiniteTypeSchemeDimension
+public import HodgeConjecture.Cycles.CycleDegree
+
+@[expose] public section
 
 /-!
 # Dimension functions on actual affine schemes over a field
@@ -39,7 +43,7 @@ theorem point_height_iso {X Y : Scheme.{u}} (e : X ≅ Y) (x : X) :
   exact (IsHomeomorph.topologicalKrullDim_eq _
     (Scheme.homeoOfIso (closedImageSubschemeIso e.hom (pointSupport X x))).isHomeomorph).symm
 
-private theorem affine_pointHeight_dimensionLaws
+theorem affine_pointHeight_dimensionLaws
     (k : Type u) [Field k] (X : Scheme.{u}) [IsAffine X]
     (p : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType p] :
     StrictMono (fun x : X ↦ ((Order.height x).toNat : ℤ)) ∧

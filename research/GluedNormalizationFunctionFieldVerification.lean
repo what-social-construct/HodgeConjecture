@@ -1,6 +1,11 @@
+module
+
 import HodgeConjecture.Boundary.Normalization.GluedNormalizationFunctionFieldAction
 import HodgeConjecture.Boundary.Normalization.GluedNormalClosureFunctionField
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP93 focused checks for the original normalization's function field.
@@ -324,7 +329,7 @@ example (c : Y.functionField) :
     (functionFieldNormalClosureData p).finiteNormal
   letI : Surjective (gluedNormalClosureToCover p hY) :=
     gluedNormalClosureToCover_surjective p hY
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   fail_if_success have _ : FormallyUnramified p := inferInstance
   fail_if_success have _ : Algebra.IsSeparable X.functionField Y.functionField := inferInstance
   fail_if_success have _ : IsNoetherian X := inferInstance
@@ -397,8 +402,8 @@ run_cmd do
   for declaration in declarations do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    let actual := state.axioms.toList
+    let axioms ← Lean.collectAxioms declaration
+    let actual := axioms.toList
     for axiomName in actual do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"

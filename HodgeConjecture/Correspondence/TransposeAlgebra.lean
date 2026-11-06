@@ -1,7 +1,11 @@
-import HodgeConjecture.Correspondence.Graph
-import Mathlib.Algebra.MonoidAlgebra.Opposite
-import Mathlib.LinearAlgebra.Finsupp.LSum
-import Mathlib.RingTheory.RingInvo
+module
+
+public import HodgeConjecture.Correspondence.Graph
+public import Mathlib.Algebra.MonoidAlgebra.Opposite
+public import Mathlib.LinearAlgebra.Finsupp.LSum
+public import Mathlib.RingTheory.RingInvo
+
+@[expose] public section
 
 /-!
 # Transpose on the correspondence algebra
@@ -236,7 +240,7 @@ theorem finiteEtaleClassTranspose_ofScheme
 correspondence algebra. -/
 noncomputable def freeTransposeLinearEquiv :
     FreeAlgebra pX ≃ₗ[ℚ] FreeAlgebra pX :=
-  Finsupp.domLCongr
+  MonoidAlgebra.mapDomainLinearEquiv ℚ ℚ
     (classTransposeEquiv (pX := pX) (pY := pX))
 
 @[simp]
@@ -244,12 +248,7 @@ theorem freeTranspose_ofClass
     (c : Class pX pX) :
     freeTransposeLinearEquiv pX (ofClass pX c) =
       ofClass pX (classTranspose c) := by
-  change
-    Finsupp.equivMapDomain
-        (classTransposeEquiv (pX := pX) (pY := pX))
-        (MonoidAlgebra.single c 1) =
-      MonoidAlgebra.single (classTranspose c) 1
-  exact Finsupp.equivMapDomain_single _ _ _
+  exact MonoidAlgebra.mapDomainLinearEquiv_single _ _ _
 
 @[simp]
 theorem freeTranspose_single
@@ -257,12 +256,7 @@ theorem freeTranspose_single
     freeTransposeLinearEquiv pX
         (MonoidAlgebra.single c r) =
       MonoidAlgebra.single (classTranspose c) r := by
-  change
-    Finsupp.equivMapDomain
-        (classTransposeEquiv (pX := pX) (pY := pX))
-        (MonoidAlgebra.single c r) =
-      MonoidAlgebra.single (classTranspose c) r
-  exact Finsupp.equivMapDomain_single _ _ _
+  exact MonoidAlgebra.mapDomainLinearEquiv_single _ _ _
 
 @[simp]
 theorem freeTranspose_ofScheme
@@ -343,7 +337,7 @@ correspondence algebra. -/
 noncomputable def finiteEtaleFreeTransposeLinearEquiv :
     FiniteEtaleFreeAlgebra pX ≃ₗ[ℚ]
       FiniteEtaleFreeAlgebra pX :=
-  Finsupp.domLCongr (finiteEtaleClassTransposeEquiv pX)
+  MonoidAlgebra.mapDomainLinearEquiv ℚ ℚ (finiteEtaleClassTransposeEquiv pX)
 
 @[simp]
 theorem finiteEtaleFreeTranspose_single
@@ -352,13 +346,7 @@ theorem finiteEtaleFreeTranspose_single
         (MonoidAlgebra.single c r) =
       MonoidAlgebra.single
         (finiteEtaleClassTranspose pX c) r := by
-  change
-    Finsupp.equivMapDomain
-        (finiteEtaleClassTransposeEquiv pX)
-        (MonoidAlgebra.single c r) =
-      MonoidAlgebra.single
-        (finiteEtaleClassTranspose pX c) r
-  exact Finsupp.equivMapDomain_single _ _ _
+  exact MonoidAlgebra.mapDomainLinearEquiv_single _ _ _
 
 @[simp]
 theorem finiteEtaleFreeTranspose_ofScheme
@@ -442,12 +430,12 @@ deck transformation. -/
 def graphTransposeIsom
     (pX : X ⟶ S) (sigma : DeckTransformation pX) :
     Isom (graph pX sigma).transpose (graph pX sigma⁻¹) where
-  carrierIso := Comma.leftIso sigma
+  carrierIso := Comma.leftIso sigma.asIso
   hom_left := by
     simp [graph, transpose]
   hom_right := by
     change sigma.hom.left ≫ sigma.inv.left = 𝟙 X
-    exact Over.hom_left_inv_left sigma
+    exact Over.hom_left_inv_left sigma.asIso
 
 @[simp]
 theorem classTranspose_graph

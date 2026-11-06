@@ -1,7 +1,11 @@
-import HodgeConjecture.Boundary.Sheets.MarkedBlockProjector
-import HodgeConjecture.Realization.Chow.Examples.SplitCycleOperations
-import Mathlib.Data.Complex.Basic
-import Mathlib.Logic.Equiv.Option
+module
+
+public import HodgeConjecture.Boundary.Sheets.MarkedBlockProjector
+public import HodgeConjecture.Realization.Chow.Examples.SplitCycleOperations
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Logic.Equiv.Option
+
+@[expose] public section
 
 /-!
 # Actual Chow classes of the marked Galois-sheet residual ideal

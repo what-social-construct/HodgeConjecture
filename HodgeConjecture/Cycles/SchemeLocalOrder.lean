@@ -1,8 +1,12 @@
-import HodgeConjecture.Cycles.LocalOrder
-import HodgeConjecture.Cycles.LocalOrderTransport
-import HodgeConjecture.Cycles.FunctionFieldTransport
-import Mathlib.AlgebraicGeometry.Noetherian
-import Mathlib.RingTheory.Ideal.Height
+module
+
+public import HodgeConjecture.Cycles.LocalOrder
+public import HodgeConjecture.Cycles.LocalOrderTransport
+public import HodgeConjecture.Cycles.FunctionFieldTransport
+public import Mathlib.AlgebraicGeometry.Noetherian
+public import Mathlib.RingTheory.Ideal.Height
+
+@[expose] public section
 
 /-!
 # Local divisor coefficients and their geometric transport

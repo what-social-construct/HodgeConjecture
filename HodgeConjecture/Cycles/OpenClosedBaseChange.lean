@@ -1,4 +1,8 @@
-import HodgeConjecture.Cycles.OpenSupport
+module
+
+public import HodgeConjecture.Cycles.OpenSupport
+
+@[expose] public section
 
 /-!
 # Open restriction and closed carrier pushforward
@@ -30,7 +34,7 @@ private theorem range_openRestrictionSubschemeMap :
       Z.val.subschemeι.base ⁻¹' Set.range j.base := by
   have hs : Function.Surjective (Z.val.comapIso j).hom.base :=
     (Scheme.homeoOfIso (Z.val.comapIso j)).surjective
-  rw [openRestrictionSubschemeMap, Scheme.comp_base, TopCat.coe_comp,
+  rw [openRestrictionSubschemeMap, Scheme.Hom.comp_base, TopCat.coe_comp,
     Set.range_comp, Set.range_eq_univ.mpr hs, Set.image_univ,
     Scheme.Pullback.range_snd]
 

@@ -1,7 +1,11 @@
-import HodgeConjecture.Cycles.ClosedImmersionPushforward
-import HodgeConjecture.Cycles.PointSupport
-import HodgeConjecture.Boundary.Normalization.FiniteFunctionField
-import HodgeConjecture.Boundary.Normalization.FiniteEtaleGluedRefinement
+module
+
+public import HodgeConjecture.Cycles.ClosedImmersionPushforward
+public import HodgeConjecture.Cycles.PointSupport
+public import HodgeConjecture.Boundary.Normalization.FiniteFunctionField
+public import HodgeConjecture.Boundary.Normalization.FiniteEtaleGluedRefinement
+
+@[expose] public section
 
 /-!
 # Degree-weighted pushforward along finite morphisms

@@ -1,4 +1,8 @@
-import HodgeConjecture.Cycles.FieldSupportDimension
+module
+
+public import HodgeConjecture.Cycles.FieldSupportDimension
+
+@[expose] public section
 
 /-!
 # Actual codimension and dimension on integral schemes over a field

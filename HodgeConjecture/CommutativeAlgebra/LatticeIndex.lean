@@ -1,7 +1,11 @@
-import Mathlib.RingTheory.OrderOfVanishing
-import Mathlib.Algebra.Module.Lattice
-import Mathlib.Algebra.Module.LocalizedModule.Int
-import Mathlib.Algebra.Module.Torsion
+module
+
+public import Mathlib.RingTheory.OrderOfVanishing.Noetherian
+public import Mathlib.Algebra.Module.Lattice
+public import Mathlib.Algebra.Module.LocalizedModule.Int
+public import Mathlib.Algebra.Module.Torsion.Basic
+
+@[expose] public section
 
 /-!
 # Relative lengths of lattices
@@ -31,6 +35,7 @@ theorem lattice_isLocalizedModule (M : Submodule R V)
     IsLocalizedModule (nonZeroDivisors R) M.subtype := by
   let S := nonZeroDivisors R
   letI := isLocalizedModule_id S V K
+  letI : Module K (LocalizedModule S M) := LocalizedModule.moduleOfIsLocalization (S := S) (M := M) (T := K)
   let f : LocalizedModule S M →ₗ[K] V := IsLocalizedModule.mapExtendScalars S
     (LocalizedModule.mkLinearMap S M) (LinearMap.id : V →ₗ[R] V) K M.subtype
   have hf : Function.Injective f :=
@@ -243,7 +248,6 @@ theorem latticeIndex_common_lower [IsNoetherianRing R] [Ring.KrullDimLE 1 R]
       submoduleQuotientLength Q P ≠ ⊤ := Module.length_ne_top_iff.mpr
     (lattice_quotient_finiteLength R K V P Q Submodule.IsLattice.fg)
   have h := congrArg (fun n : ℕ∞ => (n.toNat : ℤ)) (h1.symm.trans h2)
-  dsimp only at h
   rw [ENat.toNat_add (hfin L M) (hfin M (M ⊔ N)),
     ENat.toNat_add (hfin L N) (hfin N (M ⊔ N)), Nat.cast_add, Nat.cast_add] at h
   dsimp [latticeIndex]
@@ -254,7 +258,7 @@ theorem latticeIndex_of_le {R E : Type*} [CommRing R] [AddCommGroup E] [Module R
     latticeIndex M N = ((submoduleQuotientLength M N).toNat : ℤ) := by
   rw [latticeIndex, sup_eq_left.mpr hNM]
   letI : Subsingleton (M ⧸ M.comap M.subtype) :=
-    (Submodule.Quotient.subsingleton_iff _).mpr (fun x => x.property)
+    Submodule.Quotient.subsingleton_iff.mpr (by ext x; simp)
   simp [submoduleQuotientLength, Module.length_eq_zero]
 
 /-- The signed index of a lattice under an automorphism is additive under composition. -/

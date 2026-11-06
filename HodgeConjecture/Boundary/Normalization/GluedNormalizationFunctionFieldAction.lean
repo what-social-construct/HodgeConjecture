@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Normalization.GluedNormalizationFunctionField
-import HodgeConjecture.Boundary.Normalization.GluedNormalizationAction
+module
+
+public import HodgeConjecture.Boundary.Normalization.GluedNormalizationFunctionField
+public import HodgeConjecture.Boundary.Normalization.GluedNormalizationAction
+
+@[expose] public section
 
 /-!
 # Comparing the original glued action with field pullback

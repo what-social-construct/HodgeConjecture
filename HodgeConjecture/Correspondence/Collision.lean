@@ -1,5 +1,9 @@
-import HodgeConjecture.Collision.ClopenDecomposition
-import HodgeConjecture.Correspondence.Algebra
+module
+
+public import HodgeConjecture.Collision.ClopenDecomposition
+public import HodgeConjecture.Correspondence.Algebra
+
+@[expose] public section
 
 /-!
 # Collision schemes as scheme correspondences

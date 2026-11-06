@@ -1,6 +1,10 @@
-import HodgeConjecture.Cycles.FinitePrincipalDivisorImage
-import HodgeConjecture.Cycles.FiniteGrading
-import HodgeConjecture.Cycles.ChowPushforward
+module
+
+public import HodgeConjecture.Cycles.FinitePrincipalDivisorImage
+public import HodgeConjecture.Cycles.FiniteGrading
+public import HodgeConjecture.Cycles.ChowPushforward
+
+@[expose] public section
 
 /-!
 # Finite pushforward on the existing Chow quotient

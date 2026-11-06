@@ -1,5 +1,9 @@
-import HodgeConjecture.Cycles.PrincipalDivisorImage
-import HodgeConjecture.Cycles.OpenClosedBaseChange
+module
+
+public import HodgeConjecture.Cycles.PrincipalDivisorImage
+public import HodgeConjecture.Cycles.OpenClosedBaseChange
+
+@[expose] public section
 
 /-!
 # Open restriction of actual ambient principal divisors

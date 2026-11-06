@@ -1,5 +1,9 @@
-import HodgeConjecture.Correspondence.Etale
-import HodgeConjecture.Correspondence.Linearized
+module
+
+public import HodgeConjecture.Correspondence.Etale
+public import HodgeConjecture.Correspondence.Linearized
+
+@[expose] public section
 
 /-!
 # Isomorphism classes and algebra of finite étale correspondences

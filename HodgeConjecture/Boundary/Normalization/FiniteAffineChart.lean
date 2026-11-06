@@ -1,7 +1,11 @@
-import HodgeConjecture.Boundary.Normalization.FiniteAffineCover
-import HodgeConjecture.Boundary.Normalization.AffineEtaleAlgebra
-import HodgeConjecture.Boundary.Normalization.AffineNormality
-import Mathlib.AlgebraicGeometry.Morphisms.Finite
+module
+
+public import HodgeConjecture.Boundary.Normalization.FiniteAffineCover
+public import HodgeConjecture.Boundary.Normalization.AffineEtaleAlgebra
+public import HodgeConjecture.Boundary.Normalization.AffineNormality
+public import Mathlib.AlgebraicGeometry.Morphisms.Finite
+
+@[expose] public section
 
 /-!
 # Whole affine inverse images as normalization models
@@ -43,13 +47,14 @@ local instance : Algebra Bᵤ Aᵤ := (p.app U).hom.toAlgebra
 /-- A finite morphism supplies the finite algebra of its whole affine inverse image. -/
 theorem finiteAffinePreimage_moduleFinite [IsFinite p] (hU : IsAffineOpen U) :
     Module.Finite Bᵤ Aᵤ :=
-  IsFinite.finite_app U hU
+  IsFinite.finite_app p U hU
 
 /-- Scheme étaleness gives étaleness of the finite affine inverse-image algebra. -/
-theorem finiteAffinePreimage_etale [IsFinite p] [IsEtale p] (hU : IsAffineOpen U) :
+theorem finiteAffinePreimage_etale [IsFinite p] [Etale p] (hU : IsAffineOpen U) :
     Algebra.Etale Bᵤ Aᵤ := by
-  have h := affine_appLE_etale p ⟨U, hU⟩ ⟨p ⁻¹ᵁ U, hU.preimage p⟩ le_rfl
-  simpa only [Scheme.Hom.appLE_eq_app] using h
+  change (p.app U).hom.Etale
+  simpa only [Scheme.Hom.appLE_eq_app] using
+    p.etale_appLE hU (hU.preimage p) le_rfl
 
 variable [IsIntegral Y] [Nonempty (p ⁻¹ᵁ U)]
 
@@ -109,7 +114,7 @@ theorem finiteAffinePreimageNormalizationIso_hom_comp_toBase (hU : IsAffineOpen 
     (A := Aᵤ) (E := Y.functionField))]
   rw [intermediateToNormalization_comp_toBase (B := Bᵤ) (A := Aᵤ) (E := Y.functionField)]
   change (hU.preimage p).isoSpec.hom ≫ Spec.map (p.app U) ≫ hU.fromSpec = _
-  rw [p.app_eq_appLE, IsAffineOpen.Spec_map_appLE_fromSpec p hU (hU.preimage p) le_rfl]
+  rw [p.app_eq_appLE, IsAffineOpen.SpecMap_appLE_fromSpec p hU (hU.preimage p) le_rfl]
   rw [← Category.assoc, IsAffineOpen.isoSpec_hom, IsAffineOpen.toSpecΓ_fromSpec]
 
 /-- Finiteness of the normalization is derived from the actual finite morphism. -/
@@ -129,7 +134,7 @@ theorem finiteAffinePreimage_normalization_finite (hU : IsAffineOpen U)
   exact normalizedCoordinateRing_finite (A := Aᵤ)
 
 /-- Étaleness of the normalization is derived from the actual étale morphism. -/
-theorem finiteAffinePreimage_normalization_etale [IsEtale p] (hU : IsAffineOpen U)
+theorem finiteAffinePreimage_normalization_etale [Etale p] (hU : IsAffineOpen U)
     (hNormal : ∀ y : p ⁻¹ᵁ U, IsIntegrallyClosed (Y.presheaf.stalk y.val)) :
     letI : Algebra Bᵤ Y.functionField :=
       ((Y.germToFunctionField (p ⁻¹ᵁ U)).hom.comp (p.app U).hom).toAlgebra

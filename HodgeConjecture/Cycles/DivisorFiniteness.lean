@@ -1,7 +1,11 @@
-import HodgeConjecture.Cycles.DivisorSupport
-import HodgeConjecture.Cycles.HeightOneFiniteness
-import HodgeConjecture.Cycles.RationalFunctionPresentation
-import Mathlib.Topology.Compactness.LocallyFinite
+module
+
+public import HodgeConjecture.Cycles.DivisorSupport
+public import HodgeConjecture.Cycles.HeightOneFiniteness
+public import HodgeConjecture.Cycles.RationalFunctionPresentation
+public import Mathlib.Topology.Compactness.LocallyFinite
+
+@[expose] public section
 
 /-!
 # Local finiteness of actual prime-divisor supports
@@ -117,7 +121,7 @@ theorem finite_divisorOrder_support (X : Scheme.{u})
   apply h.subset
   intro x hx
   change primeDivisorOrder X (divisorPointEquivPrimeDivisor X x) f ≠ 0
-  simpa only [primeDivisorOrder_pointSupport] using hx
+  simpa only [primeDivisorOrder_pointSupport, Set.mem_setOf_eq] using hx
 
 end
 

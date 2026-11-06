@@ -1,6 +1,10 @@
-import HodgeConjecture.Cycles.AffineDimension
-import HodgeConjecture.Cycles.PolynomialPrimeHeight
-import Mathlib.RingTheory.Jacobson.Ring
+module
+
+public import HodgeConjecture.Cycles.AffineDimension
+public import HodgeConjecture.Cycles.PolynomialPrimeHeight
+public import Mathlib.RingTheory.Jacobson.Ring
+
+@[expose] public section
 
 /-!
 # Heights of maximal ideals in polynomial algebras over fields
@@ -26,17 +30,17 @@ universe u
 full height, including the zero-variable case. -/
 theorem mvPolynomial_primeHeight_eq_card_of_isMaximal
     (k : Type u) [Field k] (n : ℕ) (m : Ideal (MvPolynomial (Fin n) k))
-    [m.IsMaximal] : m.primeHeight = (n : ℕ∞) := by
+    [m.IsMaximal] : m.height = (n : ℕ∞) := by
   induction n with
   | zero =>
-      apply le_antisymm _ (zero_le _)
+      apply le_antisymm _ zero_le
       apply WithBot.coe_le_coe.mp
-      exact (Ideal.primeHeight_le_ringKrullDim (I := m)).trans
+      exact (Ideal.height_le_ringKrullDim_of_isPrime (I := m)).trans
         (mvPolynomial_ringKrullDim_eq_card k 0).le
   | succ n ih =>
-      have hupper : m.primeHeight ≤ ((n + 1 : ℕ) : ℕ∞) := by
+      have hupper : m.height ≤ ((n + 1 : ℕ) : ℕ∞) := by
         apply WithBot.coe_le_coe.mp
-        exact (Ideal.primeHeight_le_ringKrullDim (I := m)).trans
+        exact (Ideal.height_le_ringKrullDim_of_isPrime (I := m)).trans
           (mvPolynomial_ringKrullDim_eq_card k (n + 1)).le
       apply le_antisymm hupper
       let e := (MvPolynomial.finSuccEquiv k n).toRingEquiv
@@ -44,20 +48,20 @@ theorem mvPolynomial_primeHeight_eq_card_of_isMaximal
       letI : M.IsMaximal := Ideal.comap_isMaximal_of_equiv e.symm
       let p : Ideal (MvPolynomial (Fin n) k) := M.comap Polynomial.C
       letI : p.IsMaximal := Polynomial.isMaximal_comap_C_of_isJacobsonRing M
-      have hp : p.primeHeight = (n : ℕ∞) := ih p
-      have hM : M.primeHeight = m.primeHeight := by
-        rw [← Ideal.height_eq_primeHeight, ← Ideal.height_eq_primeHeight]
+      have hp : p.height = (n : ℕ∞) := ih p
+      have hM : M.height = m.height := by
+        skip
         exact e.symm.height_comap m
       have hstep := polynomial_primeHeight_comap_add_one_le
         (MvPolynomial (Fin n) k) M
-      change p.primeHeight + 1 ≤ M.primeHeight at hstep
+      change p.height + 1 ≤ M.height at hstep
       simpa only [hp, hM, Nat.cast_add, Nat.cast_one] using hstep
 
 /-- The ordinary ideal-height interface gives the same maximal height. -/
 theorem mvPolynomial_height_eq_card_of_isMaximal
     (k : Type u) [Field k] (n : ℕ) (m : Ideal (MvPolynomial (Fin n) k))
     [m.IsMaximal] : m.height = (n : ℕ∞) := by
-  rw [Ideal.height_eq_primeHeight, mvPolynomial_primeHeight_eq_card_of_isMaximal k n m]
+  rw [mvPolynomial_primeHeight_eq_card_of_isMaximal k n m]
 
 /-- The actual localization at every polynomial maximal ideal has the
 full dimension; no residue-field degree-one assumption is made. -/

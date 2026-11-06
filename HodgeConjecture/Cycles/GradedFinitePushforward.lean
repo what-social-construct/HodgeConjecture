@@ -1,6 +1,10 @@
-import HodgeConjecture.Cycles.FinitePushforward
-import HodgeConjecture.Cycles.CoefficientExtension
-import HodgeConjecture.Cycles.GradedPushforward
+module
+
+public import HodgeConjecture.Cycles.FinitePushforward
+public import HodgeConjecture.Cycles.CoefficientExtension
+public import HodgeConjecture.Cycles.GradedPushforward
+
+@[expose] public section
 
 /-!
 # Finite pushforward on the existing homogeneous cycles

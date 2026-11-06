@@ -1,6 +1,10 @@
-import HodgeConjecture.Boundary.Normalization.NormalClosure
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import HodgeConjecture.CommutativeAlgebra.FiniteTensorProduct
+module
+
+public import HodgeConjecture.Boundary.Normalization.NormalClosure
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import HodgeConjecture.CommutativeAlgebra.FiniteTensorProduct
+
+@[expose] public section
 
 /-!
 # Tensor evaluation onto a marked normal closure

@@ -1,5 +1,9 @@
-import HodgeConjecture.Correspondence.Classes
-import Mathlib.Algebra.MonoidAlgebra.Basic
+module
+
+public import HodgeConjecture.Correspondence.Classes
+public import Mathlib.Algebra.MonoidAlgebra.Basic
+
+@[expose] public section
 
 /-!
 # Free rational algebra on scheme correspondences

@@ -1,5 +1,9 @@
-import Mathlib.NumberTheory.RamificationInertia.Unramified
-import Mathlib.RingTheory.Invariant.Basic
+module
+
+public import Mathlib.NumberTheory.RamificationInertia.Unramified
+public import Mathlib.RingTheory.Invariant.Basic
+
+@[expose] public section
 
 /-!
 # The selected fixed-inertia unramifiedness input

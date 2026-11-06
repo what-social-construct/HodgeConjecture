@@ -1,6 +1,10 @@
-import HodgeConjecture.Cycles.Basic
-import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
-import Mathlib.RingTheory.Ideal.Quotient.Nilpotent
+module
+
+public import HodgeConjecture.Cycles.Basic
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Mathlib.RingTheory.Ideal.Quotient.Nilpotent
+
+@[expose] public section
 
 /-!
 # Actual integral closed supports of scheme points
@@ -87,7 +91,7 @@ theorem ambientGenericPoint_isGenericPoint (Z : IntegralClosedSubscheme X) :
     IsGenericPoint (ambientGenericPoint Z) (Z.val.support : Set X) := by
   letI := Z.property
   have h := (genericPoint_spec Z.val.subscheme).image Z.val.subschemeι.continuous
-  simpa only [Set.image_univ, Scheme.IdealSheafData.range_subschemeι,
+  simpa only [ambientGenericPoint, Set.image_univ, Scheme.IdealSheafData.range_subschemeι,
     Z.val.support.isClosed.closure_eq] using h
 
 @[simp]

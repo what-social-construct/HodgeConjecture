@@ -1,5 +1,9 @@
-import Mathlib.RingTheory.NoetherNormalization
-import Mathlib.Algebra.GroupWithZero.NonZeroDivisors
+module
+
+public import Mathlib.RingTheory.NoetherNormalization
+public import Mathlib.Algebra.GroupWithZero.NonZeroDivisors
+
+@[expose] public section
 
 /-!
 # Lifting an actual polynomial normalization of a prime quotient

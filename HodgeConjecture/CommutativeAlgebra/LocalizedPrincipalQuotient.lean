@@ -1,6 +1,10 @@
-import Mathlib.Algebra.Module.LocalizedModule.Submodule
-import Mathlib.Algebra.Module.LocalizedModule.IsLocalization
-import Mathlib.RingTheory.Length
+module
+
+public import Mathlib.Algebra.Module.LocalizedModule.Submodule
+public import Mathlib.Algebra.Module.LocalizedModule.IsLocalization
+public import Mathlib.RingTheory.Length
+
+@[expose] public section
 
 /-!
 # Localization of principal quotients
@@ -57,8 +61,9 @@ theorem localizedPrincipalQuotientEquiv_fraction (b x : B) (s : S) :
   have h : LocalizedModule.mk (Ideal.Quotient.mk (Ideal.span {b}) x) s =
       IsLocalization.mk' (Localization S) 1 s •
         LocalizedModule.mkLinearMap S (B ⧸ Ideal.span {b}) (Ideal.Quotient.mk _ x) := by
-    simp only [LocalizedModule.mkLinearMap_apply, LocalizedModule.mk'_smul_mk,
-      one_smul, mul_one]
+    change _ = IsLocalization.mk' (Localization S) 1 s • LocalizedModule.mk _ 1
+    simp only [IsLocalizedModule.mk_eq_mk']
+    rw [IsLocalizedModule.mk'_smul_mk' (Localization S), one_smul, mul_one]
   rw [h, map_smul, localizedPrincipalQuotientEquiv_mk]
   change Ideal.Quotient.mk _ (IsLocalization.mk' (Localization S) 1 s *
     algebraMap B (Localization S) x) = _
@@ -78,7 +83,7 @@ theorem length_localized_principalQuotient_eq_zero (b : B) (hb : b ∈ S) :
   have htop : Ideal.span {algebraMap B (Localization S) b} = ⊤ :=
     Ideal.span_singleton_eq_top.mpr (IsLocalization.map_units (Localization S) ⟨b, hb⟩)
   letI : Subsingleton (Localization S ⧸ Ideal.span {algebraMap B (Localization S) b}) :=
-    (Submodule.Quotient.subsingleton_iff _).mpr (fun x => by rw [htop]; trivial)
+    Submodule.Quotient.subsingleton_iff.mpr htop
   exact Module.length_eq_zero
 
 end

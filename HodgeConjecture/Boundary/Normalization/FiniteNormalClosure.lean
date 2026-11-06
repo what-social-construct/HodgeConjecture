@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Normalization.FunctionFieldNormalClosure
-import Mathlib.RingTheory.DedekindDomain.IntegralClosure
+module
+
+public import HodgeConjecture.Boundary.Normalization.FunctionFieldNormalClosure
+public import Mathlib.RingTheory.DedekindDomain.IntegralClosure
+
+@[expose] public section
 
 /-!
 # Finite normalization in the constructed normal closure

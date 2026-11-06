@@ -1,6 +1,10 @@
-import HodgeConjecture.Collision.EtaleDecomposition
-import HodgeConjecture.Correspondence.Collision
-import HodgeConjecture.Correspondence.Etale
+module
+
+public import HodgeConjecture.Collision.EtaleDecomposition
+public import HodgeConjecture.Correspondence.Collision
+public import HodgeConjecture.Correspondence.Etale
+
+@[expose] public section
 
 /-!
 # Finite étale collision correspondences
@@ -36,19 +40,19 @@ correspondence are finite étale: each is a base change of `f`.
 -/
 theorem collisionSchemeCorrespondence_hasFiniteEtaleLegs
     (f : X ⟶ Y) (g : Y ⟶ S)
-    [IsFinite f] [IsEtale f] :
+    [IsFinite f] [Etale f] :
     SchemeCorrespondence.HasFiniteEtaleLegs
       (collisionSchemeCorrespondence f g) := by
   refine ⟨?_, ?_, ?_⟩
   · constructor
-    · change IsEtale (pullback.fst f f)
+    · change Etale (pullback.fst f f)
       exact
         MorphismProperty.pullback_fst
-          f f (inferInstance : IsEtale f)
-    · change IsEtale (pullback.snd f f)
+          f f (inferInstance : Etale f)
+    · change Etale (pullback.snd f f)
       exact
         MorphismProperty.pullback_snd
-          f f (inferInstance : IsEtale f)
+          f f (inferInstance : Etale f)
   · change IsFinite (pullback.fst f f)
     exact
       MorphismProperty.pullback_fst
@@ -69,31 +73,31 @@ decomposition has finite étale legs.
 theorem offDiagonalSchemeCorrespondence_hasFiniteEtaleLegs
     (D : CollisionSchemeDecomposition f)
     (g : Y ⟶ S)
-    [IsFinite f] [IsEtale f] :
+    [IsFinite f] [Etale f] :
     SchemeCorrespondence.HasFiniteEtaleLegs
       (D.offDiagonalSchemeCorrespondence g) := by
-  letI : IsEtale (collisionFst f) :=
+  letI : Etale (collisionFst f) :=
     MorphismProperty.pullback_fst
-      f f (inferInstance : IsEtale f)
-  letI : IsEtale (collisionSnd f) :=
+      f f (inferInstance : Etale f)
+  letI : Etale (collisionSnd f) :=
     MorphismProperty.pullback_snd
-      f f (inferInstance : IsEtale f)
+      f f (inferInstance : Etale f)
   letI : IsFinite (collisionFst f) :=
     MorphismProperty.pullback_fst
       f f (inferInstance : IsFinite f)
   letI : IsFinite (collisionSnd f) :=
     MorphismProperty.pullback_snd
       f f (inferInstance : IsFinite f)
-  letI : IsEtale D.offDiagonalInclusion := by
+  letI : Etale D.offDiagonalInclusion := by
     infer_instance
   letI : IsFinite D.offDiagonalInclusion := by
     infer_instance
   refine ⟨?_, ?_, ?_⟩
   · constructor
-    · change IsEtale
+    · change Etale
         (D.offDiagonalInclusion ≫ collisionFst f)
       infer_instance
-    · change IsEtale
+    · change Etale
         (D.offDiagonalInclusion ≫ collisionSnd f)
       infer_instance
   · change IsFinite

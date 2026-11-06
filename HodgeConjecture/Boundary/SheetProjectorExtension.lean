@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Normalization.ExtensionBridge
-import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
+module
+
+public import HodgeConjecture.Boundary.Normalization.ExtensionBridge
+public import HodgeConjecture.Boundary.Normalization.ConjugateBoundary
+
+@[expose] public section
 
 /-!
 # Extension of selected-sheet projectors

@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Normalization.AffineNormalizationCoherence
-import Mathlib.AlgebraicGeometry.Morphisms.OpenImmersion
+module
+
+public import HodgeConjecture.Boundary.Normalization.AffineNormalizationCoherence
+public import Mathlib.AlgebraicGeometry.Morphisms.OpenImmersion
+
+@[expose] public section
 
 /-!
 # Open immersion of actual affine normalization restrictions
@@ -48,7 +52,7 @@ theorem affineNormalizationRestriction_injective
     rw [← hV.range_fromSpec]
     exact ⟨_, rfl⟩
   have hxEq : μV.base a = μV.base b := by
-    simpa only [← Scheme.comp_base_apply, hcomm] using congrArg μU.base hab
+    simpa only [← Scheme.Hom.comp_apply, hcomm] using congrArg μU.base hab
   obtain ⟨f, g, hfg, hxf⟩ :=
     exists_basicOpen_le_affine_inter hU hV (μV.base a) ⟨hVU hxV, hxV⟩
   let W := X.basicOpen f
@@ -73,7 +77,7 @@ theorem affineNormalizationRestriction_injective
   have hab' : (affineNormalizationRestriction U W N hWU).base a' =
       (affineNormalizationRestriction U W N hWU).base b' := by
     rw [← haa, ← hbb] at hab
-    simpa only [← Scheme.comp_base_apply, affineNormalizationRestriction_trans] using hab
+    simpa only [← Scheme.Hom.comp_apply, affineNormalizationRestriction_trans] using hab
   have : a' = b' :=
     (affineNormalizationRestriction U W N hWU).isOpenEmbedding.injective hab'
   exact haa.symm.trans ((congrArg (affineNormalizationRestriction V W N hWV).base this).trans hbb)
@@ -136,7 +140,7 @@ theorem affineNormalizationRestriction_range
   apply Set.Subset.antisymm
   · rintro _ ⟨a, rfl⟩
     change μU.base ((affineNormalizationRestriction U V N hVU).base a) ∈ V
-    rw [← Scheme.comp_base_apply, hcomm]
+    rw [← Scheme.Hom.comp_apply, hcomm]
     change μV.base a ∈ (V : Set X)
     rw [← hV.range_fromSpec]
     exact ⟨_, rfl⟩
@@ -159,7 +163,7 @@ theorem affineNormalizationRestriction_range
       exact hxf
     obtain ⟨b, hba⟩ := haW
     refine ⟨(affineNormalizationRestriction V W N hWV).base b, ?_⟩
-    rw [← Scheme.comp_base_apply, affineNormalizationRestriction_trans]
+    rw [← Scheme.Hom.comp_apply, affineNormalizationRestriction_trans]
     exact hba
 
 end

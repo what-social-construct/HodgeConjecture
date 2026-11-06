@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.GaloisProjectorExtension
-import HodgeConjecture.Realization.Chow.GaloisMarkedBlock
+module
+
+public import HodgeConjecture.Boundary.GaloisProjectorExtension
+public import HodgeConjecture.Realization.Chow.GaloisMarkedBlock
+
+@[expose] public section
 
 /-!
 # Realizing a marked Galois selector as a Tate graph projector
@@ -108,10 +112,12 @@ def toMarkedSelectorActionComparison
       (MarkedSheetProjector.markedAugmentedAlgebra D) rho E x where
   residualRealization := B.residualRealization
   action_intertwines := by
-    simpa only [
-      MarkedSheetProjector.markedAugmentedAlgebra_decomposition,
-      MarkedSheetProjector.markedAugmentedAlgebra_multiplication] using
-        B.action_intertwines
+    have hprod :
+        (MarkedSheetProjector.markedAugmentedAlgebra D).productRealization B.residualRealization =
+          MarkedSheetProjector.productRealization D B.residualRealization := rfl
+    rw [hprod, MarkedSheetProjector.markedAugmentedAlgebra_decomposition,
+      MarkedSheetProjector.markedAugmentedAlgebra_multiplication]
+    exact B.action_intertwines
 
 @[simp]
 theorem toMarkedSelectorActionComparison_residualRealization

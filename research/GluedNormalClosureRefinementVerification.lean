@@ -1,6 +1,11 @@
+module
+
 import HodgeConjecture.Boundary.Normalization.GluedNormalClosureRefinement
 import HodgeConjecture.Boundary.Normalization.GluedNormalizationChart
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP87 regressions for descent of the original marked normal-closure refinement.
@@ -92,7 +97,8 @@ example {U V : NonemptyAffineChart X} (f : U ⟶ V) :
       (affineNormalClosureRefinementCocone p hY).ι.app U := by
   letI : Algebra X.functionField Y.functionField :=
     (functionFieldMapOfDominant p).hom.toAlgebra
-  simpa only [Functor.const_obj_map, Category.comp_id] using
+  simpa only [affineNormalClosureRefinementCocone, Functor.const_obj_map,
+    Functor.const_obj_obj, Category.comp_id] using
     (affineNormalClosureRefinementCocone p hY).ι.naturality f
 
 example {U V : NonemptyAffineChart X} (f : U ⟶ V) :
@@ -105,7 +111,8 @@ example {U V : NonemptyAffineChart X} (f : U ⟶ V) :
         (fun y => hY y.val) ≫ (p ⁻¹ᵁ U.val).ι := by
   letI : Algebra X.functionField Y.functionField :=
     (functionFieldMapOfDominant p).hom.toAlgebra
-  simpa only [Functor.const_obj_map, Category.comp_id] using
+  simpa only [affineNormalClosureRefinementCocone, Functor.const_obj_map,
+    Functor.const_obj_obj, Category.comp_id] using
     (affineNormalClosureRefinementCocone p hY).ι.naturality f
 
 end OriginalCocone
@@ -125,7 +132,7 @@ example (U : NonemptyAffineChart X) :
     normalizationChartToGlued X Nₚ U ≫ gluedNormalClosureToCover p hY =
       finiteEtaleAffineNormalClosureToPreimage p U.val U.property.1
         (fun y => hY y.val) ≫ (p ⁻¹ᵁ U.val).ι := by
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   fail_if_success have _ : IsIntegrallyClosed Γ(X, U.val) := inferInstance
   fail_if_success have _ : IsNoetherianRing Γ(X, U.val) := inferInstance
   fail_if_success have _ : PerfectField X.functionField := inferInstance
@@ -149,14 +156,14 @@ example (U : NonemptyAffineChart X) :
   letI : Algebra X.functionField Y.functionField :=
     (functionFieldMapOfDominant p).hom.toAlgebra
   intro a
-  rw [← Scheme.comp_base_apply, normalizationChartToGlued_comp_toCover]
+  rw [← Scheme.Hom.comp_apply, normalizationChartToGlued_comp_toCover]
   rfl
 
 example :
     letI : Algebra X.functionField Y.functionField :=
       (functionFieldMapOfDominant p).hom.toAlgebra
     gluedNormalClosureToCover p hY ≫ p = gluedNormalizationToBase X Nₚ := by
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   fail_if_success have _ : IsNoetherian X := inferInstance
   fail_if_success have _ : IsNoetherian Y := inferInstance
   exact gluedNormalClosureToCover_comp_toBase p hY
@@ -170,7 +177,7 @@ example :
   letI : Algebra X.functionField Y.functionField :=
     (functionFieldMapOfDominant p).hom.toAlgebra
   intro z
-  rw [← Scheme.comp_base_apply, gluedNormalClosureToCover_comp_toBase]
+  rw [← Scheme.Hom.comp_apply, gluedNormalClosureToCover_comp_toBase]
 
 example (U : NonemptyAffineChart X) :
     letI : Algebra X.functionField Y.functionField :=
@@ -310,9 +317,9 @@ run_cmd do
   for declaration in declarations do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    for axiomName in state.axioms do
+    let axioms ← Lean.collectAxioms declaration
+    for axiomName in axioms do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"
-    logInfo m!"PASS standard-axiom boundary: {declaration}; {state.axioms.toList}"
+    logInfo m!"PASS standard-axiom boundary: {declaration}; {axioms.toList}"
   logInfo "PASS SP87 audit registry: 5 distinct public declarations"

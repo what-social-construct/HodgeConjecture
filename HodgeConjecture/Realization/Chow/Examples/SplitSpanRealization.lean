@@ -1,7 +1,11 @@
-import HodgeConjecture.Correspondence.Examples.SplitSpanGeometry
-import HodgeConjecture.Correspondence.Examples.SplitPointMaps
-import HodgeConjecture.Correspondence.Examples.SplitSpanCoproduct
-import HodgeConjecture.LinearAlgebra.FiniteSpanMatrix
+module
+
+public import HodgeConjecture.Correspondence.Examples.SplitSpanGeometry
+public import HodgeConjecture.Correspondence.Examples.SplitPointMaps
+public import HodgeConjecture.Correspondence.Examples.SplitSpanCoproduct
+public import HodgeConjecture.LinearAlgebra.FiniteSpanMatrix
+
+@[expose] public section
 
 /-!
 # Intrinsic matrix realization of finite split scheme spans
@@ -193,7 +197,7 @@ abbrev FreeAlgebra := MonoidAlgebra ℚ (SplitClass K I)
 
 /-- The constructed rational cycle-coefficient realization. -/
 def realization : FreeAlgebra K I →ₐ[ℚ] Matrix I I ℚ :=
-  MonoidAlgebra.lift ℚ (SplitClass K I) (Matrix I I ℚ) (classMatrixHom K I)
+  MonoidAlgebra.lift ℚ (Matrix I I ℚ) (SplitClass K I) (classMatrixHom K I)
 
 /-- A finite split span as a basis vector. -/
 def ofSchemeSpan (left right : S → I) : FreeAlgebra K I :=
@@ -213,7 +217,7 @@ def toFiniteEtaleFreeAlgebra :
 omit [DecidableEq I] in
 theorem toFiniteEtaleFreeAlgebra_injective :
     Function.Injective (toFiniteEtaleFreeAlgebra K I) :=
-  Finsupp.mapDomain_injective Subtype.val_injective
+  MonoidAlgebra.mapDomain_injective Subtype.val_injective
 
 omit [DecidableEq I] in
 @[simp]

@@ -1,6 +1,10 @@
-import HodgeConjecture.Boundary.Normalization.GenericFiberBaseChange
-import HodgeConjecture.Boundary.Normalization.FunctionFieldNormalClosure
-import HodgeConjecture.Boundary.Normalization.SelectorComparison
+module
+
+public import HodgeConjecture.Boundary.Normalization.GenericFiberBaseChange
+public import HodgeConjecture.Boundary.Normalization.FunctionFieldNormalClosure
+public import HodgeConjecture.Boundary.Normalization.SelectorComparison
+
+@[expose] public section
 
 /-!
 # The original normal closure splits the actual generic fiber
@@ -32,7 +36,7 @@ set_option quotPrecheck false in
 local notation "Nₚ" => IntermediateField.normalClosure X.functionField Y.functionField
   (AlgebraicClosure Y.functionField)
 
-private theorem markedGenericPoint_commutes :
+theorem markedGenericPoint_commutes :
     letI : Algebra X.functionField Y.functionField :=
       (functionFieldMapOfDominant p).hom.toAlgebra
     (Spec.map (CommRingCat.ofHom (functionFieldNormalClosureData p).embedding.toRingHom) ≫

@@ -1,7 +1,11 @@
-import HodgeConjecture.Collision.SchemeDecomposition
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.RingTheory.Unramified.Finite
+module
+
+public import HodgeConjecture.Collision.SchemeDecomposition
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.RingTheory.Unramified.Finite
+
+@[expose] public section
 
 /-!
 # Affine collision geometry
@@ -65,7 +69,7 @@ theorem affineCollisionDiagonal_eq :
           (CommRingCat.ofHom
             (collisionMultiplication B A).toRingHom) ≫
         (affineSelfCollisionSpecIso B A).inv := by
-  exact diagonal_Spec_map B A
+  exact diagonal_SpecMap B A
 
 /--
 The quotient of the collision algebra by the diagonal obstruction ideal is
@@ -156,8 +160,12 @@ theorem affineCollisionDiagonal_decomposition_hom
   slice_rhs 2 3 => rw [coprodSpec_inl]
   rw [← Spec.map_comp, ← Spec.map_comp]
   rw [Spec.map_inj]
-  ext x
-  simp [idealProductDecomposition_fst]
+  ext x <;>
+    simp only [CommRingCat.hom_comp, CommRingCat.hom_ofHom, RingHom.comp_apply,
+      RingHom.fst] <;>
+    change collisionMultiplication B A _ = collisionDiagonalQuotientEquiv B A
+      ((idealProductDecomposition (collisionObstructionIdeal B A) hOverlap hContact _).1) <;>
+    rw [idealProductDecomposition_fst, collisionDiagonalQuotientEquiv_mk]
 
 /--
 For an essentially finite-type formally unramified affine morphism, the

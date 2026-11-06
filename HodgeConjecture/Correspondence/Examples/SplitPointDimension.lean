@@ -1,6 +1,10 @@
-import HodgeConjecture.Correspondence.Examples.SplitPointMaps
-import Mathlib.RingTheory.Spectrum.Prime.Noetherian
-import Mathlib.Topology.KrullDimension
+module
+
+public import HodgeConjecture.Correspondence.Examples.SplitPointMaps
+public import Mathlib.RingTheory.Spectrum.Prime.Noetherian
+public import Mathlib.Topology.KrullDimension
+
+@[expose] public section
 
 /-!
 # Zero-dimensional topology of finite split schemes
@@ -48,8 +52,8 @@ theorem range_eq_point {X : Scheme.{u}} [IrreducibleSpace X]
 theorem topologicalKrullDim_le_zero : topologicalKrullDim (scheme K I) ≤ 0 := by
   apply Order.krullDim_nonpos_iff_forall_isMax.mpr
   intro s t hst
-  obtain ⟨i, hi⟩ := (isIrreducible_iff_point K I s) |>.mp s.is_irreducible'
-  obtain ⟨j, hj⟩ := (isIrreducible_iff_point K I t) |>.mp t.is_irreducible'
+  obtain ⟨i, hi⟩ := (isIrreducible_iff_point K I s) |>.mp s.isIrreducible
+  obtain ⟨j, hj⟩ := (isIrreducible_iff_point K I t) |>.mp t.isIrreducible
   change (t : Set (scheme K I)) ⊆ s
   change (s : Set (scheme K I)) ⊆ t at hst
   rw [hi, hj] at hst ⊢
@@ -59,7 +63,7 @@ theorem topologicalKrullDim_le_zero : topologicalKrullDim (scheme K I) ≤ 0 := 
 theorem topologicalKrullDim_le_zero_of_isClosedImmersion
     {X : Scheme.{u}} (f : X ⟶ scheme K I) [IsClosedImmersion f] :
     topologicalKrullDim X ≤ 0 :=
-  (IsClosedEmbedding.topologicalKrullDim_le f.base f.isClosedEmbedding).trans
+  (f.isClosedEmbedding.isInducing.topologicalKrullDim_le).trans
     (topologicalKrullDim_le_zero K I)
 
 /-- A nonempty actual closed subscheme has dimension exactly zero. -/

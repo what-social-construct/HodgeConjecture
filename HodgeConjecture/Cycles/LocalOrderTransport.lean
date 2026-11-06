@@ -1,5 +1,9 @@
-import HodgeConjecture.Cycles.LocalOrder
-import Mathlib.RingTheory.Localization.FractionRing
+module
+
+public import HodgeConjecture.Cycles.LocalOrder
+public import Mathlib.RingTheory.Localization.FractionRing
+
+@[expose] public section
 
 /-!
 # Transport of the actual local order of vanishing
@@ -60,8 +64,8 @@ theorem ordFrac_ringEquiv {K L : Type*} [Field K] [Field L]
     rw [h]
     by_cases ha : a = 0
     · simp [ha]
-    · rw [Ring.ordFrac_eq_ord (R := S) (K := L) (eR a) (by simpa using ha),
-        Ring.ordFrac_eq_ord (R := R) (K := K) a ha, ordMonoidWithZeroHom_ringEquiv]
+    · rw [Ring.ordFrac_eq_ord (R := S) (K := L) (by simpa using ha),
+        Ring.ordFrac_eq_ord (R := R) (K := K) ha, ordMonoidWithZeroHom_ringEquiv]
   obtain ⟨a, b, _, rfl⟩ := IsFractionRing.div_surjective (A := R) f
   simp only [map_div₀, hbase]
 

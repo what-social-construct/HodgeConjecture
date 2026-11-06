@@ -1,6 +1,10 @@
-import HodgeConjecture.Inputs.FixedInertia
-import HodgeConjecture.Inputs.FiniteEtaleExtension
-import HodgeConjecture.Inputs.ChowLocalization
+module
+
+public import HodgeConjecture.Inputs.FixedInertia
+public import HodgeConjecture.Inputs.FiniteEtaleExtension
+public import HodgeConjecture.Inputs.ChowLocalization
+
+@[expose] public section
 
 /-!
 # Explicit literature-input packages

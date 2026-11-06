@@ -1,4 +1,8 @@
-import HodgeConjecture.Correspondence.Scheme
+module
+
+public import HodgeConjecture.Correspondence.Scheme
+
+@[expose] public section
 
 /-!
 # Isomorphism classes of scheme correspondences

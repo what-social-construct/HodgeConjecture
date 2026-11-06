@@ -1,6 +1,10 @@
-import HodgeConjecture.Realization.Chow.Examples.SplitSpanRealization
-import HodgeConjecture.Realization.Chow.Presentation
-import HodgeConjecture.Correspondence.Examples.SplitSpanDecomposition
+module
+
+public import HodgeConjecture.Realization.Chow.Examples.SplitSpanRealization
+public import HodgeConjecture.Realization.Chow.Presentation
+public import HodgeConjecture.Correspondence.Examples.SplitSpanDecomposition
+
+@[expose] public section
 
 /-!
 # The additive quotient of actual finite split scheme spans

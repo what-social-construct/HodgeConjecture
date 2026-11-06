@@ -1,4 +1,8 @@
-import HodgeConjecture.Collision.SchemeDecomposition
+module
+
+public import HodgeConjecture.Collision.SchemeDecomposition
+
+@[expose] public section
 
 /-!
 # Diagonal and off-diagonal component selectors

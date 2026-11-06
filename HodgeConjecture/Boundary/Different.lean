@@ -1,6 +1,10 @@
-import HodgeConjecture.Collision.DecompositionDefect
-import Mathlib.RingTheory.Unramified.Finite
-import Mathlib.RingTheory.Unramified.Locus
+module
+
+public import HodgeConjecture.Collision.DecompositionDefect
+public import Mathlib.RingTheory.Unramified.Finite
+public import Mathlib.RingTheory.Unramified.Locus
+
+@[expose] public section
 
 /-!
 # Boundary contact and the Noether different

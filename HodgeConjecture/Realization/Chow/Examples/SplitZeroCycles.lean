@@ -1,5 +1,9 @@
-import HodgeConjecture.Correspondence.Examples.SplitIntegralSubschemes
-import Mathlib.LinearAlgebra.Finsupp.LSum
+module
+
+public import HodgeConjecture.Correspondence.Examples.SplitIntegralSubschemes
+public import Mathlib.LinearAlgebra.Finsupp.LSum
+
+@[expose] public section
 
 /-!
 # Zero-cycles on actual finite split subschemes

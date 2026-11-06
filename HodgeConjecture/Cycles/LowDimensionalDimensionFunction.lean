@@ -1,6 +1,10 @@
-import HodgeConjecture.Cycles.DimensionFunction
-import HodgeConjecture.Cycles.SupportDimension
-import HodgeConjecture.Cycles.CycleDegree
+module
+
+public import HodgeConjecture.Cycles.DimensionFunction
+public import HodgeConjecture.Cycles.SupportDimension
+public import HodgeConjecture.Cycles.CycleDegree
+
+@[expose] public section
 
 /-!
 # The actual dimension function in dimension at most one

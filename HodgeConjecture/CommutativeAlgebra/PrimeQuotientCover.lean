@@ -1,5 +1,9 @@
-import Mathlib.RingTheory.Ideal.Height
-import Mathlib.RingTheory.Spectrum.Prime.RingHom
+module
+
+public import Mathlib.RingTheory.Ideal.Height
+public import Mathlib.RingTheory.Spectrum.Prime.RingHom
+
+@[expose] public section
 
 /-!
 # Consecutive primes in the actual quotient
@@ -65,7 +69,7 @@ theorem primeQuotient_bot_covBy_map
     apply PrimeSpectrum.ext
     exact (Ideal.map_eq_bot_iff_le_ker (Ideal.Quotient.mk p.asIdeal)).mpr
       (by rw [Ideal.mk_ker])
-  have h' := e.symm.map_covBy.mpr hsub
+  have h' := (apply_covBy_apply_iff e.symm).mpr hsub
   rw [hbot] at h'
   exact h'
 
@@ -74,9 +78,12 @@ one. The ambient ring need not be a domain. -/
 theorem primeQuotient_primeHeight_eq_one_of_covBy
     (B : Type u) [CommRing B] (p q : PrimeSpectrum B) (h : p ⋖ q) :
     letI := primeQuotient_map_isPrime B p q h.le
-    (q.asIdeal.map (Ideal.Quotient.mk p.asIdeal)).primeHeight = 1 := by
+    (q.asIdeal.map (Ideal.Quotient.mk p.asIdeal)).height = 1 := by
   letI : p.asIdeal.IsPrime := p.isPrime
   letI := primeQuotient_map_isPrime B p q h.le
+  change (⟨q.asIdeal.map (Ideal.Quotient.mk p.asIdeal), inferInstance⟩ :
+    PrimeSpectrum (B ⧸ p.asIdeal)).asIdeal.height = 1
+  rw [PrimeSpectrum.height_eq_orderHeight]
   exact height_eq_one_of_bot_covBy (primeQuotient_bot_covBy_map B p q h)
 
 end

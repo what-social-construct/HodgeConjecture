@@ -1,5 +1,10 @@
+module
+
 import HodgeConjecture.Boundary.Normalization.BoundedOverring
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 Focused SP64 regressions. Run with
@@ -73,8 +78,8 @@ run_cmd do
       `HodgeConjecture.NormalizationInertia.subalgebra_eq_bot_of_nonzero_mul_mem_base,
       `HodgeConjecture.NormalizationInertia.subalgebra_eq_bot_of_mem_colon,
       `HodgeConjecture.NormalizationInertia.colon_eq_bot_of_subalgebra_ne_bot] do
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    for axiomName in state.axioms do
+    let axioms ← Lean.collectAxioms declaration
+    for axiomName in axioms do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"
     logInfo m!"PASS standard-axiom boundary: {declaration}"

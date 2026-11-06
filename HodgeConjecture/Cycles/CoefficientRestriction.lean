@@ -1,5 +1,9 @@
-import HodgeConjecture.Cycles.CoefficientExtension
-import HodgeConjecture.Cycles.OpenGrading
+module
+
+public import HodgeConjecture.Cycles.CoefficientExtension
+public import HodgeConjecture.Cycles.OpenGrading
+
+@[expose] public section
 
 /-!
 # Coefficient extension and actual open restriction

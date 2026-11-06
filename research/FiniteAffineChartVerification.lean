@@ -1,5 +1,10 @@
+module
+
 import HodgeConjecture.Boundary
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP71 regressions for actual affine charts of finite étale scheme morphisms.
@@ -28,14 +33,14 @@ section GeneralCharts
 variable {X Y : Scheme.{u}} (p : Y ⟶ X)
 
 -- Scheme smoothness is sufficient; neither finiteness nor étaleness is inferred.
-example [IsSmooth p] (U : X.affineOpens) (V : Y.affineOpens)
+example [Smooth p] (U : X.affineOpens) (V : Y.affineOpens)
     (e : V.1 ≤ p ⁻¹ᵁ U.1) : (p.appLE U V e).hom.Smooth := by
   fail_if_success have _ : IsFinite p := inferInstance
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   exact affine_appLE_smooth p U V e
 
 -- Étaleness of the chart algebra does not need, or supply, normality.
-example [IsEtale p] (U : X.affineOpens) (V : Y.affineOpens)
+example [Etale p] (U : X.affineOpens) (V : Y.affineOpens)
     (e : V.1 ≤ p ⁻¹ᵁ U.1) :
     letI := (p.appLE U V e).hom.toAlgebra
     Algebra.Etale Γ(X, U) Γ(Y, V) := by
@@ -43,7 +48,7 @@ example [IsEtale p] (U : X.affineOpens) (V : Y.affineOpens)
   fail_if_success have _ : IsIntegrallyClosed Γ(Y, V) := inferInstance
   exact affine_appLE_etale p U V e
 
-example [IsEtale p] [IsAffine X] [IsAffine Y] :
+example [Etale p] [IsAffine X] [IsAffine Y] :
     letI := p.appTop.hom.toAlgebra
     Algebra.Etale Γ(X, ⊤) Γ(Y, ⊤) :=
   affine_appTop_etale p
@@ -79,7 +84,7 @@ example [IsFinite p] (hU : IsAffineOpen U) : Algebra.IsIntegral Bᵤ Aᵤ := by
   letI := finiteAffinePreimage_moduleFinite p U hU
   infer_instance
 
-example [IsFinite p] [IsEtale p] (hU : IsAffineOpen U) :
+example [IsFinite p] [Etale p] (hU : IsAffineOpen U) :
     Algebra.Etale Bᵤ Aᵤ := by
   fail_if_success have _ : IsIntegrallyClosed Aᵤ := inferInstance
   exact finiteAffinePreimage_etale p U hU
@@ -158,10 +163,10 @@ example :
       ((Y.germToFunctionField (p ⁻¹ᵁ U)).hom.comp (p.app U).hom).toAlgebra
     Module.Finite Bᵤ (normalizedCoordinateRing Bᵤ Y.functionField) := by
   fail_if_success have _ : IsNoetherianRing Bᵤ := inferInstance
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   exact finiteAffinePreimage_normalization_finite p U hU hNormal
 
-example [IsEtale p] :
+example [Etale p] :
     letI : Algebra Bᵤ Y.functionField :=
       ((Y.germToFunctionField (p ⁻¹ᵁ U)).hom.comp (p.app U).hom).toAlgebra
     Algebra.Etale Bᵤ (normalizedCoordinateRing Bᵤ Y.functionField) :=
@@ -195,8 +200,8 @@ run_cmd do
       `HodgeConjecture.CollisionFoundations.finiteAffinePreimage_normalization_etale] do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    for axiomName in state.axioms do
+    let axioms ← Lean.collectAxioms declaration
+    for axiomName in axioms do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"
-    logInfo m!"PASS standard-axiom boundary: {declaration}; {state.axioms.toList}"
+    logInfo m!"PASS standard-axiom boundary: {declaration}; {axioms.toList}"

@@ -1,6 +1,10 @@
-import HodgeConjecture.Correspondence.GraphBaseComparison
-import HodgeConjecture.Correspondence.GraphCycleComposition
-import HodgeConjecture.Cycles.IsomorphismTransport
+module
+
+public import HodgeConjecture.Correspondence.GraphBaseComparison
+public import HodgeConjecture.Correspondence.GraphCycleComposition
+public import HodgeConjecture.Cycles.IsomorphismTransport
+
+@[expose] public section
 
 /-!
 # Graph cycles under a change of structural base
@@ -89,6 +93,7 @@ theorem graphCycleLinearMap_baseComparison
         (graphCycleLinearMap p) =
       (graphCycleLinearMap (p ≫ b)).comp
         (MonoidAlgebra.mapDomainAlgHom ℚ ℚ (forgetDeckBase p b)).toLinearMap := by
+  apply (LinearMap.cancel_right (MonoidAlgebra.coeffLinearEquiv ℚ).symm.surjective).mp
   apply Finsupp.lhom_ext
   intro σ q
   change closedImmersionPushforward ℚ (pairBaseComparison p b)
@@ -97,7 +102,7 @@ theorem graphCycleLinearMap_baseComparison
       (MonoidAlgebra.mapDomainAlgHom ℚ ℚ (forgetDeckBase p b)
         (MonoidAlgebra.single σ q))
   rw [graphCycleLinearMap_single, map_smul, graphCycle_pairBaseComparison]
-  simp only [MonoidAlgebra.mapDomainAlgHom_apply, Finsupp.mapDomain_single,
+  simp only [MonoidAlgebra.mapDomainAlgHom_apply, MonoidAlgebra.mapDomain_single,
     graphCycleLinearMap_single]
 
 end

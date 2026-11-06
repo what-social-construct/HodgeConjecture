@@ -1,7 +1,11 @@
-import HodgeConjecture.Realization.Betti.Examples.SplitCycleClass
-import Mathlib.LinearAlgebra.TensorProduct.Pi
-import Mathlib.LinearAlgebra.FiniteDimensional.Basic
-import Mathlib.Order.SupIndep
+module
+
+public import HodgeConjecture.Realization.Betti.Examples.SplitCycleClass
+public import Mathlib.LinearAlgebra.TensorProduct.Pi
+public import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+public import Mathlib.Order.SupIndep
+
+@[expose] public section
 
 /-!
 # The pure degree-zero Hodge structure of a finite split complex scheme

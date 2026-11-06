@@ -1,7 +1,7 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-10-13 (SP108 conditional boundary correction, following SP107
-finite scheme norms and Chow descent).
+Assessed: 2026-10-27 (through SP113 finite cycle/Chow pushforward
+functoriality; SP108--SP112 retain their stated conditional and research scope).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
 [GAP_MAP.md](GAP_MAP.md), with theorem scope in [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
@@ -20,8 +20,38 @@ H_B^{2p}(X,\mathbb Q)\), with Hodge membership specified independently.
 Compare candidates by the algebraic cycles we can construct and their image
 under this map. Establishing the map and its compatibility
 is distinct from showing that the construction generates every Hodge class.
+
+The [2026-11-05 affine de Rham checkpoint](working/0022-affine-derham-trace-comparison.md)
+constructs the actual affine complex and a degree-zero trace on finite free
+formally unramified algebras. The finite split complex specialization has
+proved Chow/de Rham/complexified-Betti squares. It does not extend the
+realization or the prescribed-class coverage to positive-dimensional varieties.
+The [affine-line extension](working/0024-affine-line-betti-comparison.md)
+now identifies actual algebraic and complexified rational Betti cohomology in
+degree zero for `ℂ[X]`, with original point topology, polynomial pullbacks
+and multiplication. This supplies a bounded positive-dimensional comparison;
+higher-degree realization and prescribed-class coverage remain open.
 Galois actions, projectors and compactification are construction mechanisms
 to introduce when the chosen geometry needs them.
+
+Current implementation step (2026-11-05): resume the original marked-Galois
+spine recorded in the [canonical diagram](archive/planning/0006-lean-spine-manuscript-outline.md)
+and [algebraic decomposition](archive/planning/0003-hodge-target-equivalence.md).
+The sheet algebra decomposes multiplicatively as `ℚ × E_corner`; the later
+constant-unit shear is a separate linear coordinate change. Normal/Galois
+closure and selector extension do not supply the missing Chow realization
+or the residual map with a prescribed cohomological action.
+
+The [graph-Chow checkpoint](working/0025-graph-chow-convolution.md) constructs
+actual canonically graded deck graph classes, their geometric left/right
+Chow pullbacks, and convolution on precisely their Chow-generated submodule.
+Group-algebra idempotents therefore give actual graph-generated Chow
+projectors. Closed pushforward also places the relative graphs in the
+absolute product over the field. Applying this to a chosen compactified
+normal cover still requires its precise hypotheses and open comparison;
+the prescribed Betti action and class-dependent residual map remain open.
+This is the selected bounded step toward that spine, not a replacement
+of the independently specified Hodge target by an algebraic decomposition.
 
 Retain smooth projective complex varieties as the main setting. An auxiliary
 cover is a construction choice, not a restriction in the target statement;
@@ -96,7 +126,11 @@ below:
    SP106 derives the semilocal hypotheses and compatible localization actions
    and proves 02MJ for every nonzero fraction. SP107 proves the finite scheme
    principal/norm identity and integral/rational Chow descent of this same
-   map. Next prove finite-map composition and flat pullback/degree. Build the actual
+   map. SP113 proves composition and identity for these same finite cycle
+   and integral/rational Chow maps, using actual residue-degree towers and
+   image composition. The [finite flat checkpoint](working/0021-finite-flat-chow-transfer.md)
+   proves actual integral/rational Chow pullback and its geometric-rank
+   degree law, and instantiates positive-degree Chow transfer. Build the actual
    same-cover Chow--Betti maps and prove the displayed
    degree and cycle-class laws; derive normal stalks from the selected
    smooth geometry where required.
@@ -295,8 +329,9 @@ on the existing canonically graded quotients. The quotient maps need
 Noetherian ambient schemes locally of finite type over a field, with a
 finite map; they require neither ambient integrality nor dominance.
 They introduce no assumed norm identity or relation-preservation package.
-Finite-pushforward composition and flat pullback/degree remain next, along
-with the actual Betti comparisons and geometric generation.
+SP113 proves composition and identity for these same finite cycle and Chow
+maps. Flat pullback/degree, the actual Betti comparisons and geometric
+generation remain unfinished.
 
 The first substantive local input is
 [Stacks Lemma 10.121.8, 02MJ](https://stacks.math.columbia.edu/tag/02MJ):
@@ -441,11 +476,267 @@ cycle-class squares, the supported Hodge lift, and boundary algebraicity
 remain explicit inputs. The same dimension grading $\dim Y-p$ becomes
 codimension $p-1$ on a smooth divisor; no dimension is selected.
 
+**Next input to the existing target theorem.** The boundary route feeds
+`rationalHodgeConjectureAt_of_classDependentChowBettiGeneration` in
+[`UpstairsGeneration.lean`](../HodgeConjecture/Realization/Chow/UpstairsGeneration.lean),
+not a new Hodge target. With a fixed indexed family of geometric data and
+the required boundary/transfer comparisons, its remaining construction is
+\[
+ \forall\alpha\in\operatorname{Hdg}^p(X),\quad
+ \exists a,\ z_{U_a}\in CH^p(U_a)_{\mathbf Q},\quad
+ \operatorname{cl}_{U_a}(z_{U_a})=j_a^*f_a^*\alpha.
+\]
+Here the admissible data must supply the smooth boundary and supported
+Hodge lift, with boundary algebraicity provided by the proposed induction.
+SP108 then gives an upstairs cycle, and the existing normalized descent
+gives the downstairs class. Taking all upstairs Chow classes as coefficients
+uses the identity recipe in the existing generation predicate; a narrower
+chosen recipe additionally needs to contain the corrected cycle.
+The open-cycle identity has not been proved. General geometric Betti/Gysin
+and transfer comparisons also remain uninstantiated. For this investigation,
+select a geometric construction and establish this identity before adding
+further infrastructure. SP113's proved finite-pushforward composition is
+supporting work and does not discharge the prescribed-class input.
+
 Retain Galois closure, norms and projectors where they serve a named
 geometric step. A new projector is warranted when a concrete geometric
 correspondence needs a summand isolated; idempotence alone does not supply
 a cycle. The general construction of \(Z_\alpha\) remains unresolved.
 The correction adds no realization record or geometric coverage claim.
+
+**SP109: a Chow-valued map from supplied cycles.**
+[`MarkedCycleMap.lean`](../HodgeConjecture/Realization/Chow/MarkedCycleMap.lean)
+now constructs, on any fixed Noetherian ambient scheme with dimension
+grading $\delta$ and degree $n$, the map
+\[
+ \eta_C:E_H\longrightarrow CH_n(X)_{\mathbf Q},\qquad
+ x\longmapsto\left[\sum_{s\in G/H}x(s)C_s\right].
+\]
+Here $C_s$ are supplied actual homogeneous cycles and $E_H$ consists of
+sheet functions vanishing at the marked sheet $s_0$. Consequently
+$\eta_C(q_H-1)=[C_{s_0}]-\sum_s[C_s]$, and
+$\operatorname{im}\eta_C=\operatorname{span}_{\mathbf Q}\{[C_s]:s\ne s_0\}$.
+The map respects the existing principal relations and commutes with actual
+open restriction and finite Chow pushforward, including residue-degree
+weights. No new Chow quotient or fixed dimension is introduced.
+
+With a supplied realization $\operatorname{cl}$, its realized image is
+exactly the span of $\operatorname{cl}[C_s]$ for nonmarked sheets. Thus the
+existing `HodgePullbackGeneratedBy` input becomes containment in that span.
+Reweighting $C_s$ to $-x(s)C_s$ expresses any residual input at the canonical
+vector $q_H-1$; it does not find cycles for a prescribed class. For fixed
+$C$, varying $x$ and evaluating the single canonical vector are distinct
+operations. This map is linear; no multiplicative residual realization or
+new correspondence action is assumed.
+
+The remaining task is geometric selection of these cycles, possibly on an
+auxiliary cover or open, with the required class identity. Sheet labels
+alone give no cover or incidence family. The fixed ambient target,
+codimension, realization and correspondence action stay fixed; selected
+auxiliary data may vary with $\alpha$. SP109 supplies a cycle recipe for
+the existing target, not a proof of its arbitrary-class generation input
+or a general Betti realization.
+
+**SP110: settled auxiliary Chow localization.** The actual integral and
+rational sequences
+\[
+ CH_n(Z)\xrightarrow{i_*}CH_n(X)\xrightarrow{j^*}CH_n(U)\longrightarrow0,
+ \qquad Z=(X\setminus U)_{\mathrm{red}},
+\]
+are now proved for a Noetherian ambient scheme with a supplied dimension
+function. The implementation constructs the reduced boundary, identifies
+the cycle kernel, extends open principal relations by closure and the
+actual function-field equivalence, and descends to the existing quotients.
+`ChowLocalization.ofOpenComplement` supplies the old localization interface
+for these actual rational maps. Consequently, two marked Chow recipes
+agreeing on the open differ by a pushed boundary class. This controls
+Chow lift ambiguity; the separate cohomological correction still needs
+its Betti/Gysin and boundary-Hodge inputs. See
+[`ChowLocalization.lean`](../HodgeConjecture/Cycles/ChowLocalization.lean).
+
+#### Open representative: the smooth ample boundary calculation
+
+This is a classical mathematical check, not a new Lean construction.
+Keep $Y/\mathbf C$ smooth projective of arbitrary dimension $d$, with
+$1\leq p\leq d$. Fix an ample line bundle $A$, take a smooth divisor
+$D\in |A^{\otimes m}|$ for sufficiently large $m>0$, and put
+$U=Y\setminus D$. Write $h=c_1(A)$ and $L=h\cup-$. These are auxiliary
+choices; the target variety, codimension, cycle-class map and correspondence
+action remain fixed. For the auxiliary map $f:Y\to X$, write
+$\beta=f^*\alpha$ for the prescribed upstairs Hodge class.
+
+**An actual partial construction.** The open $U$ is smooth affine. If
+$2p>d$, then $H^{2p}(U,\mathbf Q)=0$, so take
+\[
+ z_U=0\in CH^p(U)_{\mathbf Q},\qquad
+ \operatorname{cl}_U(z_U)=0=j^*f^*\alpha.
+\]
+The vanishing follows from the affine CW-dimension bound in
+[Voisin, II, Theorem 1.2](https://assets.cambridge.org/97805218/02833/sample/9780521802833ws.pdf).
+This constructs the open representative in that range. Finishing upstairs
+still uses the smooth-boundary Hodge lift and the codimension-$p-1$
+induction hypothesis from SP108. Neither the geometric vanishing nor the
+general Betti realization is currently implemented in Lean.
+
+**What survives in the other range.** If $2p\leq d$, weak Lefschetz makes
+$i^*:H^{2p-2}(Y,\mathbf Q)\to H^{2p-2}(D,\mathbf Q)$ an isomorphism.
+Together with the Gysin sequence and $i_*i^*=mL$, this gives
+\[
+ \ker\bigl(j^*:H^{2p}(Y,\mathbf Q)\to H^{2p}(U,\mathbf Q)\bigr)
+   =L H^{2p-2}(Y,\mathbf Q).
+\]
+Here weak Lefschetz and the cup-product identity are
+[Voisin, II, Theorem 1.1 and equation (1.6)](https://assets.cambridge.org/97805218/02833/sample/9780521802833ws.pdf);
+localization/Thom and Hodge compatibility are the separate cohomological
+inputs discussed for SP108 above. The displayed kernel formula is the
+deduction, not a claim that Chow localization proves Betti exactness.
+
+Hard Lefschetz gives the rational decomposition
+\[
+ H^{2p}(Y,\mathbf Q)=P_h^{2p}(Y)\oplus L H^{2p-2}(Y,\mathbf Q),
+ \qquad P_h^{2p}(Y)=\ker L^{d-2p+1}.
+\]
+Thus $j^*$ is injective on $P_h^{2p}(Y)$: a primitive class in its kernel
+lies in both summands and is zero. For a Hodge class
+$\beta=\beta_{\mathrm{prim}}+L\gamma$, the only remaining open target is
+$j^*\beta_{\mathrm{prim}}$. A nonzero primitive part rules out the zero
+open cycle. Hard Lefschetz is recalled in
+[Deligne, §4, Example 2](https://www.claymath.org/wp-content/uploads/2022/06/hodge.pdf);
+the direct-sum and injectivity conclusions here are deductions from it.
+This treats all dimensions and codimensions in the stated range; it does
+not choose a particular dimension or assert an algebraic primitive projector.
+
+The kernel is unchanged as $D$ varies among smooth members of powers of
+this polarization. Moreover, for a finite surjective
+$f:Y\to X$ between smooth projective $d$-folds, use the pulled-back ample
+class $h_Y=f^*h_X$. Positive-degree transfer makes $f^*$ injective, and
+\[
+ L_Y^{d-2p+1}f^*\alpha=f^*(L_X^{d-2p+1}\alpha).
+\]
+Consequently a nonzero $h_X$-primitive class stays nonzero and primitive
+on every such cover, and survives restriction after removal of a smooth
+divisor in a power of $f^*A_X$. This is a deduction using the classical
+degree law and cup-product functoriality, not a new formal transfer result.
+It excludes only this attempted zero-cycle construction. Other polarizations,
+boundaries or genuinely nonzero open cycles require their own argument.
+
+**Exact remaining obligation.** Construct actual algebraic cycles
+$W_r\subset U$ of codimension $p$ and coefficients $q_r\in\mathbf Q$
+such that $\sum_r q_r\operatorname{cl}_U[W_r]=j^*\beta_{\mathrm{prim}}$.
+Naming its preimage under $\operatorname{cl}_U$, or assuming it belongs to
+the span of a supplied cycle family, does not construct it.
+Under SP108's comparison, Hodge-lift and boundary-algebraicity hypotheses,
+an open representative exists **if and only if** the ambient Hodge class
+is algebraic: SP108 proves one direction; restricting an ambient cycle
+proves the other. The unrestricted construction is therefore the remaining
+Hodge-algebraicity problem in this induction, not a consequence of SP110.
+
+#### Chern-character trial within the cycle induction (SP112)
+
+Keep the ambient target and realization fixed. On the smooth open
+$U=X\setminus D$, the proposed input is a class-dependent rational
+combination $\xi_\alpha$ of algebraic perfect complexes, with
+\[
+ z_U=\operatorname{ch}^{CH}_p(\xi_\alpha)\in CH^p(U)_{\mathbf Q},
+ \qquad \operatorname{cl}_U(z_U)=\alpha|_U.
+\]
+Here $\operatorname{ch}^{CH}_p$ means the degree-$p$ Chern character capped
+with the fundamental class. It is additive, allowing virtual objects and
+rational coefficients; ordinary $c_p$ for $p>1$ is not additive. For a bounded
+bundle complex its value is the alternating sum of the terms' Chern
+characters, so changing only its differentials leaves this Chow class
+fixed. See [Stacks 0ESY](https://stacks.math.columbia.edu/tag/0ESY).
+
+**Extension fits the existing induction.** An algebraic bounded coherent
+complex on $U$ extends to a bounded coherent complex on Noetherian $X$
+by [Stacks Lemma 36.13.2](https://stacks.math.columbia.edu/tag/08EC).
+Since $X$ is smooth, the extension is perfect by
+[Lemma 36.11.8](https://stacks.math.columbia.edu/tag/08E0).
+Extend the finitely many terms in the rational combination this way.
+Their ambient Chern characters give a Chow lift $\bar z$ of $z_U$.
+SP108 then corrects $\alpha-\operatorname{cl}_X(\bar z)$ using the
+smooth-boundary Hodge lift and codimension-$p-1$ induction. Two such Chow
+lifts differ by a pushed boundary class by SP110. The extension need not
+be a vector bundle. These are classical geometric deductions; the current
+Lean library does not yet construct these complexes or Chern characters.
+
+**First candidate: bundles supplied only by a finite cover.** Let
+$f:V\to U$ be finite étale of positive constant degree. Test
+$f_*\mathcal O_V$, its trace-zero summand, and associated bundles from
+finite-dimensional representations of a finite deck group. A finite étale
+splitting cover $q:T\to U$ trivializes these bundles; for a connected base,
+a Galois refinement is supplied by
+[Stacks 03SF](https://stacks.math.columbia.edu/tag/03SF).
+For any such bundle $E$ and $p>0$, Chern naturality gives
+\[
+ q^*\operatorname{ch}^{CH}_p(E)=0,
+ \qquad
+ (\deg q)\operatorname{ch}^{CH}_p(E)
+   =q_*q^*\operatorname{ch}^{CH}_p(E)=0.
+\]
+The second identity is the degree law
+[Stacks 02RH](https://stacks.math.columbia.edu/tag/02RH), descended to Chow;
+the Chern normalization is [02UM](https://stacks.math.columbia.edu/tag/02UM).
+Thus $\operatorname{ch}^{CH}_p(E)=0$ rationally. This is a deduction from
+the cited facts. Varying the finite cover or its representation does not
+change that conclusion. It also applies termwise to bounded complexes of
+these bundles, regardless of their differentials. It does not apply to
+arbitrary algebraic bundles or arbitrary idempotent matrices of functions:
+their images need not be trivialized by a finite étale cover.
+
+Consequently this candidate gives the zero open cycle and cannot represent
+a nonzero $\alpha|_U$. A compactified extension can contribute boundary
+classes, but its restriction remains zero. Likewise, a complex supported
+entirely on $D$ contributes only a boundary correction. For such a complex,
+[Stacks 0FB0](https://stacks.math.columbia.edu/tag/0FB0) supplies the localized
+Chern character and its pushforward identity; localization does not create
+the missing nonzero open class. The Stein holomorphic-bundle construction
+in [Deligne §2(iv)](https://www.claymath.org/wp-content/uploads/2022/06/hodge.pdf)
+does not supply an algebraic complex on $U$ to which the extension theorem
+applies.
+
+SP112 formalizes only the transfer cancellation in the existing
+`RationalDegreeTransfer`: `pull_injective` and `pull_eq_zero_iff`, in
+[`TransferProjector.lean`](../HodgeConjecture/Realization/Chow/TransferProjector.lean).
+No Chern map, geometric pullback instance, new target, or source axiom is
+introduced. The construction task is still to produce algebraic data with
+the required nonzero open Chern character. The conditional boundary
+induction remains the consumer of that construction.
+
+#### Supported-class extraction (SP111)
+
+The direct vanishing route asks for an algebraic $Z_\alpha\subset X$ with
+$\operatorname{codim}_X Z_\alpha\geq p$ and
+$\alpha\vert_{X\setminus Z_\alpha}=0$. For smooth projective $X$, the
+relative cohomology sequence and the top-dimensional fundamental classes
+of $Z_\alpha$ then express $\alpha$ as a rational cycle class; see
+[Voisin, sections 4.1--4.2](https://webusers.imj-prg.fr/~claire.voisin/Articlesweb/JOMP_V01N01P02Paper.pdf).
+Finding that support and proving vanishing remain the algebraicity problem.
+
+[`SupportedClass.lean`](../HodgeConjecture/Realization/Chow/SupportedClass.lean)
+implements the **conditional extraction**, with three separate inputs:
+cohomological localization, a supported-class basis $b_k$ indexed by actual
+integral supports $W_k$ of dimension degree $n$, and the fundamental-class
+comparison. For a lift $\gamma$ of $\alpha$, the output is explicitly
+\[
+ c_\gamma=\sum_k(b.\mathrm{repr}\,\gamma)_k[W_k],\qquad
+ z_\gamma=i_{*,\mathrm{cyc}}c_\gamma,\qquad
+ \operatorname{cl}_X([z_\gamma])=\alpha.
+\]
+`Basis.constr` supplies this finite expansion without a new object type.
+The actual graded closed pushforward gives $j^*z_\gamma=0$ as a cycle.
+With the cycle-class/restriction square, vanishing is equivalent to
+representation by a cycle on the chosen closed support.
+
+The source may be singular, reducible or nonreduced; the Lean consumer only
+requires its actual integral supports, a closed immersion, the complementary
+open and a Noetherian ambient scheme. The geometric theorem producing the
+basis from the codimension bound is **not implemented**, nor are general
+Betti localization and the fundamental-class comparison. The supported
+space and maps are explicit parameters. No boundary Hodge induction is
+used once these stronger supported-basis inputs are supplied. The existing
+dimension/codimension formula interprets $n$ as $\dim X-p$; no dimension
+or new projector is chosen, and the ambient cycle-class map stays fixed.
 
 ### B0. Boundary-section algebra and uniform trace landing
 
@@ -818,7 +1109,7 @@ SP71 starts with a finite scheme morphism `p:Y -> X` and affine open `U`
 of `X`. Use its whole inverse image and actual rings
 `B_U=Gamma(X,U)`, `A_U=Gamma(Y,p^-1 U)`, with the scalar map `p.app U`.
 `finiteAffinePreimage_moduleFinite` proves the finite algebra, and
-`finiteAffinePreimage_etale` derives etaleness from `IsEtale p`.
+`finiteAffinePreimage_etale` derives etaleness from `Etale p`.
 Neither requires integrality, nonemptiness or normality. The underlying
 general smooth/etale affine-chart results are proved in
 [`AffineEtaleAlgebra.lean`](../HodgeConjecture/Boundary/Normalization/AffineEtaleAlgebra.lean).
@@ -1296,7 +1587,7 @@ finite-index tensor carrier. `piTensorProduct_isEtale` in
 `EtaleTensorSource.lean` applies this to the presentations defining
 scheme etaleness. SP80's surjective evaluation and complementary-idempotent
 kernel identify `Spec(ev_B)` as an open immersion, so its composite with
-that etale tensor source is etale. A general `Algebra.Etale`-to-`IsEtale`
+that etale tensor source is etale. A general `Algebra.Etale`-to-`Etale`
 converse is absent from the pinned API and is not postulated here.
 
 All 19 APIs compile without warnings in the 2761-job scoped build:
@@ -1566,7 +1857,7 @@ integral `X` and `Y`, and assume explicitly
 Retain the function-field map induced by `p` and its original marked
 `N_p = normalClosure K(X) K(Y) (AlgebraicClosure K(Y))`.
 SP81 proves finite etaleness of each `pi_U`; the equivalences above
-prove `IsFinite mu_(N_p)` and `IsEtale mu_(N_p)`. This is the actual
+prove `IsFinite mu_(N_p)` and `Etale mu_(N_p)`. This is the actual
 map of the existing glued model, not another existential cover.
 The manuscript counterpart is `cor:normal-closure-global-finite-etale`.
 
@@ -2192,8 +2483,10 @@ descent of the constructed cycles does not require them.
 
 #### Lean feasibility for optional examples
 
-The audit uses Lean 4.24.0 and the pinned Mathlib revision
-`f897ebcf72cd16f89ab4577d0c826cd14afaafc7`; no dependency changes are proposed.
+This optional-example audit used Lean 4.24.0 and Mathlib
+`f897ebcf72cd16f89ab4577d0c826cd14afaafc7`. The later
+[Lean 4.35 migration](working/0020-lean-4-35-migration.md) supersedes that
+baseline; the table records the earlier source survey, not a new API audit.
 
 | Available construction | Missing comparison for the cover route or optional examples |
 | --- | --- |
@@ -2306,17 +2599,16 @@ the separate arbitrary-Hodge-class generation gate.
 
 ### L1--L3. Bounded additive-localization stream
 
-The next Lean checkpoint in the existing stream is L1. This stream can run
-alongside G0/G1, but is a prerequisite for the selected application only if
-that application's boundary-lifting argument uses it. Do not make general
-localization a prerequisite for an independently constructed Chow projector.
-The file names below are **prospective**, not existing implementations.
+**Completed at SP110.** These are now implemented auxiliary results on the
+actual scheme-cycle and Chow maps. They control Chow lift ambiguity when
+the selected construction needs a boundary. General localization is not
+a prerequisite for every independent projector construction.
 
 | Checkpoint | Exact result and reuse | Acceptance boundary |
 | --- | --- | --- |
-| L1. `Cycles/OpenClosedLocalization.lean` | Construct the reduced closed complement `i:Z → X` of `j:U → X`; prove `range(i_*) = ker(j^*)` on the existing raw and homogeneous cycles, using actual support/generic-point and coefficient identities. | Any coefficient semiring; canonical restrictions of the supplied dimension function; no Noetherian premise. Include empty/full opens, trivial coefficients and nonreduced ambient schemes. A complementary-pair lemma must be instantiated by the actual complement. |
-| L2. `Cycles/PrincipalRelationLifting.lean` | Extend an open principal-relation carrier by reduced closure and its function by the inverse of the actual open function-field equivalence. Prove integral and rational relation-span image equalities using SP61 and coefficient compatibility. | Keep carrier degree `m+1`, exact function-field variance and representative identities. Data lifting needs no ambient finiteness; actual relation spans retain target Noetherianity. The lifted divisor may acquire boundary terms: this is not a relation-preserving closure section. |
-| L3. `Cycles/ChowLocalization.lean` | Correct a cycle representative by a lifted principal relation, apply L1, and descend to integral/rational quotient kernel=image; reuse SP63 surjectivity. | Prove the right-exact sequence on the actual existing maps. Derive finiteness of the open and closed sources from the Noetherian target. Do not assume rationalization injective or closed Chow pushforward injective. |
+| L1. `Cycles/OpenClosedLocalization.lean` | **PROVED:** reduced closed complement and `range(i_*) = ker(j^*)` on raw and homogeneous cycles, using actual support/generic-point and coefficient identities. | Any coefficient semiring; actual restricted grading; no Noetherian or ambient reducedness premise. Instantiated by the actual complement, including empty/full opens and trivial coefficients. |
+| L2. `Cycles/PrincipalRelationLifting.lean` | **PROVED:** open relation data lift through reduced closure and the inverse actual function-field equivalence; integral and rational relation spans map onto the open spans. | Carrier degree `m+1` and exact function-field variance retained. Data lifting needs no finiteness; relation spans retain target Noetherianity. No relation-preserving closure section is asserted. |
+| L3. `Cycles/ChowLocalization.lean` | **PROVED:** correction by a lifted principal relation and L1 give integral/rational quotient kernel=image; SP63 supplies surjectivity. | Open and closed source finiteness derived from the Noetherian target. No injectivity of rationalization or closed Chow pushforward assumed. `ChowLocalization.ofOpenComplement` instantiates the existing two-lift consumer on these actual maps. |
 
 After L3, stop generic expansion until G1 identifies the next consumer.
 An adapter to `Inputs/ChowLocalization.lean` is appropriate only for these
@@ -2402,8 +2694,8 @@ provide variable-class coverage.
   not added to every `NormalizedCover`. Retain nonempty-boundary geometry
   as an alternative if needed. Preserve PB0 and the abelian examples as
   optional deferred work, with the general smooth-projective target unchanged.
-  L1 remains the next checkpoint of the separate bounded localization
-  stream, only if continued in parallel for a named consumer. No new
+  SP110 completes the separate bounded L1--L3 localization stream and its
+  actual two-lift boundary consumer. No new
   geometric family is implemented or universal reduction asserted here.
 
 ## 1. Fix the target before choosing a cover
@@ -3154,15 +3446,10 @@ the dated checkpoints below document how the existing objects were built.
    closure lift is not a Chow map: preservation of rational equivalence
    by that lift is not supplied or used.
 
-   **Next bounded obligation:** prove the actual closed-complement
-   support/kernel/image comparison on finite and homogeneous cycles.
-   Construct the reduced closed complement using the existing vanishing
-   ideal of the complement of `Set.range j.base`. Compare closed-image
-   supports with ambient generic points outside this range, and use the
-   existing open coefficient formula to identify the restriction kernel.
-   The graded comparison uses the actual restricted dimension functions.
-   Quotient localization exactness additionally needs a principal-relation
-   lifting argument and remains a separate proof.
+   **Completed at SP110:** the actual reduced-complement support comparison
+   proves kernel=image on finite and homogeneous cycles. Lifting open
+   principal relations through closure and the function-field equivalence
+   proves localization exactness on the integral and rational Chow quotients.
    The target's actual
    rational Chow groups and their intersection/Betti structure still
    require a geometric identification.
@@ -3172,7 +3459,7 @@ the dated checkpoints below document how the existing objects were built.
    Noetherian premise is retained; the general scalar-extension comparison
    is now proved independently of the earlier split-case adapter.
    General proper pushforward still needs its norm
-   compatibility; localization exactness remains to be proved, and general flat/Gysin operations need
+   compatibility; general flat/Gysin operations need
    their own principal-relation comparisons and quotient descent.
    Absolute
    relations may use larger-dimensional supports outside the relative
@@ -3247,9 +3534,8 @@ alternative requiring its own quotient regularity or all-section landing.
 The projective-bundle recipe, its PB0 chart, and the
 elliptic curve/chart/point construction are optional deferred examples;
 their detailed analyses are preserved above.
-L1 is the next bounded
-Lean checkpoint for the ongoing localization stream, not a universal
-prerequisite for every geometric route. Actual integral/rational Chow
-quotients and their surjective open maps are constructed; the general
+SP110 completes L1--L3 for the localization stream; this remains auxiliary
+to the selected geometric route. Actual integral/rational Chow
+quotients and their open/closed exact sequences are constructed; the general
 graph-to-Chow algebra, target action and class coverage remain the distinct
 obligations recorded above.

@@ -1,5 +1,9 @@
-import HodgeConjecture.Realization.Chow.TateGraphProjector
-import HodgeConjecture.Realization.HodgeClasses
+module
+
+public import HodgeConjecture.Realization.Chow.TateGraphProjector
+public import HodgeConjecture.Realization.HodgeClasses
+
+@[expose] public section
 
 /-!
 # Rational Hodge target and projector reformulation

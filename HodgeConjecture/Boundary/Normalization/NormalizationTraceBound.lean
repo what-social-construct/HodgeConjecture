@@ -1,6 +1,10 @@
-import HodgeConjecture.Boundary.Normalization.BoundarySections
-import HodgeConjecture.Boundary.Normalization.BoundedOverring
-import HodgeConjecture.Boundary.Normalization.TraceDualBound
+module
+
+public import HodgeConjecture.Boundary.Normalization.BoundarySections
+public import HodgeConjecture.Boundary.Normalization.BoundedOverring
+public import HodgeConjecture.Boundary.Normalization.TraceDualBound
+
+@[expose] public section
 
 /-!
 # The normalization trace dual and actual boundary-section landing

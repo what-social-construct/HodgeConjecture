@@ -1,5 +1,9 @@
-import HodgeConjecture.Cycles.FinitePushforward
-import HodgeConjecture.Cycles.FunctionFieldResidue
+module
+
+public import HodgeConjecture.Cycles.FinitePushforward
+public import HodgeConjecture.Cycles.FunctionFieldResidue
+
+@[expose] public section
 
 /-!
 # The existing finite pushforward weight is the actual residue degree

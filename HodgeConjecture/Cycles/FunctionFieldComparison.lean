@@ -1,4 +1,8 @@
-import HodgeConjecture.Cycles.FunctionFieldMap
+module
+
+public import HodgeConjecture.Cycles.FunctionFieldMap
+
+@[expose] public section
 
 /-! # Generic-stalk maps on affine coordinates -/
 

@@ -1,7 +1,11 @@
-import HodgeConjecture.Cycles.ResidueNormalizationLift
-import HodgeConjecture.CommutativeAlgebra.GenericFiberAlgebra
-import HodgeConjecture.CommutativeAlgebra.ResidueLocalization
-import HodgeConjecture.Cycles.NormalizationLocalDimension
+module
+
+public import HodgeConjecture.Cycles.ResidueNormalizationLift
+public import HodgeConjecture.CommutativeAlgebra.GenericFiberAlgebra
+public import HodgeConjecture.CommutativeAlgebra.ResidueLocalization
+public import HodgeConjecture.Cycles.NormalizationLocalDimension
+
+@[expose] public section
 
 /-!
 # The actual localization of a lifted residue normalization
@@ -53,7 +57,7 @@ theorem residueNormalization_localization
     residueLocalization_map_isMaximal P B B' q hinj hint,
     residueLocalization_comap_map P B B' q hinj, ?_⟩
   letI := residueLocalization_map_isPrime P B B' q hinj
-  rw [Ideal.height_eq_primeHeight, Ideal.height_eq_primeHeight]
+  skip
   exact residueLocalization_primeHeight_map P B B' q hinj
 
 /-- Noether normalization of the actual prime quotient supplies all
@@ -87,7 +91,7 @@ theorem primeHeight_eq_residueNormalization_trdeg [IsDomain B]
     let B' := Localization
       (Algebra.algebraMapSubmonoid B (nonZeroDivisors (MvPolynomial (Fin n) k)))
     letI := genericFiberAlgebra (MvPolynomial (Fin n) k) B B'
-    q.primeHeight =
+    q.height =
       ((Algebra.trdeg (FractionRing (MvPolynomial (Fin n) k)) B').toNat : ℕ∞) := by
   algebraize [f.toRingHom]
   let P := MvPolynomial (Fin n) k

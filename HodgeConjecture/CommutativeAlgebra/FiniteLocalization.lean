@@ -1,6 +1,10 @@
-import HodgeConjecture.CommutativeAlgebra.FiniteSemilocal
-import Mathlib.RingTheory.RingHom.Finite
-import Mathlib.RingTheory.Localization.LocalizationLocalization
+module
+
+public import HodgeConjecture.CommutativeAlgebra.FiniteSemilocal
+public import Mathlib.RingTheory.RingHom.Finite
+public import Mathlib.RingTheory.Localization.LocalizationLocalization
+
+@[expose] public section
 
 /-!
 # The semilocal algebra over a prime of the base
@@ -38,7 +42,7 @@ theorem finiteLocalization_finite [Module.Finite A B] : Module.Finite Aₚ Bₚ 
 
 attribute [local instance] finiteLocalization_finite
 
-private theorem maximal_comap_liesOver [Module.Finite A B] (q : MaximalSpectrum Bₚ) :
+theorem maximal_comap_liesOver [Module.Finite A B] (q : MaximalSpectrum Bₚ) :
     (q.asIdeal.comap (algebraMap B Bₚ)).LiesOver p := by
   letI := finiteAlgebra_maximal_liesOver Aₚ Bₚ q
   constructor
@@ -50,22 +54,21 @@ private theorem maximal_comap_liesOver [Module.Finite A B] (q : MaximalSpectrum 
   rw [hq]
   exact (IsLocalization.AtPrime.comap_maximalIdeal Aₚ p).symm
 
-private theorem over_disjoint (q : p.primesOver B) : Disjoint (S : Set B) (q.val : Set B) := by
+theorem over_disjoint (q : p.primesOver B) : Disjoint (S : Set B) (q.val : Set B) := by
   apply Set.disjoint_left.mpr
   rintro _ ⟨a, ha, rfl⟩ hq
   exact ha ((Ideal.mem_of_liesOver q.val p a).mpr hq)
 
-private theorem over_map_comap (q : p.primesOver B) :
+theorem over_map_comap (q : p.primesOver B) :
     (q.val.map (algebraMap B Bₚ)).comap (algebraMap B Bₚ) = q.val :=
-  IsLocalization.comap_map_of_isPrime_disjoint S Bₚ q.val q.property.1
+  IsLocalization.comap_map_of_isPrime_disjoint S Bₚ q.property.1
     (over_disjoint A B p q)
 
-private theorem over_map_isMaximal [Module.Finite A B] (q : p.primesOver B) :
+theorem over_map_isMaximal [Module.Finite A B] (q : p.primesOver B) :
     (q.val.map (algebraMap B Bₚ)).IsMaximal := by
   letI : (q.val.map (algebraMap B Bₚ)).IsPrime :=
     IsLocalization.isPrime_of_isPrime_disjoint S Bₚ q.val q.property.1
       (over_disjoint A B p q)
-  apply Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := Aₚ)
   have h : (q.val.map (algebraMap B Bₚ)).comap (algebraMap Aₚ Bₚ) =
       IsLocalRing.maximalIdeal Aₚ := by
     apply (IsLocalization.orderEmbedding p.primeCompl Aₚ).injective
@@ -73,10 +76,14 @@ private theorem over_map_isMaximal [Module.Finite A B] (q : p.primesOver B) :
       (algebraMap A Aₚ) = (IsLocalRing.maximalIdeal Aₚ).comap (algebraMap A Aₚ)
     rw [Ideal.comap_comap, ← IsScalarTower.algebraMap_eq A Aₚ Bₚ,
       IsScalarTower.algebraMap_eq A B Bₚ, ← Ideal.comap_comap,
-      over_map_comap, IsLocalization.AtPrime.comap_maximalIdeal Aₚ p]
+      over_map_comap]
+    change q.val.under A = (IsLocalRing.maximalIdeal Aₚ).under A
+    rw [IsLocalization.AtPrime.comap_maximalIdeal Aₚ p]
     exact (Ideal.over_def q.val p).symm
-  rw [h]
-  infer_instance
+  letI : (q.val.map (algebraMap B Bₚ)).LiesOver (IsLocalRing.maximalIdeal Aₚ) := ⟨h.symm⟩
+  exact Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := Aₚ)
+    (q.val.map (algebraMap B Bₚ)) (by simpa only [Ideal.under_def, h] using
+      (inferInstance : (IsLocalRing.maximalIdeal Aₚ).IsMaximal))
 
 /-- Maximal ideals of the whole localization are exactly primes over the base prime. -/
 def finiteLocalization_maximalEquiv [Module.Finite A B] :

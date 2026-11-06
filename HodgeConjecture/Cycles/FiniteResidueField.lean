@@ -1,6 +1,10 @@
-import HodgeConjecture.Cycles.AffineResidueField
-import Mathlib.AlgebraicGeometry.Morphisms.Finite
-import Mathlib.RingTheory.LocalRing.ResidueField.Instances
+module
+
+public import HodgeConjecture.Cycles.AffineResidueField
+public import Mathlib.AlgebraicGeometry.Morphisms.Finite
+public import Mathlib.RingTheory.LocalRing.ResidueField.Instances
+
+@[expose] public section
 
 /-!
 # Algebraicity of the actual residue maps of finite morphisms
@@ -33,6 +37,7 @@ private theorem spec_residueFieldMap_isAlgebraic
   let f := Spec.map (CommRingCat.ofHom (algebraMap A B))
   let y : Spec (.of A) := f.base x
   letI : x.asIdeal.LiesOver y.asIdeal := ⟨rfl⟩
+  letI := Localization.AtPrime.algebraOfLiesOver y.asIdeal x.asIdeal
   letI : Algebra ((Spec (.of A)).residueField (f.base x))
       ((Spec (.of B)).residueField x) := (f.residueFieldMap x).hom.toAlgebra
   let eA := specResidueFieldEquiv A y
@@ -129,10 +134,10 @@ theorem residueFieldMap_isAlgebraic_of_isFinite {X Y : Scheme.{u}}
   have hx' : hV.fromSpec.base x' = x := hV.fromSpec_primeIdealOf ⟨x, hx⟩
   letI : Algebra Γ(Y, U) Γ(X, f ⁻¹ᵁ U) := (f.app U).hom.toAlgebra
   letI : Algebra.IsIntegral Γ(Y, U) Γ(X, f ⁻¹ᵁ U) :=
-    algebraMap_isIntegral_iff.mp (IsIntegralHom.integral_app (f := f) U hU)
+    algebraMap_isIntegral_iff.mp (IsIntegralHom.isIntegral_app (f := f) U hU)
   have hsq : Spec.map (f.app U) ≫ hU.fromSpec = hV.fromSpec ≫ f := by
     simpa only [Scheme.Hom.app_eq_appLE] using
-      (IsAffineOpen.Spec_map_appLE_fromSpec f hU hV le_rfl)
+      (IsAffineOpen.SpecMap_appLE_fromSpec f hU hV le_rfl)
   have h := residue_algebraic_comp_open (Spec.map (f.app U)) hU.fromSpec x'
     (spec_residueFieldMap_isAlgebraic Γ(Y, U) Γ(X, f ⁻¹ᵁ U) x')
   rw [hsq] at h

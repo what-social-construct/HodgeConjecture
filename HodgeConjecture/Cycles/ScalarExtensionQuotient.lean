@@ -1,5 +1,9 @@
-import Mathlib.LinearAlgebra.Quotient.Basic
-import Mathlib.RingTheory.TensorProduct.Basic
+module
+
+public import Mathlib.LinearAlgebra.Quotient.Basic
+public import Mathlib.RingTheory.TensorProduct.Basic
+
+@[expose] public section
 
 /-!
 # Scalar extension of a quotient by actual relation generators
@@ -26,7 +30,7 @@ variable {R : Type uR} {S : Type uS} {M : Type uM} {N : Type uN} {ι : Type uI}
   [AddCommGroup M] [Module R M]
   [AddCommGroup N] [Module R N] [Module S N] [IsScalarTower R S N]
 
-private def quotientScalarExtensionMap (r : ι → M) (f : M →ₗ[R] N) :
+def quotientScalarExtensionMap (r : ι → M) (f : M →ₗ[R] N) :
     S ⊗[R] (M ⧸ Submodule.span R (Set.range r)) →ₗ[S]
       N ⧸ Submodule.span S (Set.range (fun i ↦ f (r i))) :=
   ((Submodule.span R (Set.range r)).liftQ
@@ -43,7 +47,7 @@ private theorem quotientScalarExtensionMap_tmul_mk
     quotientScalarExtensionMap r f (s ⊗ₜ[R] Submodule.Quotient.mk m) =
       Submodule.Quotient.mk (s • f m) := rfl
 
-private def quotientScalarExtensionInverse (r : ι → M) (f : M →ₗ[R] N)
+def quotientScalarExtensionInverse (r : ι → M) (f : M →ₗ[R] N)
     (E : (S ⊗[R] M) ≃ₗ[S] N)
     (hE : ∀ s m, E (s ⊗ₜ[R] m) = s • f m) :
     (N ⧸ Submodule.span S (Set.range (fun i ↦ f (r i)))) →ₗ[S]

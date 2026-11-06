@@ -1,5 +1,9 @@
-import Mathlib.Algebra.Algebra.Hom
-import Mathlib.Algebra.Group.Idempotent
+module
+
+public import Mathlib.Algebra.Algebra.Hom
+public import Mathlib.Algebra.Group.Idempotent
+
+@[expose] public section
 
 /-!
 # The idempotence defect of a proposed projector

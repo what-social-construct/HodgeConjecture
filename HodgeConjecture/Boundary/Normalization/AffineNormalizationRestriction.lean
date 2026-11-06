@@ -1,8 +1,12 @@
-import HodgeConjecture.Boundary.Normalization.NormalizationLocalization
-import HodgeConjecture.Boundary.Normalization.FiniteAffineChart
-import HodgeConjecture.Boundary.Normalization.FiniteFunctionField
-import Mathlib.AlgebraicGeometry.FunctionField
-import Mathlib.AlgebraicGeometry.OpenImmersion
+module
+
+public import HodgeConjecture.Boundary.Normalization.NormalizationLocalization
+public import HodgeConjecture.Boundary.Normalization.FiniteAffineChart
+public import HodgeConjecture.Boundary.Normalization.FiniteFunctionField
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Mathlib.AlgebraicGeometry.OpenImmersion
+
+@[expose] public section
 
 /-!
 # Restricting affine normalization models
@@ -305,7 +309,7 @@ theorem finiteAffinePreimageNormalizationIso_restriction
     Y.homOfLE hpre ≫
       ((hU.preimage p).isoSpec.hom ≫ Spec.map (CommRingCat.ofHom ψU.toRingHom))
   rw [Category.assoc, ← Spec.map_comp, hring, Spec.map_comp, ← Category.assoc]
-  simp only [IsAffineOpen.isoSpec_hom, Scheme.Opens.toSpecΓ_SpecMap_map, Category.assoc]
+  simp only [IsAffineOpen.isoSpec_hom, Scheme.Opens.toSpecΓ_SpecMap_presheaf_map, Category.assoc]
 
 end Preimage
 

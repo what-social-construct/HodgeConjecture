@@ -1,7 +1,11 @@
-import HodgeConjecture.LinearAlgebra.MarkedAugmentedAlgebra
-import Mathlib.Algebra.Module.TransferInstance
-import Mathlib.Algebra.Ring.TransferInstance
-import Mathlib.RingTheory.Idempotents
+module
+
+public import HodgeConjecture.LinearAlgebra.MarkedAugmentedAlgebra
+public import Mathlib.Algebra.Module.TransferInstance
+public import Mathlib.Algebra.Ring.TransferInstance
+public import Mathlib.RingTheory.Idempotents
+
+@[expose] public section
 
 /-!
 # Multiplicative decomposition of a marked augmented algebra
@@ -68,7 +72,8 @@ instance residualCornerNonUnitalCommRing : NonUnitalCommRing M.ResidualCorner :=
   M.residualCornerEquivIdealType.nonUnitalCommRing
 
 instance residualCornerModule : Module R M.ResidualCorner :=
-  M.residualCornerEquivIdealType.module R
+  (show M.ResidualCorner ≃+ M.Residual from
+    { M.residualCornerEquivIdealType with map_add' := fun _ _ ↦ rfl }).module R
 
 theorem residualCorner_property (x : M.ResidualCorner) :
     M.augmentation (x.toResidual : A) = 0 :=

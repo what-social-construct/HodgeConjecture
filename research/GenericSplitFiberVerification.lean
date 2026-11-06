@@ -1,6 +1,11 @@
+-- This dependency audit loads private imported proof bodies (legacy import mode).
 import HodgeConjecture.Boundary.Normalization.GenericSplitFiber
 import HodgeConjecture.Collision.AffineGeometry
 import Lean.Util.CollectAxioms
+import HodgeConjecture.MathlibCompat.DeclarationDependencies
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP99 focused checks for splitting the actual generic fiber over the original
@@ -94,7 +99,7 @@ example :
     Nonempty (Spec (.of Sₚ) ≅ pullback p bN) := by
   letI : Algebra X.functionField Y.functionField :=
     (functionFieldMapOfDominant p).hom.toAlgebra
-  fail_if_success have _ : IsEtale p := inferInstance
+  fail_if_success have _ : Etale p := inferInstance
   fail_if_success have _ : PerfectField X.functionField := inferInstance
   fail_if_success have _ : IsNoetherian X := inferInstance
   fail_if_success have _ : IsNoetherian Y := inferInstance
@@ -234,7 +239,7 @@ end FormallyUnramified
 
 section Etale
 
-variable [IsEtale p]
+variable [Etale p]
 
 example :
     letI : Algebra X.functionField Y.functionField :=
@@ -276,8 +281,8 @@ run_cmd do
   for declaration in declarations do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    let actual := state.axioms.toList
+    let axioms ← Lean.collectAxioms declaration
+    let actual := axioms.toList
     for axiomName in actual do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"
@@ -303,16 +308,16 @@ run_cmd do
   for declaration in separability :: forbidden ++ predecessors do
     unless env.contains declaration do
       throwError "Missing dependency-audit declaration {declaration}"
-  let (_, separabilityState) := ((CollectAxioms.collect separability).run env).run {}
+  let separabilityDependencies := HodgeConjecture.Research.declarationDependencies env separability
   for declaration in forbidden do
-    if separabilityState.visited.contains declaration then
+    if separabilityDependencies.contains declaration then
       throwError "Unexpected downstream dependency of separability: {declaration}"
   for declaration in predecessors do
-    unless separabilityState.visited.contains declaration do
+    unless separabilityDependencies.contains declaration do
       throwError "Missing established separability predecessor {declaration}"
   logInfo m!"PASS SP99 separability dependency boundary: established predecessors {predecessors}; absent downstream declarations {forbidden}"
-  let (_, splittingState) := ((CollectAxioms.collect splitting).run env).run {}
+  let splittingDependencies := HodgeConjecture.Research.declarationDependencies env splitting
   for declaration in [separability, equivalence] do
-    unless splittingState.visited.contains declaration do
+    unless splittingDependencies.contains declaration do
       throwError "Missing expected forward splitting dependency {declaration}"
   logInfo "PASS SP99 splitting dependency direction: the split-fiber isomorphism depends on established separability and the tensor equivalence"

@@ -1,6 +1,10 @@
-import Mathlib.RingTheory.Ideal.Colon
-import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
-import Mathlib.RingTheory.Noetherian.Basic
+module
+
+public import Mathlib.RingTheory.Ideal.Colon
+public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+public import Mathlib.RingTheory.Noetherian.Basic
+
+@[expose] public section
 
 /-!
 # Uniformly bounded overrings of a normal Noetherian domain

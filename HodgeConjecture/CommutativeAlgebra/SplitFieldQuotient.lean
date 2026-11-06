@@ -1,6 +1,10 @@
-import Mathlib.Algebra.Algebra.Pi
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.RingTheory.Spectrum.Prime.RingHom
+module
+
+public import Mathlib.Algebra.Algebra.Pi
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.RingTheory.Spectrum.Prime.RingHom
+
+@[expose] public section
 
 /-!
 # Integral quotients of a finite product of fields

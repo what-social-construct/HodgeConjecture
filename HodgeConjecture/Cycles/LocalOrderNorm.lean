@@ -1,8 +1,12 @@
-import HodgeConjecture.Cycles.LocalOrderDeterminant
-import HodgeConjecture.CommutativeAlgebra.SemilocalLength
-import Mathlib.RingTheory.Norm.Defs
-import Mathlib.RingTheory.Localization.Integral
-import Mathlib.RingTheory.Localization.Finiteness
+module
+
+public import HodgeConjecture.Cycles.LocalOrderDeterminant
+public import HodgeConjecture.CommutativeAlgebra.SemilocalLength
+public import Mathlib.RingTheory.Norm.Defs
+public import Mathlib.RingTheory.Localization.Integral
+public import Mathlib.RingTheory.Localization.Finiteness
+
+@[expose] public section
 
 /-!
 # Norms and actual quotient lengths

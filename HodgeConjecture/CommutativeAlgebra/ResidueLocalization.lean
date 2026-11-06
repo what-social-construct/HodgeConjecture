@@ -1,6 +1,10 @@
-import Mathlib.RingTheory.Localization.Algebra
-import Mathlib.RingTheory.Localization.Integral
-import Mathlib.RingTheory.Ideal.Height
+module
+
+public import Mathlib.RingTheory.Localization.Algebra
+public import Mathlib.RingTheory.Localization.Integral
+public import Mathlib.RingTheory.Ideal.Height
+
+@[expose] public section
 
 /-!
 # Localization along an integral prime quotient
@@ -43,7 +47,7 @@ theorem residueLocalization_comap_map
     (hinj : Function.Injective (algebraMap R (S ⧸ q))) :
     (q.map (algebraMap S S')).comap (algebraMap S S') = q :=
   IsLocalization.comap_map_of_isPrime_disjoint
-    (Algebra.algebraMapSubmonoid S (nonZeroDivisors R)) S' q inferInstance
+    (Algebra.algebraMapSubmonoid S (nonZeroDivisors R)) S' inferInstance
     (residueLocalization_disjoint R S q hinj)
 
 /-- The prime remains prime after the actual localization. -/
@@ -88,7 +92,7 @@ theorem residueLocalization_map_isMaximal
     IsLocalization.map_surjective_of_surjective M S' T (Ideal.Quotient.mk_surjective (I := q))
   have hker : RingHom.ker g = q.map (algebraMap S S') := by
     simpa only [Ideal.mk_ker] using
-      (IsLocalization.ker_map (S := S') T (Ideal.Quotient.mk q) hMN)
+      (IsLocalization.ker_map (S := S') T (Ideal.Quotient.mk q) rfl)
   rw [← hker]
   exact RingHom.ker_isMaximal_of_surjective g hg
 
@@ -98,9 +102,9 @@ theorem residueLocalization_primeHeight_map
     (q : Ideal S) [q.IsPrime]
     (hinj : Function.Injective (algebraMap R (S ⧸ q))) :
     letI := residueLocalization_map_isPrime R S S' q hinj
-    (q.map (algebraMap S S')).primeHeight = q.primeHeight := by
+    (q.map (algebraMap S S')).height = q.height := by
   letI := residueLocalization_map_isPrime R S S' q hinj
-  have h := IsLocalization.primeHeight_comap
+  have h := IsLocalization.height_under
     (Algebra.algebraMapSubmonoid S (nonZeroDivisors R))
     (q.map (algebraMap S S'))
   simpa only [residueLocalization_comap_map R S S' q hinj] using h.symm

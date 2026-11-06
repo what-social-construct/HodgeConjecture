@@ -1,7 +1,11 @@
-import HodgeConjecture.Cycles.PointSupport
-import HodgeConjecture.Cycles.SupportCodimension
-import HodgeConjecture.Cycles.SchemeLocalOrder
-import HodgeConjecture.Cycles.ClosedImmersionPushforward
+module
+
+public import HodgeConjecture.Cycles.PointSupport
+public import HodgeConjecture.Cycles.SupportCodimension
+public import HodgeConjecture.Cycles.SchemeLocalOrder
+public import HodgeConjecture.Cycles.ClosedImmersionPushforward
+
+@[expose] public section
 
 /-!
 # Prime divisors as actual integral closed supports
@@ -32,8 +36,8 @@ variable {X Y : Scheme.{u}}
 def integralSupport (Z : IntegralClosedSubscheme X) :
     TopologicalSpace.IrreducibleCloseds X where
   carrier := Z.val.support
-  is_closed' := Z.val.support.isClosed
-  is_irreducible' := (ambientGenericPoint_isGenericPoint Z).isIrreducible
+  isClosed' := Z.val.support.isClosed
+  isIrreducible' := (ambientGenericPoint_isGenericPoint Z).isIrreducible
 
 @[simp]
 theorem integralSupport_coe (Z : IntegralClosedSubscheme X) :

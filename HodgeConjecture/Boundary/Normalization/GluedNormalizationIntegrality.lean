@@ -1,4 +1,8 @@
-import HodgeConjecture.Boundary.Normalization.GluedNormalizationNormality
+module
+
+public import HodgeConjecture.Boundary.Normalization.GluedNormalizationNormality
+
+@[expose] public section
 
 /-!
 # Integrality of the original glued normalization
@@ -50,9 +54,9 @@ theorem normalizationChartToGlued_range_inter_nonempty
   obtain ⟨w⟩ := (inferInstance : Nonempty ((affineNormalizationDiagram X N).obj W))
   refine ⟨(normalizationChartToGlued X N W).base w, ?_, ?_⟩
   · refine ⟨((affineNormalizationDiagram X N).map f).base w, ?_⟩
-    rw [← Scheme.comp_base_apply, normalizationChartToGlued_naturality]
+    rw [← Scheme.Hom.comp_apply, normalizationChartToGlued_naturality]
   · refine ⟨((affineNormalizationDiagram X N).map g).base w, ?_⟩
-    rw [← Scheme.comp_base_apply, normalizationChartToGlued_naturality]
+    rw [← Scheme.Hom.comp_apply, normalizationChartToGlued_naturality]
 
 /-- The proved domain stalks make the original glued scheme reduced. -/
 theorem gluedNormalizationModel_isReduced : IsReduced (gluedNormalizationModel X N) := by

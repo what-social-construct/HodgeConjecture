@@ -1,7 +1,11 @@
-import HodgeConjecture.Cycles.LocalOrderNorm
-import HodgeConjecture.Cycles.LocalOrderLocalization
-import HodgeConjecture.CommutativeAlgebra.FiniteSemilocal
-import Mathlib.Algebra.BigOperators.Finprod
+module
+
+public import HodgeConjecture.Cycles.LocalOrderNorm
+public import HodgeConjecture.Cycles.LocalOrderLocalization
+public import HodgeConjecture.CommutativeAlgebra.FiniteSemilocal
+public import Mathlib.Algebra.BigOperators.Finprod
+
+@[expose] public section
 
 /-!
 # The weighted norm--order formula
@@ -67,7 +71,7 @@ theorem localOrder_norm_eq_sum (y : Lˣ) :
     ((map_ne_zero_iff _ (IsFractionRing.injective B L)).mpr hb0)
   have hy : y = u / v := by
     apply Units.ext
-    simpa only [Units.val_div_eq_div_val, Units.val_mk0] using hab.symm
+    simpa only [u, v, Units.val_div_eq_div_val, Units.val_mk0] using hab.symm
   rw [hy, map_div, localOrder_div]
   simp_rw [localOrder_div, mul_sub, Finset.sum_sub_distrib]
   congr 1

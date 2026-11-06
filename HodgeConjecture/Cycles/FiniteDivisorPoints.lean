@@ -1,5 +1,9 @@
-import HodgeConjecture.Cycles.FiniteGrading
-import HodgeConjecture.Cycles.IntegralCodimension
+module
+
+public import HodgeConjecture.Cycles.FiniteGrading
+public import HodgeConjecture.Cycles.IntegralCodimension
+
+@[expose] public section
 
 /-!
 # Divisor points under finite dominant maps over a field

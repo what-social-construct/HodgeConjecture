@@ -1,5 +1,9 @@
-import HodgeConjecture.Cycles.OpenRestriction
-import HodgeConjecture.Cycles.DivisorSupport
+module
+
+public import HodgeConjecture.Cycles.OpenRestriction
+public import HodgeConjecture.Cycles.DivisorSupport
+
+@[expose] public section
 
 /-!
 # Actual open support restriction and reduced closure

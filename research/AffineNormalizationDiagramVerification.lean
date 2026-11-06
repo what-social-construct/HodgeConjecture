@@ -1,5 +1,10 @@
+module
+
 import HodgeConjecture.Boundary.Normalization.GluedNormalization
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP84 regressions for the actual locally directed normalization-chart diagram.
@@ -215,7 +220,7 @@ example (U : NonemptyAffineChart X) :
 example (U : NonemptyAffineChart X) (a : (affineNormalizationDiagram X N).obj U) :
     (gluedNormalizationToBase X N).base ((normalizationChartToGlued X N U).base a) =
       ((affineNormalizationBaseCocone X N).ι.app U).base a := by
-  rw [← Scheme.comp_base_apply, normalizationChartToGlued_comp_toBase]
+  rw [← Scheme.Hom.comp_apply, normalizationChartToGlued_comp_toBase]
   rfl
 
 example {U V : NonemptyAffineChart X} (f : U ⟶ V) :
@@ -292,9 +297,9 @@ run_cmd do
   for declaration in declarations do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    for axiomName in state.axioms do
+    let axioms ← Lean.collectAxioms declaration
+    for axiomName in axioms do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"
-    logInfo m!"PASS standard-axiom boundary: {declaration}; {state.axioms.toList}"
+    logInfo m!"PASS standard-axiom boundary: {declaration}; {axioms.toList}"
   logInfo "PASS SP84 audit registry: 16 distinct public declarations"

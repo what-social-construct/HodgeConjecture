@@ -1,5 +1,9 @@
-import HodgeConjecture.Boundary.Normalization.GluedNormalizationProperties
-import HodgeConjecture.Boundary.Normalization.GluedNormalClosureRefinement
+module
+
+public import HodgeConjecture.Boundary.Normalization.GluedNormalizationProperties
+public import HodgeConjecture.Boundary.Normalization.GluedNormalClosureRefinement
+
+@[expose] public section
 
 /-!
 # Surjectivity of the original global normalization maps
@@ -41,7 +45,7 @@ theorem gluedNormalizationToBase_surjective (X : Scheme.{u}) [IsIntegral X]
     apply (algebraMap X.functionField N).injective
     exact congrArg (fun z : normalizedCoordinateRing Γ(X, U.val) N => (z : N)) h
   haveI : Surjective (normalizedModelToBase Γ(X, U.val) N) :=
-    ⟨hi.specComap_surjective hinj⟩
+    ⟨hi.comap_surjective hinj⟩
   infer_instance
 
 variable {X Y : Scheme.{u}} [IsIntegral X] [IsIntegral Y]
@@ -68,8 +72,8 @@ theorem gluedNormalClosureToCover_surjective
     p A.val A.property.1 (fun y => hY y.val)
   obtain ⟨z, hz⟩ := q.surjective ⟨y, hy⟩
   refine ⟨(normalizationChartToGlued X N A).base z, ?_⟩
-  rw [← Scheme.comp_base_apply, normalizationChartToGlued_comp_toCover]
-  rw [Scheme.comp_base_apply]
+  rw [← Scheme.Hom.comp_apply, normalizationChartToGlued_comp_toCover]
+  rw [Scheme.Hom.comp_apply]
   change (p ⁻¹ᵁ A.val).ι.base (q.base z) = y
   rw [hz]
   rfl

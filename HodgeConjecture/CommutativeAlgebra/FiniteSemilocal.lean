@@ -1,7 +1,11 @@
-import Mathlib.RingTheory.Ideal.GoingUp
-import Mathlib.RingTheory.Artinian.Module
-import Mathlib.RingTheory.LocalRing.ResidueField.Basic
-import Mathlib.RingTheory.KrullDimension.Basic
+module
+
+public import Mathlib.RingTheory.Ideal.GoingUp
+public import Mathlib.RingTheory.Artinian.Module
+public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+public import Mathlib.RingTheory.KrullDimension.Basic
+
+@[expose] public section
 
 /-!
 # Finite algebras over a local ring
@@ -31,7 +35,7 @@ theorem finiteAlgebra_maximal_liesOver [IsLocalRing R] [Module.Finite R B]
     (q : MaximalSpectrum B) : q.asIdeal.LiesOver (IsLocalRing.maximalIdeal R) := by
   constructor
   exact (IsLocalRing.eq_maximalIdeal
-    (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := R) q.asIdeal)).symm
+    (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := R) (S := B) q.asIdeal)).symm
 
 attribute [local instance] finiteAlgebra_maximal_liesOver
 
@@ -74,7 +78,7 @@ theorem integralAlgebra_krullDimLE_one [IsDomain R] [IsDomain B]
   apply Ring.KrullDimLE.mk₁'
   intro q hq hprime
   letI := hprime
-  apply Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := R)
+  apply Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := R) (S := B) q
   exact (Ring.krullDimLE_one_iff_of_noZeroDivisors.mp ‹Ring.KrullDimLE 1 R›)
     (q.comap (algebraMap R B))
     (fun h => hq (Ideal.eq_bot_of_comap_eq_bot h)) inferInstance

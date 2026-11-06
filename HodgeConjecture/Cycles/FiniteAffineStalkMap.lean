@@ -1,7 +1,11 @@
-import HodgeConjecture.Cycles.FiniteAffineFiber
-import HodgeConjecture.CommutativeAlgebra.FiniteLocalizationFractionField
-import HodgeConjecture.CommutativeAlgebra.LocalizedResidueDegree
-import Mathlib.AlgebraicGeometry.ResidueField
+module
+
+public import HodgeConjecture.Cycles.FiniteAffineFiber
+public import HodgeConjecture.CommutativeAlgebra.FiniteLocalizationFractionField
+public import HodgeConjecture.CommutativeAlgebra.LocalizedResidueDegree
+public import Mathlib.AlgebraicGeometry.ResidueField
+
+@[expose] public section
 
 /-!
 # The semilocal base action is the actual scheme stalk map
@@ -61,7 +65,7 @@ theorem finiteAffineFiber_stalkEquiv_stalkMap (q : MaximalSpectrum T) :
       (Y.presheaf.stalkCongr (.of_eq x.property.symm)).hom ≫ f.stalkMap x.val =
       f.app U ≫ X.presheaf.germ (f ⁻¹ᵁ U) x.val hx := by
     rw [← Category.assoc, TopCat.Presheaf.stalkCongr_hom,
-      TopCat.Presheaf.germ_stalkSpecializes, Scheme.stalkMap_germ]
+      TopCat.Presheaf.germ_stalkSpecializes, Scheme.Hom.germ_stalkMap]
   apply IsLocalization.ringHom_ext (p).primeCompl
   ext a
   have h := DFunLike.congr_fun (congrArg CommRingCat.Hom.hom hgerm) a

@@ -1,5 +1,10 @@
+module
+
 import HodgeConjecture.Boundary.Normalization.FiniteEtaleGluedRefinement
 import Lean.Util.CollectAxioms
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 /-!
 SP88 regressions for finite étaleness of the original glued marked refinement.
@@ -34,7 +39,7 @@ variable {Z Y X W : Scheme.{u}}
 example (f : Z ⟶ Y) (g : Y ⟶ X) [IsFinite (f ≫ g)] [IsSeparated g] :
     IsFinite f := by
   fail_if_success have _ : IsFinite g := inferInstance
-  fail_if_success have _ : IsEtale g := inferInstance
+  fail_if_success have _ : Etale g := inferInstance
   fail_if_success have _ : IsIntegral X := inferInstance
   fail_if_success have _ : IsIntegral Y := inferInstance
   fail_if_success have _ : IsIntegral Z := inferInstance
@@ -70,7 +75,7 @@ end GenericCancellation
 section ActualRefinement
 
 variable {X Y : Scheme.{u}} [IsIntegral X] [IsIntegral Y]
-variable (p : Y ⟶ X) [IsDominant p] [IsFinite p] [IsEtale p]
+variable (p : Y ⟶ X) [IsDominant p] [IsFinite p] [Etale p]
 variable (hX : ∀ x : X, IsIntegrallyClosed (X.presheaf.stalk x))
 variable (hY : ∀ y : Y, IsIntegrallyClosed (Y.presheaf.stalk y))
 
@@ -92,7 +97,7 @@ example (U : NonemptyAffineChart X) (b : Γ(X, U.val)) :
       algebraMap X.functionField Nₚ ((X.germToFunctionField U.val).hom b) := rfl
 
 example : IsFinite (gluedNormalClosureToCover p hY) ∧
-    IsEtale (gluedNormalClosureToCover p hY) := by
+    Etale (gluedNormalClosureToCover p hY) := by
   fail_if_success have _ : IsNoetherian X := inferInstance
   fail_if_success have _ : IsNoetherian Y := inferInstance
   fail_if_success have _ : PerfectField X.functionField := inferInstance
@@ -101,7 +106,7 @@ example : IsFinite (gluedNormalClosureToCover p hY) ∧
 example : IsFinite (gluedNormalClosureToCover p hY) :=
   (gluedNormalClosureToCover_finite_etale p hX hY).1
 
-example : IsEtale (gluedNormalClosureToCover p hY) :=
+example : Etale (gluedNormalClosureToCover p hY) :=
   (gluedNormalClosureToCover_finite_etale p hX hY).2
 
 example :
@@ -114,7 +119,7 @@ example :
     letI : Algebra X.functionField Y.functionField :=
       (functionFieldMapOfDominant p).hom.toAlgebra
     IsFinite (gluedNormalClosureToCover p hY) ∧
-      IsEtale (gluedNormalClosureToCover p hY) ∧
+      Etale (gluedNormalClosureToCover p hY) ∧
       gluedNormalClosureToCover p hY ≫ p = gluedNormalizationToBase X Nₚ := by
   letI : Algebra X.functionField Y.functionField :=
     (functionFieldMapOfDominant p).hom.toAlgebra
@@ -140,22 +145,22 @@ example (U : NonemptyAffineChart X) :
   letI : Algebra X.functionField Y.functionField :=
     (functionFieldMapOfDominant p).hom.toAlgebra
   intro a
-  rw [← Scheme.comp_base_apply, normalizationChartToGlued_comp_toCover]
+  rw [← Scheme.Hom.comp_apply, normalizationChartToGlued_comp_toCover]
   rfl
 
 example (U : NonemptyAffineChart X) :
     IsFinite (finiteEtaleAffineNormalClosureToPreimage p U.val U.property.1
       (fun y => hY y.val)) ∧
-      IsEtale (finiteEtaleAffineNormalClosureToPreimage p U.val U.property.1
+      Etale (finiteEtaleAffineNormalClosureToPreimage p U.val U.property.1
         (fun y => hY y.val)) :=
   finiteEtaleAffineNormalClosureToPreimage_finite_etale p U.val U.property.1
     (fun x => hX x.val) (fun y => hY y.val)
 
 example (V : Y.Opens) : IsFinite (gluedNormalClosureToCover p hY ∣_ V) ∧
-    IsEtale (gluedNormalClosureToCover p hY ∣_ V) := by
+    Etale (gluedNormalClosureToCover p hY ∣_ V) := by
   have h := gluedNormalClosureToCover_finite_etale p hX hY
   exact ⟨IsZariskiLocalAtTarget.restrict (P := @IsFinite) h.1 V,
-    IsZariskiLocalAtTarget.restrict (P := @IsEtale) h.2 V⟩
+    IsZariskiLocalAtTarget.restrict (P := @Etale) h.2 V⟩
 
 example (V : Y.Opens) (hV : IsAffineOpen V) :
     IsAffineOpen ((gluedNormalClosureToCover p hY) ⁻¹ᵁ V) := by
@@ -164,21 +169,21 @@ example (V : Y.Opens) (hV : IsAffineOpen V) :
   exact hV.preimage (gluedNormalClosureToCover p hY)
 
 example : IsFinite (gluedNormalClosureToCover p hY ∣_ (⊥ : Y.Opens)) ∧
-    IsEtale (gluedNormalClosureToCover p hY ∣_ (⊥ : Y.Opens)) := by
+    Etale (gluedNormalClosureToCover p hY ∣_ (⊥ : Y.Opens)) := by
   have h := gluedNormalClosureToCover_finite_etale p hX hY
   exact ⟨IsZariskiLocalAtTarget.restrict (P := @IsFinite) h.1 ⊥,
-    IsZariskiLocalAtTarget.restrict (P := @IsEtale) h.2 ⊥⟩
+    IsZariskiLocalAtTarget.restrict (P := @Etale) h.2 ⊥⟩
 
 example :
     letI : Algebra X.functionField Y.functionField :=
       (functionFieldMapOfDominant p).hom.toAlgebra
     IsFinite (gluedNormalizationToBase X Nₚ) ∧
-      IsEtale (gluedNormalizationToBase X Nₚ) := by
+      Etale (gluedNormalizationToBase X Nₚ) := by
   letI : Algebra X.functionField Y.functionField :=
     (functionFieldMapOfDominant p).hom.toAlgebra
   letI : IsFinite (gluedNormalClosureToCover p hY) :=
     (gluedNormalClosureToCover_finite_etale p hX hY).1
-  letI : IsEtale (gluedNormalClosureToCover p hY) :=
+  letI : Etale (gluedNormalClosureToCover p hY) :=
     (gluedNormalClosureToCover_finite_etale p hX hY).2
   rw [← gluedNormalClosureToCover_comp_toBase p hY]
   constructor <;> infer_instance
@@ -201,9 +206,9 @@ run_cmd do
   for declaration in declarations do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
-    let (_, state) := ((CollectAxioms.collect declaration).run env).run {}
-    for axiomName in state.axioms do
+    let axioms ← Lean.collectAxioms declaration
+    for axiomName in axioms do
       unless permitted.contains axiomName do
         throwError "Unexpected axiom {axiomName} in {declaration}"
-    logInfo m!"PASS standard-axiom boundary: {declaration}; {state.axioms.toList}"
+    logInfo m!"PASS standard-axiom boundary: {declaration}; {axioms.toList}"
   logInfo "PASS SP88 audit registry: 2 distinct public declarations"

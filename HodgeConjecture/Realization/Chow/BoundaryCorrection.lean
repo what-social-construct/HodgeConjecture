@@ -1,6 +1,10 @@
-import HodgeConjecture.Realization.HodgeClasses
-import HodgeConjecture.Cycles.RationalChowOpenRestriction
-import HodgeConjecture.Cycles.RationalChowPushforward
+module
+
+public import HodgeConjecture.Realization.HodgeClasses
+public import HodgeConjecture.Cycles.RationalChowOpenRestriction
+public import HodgeConjecture.Cycles.RationalChowPushforward
+
+@[expose] public section
 
 /-!
 # Boundary correction on the existing Chow groups
