@@ -48,8 +48,14 @@ manuscript. Do not combine old checkpoint descriptions into a proof plan.
   and analytic scheme periods, with the singular H² comparison still open.
 - [0029-small-singular-chains.md](0029-small-singular-chains.md) records actual
   barycentric subdivision, its local homotopy, finite-chain shrinking and
-  the two-open small-chain comparison. Full singular cohomology
-  Mayer–Vietoris still requires rational dualization.
+  the two-open small-chain comparison. Its full singular cohomology
+  comparison is completed by 0031 below.
+- [0030-hodge-derham-degeneration-audit.md](0030-hodge-derham-degeneration-audit.md)
+  audits the missing general characteristic-zero degeneration theorem and
+  the explicit premises of upstream reductions; no submission copy is made.
+- [0031-singular-cohomology-mayer-vietoris.md](0031-singular-cohomology-mayer-vietoris.md)
+  records exact rational dualization, the full/small cochain comparison and
+  full singular Mayer–Vietoris with original continuous inclusion maps.
 - `../bench/` holds the standalone matrix-restriction diagnostic outside
   active imports; this is not an obstruction in the intended target route.
 

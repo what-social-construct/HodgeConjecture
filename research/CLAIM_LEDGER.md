@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-11-06 (rational singular subdivision and small chains;
+Last audited: 2026-11-06 (exact rational dualization and full singular Mayer–Vietoris;
 earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,34 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Exact rational dualization and full singular Mayer–Vietoris (2026-11-06)
+
+Status: `FORMAL`. The unrestricted rational linear dual is an actual
+additive exact functor, with proved homology and quasi-isomorphism
+preservation, without a finite-dimensionality premise. Its native dual
+chain complex is identified with the original rational simplicial
+cochains, retaining the actual alternating differential and map naturality.
+The proved small-chain comparison therefore gives an actual full-to-small
+singular cochain restriction quasi-isomorphism for a genuine two-open cover.
+
+The resulting full singular Mayer–Vietoris sequence has the actual subtype
+cohomologies of the two opens and their intersection, with the pair product
+comparison fixed by original projections and inclusions. All three
+exactness positions, adjacent zero compositions and the initial H⁰
+injection are proved. Its restriction and difference maps agree with the
+original continuous inclusion pullbacks, using first minus second for
+the difference. The connecting morphism comes from the original native
+short exact sequence and proved small-cochain comparison.
+
+This uses literal ℚ coefficients and universe-zero topological spaces,
+including the original P¹(ℂ). Computing circle/P¹ groups, the oriented
+Betti period comparison and prescribed Hodge-class coverage remain `OPEN`.
+General characteristic-zero Hodge–de Rham degeneration is also `OPEN`
+here: no Hodge filtration/spectral-sequence construction or closed general
+degeneration endpoint is supplied. See the
+[cohomology checkpoint](working/0031-singular-cohomology-mayer-vietoris.md)
+and [proof-scope audit](working/0030-hodge-derham-degeneration-audit.md).
 
 ## Rational singular subdivision and small chains (2026-11-06)
 
@@ -45,9 +73,9 @@ coefficients, including the constructed P¹(ℂ).
 Rational cochains on an arbitrary simplicial union carry the actual short
 exact gluing sequence and connecting maps. Its first term for a topological
 cover is cochains on the small singular subcomplex. Exact rational
-dualization and identification with full singular cochains remain `OPEN`;
-the full singular cohomology Mayer–Vietoris application, P¹ H² computation,
-oriented Betti comparison and Hodge-class coverage remain `OPEN`. See
+dualization and full singular Mayer–Vietoris are now formalized in the
+entry above. P¹ H² computation, oriented Betti comparison and Hodge-class
+coverage remain `OPEN`. See
 [0029](working/0029-small-singular-chains.md).
 
 ## Projective-line Betti inputs and analytic periods (2026-11-06)
@@ -71,9 +99,10 @@ scheme comparison. The original scheme Chern coordinate has period `2πi`;
 the normalized period of every ordinary rational Chow class is its actual
 rational degree embedded in ℂ.
 
-Computing P¹'s rational singular H², singular excision/Mayer–Vietoris and
-identifying an oriented singular generator with the analytic period remain
-`OPEN`. The analytic functional does not define an independent rational
+Computing P¹'s rational singular H² and identifying an oriented singular
+generator with the analytic period remain `OPEN`. The two-open small-chain
+comparison and full singular cohomology Mayer–Vietoris are now formalized
+above. The analytic functional does not define an independent rational
 singular lattice or establish positive-degree Betti comparison. General
 Hodge-class coverage remains `OPEN`. See
 [0028](working/0028-projective-line-betti-inputs.md).

@@ -16,7 +16,8 @@ The actual support shrinks uniformly on every finite chain, giving the
 small-chain inclusion's homology comparison for a two-open cover.
 
 The associated subcomplex cochains have an actual short exact gluing
-sequence and connecting maps. Comparing their cohomology with the full
-singular cochains requires the separate rational dualization step; the
-projective-line H² calculation and oriented period comparison remain open.
+sequence and connecting maps. The separate `SingularMayerVietorisMaps`
+entry point constructs exact rational dualization and the full singular
+cover sequence. The projective-line H² calculation and oriented period
+comparison remain open.
 -/

@@ -270,3 +270,21 @@ rational homology quasi-isomorphism for a genuine two-open cover. Full
 singular cochain dualization, the P¹ H² calculation and oriented Betti
 comparison remain open. See [0029](working/0029-small-singular-chains.md).
 Release sign-offs, comparator selection and submission packaging remain unchanged.
+
+The rational dualization/full singular Mayer–Vietoris checkpoint (2026-11-06)
+passes its 2,489-job pure target and separate 2,949-job P¹ chart-topology
+regression build. Four suites pass 40 examples, three named calculations
+and 86 enforced standard-three axiom audits with zero suite warnings.
+The full default build passes 5,018 jobs; root verification passes 1,411
+declaration checks, 574 examples and 1,275 axiom reports within the standard
+three (one report needs no axioms). All 493 library modules plus the root
+pass source scans; fourteen import boundaries, three indirect-negative
+checks, pins, local links and whitespace checks pass. Existing warning
+scope remains; the main README remains 69 lines. The full rational singular
+cover sequence and original continuous pullback formulas are constructed.
+Circle/P¹ group calculations and oriented Betti comparison remain open.
+The separate audit finds no completed general characteristic-zero
+Hodge–de Rham degeneration proof, so no outside submission copy was made.
+See [0031](working/0031-singular-cohomology-mayer-vietoris.md) and
+[0030](working/0030-hodge-derham-degeneration-audit.md). Release sign-offs,
+comparator selection and submission packaging remain unchanged.

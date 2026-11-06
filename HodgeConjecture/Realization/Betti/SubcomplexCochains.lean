@@ -17,8 +17,8 @@ and their intersection. Its connecting morphism and long exact sequence
 are therefore constructed without an excision hypothesis.
 
 For singular simplices this union is the small singular complex. Its
-comparison with all singular simplices of a topological open cover remains
-a separate subdivision theorem.
+comparison with full singular cochains of a topological open cover is
+provided separately by actual subdivision and exact rational dualization.
 -/
 
 set_option autoImplicit false

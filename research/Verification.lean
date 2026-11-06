@@ -8605,3 +8605,33 @@ Focused regressions and enforced standard-axiom checks are in
 #print axioms HodgeConjecture.SmallSingularComparison.homologyIso
 #check HodgeConjecture.SmallSingularComparison.homologyIso_hom
 #print axioms HodgeConjecture.SmallSingularComparison.homologyIso_hom
+
+/-! Exact unrestricted rational dualization and full singular Mayer–Vietoris. -/
+#check HodgeConjecture.RationalDual.functor
+#check HodgeConjecture.RationalDual.map_exact
+#check HodgeConjecture.RationalDual.dualMap_quasiIso
+#check HodgeConjecture.CochainDualCoordinates.coordinates
+#check HodgeConjecture.CochainDualCoordinates.coordinates_differential
+#check HodgeConjecture.CochainDualComparison.comparisonIso
+#check HodgeConjecture.CochainDualComparison.comparisonIso_naturality
+#check HodgeConjecture.CochainDualComparison.smallRestriction_quasiIso
+#check HodgeConjecture.CochainDualComparison.smallCohomologyIso
+#check HodgeConjecture.CochainPair.cohomologyIso
+#check HodgeConjecture.SingularMayerVietoris.pairSequence_exact
+#check HodgeConjecture.SingularMayerVietoris.intersectionSequence_exact
+#check HodgeConjecture.SingularMayerVietoris.unionSequence_exact
+#check HodgeConjecture.SingularMayerVietoris.mono_restriction_zero
+#check HodgeConjecture.SingularMayerVietoris.restriction_apply
+#check HodgeConjecture.SingularMayerVietoris.difference_apply
+#print axioms HodgeConjecture.RationalDual.map_exact
+#print axioms HodgeConjecture.RationalDual.dualMap_quasiIso
+#print axioms HodgeConjecture.CochainDualCoordinates.coordinates_differential
+#print axioms HodgeConjecture.CochainDualComparison.comparisonIso_naturality
+#print axioms HodgeConjecture.CochainDualComparison.smallRestriction_quasiIso
+#print axioms HodgeConjecture.CochainPair.cohomologyIso
+#print axioms HodgeConjecture.SingularMayerVietoris.pairSequence_exact
+#print axioms HodgeConjecture.SingularMayerVietoris.intersectionSequence_exact
+#print axioms HodgeConjecture.SingularMayerVietoris.unionSequence_exact
+#print axioms HodgeConjecture.SingularMayerVietoris.mono_restriction_zero
+#print axioms HodgeConjecture.SingularMayerVietoris.restriction_apply
+#print axioms HodgeConjecture.SingularMayerVietoris.difference_apply

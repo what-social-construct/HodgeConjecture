@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-11-06 (rational singular subdivision and small chains;
+Assessed: 2026-11-06 (exact rational dualization and full singular Mayer–Vietoris;
 SP108--SP113 retain their stated conditional and research scope).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
@@ -57,10 +57,13 @@ constructs barycentric subdivision on the actual rational singular complex,
 its explicit local chain homotopy and uniform finite-chain shrinking for a
 two-open cover. The actual small-subcomplex inclusion supplies the homology
 comparison; the small cochain gluing sequence has proved exactness and
-connecting maps. Next transfer the chain comparison to rational cochains
-by exact dualization, obtain full singular Mayer–Vietoris, compute this
-independent rational H² and match its oriented generator to the analytic
-period. The singular functor still does not carry a topological cover
+connecting maps. The [full cohomology checkpoint](working/0031-singular-cohomology-mayer-vietoris.md)
+now proves exact unrestricted rational dualization, identifies dual chains
+with the original cochains and constructs full singular Mayer–Vietoris.
+Its maps are the original continuous pullbacks on actual subtype spaces,
+with the first-minus-second difference and degree-zero injection proved.
+Next compute the circle and this independent P¹ rational H², then match
+the oriented generator to the analytic period. The singular functor still does not carry a topological cover
 directly to a union of all singular simplices; the proved subdivision
 argument supplies that comparison on homology. Generality beyond P¹ and
 Hodge-class coverage remain open. Logarithmic higher-Chow ideas support

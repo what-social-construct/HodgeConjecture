@@ -50,7 +50,17 @@ local homotopy and finite-support mesh shrinking. `SingularSubdivision`
 and its homotopy/smallness companions transfer these to original rational
 singular chains. `SmallSingularComparison` supplies the two-open homology
 comparison. `SubcomplexCochains` supplies the actual small-union gluing
-sequence; exact dualization is the next full-cochain comparison obligation.
+sequence; its full-cochain comparison is completed in the next checkpoint.
+
+The [full singular cohomology checkpoint](working/0031-singular-cohomology-mayer-vietoris.md)
+discharges that obligation. `RationalDual` proves exact unrestricted
+dualization and native chain/cochain quasi-isomorphism preservation.
+`CochainDualCoordinates` and `CochainDualComparison` identify actual
+cochains and the canonical full-to-small restriction. `CochainPair` and
+`SingularMayerVietoris` construct the full cover sequence on actual subtype
+cohomologies; `SingularMayerVietorisMaps` proves the original continuous
+pullback formulas and first-minus-second difference. The circle/P¹ group
+calculations and oriented period comparison remain open.
 
 
 This Lean project develops collision ideals as scheme-theoretic input to

@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-11-06 (rational singular subdivision and small chains;
+Last reviewed: 2026-11-06 (exact rational dualization and full singular Mayer–Vietoris;
 earlier checkpoint records retain
 their original validation scope).
 
@@ -93,11 +93,20 @@ count for every whole finite chain in a two-open cover. The actual native
 small-subcomplex inclusion gives the homology comparison. The small cochain
 sequence also has proved short exactness and native connecting maps.
 
-The next obligation is exact rational dualization of that chain comparison
-and identification with the constructed singular cochain complex. This
-then transfers the cover sequence to full singular cohomology. The circle
-and P¹ singular calculations, oriented generator and cycle-class period
-comparison remain open. A direct pushout argument on all singular simplices
+The [full cohomology checkpoint](working/0031-singular-cohomology-mayer-vietoris.md)
+now proves exact rational dualization without finite-dimensionality,
+identifies dual native chains with original cochains and transfers the
+cover sequence to full singular cohomology. All three exactness positions
+and the initial degree-zero injection are proved. Chart and intersection
+groups use their actual subtype topologies; original continuous pullback
+formulas fix the restriction and first-minus-second difference.
+
+The next obligation is the actual circle and P¹ singular calculations,
+followed by the oriented generator and cycle-class period comparison.
+The [degeneration audit](working/0030-hodge-derham-degeneration-audit.md)
+also records the missing general characteristic-zero spectral-sequence
+theorem; the existing bounded P¹ de Rham computation does not supply it.
+A direct pushout argument on all singular simplices
 would omit simplices crossing the cover; an actual regression guards this
 point. The analytic functional alone supplies no rational singular lattice.
 General varieties/codimensions and prescribed-class coverage remain open.

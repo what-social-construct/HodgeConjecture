@@ -14,6 +14,7 @@ PYTHON ?= python3
         build-projective-line-betti check-projective-line-betti \
         build-projective-line-periods check-projective-line-periods \
         build-small-chains check-small-chains \
+        build-singular-cohomology check-singular-cohomology \
         build-palomar check-palomar-proofs check-palomar
 
 help:
@@ -28,6 +29,7 @@ help:
 	@echo "build-projective-line-betti  Actual P1 complex topology and all-degree singular cochains"
 	@echo "build-projective-line-periods  Actual analytic Laurent and scheme periods"
 	@echo "build-small-chains    Rational singular subdivision and small-chain comparison"
+	@echo "build-singular-cohomology  Exact rational duals and full singular Mayer-Vietoris"
 	@echo "build-betti          Existing singular Betti realization"
 	@echo "build-comparison     De Rham, geometry and Chow/Betti squares"
 	@echo "check-layers         Enforce project import boundaries"
@@ -41,6 +43,7 @@ help:
 	@echo "check-projective-line-betti  Atlas topology, actual cochains, H0 bridge and axiom audits"
 	@echo "check-projective-line-periods  Analytic integrals, quotient descent and cycle normalization"
 	@echo "check-small-chains    Subdivision, shrinking, actual inclusion and axiom audits"
+	@echo "check-singular-cohomology  Duality, original restriction maps and full cover sequence"
 	@echo "check-comparison     Comparison build, examples and axiom audits"
 	@echo "check-integration    Full build and root-import inventory"
 	@echo "check                All checks above"
@@ -83,6 +86,9 @@ build-projective-line-periods:
 
 build-small-chains:
 	$(LAKE) build HodgeConjecture.Realization.Betti.SmallChains
+
+build-singular-cohomology:
+	$(LAKE) build HodgeConjecture.Realization.Betti.SingularMayerVietorisMaps
 
 build-betti:
 	$(LAKE) build HodgeConjecture.Realization.Betti
@@ -136,6 +142,13 @@ check-small-chains: check-layers build-small-chains
 	$(LAKE) env lean research/SingularSubdivisionSmallnessVerification.lean
 	$(LAKE) env lean research/SmallSingularComparisonVerification.lean
 
+check-singular-cohomology: check-layers build-singular-cohomology
+	$(LAKE) build HodgeConjecture.Realization.Betti.Examples.ProjectiveLineComplexPoints
+	$(LAKE) env lean research/RationalDualVerification.lean
+	$(LAKE) env lean research/CochainDualComparisonVerification.lean
+	$(LAKE) env lean research/SingularMayerVietorisVerification.lean
+	$(LAKE) env lean research/SingularMayerVietorisMapsVerification.lean
+
 check-comparison: build-comparison
 	$(LAKE) env lean research/DeRhamVerification.lean
 
@@ -151,4 +164,4 @@ check-palomar-proofs: build-palomar
 check-palomar:
 	$(PYTHON) scripts/check_palomar.py
 
-check: check-derham-core check-derham-components check-affine-line-comparison check-positive-degree check-scheme-comparison check-projective-line-betti check-projective-line-periods check-small-chains check-chow check-graph-chow check-comparison check-integration
+check: check-derham-core check-derham-components check-affine-line-comparison check-positive-degree check-scheme-comparison check-projective-line-betti check-projective-line-periods check-small-chains check-singular-cohomology check-chow check-graph-chow check-comparison check-integration
