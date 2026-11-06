@@ -16,11 +16,12 @@ repository. Existing build artifacts are reused.
 | Projective-line scheme de Rham comparison and ordinary cycle classes | `make build-scheme-comparison` | `make check-scheme-comparison` |
 | Actual P¹ complex topology and all-degree singular cochains | `make build-projective-line-betti` | `make check-projective-line-betti` |
 | Analytic Laurent integrals, scheme periods and ordinary cycle normalization | `make build-projective-line-periods` | `make check-projective-line-periods` |
+| Rational singular subdivision and two-open small-chain comparison | `make build-small-chains` | `make check-small-chains` |
 | Existing singular Betti realization | `make build-betti` | Covered by comparison and integration checks |
 | De Rham/geometric degree and Chow–Betti squares | `make build-comparison` | `make check-comparison` |
 | Complete library and public imports | `make build` | `make check-integration` |
 
-`make help` lists the commands. `make check` runs all eleven verification groups
+`make help` lists the commands. `make check` runs all twelve verification groups
 and checks the import boundaries. Make runs the groups sequentially; Lake
 retains its own build parallelism. A failed command stops the checks.
 
@@ -38,6 +39,7 @@ lake build HodgeConjecture.Realization.DeRham.ProjectiveLineSchemeComparison
 lake build HodgeConjecture.Realization.DeRham.ProjectiveLineSchemeCycleClass
 lake build HodgeConjecture.Realization.Betti.ProjectiveLine
 lake build HodgeConjecture.Realization.DeRham.ProjectiveLinePeriods
+lake build HodgeConjecture.Realization.Betti.SmallChains
 lake build HodgeConjecture.Realization.Betti
 lake build HodgeConjecture.Realization.DeRham
 ```
@@ -98,7 +100,18 @@ the algebraic positive-degree and scheme entry points exclude both new
 period modules. These inputs do not compute P¹'s singular H² or establish
 a Betti comparison. See [0028](working/0028-projective-line-betti-inputs.md).
 
-`make check-layers` enforces twelve transitive project-import boundaries:
+The small-chain target has 23 project modules and constructs actual subset simplicial subcomplexes,
+native singular chain coordinates, barycentric subdivision and its local
+homotopy, uniform finite-chain shrinking and the two-open homology
+comparison. Its cochain gluing sequence retains the small union as its
+first term; full-cochain dualization and the P¹ group calculation are
+separate obligations. It excludes project geometry, cycles, Chow,
+correspondences, de Rham and sheaf cohomology. See
+[0029](working/0029-small-singular-chains.md).
+Its check target separately builds the actual P¹ chart topology for the
+cover regression; the pure library entry point retains those exclusions.
+
+`make check-layers` enforces thirteen transitive project-import boundaries:
 
 - The de Rham core excludes scheme cycles, Chow, Betti and comparison modules.
 - Polynomial/component calculations have the same exclusions as the core.
@@ -111,6 +124,7 @@ a Betti comparison. See [0028](working/0028-projective-line-betti-inputs.md).
 - Pure projective-line scheme comparison excludes project cycles, Chow realization, correspondences, collision geometry and Betti.
 - Ordinary projective-line scheme cycle classes exclude Betti, the assumed Chow-realization layer, collision geometry and graph-Chow convolution.
 - All-degree singular cochains exclude project geometry, cycles, correspondences, Chow, de Rham and sheaf cohomology.
+- Small-chain subdivision and cover comparison have the same exclusions.
 - Analytic Laurent periods exclude project geometry, cycles, correspondences, Chow, Betti and sheaf cohomology.
 
 The existing core, polynomial/component, affine-line, positive-degree and

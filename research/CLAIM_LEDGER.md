@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-11-06 (projective-line Betti inputs and analytic periods;
+Last audited: 2026-11-06 (rational singular subdivision and small chains;
 earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,37 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Rational singular subdivision and small chains (2026-11-06)
+
+Status: `FORMAL` in the following scope. Subset-contained original singular
+simplices form an actual simplicial subcomplex, identified with the
+singular set of the subtype space. Native coproduct coordinates identify
+Mathlib's literal rational chain modules with finite-support simplex
+functions and identify actual subcomplex-inclusion ranges with supported
+chains, retaining the original differential.
+
+Explicit finite vertex-cone recursions construct subdivision and its
+homotopy, with boundary, naturality and locality laws proved in all degrees.
+Native standard-simplex affine realization and barycenters give an actual
+subdivision chain map on the original singular complex. The realized
+homotopy is a native chain homotopy to identity, including degree zero.
+Each occurring recursive barycentric tuple has a proved nested-face flag,
+yielding the `n/(n+1)` mesh bound and shrinking of actual chain iterates.
+A proved Lebesgue number on the native compact domain makes every finite
+singular chain small in a genuine two-open cover after one common count.
+The local homotopy and subdivision preserve small chains; the actual
+small-chain inclusion supplies the native rational homology comparison.
+This chain specialization uses universe-zero spaces and literal ℚ
+coefficients, including the constructed P¹(ℂ).
+
+Rational cochains on an arbitrary simplicial union carry the actual short
+exact gluing sequence and connecting maps. Its first term for a topological
+cover is cochains on the small singular subcomplex. Exact rational
+dualization and identification with full singular cochains remain `OPEN`;
+the full singular cohomology Mayer–Vietoris application, P¹ H² computation,
+oriented Betti comparison and Hodge-class coverage remain `OPEN`. See
+[0029](working/0029-small-singular-chains.md).
 
 ## Projective-line Betti inputs and analytic periods (2026-11-06)
 

@@ -13,6 +13,7 @@ PYTHON ?= python3
         build-scheme-comparison check-scheme-comparison \
         build-projective-line-betti check-projective-line-betti \
         build-projective-line-periods check-projective-line-periods \
+        build-small-chains check-small-chains \
         build-palomar check-palomar-proofs check-palomar
 
 help:
@@ -26,6 +27,7 @@ help:
 	@echo "build-scheme-comparison  Projective-line scheme de Rham comparison and cycle classes"
 	@echo "build-projective-line-betti  Actual P1 complex topology and all-degree singular cochains"
 	@echo "build-projective-line-periods  Actual analytic Laurent and scheme periods"
+	@echo "build-small-chains    Rational singular subdivision and small-chain comparison"
 	@echo "build-betti          Existing singular Betti realization"
 	@echo "build-comparison     De Rham, geometry and Chow/Betti squares"
 	@echo "check-layers         Enforce project import boundaries"
@@ -38,6 +40,7 @@ help:
 	@echo "check-scheme-comparison  Actual sheaves, derived sections and ordinary cycle compatibility"
 	@echo "check-projective-line-betti  Atlas topology, actual cochains, H0 bridge and axiom audits"
 	@echo "check-projective-line-periods  Analytic integrals, quotient descent and cycle normalization"
+	@echo "check-small-chains    Subdivision, shrinking, actual inclusion and axiom audits"
 	@echo "check-comparison     Comparison build, examples and axiom audits"
 	@echo "check-integration    Full build and root-import inventory"
 	@echo "check                All checks above"
@@ -78,6 +81,9 @@ build-projective-line-betti:
 build-projective-line-periods:
 	$(LAKE) build HodgeConjecture.Realization.DeRham.ProjectiveLinePeriods
 
+build-small-chains:
+	$(LAKE) build HodgeConjecture.Realization.Betti.SmallChains
+
 build-betti:
 	$(LAKE) build HodgeConjecture.Realization.Betti
 
@@ -116,6 +122,20 @@ check-projective-line-betti: check-layers build-projective-line-betti
 check-projective-line-periods: check-layers build-projective-line-periods
 	$(LAKE) env lean research/ProjectiveLinePeriodVerification.lean
 
+check-small-chains: check-layers build-small-chains
+	$(LAKE) build HodgeConjecture.Realization.Betti.Examples.ProjectiveLineComplexPoints
+	$(LAKE) env lean research/SingularSubcomplexVerification.lean
+	$(LAKE) env lean research/SubcomplexCochainsVerification.lean
+	$(LAKE) env lean research/SubcomplexChainVerification.lean
+	$(LAKE) env lean research/AffineSingularVerification.lean
+	$(LAKE) env lean research/SubdivisionGeometryVerification.lean
+	$(LAKE) env lean research/NativeSimplexGeometryVerification.lean
+	$(LAKE) env lean research/VertexSubdivisionVerification.lean
+	$(LAKE) env lean research/BarycentricMeshVerification.lean
+	$(LAKE) env lean research/SingularSubdivisionVerification.lean
+	$(LAKE) env lean research/SingularSubdivisionSmallnessVerification.lean
+	$(LAKE) env lean research/SmallSingularComparisonVerification.lean
+
 check-comparison: build-comparison
 	$(LAKE) env lean research/DeRhamVerification.lean
 
@@ -131,4 +151,4 @@ check-palomar-proofs: build-palomar
 check-palomar:
 	$(PYTHON) scripts/check_palomar.py
 
-check: check-derham-core check-derham-components check-affine-line-comparison check-positive-degree check-scheme-comparison check-projective-line-betti check-projective-line-periods check-chow check-graph-chow check-comparison check-integration
+check: check-derham-core check-derham-components check-affine-line-comparison check-positive-degree check-scheme-comparison check-projective-line-betti check-projective-line-periods check-small-chains check-chow check-graph-chow check-comparison check-integration

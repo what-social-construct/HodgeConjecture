@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-11-06 (projective-line Betti inputs and analytic periods;
+Assessed: 2026-11-06 (rational singular subdivision and small chains;
 SP108--SP113 retain their stated conditional and research scope).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
@@ -52,11 +52,17 @@ with native `OnePoint ℂ`, and constructs rational singular cochains in every
 degree with the existing H⁰ identification. Separately, actual Laurent
 circle integration descends to scheme H² and has Chern period `2πi`;
 its normalized ordinary rational Chow period is rational degree.
-Next prove small-chain comparison for an open cover, obtain singular
-Mayer–Vietoris, compute this independent rational H² and match its oriented
-generator to the analytic period. The singular functor does not carry an
-open-cover union directly to a union of singular simplices: subdivision
-and shrinking are substantive missing inputs. Generality beyond P¹ and
+The [small-chain checkpoint](working/0029-small-singular-chains.md)
+constructs barycentric subdivision on the actual rational singular complex,
+its explicit local chain homotopy and uniform finite-chain shrinking for a
+two-open cover. The actual small-subcomplex inclusion supplies the homology
+comparison; the small cochain gluing sequence has proved exactness and
+connecting maps. Next transfer the chain comparison to rational cochains
+by exact dualization, obtain full singular Mayer–Vietoris, compute this
+independent rational H² and match its oriented generator to the analytic
+period. The singular functor still does not carry a topological cover
+directly to a union of all singular simplices; the proved subdivision
+argument supplies that comparison on homology. Generality beyond P¹ and
 Hodge-class coverage remain open. Logarithmic higher-Chow ideas support
 this selected ordinary target.
 

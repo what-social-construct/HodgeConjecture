@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-11-06 (projective-line Betti inputs and analytic periods;
+Last reviewed: 2026-11-06 (rational singular subdivision and small chains;
 earlier checkpoint records retain
 their original validation scope).
 
@@ -85,16 +85,23 @@ in every degree, with continuous pullback and its H⁰ bridge. Actual Laurent
 circle integration also descends through the full Čech boundaries to scheme
 H², with Chern period `2πi` and normalized ordinary Chow period equal to degree.
 
-The remaining bounded obligation is to compute this independent rational
-singular H² and prove the oriented cycle-class comparison. Mathlib and the
-pinned Axiom sources supply no sphere homology or singular excision result.
-The next construction is barycentric chain subdivision, its chain homotopy
-to the identity and shrinking into an open cover, giving small-chain
-comparison and then singular Mayer–Vietoris. A direct pushout argument on
-all singular simplices would omit simplices crossing the cover. The analytic
-functional alone does not supply an oriented singular generator or rational
-lattice. General varieties/codimensions and prescribed-class coverage remain
-open. The preceding algebraic checkpoint remains
+The [small-chain checkpoint](working/0029-small-singular-chains.md)
+constructs barycentric subdivision on the original rational singular chains,
+its explicit local homotopy and a proved mesh bound on the actual recursive
+support. A genuine compact-domain Lebesgue number gives one subdivision
+count for every whole finite chain in a two-open cover. The actual native
+small-subcomplex inclusion gives the homology comparison. The small cochain
+sequence also has proved short exactness and native connecting maps.
+
+The next obligation is exact rational dualization of that chain comparison
+and identification with the constructed singular cochain complex. This
+then transfers the cover sequence to full singular cohomology. The circle
+and P¹ singular calculations, oriented generator and cycle-class period
+comparison remain open. A direct pushout argument on all singular simplices
+would omit simplices crossing the cover; an actual regression guards this
+point. The analytic functional alone supplies no rational singular lattice.
+General varieties/codimensions and prescribed-class coverage remain open.
+The preceding algebraic checkpoint remains
 [0026](working/0026-positive-degree-cycle-realization.md).
 
 The preceding graph-Chow implementation resumed the original marked-Galois

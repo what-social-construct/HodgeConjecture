@@ -80,6 +80,9 @@ RULES["HodgeConjecture.Realization.Betti.SingularCochains"] = (
     "HodgeConjecture.Realization.DeRham",
     "HodgeConjecture.SheafCohomology",
 )
+RULES["HodgeConjecture.Realization.Betti.SmallChains"] = RULES[
+    "HodgeConjecture.Realization.Betti.SingularCochains"
+]
 RULES["HodgeConjecture.Realization.DeRham.LaurentPeriods"] = (
     "HodgeConjecture.Geometry",
     "HodgeConjecture.Cycles",

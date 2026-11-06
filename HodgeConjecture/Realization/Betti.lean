@@ -5,6 +5,7 @@ public import HodgeConjecture.Realization.Betti.ZeroSimplexTransfer
 public import HodgeConjecture.Realization.Betti.SingularPathConnected
 public import HodgeConjecture.Realization.Betti.Examples.AffineLineComplexPoints
 public import HodgeConjecture.Realization.Betti.ProjectiveLine
+public import HodgeConjecture.Realization.Betti.SmallChains
 
 @[expose] public section
 
@@ -19,6 +20,12 @@ topology, proved homeomorphic to `OnePoint ℂ`. Singular cochains in every
 degree use the original simplices and alternating faces; their H⁰ agrees
 with the existing kernel construction. P¹'s singular H² computation and
 positive-degree comparison remain open.
+The small-chain development constructs actual barycentric subdivision,
+its local homotopy, and finite-chain shrinking for a two-open cover.
+The inclusion of the small singular subcomplex compares its rational
+homology with the original singular complex. The small cochain gluing
+sequence has a constructed connecting map; full-cochain dualization
+and the sphere/projective-line calculations remain separate obligations.
 
 The finite split complex example uses actual complex-algebra points with
 their evaluation topology, actual continuous singular simplices and faces,

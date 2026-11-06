@@ -43,6 +43,13 @@ manuscript. Do not combine old checkpoint descriptions into a proof plan.
   records actual sheaf forms, affine acyclicity and the derived P¹ comparison,
   with a separate ordinary Chow-source entry point and completed integration
   validation. Betti and general-variety comparisons remain open.
+- [0028-projective-line-betti-inputs.md](0028-projective-line-betti-inputs.md)
+  records actual P¹ complex topology, all-degree rational singular cochains
+  and analytic scheme periods, with the singular H² comparison still open.
+- [0029-small-singular-chains.md](0029-small-singular-chains.md) records actual
+  barycentric subdivision, its local homotopy, finite-chain shrinking and
+  the two-open small-chain comparison. Full singular cohomology
+  Mayer–Vietoris still requires rational dualization.
 - `../bench/` holds the standalone matrix-restriction diagnostic outside
   active imports; this is not an obstruction in the intended target route.
 

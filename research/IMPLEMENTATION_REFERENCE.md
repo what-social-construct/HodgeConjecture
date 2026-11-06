@@ -42,6 +42,16 @@ targets and proves normalized ordinary Chow period equals degree.
 The singular H² computation, oriented Betti comparison, general
 varieties/codimensions and Hodge-class coverage remain open.
 
+The [small-chain checkpoint](working/0029-small-singular-chains.md) adds the
+focused `Betti.SmallChains` entry point. `SingularSubcomplexes` and native
+chain-coordinate adapters retain original simplices and inclusions.
+`VertexSubdivision` and `BarycentricMesh` construct the actual recursion,
+local homotopy and finite-support mesh shrinking. `SingularSubdivision`
+and its homotopy/smallness companions transfer these to original rational
+singular chains. `SmallSingularComparison` supplies the two-open homology
+comparison. `SubcomplexCochains` supplies the actual small-union gluing
+sequence; exact dualization is the next full-cochain comparison obligation.
+
 
 This Lean project develops collision ideals as scheme-theoretic input to
 algebraic correspondences, with boundary inertia measuring whether a generic

@@ -255,3 +255,18 @@ cochains and analytic scheme periods are constructed. Singular H²
 computation, the oriented Betti comparison and general prescribed-class
 coverage remain open. See [0028](working/0028-projective-line-betti-inputs.md).
 Release sign-offs, comparator selection and submission packaging remain unchanged.
+
+The rational small-chain checkpoint (2026-11-06) passes the 2,263-job pure
+focused target and separate 2,949-job P¹ chart-topology regression build.
+Its eleven suites pass 111 examples, 13 named calculations and 264 enforced
+standard-three axiom audits with zero suite warnings. The full default
+build passes 5,012 jobs; root verification passes 1,395 declaration checks,
+574 examples and 1,263 axiom reports within the standard three (one report
+needs no axioms). All 487 library modules plus the root pass source scans;
+thirteen import boundaries, three indirect-negative checks, pins, local
+links and whitespace checks pass. Existing warning scope remains; the main
+README remains 69 lines. The actual native small-chain inclusion is now a
+rational homology quasi-isomorphism for a genuine two-open cover. Full
+singular cochain dualization, the P¹ H² calculation and oriented Betti
+comparison remain open. See [0029](working/0029-small-singular-chains.md).
+Release sign-offs, comparator selection and submission packaging remain unchanged.
