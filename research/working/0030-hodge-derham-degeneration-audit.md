@@ -5,6 +5,13 @@ theorem or a submission package. The general theorem at issue is
 `E₁`-degeneration for a smooth proper scheme over a characteristic-zero
 field; characteristic zero alone is not its full hypothesis.
 
+Update, 2026-11-07: the bounded P¹ H² degree filtration is now constructed
+and computed in the [0034 checkpoint](0034-projective-line-hodge-filtration.md).
+Its F¹ inclusion is an actual derived isomorphism and F² is zero, over
+every field. This does not construct the general Hodge spectral-sequence
+pages or prove general E₁-degeneration. The general extraction decision
+below is unchanged; no outside general-theorem submission copy was made.
+
 ## Current repository
 
 The active library and archived Lean sources contain no construction of

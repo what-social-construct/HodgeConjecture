@@ -30,6 +30,8 @@ structure, and cycle-class map remain explicit geometric data. This file
 does not define the indexing type of all smooth projective complex
 varieties. The repository's `Betti.Examples.SplitTateBlock` instantiates
 the fixed-codimension model for finite split complex schemes in degree zero.
+`DeRham.ProjectiveLineHodgeCycleClass` supplies a degree-two model from
+the computed P¹ geometric filtration and its bounded period comparison.
 Surjectivity is not a field of the model, so constructing its data does not
 assume the conjecture.
 -/

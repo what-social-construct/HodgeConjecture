@@ -10,6 +10,7 @@ public import HodgeConjecture.Realization.Betti.SingularMayerVietorisMaps
 public import HodgeConjecture.Realization.Betti.ProjectiveLineCohomology
 public import HodgeConjecture.Realization.Betti.ProjectiveLineComplexification
 public import HodgeConjecture.Realization.Betti.ProjectiveLineCycleClass
+public import HodgeConjecture.Realization.Betti.ProjectiveLineHodgeStructure
 
 @[expose] public section
 
@@ -41,6 +42,10 @@ circle cover generator. The induced P¹ boundary pairing fixes its sign.
 The genuine tensor complexification and ordinary Chow-to-singular map are
 constructed independently of de Rham. A separate period layer compares
 their actual boundary periods; general analytic/Gysin comparison remains open.
+An independently defined type-(1,1) decomposition on the genuine tensor
+target has canonical rational conjugation, directness and an opposed
+filtration. Its agreement with the actual scheme degree filtration is
+proved separately in the de Rham comparison layer.
 
 The finite split complex example uses actual complex-algebra points with
 their evaluation topology, actual continuous singular simplices and faces,

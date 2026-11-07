@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-11-07 (positive circle pairing and projective-line boundary periods;
+Last reviewed: 2026-11-07 (actual projective-line Hodge filtration and fixed cycle model;
 earlier checkpoint records retain
 their original validation scope).
 
@@ -121,11 +121,23 @@ The original analytic boundary period uniquely specifies a bounded scheme
 de Rham-to-tensor equivalence. It retains the Chern factor `2πi`; its
 normalized version intertwines those independently constructed cycle maps.
 
-The next obligation is a geometric analytic/Gysin comparison and an
-independent positive-degree Hodge filtration, extending beyond this computed
-boundary-period model. No singular two-cycle/Poincaré-duality comparison
-or identification with a separately constructed general cycle-class map
-is asserted. General variety/codimension comparisons remain open.
+The [actual Hodge-filtration checkpoint](working/0034-projective-line-hodge-filtration.md)
+now defines the degree-filtered sheaf complexes and Fᵖ as the range of the
+original derived inclusion. The P¹ H² computation works over any field:
+the actual F¹ map is an isomorphism and all terms in F² vanish. Its
+geometric filtration agrees with the independently specified Betti type
+(1,1) under the bounded period map. Canonical rational tensor conjugation
+gives the opposed filtration and recovers the pieces. Rational Hodge
+classes are an inverse image of that geometric piece, independently of
+cycles. The existing fixed-codimension target predicate is proved for this
+model by the original rational infinity class.
+
+Next identify the normalized point class with a geometric Gysin class.
+A singular fundamental two-cycle/Poincaré-duality comparison, a general
+analytic/Gysin construction, and identification with separately constructed
+general cycle classes remain open. The computed P¹ filtration is not a
+general Hodge-to-de Rham degeneration theorem. General variety/codimension
+comparisons and prescribed-class generation remain open.
 The [degeneration audit](working/0030-hodge-derham-degeneration-audit.md)
 also records the missing general characteristic-zero spectral-sequence
 theorem; the existing bounded P¹ de Rham computation does not supply it.

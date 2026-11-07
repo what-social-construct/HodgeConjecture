@@ -17,9 +17,24 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-11-07 (positive circle pairing and actual P¹ boundary periods).
+Last source/interface review: 2026-11-07 (actual P¹ Hodge filtration and fixed cycle model).
 Earlier source records retain their original
 validation scope.
+
+### Actual P¹ Hodge filtration and fixed cycle model (2026-11-07)
+
+The [0034 checkpoint](working/0034-projective-line-hodge-filtration.md)
+constructs the geometric filtration before comparing it with the Betti
+pieces or using an ordinary cycle map.
+
+| Source-matched step | Source and local construction | Scope |
+| --- | --- | --- |
+| Actual degree subcomplexes | Native `HomologicalComplex.stupidTrunc`, restriction and extension; local `DegreeFiltration.lean` and `TwoTermDegreeFiltration.lean` | Original terms and differential are retained. Actual inclusions/transitions, level-zero isomorphism and the one-form comparison are proved. A native identity-complex regression distinguishes brutal from smart truncation. |
+| Derived image filtration | Original `SheafHypercohomology.hypercohomologyMap` and native bounded-below derived functors; local `HypercohomologyFiltration.lean` and `SchemeHodgeFiltration.lean` | Fᵖ is the actual linear range of the original derived inclusion. No desired filtration subspaces or degeneration premise are supplied. |
+| P¹ degree-two computation | Previously proved sheaf-term vanishing and O-term H¹/H² vanishing; local `ProjectiveLineHodgeFiltration.lean` | The actual F¹ map is an isomorphism and F² complex is zero, over every field. This is not a general E₁-degeneration theorem. |
+| Actual Betti Hodge pieces | Genuine tensor scalar extension and canonical rational conjugation; local `Betti/ProjectiveLineHodgeStructure.lean` | The independent type-(1,1) decomposition is direct/exhaustive and its filtration is opposed. No cycle-map module is imported in this layer. |
+| Geometric filtered comparison | The bounded period map and actual computed filtration; local `ProjectiveLineHodgeComparison.lean` | Both raw and normalized maps preserve all integer levels. Type (1,1) is recovered from actual transported F and its canonical conjugate. This uses no general analytic/Gysin identification. |
+| Fixed target model | Existing `RationalHodgeCycleClassModel` and independent ordinary map; local `ProjectiveLineHodgeCycleClass.lean` | Rational Hodge classes are independently geometric; the original infinity class gives every target's explicit witness. Only this constructed fixed-codimension model is asserted. |
 
 ### Positive circle pairing and actual P¹ boundary periods (2026-11-07)
 

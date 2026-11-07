@@ -149,6 +149,43 @@ for entry in (
         "HodgeConjecture.Realization.DeRham.ProjectiveLinePeriods",
     )
 
+RULES["HodgeConjecture.Realization.DeRham.DegreeFiltration"] = (
+    "HodgeConjecture.Geometry",
+    "HodgeConjecture.Cycles",
+    "HodgeConjecture.Boundary",
+    "HodgeConjecture.Collision",
+    "HodgeConjecture.Correspondence",
+    "HodgeConjecture.SheafCohomology",
+    "HodgeConjecture.Inputs",
+    "HodgeConjecture.Realization.Betti",
+    "HodgeConjecture.Realization.Chow",
+    "HodgeConjecture.Realization.Transfer",
+    "HodgeConjecture.Realization.FiberSum",
+    "HodgeConjecture.Realization.HodgeClasses",
+    "HodgeConjecture.Realization.HodgeTarget",
+    "HodgeConjecture.Realization.DeRham.SheafComplex",
+    "HodgeConjecture.Realization.DeRham.SheafHypercohomology",
+    "HodgeConjecture.Realization.DeRham.TwoTermHypercohomology",
+    "HodgeConjecture.Realization.DeRham.TwoTermDegreeFiltration",
+    "HodgeConjecture.Realization.DeRham.HypercohomologyFiltration",
+    "HodgeConjecture.Realization.DeRham.SchemeHodgeFiltration",
+    "HodgeConjecture.Realization.DeRham.ProjectiveLineHodgeFiltration",
+)
+RULES["HodgeConjecture.Realization.DeRham.SchemeHodgeFiltration"] = (
+    "HodgeConjecture.Geometry",
+    "HodgeConjecture.Cycles",
+    "HodgeConjecture.Realization.Betti",
+    "HodgeConjecture.Realization.Chow",
+    "HodgeConjecture.Correspondence",
+    "HodgeConjecture.Collision",
+)
+RULES["HodgeConjecture.Realization.DeRham.ProjectiveLineHodgeFiltration"] = RULES[
+    "HodgeConjecture.Realization.DeRham.ProjectiveLineSchemeComparison"
+]
+RULES["HodgeConjecture.Realization.Betti.ProjectiveLineHodgeStructure"] = RULES[
+    "HodgeConjecture.Realization.Betti.Examples.ProjectiveLineSingularCohomology"
+] + ("HodgeConjecture.Realization.Betti.ProjectiveLineCycleClass",)
+
 
 def without_comments(source):
     """Remove line comments and nested Lean block comments before reading imports."""

@@ -323,3 +323,22 @@ the independently constructed ordinary Chow maps. General analytic/Gysin
 identification and independent positive-degree Hodge filtration remain open.
 See [0033](working/0033-oriented-boundary-period-comparison.md). Release
 sign-offs, comparator selection and submission packaging remain unchanged.
+
+The actual P¹ Hodge-filtration checkpoint (2026-11-07) passes its
+3,159-job pure scheme and 4,537-job complete fixed-model builds, plus the
+1,226-job native field-instance regression build. Four focused suites
+pass 62 examples, ten named mathematical checks and 136 enforced
+standard-three axiom audits with zero suite warnings. The full default
+build passes 5,088 jobs; root verification passes 1,787 declaration checks,
+574 examples and 1,651 axiom reports within the standard three (one report
+needs no axioms). All 523 library modules plus the root pass source scans;
+twenty-six import boundaries, four indirect-negative checks, pins, local
+links and whitespace checks pass. Existing warning scope remains, including
+92 root-verification style warnings; the main README remains 69 lines.
+Actual derived inclusion images compute F¹H² = H² and F²H² = 0 for P¹
+over every field. The bounded period comparison identifies the geometric
+type (1,1), independently of cycle maps, and the fixed model has an explicit
+infinity-class witness for every target class. General analytic/Gysin
+identification and general characteristic-zero degeneration remain open.
+See [0034](working/0034-projective-line-hodge-filtration.md). Release
+sign-offs, comparator selection and submission packaging remain unchanged.

@@ -8,6 +8,7 @@ public import HodgeConjecture.Realization.DeRham.ProjectiveLineCycleClass
 public import HodgeConjecture.Realization.DeRham.ProjectiveLineSchemeCycleClass
 public import HodgeConjecture.Realization.DeRham.ProjectiveLinePeriods
 public import HodgeConjecture.Realization.DeRham.ProjectiveLinePeriodComparison
+public import HodgeConjecture.Realization.DeRham.ProjectiveLineHodgeCycleClass
 public import HodgeConjecture.Realization.DeRham.AffineGeometricDegree
 public import HodgeConjecture.Realization.DeRham.SplitComparison
 
@@ -52,4 +53,12 @@ singular H². The unnormalized Chern class retains its factor `2πi`;
 normalizing the period gives the square for the independently constructed
 ordinary Chow-to-singular map. This bounded period comparison does not
 identify a separately constructed general analytic or Gysin comparison.
+The actual degree filtration of the sheaf de Rham complex now computes
+P¹'s H² filtration over every field: F¹ is all and F² is zero. The actual
+derived inclusion fixes this calculation. Over ℂ its bounded period
+comparison agrees with the independently specified type-(1,1) Betti
+decomposition and rational conjugation. This gives a fixed-codimension
+Hodge-cycle model with an explicit infinity-class witness for every
+target class. General degeneration and analytic/Gysin identification
+remain separate obligations.
 -/

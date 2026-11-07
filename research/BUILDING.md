@@ -22,11 +22,13 @@ repository. Existing build artifacts are reused.
 | Actual projective-line singular H² and its cover generator | `make build-projective-line-cohomology` | `make check-projective-line-cohomology` |
 | Actual positive circle cycle and original generator pairing | `make build-circle-orientation` | `make check-circle-orientation` |
 | Actual P¹ boundary periods, tensor extension and ordinary Chow square | `make build-projective-line-period-comparison` | `make check-projective-line-period-comparison` |
+| Actual derived Hodge filtration and P¹ H² calculation | `make build-hodge-filtration` | `make check-hodge-filtration` |
+| Geometric type (1,1) and the fixed P¹ Hodge-cycle model | `make build-projective-line-hodge` | `make check-projective-line-hodge` |
 | Existing singular Betti realization | `make build-betti` | Covered by comparison and integration checks |
 | De Rham/geometric degree and Chow–Betti squares | `make build-comparison` | `make check-comparison` |
 | Complete library and public imports | `make build` | `make check-integration` |
 
-`make help` lists the commands. `make check` runs all seventeen verification groups
+`make help` lists the commands. `make check` runs all nineteen verification groups
 and checks the import boundaries. Make runs the groups sequentially; Lake
 retains its own build parallelism. A failed command stops the checks.
 
@@ -50,6 +52,8 @@ lake build HodgeConjecture.Realization.Betti.Circle
 lake build HodgeConjecture.Realization.Betti.ProjectiveLineCohomology
 lake build HodgeConjecture.Realization.Betti.Examples.CircleOrientedPairing
 lake build HodgeConjecture.Realization.DeRham.ProjectiveLinePeriodComparison
+lake build HodgeConjecture.Realization.DeRham.ProjectiveLineHodgeFiltration
+lake build HodgeConjecture.Realization.DeRham.ProjectiveLineHodgeCycleClass
 lake build HodgeConjecture.Realization.Betti
 lake build HodgeConjecture.Realization.DeRham
 ```
@@ -163,7 +167,24 @@ Its check target runs the independent ordinary-cycle suite, analytic-arc
 suite and final actual period/tensor square suite. See
 [0033](working/0033-oriented-boundary-period-comparison.md).
 
-`make check-layers` enforces twenty-two transitive project-import boundaries:
+The native degree-filtration layer has one project module and imports no
+other project source. The generic scheme image filtration has 11 modules;
+the actual P¹ H² filtration has 55. It excludes project cycles, Chow,
+Betti, correspondences and collision geometry. Its checks distinguish
+brutal from smart truncation and test the actual nonzero Chern filtration
+degree over ℚ and characteristic two. The check target explicitly builds
+the native complex and finite-field instances used by these standalone
+regressions.
+
+The independent Betti Hodge structure has 60 project modules, with no
+cycle-map, Chow realization or de Rham imports. The filtered comparison has
+212 modules and the final fixed-codimension model has 214, intentionally
+combining the original scheme, period, Betti and ordinary Chow constructions.
+Its focused checks cover rational tensor conjugation, all integer filtration
+levels, geometric type recovery and explicit infinity-class witnesses. See
+[0034](working/0034-projective-line-hodge-filtration.md).
+
+`make check-layers` enforces twenty-six transitive project-import boundaries:
 
 - The de Rham core excludes scheme cycles, Chow, Betti and comparison modules.
 - Polynomial/component calculations have the same exclusions as the core.
@@ -186,6 +207,10 @@ suite and final actual period/tensor square suite. See
 - P¹ positive boundary orientation and genuine tensor extension each have the P¹ singular exclusions.
 - The independent P¹ Betti cycle map excludes de Rham, sheaf cohomology, Chow realization, collision and graph-Chow consumers.
 - Analytic positive arc integration has the pure Laurent-period exclusions.
+- The native degree-filtration layer excludes project geometry, cycles, boundary, correspondences, sheaf/derived consumers and other realization layers.
+- The generic scheme filtration excludes project geometry, cycles, Chow, Betti and correspondence/collision machinery.
+- The actual P¹ H² filtration has the pure scheme-comparison exclusions.
+- The independent Betti Hodge decomposition excludes cycle-map modules, Chow realization, de Rham, sheaf cohomology and correspondences.
 
 The existing core, polynomial/component, affine-line, positive-degree and
 ordinary Čech cycle-class entry points also exclude the new sheaf-cohomology

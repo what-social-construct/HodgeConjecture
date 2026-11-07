@@ -98,6 +98,21 @@ intertwines the independent ordinary cycle maps. This does not construct
 a singular fundamental two-cycle, Poincaré duality, a general analytic
 comparison or a geometric Gysin comparison.
 
+The [actual Hodge-filtration checkpoint](working/0034-projective-line-hodge-filtration.md)
+adds `DegreeFiltration` and `TwoTermDegreeFiltration`, retaining native
+brutal truncations, original differentials and inclusion maps.
+`HypercohomologyFiltration` takes ranges of the actual derived maps;
+`SchemeHodgeFiltration` provides the original scheme complex and integer
+indices. `ProjectiveLineHodgeFiltration` computes F¹H² = H² and F²H² = 0
+over any field by the original one-form inclusion and geometric vanishings.
+`Betti.ProjectiveLineHodgeStructure` defines the independent tensor
+decomposition and rational conjugation. `ProjectiveLineHodgeComparison`
+proves geometric filtration agreement under the bounded period map and
+recovers type (1,1) from the actual transported filtration and its conjugate.
+`ProjectiveLineHodgeCycleClass` instantiates the existing fixed model and
+proves its target with an explicit infinity-class witness. General
+analytic/Gysin identification and general degeneration remain open.
+
 
 This Lean project develops collision ideals as scheme-theoretic input to
 algebraic correspondences, with boundary inertia measuring whether a generic

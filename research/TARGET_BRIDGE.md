@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-11-07 (positive circle pairing and projective-line boundary periods;
+Assessed: 2026-11-07 (actual projective-line Hodge filtration and fixed cycle model;
 SP108--SP113 retain their stated conditional and research scope).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
@@ -74,10 +74,20 @@ actual rational singular H². The actual analytic period uniquely fixes
 a bounded equivalence from actual scheme de Rham H² to this target;
 its Chern factor is `2πi`. Period normalization gives the square for
 independently constructed ordinary Chow-to-singular maps.
-This does not identify a separately constructed general analytic or
-Gysin/Poincaré-dual comparison. Those geometric comparisons, independent
-positive-degree Hodge filtration and general cycle compatibility remain
-the next obligations. A rational coordinate alone supplies none of them.
+The [Hodge-filtration checkpoint](working/0034-projective-line-hodge-filtration.md)
+now constructs the actual degree-filtered sheaf complex and defines Fᵖ by
+the image of its original derived inclusion. For P¹ H² over any field,
+F⁰ = F¹ = H² and F² = 0, by original sheaf vanishings and the actual
+degree-one inclusion. The bounded complex period map identifies this
+geometric filtration with the independently defined Betti decomposition;
+canonical tensor conjugation recovers type (1,1). The fixed-codimension
+model now uses this actual geometric rational Hodge subspace and the
+independent ordinary cycle map, with an explicit infinity-class witness
+for every target class.
+The next concrete comparison is the geometric point/Gysin normalization.
+General analytic/Gysin comparison, Hodge comparison and degeneration beyond P¹,
+and class-dependent coverage remain open. A rational coordinate alone
+would supply none of these geometric identifications.
 The singular functor still does not carry a topological cover
 directly to a union of all singular simplices; the proved subdivision
 argument supplies that comparison on homology. Generality beyond P¹ and

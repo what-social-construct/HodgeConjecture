@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-11-07 (positive circle pairing and projective-line boundary periods;
+Last audited: 2026-11-07 (actual projective-line Hodge filtration and fixed cycle model;
 earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,45 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Actual P¹ Hodge filtration and fixed cycle model (2026-11-07)
+
+Status: `FORMAL`. Native brutal degree truncation retains the original
+terms and differential above its index, with actual inclusions and
+decreasing transitions. Hypercohomology uses the original extension by
+zero, derived global sections and homology. The scheme Hodge filtration
+is defined as the linear range of the induced actual inclusion, including
+integer indices. Its top/bottom values are proved rather than assigned.
+
+For the original P¹ over any field, the original form sheaves vanish
+above degree one and the regular-function term has vanishing H¹ and H².
+The actual F¹ inclusion is consequently an isomorphism on actual scheme
+H², retaining the original comparison with H¹(Ω¹). Thus Fᵖ = H² for
+p ≤ 1 and Fᵖ = 0 for p ≥ 2. The nonzero Chern coordinate has filtration
+degree exactly one. No general spectral-sequence degeneration is inferred.
+
+The actual rational singular H² has an independently defined weight-two
+tensor decomposition, canonical rational conjugation, directness,
+exhaustion and an opposed filtration. The bounded period equivalence
+preserves the actual geometric filtration in every integer index. Its
+transported filtration and conjugate recover exactly type (1,1); rational
+Hodge classes are defined by inverse image of that geometric piece.
+No cycle map is used to define those pieces or their rational subspace.
+
+`ProjectiveLineHodgeCycleClass.model` instantiates the existing
+fixed-codimension target predicate with the original zero-cycle Chow
+quotient, actual rational singular H² and this geometric Hodge subspace.
+`model_satisfies_rationalHodgeTarget` is proved using the independently
+constructed ordinary cycle map; `infinity_class_witness` gives an explicit
+rational multiple of the original reduced infinity class for every target
+class. This is a model specialization under the bounded period comparison,
+not an identification with a separately constructed general Gysin map
+or an assertion of a new classical Hodge-conjecture case.
+
+Geometric point/Gysin identification, a singular fundamental two-cycle,
+general analytic/Gysin comparison, general characteristic-zero degeneration
+and general prescribed-class coverage remain `OPEN`. See
+[0034](working/0034-projective-line-hodge-filtration.md).
 
 ## Positive circle pairing and P¹ boundary-period comparison (2026-11-07)
 
@@ -50,8 +89,8 @@ with the independently constructed ordinary Chow maps.
 This is a bounded boundary-period comparison. It does not construct a
 singular fundamental two-cycle, Poincaré duality, a general analytic-sheaf
 comparison or a topological Gysin map. Identification with separately
-constructed general cycle classes, an independent positive-degree Hodge
-filtration and general prescribed-class coverage remain `OPEN`. General
+constructed general cycle classes, Hodge-structure comparison beyond this
+computed P¹ and general prescribed-class coverage remain `OPEN`. General
 characteristic-zero degeneration also remains `OPEN`. See
 [0033](working/0033-oriented-boundary-period-comparison.md).
 
@@ -196,7 +235,7 @@ rationalization, nonvanishing and rational coefficient bound. The integral
 source requires an algebraically closed field; rational classes additionally
 require characteristic zero. The scheme comparison itself needs only a field.
 
-General analytic/Gysin comparison, an independent positive-degree Hodge structure,
+General analytic/Gysin comparison, Hodge structures beyond this computed P¹,
 general varieties/codimensions and identification with a separately
 formalized general Picard/Chern API remain `OPEN`. No prescribed Hodge-class
 coverage or new Hodge-conjecture case is claimed. See
