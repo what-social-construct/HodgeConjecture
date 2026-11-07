@@ -17,6 +17,8 @@ PYTHON ?= python3
         build-singular-cohomology check-singular-cohomology \
         build-circle-cohomology check-circle-cohomology \
         build-projective-line-cohomology check-projective-line-cohomology \
+        build-circle-orientation check-circle-orientation \
+        build-projective-line-period-comparison check-projective-line-period-comparison \
         build-palomar check-palomar-proofs check-palomar
 
 help:
@@ -34,6 +36,8 @@ help:
 	@echo "build-singular-cohomology  Exact rational duals and full singular Mayer-Vietoris"
 	@echo "build-circle-cohomology  Actual circle singular H1 and cover generator"
 	@echo "build-projective-line-cohomology  Actual P1 rational singular H2 and cover generator"
+	@echo "build-circle-orientation  Actual positive cycle and generator pairing"
+	@echo "build-projective-line-period-comparison  Actual boundary periods and ordinary cycle maps"
 	@echo "build-betti          Existing singular Betti realization"
 	@echo "build-comparison     De Rham, geometry and Chow/Betti squares"
 	@echo "check-layers         Enforce project import boundaries"
@@ -50,6 +54,8 @@ help:
 	@echo "check-singular-cohomology  Duality, original restriction maps and full cover sequence"
 	@echo "check-circle-cohomology  Homotopy, contractible charts and the actual H1 boundary quotient"
 	@echo "check-projective-line-cohomology  Original affine charts, radial pullback and actual H2"
+	@echo "check-circle-orientation  Native connecting representatives and positive-loop pairing"
+	@echo "check-projective-line-period-comparison  Tensor extension, actual periods and ordinary Chow square"
 	@echo "check-comparison     Comparison build, examples and axiom audits"
 	@echo "check-integration    Full build and root-import inventory"
 	@echo "check                All checks above"
@@ -101,6 +107,12 @@ build-circle-cohomology:
 
 build-projective-line-cohomology:
 	$(LAKE) build HodgeConjecture.Realization.Betti.ProjectiveLineCohomology
+
+build-circle-orientation:
+	$(LAKE) build HodgeConjecture.Realization.Betti.Examples.CircleOrientedPairing
+
+build-projective-line-period-comparison:
+	$(LAKE) build HodgeConjecture.Realization.DeRham.ProjectiveLinePeriodComparison
 
 build-betti:
 	$(LAKE) build HodgeConjecture.Realization.Betti
@@ -171,6 +183,17 @@ check-projective-line-cohomology: check-layers build-projective-line-cohomology
 	$(LAKE) env lean research/ProjectiveLineSingularCohomologyVerification.lean
 	$(LAKE) env lean research/ProjectiveLineCohomologyVerification.lean
 
+check-circle-orientation: check-layers build-circle-orientation
+	$(LAKE) env lean research/ConnectingRepresentativeVerification.lean
+	$(LAKE) env lean research/SingularCyclePairingVerification.lean
+	$(LAKE) env lean research/CircleOrientedCycleVerification.lean
+	$(LAKE) env lean research/CircleOrientationVerification.lean
+
+check-projective-line-period-comparison: check-layers build-projective-line-period-comparison
+	$(LAKE) env lean research/ProjectiveLineBettiCycleClassVerification.lean
+	$(LAKE) env lean research/LaurentOrientedArcsVerification.lean
+	$(LAKE) env lean research/ProjectiveLinePeriodComparisonVerification.lean
+
 check-comparison: build-comparison
 	$(LAKE) env lean research/DeRhamVerification.lean
 
@@ -186,4 +209,4 @@ check-palomar-proofs: build-palomar
 check-palomar:
 	$(PYTHON) scripts/check_palomar.py
 
-check: check-derham-core check-derham-components check-affine-line-comparison check-positive-degree check-scheme-comparison check-projective-line-betti check-projective-line-periods check-small-chains check-singular-cohomology check-circle-cohomology check-projective-line-cohomology check-chow check-graph-chow check-comparison check-integration
+check: check-derham-core check-derham-components check-affine-line-comparison check-positive-degree check-scheme-comparison check-projective-line-betti check-projective-line-periods check-small-chains check-singular-cohomology check-circle-cohomology check-projective-line-cohomology check-circle-orientation check-projective-line-period-comparison check-chow check-graph-chow check-comparison check-integration

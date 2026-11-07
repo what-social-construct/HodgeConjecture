@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-11-06 (actual circle H¹ and projective-line singular H²;
+Last reviewed: 2026-11-07 (positive circle pairing and projective-line boundary periods;
 earlier checkpoint records retain
 their original validation scope).
 
@@ -110,10 +110,22 @@ The original P¹ affine charts are contractible; their original native
 connecting map is an isomorphism from overlap H¹ to P¹ H². Actual radial
 pullback therefore computes this independent rational singular H² as ℚ.
 
-The next obligation is to compare the cover generator with a standard
-oriented loop and the analytic period, retaining the two cover-sign
-conventions and complex scalar extension. This will supply the oriented
-cycle-class period comparison; a rational coordinate alone does not do so.
+The [positive boundary-period checkpoint](working/0033-oriented-boundary-period-comparison.md)
+now supplies the explicit actual counterclockwise circle cycle and proves
+its pairing with the original generator is +1, by evaluating native
+connecting representatives on original endpoints. The induced P¹ boundary
+pairing fixes the cover sign and extends to the genuine tensor product
+`ℂ ⊗[ℚ] H²_B`. The original Chow degree independently defines ordinary
+maps into actual singular H², with point normalization and surjectivity.
+The original analytic boundary period uniquely specifies a bounded scheme
+de Rham-to-tensor equivalence. It retains the Chern factor `2πi`; its
+normalized version intertwines those independently constructed cycle maps.
+
+The next obligation is a geometric analytic/Gysin comparison and an
+independent positive-degree Hodge filtration, extending beyond this computed
+boundary-period model. No singular two-cycle/Poincaré-duality comparison
+or identification with a separately constructed general cycle-class map
+is asserted. General variety/codimension comparisons remain open.
 The [degeneration audit](working/0030-hodge-derham-degeneration-audit.md)
 also records the missing general characteristic-zero spectral-sequence
 theorem; the existing bounded P¹ de Rham computation does not supply it.

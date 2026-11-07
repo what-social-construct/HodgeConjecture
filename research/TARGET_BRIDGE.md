@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-11-06 (actual circle H¹ and projective-line singular H²;
+Assessed: 2026-11-07 (positive circle pairing and projective-line boundary periods;
 SP108--SP113 retain their stated conditional and research scope).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
@@ -66,9 +66,18 @@ The [circle/P¹ calculation](working/0032-circle-projective-line-singular-cohomo
 now computes actual rational singular H¹ of the circle and H² of this
 original P¹ as rational lines. Both generators are actual Mayer–Vietoris
 boundaries; the P¹ map uses the original affine charts and radial overlap
-pullback. Next match this cover generator with the standard oriented loop
-and analytic period, including the cover-sign convention and complex scalar
-extension. A rank-one calculation alone does not prove that comparison.
+pullback. The [positive boundary-period checkpoint](working/0033-oriented-boundary-period-comparison.md)
+now pairs the original circle generator with an actual counterclockwise
+two-arc singular cycle and proves the value is +1. The resulting P¹
+boundary pairing extends to the genuine tensor complexification of its
+actual rational singular H². The actual analytic period uniquely fixes
+a bounded equivalence from actual scheme de Rham H² to this target;
+its Chern factor is `2πi`. Period normalization gives the square for
+independently constructed ordinary Chow-to-singular maps.
+This does not identify a separately constructed general analytic or
+Gysin/Poincaré-dual comparison. Those geometric comparisons, independent
+positive-degree Hodge filtration and general cycle compatibility remain
+the next obligations. A rational coordinate alone supplies none of them.
 The singular functor still does not carry a topological cover
 directly to a union of all singular simplices; the proved subdivision
 argument supplies that comparison on homology. Generality beyond P¹ and

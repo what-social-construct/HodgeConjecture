@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-11-06 (actual circle H¹ and projective-line singular H²;
+Last audited: 2026-11-07 (positive circle pairing and projective-line boundary periods;
 earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,42 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Positive circle pairing and P¹ boundary-period comparison (2026-11-07)
+
+Status: `FORMAL`. Actual cochain evaluation on native closed rational
+chains descends to actual cohomology and is natural for original chain
+maps/cochain pullback. Actual native connecting representatives have the
+positive lift-and-differentiate sign. The two explicit circle arcs follow
+angles `−π/2 → π/2 → 3π/2`; their actual endpoint boundaries cancel.
+Evaluating the actual connecting class gives upper minus lower endpoint
+value. The original circle cover generator therefore pairs +1 with this
+counterclockwise singular cycle.
+
+The original P¹ inverse connecting isomorphism and actual radial map
+define its positive boundary-loop functional. Its scalar extension is a
+functional on the genuine tensor product `ℂ ⊗[ℚ] H²_B`, agreeing with the
+proved coordinates. Rational embedding is the original pure tensor and
+is injective. Ordinary integral/rational maps from the existing Chow
+quotients are constructed independently of de Rham as actual geometric
+degree times the singular cover generator. Point normalization, principal
+invariance, rationalization, nonvanishing and rational surjectivity hold.
+
+`ProjectiveLinePeriodComparison` specifies a linear equivalence from actual
+scheme de Rham H² to that tensor target by the actual analytic boundary
+period, with uniqueness proved using the independently constructed positive
+boundary pairing. Every original overlap form has its actual Laurent
+circle integral as coefficient; the Chern coordinate maps to `2πi` times
+the embedded singular generator. Dividing by `2πi` gives the proved square
+with the independently constructed ordinary Chow maps.
+
+This is a bounded boundary-period comparison. It does not construct a
+singular fundamental two-cycle, Poincaré duality, a general analytic-sheaf
+comparison or a topological Gysin map. Identification with separately
+constructed general cycle classes, an independent positive-degree Hodge
+filtration and general prescribed-class coverage remain `OPEN`. General
+characteristic-zero degeneration also remains `OPEN`. See
+[0033](working/0033-oriented-boundary-period-comparison.md).
 
 ## Actual circle H¹ and projective-line singular H² (2026-11-06)
 
@@ -44,12 +80,11 @@ Composing these maps computes `H²(P¹(ℂ), ℚ) ≃ₗ[ℚ] ℚ`; every actual
 is a unique rational multiple of the resulting boundary generator.
 
 These statements supply no topological or cohomological computation as a
-premise at the concrete endpoints. The identification with a standard
-oriented loop pairing, complex scalar extension and agreement with the
-analytic de Rham `2πi` period remain `OPEN`. A rank-one isomorphism alone
-does not establish those comparisons or an ordinary Betti cycle map.
-General Hodge-class coverage and general characteristic-zero degeneration
-also remain `OPEN`. See
+premise at the concrete endpoints. Positive loop pairing, complex scalar
+extension and the bounded boundary-period comparison are now formalized
+above. Identification with general analytic/Gysin constructions, general
+Hodge-class coverage and general characteristic-zero degeneration remain
+`OPEN`. See
 [0032](working/0032-circle-projective-line-singular-cohomology.md).
 
 ## Exact rational dualization and full singular Mayer–Vietoris (2026-11-06)
@@ -73,8 +108,9 @@ short exact sequence and proved small-cochain comparison.
 
 This uses literal ℚ coefficients and universe-zero topological spaces,
 including the original P¹(ℂ). The circle H¹/P¹ H² calculations are now
-proved above; the oriented Betti period comparison and prescribed
-Hodge-class coverage remain `OPEN`.
+proved above. Positive boundary-period comparison is also now formalized;
+the general analytic/Gysin comparison and prescribed Hodge-class coverage
+remain `OPEN`.
 General characteristic-zero Hodge–de Rham degeneration is also `OPEN`
 here: no Hodge filtration/spectral-sequence construction or closed general
 degeneration endpoint is supplied. See the
@@ -109,7 +145,7 @@ exact gluing sequence and connecting maps. Its first term for a topological
 cover is cochains on the small singular subcomplex. Exact rational
 dualization and full singular Mayer–Vietoris are now formalized in the
 entry above. The P¹ H² computation is proved in the current checkpoint;
-oriented Betti comparison and Hodge-class coverage remain `OPEN`. See
+general analytic/Gysin comparison and Hodge-class coverage remain `OPEN`. See
 [0029](working/0029-small-singular-chains.md).
 
 ## Projective-line Betti inputs and analytic periods (2026-11-06)
@@ -133,11 +169,11 @@ scheme comparison. The original scheme Chern coordinate has period `2πi`;
 the normalized period of every ordinary rational Chow class is its actual
 rational degree embedded in ℂ.
 
-P¹'s rational singular H² is now computed above. Identifying its cover
-generator with the oriented analytic period remains `OPEN`. The two-open small-chain
+P¹'s rational singular H² and positive boundary-period comparison are now
+proved above. General analytic/Gysin comparison remains `OPEN`. The two-open small-chain
 comparison and full singular cohomology Mayer–Vietoris are now formalized
 above. The analytic functional does not define an independent rational
-singular lattice or establish positive-degree Betti comparison. General
+singular lattice or establish positive-degree Betti comparison by itself. General
 Hodge-class coverage remains `OPEN`. See
 [0028](working/0028-projective-line-betti-inputs.md).
 
@@ -160,7 +196,7 @@ rationalization, nonvanishing and rational coefficient bound. The integral
 source requires an algebraically closed field; rational classes additionally
 require characteristic zero. The scheme comparison itself needs only a field.
 
-Singular/Betti comparison, an independent positive-degree Hodge structure,
+General analytic/Gysin comparison, an independent positive-degree Hodge structure,
 general varieties/codimensions and identification with a separately
 formalized general Picard/Chern API remain `OPEN`. No prescribed Hodge-class
 coverage or new Hodge-conjecture case is claimed. See

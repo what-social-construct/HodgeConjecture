@@ -7,6 +7,7 @@ public import HodgeConjecture.Realization.DeRham.PositiveDegree
 public import HodgeConjecture.Realization.DeRham.ProjectiveLineCycleClass
 public import HodgeConjecture.Realization.DeRham.ProjectiveLineSchemeCycleClass
 public import HodgeConjecture.Realization.DeRham.ProjectiveLinePeriods
+public import HodgeConjecture.Realization.DeRham.ProjectiveLinePeriodComparison
 public import HodgeConjecture.Realization.DeRham.AffineGeometricDegree
 public import HodgeConjecture.Realization.DeRham.SplitComparison
 
@@ -44,4 +45,11 @@ For P¹ the original Čech target is now compared with actual scheme de Rham
 hypercohomology. Its analytic Laurent unit-circle integral descends through
 the original boundaries and this scheme comparison, with Chern period
 `2πi` and normalized rational Chow period equal to rational degree.
+The explicit positive circle cycle now fixes the original singular cover
+generator's boundary-loop sign. The actual boundary period uniquely
+specifies an equivalence to the genuine tensor complexification of P¹
+singular H². The unnormalized Chern class retains its factor `2πi`;
+normalizing the period gives the square for the independently constructed
+ordinary Chow-to-singular map. This bounded period comparison does not
+identify a separately constructed general analytic or Gysin comparison.
 -/

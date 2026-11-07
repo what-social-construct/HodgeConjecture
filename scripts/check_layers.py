@@ -98,6 +98,24 @@ RULES["HodgeConjecture.Realization.Betti.Examples.ProjectiveLineSingularCohomolo
 RULES["HodgeConjecture.Realization.Betti.ProjectiveLineCohomology"] = RULES[
     "HodgeConjecture.Realization.Betti.Examples.ProjectiveLineSingularCohomology"
 ]
+RULES["HodgeConjecture.Realization.Betti.Examples.CircleOrientedPairing"] = RULES[
+    "HodgeConjecture.Realization.Betti.SingularCochains"
+]
+for entry in (
+    "HodgeConjecture.Realization.Betti.ProjectiveLineOrientation",
+    "HodgeConjecture.Realization.Betti.ProjectiveLineComplexification",
+):
+    RULES[entry] = RULES[
+        "HodgeConjecture.Realization.Betti.Examples.ProjectiveLineSingularCohomology"
+    ]
+RULES["HodgeConjecture.Realization.Betti.ProjectiveLineCycleClass"] = (
+    "HodgeConjecture.Collision",
+    "HodgeConjecture.Correspondence.GraphChowAlgebra",
+    "HodgeConjecture.Correspondence.GraphChowBaseComparison",
+    "HodgeConjecture.Realization.Chow",
+    "HodgeConjecture.Realization.DeRham",
+    "HodgeConjecture.SheafCohomology",
+)
 RULES["HodgeConjecture.Realization.DeRham.LaurentPeriods"] = (
     "HodgeConjecture.Geometry",
     "HodgeConjecture.Cycles",
@@ -106,6 +124,9 @@ RULES["HodgeConjecture.Realization.DeRham.LaurentPeriods"] = (
     "HodgeConjecture.Realization.Betti",
     "HodgeConjecture.SheafCohomology",
 )
+RULES["HodgeConjecture.Realization.DeRham.LaurentOrientedArcs"] = RULES[
+    "HodgeConjecture.Realization.DeRham.LaurentPeriods"
+]
 for entry in (
     "HodgeConjecture.Realization.DeRham.Core",
     "HodgeConjecture.Realization.DeRham.AffineComponents",

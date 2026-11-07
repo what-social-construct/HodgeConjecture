@@ -17,9 +17,24 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-11-06 (actual circle/P¹ singular cohomology and native foundational reuse).
+Last source/interface review: 2026-11-07 (positive circle pairing and actual P¹ boundary periods).
 Earlier source records retain their original
 validation scope.
+
+### Positive circle pairing and actual P¹ boundary periods (2026-11-07)
+
+The [0033 checkpoint](working/0033-oriented-boundary-period-comparison.md)
+retains original native objects and local proved maps. The actual native
+connecting formula fixes the sign before the period equivalence is defined.
+
+| Source-matched step | Source and local construction | Scope |
+| --- | --- | --- |
+| Actual Kronecker pairing and Stokes | Native dual coordinates and `ShortComplex.descHomology`; local `SingularCyclePairing.lean` | Original cochain evaluation on an actual closed native chain descends to actual cohomology and is natural for original simplex maps. |
+| Native boundary representative | Mathlib `ShortComplex.ShortExact.δ_apply`; local `SubcomplexConnectingRepresentative.lean` and `SubcomplexDegreeZeroRepresentative.lean` | The actual connecting class is the positive differential of an actual pair lift. Existence and the original H⁰ evaluation bridge are proved. |
+| Positive loop and generator | Original complex exponential, actual path simplices and their native faces; local `CircleOrientedCycle.lean` and `CircleOrientedPairing.lean` | Exact endpoint evaluation proves the actual generator pairs +1 with the counterclockwise two-arc cycle; the cycle has no native filling chain. |
+| Same actual analytic arcs | Native periodic interval integration and `circleIntegral`; local `LaurentOrientedArcs.lean` | The original Laurent circle integral equals the derivative-weighted integrals on `[-π/2,π/2]` and `[π/2,3π/2]`; native circle maps equal the original complex exponentials. |
+| Independent ordinary singular cycle map | The existing proved projective-line Chow degree and actual singular cover generator; local `Betti/ProjectiveLineCycleClass.lean` | Point normalization, principal invariance, rationalization and rational surjectivity hold in actual singular H². This does not identify a separately constructed general Gysin/Poincaré-dual map. |
+| Actual tensor and boundary-period comparison | Native tensor scalar extension; local `ProjectiveLineOrientation.lean`, `ProjectiveLineComplexification.lean` and `DeRham/ProjectiveLinePeriodComparison.lean` | Actual analytic and positive boundary pairings uniquely specify the bounded equivalence. Raw Chern period remains `2πi`; the normalized ordinary Chow square is proved. No general analytic-sheaf comparison is asserted. |
 
 ### Actual circle and projective-line singular calculations (2026-11-06)
 
@@ -33,7 +48,7 @@ source conclusion is assumed at the concrete endpoints.
 | Contractible positive-degree vanishing | Native `singularChainComplexFunctor_exactAt_of_totallyDisconnectedSpace`, exact rational dualization, and native `ContractibleSpace.hequiv_unit`; local `SingularContractible.lean` | The original point-chain exactness proves point cohomology vanishes; actual topological contractions give vanishing without finite-dimensionality. |
 | Actual circle two-arc calculation | Native complex argument/exponential and interval convexity; local `CircleTopology.lean`, `SingularComponents.lean` and `CircleCohomology.lean` | Actual component evaluation and original continuous pullbacks compute the kernel and image of the actual Mayer–Vietoris boundary. Its quotient gives H¹ as ℚ. |
 | Actual P¹ overlap and connecting isomorphism | Native `homeomorphUnitSphereProd`, explicit radial homotopy, and the original P¹ charts; local `PuncturedComplexCircle.lean`, `ProjectiveLineAnalyticCover.lean` and `ProjectiveLineSingularCohomology.lean` | Contractible-chart vanishing proves the native boundary itself is an isomorphism. The forward circle-to-P¹ map is the actual radial pullback followed by this boundary. |
-| Rational H² coordinate | The preceding proved maps and the local circle H¹ quotient; `Betti/ProjectiveLineCohomology.lean` | Actual H² of the original complex-point space is ℚ with a nonzero cover generator. Standard oriented-loop pairing, de Rham period agreement and ordinary Betti cycle compatibility remain open. |
+| Rational H² coordinate | The preceding proved maps and the local circle H¹ quotient; `Betti/ProjectiveLineCohomology.lean` | Actual H² of the original complex-point space is ℚ with a nonzero cover generator. The checkpoint above proves its positive boundary-period comparison and independent ordinary cycle map; general analytic/Gysin identification remains open. |
 
 ### Projective-line scheme de Rham bridge (2026-11-06)
 

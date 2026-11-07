@@ -305,3 +305,21 @@ The standard oriented-loop/de Rham period comparison and ordinary Betti
 cycle compatibility remain open. See
 [0032](working/0032-circle-projective-line-singular-cohomology.md).
 Release sign-offs, comparator selection and submission packaging remain unchanged.
+
+The positive circle/P¹ boundary-period checkpoint (2026-11-07) passes its
+2,694-job pure circle and 4,527-job complete period builds. Seven focused
+suites pass 65 examples, seven named mathematical checks and 154 enforced
+standard-three axiom audits with zero suite warnings. The full default
+build passes 5,079 jobs; root verification passes 1,658 declaration checks,
+574 examples and 1,522 axiom reports within the standard three (one report
+needs no axioms). All 515 library modules plus the root pass source scans;
+twenty-two import boundaries, three indirect-negative checks, pins, local
+links and whitespace checks pass. Existing warning scope remains, including
+92 root-verification style warnings; the main README remains 69 lines.
+The actual positive circle pairing is +1. Actual analytic and singular
+boundary periods uniquely fix a bounded equivalence to the genuine tensor
+target; its raw Chern factor is `2πi` and its normalized square retains
+the independently constructed ordinary Chow maps. General analytic/Gysin
+identification and independent positive-degree Hodge filtration remain open.
+See [0033](working/0033-oriented-boundary-period-comparison.md). Release
+sign-offs, comparator selection and submission packaging remain unchanged.

@@ -8,6 +8,8 @@ public import HodgeConjecture.Realization.Betti.ProjectiveLine
 public import HodgeConjecture.Realization.Betti.SmallChains
 public import HodgeConjecture.Realization.Betti.SingularMayerVietorisMaps
 public import HodgeConjecture.Realization.Betti.ProjectiveLineCohomology
+public import HodgeConjecture.Realization.Betti.ProjectiveLineComplexification
+public import HodgeConjecture.Realization.Betti.ProjectiveLineCycleClass
 
 @[expose] public section
 
@@ -33,8 +35,12 @@ continuous restriction formulas and the first-minus-second difference.
 Homotopy invariance and actual chart contractibility now compute the circle's
 H¹ and the original projective line's H² as rational lines, with generators
 given by the actual Mayer–Vietoris boundaries. The P¹ isomorphism uses the
-original affine charts and actual radial overlap pullback. Agreement with
-the oriented analytic period and the positive-degree cycle comparison remain open.
+original affine charts and actual radial overlap pullback. The explicit
+counterclockwise two-arc cycle now proves positive pairing one with the
+circle cover generator. The induced P¹ boundary pairing fixes its sign.
+The genuine tensor complexification and ordinary Chow-to-singular map are
+constructed independently of de Rham. A separate period layer compares
+their actual boundary periods; general analytic/Gysin comparison remains open.
 
 The finite split complex example uses actual complex-algebra points with
 their evaluation topology, actual continuous singular simplices and faces,

@@ -20,11 +20,13 @@ repository. Existing build artifacts are reused.
 | Exact rational dualization and full singular Mayer–Vietoris | `make build-singular-cohomology` | `make check-singular-cohomology` |
 | Actual circle singular H¹ and its cover generator | `make build-circle-cohomology` | `make check-circle-cohomology` |
 | Actual projective-line singular H² and its cover generator | `make build-projective-line-cohomology` | `make check-projective-line-cohomology` |
+| Actual positive circle cycle and original generator pairing | `make build-circle-orientation` | `make check-circle-orientation` |
+| Actual P¹ boundary periods, tensor extension and ordinary Chow square | `make build-projective-line-period-comparison` | `make check-projective-line-period-comparison` |
 | Existing singular Betti realization | `make build-betti` | Covered by comparison and integration checks |
 | De Rham/geometric degree and Chow–Betti squares | `make build-comparison` | `make check-comparison` |
 | Complete library and public imports | `make build` | `make check-integration` |
 
-`make help` lists the commands. `make check` runs all fifteen verification groups
+`make help` lists the commands. `make check` runs all seventeen verification groups
 and checks the import boundaries. Make runs the groups sequentially; Lake
 retains its own build parallelism. A failed command stops the checks.
 
@@ -46,6 +48,8 @@ lake build HodgeConjecture.Realization.Betti.SmallChains
 lake build HodgeConjecture.Realization.Betti.SingularMayerVietorisMaps
 lake build HodgeConjecture.Realization.Betti.Circle
 lake build HodgeConjecture.Realization.Betti.ProjectiveLineCohomology
+lake build HodgeConjecture.Realization.Betti.Examples.CircleOrientedPairing
+lake build HodgeConjecture.Realization.DeRham.ProjectiveLinePeriodComparison
 lake build HodgeConjecture.Realization.Betti
 lake build HodgeConjecture.Realization.DeRham
 ```
@@ -141,7 +145,25 @@ nonzero rational generator of actual H². The original Betti-input target
 remains separate. See
 [0032](working/0032-circle-projective-line-singular-cohomology.md).
 
-`make check-layers` enforces seventeen transitive project-import boundaries:
+The positive-circle entry point has 40 project modules and keeps the same
+pure singular exclusions. Its four suites check native connecting
+representatives, actual closed-chain pairing and Stokes, literal positive
+arc simplices, and generator pairing +1. The cycle is also proved to have
+no native filling two-chain.
+
+The separate actual P¹ tensor target has 59 project modules. The independent
+ordinary Betti cycle map has 143, including the existing Chow degree and
+normalization/finite-group projector foundation; it excludes de Rham,
+sheaf cohomology, Chow realization, collision geometry and graph-Chow
+consumers. Analytic positive arc integration has four project modules and
+keeps the pure Laurent-period exclusions. The final boundary-period
+comparison has 205 project modules, intentionally combining actual scheme
+de Rham, singular cohomology, analytic integration and ordinary Chow maps.
+Its check target runs the independent ordinary-cycle suite, analytic-arc
+suite and final actual period/tensor square suite. See
+[0033](working/0033-oriented-boundary-period-comparison.md).
+
+`make check-layers` enforces twenty-two transitive project-import boundaries:
 
 - The de Rham core excludes scheme cycles, Chow, Betti and comparison modules.
 - Polynomial/component calculations have the same exclusions as the core.
@@ -160,6 +182,10 @@ remains separate. See
 - The original P¹ connecting calculation excludes Chow realization, correspondences, de Rham and sheaf cohomology.
 - The final P¹ H² entry point has those same exclusions.
 - Analytic Laurent periods exclude project geometry, cycles, correspondences, Chow, Betti and sheaf cohomology.
+- The actual positive-circle pairing has the pure singular exclusions.
+- P¹ positive boundary orientation and genuine tensor extension each have the P¹ singular exclusions.
+- The independent P¹ Betti cycle map excludes de Rham, sheaf cohomology, Chow realization, collision and graph-Chow consumers.
+- Analytic positive arc integration has the pure Laurent-period exclusions.
 
 The existing core, polynomial/component, affine-line, positive-degree and
 ordinary Čech cycle-class entry points also exclude the new sheaf-cohomology

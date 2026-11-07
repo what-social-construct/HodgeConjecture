@@ -40,8 +40,9 @@ the H⁰ bridge and the affine-atlas homeomorphism to native `OnePoint ℂ`.
 `DeRham.ProjectiveLinePeriods` descends it to the original Čech and scheme
 targets and proves normalized ordinary Chow period equals degree.
 The singular H² computation is completed in the current checkpoint below.
-Oriented Betti comparison, general varieties/codimensions and Hodge-class
-coverage remain open.
+Positive boundary-period comparison is completed below. General
+analytic/Gysin comparison, varieties/codimensions and Hodge-class coverage
+remain open.
 
 The [small-chain checkpoint](working/0029-small-singular-chains.md) adds the
 focused `Betti.SmallChains` entry point. `SingularSubcomplexes` and native
@@ -73,7 +74,29 @@ pullback and the original P¹ affine-chart connecting isomorphism.
 `ProjectiveLineBettiCohomology.h2Equiv` computes actual singular H² as ℚ;
 `coverGenerator_eq_connecting` retains the original maps, and
 `eq_smul_coverGenerator` expresses every actual class in that basis.
-The oriented period and ordinary Betti cycle-class comparison remain open.
+The next checkpoint below fixes the positive boundary-period normalization
+and supplies independent ordinary maps into the actual singular target.
+
+The [positive boundary-period checkpoint](working/0033-oriented-boundary-period-comparison.md)
+adds native `SingularCyclePairing`, computational
+`SubcomplexConnectingRepresentative` and the degree-zero representative
+bridge. `CircleOrientedCycle` constructs the literal counterclockwise
+two-arc cycle; `CircleOrientedPairing.loopPairing_coverGenerator` proves
+its pairing with the original cover generator is +1.
+`DeRham.LaurentOrientedArcs` proves the original analytic unit-circle
+integral equals the derivative-weighted integral over these same angular
+arcs. `Betti.ProjectiveLineOrientation` fixes the P¹ boundary sign;
+`ProjectiveLineComplexification` retains the genuine tensor product and
+original rational embedding. `Betti.ProjectiveLineCycleClass` independently
+constructs ordinary Chow maps into actual singular H² by the proved degree
+and cover normalization. The map is onto, with original infinity witness.
+
+`DeRham.ProjectiveLinePeriodComparison` is the unique bounded linear
+equivalence preserving actual analytic and positive boundary periods.
+It retains the factor `2πi` on the Chern class; its normalized version
+intertwines the independent ordinary cycle maps. This does not construct
+a singular fundamental two-cycle, Poincaré duality, a general analytic
+comparison or a geometric Gysin comparison.
 
 
 This Lean project develops collision ideals as scheme-theoretic input to
