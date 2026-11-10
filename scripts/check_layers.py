@@ -187,6 +187,34 @@ RULES["HodgeConjecture.Realization.Betti.ProjectiveLineHodgeStructure"] = RULES[
 ] + ("HodgeConjecture.Realization.Betti.ProjectiveLineCycleClass",)
 
 
+for entry in (
+    "HodgeConjecture.Realization.Betti.RelativeCochains",
+    "HodgeConjecture.Realization.Betti.ShortExactQuasiIso",
+    "HodgeConjecture.Realization.Betti.RelativeUnion",
+    "HodgeConjecture.Realization.Betti.RelativeExcision",
+    "HodgeConjecture.Realization.Betti.RelativeMayerVietoris",
+    "HodgeConjecture.Realization.Betti.Examples.ComplexPointThom",
+):
+    RULES[entry] = RULES["HodgeConjecture.Realization.Betti.SingularCochains"]
+
+for entry in (
+    "HodgeConjecture.Realization.Betti.Examples.ProjectiveLinePointSupport",
+    "HodgeConjecture.Realization.Betti.Examples.ProjectiveLineNormalChart",
+    "HodgeConjecture.Realization.Betti.Examples.ProjectiveLineNormalChartBoundary",
+):
+    RULES[entry] = RULES["HodgeConjecture.Realization.Betti.ProjectiveLineCohomology"]
+
+RULES["HodgeConjecture.Realization.Betti.ProjectiveLinePointGysin"] = RULES[
+    "HodgeConjecture.Realization.Betti.ProjectiveLineCohomology"
+] + (
+    "HodgeConjecture.Realization.Betti.ProjectiveLineCycleClass",
+    "HodgeConjecture.Realization.Betti.ProjectiveLineGysinCycleClass",
+)
+RULES["HodgeConjecture.Realization.Betti.ProjectiveLineGysinCycleClass"] = RULES[
+    "HodgeConjecture.Realization.Betti.ProjectiveLineCycleClass"
+]
+
+
 def without_comments(source):
     """Remove line comments and nested Lean block comments before reading imports."""
     result = []

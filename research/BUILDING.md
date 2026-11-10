@@ -24,11 +24,13 @@ repository. Existing build artifacts are reused.
 | Actual P¹ boundary periods, tensor extension and ordinary Chow square | `make build-projective-line-period-comparison` | `make check-projective-line-period-comparison` |
 | Actual derived Hodge filtration and P¹ H² calculation | `make build-hodge-filtration` | `make check-hodge-filtration` |
 | Geometric type (1,1) and the fixed P¹ Hodge-cycle model | `make build-projective-line-hodge` | `make check-projective-line-hodge` |
+| Actual relative cochains, excision and boundary sign | `make build-relative-cohomology` | `make check-relative-cohomology` |
+| Oriented P¹ zero-point Gysin and original cycle comparison | `make build-projective-line-point-gysin` | `make check-projective-line-point-gysin` |
 | Existing singular Betti realization | `make build-betti` | Covered by comparison and integration checks |
 | De Rham/geometric degree and Chow–Betti squares | `make build-comparison` | `make check-comparison` |
 | Complete library and public imports | `make build` | `make check-integration` |
 
-`make help` lists the commands. `make check` runs all nineteen verification groups
+`make help` lists the commands. `make check` runs all twenty-one verification groups
 and checks the import boundaries. Make runs the groups sequentially; Lake
 retains its own build parallelism. A failed command stops the checks.
 
@@ -184,7 +186,21 @@ Its focused checks cover rational tensor conjugation, all integer filtration
 levels, geometric type recovery and explicit infinity-class witnesses. See
 [0034](working/0034-projective-line-hodge-filtration.md).
 
-`make check-layers` enforces twenty-six transitive project-import boundaries:
+The relative-cohomology target builds actual pair kernels, strict union
+gluing, open-cover excision and the positive native boundary comparison.
+Its check target also builds the pure circle endpoint for an actual
+nonzero sign regression. The zero-point Gysin target combines the oriented
+local complex pair, original projective-line chart and scheme support,
+inverse excision and forgetting. Its focused suites check local absolute
+vanishing, global nonvanishing, positive sign and both original Chow maps.
+Neither target imports de Rham. See
+[0035](working/0035-projective-line-zero-point-gysin.md).
+The relative-boundary entry point has 32 project modules and the local
+complex Thom class has 43. The original chart-boundary comparison has 62;
+the geometric point Gysin has 67. The final ordinary-cycle comparison has
+159, adding the independent actual Chow branch only at that endpoint.
+
+`make check-layers` enforces thirty-seven transitive project-import boundaries:
 
 - The de Rham core excludes scheme cycles, Chow, Betti and comparison modules.
 - Polynomial/component calculations have the same exclusions as the core.
@@ -211,6 +227,11 @@ levels, geometric type recovery and explicit infinity-class witnesses. See
 - The generic scheme filtration excludes project geometry, cycles, Chow, Betti and correspondence/collision machinery.
 - The actual P¹ H² filtration has the pure scheme-comparison exclusions.
 - The independent Betti Hodge decomposition excludes cycle-map modules, Chow realization, de Rham, sheaf cohomology and correspondences.
+- Relative kernel cochains, short-exact quasi-isomorphism comparison, relative union, excision and boundary comparison have the pure singular exclusions.
+- The local complex Thom class has the pure singular exclusions.
+- The original point support and normal-chart comparisons have the P¹ singular exclusions.
+- The geometric zero-point Gysin additionally excludes both ordinary Betti cycle-map modules.
+- The final zero-point Gysin/cycle comparison has the existing independent Betti cycle-map exclusions.
 
 The existing core, polynomial/component, affine-line, positive-degree and
 ordinary Čech cycle-class entry points also exclude the new sheaf-cohomology

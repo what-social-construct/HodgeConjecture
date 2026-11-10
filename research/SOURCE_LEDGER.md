@@ -17,9 +17,24 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-11-07 (actual P¹ Hodge filtration and fixed cycle model).
+Last source/interface review: 2026-11-07 (actual P¹ zero-point Gysin and cycle comparison).
 Earlier source records retain their original
 validation scope.
+
+### Actual P¹ zero-point Gysin and cycle comparison (2026-11-07)
+
+The [0035 checkpoint](working/0035-projective-line-zero-point-gysin.md)
+uses actual native pair sequences and the already proved small-chain
+comparison. No excision, orientation or cycle-comparison premise is supplied.
+
+| Source-matched step | Source and local construction | Scope |
+| --- | --- | --- |
+| Relative cochains and pair sequence | Native singular restriction, kernel and short exact connecting maps; local `RelativeCochains.lean` | Actual cochain kernels retain original differential; extension by zero proves termwise surjectivity. Pair pullbacks and native boundary naturality are proved. |
+| Actual open-cover excision | Existing subdivision/full-to-small quasi-isomorphism, native opposite-complex short-exact comparison; local `ShortExactQuasiIso.lean`, `RelativeUnion.lean`, `RelativeExcision.lean` | Strict relative union gluing and the original restriction quasi-isomorphism give actual excision in all degrees. No dimension comparison or assumed excision is used. |
+| Boundary sign | Native `ShortComplex.ShortExact.δ_naturality`; local `RelativeMayerVietoris.lean` | Actual local relative boundary, inverse excision and forgetting equal the old full Mayer–Vietoris boundary. The map `(a, 0)` into the first-minus-second sequence fixes the plus sign. |
+| Local oriented Thom class | The actual radial pullback and positively paired circle class; local `Examples/ComplexPointThom.lean` | Actual H²(ℂ, ℂ∖{0}) is identified with singleton H⁰, with unit boundary pairing +1. Local absolute forgetting is zero. |
+| Original normal chart and supported class | Original finite evaluation chart and actual pair pullback; local `ProjectiveLinePointSupport.lean`, `ProjectiveLineNormalChart.lean`, `ProjectiveLineNormalChartBoundary.lean` | The zero maps to the original scheme zero and the reciprocal chart is its exact complement. Original simplex maps identify the native pair boundaries. |
+| Geometric zero-point cycle normalization | Local Thom, inverse actual excision and original forgetting; local `ProjectiveLinePointGysin.lean`, `ProjectiveLineGysinCycleClass.lean` | The actual Gysin unit is the positive P¹ generator and the ordinary cycle-class image of the original zero-point integral/rational Chow classes. Both maps factor through this distinguished-point Gysin and degree. Other points, chart independence and general Gysin remain open. |
 
 ### Actual P¹ Hodge filtration and fixed cycle model (2026-11-07)
 

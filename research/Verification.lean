@@ -9407,3 +9407,465 @@ Focused regressions and enforced standard-axiom checks are in
 #print axioms HodgeConjecture.ProjectiveLineHodgeCycleClass.model_satisfies_rationalHodgeTarget
 #print axioms HodgeConjecture.ProjectiveLineHodgeCycleClass.model_cycleClass_range_eq_hodgeClasses
 #print axioms HodgeConjecture.ProjectiveLineHodgeCycleClass.cycleClass_has_geometric_type_one_one
+
+-- Actual relative kernels, excision, oriented local Thom classes and the geometric zero-point Gysin.
+
+-- RelativeCochains.
+
+#check HodgeConjecture.RelativeCochains.restriction
+#check HodgeConjecture.RelativeCochains.restrictionLinear
+#check HodgeConjecture.RelativeCochains.restrictionLinear_apply
+#check HodgeConjecture.RelativeCochains.Cochain
+#check HodgeConjecture.RelativeCochains.cochain_vanish
+#check HodgeConjecture.RelativeCochains.restriction_differential
+#check HodgeConjecture.RelativeCochains.differential
+#check HodgeConjecture.RelativeCochains.differential_val
+#check HodgeConjecture.RelativeCochains.differential_squared
+#check HodgeConjecture.RelativeCochains.complex
+#check HodgeConjecture.RelativeCochains.complex_d
+#check HodgeConjecture.RelativeCochains.inclusion
+#check HodgeConjecture.RelativeCochains.inclusion_apply
+#check HodgeConjecture.RelativeCochains.inclusion_comp_restriction
+#check HodgeConjecture.RelativeCochains.extension
+#check HodgeConjecture.RelativeCochains.restriction_extension
+#check HodgeConjecture.RelativeCochains.restrictionLinear_surjective
+#check HodgeConjecture.RelativeCochains.shortComplex
+#check HodgeConjecture.RelativeCochains.shortComplex_degreewise_shortExact
+#check HodgeConjecture.RelativeCochains.shortComplex_shortExact
+#check HodgeConjecture.RelativeCochains.Cohomology
+#check HodgeConjecture.RelativeCochains.forget
+#check HodgeConjecture.RelativeCochains.restrictCohomology
+#check HodgeConjecture.RelativeCochains.connecting
+#check HodgeConjecture.RelativeCochains.intersectionSequence
+#check HodgeConjecture.RelativeCochains.intersectionSequence_exact
+#check HodgeConjecture.RelativeCochains.intersectionSequence_f
+#check HodgeConjecture.RelativeCochains.intersectionSequence_g
+#check HodgeConjecture.RelativeCochains.unionSequence
+#check HodgeConjecture.RelativeCochains.unionSequence_exact
+#check HodgeConjecture.RelativeCochains.unionSequence_f
+#check HodgeConjecture.RelativeCochains.unionSequence_g
+#check HodgeConjecture.RelativeCochains.pairSequence
+#check HodgeConjecture.RelativeCochains.pairSequence_exact
+#check HodgeConjecture.RelativeCochains.Cocycle
+#check HodgeConjecture.RelativeCochains.cocycleClass
+#check HodgeConjecture.RelativeCochains.cocycleClass_surjective
+#check HodgeConjecture.RelativeCochains.connecting_cocycleClass
+#check HodgeConjecture.RelativeCochains.exists_connecting_representative
+#check HodgeConjecture.RelativeCochains.pullbackLinear
+#check HodgeConjecture.RelativeCochains.pullback
+#check HodgeConjecture.RelativeCochains.pullback_inclusion
+#check HodgeConjecture.RelativeCochains.subcomplexMap
+#check HodgeConjecture.RelativeCochains.pullback_restriction
+#check HodgeConjecture.RelativeCochains.shortComplexMap
+#check HodgeConjecture.RelativeCochains.connecting_naturality
+#check HodgeConjecture.RelativeCochains.pullbackIsoOfLE
+#check HodgeConjecture.RelativeCochains.pullbackIso
+#check HodgeConjecture.RelativeCochains.pullbackIso_hom
+
+#print axioms HodgeConjecture.RelativeCochains.restriction
+#print axioms HodgeConjecture.RelativeCochains.restrictionLinear
+#print axioms HodgeConjecture.RelativeCochains.restrictionLinear_apply
+#print axioms HodgeConjecture.RelativeCochains.Cochain
+#print axioms HodgeConjecture.RelativeCochains.cochain_vanish
+#print axioms HodgeConjecture.RelativeCochains.restriction_differential
+#print axioms HodgeConjecture.RelativeCochains.differential
+#print axioms HodgeConjecture.RelativeCochains.differential_val
+#print axioms HodgeConjecture.RelativeCochains.differential_squared
+#print axioms HodgeConjecture.RelativeCochains.complex
+#print axioms HodgeConjecture.RelativeCochains.complex_d
+#print axioms HodgeConjecture.RelativeCochains.inclusion
+#print axioms HodgeConjecture.RelativeCochains.inclusion_apply
+#print axioms HodgeConjecture.RelativeCochains.inclusion_comp_restriction
+#print axioms HodgeConjecture.RelativeCochains.extension
+#print axioms HodgeConjecture.RelativeCochains.restriction_extension
+#print axioms HodgeConjecture.RelativeCochains.restrictionLinear_surjective
+#print axioms HodgeConjecture.RelativeCochains.shortComplex
+#print axioms HodgeConjecture.RelativeCochains.shortComplex_degreewise_shortExact
+#print axioms HodgeConjecture.RelativeCochains.shortComplex_shortExact
+#print axioms HodgeConjecture.RelativeCochains.Cohomology
+#print axioms HodgeConjecture.RelativeCochains.forget
+#print axioms HodgeConjecture.RelativeCochains.restrictCohomology
+#print axioms HodgeConjecture.RelativeCochains.connecting
+#print axioms HodgeConjecture.RelativeCochains.intersectionSequence
+#print axioms HodgeConjecture.RelativeCochains.intersectionSequence_exact
+#print axioms HodgeConjecture.RelativeCochains.intersectionSequence_f
+#print axioms HodgeConjecture.RelativeCochains.intersectionSequence_g
+#print axioms HodgeConjecture.RelativeCochains.unionSequence
+#print axioms HodgeConjecture.RelativeCochains.unionSequence_exact
+#print axioms HodgeConjecture.RelativeCochains.unionSequence_f
+#print axioms HodgeConjecture.RelativeCochains.unionSequence_g
+#print axioms HodgeConjecture.RelativeCochains.pairSequence
+#print axioms HodgeConjecture.RelativeCochains.pairSequence_exact
+#print axioms HodgeConjecture.RelativeCochains.Cocycle
+#print axioms HodgeConjecture.RelativeCochains.cocycleClass
+#print axioms HodgeConjecture.RelativeCochains.cocycleClass_surjective
+#print axioms HodgeConjecture.RelativeCochains.connecting_cocycleClass
+#print axioms HodgeConjecture.RelativeCochains.exists_connecting_representative
+#print axioms HodgeConjecture.RelativeCochains.pullbackLinear
+#print axioms HodgeConjecture.RelativeCochains.pullback
+#print axioms HodgeConjecture.RelativeCochains.pullback_inclusion
+#print axioms HodgeConjecture.RelativeCochains.subcomplexMap
+#print axioms HodgeConjecture.RelativeCochains.pullback_restriction
+#print axioms HodgeConjecture.RelativeCochains.shortComplexMap
+#print axioms HodgeConjecture.RelativeCochains.connecting_naturality
+#print axioms HodgeConjecture.RelativeCochains.pullbackIsoOfLE
+#print axioms HodgeConjecture.RelativeCochains.pullbackIso
+#print axioms HodgeConjecture.RelativeCochains.pullbackIso_hom
+
+-- ShortExactQuasiIso.
+
+#check HodgeConjecture.ShortExactQuasiIso.left
+
+#print axioms HodgeConjecture.ShortExactQuasiIso.left
+
+-- RelativeUnion.
+
+#check HodgeConjecture.RelativeUnion.unionBoundary
+#check HodgeConjecture.RelativeUnion.localBoundary
+#check HodgeConjecture.RelativeUnion.leftInclusion
+#check HodgeConjecture.RelativeUnion.leftInclusion_maps_boundary
+#check HodgeConjecture.RelativeUnion.restriction
+#check HodgeConjecture.RelativeUnion.difference_pair_zero
+#check HodgeConjecture.RelativeUnion.extensionFunction
+#check HodgeConjecture.RelativeUnion.extensionFunction_restrictions
+#check HodgeConjecture.RelativeUnion.extensionLinear
+#check HodgeConjecture.RelativeUnion.extensionLinear_val
+#check HodgeConjecture.RelativeUnion.extension_restriction
+#check HodgeConjecture.RelativeUnion.restriction_extension
+#check HodgeConjecture.RelativeUnion.cochainEquiv
+#check HodgeConjecture.RelativeUnion.excisionIso
+#check HodgeConjecture.RelativeUnion.excisionIso_hom
+#check HodgeConjecture.RelativeUnion.excisionIso_inv_apply
+#check HodgeConjecture.RelativeUnion.intersectionIso
+#check HodgeConjecture.RelativeUnion.boundaryIso
+
+#print axioms HodgeConjecture.RelativeUnion.unionBoundary
+#print axioms HodgeConjecture.RelativeUnion.localBoundary
+#print axioms HodgeConjecture.RelativeUnion.leftInclusion
+#print axioms HodgeConjecture.RelativeUnion.leftInclusion_maps_boundary
+#print axioms HodgeConjecture.RelativeUnion.restriction
+#print axioms HodgeConjecture.RelativeUnion.difference_pair_zero
+#print axioms HodgeConjecture.RelativeUnion.extensionFunction
+#print axioms HodgeConjecture.RelativeUnion.extensionFunction_restrictions
+#print axioms HodgeConjecture.RelativeUnion.extensionLinear
+#print axioms HodgeConjecture.RelativeUnion.extensionLinear_val
+#print axioms HodgeConjecture.RelativeUnion.extension_restriction
+#print axioms HodgeConjecture.RelativeUnion.restriction_extension
+#print axioms HodgeConjecture.RelativeUnion.cochainEquiv
+#print axioms HodgeConjecture.RelativeUnion.excisionIso
+#print axioms HodgeConjecture.RelativeUnion.excisionIso_hom
+#print axioms HodgeConjecture.RelativeUnion.excisionIso_inv_apply
+#print axioms HodgeConjecture.RelativeUnion.intersectionIso
+#print axioms HodgeConjecture.RelativeUnion.boundaryIso
+
+-- RelativeExcision.
+
+#check HodgeConjecture.RelativeExcision.toUnion
+#check HodgeConjecture.RelativeExcision.restriction
+#check HodgeConjecture.RelativeExcision.toUnion_excisionIso
+#check HodgeConjecture.RelativeExcision.quotient_quasiIso
+#check HodgeConjecture.RelativeExcision.toUnion_quasiIso
+#check HodgeConjecture.RelativeExcision.restriction_quasiIso
+#check HodgeConjecture.RelativeExcision.toUnion_forget
+#check HodgeConjecture.RelativeExcision.smallRestriction_quasiIso
+#check HodgeConjecture.RelativeExcision.relativeRestriction_quasiIso
+#check HodgeConjecture.RelativeExcision.smallCohomologyIso
+#check HodgeConjecture.RelativeExcision.smallCohomologyIso_hom
+#check HodgeConjecture.RelativeExcision.excisionIso
+#check HodgeConjecture.RelativeExcision.excisionIso_hom
+#check HodgeConjecture.RelativeExcision.smallCohomologyIso_forget
+
+#print axioms HodgeConjecture.RelativeExcision.toUnion
+#print axioms HodgeConjecture.RelativeExcision.restriction
+#print axioms HodgeConjecture.RelativeExcision.toUnion_excisionIso
+#print axioms HodgeConjecture.RelativeExcision.quotient_quasiIso
+#print axioms HodgeConjecture.RelativeExcision.toUnion_quasiIso
+#print axioms HodgeConjecture.RelativeExcision.restriction_quasiIso
+#print axioms HodgeConjecture.RelativeExcision.toUnion_forget
+#print axioms HodgeConjecture.RelativeExcision.smallRestriction_quasiIso
+#print axioms HodgeConjecture.RelativeExcision.relativeRestriction_quasiIso
+#print axioms HodgeConjecture.RelativeExcision.smallCohomologyIso
+#print axioms HodgeConjecture.RelativeExcision.smallCohomologyIso_hom
+#print axioms HodgeConjecture.RelativeExcision.excisionIso
+#print axioms HodgeConjecture.RelativeExcision.excisionIso_hom
+#print axioms HodgeConjecture.RelativeExcision.smallCohomologyIso_forget
+
+-- RelativeMayerVietoris.
+
+#check HodgeConjecture.RelativeMayerVietoris.intersectionCohomologyIso
+#check HodgeConjecture.RelativeMayerVietoris.localConnecting
+#check HodgeConjecture.RelativeMayerVietoris.localToAbsolute
+#check HodgeConjecture.RelativeMayerVietoris.localToAbsolute_restrictions
+#check HodgeConjecture.RelativeMayerVietoris.inl_difference
+#check HodgeConjecture.RelativeMayerVietoris.shortComplexMap
+#check HodgeConjecture.RelativeMayerVietoris.connecting_naturality
+#check HodgeConjecture.RelativeMayerVietoris.localConnecting_forget
+#check HodgeConjecture.RelativeMayerVietoris.localConnectingActual
+#check HodgeConjecture.RelativeMayerVietoris.excisionIso_inv_forget_small
+#check HodgeConjecture.RelativeMayerVietoris.connecting_excision_forget
+#check HodgeConjecture.RelativeMayerVietoris.localConnecting_excision_forget
+
+#print axioms HodgeConjecture.RelativeMayerVietoris.intersectionCohomologyIso
+#print axioms HodgeConjecture.RelativeMayerVietoris.localConnecting
+#print axioms HodgeConjecture.RelativeMayerVietoris.localToAbsolute
+#print axioms HodgeConjecture.RelativeMayerVietoris.localToAbsolute_restrictions
+#print axioms HodgeConjecture.RelativeMayerVietoris.inl_difference
+#print axioms HodgeConjecture.RelativeMayerVietoris.shortComplexMap
+#print axioms HodgeConjecture.RelativeMayerVietoris.connecting_naturality
+#print axioms HodgeConjecture.RelativeMayerVietoris.localConnecting_forget
+#print axioms HodgeConjecture.RelativeMayerVietoris.localConnectingActual
+#print axioms HodgeConjecture.RelativeMayerVietoris.excisionIso_inv_forget_small
+#print axioms HodgeConjecture.RelativeMayerVietoris.connecting_excision_forget
+#print axioms HodgeConjecture.RelativeMayerVietoris.localConnecting_excision_forget
+
+-- Examples.ComplexPointThom.
+
+#check HodgeConjecture.ComplexPointThom.space
+#check HodgeConjecture.ComplexPointThom.punctured
+#check HodgeConjecture.ComplexPointThom.Plane
+#check HodgeConjecture.ComplexPointThom.puncturedSubcomplex
+#check HodgeConjecture.ComplexPointThom.LocalH2
+#check HodgeConjecture.ComplexPointThom.puncturedCohomologyIso
+#check HodgeConjecture.ComplexPointThom.nativeConnecting_mono
+#check HodgeConjecture.ComplexPointThom.nativeConnecting_epi
+#check HodgeConjecture.ComplexPointThom.nativeConnecting_isIso
+#check HodgeConjecture.ComplexPointThom.connecting
+#check HodgeConjecture.ComplexPointThom.connecting_isIso
+#check HodgeConjecture.ComplexPointThom.connectingIso
+#check HodgeConjecture.ComplexPointThom.connectingIso_hom
+#check HodgeConjecture.ComplexPointThom.circleIso
+#check HodgeConjecture.ComplexPointThom.circleIso_hom
+#check HodgeConjecture.ComplexPointThom.thomClass
+#check HodgeConjecture.ComplexPointThom.thomClass_eq_connecting
+#check HodgeConjecture.ComplexPointThom.thomClass_eq_nativeConnecting
+#check HodgeConjecture.ComplexPointThom.coordinates
+#check HodgeConjecture.ComplexPointThom.coordinates_circleIso
+#check HodgeConjecture.ComplexPointThom.coordinates_thomClass
+#check HodgeConjecture.ComplexPointThom.thomClass_ne_zero
+#check HodgeConjecture.ComplexPointThom.boundaryPairing
+#check HodgeConjecture.ComplexPointThom.boundaryPairing_eq_coordinates
+#check HodgeConjecture.ComplexPointThom.boundaryPairing_thomClass
+#check HodgeConjecture.ComplexPointThom.thomClass_unique
+#check HodgeConjecture.ComplexPointThom.eq_smul_thomClass
+#check HodgeConjecture.ComplexPointThom.forget_thomClass
+#check HodgeConjecture.ComplexPointThom.rationalGysin
+#check HodgeConjecture.ComplexPointThom.rationalGysin_one
+#check HodgeConjecture.ComplexPointThom.coordinates_rationalGysin
+#check HodgeConjecture.ComplexPointThom.Point
+#check HodgeConjecture.ComplexPointThom.point
+#check HodgeConjecture.ComplexPointThom.point_nonempty
+#check HodgeConjecture.ComplexPointThom.point_subsingleton
+#check HodgeConjecture.ComplexPointThom.pointCoordinates
+#check HodgeConjecture.ComplexPointThom.pointUnit
+#check HodgeConjecture.ComplexPointThom.pointCoordinates_pointUnit
+#check HodgeConjecture.ComplexPointThom.localGysin
+#check HodgeConjecture.ComplexPointThom.localGysin_pointUnit
+#check HodgeConjecture.ComplexPointThom.localGysin_eq_smul
+#check HodgeConjecture.ComplexPointThom.thomIso
+#check HodgeConjecture.ComplexPointThom.thomIso_apply
+#check HodgeConjecture.ComplexPointThom.localGysin_bijective
+
+#print axioms HodgeConjecture.ComplexPointThom.space
+#print axioms HodgeConjecture.ComplexPointThom.punctured
+#print axioms HodgeConjecture.ComplexPointThom.Plane
+#print axioms HodgeConjecture.ComplexPointThom.puncturedSubcomplex
+#print axioms HodgeConjecture.ComplexPointThom.LocalH2
+#print axioms HodgeConjecture.ComplexPointThom.puncturedCohomologyIso
+#print axioms HodgeConjecture.ComplexPointThom.nativeConnecting_mono
+#print axioms HodgeConjecture.ComplexPointThom.nativeConnecting_epi
+#print axioms HodgeConjecture.ComplexPointThom.nativeConnecting_isIso
+#print axioms HodgeConjecture.ComplexPointThom.connecting
+#print axioms HodgeConjecture.ComplexPointThom.connecting_isIso
+#print axioms HodgeConjecture.ComplexPointThom.connectingIso
+#print axioms HodgeConjecture.ComplexPointThom.connectingIso_hom
+#print axioms HodgeConjecture.ComplexPointThom.circleIso
+#print axioms HodgeConjecture.ComplexPointThom.circleIso_hom
+#print axioms HodgeConjecture.ComplexPointThom.thomClass
+#print axioms HodgeConjecture.ComplexPointThom.thomClass_eq_connecting
+#print axioms HodgeConjecture.ComplexPointThom.thomClass_eq_nativeConnecting
+#print axioms HodgeConjecture.ComplexPointThom.coordinates
+#print axioms HodgeConjecture.ComplexPointThom.coordinates_circleIso
+#print axioms HodgeConjecture.ComplexPointThom.coordinates_thomClass
+#print axioms HodgeConjecture.ComplexPointThom.thomClass_ne_zero
+#print axioms HodgeConjecture.ComplexPointThom.boundaryPairing
+#print axioms HodgeConjecture.ComplexPointThom.boundaryPairing_eq_coordinates
+#print axioms HodgeConjecture.ComplexPointThom.boundaryPairing_thomClass
+#print axioms HodgeConjecture.ComplexPointThom.thomClass_unique
+#print axioms HodgeConjecture.ComplexPointThom.eq_smul_thomClass
+#print axioms HodgeConjecture.ComplexPointThom.forget_thomClass
+#print axioms HodgeConjecture.ComplexPointThom.rationalGysin
+#print axioms HodgeConjecture.ComplexPointThom.rationalGysin_one
+#print axioms HodgeConjecture.ComplexPointThom.coordinates_rationalGysin
+#print axioms HodgeConjecture.ComplexPointThom.Point
+#print axioms HodgeConjecture.ComplexPointThom.point
+#print axioms HodgeConjecture.ComplexPointThom.point_nonempty
+#print axioms HodgeConjecture.ComplexPointThom.point_subsingleton
+#print axioms HodgeConjecture.ComplexPointThom.pointCoordinates
+#print axioms HodgeConjecture.ComplexPointThom.pointUnit
+#print axioms HodgeConjecture.ComplexPointThom.pointCoordinates_pointUnit
+#print axioms HodgeConjecture.ComplexPointThom.localGysin
+#print axioms HodgeConjecture.ComplexPointThom.localGysin_pointUnit
+#print axioms HodgeConjecture.ComplexPointThom.localGysin_eq_smul
+#print axioms HodgeConjecture.ComplexPointThom.thomIso
+#print axioms HodgeConjecture.ComplexPointThom.thomIso_apply
+#print axioms HodgeConjecture.ComplexPointThom.localGysin_bijective
+
+-- Examples.ProjectiveLinePointSupport.
+
+#check HodgeConjecture.ProjectiveLinePointSupport.zeroPoint
+#check HodgeConjecture.ProjectiveLinePointSupport.support
+#check HodgeConjecture.ProjectiveLinePointSupport.puncturedOpen
+#check HodgeConjecture.ProjectiveLinePointSupport.reciprocalOpen_eq_puncturedOpen
+#check HodgeConjecture.ProjectiveLinePointSupport.puncturedOpen_isOpen
+#check HodgeConjecture.ProjectiveLinePointSupport.zeroPoint_scheme_base
+#check HodgeConjecture.ProjectiveLinePointSupport.schemeZero_ne_genericPoint
+#check HodgeConjecture.ProjectiveLinePointSupport.PointSupport
+#check HodgeConjecture.ProjectiveLinePointSupport.point
+#check HodgeConjecture.ProjectiveLinePointSupport.pointSupport_nonempty
+#check HodgeConjecture.ProjectiveLinePointSupport.pointSupport_subsingleton
+#check HodgeConjecture.ProjectiveLinePointSupport.pointHomeomorph
+#check HodgeConjecture.ProjectiveLinePointSupport.pointHomeomorph_coe
+#check HodgeConjecture.ProjectiveLinePointSupport.pointCoordinates
+#check HodgeConjecture.ProjectiveLinePointSupport.pointUnit
+#check HodgeConjecture.ProjectiveLinePointSupport.pointCoordinates_pointUnit
+
+#print axioms HodgeConjecture.ProjectiveLinePointSupport.zeroPoint
+#print axioms HodgeConjecture.ProjectiveLinePointSupport.support
+#print axioms HodgeConjecture.ProjectiveLinePointSupport.puncturedOpen
+#print axioms HodgeConjecture.ProjectiveLinePointSupport.reciprocalOpen_eq_puncturedOpen
+#print axioms HodgeConjecture.ProjectiveLinePointSupport.puncturedOpen_isOpen
+#print axioms HodgeConjecture.ProjectiveLinePointSupport.zeroPoint_scheme_base
+#print axioms HodgeConjecture.ProjectiveLinePointSupport.schemeZero_ne_genericPoint
+#print axioms HodgeConjecture.ProjectiveLinePointSupport.PointSupport
+#print axioms HodgeConjecture.ProjectiveLinePointSupport.point
+#print axioms HodgeConjecture.ProjectiveLinePointSupport.pointSupport_nonempty
+#print axioms HodgeConjecture.ProjectiveLinePointSupport.pointSupport_subsingleton
+#print axioms HodgeConjecture.ProjectiveLinePointSupport.pointHomeomorph
+#print axioms HodgeConjecture.ProjectiveLinePointSupport.pointHomeomorph_coe
+#print axioms HodgeConjecture.ProjectiveLinePointSupport.pointCoordinates
+#print axioms HodgeConjecture.ProjectiveLinePointSupport.pointUnit
+#print axioms HodgeConjecture.ProjectiveLinePointSupport.pointCoordinates_pointUnit
+
+-- Examples.ProjectiveLineNormalChart.
+
+#check HodgeConjecture.ProjectiveLineNormalChart.space
+#check HodgeConjecture.ProjectiveLineNormalChart.first
+#check HodgeConjecture.ProjectiveLineNormalChart.second
+#check HodgeConjecture.ProjectiveLineNormalChart.localBoundary
+#check HodgeConjecture.ProjectiveLineNormalChart.puncturedChart
+#check HodgeConjecture.ProjectiveLineNormalChart.finiteSSetIso
+#check HodgeConjecture.ProjectiveLineNormalChart.finiteSSetIso_simplexMap
+#check HodgeConjecture.ProjectiveLineNormalChart.punctured_preimage
+#check HodgeConjecture.ProjectiveLineNormalChart.puncturedSSetMap
+#check HodgeConjecture.ProjectiveLineNormalChart.normalPullbackIso
+#check HodgeConjecture.ProjectiveLineNormalChart.normalClassIso
+#check HodgeConjecture.ProjectiveLineNormalChart.normalClassIso_inv
+#check HodgeConjecture.ProjectiveLineNormalChart.normalClassIso_hom
+#check HodgeConjecture.ProjectiveLineNormalChart.punctured_map_intersection
+#check HodgeConjecture.ProjectiveLineNormalChart.punctured_cohomology_comparison
+
+#print axioms HodgeConjecture.ProjectiveLineNormalChart.space
+#print axioms HodgeConjecture.ProjectiveLineNormalChart.first
+#print axioms HodgeConjecture.ProjectiveLineNormalChart.second
+#print axioms HodgeConjecture.ProjectiveLineNormalChart.localBoundary
+#print axioms HodgeConjecture.ProjectiveLineNormalChart.puncturedChart
+#print axioms HodgeConjecture.ProjectiveLineNormalChart.finiteSSetIso
+#print axioms HodgeConjecture.ProjectiveLineNormalChart.finiteSSetIso_simplexMap
+#print axioms HodgeConjecture.ProjectiveLineNormalChart.punctured_preimage
+#print axioms HodgeConjecture.ProjectiveLineNormalChart.puncturedSSetMap
+#print axioms HodgeConjecture.ProjectiveLineNormalChart.normalPullbackIso
+#print axioms HodgeConjecture.ProjectiveLineNormalChart.normalClassIso
+#print axioms HodgeConjecture.ProjectiveLineNormalChart.normalClassIso_inv
+#print axioms HodgeConjecture.ProjectiveLineNormalChart.normalClassIso_hom
+#print axioms HodgeConjecture.ProjectiveLineNormalChart.punctured_map_intersection
+#print axioms HodgeConjecture.ProjectiveLineNormalChart.punctured_cohomology_comparison
+
+-- Examples.ProjectiveLineNormalChartBoundary.
+
+#check HodgeConjecture.ProjectiveLineNormalChart.punctured_cohomology_comparison_inv
+#check HodgeConjecture.ProjectiveLineNormalChart.localConnectingActual_normalClassIso_inv
+#check HodgeConjecture.ProjectiveLineNormalChart.overlap_radial_comp
+#check HodgeConjecture.ProjectiveLineNormalChart.overlapOrientationClass
+#check HodgeConjecture.ProjectiveLineNormalChart.overlapOrientationClass_pullback
+#check HodgeConjecture.ProjectiveLineNormalChart.normalClassIso_thomClass
+
+#print axioms HodgeConjecture.ProjectiveLineNormalChart.punctured_cohomology_comparison_inv
+#print axioms HodgeConjecture.ProjectiveLineNormalChart.localConnectingActual_normalClassIso_inv
+#print axioms HodgeConjecture.ProjectiveLineNormalChart.overlap_radial_comp
+#print axioms HodgeConjecture.ProjectiveLineNormalChart.overlapOrientationClass
+#print axioms HodgeConjecture.ProjectiveLineNormalChart.overlapOrientationClass_pullback
+#print axioms HodgeConjecture.ProjectiveLineNormalChart.normalClassIso_thomClass
+
+-- ProjectiveLinePointGysin.
+
+#check HodgeConjecture.ProjectiveLinePointGysin.space
+#check HodgeConjecture.ProjectiveLinePointGysin.complementSubcomplex
+#check HodgeConjecture.ProjectiveLinePointGysin.SupportedH2
+#check HodgeConjecture.ProjectiveLinePointGysin.PointH0
+#check HodgeConjecture.ProjectiveLinePointGysin.AbsoluteH2
+#check HodgeConjecture.ProjectiveLinePointGysin.pointPullbackIso
+#check HodgeConjecture.ProjectiveLinePointGysin.pointPullbackIso_pointUnit
+#check HodgeConjecture.ProjectiveLinePointGysin.thomToSupportIso
+#check HodgeConjecture.ProjectiveLinePointGysin.supportedThomClass
+#check HodgeConjecture.ProjectiveLinePointGysin.supportedThomClass_ne_zero
+#check HodgeConjecture.ProjectiveLinePointGysin.complementCohomology_isZero
+#check HodgeConjecture.ProjectiveLinePointGysin.forget_isIso
+#check HodgeConjecture.ProjectiveLinePointGysin.forgetIso
+#check HodgeConjecture.ProjectiveLinePointGysin.forget_supportedThomClass
+#check HodgeConjecture.ProjectiveLinePointGysin.supportedGysin
+#check HodgeConjecture.ProjectiveLinePointGysin.gysin
+#check HodgeConjecture.ProjectiveLinePointGysin.supportedGysin_pointUnit
+#check HodgeConjecture.ProjectiveLinePointGysin.gysin_pointUnit
+#check HodgeConjecture.ProjectiveLinePointGysin.gysinIso
+#check HodgeConjecture.ProjectiveLinePointGysin.gysinIso_apply
+#check HodgeConjecture.ProjectiveLinePointGysin.gysin_bijective
+
+#print axioms HodgeConjecture.ProjectiveLinePointGysin.space
+#print axioms HodgeConjecture.ProjectiveLinePointGysin.complementSubcomplex
+#print axioms HodgeConjecture.ProjectiveLinePointGysin.SupportedH2
+#print axioms HodgeConjecture.ProjectiveLinePointGysin.PointH0
+#print axioms HodgeConjecture.ProjectiveLinePointGysin.AbsoluteH2
+#print axioms HodgeConjecture.ProjectiveLinePointGysin.pointPullbackIso
+#print axioms HodgeConjecture.ProjectiveLinePointGysin.pointPullbackIso_pointUnit
+#print axioms HodgeConjecture.ProjectiveLinePointGysin.thomToSupportIso
+#print axioms HodgeConjecture.ProjectiveLinePointGysin.supportedThomClass
+#print axioms HodgeConjecture.ProjectiveLinePointGysin.supportedThomClass_ne_zero
+#print axioms HodgeConjecture.ProjectiveLinePointGysin.complementCohomology_isZero
+#print axioms HodgeConjecture.ProjectiveLinePointGysin.forget_isIso
+#print axioms HodgeConjecture.ProjectiveLinePointGysin.forgetIso
+#print axioms HodgeConjecture.ProjectiveLinePointGysin.forget_supportedThomClass
+#print axioms HodgeConjecture.ProjectiveLinePointGysin.supportedGysin
+#print axioms HodgeConjecture.ProjectiveLinePointGysin.gysin
+#print axioms HodgeConjecture.ProjectiveLinePointGysin.supportedGysin_pointUnit
+#print axioms HodgeConjecture.ProjectiveLinePointGysin.gysin_pointUnit
+#print axioms HodgeConjecture.ProjectiveLinePointGysin.gysinIso
+#print axioms HodgeConjecture.ProjectiveLinePointGysin.gysinIso_apply
+#print axioms HodgeConjecture.ProjectiveLinePointGysin.gysin_bijective
+
+-- ProjectiveLineGysinCycleClass.
+
+#check HodgeConjecture.ProjectiveLineGysinCycleClass.Source
+#check HodgeConjecture.ProjectiveLineGysinCycleClass.integralZeroClass
+#check HodgeConjecture.ProjectiveLineGysinCycleClass.rationalZeroClass
+#check HodgeConjecture.ProjectiveLineGysinCycleClass.pointClass
+#check HodgeConjecture.ProjectiveLineGysinCycleClass.pointClass_one
+#check HodgeConjecture.ProjectiveLineGysinCycleClass.pointClass_eq_smul
+#check HodgeConjecture.ProjectiveLineGysinCycleClass.gysin_pointUnit_eq_integralZeroClass
+#check HodgeConjecture.ProjectiveLineGysinCycleClass.gysin_pointUnit_eq_rationalZeroClass
+#check HodgeConjecture.ProjectiveLineGysinCycleClass.cycleClassViaZeroGysin
+#check HodgeConjecture.ProjectiveLineGysinCycleClass.cycleClassViaZeroGysin_eq_cycleClass
+#check HodgeConjecture.ProjectiveLineGysinCycleClass.cycleClass_factorization
+#check HodgeConjecture.ProjectiveLineGysinCycleClass.integralCycleClass_factorization
+
+#print axioms HodgeConjecture.ProjectiveLineGysinCycleClass.Source
+#print axioms HodgeConjecture.ProjectiveLineGysinCycleClass.integralZeroClass
+#print axioms HodgeConjecture.ProjectiveLineGysinCycleClass.rationalZeroClass
+#print axioms HodgeConjecture.ProjectiveLineGysinCycleClass.pointClass
+#print axioms HodgeConjecture.ProjectiveLineGysinCycleClass.pointClass_one
+#print axioms HodgeConjecture.ProjectiveLineGysinCycleClass.pointClass_eq_smul
+#print axioms HodgeConjecture.ProjectiveLineGysinCycleClass.gysin_pointUnit_eq_integralZeroClass
+#print axioms HodgeConjecture.ProjectiveLineGysinCycleClass.gysin_pointUnit_eq_rationalZeroClass
+#print axioms HodgeConjecture.ProjectiveLineGysinCycleClass.cycleClassViaZeroGysin
+#print axioms HodgeConjecture.ProjectiveLineGysinCycleClass.cycleClassViaZeroGysin_eq_cycleClass
+#print axioms HodgeConjecture.ProjectiveLineGysinCycleClass.cycleClass_factorization
+#print axioms HodgeConjecture.ProjectiveLineGysinCycleClass.integralCycleClass_factorization

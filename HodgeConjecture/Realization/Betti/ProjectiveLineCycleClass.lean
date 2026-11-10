@@ -20,7 +20,9 @@ This module imports no de Rham construction or comparison. Its rational
 map is onto actual singular H² by the independently proved cohomology
 calculation and the original reduced infinity class.
 No identification with a separately constructed general topological
-Gysin or Poincaré-dual cycle map is asserted.
+Gysin or Poincaré-dual cycle map is asserted here. The separate
+`ProjectiveLineGysinCycleClass` module constructs the distinguished
+zero-point Gysin and proves its agreement with this normalization.
 -/
 
 set_option autoImplicit false

@@ -6,7 +6,7 @@ with actual Chow groups and their cycle maps; correspondences, collision
 geometry, and boundary inertia provide supporting construction tools.
 
 **Current status:** proved mechanisms include finite split Chow/Betti/Hodge
-comparison and a P¹ Hodge-cycle model using actual filtered de Rham and singular `H²`.
+comparison, a P¹ Hodge-cycle model, and an oriented zero-point Gysin/cycle comparison.
 General Betti comparison and prescribed-class generation remain open.
 No new case of the Hodge conjecture is claimed.
 

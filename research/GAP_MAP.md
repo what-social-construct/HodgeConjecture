@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-11-07 (actual projective-line Hodge filtration and fixed cycle model;
+Last reviewed: 2026-11-07 (actual projective-line zero-point Gysin and cycle comparison;
 earlier checkpoint records retain
 their original validation scope).
 
@@ -132,7 +132,17 @@ classes are an inverse image of that geometric piece, independently of
 cycles. The existing fixed-codimension target predicate is proved for this
 model by the original rational infinity class.
 
-Next identify the normalized point class with a geometric Gysin class.
+The [zero-point Gysin checkpoint](working/0035-projective-line-zero-point-gysin.md)
+now constructs actual relative singular cochains, native pair boundaries
+and open-cover excision. The positive circle class gives a nonzero local
+Thom class in H²(ℂ, ℂ∖{0}); the original finite chart and inverse excision
+place it in actual cohomology supported at the P¹ zero point. Forgetting
+support gives the existing positive generator. This actual point-H⁰ Gysin
+is an isomorphism and its unit equals the ordinary cycle-class images of
+the original scheme zero-point integral and rational Chow classes. The degree-normalized maps
+factor through this distinguished-point Gysin.
+
+Next transport this construction to other points and prove chart independence.
 A singular fundamental two-cycle/Poincaré-duality comparison, a general
 analytic/Gysin construction, and identification with separately constructed
 general cycle classes remain open. The computed P¹ filtration is not a

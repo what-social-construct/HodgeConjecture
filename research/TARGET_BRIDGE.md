@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-11-07 (actual projective-line Hodge filtration and fixed cycle model;
+Assessed: 2026-11-07 (actual projective-line zero-point Gysin and cycle comparison;
 SP108--SP113 retain their stated conditional and research scope).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
@@ -84,7 +84,16 @@ canonical tensor conjugation recovers type (1,1). The fixed-codimension
 model now uses this actual geometric rational Hodge subspace and the
 independent ordinary cycle map, with an explicit infinity-class witness
 for every target class.
-The next concrete comparison is the geometric point/Gysin normalization.
+The [zero-point Gysin checkpoint](working/0035-projective-line-zero-point-gysin.md)
+constructs actual relative singular cochains and open-cover excision. The
+positive circle boundary gives the local Thom class in H²(ℂ, ℂ∖{0}).
+The original finite chart and inverse excision carry it to cohomology
+supported at the actual P¹ zero point; forgetting support sends it to
+the existing positive generator. This gives an isomorphism from actual
+point H⁰ to P¹ H² and identifies its unit with the ordinary cycle-class
+image of the original scheme zero-point Chow class. Both ordinary maps
+factor through this distinguished-point Gysin and the actual Chow degree.
+The next comparison is transport to other points and chart independence.
 General analytic/Gysin comparison, Hodge comparison and degeneration beyond P¹,
 and class-dependent coverage remain open. A rational coordinate alone
 would supply none of these geometric identifications.

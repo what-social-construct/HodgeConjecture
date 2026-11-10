@@ -16,6 +16,7 @@ public import HodgeConjecture.Realization.Betti.ProjectiveLineHodgeStructure
 
 /-!
 # Constructed Betti realization
+public import HodgeConjecture.Realization.Betti.ProjectiveLineGysinCycleClass
 
 For path-connected spaces, actual paths and singular one-simplices prove
 that degree-zero cocycles are constant. The complex affine line has the
@@ -72,3 +73,8 @@ and the full sheet-algebra action comparison is proved. The marked
 selector's universal target square follows for the resulting negative
 fundamental class.
 -/
+Actual relative cochains and open-cover excision now construct the oriented
+zero-point Gysin map through local Thom class and forgetting support. Its
+unit equals the positive P¹ generator and the zero-point ordinary cycle class;
+the ordinary degree map factors through this distinguished-point Gysin.
+Other points, chart independence and general Gysin comparison remain open.

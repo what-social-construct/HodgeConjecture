@@ -342,3 +342,19 @@ infinity-class witness for every target class. General analytic/Gysin
 identification and general characteristic-zero degeneration remain open.
 See [0034](working/0034-projective-line-hodge-filtration.md). Release
 sign-offs, comparator selection and submission packaging remain unchanged.
+
+The actual P¹ zero-point Gysin checkpoint (2026-11-07) constructs
+relative singular cochains, open-cover excision, the oriented local Thom
+class and a map from the original support H⁰ to actual P¹ singular H².
+Its unit is the positive cover generator and the ordinary cycle-class
+image of the original scheme zero point; the integral and rational maps
+factor through this geometric map and Chow degree. Five focused suites
+pass 47 examples, 15 named checks and 181 enforced standard-three axiom
+audits. The full build passes 5,099 jobs; the focused zero-point suite and
+root inventory also pass against the later working tree. All 535 active
+sources passed placeholder scans. Thirty-seven import boundaries, four
+indirect-negative guards, dependency pins, local links and whitespace
+checks passed.
+Other points, chart independence and general Gysin remain open. See
+[0035](working/0035-projective-line-zero-point-gysin.md). Release sign-offs
+and submission packaging remain unchanged.

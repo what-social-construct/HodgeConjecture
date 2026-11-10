@@ -113,6 +113,21 @@ recovers type (1,1) from the actual transported filtration and its conjugate.
 proves its target with an explicit infinity-class witness. General
 analytic/Gysin identification and general degeneration remain open.
 
+The [zero-point Gysin checkpoint](working/0035-projective-line-zero-point-gysin.md)
+adds actual kernel `RelativeCochains`, strict cochain-gluing `RelativeUnion`,
+open-cover `RelativeExcision` and the positive `RelativeMayerVietoris`
+comparison. `Examples.ComplexPointThom` constructs the oriented local class
+and actual singleton H⁰ isomorphism. `ProjectiveLinePointSupport` identifies
+the original scheme zero and its actual complement; `ProjectiveLineNormalChart`
+and `ProjectiveLineNormalChartBoundary` retain original chart simplex maps
+and native connecting naturality. `ProjectiveLinePointGysin` then constructs
+the supported and absolute Gysin maps by local Thom and inverse excision.
+Its unit is the existing positive cover generator. `ProjectiveLineGysinCycleClass`
+matches the original zero-point Chow classes and factors both ordinary maps
+through this actual Gysin. Other points and coordinate independence remain
+open, as do general Gysin, degeneration and prescribed-class generation.
+
+
 
 This Lean project develops collision ideals as scheme-theoretic input to
 algebraic correspondences, with boundary inertia measuring whether a generic

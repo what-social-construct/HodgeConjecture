@@ -21,6 +21,8 @@ PYTHON ?= python3
         build-projective-line-period-comparison check-projective-line-period-comparison \
         build-hodge-filtration check-hodge-filtration \
         build-projective-line-hodge check-projective-line-hodge \
+        build-relative-cohomology check-relative-cohomology \
+        build-projective-line-point-gysin check-projective-line-point-gysin \
         build-palomar check-palomar-proofs check-palomar
 
 help:
@@ -42,6 +44,8 @@ help:
 	@echo "build-projective-line-period-comparison  Actual boundary periods and ordinary cycle maps"
 	@echo "build-hodge-filtration  Actual derived degree filtration and P1 H2 calculation"
 	@echo "build-projective-line-hodge  Geometric type (1,1) and the fixed P1 Hodge-cycle model"
+	@echo "build-relative-cohomology  Actual relative cochains, excision and connecting signs"
+	@echo "build-projective-line-point-gysin  Oriented zero-point Gysin and ordinary cycle comparison"
 	@echo "build-betti          Existing singular Betti realization"
 	@echo "build-comparison     De Rham, geometry and Chow/Betti squares"
 	@echo "check-layers         Enforce project import boundaries"
@@ -62,6 +66,8 @@ help:
 	@echo "check-projective-line-period-comparison  Tensor extension, actual periods and ordinary Chow square"
 	@echo "check-hodge-filtration  Brutal truncation, actual derived images and characteristic-two checks"
 	@echo "check-projective-line-hodge  Independent Betti decomposition, geometric comparison and model witnesses"
+	@echo "check-relative-cohomology  Kernel pairs, actual excision and positive boundary checks"
+	@echo "check-projective-line-point-gysin  Local Thom orientation, original chart and zero-cycle checks"
 	@echo "check-comparison     Comparison build, examples and axiom audits"
 	@echo "check-integration    Full build and root-import inventory"
 	@echo "check                All checks above"
@@ -125,6 +131,12 @@ build-hodge-filtration:
 
 build-projective-line-hodge:
 	$(LAKE) build HodgeConjecture.Realization.DeRham.ProjectiveLineHodgeCycleClass
+
+build-relative-cohomology:
+	$(LAKE) build HodgeConjecture.Realization.Betti.RelativeMayerVietoris
+
+build-projective-line-point-gysin:
+	$(LAKE) build HodgeConjecture.Realization.Betti.ProjectiveLineGysinCycleClass
 
 build-betti:
 	$(LAKE) build HodgeConjecture.Realization.Betti
@@ -215,6 +227,16 @@ check-projective-line-hodge: check-layers build-projective-line-hodge
 	$(LAKE) env lean research/ProjectiveLineHodgeStructureVerification.lean
 	$(LAKE) env lean research/ProjectiveLineHodgeComparisonVerification.lean
 
+check-relative-cohomology: check-layers build-relative-cohomology
+	$(LAKE) build HodgeConjecture.Realization.Betti.Circle
+	$(LAKE) env lean research/RelativeCochainsVerification.lean
+	$(LAKE) env lean research/RelativeExcisionVerification.lean
+
+check-projective-line-point-gysin: check-layers build-projective-line-point-gysin
+	$(LAKE) env lean research/ComplexPointThomVerification.lean
+	$(LAKE) env lean research/ProjectiveLineNormalChartVerification.lean
+	$(LAKE) env lean research/ProjectiveLinePointGysinVerification.lean
+
 check-comparison: build-comparison
 	$(LAKE) env lean research/DeRhamVerification.lean
 
@@ -230,4 +252,4 @@ check-palomar-proofs: build-palomar
 check-palomar:
 	$(PYTHON) scripts/check_palomar.py
 
-check: check-derham-core check-derham-components check-affine-line-comparison check-positive-degree check-scheme-comparison check-projective-line-betti check-projective-line-periods check-small-chains check-singular-cohomology check-circle-cohomology check-projective-line-cohomology check-circle-orientation check-projective-line-period-comparison check-hodge-filtration check-projective-line-hodge check-chow check-graph-chow check-comparison check-integration
+check: check-derham-core check-derham-components check-affine-line-comparison check-positive-degree check-scheme-comparison check-projective-line-betti check-projective-line-periods check-small-chains check-singular-cohomology check-circle-cohomology check-projective-line-cohomology check-circle-orientation check-projective-line-period-comparison check-hodge-filtration check-projective-line-hodge check-relative-cohomology check-projective-line-point-gysin check-chow check-graph-chow check-comparison check-integration

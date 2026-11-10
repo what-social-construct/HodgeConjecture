@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-11-07 (actual projective-line Hodge filtration and fixed cycle model;
+Last audited: 2026-11-07 (actual projective-line zero-point Gysin and cycle comparison;
 earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,42 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Actual P¹ zero-point Gysin and cycle comparison (2026-11-07)
+
+Status: `FORMAL`. `RelativeCochains` is the actual kernel of restriction
+of original rational singular cochains, with original differential,
+short exact pair sequence, native connecting maps and pair pullbacks.
+`RelativeUnion` proves strict excision inside a union by actual cochain
+gluing. `RelativeExcision` uses the proved full-to-small quasi-isomorphism
+and the native short-exact-sequence comparison to prove actual open-cover
+excision. `RelativeMayerVietoris` identifies local relative boundary,
+inverse excision and forgetting with the existing full Mayer–Vietoris
+boundary. The positive sign follows from the actual map `(a, 0)` into
+the first-minus-second sequence.
+
+`ComplexPointThom.thomClass` is the native relative boundary of the
+original radial pullback of the positively paired circle class, in
+actual H²(ℂ, ℂ∖{0}). It is nonzero, has boundary pairing +1, and gives
+an isomorphism from actual singleton H⁰. Its image in local absolute H²
+is zero. The original P¹ finite chart identifies this pair with the
+local zero-point pair; inverse excision places the class in actual
+cohomology supported at that point. Forgetting support has nonzero image
+equal to the existing positive P¹ generator.
+
+`ProjectiveLinePointGysin.gysin` retains those actual maps and is an
+isomorphism from original support H⁰ to actual P¹ singular H². The support
+point is proved to map to the original scheme `projectiveLineZero`.
+`ProjectiveLineGysinCycleClass` identifies the Gysin unit with both ordinary
+cycle-class images of the integral and rational Chow classes of that same
+scheme point. Both ordinary cycle maps factor through this actual zero-point Gysin and
+the original Chow degree.
+
+This constructs only the distinguished zero-point Gysin in its original
+finite chart. Transport to other points, coordinate independence, general
+Gysin/Poincaré duality, a singular fundamental two-cycle, general
+characteristic-zero degeneration and prescribed-class coverage remain
+`OPEN`. See [0035](working/0035-projective-line-zero-point-gysin.md).
 
 ## Actual P¹ Hodge filtration and fixed cycle model (2026-11-07)
 
@@ -53,7 +89,7 @@ class. This is a model specialization under the bounded period comparison,
 not an identification with a separately constructed general Gysin map
 or an assertion of a new classical Hodge-conjecture case.
 
-Geometric point/Gysin identification, a singular fundamental two-cycle,
+The zero-point Gysin comparison is now proved above. A singular fundamental two-cycle,
 general analytic/Gysin comparison, general characteristic-zero degeneration
 and general prescribed-class coverage remain `OPEN`. See
 [0034](working/0034-projective-line-hodge-filtration.md).
