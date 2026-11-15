@@ -119,8 +119,11 @@ degree-normalized Chow class of that point, and the full degree-normalized
 Chow map factors through this Gysin. For the scheme
 product of two projective lines, the zero-coordinate fibers are integral
 copies of the projective line and two projection-pullback singular
-degree-two classes form a rational basis. Their Chow-class comparison remains
-open.
+degree-two classes form a rational basis. The fibers define actual
+codimension-one Chow classes. Pulling back the zero-point Thom class gives
+supported classes on the exact fiber complements whose absolute classes are
+the two basis vectors. Compatibility with an ordinary product Chow
+cycle-class map remains open.
 For a supplied finite \'{e}tale extension, we also construct closed deck
 graphs and prove their scheme-theoretic restriction over the open base;
 for integral covers this extends to actual cycles and rational graph sums.
@@ -172,8 +175,9 @@ with \(\operatorname{cl}\) the rational cycle-class map. The universal
 statement ranges over all smooth projective complex varieties and
 codimensions with these geometric models. The finite split degree-zero
 model and a fixed degree-two projective-line model are constructed below.
-The projective-line product currently supplies geometric fiber and Betti
-independence results, without a codimension-one Chow witness.
+The projective-line product supplies geometric codimension-one fiber Chow
+classes and a Betti basis realized by supported fiber classes. A comparison
+from its ordinary Chow group to this Betti realization remains to be proved.
 
 \subsection{Upstairs generation and descent}
 \label{subsec:upstairs-generation}
@@ -3193,6 +3197,12 @@ the fibers are integral and their schemes are isomorphic to
 \(\mathbf P^1_{\mathbf C}\). On the affine product chart, the coordinate ring
 \(\mathbf C[x]\otimes_{\mathbf C}\mathbf C[y]\) has Krull dimension two and each coordinate
 variable generates a height-one prime ideal.
+The generic point of each global zero fiber lifts into this chart. The
+finite-type prime dimension formula gives height one for both lifted points,
+and invariance under the open immersion gives codimension one for each
+global carrier. The field-induced dimension function assigns both carriers
+degree one, so their fundamental cycles define classes in the ordinary
+degree-one Chow quotient of \(X\), then in its rationalization.
 On affine tensor-product charts, the original evaluation topology on complex
 algebra points agrees with the product of the factor evaluation topologies.
 The four actual open charts glue this comparison to a homeomorphism from
@@ -3255,13 +3265,27 @@ above. Proposition~\ref{prop:p1-product-independent} gives uniqueness;
 the probes recover the two coefficients.
 \end{proof}
 
-The local height-one coordinate prime has not yet been identified with the
-generic point of each global fiber.
-Consequently the formalization does not yet place these fibers in
-\(\CH^1(X)_{\Q}\) or prove that their cycle classes are \(u_1,u_2\).
-These are the next steps toward a product Chow-class witness; no
-arbitrary-variety Hodge
-conclusion follows from this checkpoint.
+The zero-point class on \(\mathbf P^1\) is already identified with its
+oriented point Gysin class. Pulling its relative Thom class back along
+\(\pi_i\) gives a class supported on the exact zero fiber \(F_i\): the
+preimage of the punctured-line singular subcomplex is exactly the singular
+subcomplex of \(X(\mathbf C)\setminus F_i(\mathbf C)\). Forgetting support
+maps these two classes to \(u_1\) and \(u_2\), respectively. Thus the
+supported geometric fiber classes give the Betti basis in
+Corollary~\ref{cor:p1-product-h2-basis}.
+For a prescribed \(z=a u_1+b u_2\), the checked paired construction
+forms the actual rational cycle \(a[F_1]+b[F_2]\), its ordinary rational
+Chow class, and the same linear combination of the supported fiber
+classes. The latter maps to \(z\) after forgetting support.
+
+This verifies the specific fiber support and Gysin normalization. The
+formalization does not yet construct an ordinary
+\(\CH^1(X)_{\Q}\to H^2_{\mathrm B}(X,\Q)\) map respecting rational
+equivalence and prove that it sends the two Chow classes to \(u_1,u_2\).
+That comparison is required before the coefficientwise linear combination
+of the two Chow classes is a formal Chow witness for an arbitrary product
+Betti class. No arbitrary-variety Hodge conclusion follows from this
+checkpoint.
 
 \section{Residual realization and coverage}
 \label{sec:coverage}
@@ -3395,10 +3419,10 @@ as the commuting algebra-homomorphism square
 \(\rho\circ\varphi_\Pi=\varphi_{P_\alpha}\).  A compactified deck-graph square produces a projector extension, while
 the raw-closure construction isolates its idempotence defect.
 The bounded projective-line realization gives an explicit degree-two Chow
-witness. On the product of two projective lines, the exact zero fibers and
-two independent singular classes have been constructed, and those classes
-span the actual rational singular degree-two cohomology. The
-codimension-one Chow classes and their cycle-class identities remain open.
+witness. On the product of two projective lines, the exact zero fibers define
+codimension-one Chow classes, and the two supported fiber classes map to a
+basis of actual rational singular degree-two cohomology. The product Chow
+cycle-class compatibility remains open.
 The class-dependent witness for an arbitrary smooth
 projective variety remains the central geometric gap.
 
@@ -6165,6 +6189,17 @@ Finite-degree cochain--holomorphic comparison &
 Product zero-fiber integrality and geometry &
 \leanpath{projectiveLineProduct_firstOriginFiber_isIntegral}\newline
 \leanpath{Cycles/ProjectiveLineProductZeroCarriers.lean}\\
+Product fiber Chow classes and codimension &
+\leanpath{ProjectiveLineProductChow.firstZeroRationalChowClass};
+\leanpath{ProjectiveLineProductFiberCodimension.firstZeroCarrier_codimension_one};
+\leanpath{ProjectiveLineProductFiberCodimension.secondZeroCarrier_codimension_one}\newline
+\leanpath{Cycles/ProjectiveLineProductChowClasses.lean};
+\leanpath{Cycles/ProjectiveLineProductFiberCodimension.lean}\\
+Fiber Chow/Betti certificates and paired cycle &
+\leanpath{ProjectiveLineProductFiberChowBettiData.firstFiberData};
+\leanpath{ProjectiveLineProductFiberPairedWitness.exists_paired_witness}\newline
+\leanpath{Realization/Betti/ProjectiveLineProductFiberChowBettiData.lean};
+\leanpath{Realization/Betti/ProjectiveLineProductFiberPairedWitness.lean}\\
 Affine product dimension and coordinate height &
 \leanpath{projectiveLineAffineProduct_ringKrullDim}\newline
 \leanpath{projectiveLineAffineProduct_firstVariable_height_one}\newline
@@ -6214,6 +6249,10 @@ Product Betti degree-two basis &
 \leanpath{ProjectiveLineProductSpanning.classes_span};
 \leanpath{ProjectiveLineProductSpanning.coordinateEquiv}\newline
 \leanpath{Realization/Betti/ProjectiveLineProductSpanning.lean}\\
+Supported product fiber Betti classes &
+\leanpath{ProjectiveLineProductFiberSupportedClass.forget_firstSupportedClass};
+\leanpath{ProjectiveLineProductFiberSupportedClass.forget_secondSupportedClass}\newline
+\leanpath{Realization/Betti/ProjectiveLineProductFiberSupportedClass.lean}\\
 Graph-projector equivalence &
 \leanpath{rationalHodgeConjectureAt_iff_everyHodgeClassHasGraphProjectorLift}\newline
 \leanpath{Realization/Chow/TateGraphProjector.lean}\\

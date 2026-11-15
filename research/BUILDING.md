@@ -20,6 +20,8 @@ repository. Existing build artifacts are reused.
 | Exact rational dualization and full singular Mayer–Vietoris | `make build-singular-cohomology` | `make check-singular-cohomology` |
 | Actual circle singular H¹ and its cover generator | `make build-circle-cohomology` | `make check-circle-cohomology` |
 | Actual projective-line singular H² and its cover generator | `make build-projective-line-cohomology` | `make check-projective-line-cohomology` |
+| Actual P¹ × P¹ topology and singular H² basis | `make build-projective-line-product` | `make check-projective-line-product` |
+| Codimension-one product fiber Chow classes and supported Betti classes | `make build-projective-line-product-fibers` | `make check-projective-line-product-fibers` |
 | Actual positive circle cycle and original generator pairing | `make build-circle-orientation` | `make check-circle-orientation` |
 | Actual P¹ boundary periods, tensor extension and ordinary Chow square | `make build-projective-line-period-comparison` | `make check-projective-line-period-comparison` |
 | Actual derived Hodge filtration and P¹ H² calculation | `make build-hodge-filtration` | `make check-hodge-filtration` |

@@ -54,8 +54,9 @@ not a replacement for the arbitrary `X,p,α` goal.
   tensor factors. `ProjectiveLineProductAffineDimension.lean` identifies that
   ring with a two-variable polynomial ring and proves it has Krull dimension
   two. `ProjectiveLineProductAffinePrime.lean` proves that the ideal generated
-  by the first coordinate variable has height one. Identifying that local
-  prime with the generic point of the zero fiber remains open.
+  by the first coordinate variable has height one. The later fiber
+  codimension module computes the height of each actual generic point in
+  this affine chart.
 - `Cycles/ProjectiveLineProductFibers.lean` constructs both actual closed
   fiber subschemes by pulling back point-closure ideal sheaves and proves
   their support formulas. `ProjectiveLineProductIntegralCandidates.lean`
@@ -67,7 +68,14 @@ not a replacement for the arbitrary `X,p,α` goal.
   their integral closed images with the earlier reduced closures and proves
   both carrier schemes are isomorphic to `P¹`. It also identifies their ideal
   sheaves with the pulled-back zero-point ideals, so the exact
-  scheme-theoretic zero fibers are integral. Codimension one is not proved.
+  scheme-theoretic zero fibers are integral.
+- `Cycles/ProjectiveLineProductChowClasses.lean` puts each actual fiber's
+  fundamental cycle in the degree-one cycle module of the product's
+  field-induced dimension function, maps it into the ordinary degree-one
+  Chow quotient, and rationalizes it. The generic-point lift and
+  finite-type dimension calculation in
+  `Cycles/ProjectiveLineProductFiberCodimension.lean` prove that both
+  integral carriers have support codimension one in the product.
 - `Realization/Betti/ProjectiveLineProductClasses.lean` constructs the two
   canonical singular `H²` projection-pullback classes and proves their linear
   independence by restriction to the coordinate maps. The P¹ generator is
@@ -131,11 +139,32 @@ not a replacement for the arbitrary `X,p,α` goal.
   through the homeomorphism, proves the two projection classes span actual
   product `H²`, and constructs the fiber-probe linear equivalence
   `H²(P¹ × P¹, ℚ) ≃ₗ[ℚ] ℚ × ℚ`.
+- `ProjectiveLineProductFiberClassInputs.lean` identifies each product Betti
+  basis class as the projection pullback of the already proved zero-point
+  Chow/Gysin class on `P¹`, and identifies each fiber carrier ideal with
+  the corresponding pulled-back point ideal.
+  `ProjectiveLineProductFiberSupportedClass.lean` pulls the actual
+  zero-point relative Thom class back to each product projection. Its
+  simplicial complement is exactly the complement of the corresponding
+  scheme-theoretic zero fiber, and forgetting support yields the two
+  product Betti basis classes.
+  `ProjectiveLineProductFiberChowBettiData.lean` binds each actual
+  codimension-one carrier, its named ordinary Chow classes, exact fiber
+  support, and pulled-back Thom class in one checked certificate.
+  `ProjectiveLineProductFiberPairedWitness.lean` uses the Betti basis
+  coordinates of any class to construct a rational combination of the
+  actual fiber cycles, its ordinary Chow class, and the matching supported
+  Betti combination. The supported combination forgets to that class.
 
-The focused `make check-projective-line-product` target builds these modules
-and audits 68 selected declarations for only `propext`,
-`Classical.choice`, and `Quot.sound`. This checkpoint does not yet exhibit a
-codimension-one Chow class on the product.
+The focused `make check-projective-line-product` target builds the product
+topology and H² basis modules and audits 68 selected declarations for only
+`propext`, `Classical.choice`, and `Quot.sound`. The separate
+`make check-projective-line-product-fibers` target builds the added
+fiber Chow, codimension, certificate, supported-class, and paired-witness
+modules and audits 40 selected declarations under the same boundary.
+The remaining comparison is a product ordinary Chow-to-Betti cycle-class
+map respecting rational equivalence, with the two fiber classes sent to
+these independently constructed supported Betti classes.
 
 ## Work order
 
@@ -143,12 +172,16 @@ codimension-one Chow class on the product.
    tensor-product evaluation comparison and four open product charts.
 2. Completed: prove an actual singular `H²` spanning theorem for the
    product, using Mayer–Vietoris on the first-factor affine chart cover.
-3. Compute codimension one by identifying the generic point of each integral
-   zero fiber in the affine tensor-product chart with the proved height-one
-   coordinate prime. Form the two ordinary degree-one Chow classes, prove
-   their cycle classes equal the Betti pullbacks, and then exhibit the
-   coordinatewise Chow witness.
-4. For the general target, supply a class-dependent geometric construction
+3. Completed: compute codimension one for both integral zero fibers using
+   their affine generic-point lifts, form their ordinary degree-one Chow
+   classes, and construct supported Betti fiber classes equal to the
+   independently computed product basis after forgetting support. The
+   paired construction uses these basis coordinates for every product
+   Betti class.
+4. Prove the ordinary product Chow-to-Betti cycle-class compatibility for
+   those two fibers, then use the basis coordinates to exhibit the
+   coefficientwise Chow witness.
+5. For the general target, supply a class-dependent geometric construction
    of cycles or support and prove its Betti class identity. The current
    finite-cover, normalization, and fixed-inertia results support this step
    but do not themselves produce `z` for a prescribed `α`.

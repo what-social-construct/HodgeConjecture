@@ -28,6 +28,7 @@ PYTHON ?= python3
         build-circle-cohomology check-circle-cohomology \
         build-projective-line-cohomology check-projective-line-cohomology \
         build-projective-line-product check-projective-line-product \
+        build-projective-line-product-fibers check-projective-line-product-fibers \
         build-circle-orientation check-circle-orientation \
         build-projective-line-period-comparison check-projective-line-period-comparison \
         build-hodge-filtration check-hodge-filtration \
@@ -72,6 +73,7 @@ help:
 	@echo "build-circle-cohomology  Actual circle singular H1 and cover generator"
 	@echo "build-projective-line-cohomology  Actual P1 rational singular H2 and cover generator"
 	@echo "build-projective-line-product  Actual P1 square geometry, fiber supports and Betti classes"
+	@echo "build-projective-line-product-fibers  Actual P1 square Chow fibers and supported Betti classes"
 	@echo "build-circle-orientation  Actual positive cycle and generator pairing"
 	@echo "build-projective-line-period-comparison  Actual boundary periods and ordinary cycle maps"
 	@echo "build-hodge-filtration  Actual derived degree filtration and P1 H2 calculation"
@@ -115,6 +117,7 @@ help:
 	@echo "check-circle-cohomology  Homotopy, contractible charts and the actual H1 boundary quotient"
 	@echo "check-projective-line-cohomology  Original affine charts, radial pullback and actual H2"
 	@echo "check-projective-line-product  Focused P1 square build and axiom audit"
+	@echo "check-projective-line-product-fibers  Focused fiber Chow/Betti build and axiom audit"
 	@echo "check-circle-orientation  Native connecting representatives and positive-loop pairing"
 	@echo "check-projective-line-period-comparison  Tensor extension, actual periods and ordinary Chow square"
 	@echo "check-hodge-filtration  Brutal truncation, actual derived images and characteristic-two checks"
@@ -233,6 +236,14 @@ build-projective-line-product:
 	  HodgeConjecture.Realization.Betti.ProjectiveLineProductClasses \
 	  HodgeConjecture.Realization.Betti.ProjectiveLineProductSpanningCriterion \
 	  HodgeConjecture.Realization.Betti.ProjectiveLineDegreeOne
+
+build-projective-line-product-fibers:
+	$(LAKE) build HodgeConjecture.Cycles.ProjectiveLineProductChowClasses \
+	  HodgeConjecture.Cycles.ProjectiveLineProductFiberCodimension \
+	  HodgeConjecture.Realization.Betti.ProjectiveLineProductFiberClassInputs \
+	  HodgeConjecture.Realization.Betti.ProjectiveLineProductFiberSupportedClass \
+	  HodgeConjecture.Realization.Betti.ProjectiveLineProductFiberChowBettiData \
+	  HodgeConjecture.Realization.Betti.ProjectiveLineProductFiberPairedWitness
 
 build-circle-orientation:
 	$(LAKE) build HodgeConjecture.Realization.Betti.Examples.CircleOrientedPairing
@@ -374,6 +385,9 @@ check-projective-line-cohomology: check-layers build-projective-line-cohomology
 
 check-projective-line-product: check-layers build-projective-line-product
 	$(LAKE) env lean research/ProjectiveLineProductVerification.lean
+
+check-projective-line-product-fibers: check-layers build-projective-line-product-fibers
+	$(LAKE) env lean research/ProjectiveLineProductFibersVerification.lean
 
 check-circle-orientation: check-layers build-circle-orientation
 	$(LAKE) env lean research/ConnectingRepresentativeVerification.lean

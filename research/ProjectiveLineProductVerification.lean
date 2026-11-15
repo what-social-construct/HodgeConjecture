@@ -23,8 +23,9 @@ public import Lean.Util.CollectAxioms
 
 /-!
 Focused axiom audit for the geometric and Betti parts of the P¹ × P¹
-Chow-witness checkpoint. This verifies the actual declarations that exist;
-it does not assert codimension, a product cycle-class square, or H² spanning.
+Chow-witness checkpoint, including the actual singular H² basis. The
+codimension-one Chow classes and supported Betti fiber data have their own
+focused audit. A product Chow cycle-class square remains open.
 -/
 
 @[expose] public section
