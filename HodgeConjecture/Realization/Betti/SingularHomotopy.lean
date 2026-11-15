@@ -9,8 +9,8 @@ public import Mathlib.Topology.Homotopy.Equiv
 /-!
 # Homotopy invariance of actual rational singular cohomology
 
-Transpose the components of a native rational chain homotopy and identify
-the resulting dual complex with the original singular cochains. Original
+Apply the native opposite-homotopy and additive-functor constructions, then
+identify the resulting dual complex with the original singular cochains. Original
 continuous homotopies therefore induce equal cohomology pullbacks in all
 degrees, and original homotopy equivalences induce cohomology isomorphisms.
 -/
@@ -27,43 +27,8 @@ open CategoryTheory HomologicalComplex
 
 /-- The transpose of an actual rational chain homotopy, with no degree shift or extra sign. -/
 def dualHomotopy {K L : ChainComplex (ModuleCat.{0} ℚ) ℕ} {f g : K ⟶ L}
-    (h : Homotopy f g) : Homotopy (RationalDual.dualMap f) (RationalDual.dualMap g) where
-  hom i j := ModuleCat.ofHom (h.hom j i).hom.dualMap
-  zero i j hij := by
-    rw [h.zero j i hij]
-    apply ModuleCat.hom_ext
-    ext φ x
-    simp
-  comm i := by
-    cases i with
-    | zero =>
-      rw [Homotopy.dNext_cochainComplex, Homotopy.prevD_zero_cochainComplex, add_zero]
-      apply ModuleCat.hom_ext
-      apply LinearMap.ext
-      intro φ
-      apply LinearMap.ext
-      intro x
-      let ψ : Module.Dual ℚ (L.X 0) := φ
-      change ψ (f.f 0 x) = ψ (L.d 1 0 (h.hom 0 1 x)) + ψ (g.f 0 x)
-      have he := congrArg (fun p : K.X 0 ⟶ L.X 0 ↦ ψ (p x)) (h.comm 0)
-      rw [Homotopy.dNext_zero_chainComplex, Homotopy.prevD_chainComplex, zero_add] at he
-      simpa only [ModuleCat.hom_add, LinearMap.add_apply, ModuleCat.hom_comp,
-        LinearMap.comp_apply, map_add] using he
-    | succ n =>
-      rw [Homotopy.dNext_cochainComplex, Homotopy.prevD_succ_cochainComplex]
-      apply ModuleCat.hom_ext
-      apply LinearMap.ext
-      intro φ
-      apply LinearMap.ext
-      intro x
-      let ψ : Module.Dual ℚ (L.X (n + 1)) := φ
-      change ψ (f.f (n + 1) x) =
-        ψ (L.d (n + 2) (n + 1) (h.hom (n + 1) (n + 2) x)) +
-          ψ (h.hom n (n + 1) (K.d (n + 1) n x)) + ψ (g.f (n + 1) x)
-      have he := congrArg (fun p : K.X (n + 1) ⟶ L.X (n + 1) ↦ ψ (p x)) (h.comm (n + 1))
-      rw [Homotopy.dNext_succ_chainComplex, Homotopy.prevD_chainComplex] at he
-      simpa only [ModuleCat.hom_add, LinearMap.add_apply, ModuleCat.hom_comp,
-        LinearMap.comp_apply, map_add, add_comm, add_left_comm, add_assoc] using he
+    (h : Homotopy f g) : Homotopy (RationalDual.dualMap f) (RationalDual.dualMap g) :=
+  RationalDual.functor.mapHomotopy h.op
 
 /-- A native continuous homotopy gives a homotopy on the original singular cochain complexes. -/
 def cochainHomotopy {X Y : TopCat.{0}} {f g : X ⟶ Y} (h : TopCat.Homotopy f g) :

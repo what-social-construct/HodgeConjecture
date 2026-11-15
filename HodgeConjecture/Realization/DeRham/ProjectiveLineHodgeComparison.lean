@@ -3,6 +3,7 @@ module
 public import HodgeConjecture.Realization.DeRham.ProjectiveLineHodgeFiltration
 public import HodgeConjecture.Realization.DeRham.ProjectiveLinePeriodComparison
 public import HodgeConjecture.Realization.Betti.ProjectiveLineHodgeStructure
+public import HodgeConjecture.Realization.DeRham.BettiHodgeTarget
 
 @[expose] public section
 
@@ -115,15 +116,35 @@ theorem geometricHodgePiece_eq_bot (p q : ℤ) (h : ¬ (p = 1 ∧ q = 1)) :
 
 /-- Rational classes are selected by the actual transported geometric type (1,1), independently of cycles. -/
 def rationalHodgeClasses : Submodule ℚ Betti :=
-  ((geometricHodgePiece 1 1).restrictScalars ℚ).comap rationalEmbedding
+  HodgeFiltration.rationalHodgeClasses geometricFiltration 1
+
+/-- The geometric filtration satisfies the full pure weight-two conditions. -/
+def pureHodgeStructure : PureRationalHodgeStructure Betti 2 where
+  finiteDimensional := inferInstance
+  filtration := geometricFiltration
+  antitone := geometricFiltration_antitone
+  exhaustive := ⟨1, by rw [geometricFiltration_eq]; exact ProjectiveLineHodgeStructure.filtration_one⟩
+  separated := ⟨2, by rw [geometricFiltration_eq]; exact ProjectiveLineHodgeStructure.filtration_two⟩
+  opposed := geometricFiltration_opposed
+
+/-- The original P¹ target is exactly the target attached to its pure Hodge structure. -/
+theorem rationalHodgeClasses_eq_pureStructure :
+    rationalHodgeClasses = PureRationalHodgeStructure.rationalHodgeClasses 1 pureHodgeStructure := rfl
+
+/-- The computed P¹ target specializes the general actual scheme-filtration construction. -/
+theorem rationalHodgeClasses_eq_schemeTarget :
+    rationalHodgeClasses = SchemeDeRham.rationalBettiHodgeClasses
+      (AlgebraicGeometry.projectiveLine ℂ ↘ AlgebraicGeometry.Spec (.of ℂ))
+      (TopCat.of ProjectiveLineComplexPoints.Point) 2 ProjectiveLinePeriodComparison.comparison 1 := rfl
 
 theorem mem_rationalHodgeClasses (z : Betti) :
     z ∈ rationalHodgeClasses ↔ rationalEmbedding z ∈ geometricHodgePiece 1 1 := Iff.rfl
 
 theorem rationalHodgeClasses_eq_candidate :
     rationalHodgeClasses = ProjectiveLineHodgeStructure.rationalHodgeClasses := by
-  unfold rationalHodgeClasses ProjectiveLineHodgeStructure.rationalHodgeClasses
-  rw [geometricHodgePiece_eq_bigrading]
+  ext z
+  rw [mem_rationalHodgeClasses, geometricHodgePiece_eq_bigrading]
+  rfl
 
 theorem all_rational_hodge (z : Betti) : z ∈ rationalHodgeClasses := by
   rw [mem_rationalHodgeClasses, geometricHodgePiece_one_one]

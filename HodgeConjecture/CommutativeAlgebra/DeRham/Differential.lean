@@ -29,7 +29,7 @@ variable {A B : Type*} [CommRing A] [CommRing B] [Algebra A B]
 
 /-- The wedges `d b₁ ∧ ⋯ ∧ d b_p` of differentials of elements of `B` span `Ω^p_{B/A}` over `B`:
 they are the wedges of the `B`-spanning set `Set.range (D A B)` of `Ω[B⁄A]`. -/
-private lemma span_range_ιMulti_D_eq_top (p : ℕ) :
+public lemma span_range_ιMulti_D_eq_top (p : ℕ) :
     Submodule.span B (Set.range fun c : Fin p → B ↦
       exteriorPower.ιMulti B p fun i ↦ D A B (c i)) = ⊤ := by
   have himg : exteriorPower.ιMulti B p ''
@@ -48,7 +48,7 @@ open Pointwise in
 /-- The elements `b₀ · d b₁ ∧ ⋯ ∧ d b_p` span `Ω^p_{B/A}` already as an `A`-module, not merely as
 a `B`-module: they are `B • {d b₁ ∧ ⋯ ∧ d b_p}`, and multiplying a `B`-spanning set by all of `B`
 produces an `A`-spanning set. -/
-private lemma span_range_smul_ιMulti_D_eq_top (p : ℕ) :
+public lemma span_range_smul_ιMulti_D_eq_top (p : ℕ) :
     Submodule.span A (Set.range fun b : Fin (p + 1) → B ↦
       b 0 • exteriorPower.ιMulti B p fun i ↦ D A B (b i.succ)) = ⊤ := by
   have hset : (Set.univ : Set B) • (Set.range fun c : Fin p → B ↦

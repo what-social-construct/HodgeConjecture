@@ -5,12 +5,11 @@ The single current manuscript is:
 - [`main.tex`](main.tex), *Galois Correspondences and the Hodge Conjecture*.
 - [`main.pdf`](main.pdf), the compiled manuscript.
 
-The six main sections follow the rational Hodge target and graph-projector
-equivalence, collision and marked Galois projectors, the boundary mechanism,
-compactified graph calculus, the split geometric realization, and residual
-realization and coverage. Three appendices retain the detailed graph/cycle/
-dimension proofs, split computations, and the centralized Lean declaration
-crosswalk with source inputs. These all build into the same PDF.
+The six main sections cover the target and graph-projector equivalence,
+Galois projectors, boundary geometry, graph calculus, split realization with
+projective-line checkpoints, and coverage. Three appendices hold the detailed
+proofs, split calculations, and Lean declaration crosswalk. They build into
+the same PDF.
 
 The theorem hypotheses stay in the manuscript; working proof-status and gap
 records are maintained in [`research/GAP_MAP.md`](../research/GAP_MAP.md) and
@@ -34,6 +33,4 @@ disambiguation continues `a,…,z,aa,ab,…` rather than overflowing into
 punctuation after 26 entries. This accommodates the Stacks references
 without changing corporate authorship or publication dates. The original
 style's copyright and redistribution notice are retained in the file.
-The manuscript contains no license assertion; authorship, citations, mathematical
-content, novelty positioning, and release terms require final author review
-before publication.
+The manuscript contains no separate license assertion.

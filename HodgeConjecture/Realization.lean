@@ -36,7 +36,12 @@ class. The finite-cover branch has not
 been identified with the full target; only implications from explicit
 class-indexed witness packages are formalized.
 
-`Realization.Betti` constructs the finite split complex degree-zero case:
+`Realization.Betti` constructs canonical complex point spaces and their
+rational singular cohomology functor for schemes over ℂ. Affine and P¹
+models are identified with these spaces by proved homeomorphisms; the
+existing P¹ period and purity computation uses this canonical target.
+General geometric comparison and purity remain separate obligations.
+It also constructs the finite split complex degree-zero case:
 actual complex points, singular cohomology, the normalized cycle-class
 isomorphism, and the cohomological action of the actual Chow algebra.
 Its compatibility with geometric Chow action is proved. Higher-dimensional

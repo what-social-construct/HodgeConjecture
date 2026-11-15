@@ -157,6 +157,19 @@ theorem mem_primeInertiaSubgroup_of_smul_sub_mem
     have hmem := Q.sub_mem hx hdifference
     simpa only [sub_sub_cancel] using hmem
 
+/-- The stabilizer-kernel definition of prime inertia agrees with Mathlib's
+ideal-theoretic inertia subgroup. This identifies the subgroup in Stacks
+Project Tag `0BST`; it does not supply that tag's étaleness theorem. -/
+theorem primeInertiaSubgroup_eq_inertia
+    (Q : Ideal S) [Q.IsPrime] :
+    primeInertiaSubgroup (A := A) Q = Q.inertia G := by
+  ext g
+  rw [Ideal.mem_inertia]
+  constructor
+  · intro hg
+    exact ((mem_primeInertiaSubgroup_iff (A := A) Q g).mp hg).2
+  · exact mem_primeInertiaSubgroup_of_smul_sub_mem (A := A) Q g
+
 end AbstractPrimeInertia
 
 section NormalizationPrimeInertia
@@ -198,6 +211,16 @@ abbrev normalizationPrimeInertiaGroup
     [Q.IsPrime] : Subgroup (N ≃ₐ[K] N) :=
   primeInertiaSubgroup
     (A := FullInvariantNormalizationRing (B := B) (K := K) (N := N)) Q
+
+/-- The inertia group attached to the normalization prime is Mathlib's
+ideal-theoretic inertia subgroup for the normal-closure Galois action. -/
+theorem normalizationPrimeInertiaGroup_eq_inertia
+    (Q : Ideal (NormalClosureNormalizationRing (B := B) (N := N)))
+    [Q.IsPrime] :
+    normalizationPrimeInertiaGroup (B := B) (K := K) Q =
+      Q.inertia (N ≃ₐ[K] N) :=
+  primeInertiaSubgroup_eq_inertia (A :=
+    FullInvariantNormalizationRing (B := B) (K := K) (N := N)) Q
 
 /-- The exact local unramifiedness conclusion supplied by the
 fixed-prime-inertia theorem of Stacks Project Tag `0BST`.  It remains an

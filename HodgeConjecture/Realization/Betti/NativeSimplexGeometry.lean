@@ -207,15 +207,15 @@ theorem lebesgue_number_two {κ : Type v} [Fintype κ]
   · exact Or.inr hb
   · exact Or.inl hb
 
-/-- A subset with sufficiently small actual coordinate diameter lies in one cover member.
-The bound is derived from compactness and the native topology, rather than assumed. -/
-theorem lebesgue_number_two_diam {κ : Type v} [Fintype κ]
-    (U V : Set (StdSimplex ℝ κ)) (hU : IsOpen U) (hV : IsOpen V)
-    (hcover : U ∪ V = Set.univ) :
+/-- A subset with sufficiently small actual coordinate diameter lies in one member of an
+arbitrary indexed open cover. The bound uses the original topology and compactness. -/
+theorem lebesgue_number_diam {κ : Type v} [Fintype κ] {ι : Type u}
+    (U : ι → Set (StdSimplex ℝ κ)) (hU : ∀ i, IsOpen (U i))
+    (hcover : ⋃ i, U i = Set.univ) :
     ∃ ε > 0, ∀ s : Set (StdSimplex ℝ κ), s.Nonempty →
       Metric.diam ((fun t : StdSimplex ℝ κ ↦ (t.weights : κ → ℝ)) '' s) < ε →
-        s ⊆ U ∨ s ⊆ V := by
-  obtain ⟨ε, hε, hballs⟩ := lebesgue_number_two U V hU hV hcover
+        ∃ i, s ⊆ U i := by
+  obtain ⟨ε, hε, hballs⟩ := lebesgue_number U hU hcover
   refine ⟨ε, hε, fun s hs hdiam ↦ ?_⟩
   obtain ⟨p, hp⟩ := hs
   have hb : Bornology.IsBounded
@@ -228,6 +228,29 @@ theorem lebesgue_number_two_diam {κ : Type v} [Fintype κ]
     intro q hq
     exact lt_of_le_of_lt
       (Metric.dist_le_diam_of_mem hb ⟨q, hq, rfl⟩ ⟨p, hp, rfl⟩) hdiam
-  exact (hballs p).imp (Set.Subset.trans hsub) (Set.Subset.trans hsub)
+  obtain ⟨i, hi⟩ := hballs p
+  exact ⟨i, hsub.trans hi⟩
+
+/-- The existing two-open diameter bound is a specialization of the indexed-cover bound. -/
+theorem lebesgue_number_two_diam {κ : Type v} [Fintype κ]
+    (U V : Set (StdSimplex ℝ κ)) (hU : IsOpen U) (hV : IsOpen V)
+    (hcover : U ∪ V = Set.univ) :
+    ∃ ε > 0, ∀ s : Set (StdSimplex ℝ κ), s.Nonempty →
+      Metric.diam ((fun t : StdSimplex ℝ κ ↦ (t.weights : κ → ℝ)) '' s) < ε →
+        s ⊆ U ∨ s ⊆ V := by
+  let W : Bool → Set (StdSimplex ℝ κ) := fun b ↦ if b then V else U
+  have hW : ∀ b, IsOpen (W b) := by intro b; cases b <;> assumption
+  have hcoverW : ⋃ b, W b = Set.univ := by
+    have h : ⋃ b, W b = U ∪ V := by
+      ext p
+      simp only [Set.mem_iUnion, Bool.exists_bool, W, Bool.false_eq_true, ite_false,
+        ite_true, Set.mem_union]
+    exact h.trans hcover
+  obtain ⟨ε, hε, hs⟩ := lebesgue_number_diam W hW hcoverW
+  refine ⟨ε, hε, fun s hne hd ↦ ?_⟩
+  obtain ⟨b, hb⟩ := hs s hne hd
+  cases b
+  · exact Or.inl hb
+  · exact Or.inr hb
 
 end HodgeConjecture.NativeSimplexGeometry

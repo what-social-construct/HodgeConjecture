@@ -1,7 +1,7 @@
 module
 
 public import HodgeConjecture.Realization.DeRham.ProjectiveLineHodgeComparison
-public import HodgeConjecture.Realization.HodgeClasses
+public import HodgeConjecture.Realization.FilteredHodgeTarget
 
 @[expose] public section
 
@@ -33,12 +33,13 @@ open ProjectiveLineBettiComplexification
 abbrev Source := SchemeCycles.RationalChowGroup (ProjectiveLineCycles.dimensionFunction ℂ) 0
 
 /-- The fixed degree-two model with independently constructed geometric Hodge classes. -/
-def model : RationalHodgeCycleClassModel Source Betti where
-  hodgeClasses := ProjectiveLineHodgeComparison.rationalHodgeClasses
-  cycleClass := ProjectiveLineBettiCycleClass.cycleClass
-  cycleClass_lands := by
+def model : RationalHodgeCycleClassModel Source Betti :=
+  PureRationalHodgeStructure.cycleClassModel 1 ProjectiveLineHodgeComparison.pureHodgeStructure
+    ProjectiveLineBettiCycleClass.cycleClass (by
+    change LinearMap.range ProjectiveLineBettiCycleClass.cycleClass ≤
+      ProjectiveLineHodgeComparison.rationalHodgeClasses
     rw [ProjectiveLineHodgeComparison.rationalHodgeClasses_eq_top]
-    exact le_top
+    exact le_top)
 
 theorem model_hodgeClasses :
     model.hodgeClasses = ProjectiveLineHodgeComparison.rationalHodgeClasses := rfl

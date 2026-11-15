@@ -5,6 +5,7 @@ public import Mathlib.CategoryTheory.Abelian.Exact
 public import Mathlib.Algebra.Homology.Opposite
 public import Mathlib.LinearAlgebra.Dual.Lemmas
 public import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
+public import HodgeConjecture.LinearAlgebra.HomCoefficients
 
 @[expose] public section
 
@@ -12,9 +13,9 @@ public import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
 # Exact rational linear duals and dual cochain complexes
 
 The unrestricted rational linear dual is an additive exact contravariant
-functor on rational vector spaces. Exactness follows from the actual
-kernel and range formulas for dual linear maps, with no finite-dimensional
-hypothesis. Reversing a chain complex and applying this functor gives its
+functor on rational vector spaces. The shared coefficient-functional
+construction proves exactness by extension from subspaces, with no
+finite-dimensional hypothesis. Reversing a chain complex and applying this functor gives its
 dual cochain complex, preserving quasi-isomorphisms.
 -/
 
@@ -30,39 +31,22 @@ open CategoryTheory Opposite HomologicalComplex
 
 /-- The actual unrestricted rational linear dual, contravariant in rational modules. -/
 @[implicit_reducible]
-def functor : (ModuleCat.{0} ℚ)ᵒᵖ ⥤ ModuleCat.{0} ℚ where
-  obj M := ModuleCat.of ℚ (Module.Dual ℚ M.unop)
-  map f := ModuleCat.ofHom f.unop.hom.dualMap
-  map_id _ := by ext φ x; rfl
-  map_comp _ _ := by ext φ x; rfl
+def functor : (ModuleCat.{0} ℚ)ᵒᵖ ⥤ ModuleCat.{0} ℚ :=
+  HomCoefficients.functor ℚ ℚ
 
 @[simp]
 theorem functor_map_apply {M N : (ModuleCat.{0} ℚ)ᵒᵖ} (f : M ⟶ N)
     (φ : Module.Dual ℚ M.unop) (x : N.unop) :
     (show Module.Dual ℚ N.unop from functor.map f φ).toFun x = φ (f.unop x) := rfl
 
-instance : functor.Additive where
-  map_add := by
-    intro X Y f g
-    apply ModuleCat.hom_ext
-    apply LinearMap.ext
-    intro φ
-    apply LinearMap.ext
-    intro x
-    exact φ.map_add _ _
+instance : functor.Additive := inferInstanceAs (HomCoefficients.functor ℚ ℚ).Additive
 
-/-- Exactness of rational dualization, proved from annihilator formulas on the original maps. -/
+/-- Exactness of rational dualization, through the shared extension-of-functionals proof. -/
 theorem map_exact (S : ShortComplex (ModuleCat.{0} ℚ)ᵒᵖ) (hS : S.Exact) :
-    (S.map functor).Exact := by
-  rw [ShortComplex.moduleCat_exact_iff_range_eq_ker]
-  change LinearMap.range S.f.unop.hom.dualMap = LinearMap.ker S.g.unop.hom.dualMap
-  have h := hS.unop.moduleCat_range_eq_ker
-  change LinearMap.range S.g.unop.hom = LinearMap.ker S.f.unop.hom at h
-  rw [LinearMap.range_dualMap_eq_dualAnnihilator_ker,
-    LinearMap.ker_dualMap_eq_dualAnnihilator_range, h]
+    (S.map functor).Exact := HomCoefficients.map_exact ℚ ℚ S hS
 
 instance : functor.PreservesHomology :=
-  Functor.preservesHomology_of_map_exact functor map_exact
+  inferInstanceAs (HomCoefficients.functor ℚ ℚ).PreservesHomology
 
 /-- Opposite chain complexes followed by actual rational linear dualization. -/
 @[implicit_reducible]

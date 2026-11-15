@@ -2,7 +2,7 @@ module
 
 public import HodgeConjecture.Realization.DeRham.PresheafComplex
 public import HodgeConjecture.SheafCohomology.LinearSheaves
-public import Mathlib.AlgebraicGeometry.Scheme
+public import HodgeConjecture.Geometry.SectionAlgebra
 public import Mathlib.Algebra.Homology.Additive
 public import Mathlib.CategoryTheory.Sites.Abelian
 public import Mathlib.CategoryTheory.Sites.Equivalence
@@ -37,36 +37,6 @@ noncomputable section
 universe u
 
 variable (k : Type u) [CommRing k] (X : Scheme.{u}) (f : X ⟶ Spec (.of k))
-
-/-- The actual base-ring map into sections on an open subset. -/
-def sectionBaseMap (U : X.Opens) : k →+* Γ(X, U) :=
-  ((Scheme.ΓSpecIso (.of k)).inv ≫ f.appLE ⊤ U (by simp)).hom
-
-/-- The base algebra on sections is induced by the original structure morphism. -/
-@[instance_reducible]
-def sectionAlgebra (U : X.Opens) : Algebra k Γ(X, U) :=
-  (sectionBaseMap k X f U).toAlgebra
-
-theorem sectionBaseMap_restrict {U V : X.Opens} (i : U ⟶ V) (a : k) :
-    X.presheaf.map i.op (sectionBaseMap k X f V a) = sectionBaseMap k X f U a := by
-  change ((Scheme.ΓSpecIso (.of k)).inv ≫ f.appLE ⊤ V (by simp) ≫
-    X.presheaf.map i.op) a = _
-  rw [Scheme.Hom.appLE_map]
-  rfl
-
-/-- The original restriction map, preserving the structure-morphism base action. -/
-def sectionMap {U V : X.Opens} (i : U ⟶ V) :
-    letI := sectionAlgebra k X f V
-    letI := sectionAlgebra k X f U
-    Γ(X, V) →ₐ[k] Γ(X, U) := by
-  letI := sectionAlgebra k X f V
-  letI := sectionAlgebra k X f U
-  exact { (X.presheaf.map i.op).hom with
-    commutes' := sectionBaseMap_restrict k X f i }
-
-@[simp]
-theorem sectionMap_apply {U V : X.Opens} (i : U ⟶ V) (a : Γ(X, V)) :
-    sectionMap k X f i a = X.presheaf.map i.op a := rfl
 
 /-- The section algebras and their actual restriction maps. -/
 def sectionFunctor : X.Opensᵒᵖ ⥤ CommAlgCat.{u} k := by
@@ -132,7 +102,7 @@ theorem presheafComplex_d (n : ℕ) :
 /-- Sheafification on the actual open-subset site, with fixed base-ring scalars. -/
 def sheafification : TopCat.Presheaf (ModuleCat.{u} k) X ⥤
     TopCat.Sheaf (ModuleCat.{u} k) X :=
-  presheafToSheaf (Opens.grothendieckTopology X) (ModuleCat.{u} k)
+  SheafCohomology.sheafification k X
 
 instance : (sheafification k X).Additive :=
   inferInstanceAs (presheafToSheaf (Opens.grothendieckTopology X) (ModuleCat.{u} k)).Additive
@@ -143,8 +113,7 @@ def formsSheaf (n : ℕ) : TopCat.Sheaf (ModuleCat.{u} k) X :=
 
 /-- The actual sheafified de Rham complex of the structure morphism. -/
 def sheafComplex : CochainComplex (TopCat.Sheaf (ModuleCat.{u} k) X) ℕ :=
-  ((sheafification k X).mapHomologicalComplex (ComplexShape.up ℕ)).obj
-    (presheafComplex k X f)
+  SheafCohomology.sheafifyComplex k X (presheafComplex k X f)
 
 @[simp]
 theorem sheafComplex_X (n : ℕ) :
@@ -163,13 +132,8 @@ theorem sheafComplex_d (n : ℕ) :
 presheaves of the actual sheaf complex. -/
 def toSheafComplex : presheafComplex k X f ⟶
     ((sheafToPresheaf (Opens.grothendieckTopology X) (ModuleCat.{u} k)).mapHomologicalComplex
-      (ComplexShape.up ℕ)).obj (sheafComplex k X f) where
-  f n := (CategoryTheory.sheafificationAdjunction
-    (Opens.grothendieckTopology X) (ModuleCat.{u} k)).unit.app
-      ((presheafComplex k X f).X n)
-  comm' i j _ := ((CategoryTheory.sheafificationAdjunction
-    (Opens.grothendieckTopology X) (ModuleCat.{u} k)).unit.naturality
-      ((presheafComplex k X f).d i j)).symm
+      (ComplexShape.up ℕ)).obj (sheafComplex k X f) :=
+  SheafCohomology.toSheafifyComplex k X (presheafComplex k X f)
 
 end
 

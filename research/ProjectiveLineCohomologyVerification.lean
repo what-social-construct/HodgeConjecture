@@ -1,6 +1,7 @@
 module
 
 public import HodgeConjecture.Realization.Betti.ProjectiveLineCohomology
+public import HodgeConjecture.Realization.Betti.ProjectiveLineDegreeOne
 public import Lean.Util.CollectAxioms
 
 @[expose] public section
@@ -71,7 +72,10 @@ run_cmd do
       `HodgeConjecture.ProjectiveLineBettiCohomology.h2Equiv_circleIso,
       `HodgeConjecture.ProjectiveLineBettiCohomology.h2Equiv_coverGenerator,
       `HodgeConjecture.ProjectiveLineBettiCohomology.coverGenerator_ne_zero,
-      `HodgeConjecture.ProjectiveLineBettiCohomology.eq_smul_coverGenerator] do
+      `HodgeConjecture.ProjectiveLineBettiCohomology.eq_smul_coverGenerator,
+      `HodgeConjecture.ProjectiveLineDegreeOne.overlapH0_eq_constant,
+      `HodgeConjecture.ProjectiveLineDegreeOne.difference_zero_surjective,
+      `HodgeConjecture.ProjectiveLineDegreeOne.isZero_h1] do
     unless (env.find? declaration).isSome do
       throwError "Missing declaration {declaration}"
     let axioms ← Lean.collectAxioms declaration

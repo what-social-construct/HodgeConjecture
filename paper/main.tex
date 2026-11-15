@@ -82,7 +82,7 @@
 
 \title{Galois Correspondences and the Hodge Conjecture}
 \author{Chloe van der Vlugt}
-\date{September 15, 2026}
+\date{November 15, 2026}
 
 \begin{document}
 
@@ -110,6 +110,17 @@ correspondences, with normalization and inertia controlling the boundary
 extension problem. Lean~4 verifies the algebraic reductions and the
 extension and realization implications under their displayed hypotheses.  For finite split schemes, we construct the degree-zero
 Chow, Betti, and Hodge comparisons and the marked correspondence action.
+For the actual projective line, an independently specified degree-two Hodge
+model has an explicit witness in the original rational zero-cycle Chow group,
+and its canonical
+singular-to-holomorphic comparison is verified in degree two. At the
+distinguished zero point, an actual Thom--excision Gysin map agrees with the
+degree-normalized Chow class of that point, and the full degree-normalized
+Chow map factors through this Gysin. For the scheme
+product of two projective lines, the zero-coordinate fibers are integral
+copies of the projective line and two projection-pullback singular
+degree-two classes form a rational basis. Their Chow-class comparison remains
+open.
 For a supplied finite \'{e}tale extension, we also construct closed deck
 graphs and prove their scheme-theoretic restriction over the open base;
 for integral covers this extends to actual cycles and rational graph sums.
@@ -160,7 +171,9 @@ the intended specialization is
 with \(\operatorname{cl}\) the rational cycle-class map. The universal
 statement ranges over all smooth projective complex varieties and
 codimensions with these geometric models. The finite split degree-zero
-model is constructed below.
+model and a fixed degree-two projective-line model are constructed below.
+The projective-line product currently supplies geometric fiber and Betti
+independence results, without a codimension-one Chow witness.
 
 \subsection{Upstairs generation and descent}
 \label{subsec:upstairs-generation}
@@ -3131,6 +3144,125 @@ by the same chosen Chow projector throughout.  The preceding Tate
 encoding realizes every degree-zero class, while the marked multiplicative
 construction singles out the class prescribed by its residual algebra.
 
+\subsection{Positive-degree realization checkpoints}
+\label{sec:positive-realization}
+
+The two-chart scheme \(\mathbf P^1_{\mathbf C}\) has its actual analytic complex-point
+topology and rational singular cohomology. Its degree-two group is a rational
+line with a nonzero Mayer--Vietoris generator \(\eta\), and its degree-one
+group vanishes by the degree-zero chart-difference sequence. The
+degree-normalized map from the original rational zero-cycle Chow group sends
+the reduced infinity class to \(\eta\). The actual local Thom class, inverse
+excision, and forgetting support define a Gysin isomorphism for the original
+zero point; its unit maps to \(\eta\). The degree-normalized Chow map factors
+through this point Gysin by rational Chow degree. General closed-point and
+higher-codimension Gysin cycle maps remain open. Separately, the derived de
+Rham filtration and bounded period
+comparison specify a pure type-\((1,1)\) rational Hodge subspace on this same
+group, independently of the cycle map. Thus every class in this fixed
+degree-two model has an explicit rational multiple of the infinity class
+as its Chow witness. The canonical scheme complex points also carry the
+original singular-cochain comparison with derived constant-sheaf sections
+under the proved topology hypotheses; the exact holomorphic comparison is
+bijective in degree two for \(\mathbf P^1\). These are bounded geometric
+calculations, not a general comparison or purity theorem.
+
+The original rational singular cochains compare with right-derived
+constant-sheaf sections in every degree on locally compact, second-countable,
+Hausdorff, strongly locally contractible spaces. On complex analytic
+manifolds satisfying those topology hypotheses, the intrinsic holomorphic
+Poincar\'e complex resolves the complex constant sheaf; if rational
+cohomology in the selected degree is finite dimensional, the cochain-induced
+complex comparison is an isomorphism.
+Identifying that map with the original holomorphic comparison in general,
+and comparing algebraic with analytic de Rham cohomology in general, remain
+open.
+
+For the first product test, put
+\[
+  X=\mathbf P^1_{\mathbf C}\times_{\operatorname{Spec}\mathbf C}\mathbf P^1_{\mathbf C},
+  \qquad \pi_i:X\longrightarrow\mathbf P^1_{\mathbf C},\qquad
+  u_i=\pi_i^*\eta\in H^2_{\mathrm B}(X,\Q).
+\]
+The product and its projections are actual scheme fiber products. Evaluation
+at zero defines a closed section of \(\mathbf P^1_{\mathbf C}\) over
+\(\operatorname{Spec}\mathbf C\). Base change gives closed embeddings of
+\(\mathbf P^1_{\mathbf C}\) as the two zero-coordinate fibers. Their ideal sheaves
+equal the scheme-theoretic inverse images of the reduced zero-point ideal;
+the fibers are integral and their schemes are isomorphic to
+\(\mathbf P^1_{\mathbf C}\). On the affine product chart, the coordinate ring
+\(\mathbf C[x]\otimes_{\mathbf C}\mathbf C[y]\) has Krull dimension two and each coordinate
+variable generates a height-one prime ideal.
+On affine tensor-product charts, the original evaluation topology on complex
+algebra points agrees with the product of the factor evaluation topologies.
+The four actual open charts glue this comparison to a homeomorphism from
+scheme-product complex points to the product of canonical projective-line
+complex point spaces.
+
+\begin{proposition}[Independent product Betti classes]
+\label{prop:p1-product-independent}
+For \(a,b\in\Q\),
+\[
+  a u_1+b u_2=0\quad\Longrightarrow\quad a=b=0
+  \qquad\text{in }H^2_{\mathrm B}(X,\Q).
+\]
+\end{proposition}
+\begin{proof}
+Restrict to the two coordinate embeddings. Each diagonal restriction is
+\(\eta\), while each cross restriction factors through
+\(\operatorname{Spec}\mathbf C\), whose rational singular cohomology vanishes in
+degree two. Since \(\eta\ne0\), the two restrictions recover \(a\) and
+\(b\) separately. This is the argument formalized by the two probe maps.
+\end{proof}
+
+The two probes define a split surjection \(H^2_{\mathrm B}(X,\Q)\to\Q^2\),
+with section \((a,b)\mapsto a u_1+b u_2\). The proved Mayer--Vietoris
+criterion makes this section surjective if, on a two-open product cover,
+the overlap \(H^1\) is generated by one class, \(u_1\) restricts to zero
+on both charts, one chart's \(H^2\) is generated by the restriction of
+\(u_2\), and the opposite chart's \(H^2\) restricts injectively to the
+overlap. Exactness supplies the needed boundary class. The two actual
+first-factor affine product charts cover the complex points of \(X\).
+Each is homeomorphic to \(\mathbf A^1(\mathbf C)\times\mathbf P^1(\mathbf C)\);
+the contractible-factor cohomology isomorphism and projection naturality
+prove that its \(H^2\) is generated by the restriction of \(u_2\).
+The first projection class \(u_1\) restricts to zero on both charts because
+their first-coordinate affine line is contractible.
+The opposite chart's \(H^2\) restricts injectively to the overlap: fixing
+first affine coordinate one gives a section of the second projection, on
+which \(u_2\) pulls back to the nonzero \(\eta\).
+The punctured complex line has \(H^1\cong\Q\), and its generator stays
+nonzero on the product with \(\mathbf P^1(\mathbf C)\). A second-factor
+two-chart Mayer--Vietoris calculation, using a contractible-factor chart
+isomorphism and degree-zero difference surjectivity, proves
+\(H^1(\mathbf C^*\times\mathbf P^1(\mathbf C),\Q)\cong\Q\). Identifying the
+actual first-factor chart overlap with this topological product transports
+that one-dimensional calculation to the original scheme-product points.
+The criterion therefore applies.
+
+\begin{corollary}[Product Betti degree-two basis]
+\label{cor:p1-product-h2-basis}
+Every \(z\in H^2_{\mathrm B}(X,\Q)\) has unique coefficients \(a,b\in\Q\) with
+\[
+  z=a u_1+b u_2.
+\]
+The two coordinate-fiber probes give a linear equivalence
+\(H^2_{\mathrm B}(X,\Q)\simeq\Q^2\).
+\end{corollary}
+\begin{proof}
+Mayer--Vietoris gives existence from the chart and overlap calculations
+above. Proposition~\ref{prop:p1-product-independent} gives uniqueness;
+the probes recover the two coefficients.
+\end{proof}
+
+The local height-one coordinate prime has not yet been identified with the
+generic point of each global fiber.
+Consequently the formalization does not yet place these fibers in
+\(\CH^1(X)_{\Q}\) or prove that their cycle classes are \(u_1,u_2\).
+These are the next steps toward a product Chow-class witness; no
+arbitrary-variety Hodge
+conclusion follows from this checkpoint.
+
 \section{Residual realization and coverage}
 \label{sec:coverage}
 
@@ -3262,6 +3394,13 @@ geometric layers toward such lifts.  Every completed lift displays its target
 as the commuting algebra-homomorphism square
 \(\rho\circ\varphi_\Pi=\varphi_{P_\alpha}\).  A compactified deck-graph square produces a projector extension, while
 the raw-closure construction isolates its idempotence defect.
+The bounded projective-line realization gives an explicit degree-two Chow
+witness. On the product of two projective lines, the exact zero fibers and
+two independent singular classes have been constructed, and those classes
+span the actual rational singular degree-two cohomology. The
+codimension-one Chow classes and their cycle-class identities remain open.
+The class-dependent witness for an arbitrary smooth
+projective variety remains the central geometric gap.
 
 \appendix
 
@@ -6003,6 +6142,78 @@ Upstairs recipe generation &
 Normalized cycle descent &
 \leanpath{rationalHodgeConjectureAt_of_classDependentChowBettiGeneration}\newline
 \leanpath{Realization/Chow/UpstairsGeneration.lean}\\
+Projective-line degree-two Chow witness &
+\leanpath{ProjectiveLineHodgeCycleClass.infinity_class_witness}\newline
+\leanpath{Realization/DeRham/ProjectiveLineHodgeCycleClass.lean}\\
+Projective-line point Gysin and Chow factorization &
+\leanpath{ProjectiveLinePointGysin.gysin_pointUnit};
+\leanpath{ProjectiveLineGysinCycleClass.cycleClass_factorization}\newline
+\leanpath{Realization/Betti/ProjectiveLinePointGysin.lean};
+\leanpath{Realization/Betti/ProjectiveLineGysinCycleClass.lean}\\
+Projective-line degree-one vanishing &
+\leanpath{ProjectiveLineDegreeOne.isZero_h1}\newline
+\leanpath{Realization/Betti/ProjectiveLineDegreeOne.lean}\\
+Canonical projective-line holomorphic comparison &
+\leanpath{ProjectiveLineHolomorphicComparisonIso.comparison_bijective}\newline
+\leanpath{Realization/DeRham/ProjectiveLineHolomorphicComparisonIso.lean}\\
+Rational singular--derived constant-sheaf comparison &
+\leanpath{SingularCochains.cohomologyToConstantSheafDerived_isIso}\newline
+\leanpath{Realization/Betti/SingularConstantSheafCohomology.lean}\\
+Finite-degree cochain--holomorphic comparison &
+\leanpath{AnalyticBettiComparison.cochainHolomorphicComparison_isIso}\newline
+\leanpath{Realization/DeRham/AnalyticComplexSingularComparison.lean}\\
+Product zero-fiber integrality and geometry &
+\leanpath{projectiveLineProduct_firstOriginFiber_isIntegral}\newline
+\leanpath{Cycles/ProjectiveLineProductZeroCarriers.lean}\\
+Affine product dimension and coordinate height &
+\leanpath{projectiveLineAffineProduct_ringKrullDim}\newline
+\leanpath{projectiveLineAffineProduct_firstVariable_height_one}\newline
+\leanpath{Geometry/ProjectiveLineProductAffineDimension.lean};
+\leanpath{Geometry/ProjectiveLineProductAffinePrime.lean}\\
+Affine product evaluation topology &
+\leanpath{AffineComplexPointsProduct.homeomorph}\newline
+\leanpath{Geometry/AffineComplexPointsProduct.lean}\\
+Product complex-point homeomorphism &
+\leanpath{ProjectiveLineProductComplexPoints.pointsHomeomorph}\newline
+\leanpath{Geometry/ProjectiveLineProductTopology.lean}\\
+Independent product singular classes &
+\leanpath{ProjectiveLineProductBetti.classes_independent}\newline
+\leanpath{Realization/Betti/ProjectiveLineProductClasses.lean}\\
+Split product probes and Mayer--Vietoris criterion &
+\leanpath{ProjectiveLineProductBetti.coordinateProbe_surjective};
+\leanpath{ProjectiveLineProductBetti.classes_span_of_local_cover}\newline
+\leanpath{Realization/Betti/ProjectiveLineProductSpanningCriterion.lean}\\
+Contractible-factor product cohomology &
+\leanpath{ProductContractibleFactor.cohomology_generated}\newline
+\leanpath{Realization/Betti/ProductContractibleFactor.lean}\\
+Product affine-chart cohomology transport &
+\leanpath{ProjectiveLineProductAffineChartH2.chartSet_cover};
+\leanpath{ProjectiveLineProductAffineChartH2.chartH2_generated};
+\leanpath{ProjectiveLineProductAffineChartH2.chart_firstClass_eq_zero}\newline
+\leanpath{Realization/Betti/ProjectiveLineProductAffineChartH2.lean}\\
+Product overlap degree-two injection &
+\leanpath{ProjectiveLineProductAffineOverlapH2.overlapRestriction_injective}\newline
+\leanpath{Realization/Betti/ProjectiveLineProductAffineOverlapH2.lean}\\
+Actual product overlap topology &
+\leanpath{ProjectiveLineProductAffineOverlapH2.overlapHomeomorph}\newline
+\leanpath{Realization/Betti/ProjectiveLineProductAffineOverlapTopology.lean}\\
+Punctured-line degree-one coordinate &
+\leanpath{ProjectiveLineProductOverlapH1.planeH1_generated};
+\leanpath{ProjectiveLineProductOverlapH1.productH1_generated}\newline
+\leanpath{Realization/Betti/ProjectiveLineProductOverlapH1.lean};
+\leanpath{Realization/Betti/ProjectiveLineProductOverlapH1Spanning.lean}\\
+Second-factor product-cover difference &
+\leanpath{ProductSecondFactorCover.difference_zero_surjective}\newline
+\leanpath{Realization/Betti/ProductSecondFactorCover.lean}\\
+Second-factor degree-one criterion &
+\leanpath{ProductSecondFactorH1Local.chartH1_generated};
+\leanpath{ProductSecondFactorH1Criterion.generated_of_chart_data}\newline
+\leanpath{Realization/Betti/ProductSecondFactorH1Local.lean};
+\leanpath{Realization/Betti/ProductSecondFactorH1Criterion.lean}\\
+Product Betti degree-two basis &
+\leanpath{ProjectiveLineProductSpanning.classes_span};
+\leanpath{ProjectiveLineProductSpanning.coordinateEquiv}\newline
+\leanpath{Realization/Betti/ProjectiveLineProductSpanning.lean}\\
 Graph-projector equivalence &
 \leanpath{rationalHodgeConjectureAt_iff_everyHodgeClassHasGraphProjectorLift}\newline
 \leanpath{Realization/Chow/TateGraphProjector.lean}\\
@@ -6665,6 +6876,9 @@ Fixed-inertia input &
 \leanpath{InertiaFixedRingUnramifiedAt};
 \leanpath{inertiaFixedRingUnramifiedAt_iff}\newline
 \leanpath{Inputs/FixedInertia.lean}\\
+DVR inertia-fixed local \'etaleness &
+\leanpath{NormalizationInertia.inertia_fixedSubalgebra_etale_atPrime}\newline
+\leanpath{Boundary/Normalization/DvrInertiaFixedRing.lean}\\
 Selected cover and deck extension &
 \leanpath{FiniteEtaleExtension}; \leanpath{FiniteEtaleExtensionHypothesis};
 \leanpath{DeckExtensionHypothesis}; \leanpath{liftDeckAction}\newline
@@ -7564,8 +7778,15 @@ valuation inertia \(I_V\) equals \(I_Q^{\mathrm{pr}}\).  The equality is induced
 In the finite-group invariant setting, the map from the full invariant
 ring to the inertia-fixed ring is \'etale at the selected prime
 \cite{StacksPrimeInertiaEtale}; the DVR specialization is recorded in
-\cite{StacksDVRInertiaEtale}. The local descent theorem uses its
-localized formal-unramifiedness consequence.
+\cite{StacksDVRInertiaEtale}. Adapting the pinned AxiomMath proof
+\cite{AxiomStacksDVRInertia}, the formalization proves that DVR
+specialization for the integral closure in a finite Galois field extension:
+at a selected maximal prime, the localization of the inertia-fixed
+subalgebra is \'etale over the DVR. It also proves the abstract implication
+from this localized \'etaleness to the unramifiedness premise used by local
+descent. Transport from the height-one normalization diagram to that exact
+premise remains open; the arbitrary-ring fixed-inertia theorem is still a
+source input.
 
 \subsection{Source inputs}
 \label{app:sources}

@@ -1,6 +1,6 @@
 module
 
-public import HodgeConjecture.Realization.Betti.SingularSubdivisionHomotopy
+public import HodgeConjecture.Realization.Betti.CoverSubdivisionHomotopy
 public import HodgeConjecture.Realization.Betti.SingularSubdivisionSmallness
 public import HodgeConjecture.Realization.Betti.SubcomplexChainCoordinates
 
@@ -17,6 +17,7 @@ needed for this locality statement.
 -/
 
 set_option autoImplicit false
+set_option backward.defeqAttrib.useBackward true
 
 noncomputable section
 
@@ -29,8 +30,6 @@ open scoped Simplicial
 theorem smallChains_eq_chainSubmodule (X : TopCat) (U V : Set X) (n : ℕ) :
     smallChains X U V n =
       SubcomplexChainCoordinates.chainSubmodule (SingularSubcomplexes.smallSingular X U V) n := by
-  ext c
-  rw [SubcomplexChainCoordinates.mem_chainSubmodule_iff]
   rfl
 
 /-- An original small simplex has its entire original continuous image in one member. -/
@@ -50,35 +49,19 @@ theorem homotopySimplex_mem_small (X : TopCat) (U V : Set X) (n : ℕ)
     (σ : (TopCat.toSSet.obj X).obj (op ⦋n⦌))
     (hσ : σ ∈ (SingularSubcomplexes.smallSingular X U V).obj (op ⦋n⦌)) :
     homotopySimplex X n σ ∈ smallChains X U V (n + 1) := by
-  apply realize_mem_smallChains
-  intro v _
-  rcases original_range_small X U V n σ hσ with hU | hV
-  · left
-    rintro _ ⟨t, rfl⟩
-    exact hU ⟨NativeSimplexGeometry.realization v t, rfl⟩
-  · right
-    rintro _ ⟨t, rfl⟩
-    exact hV ⟨NativeSimplexGeometry.realization v t, rfl⟩
+  simpa only [SingularSubcomplexes.coverChains, SingularSubcomplexes.coverSingular_bool,
+    smallChains] using CoverSubdivision.homotopySimplex_mem_cover X
+      (fun b : Bool ↦ if b then V else U) n σ (by
+        simpa only [SingularSubcomplexes.coverSingular_bool] using hσ)
 
 /-- The actual singular homotopy preserves the whole small-chain subcomplex. -/
 theorem homotopyComponent_mem_small (X : TopCat) (U V : Set X) (n : ℕ)
     (c : (complex X).X n) (hc : c ∈ smallChains X U V n) :
     homotopyComponent X n c ∈ smallChains X U V (n + 1) := by
-  obtain ⟨c, rfl⟩ := (SingularChainCoordinates.coordinates (TopCat.toSSet.obj X) n).surjective c
-  rw [coordinates_mem_smallChains] at hc
-  have hle : Finsupp.supported ℚ ℚ
-      ((SingularSubcomplexes.smallSingular X U V).obj (op ⦋n⦌)) ≤
-      (smallChains X U V (n + 1)).comap
-        ((homotopyComponent X n).comp
-          (SingularChainCoordinates.coordinates (TopCat.toSSet.obj X) n).toLinearMap) := by
-    rw [Finsupp.supported_eq_span_single]
-    apply Submodule.span_le.mpr
-    rintro _ ⟨σ, hσ, rfl⟩
-    change homotopyComponent X n
-      (SingularChainCoordinates.coordinates (TopCat.toSSet.obj X) n (Finsupp.single σ 1)) ∈
-        smallChains X U V (n + 1)
-    rw [homotopyComponent_coordinates_single, one_smul]
-    exact homotopySimplex_mem_small X U V n σ hσ
-  exact hle hc
+  simpa only [SingularSubcomplexes.coverChains, SingularSubcomplexes.coverSingular_bool,
+    smallChains] using CoverSubdivision.homotopyComponent_mem_cover X
+      (fun b : Bool ↦ if b then V else U) n c (by
+        simpa only [SingularSubcomplexes.coverChains, SingularSubcomplexes.coverSingular_bool,
+          smallChains] using hc)
 
 end HodgeConjecture.SingularSubdivision

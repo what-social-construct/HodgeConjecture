@@ -24,13 +24,33 @@ repository. Existing build artifacts are reused.
 | Actual P¹ boundary periods, tensor extension and ordinary Chow square | `make build-projective-line-period-comparison` | `make check-projective-line-period-comparison` |
 | Actual derived Hodge filtration and P¹ H² calculation | `make build-hodge-filtration` | `make check-hodge-filtration` |
 | Geometric type (1,1) and the fixed P¹ Hodge-cycle model | `make build-projective-line-hodge` | `make check-projective-line-hodge` |
+| General filtered rational target and explicit scheme comparison adapter | `make build-filtered-hodge-target` | `make check-filtered-hodge-target` |
+| Cyclic filtered detector of the existing projector defect | `make build-filtered-projector-defect` | `make check-filtered-projector-defect` |
+| Proved Tate/Hodge compatibility and existing target equivalence | `make build-tate-hodge-bridge` | `make check-tate-hodge-bridge` |
+| Canonical scheme complex points, Betti functor and existing P¹ comparison | `make build-scheme-betti` | `make check-scheme-betti` |
+| Holomorphic sheaf complex, radial primitives and all-degree local Poincaré comparison | `make build-holomorphic-derham` | `make check-holomorphic-derham` |
+| Canonical analytic atlas, actual regular evaluations and analytic scheme maps | `make build-analytic-charts` | `make check-analytic-charts` |
+| Intrinsic atlas forms sheaf, descended d and all-degree algebraic map | `make build-holomorphic-descent` | `make check-holomorphic-descent` |
+| Intrinsic chart identifications and full constant-sheaf Poincaré comparison | `make build-intrinsic-poincare` | `make check-intrinsic-poincare` |
+| Original singular cochains and local rational constant-sheaf resolution | `make build-singular-sheaves` | `make check-singular-sheaves` |
+| Arbitrary open-cover chain/cochain comparison and acyclic vanishing kernel | `make build-open-cover-small-chains` | `make check-open-cover-small-chains` |
+| Actual global sheafification kernel, locally zero cochains and native acyclicity | `make build-sheafification-kernel` | `make check-sheafification-kernel` |
+| Original global unit surjectivity and quasi-isomorphism on paracompact Hausdorff spaces | `make build-global-singular-sheaves` | `make check-global-singular-sheaves` |
+| Original open-subspace section lifts and native flasque singular cochain sheaves | `make build-open-singular-sheaves` | `make check-open-singular-sheaves` |
+| Positive derived sections of original flasque sheaves, on every open | `make build-flasque-derived` | `make check-flasque-derived` |
+| Original whole-complex underived-to-derived comparison for flasque sheaf complexes | `make build-singular-derived-comparison` | `make check-singular-derived-comparison` |
+| Original rational singular groups and actual derived constant-sheaf cohomology | `make build-singular-constant-comparison` | `make check-singular-constant-comparison` |
+| Complex coefficient comparison and actual holomorphic derived target | `make build-analytic-betti-comparison` | `make check-analytic-betti-comparison` |
+| Finite-cohomology scalar change on the original singular cochains | `make build-singular-coefficient-change` | `make check-singular-coefficient-change` |
+| Complex singular/derived comparison and the original canonical P¹ holomorphic isomorphism | `make build-complex-singular-comparison` | `make check-complex-singular-comparison` |
 | Actual relative cochains, excision and boundary sign | `make build-relative-cohomology` | `make check-relative-cohomology` |
 | Oriented P¹ zero-point Gysin and original cycle comparison | `make build-projective-line-point-gysin` | `make check-projective-line-point-gysin` |
+| DVR fixed-inertia étaleness and the local unramifiedness consumer | `make build-fixed-inertia` | `make check-fixed-inertia` |
 | Existing singular Betti realization | `make build-betti` | Covered by comparison and integration checks |
 | De Rham/geometric degree and Chow–Betti squares | `make build-comparison` | `make check-comparison` |
 | Complete library and public imports | `make build` | `make check-integration` |
 
-`make help` lists the commands. `make check` runs all twenty-one verification groups
+`make help` lists the commands. `make check` runs the verification groups above
 and checks the import boundaries. Make runs the groups sequentially; Lake
 retains its own build parallelism. A failed command stops the checks.
 

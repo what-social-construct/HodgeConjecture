@@ -7,6 +7,8 @@ geometry, and boundary inertia provide supporting construction tools.
 
 **Current status:** proved mechanisms include finite split Chow/Betti/Hodge
 comparison, a P¹ Hodge-cycle model, and an oriented zero-point Gysin/cycle comparison.
+The two projection classes form a basis of rational singular H² on the actual
+scheme product P¹ × P¹; its codimension-one Chow comparison remains open.
 General Betti comparison and prescribed-class generation remain open.
 No new case of the Hodge conjecture is claimed.
 
@@ -23,20 +25,28 @@ No new case of the Hodge conjecture is claimed.
 
 ## What is implemented
 
-- Scheme-theoretic cycles, principal relations, integral and rational Chow
-  groups, open localization, finite pushforward with composition laws, and
-  finite flat Chow pullback with its geometric rank degree law.
-- Scheme correspondences, actual graph-generated Chow convolution, finite-group
-  projectors, and conditional extension/descent results.
-- A concrete finite split Chow/Betti/Hodge model, including correspondence
-  actions and the marked-projector comparison.
-- Conditional generation and boundary-correction theorems using explicitly
-  supplied geometric cycles and realization comparisons.
+- Scheme cycles, Chow groups, localization, finite pushforward and finite flat
+  pullback, with graph correspondences and finite-group projectors.
+- A finite split Chow/Betti/Hodge model, a degree-normalized P¹ Chow map
+  with point Gysin factorization, and conditional generation and
+  boundary-correction theorems.
+- The actual P¹ × P¹ complex-point product topology and rational singular
+  degree-two basis, proved through two-chart Mayer–Vietoris calculations.
+- Canonical complex points of schemes, a smooth analytic atlas, intrinsic
+  holomorphic forms, and an all-degree local holomorphic Poincaré comparison.
+- Rational and complex singular-cochain sheaves, open-cover comparisons,
+  flasque resolutions, and comparison with derived constant-sheaf cohomology
+  under the stated topology hypotheses.
+- A complex Betti-to-holomorphic map that detects rational classes. On P¹ in
+  degree two the original map is an isomorphism; general invertibility and
+  equality with the separate cochain-induced map remain open.
 
 The next geometric obligations are general Betti/purity comparisons and a
-construction covering each independently prescribed Hodge class. The
-[Axiom Stacks reuse audit](research/working/0019-axiom-stacks-reuse-audit.md)
-identifies useful upstream proofs and the comparisons needed to reuse them.
+construction covering each independently prescribed Hodge class. Selected
+proof adaptations cite [Axiom Stacks](third_party/axiom-stacks/README.md) and
+[Axiom Weil](third_party/axiom-weil/README.md) at pinned revisions; the
+[reuse audit](research/working/0019-axiom-stacks-reuse-audit.md) records the
+remaining comparisons.
 
 ## Build
 

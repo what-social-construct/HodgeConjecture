@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-11-07 (actual projective-line zero-point Gysin and cycle comparison;
+Assessed: 2026-11-10 (assembled rational singular/constant-sheaf comparison;
 SP108--SP113 retain their stated conditional and research scope).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
@@ -20,6 +20,183 @@ H_B^{2p}(X,\mathbb Q)\), with Hodge membership specified independently.
 Compare candidates by the algebraic cycles we can construct and their image
 under this map. Establishing the map and its compatibility
 is distinct from showing that the construction generates every Hodge class.
+The [Chow-class witness checkpoint](working/0058-chow-class-witness.md)
+records the current generation gap and the next concrete geometric test,
+without changing the arbitrary-variety target.
+
+### Current checklist (2026-11-10)
+
+1. **Completed:** consolidate the duplicated objects and proofs in the
+   shared cycle, cochain and commutative-algebra layers.
+2. **Completed as a framework, with P¹ geometric instantiation:** construct
+   the rational Hodge target independently of the cycle map.
+3. **Completed:** prove Tate-block Hodge compatibility and feed it into
+   the existing conditional graph-projector equivalence. The
+   [bridge checkpoint](working/0038-tate-hodge-graph-bridge.md) proves that
+   the original e_α preserves the actual product filtration exactly when
+   α belongs to the independently defined rational type-(p,p) target.
+4. **Open:** general geometric Betti–de Rham comparison and purity, giving
+   the target framework its intended interpretation beyond the proved cases.
+   The [canonical scheme target checkpoint](working/0039-canonical-scheme-betti-target.md)
+   completes actual complex-point topology, the all-degree Betti functor,
+   affine/P¹ model identifications and the existing P¹ period/purity on
+   that target. The [holomorphic checkpoint](working/0040-holomorphic-derham-local-poincare.md)
+   constructs the all-degree analytic sheaf complex on coordinate spaces,
+   the actual constant-sheaf comparison and the degree-one Kähler map.
+   The [higher-degree checkpoint](working/0041-higher-degree-holomorphic-poincare.md)
+   proves the actual radial identity dK + Kd = id and local exactness in
+   every positive degree. The same comparison is now a full sheaf
+   quasi-isomorphism in every coordinate dimension. The
+   [analytic atlas checkpoint](working/0042-canonical-analytic-atlas.md)
+   constructs compatible native complex analytic charts on the same points
+   for smooth schemes of fixed relative dimension, proves regular-function
+   and morphism holomorphy, and constructs actual evaluation algebra maps.
+   The [forms descent checkpoint](working/0043-holomorphic-forms-descent.md)
+   constructs the intrinsic forms sheaf and differential through this atlas,
+   and the all-degree algebraic forms map, compatible with d and restriction.
+   The [intrinsic Poincaré checkpoint](working/0044-intrinsic-holomorphic-poincare.md)
+   constructs the actual chart complex identifications, local intrinsic
+   primitives and full constant-sheaf quasi-isomorphism. The
+   [singular sheaf checkpoint](working/0045-singular-cochain-sheaf-resolution.md)
+   reuses the original rational singular cochains to prove their local
+   constant-sheaf resolution on the same analytic points. The
+   [arbitrary-cover checkpoint](working/0046-arbitrary-open-cover-small-chains.md)
+   proves the original indexed small-chain and cochain comparisons and
+   acyclicity of the existing per-cover vanishing kernel. The
+   [global-kernel checkpoint](working/0047-global-sheafification-kernel.md)
+   identifies the actual global unit's kernel with locally zero original
+   cochains and proves its native categorical kernel acyclic in every
+   degree. The [global-unit checkpoint](working/0048-global-singular-sheaf-sections.md)
+   proves degreewise surjectivity and a quasi-isomorphism of the existing
+   unit to termwise global sections on paracompact Hausdorff spaces,
+   with those hypotheses proved for canonical affine spaces and P¹.
+   The [open-restriction checkpoint](working/0049-open-singular-sheaf-restrictions.md)
+   proves actual section lifts on paracompact Hausdorff opens and native
+   flasqueness of the same cochain sheaves when every open is paracompact.
+   Locally compact second-countable Hausdorff spaces satisfy this condition,
+   with those properties proved for canonical affine spaces and P¹.
+   The [derived-vanishing checkpoint](working/0050-flasque-derived-sections.md)
+   now proves positive derived-section vanishing for each original sheaf
+   term on every open, in the actual module-valued coefficient category.
+   The [whole-complex checkpoint](working/0051-singular-derived-comparison.md)
+   proves that the existing bounded-below comparison is invertible for
+   this entire complex, with its original homology maps in every integer degree.
+   The [rational composite checkpoint](working/0052-rational-singular-constant-sheaf-comparison.md)
+   assembles the existing global unit, whole-complex comparison and local
+   resolution into an isomorphism from the original rational singular group
+   to actual right-derived sections of the original rational constant sheaf,
+   in every nonnegative degree under the proved topology hypotheses.
+   The canonical P¹ generator remains nonzero in that derived target.
+   The [complex-coefficient checkpoint](working/0053-complex-coefficients-holomorphic-comparison.md)
+   now identifies actual derived sections of the native complex constant
+   sheaf with intrinsic holomorphic hypercohomology. Original constant-sheaf
+   coefficient inclusion constructs a complex-linear map from the existing
+   tensor complexification of rational Betti cohomology to that target.
+   Rational-diagonal zero detection and a nonzero image of the original
+   P¹ generator are proved. The [finite-cohomology coefficient step](working/0054-finite-cohomology-coefficient-change.md)
+   now proves that literal coefficient evaluation on the original singular
+   cochains induces an isomorphism to unrestricted complex-functional
+   cohomology whenever the original rational group in that degree is finite
+   dimensional. Chain modules may be infinite. The
+   [complex singular sheaf checkpoint](working/0055-complex-singular-derived-comparison.md)
+   now identifies those unrestricted complex cochains with derived sections
+   of the native complex constant sheaf under the stated topology hypotheses.
+   The original coefficient map commutes with the rational and complex
+   sheaf resolutions and global units. Their separately named cochain-induced
+   composite to intrinsic holomorphic hypercohomology is invertible under
+   finite rational cohomology and those topology hypotheses. Its generic
+   identification with the exact holomorphic comparison remains open. The
+   [canonical P¹ step](working/0056-projective-line-holomorphic-comparison-iso.md)
+   independently proves that exact original map invertible in degree two,
+   using one-dimensional coordinates and its nonzero generator image.
+   General invertibility and scheme point-topology
+   properties remain open. Proper algebraic/analytic
+   comparison, the general period isomorphism and purity remain open.
+5. **Open:** actual Chow construction and detection, correspondence-action
+   comparisons and class-dependent coverage. The
+   [filtered defect detector](working/0037-filtered-projector-defect.md) is
+   a completed supporting construction for the boundary-vanishing branch;
+   its geometric realization and boundary control remain open.
+
+This is the active checklist. The numbered SP continuation and historical
+construction notes below retain their recorded scope.
+
+### Current constructions
+
+The [holomorphic construction](working/0040-holomorphic-derham-local-poincare.md)
+reuses native alternating coefficients, bundled complex-smooth sections
+and the exterior derivative. Restriction compatibility, d² = 0 and the
+constant augmentation are proved. The
+[higher-degree radial operator](working/0041-higher-degree-holomorphic-poincare.md)
+is complex smooth and satisfies dK + Kd = id in positive degree. It gives
+local primitives and the full sheaf quasi-isomorphism in every coordinate
+dimension, specializing to the original segment primitive in degree one.
+The original Kähler universal property supplies
+da ↦ d(φ(a)) for a genuine holomorphic algebra map, with actual polynomial
+evaluation constructed. The
+[canonical analytic atlas](working/0042-canonical-analytic-atlas.md) now
+constructs the native complex manifold structure for smooth schemes of
+fixed relative dimension, with actual regular-function evaluation algebra
+maps and analytic scheme morphisms. The
+[forms descent](working/0043-holomorphic-forms-descent.md) now constructs
+intrinsic forms, their sheaf complex and the all-degree algebraic forms
+map using the same section algebras and exterior powers. Pullback,
+restriction and differential compatibility are proved. The
+[intrinsic comparison](working/0044-intrinsic-holomorphic-poincare.md)
+now identifies the complex in charts and transports the actual local
+primitives and local constants, proving the native constant-sheaf map
+is a full sheaf quasi-isomorphism. The
+[singular sheaf resolution](working/0045-singular-cochain-sheaf-resolution.md)
+now proves the corresponding rational local resolution using the original
+singular cochains. The subsequent global and complex-coefficient stages
+are recorded through 0055. The
+[arbitrary-cover comparison](working/0046-arbitrary-open-cover-small-chains.md)
+now supplies the original small-chain/cochain quasi-isomorphisms and
+acyclic per-cover vanishing kernels. The
+[global-kernel comparison](working/0047-global-sheafification-kernel.md)
+identifies the existing unit's kernel with locally zero original cochains
+and proves its native categorical kernel acyclic. The
+[global-unit comparison](working/0048-global-singular-sheaf-sections.md)
+now proves surjectivity and the original unit's quasi-isomorphism to
+termwise global sections on paracompact Hausdorff spaces. Canonical
+affine spaces in every dimension and the original P¹ satisfy those
+hypotheses. The [open-restriction step](working/0049-open-singular-sheaf-restrictions.md)
+now proves native flasqueness of the existing cochain sheaves under the
+stated open-subspace conditions, verified for canonical affine spaces
+and P¹. The [derived-vanishing step](working/0050-flasque-derived-sections.md)
+now proves zero positive derived sections of every original sheaf term,
+on every open. The whole-complex, rational constant-sheaf and complex
+constant-sheaf comparisons are completed in 0051–0055. Equality of the
+cochain-induced and original holomorphic maps, general scheme point-topology
+properties, proper algebraic/analytic comparison and general purity remain open.
+
+The [filtered defect checkpoint](working/0037-filtered-projector-defect.md)
+now constructs M_q = ℚ[T]·(q²−q) inside the same original compactified
+algebra, with T acting by q. Its finite-stage degree filtration is
+exhaustive and its finitely presented carrier detects actual idempotence.
+The original restriction kills every stage; Chow localization supplies
+boundary-image membership. The parameter is an algebraic action variable,
+not an identified boundary or twistor parameter. Constructing a geometric
+filtered realization with sufficient detection and boundary control
+remains the next vanishing comparison; the detector alone proves no
+general projector extension or Hodge-class coverage.
+
+The [general target checkpoint](working/0036-filtered-hodge-target-and-vanishing.md)
+now constructs rational type-(p,p) targets from a pure rational Hodge
+structure on the actual tensor complexification, independently of cycles.
+The scheme adapter transports the existing derived de Rham filtration to
+actual rational singular cohomology through an explicit comparison. The
+existing P¹ model is a proved pure instance and uses this shared target.
+The [canonical target](working/0039-canonical-scheme-betti-target.md) now
+constructs the actual analytic point topology and singular Betti functor,
+and identifies the original P¹ comparison with that target. Constructing
+the general geometric period comparison and proving purity remain open. The
+Tate/Hodge bridge now uses this target without supplying an arbitrary
+Hodge-class subspace or an unproved graph/Hodge compatibility premise.
+The same checkpoint compares the boundary-vanishing
+mechanisms in this repo, the Jacobian collision repo and Yun's §7; a
+geometric filtered family detecting our actual defect remains open beyond
+the proved algebraic detector described above.
 
 The [2026-11-05 affine de Rham checkpoint](working/0022-affine-derham-trace-comparison.md)
 constructs the actual affine complex and a degree-zero trace on finite free

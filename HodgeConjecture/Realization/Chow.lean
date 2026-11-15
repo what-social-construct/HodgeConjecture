@@ -9,7 +9,7 @@ public import HodgeConjecture.Realization.Chow.GaloisMarkedBlock
 public import HodgeConjecture.Realization.Chow.GaloisMarkedRealization
 public import HodgeConjecture.Realization.Chow.Model
 public import HodgeConjecture.Realization.Chow.Presentation
-public import HodgeConjecture.Realization.Chow.TateGraphProjector
+public import HodgeConjecture.Realization.Chow.FilteredTateGraphProjector
 public import HodgeConjecture.Realization.Chow.TransferProjector
 public import HodgeConjecture.Realization.Chow.FiniteFlatTransfer
 public import HodgeConjecture.Realization.Chow.UpstairsGeneration

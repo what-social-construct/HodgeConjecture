@@ -8,6 +8,79 @@ Dated build observations and older API spellings below retain their historical
 scope; the [Lean 4.35 record](working/0020-lean-4-35-migration.md) gives the
 current toolchain and migration checks.
 
+The [holomorphic checkpoint](working/0040-holomorphic-derham-local-poincare.md)
+adds `Geometry.Holomorphic.Forms`, `LowDegree`, `Poincare` and `Dimension`.
+These reuse native complex-smooth sections and alternating coefficients,
+prove the actual differential and construct normalized integral primitives.
+`SheafCohomology.LocalExactness` owns the shared local-lift criterion.
+`DeRham.HolomorphicComplex` assembles the actual sheaf complex and constant
+augmentation. The [higher-degree checkpoint](working/0041-higher-degree-holomorphic-poincare.md)
+adds `Contraction`, `ParameterIntegral` and `RadialHomotopy` to the shared
+geometry layer. The actual complex-smooth radial operator satisfies
+dK + Kd = id, and its degree-one specialization equals the existing
+segment primitive. `HolomorphicPoincare` proves the full constant-sheaf
+quasi-isomorphism in every coordinate dimension. `HolomorphicKaehler`
+constructs the ordinary universal differential map in degree one and
+actual polynomial evaluation. The
+[analytic atlas checkpoint](working/0042-canonical-analytic-atlas.md) adds
+`Geometry.PolynomialComplexPoints`, `EtaleAnalyticCoordinates` and
+`SmoothComplexManifold`: native analytic charts on canonical complex
+points for schemes smooth of fixed relative dimension, with analytic
+regular functions and scheme morphisms. `Holomorphic.SchemeEvaluation`
+constructs the actual evaluation algebra maps on analytic opens and
+coordinate charts; `ProjectiveLineSmooth` proves applicability to the
+original glued P¹. The
+[forms descent checkpoint](working/0043-holomorphic-forms-descent.md) adds
+`Holomorphic.Pullback`, `Wedge` and `Atlas`, with the proved intrinsic
+sheaf complex in `DeRham.HolomorphicAtlasComplex`. `HolomorphicFormsMap`,
+`HolomorphicFormsNaturality` and `HolomorphicFormsDifferential` construct
+the all-degree map and its pullback, restriction and chain laws.
+`SchemeHolomorphicForms` glues actual chart evaluations and supplies the
+natural transformations from the original scheme forms presheaves and
+the native `algebraicComplexComparison` between the actual presheaf complexes.
+`Geometry.SectionAlgebra` and `Holomorphic.FunctionAlgebra` own the shared
+scalar structures, preserving their existing public names. The
+[intrinsic Poincaré checkpoint](working/0044-intrinsic-holomorphic-poincare.md)
+adds `Holomorphic.AtlasCoordinates` and `AtlasPoincare`: actual derivative
+cocycles, chart equivalences, local intrinsic primitives and local constants.
+`HolomorphicAtlasComplex.chartComplexIso` identifies the existing section
+complexes in charts. `DeRham.HolomorphicAtlasPoincare` proves augmentation
+exactness and monomorphism and the full intrinsic constant-sheaf
+quasi-isomorphism. `SchemeHolomorphicForms.holomorphicComparison` specializes
+it to the same canonical scheme points. `SheafCohomology.ConstantLift` and
+`AugmentedComplex` own the generic proofs also used by the original
+coordinate comparison; coordinate constants now live in the shared
+`FunctionAlgebra` module. Analytic/singular, proper algebraic/analytic
+comparison, the general period isomorphism and purity remain open.
+
+The [canonical scheme target](working/0039-canonical-scheme-betti-target.md)
+adds `Geometry.ComplexPoints`, `ComplexPointsFunctoriality` and
+`AffineComplexPoints`, with native Mathlib-only topology proofs adapted
+from pinned Axiom Weil. `Realization.Betti.Scheme` applies the original
+singular cohomology functor to these canonical spaces. The original P¹
+point model is homeomorphic by the identity on scheme sections;
+`DeRham.ProjectiveLineCanonicalComparison` carries the existing period,
+filtration, pure structure and ordinary Chow square to the canonical
+Betti target. `Realization.HodgeTransport` proves the shared rational
+transport/conjugation facts. General comparison and purity remain open.
+
+The [Tate/Hodge bridge](working/0038-tate-hodge-graph-bridge.md) adds
+`Realization.TateHodgeStructure` and
+`Realization.Chow.FilteredTateGraphProjector`. The first constructs the
+pure Tate-product filtration and proves the original graph operator is
+Hodge exactly for the independent rational type-(p,p) target. The second
+supplies `ClassGraphProjectorHodgeCompatibility` to the existing
+equivalence, retaining its explicit Chow construction and detection inputs.
+
+The [filtered defect checkpoint](working/0037-filtered-projector-defect.md)
+adds `Correspondence.FilteredProjectorDefect` and
+`Boundary.FilteredProjectorDefect`. The former constructs the native cyclic
+polynomial module of the original defect, its exact relation ideal and
+finite-stage degree filtration. The latter specializes it to existing raw
+closures and proves original restriction-zero. `Inputs.ChowLocalization`
+places the whole detector image in the boundary image. A geometric filtered
+realization and a vanishing theorem remain separate constructions.
+
 The [graph-Chow checkpoint](working/0025-graph-chow-convolution.md) adds
 `Correspondence.GraphChow`, `GraphChowAction`, `GraphChowAlgebra` and
 `GraphChowBaseComparison`. They construct canonically graded actual graph
@@ -128,7 +201,6 @@ through this actual Gysin. Other points and coordinate independence remain
 open, as do general Gysin, degeneration and prescribed-class generation.
 
 
-
 This Lean project develops collision ideals as scheme-theoretic input to
 algebraic correspondences, with boundary inertia measuring whether a generic
 sheet decomposition extends over a compactification.
@@ -181,6 +253,198 @@ The middle arrow is genuine geometry.  It includes properness and dimension
 conditions, passage to cycles modulo rational equivalence, refined
 intersection, and a proof of convolution idempotence.  None of those facts is
 smuggled in by the existence of a clopen selector.
+
+## Finite-cohomology coefficient change on original singular cochains
+
+The [finite-cohomology checkpoint](working/0054-finite-cohomology-coefficient-change.md)
+adds shared `LinearAlgebra.HomCoefficients`. Exact unrestricted functionals
+V ↦ Hom_k(V,A) use native quotient factorization and extension from a subspace.
+The original `RationalDual.functor` and exactness theorem delegate to k = A = ℚ;
+its original complexes and public interfaces are retained. Native flat scalar
+extension and coefficient evaluation give a natural transformation of exact
+functors. Native homology of that transformation proves the induced coefficient
+map invertible when original homology in the degree is finite dimensional.
+No finiteness of chain terms is used.
+
+`Betti.CoefficientChange` retains the original rational singular chains,
+cochains and tensor complexification. Unrestricted complex functionals on
+those chains identify with all complex simplex functions using existing
+coproduct coordinates. The actual cochain map is scalar evaluation, and the
+proved tensor-homology square fixes its map on cohomology. Exact duality and
+native finite-dual equivalence show finiteness of the original rational
+cohomology in that degree suffices. Original and canonical P¹ degree-two
+controls discharge that finiteness, with nonzero image of the original
+generator in the actual complex-functional target.
+
+The remaining step is the complex-coefficient constant-sheaf resolution and
+its coefficient compatibility identifying this map with the exact holomorphic
+comparison below. That comparison's invertibility is not yet proved.
+
+## Complex coefficients and the original holomorphic derived target
+
+The [complex-coefficient checkpoint](working/0053-complex-coefficients-holomorphic-comparison.md)
+adds shared `SheafCohomology.ScalarRestriction` and
+`DerivedScalarRestriction`. Native scalar restriction is exact on the
+original sheaves. Native constant-sheaf compatibility gives coefficient
+inclusion. Ordinary derived sections commute with restriction by using
+one larger-coefficient injective resolution and the already proved flasque
+comparison on its restricted terms; restricted injectivity is not assumed.
+
+`DeRham.HolomorphicHypercohomology` applies the existing Poincaré map to
+identify actual complex constant-sheaf derived cohomology with the existing
+intrinsic holomorphic hypercohomology, retaining the original resolution
+square. `DeRham.AnalyticBettiComparison` composes original coefficient
+inclusion with the rational comparison and this isomorphism, then extends
+via the native tensor universal property to the existing complexification.
+The native existing algebra structure is retained. Rational injectivity
+uses a coefficient splitting only in its proof, and gives zero detection
+on the rational diagonal. The original P¹ generator has nonzero image in
+actual holomorphic hypercohomology. Scheme wrappers use the same canonical
+points and analytic atlas. Invertibility of this exact complex-linear map
+remains a coefficient-comparison obligation. The subsequent 0054 checkpoint
+above proves the cochain-level finite-cohomology isomorphism; its identification
+with this holomorphic map is still required. No infinite-product scalar
+extension claim is made.
+
+## Rational singular cohomology and the original constant sheaf
+
+The [rational composite checkpoint](working/0052-rational-singular-constant-sheaf-comparison.md)
+adds the shared `HypercohomologyComparison` helpers and
+`Betti.SingularConstantSheafCohomology`. The original global unit and
+whole-complex comparison map singular cohomology to singular-sheaf
+hypercohomology; the inverse of the original local resolution map and the
+existing single-sheaf comparison identify ordinary right-derived global
+sections of the original rational constant sheaf. The resulting map is
+invertible in all nonnegative degrees under the stated topology hypotheses,
+with its original resolution square and zero-class detection proved.
+Canonical affine/P¹ controls discharge those hypotheses, and the original
+P¹ generator has a proved nonzero image in the actual derived target.
+The subsequent 0053 checkpoint above constructs the complex-linear map to
+the holomorphic target; invertibility of that coefficient comparison remains open.
+The generic local-exactness import is narrowed to native Mathlib topology;
+the scheme wrapper directly imports its existing chart helper. Generic
+local exactness and the singular resolution now have stricter geometry guards.
+
+## Original whole-complex derived comparison
+
+The [whole-complex checkpoint](working/0051-singular-derived-comparison.md)
+moves the original generic construction to `SheafCohomology.Hypercohomology`.
+The old de Rham entry point retains the same public exports and scheme
+wrappers. `FlasqueComplex` proves exactness of original sections of
+bounded-below acyclic flasque complexes, using native cycles and native
+flasque quotient/section lifting. `FlasqueHypercohomology` applies this to
+the native monomorphic injective replacement and its acyclic cokernel,
+then proves the original derived-functor unit invertible by naturality.
+`Betti.SingularSheafHypercohomology` discharges the criterion with the
+existing native flasqueness. The original comparison on homology is
+invertible in every integer degree. The subsequent 0052 checkpoint above
+assembles its composition with the global unit and local rational
+constant-sheaf resolution.
+
+## Positive derived sections of flasque sheaf terms
+
+The [derived-vanishing checkpoint](working/0050-flasque-derived-sections.md)
+adds `SheafCohomology.FlasqueDerived` and `Betti.SingularSheafAcyclicity`.
+The existing complete basis criterion and flasque Čech proof are applied
+to all opens and covers. `LinearCoefficients.isZero_cohomology_of_isFlasque`
+proves vanishing of actual module-valued derived sections on every open;
+`isZero_rightDerived_globalSections_of_isFlasque` names the original
+global-sections functor directly. The singular-term and canonical-scheme
+wrappers use the already proved native flasqueness.
+The original `BoundedBelowDerived.rightDerivedPostcomposeIso` moves to
+`SheafCohomology.DerivedPostcompose` without changing its public name or
+proof. The old de Rham module-cohomology forgetting helper delegates to
+`LinearCoefficients.cohomologyForgetIso`. The subsequent 0051 checkpoint
+above proves the whole-complex bounded-below comparison for these terms.
+
+## Open-subspace lifting and native flasque singular cochain sheaves
+
+The [open-restriction checkpoint](working/0049-open-singular-sheaf-restrictions.md)
+adds `SheafCohomology.SheafifyOpen` and `Betti.SingularOpenRestriction`.
+The existing `restrictPresheaf` and `local_restrictSheaf` objects are
+compared by native sheafification compatibility, preserving the actual
+unit. `openPresheafIso` uses the original cochain functor and native image
+homeomorphisms. `toSheafify_open_surjective` transfers the existing
+surjectivity proof to any paracompact Hausdorff open.
+`exists_global_cochain_open_lift` and `cochainSheaf_restriction_surjective`
+provide actual ambient lifts and surjective restriction maps.
+`cochainSheaf_isFlasque` proves native module-valued flasqueness when
+every open is paracompact and the ambient space is Hausdorff. The locally
+compact second-countable corollary applies to canonical affine spaces
+and P¹ with independently proved topology properties. Derived vanishing
+and the existing bounded-below derived comparison remain open.
+
+## The existing global singular sheafification comparison
+
+The [global-unit checkpoint](working/0048-global-singular-sheaf-sections.md)
+adds `SingularCochainPatching` and `SingularSheafGlobalSections`.
+`openExtension` reuses the original relative extension by zero.
+`exists_cochain_locally_eq_of_closed_cover` patches locally agreeing
+original cochains on a locally finite closed cover. On paracompact
+Hausdorff spaces, `globalCochainsToSheaf_surjective` gives actual original
+preimages of arbitrary sheafified global sections.
+`globalCochainsToSheaf_quasiIso` combines this with the existing native
+kernel acyclicity; `globalCochainsToSheaf_homologyIso` uses the original
+homology map. The target remains termwise global sections.
+`SheafCohomology.SheafifyLocalLifts` owns the generic native local-lift
+and germ-equality proofs; `ComplexKernelComparison` owns the generic
+native-kernel homology-sequence argument. Scheme wrappers retain the
+explicit topology hypotheses. These properties are proved for canonical
+affine spaces and P¹ from their existing homeomorphisms. Sheaf-term
+acyclicity, actual derived sections, general scheme topology and complex
+coefficients remain open.
+
+## Actual global sheafification kernel
+
+The [global-kernel checkpoint](working/0047-global-sheafification-kernel.md)
+adds `SingularLocallyZero` and `SingularSheafificationKernel`.
+`globalCochainsToSheaf_eq_zero_iff` identifies the kernel of the existing
+unit with local vanishing of original cochains;
+`globalCochainsToSheaf_ker_eq_iSup` relates its degreewise linear kernel
+to the existing indexed-cover kernels. `exists_locallyZero_primitive`
+reuses their actual primitives. `sheafificationKernel` abbreviates the
+native categorical kernel; `exists_kernel_primitive` and
+`sheafificationKernel_acyclic` prove its acyclicity in every degree on
+every topological space, including the original canonical scheme points.
+Generic `SheafCohomology.SheafifyKernel` owns the native unit's local
+kernel criterion; `ComplexKernel` shares native degreewise evaluation
+and lifting. The global surjectivity and termwise-section comparison
+are now proved above; sheaf-term acyclicity, derived sections and complex
+coefficients remain open.
+
+## Arbitrary open-cover small chains and cochains
+
+The [indexed-cover checkpoint](working/0046-arbitrary-open-cover-small-chains.md)
+adds `CoverSingular`, `CoverSubdivisionSmallness`,
+`CoverSubdivisionHomotopy`, `CoverSmallChains` and `CoverSmallCochains`.
+The original native inclusion and simplex-function restriction are
+quasi-isomorphisms in every degree for any indexed open cover.
+`restriction_surjective` reuses original extension by zero;
+`vanishingComplex_acyclic` identifies the original relative kernel as
+acyclic, and `exists_vanishing_primitive` supplies primitives retaining
+vanishing on that cover. Refinement uses the original simplicial maps.
+`SubcomplexOperators` and `SingularSupportedChains` share restriction
+and support proofs; `SingularSubdivisionIteration` owns the unchanged
+cover-independent iteration APIs. The old two-open construction reuses
+these proofs. The actual global-unit kernel identification and acyclicity
+are now proved above, together with global surjectivity and the
+termwise-section comparison under the stated topology hypotheses.
+Derived sections and complex coefficients remain separate comparisons.
+
+## Rational singular cochain sheaves
+
+The [local singular resolution](working/0045-singular-cochain-sheaf-resolution.md)
+reuses `SingularCochains.complex` on native open subspaces, with actual
+pullbacks and the existing differential. `SingularPresheaf.sectionComplexIso`
+recovers each original complex. `globalCochainsToSheaf` uses the native
+unit. `SingularSheafResolution.comparison_quasiIso` proves the all-degree
+rational constant-sheaf resolution from actual local primitives and
+constants. `Scheme.ComplexPoints.singularSheafComparison_quasiIso`
+specializes it to the constructed smooth canonical analytic points.
+Shared sheafification, complex units and global sections live in
+`SheafCohomology.LinearSheaves`; local stalk proofs are shared in
+`LocalExactness`. The global derived-section and complex-coefficient
+comparisons remain open.
 
 ## The Hodge-theoretic target
 

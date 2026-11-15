@@ -9408,6 +9408,7 @@ Focused regressions and enforced standard-axiom checks are in
 #print axioms HodgeConjecture.ProjectiveLineHodgeCycleClass.model_cycleClass_range_eq_hodgeClasses
 #print axioms HodgeConjecture.ProjectiveLineHodgeCycleClass.cycleClass_has_geometric_type_one_one
 
+
 -- Actual relative kernels, excision, oriented local Thom classes and the geometric zero-point Gysin.
 
 -- RelativeCochains.
@@ -9869,3 +9870,298 @@ Focused regressions and enforced standard-axiom checks are in
 #print axioms HodgeConjecture.ProjectiveLineGysinCycleClass.cycleClassViaZeroGysin_eq_cycleClass
 #print axioms HodgeConjecture.ProjectiveLineGysinCycleClass.cycleClass_factorization
 #print axioms HodgeConjecture.ProjectiveLineGysinCycleClass.integralCycleClass_factorization
+
+-- General rational target, canonical real structure and actual scheme specialization.
+#check HodgeConjecture.RationalComplexification.Space
+#check HodgeConjecture.RationalComplexification.embedding_injective
+#check HodgeConjecture.RationalComplexification.conjugation_smul
+#check HodgeConjecture.RationalComplexification.conjugation_involutive
+#check HodgeConjecture.HodgeFiltration.rationalHodgeClasses
+#check HodgeConjecture.HodgeFiltration.map_mem_rationalHodgeClasses
+#check HodgeConjecture.PureRationalHodgeStructure
+#check HodgeConjecture.PureRationalHodgeStructure.piece
+#check HodgeConjecture.PureRationalHodgeStructure.rationalHodgeClasses
+#check HodgeConjecture.HodgeFiltration.target_iff
+#check HodgeConjecture.PureRationalHodgeStructure.cycleClassModel
+#check HodgeConjecture.SchemeDeRham.bettiHodgeFiltration
+#check HodgeConjecture.SchemeDeRham.mem_rationalBettiHodgeClasses
+#check HodgeConjecture.ProjectiveLineHodgeComparison.pureHodgeStructure
+#check HodgeConjecture.ProjectiveLineHodgeComparison.rationalHodgeClasses_eq_schemeTarget
+
+-- Native cyclic filtered detector of the original projector defect.
+#check HodgeConjecture.ProjectorDefectModule.Carrier
+#check HodgeConjecture.ProjectorDefectModule.embedding_injective
+#check HodgeConjecture.ProjectorDefectModule.presentation_surjective
+#check HodgeConjecture.ProjectorDefectModule.finitePresentation
+#check HodgeConjecture.ProjectorDefectModule.subsingleton_iff_defect_eq_zero
+#check HodgeConjecture.ProjectorDefectModule.mem_annihilator_iff
+#check HodgeConjecture.ProjectorDefectModule.presentation_ker
+#check HodgeConjecture.ProjectorDefectModule.filtration_eq_span
+#check HodgeConjecture.ProjectorDefectModule.filtration_exhaustive
+#check HodgeConjecture.ProjectorDefectModule.isModuleFiltration
+#check HodgeConjecture.AlgebraProjectorClosure.defectModule_detects
+#check HodgeConjecture.AlgebraProjectorClosure.restriction_defectEmbedding
+#check HodgeConjecture.AlgebraProjectorClosure.zeroDefectWitness
+#check HodgeConjecture.ChowLocalization.defectModule_embedding_mem_range
+#check HodgeConjecture.ChowLocalization.defectFiltration_map_le_range
+
+-- Proved Hodge compatibility of the existing Tate graph projector.
+#check HodgeConjecture.RationalComplexification.prodEquiv
+#check HodgeConjecture.RationalComplexification.prodEquiv_conjugation
+#check HodgeConjecture.RationalComplexification.productSubmodule
+#check HodgeConjecture.HodgeFiltration.product
+#check HodgeConjecture.HodgeFiltration.tate
+#check HodgeConjecture.PureRationalHodgeStructure.product
+#check HodgeConjecture.PureRationalHodgeStructure.tate
+#check HodgeConjecture.PureRationalHodgeStructure.tateBlock
+#check HodgeConjecture.PureRationalHodgeStructure.IsHodgeMorphism
+#check HodgeConjecture.PureRationalHodgeStructure.map_mem_piece
+#check HodgeConjecture.HodgeFiltration.lineMap_isFiltered_iff
+#check HodgeConjecture.HodgeFiltration.graph_isFiltered_iff
+#check HodgeConjecture.PureRationalHodgeStructure.lineMap_isHodge_iff
+#check HodgeConjecture.PureRationalHodgeStructure.graph_isHodge_iff
+#check HodgeConjecture.PureRationalHodgeStructure.classGraphHodgeCompatibility
+#check HodgeConjecture.PureRationalHodgeStructure.rationalHodgeConjectureAt_iff_hodgeGraphLifts
+
+-- Canonical complex-point topology, shared singular Betti functor and existing P¹ comparison.
+#check AlgebraicGeometry.Scheme.ComplexPoints
+#check AlgebraicGeometry.Scheme.ComplexPoints.continuous_map
+#check AlgebraicGeometry.Scheme.ComplexPoints.isOpenEmbedding_map_of_isOpenImmersion
+#check AlgebraicGeometry.Scheme.ComplexPoints.isClosedEmbedding_map_of_isClosedImmersion
+#check AlgebraicGeometry.Scheme.ComplexPoints.homeomorphZeroLocus
+#check HodgeConjecture.AffineComplexPoints.homeomorph
+#check HodgeConjecture.SchemeBetti.space
+#check HodgeConjecture.SchemeBetti.Cohomology
+#check HodgeConjecture.SchemeBetti.complexPointsFunctor
+#check HodgeConjecture.SchemeBetti.cohomologyFunctor
+#check HodgeConjecture.ProjectiveLineComplexPoints.canonicalHomeomorph
+#check HodgeConjecture.RationalComplexification.conjugateSubmodule_map
+#check HodgeConjecture.PureRationalHodgeStructure.transport
+#check HodgeConjecture.PureRationalHodgeStructure.mem_rationalHodgeClasses_transport
+#check HodgeConjecture.SchemeDeRham.complexPointsRationalHodgeClasses
+#check HodgeConjecture.SchemeDeRham.mem_complexPointsRationalHodgeClasses
+#check HodgeConjecture.ProjectiveLineCanonicalComparison.bettiEquiv
+#check HodgeConjecture.ProjectiveLineCanonicalComparison.comparison
+#check HodgeConjecture.ProjectiveLineCanonicalComparison.pureHodgeStructure_filtration
+#check HodgeConjecture.ProjectiveLineCanonicalComparison.normalizedComparison_cycleClass
+#check HodgeConjecture.ProjectiveLineCanonicalComparison.comparison_cycleClass
+
+-- Actual holomorphic coordinate complex, local Poincaré and Kähler differential comparison.
+#check HodgeConjecture.HolomorphicForms.Sections
+#check HodgeConjecture.HolomorphicForms.differential
+#check HodgeConjecture.HolomorphicForms.restrict_differential
+#check HodgeConjecture.HolomorphicForms.differential_comp
+#check HodgeConjecture.HolomorphicForms.segmentPrimitive
+#check HodgeConjecture.HolomorphicForms.differential_primitive
+#check HodgeConjecture.HolomorphicForms.radialHomotopy
+#check HodgeConjecture.HolomorphicForms.differential_radialHomotopy
+#check HodgeConjecture.HolomorphicForms.differential_radialHomotopy_of_closed
+#check HodgeConjecture.HolomorphicForms.radialHomotopy_zero_eq_primitive
+#check HodgeConjecture.HolomorphicForms.locally_exact_positive
+#check HodgeConjecture.HolomorphicForms.locally_exact_one
+#check HodgeConjecture.HolomorphicForms.locally_constant_zero
+#check HodgeConjecture.SheafCohomology.LocalExactness.exact_of_exists_local_preimage
+#check HodgeConjecture.HolomorphicDeRham.formsSheaf
+#check HodgeConjecture.HolomorphicDeRham.complex
+#check HodgeConjecture.HolomorphicDeRham.augmentation
+#check HodgeConjecture.HolomorphicDeRham.comparison
+#check HodgeConjecture.HolomorphicDeRham.comparison_quasiIsoAt_zero
+#check HodgeConjecture.HolomorphicDeRham.comparison_quasiIsoAt_one
+#check HodgeConjecture.HolomorphicDeRham.exact_positive
+#check HodgeConjecture.HolomorphicDeRham.complex_exactAt_positive
+#check HodgeConjecture.HolomorphicDeRham.comparison_quasiIsoAt_positive
+#check HodgeConjecture.HolomorphicDeRham.comparison_quasiIso
+#check HodgeConjecture.HolomorphicDeRham.complexLine_comparison_quasiIso
+#check HodgeConjecture.HolomorphicDeRham.holomorphicDerivation
+#check HodgeConjecture.HolomorphicDeRham.algebraicOneFormsMap
+#check HodgeConjecture.HolomorphicDeRham.algebraicOneFormsMap_D
+#check HodgeConjecture.HolomorphicDeRham.polynomialEvaluation_apply
+
+-- Constructed analytic atlas and actual evaluations on canonical smooth scheme points.
+#check HodgeConjecture.PolynomialComplexPoints.homeomorph
+#check HodgeConjecture.PolynomialComplexPoints.homeomorph_ofAlgHom
+#check HodgeConjecture.PolynomialComplexPoints.homeomorph_symm_apply
+#check AlgebraicGeometry.Scheme.ComplexPoints.exists_analyticImplicitFunction
+#check AlgebraicGeometry.Scheme.ComplexPoints.exists_analyticOpenPartialHomeomorph_of_etale
+#check AlgebraicGeometry.Scheme.ComplexPoints.exists_etaleCoordinates
+#check AlgebraicGeometry.Scheme.ComplexPoints.exists_isAlgebraicChart
+#check AlgebraicGeometry.Scheme.ComplexPoints.analyticChartedSpace
+#check AlgebraicGeometry.Scheme.ComplexPoints.analyticIsManifold
+#check AlgebraicGeometry.Scheme.ComplexPoints.contMDiffOn_evalOrZero
+#check AlgebraicGeometry.Scheme.ComplexPoints.contMDiff_map
+#check AlgebraicGeometry.Scheme.ComplexPoints.regularFunctionsAlgebra
+#check AlgebraicGeometry.Scheme.ComplexPoints.regularEvaluation
+#check AlgebraicGeometry.Scheme.ComplexPoints.regularEvaluation_restrict
+#check AlgebraicGeometry.Scheme.ComplexPoints.chartEvaluation
+#check AlgebraicGeometry.Scheme.ComplexPoints.chartEvaluation_eq_regularEvaluation
+#check AlgebraicGeometry.Scheme.ComplexPoints.regularEvaluation_map
+#check AlgebraicGeometry.projectiveLine_smoothOfRelativeDimension
+
+-- Descended intrinsic forms and the all-degree map on the same canonical atlas.
+#check HodgeConjecture.HolomorphicForms.pullback_comp
+#check HodgeConjecture.HolomorphicForms.pullback_differential
+#check HodgeConjecture.HolomorphicForms.wedgeOneForms_one
+#check HodgeConjecture.HolomorphicAtlas.Forms
+#check HodgeConjecture.HolomorphicAtlas.formsPresheaf_isSheaf
+#check HodgeConjecture.HolomorphicAtlas.formsSheaf
+#check HodgeConjecture.HolomorphicAtlas.complex
+#check HodgeConjecture.HolomorphicAtlas.differential_comp
+#check HodgeConjecture.HolomorphicDeRham.algebraicFormsMap_one
+#check HodgeConjecture.HolomorphicDeRham.algebraicFormsMap_differential
+#check HodgeConjecture.HolomorphicDeRham.algebraicComplexMap
+#check AlgebraicGeometry.Scheme.ComplexPoints.chartFormsMap_compatible
+#check AlgebraicGeometry.Scheme.ComplexPoints.algebraicFormsMap
+#check AlgebraicGeometry.Scheme.ComplexPoints.algebraicFormsMap_differential
+#check AlgebraicGeometry.Scheme.ComplexPoints.algebraicFormsMap_restrict
+#check AlgebraicGeometry.Scheme.ComplexPoints.algebraicFormsComparison
+#check AlgebraicGeometry.Scheme.ComplexPoints.algebraicFormsComparison_differential
+#check AlgebraicGeometry.Scheme.ComplexPoints.analyticPresheafComplex
+#check AlgebraicGeometry.Scheme.ComplexPoints.algebraicComplexComparison
+
+-- Intrinsic chart identifications and the full constant-sheaf comparison.
+#check HodgeConjecture.HolomorphicForms.pullback_congr
+#check HodgeConjecture.HolomorphicAtlas.chartPullback_compatible
+#check HodgeConjecture.HolomorphicAtlas.fromChart
+#check HodgeConjecture.HolomorphicAtlas.fromChart_inChart
+#check HodgeConjecture.HolomorphicAtlas.inChart_fromChart
+#check HodgeConjecture.HolomorphicAtlas.chartEquiv
+#check HodgeConjecture.HolomorphicAtlas.chartComplexIso
+#check HodgeConjecture.HolomorphicAtlas.fromChart_differential
+#check HodgeConjecture.HolomorphicAtlas.constant
+#check HodgeConjecture.HolomorphicAtlas.constant_injective
+#check HodgeConjecture.HolomorphicAtlas.locally_exact_positive
+#check HodgeConjecture.HolomorphicAtlas.locally_constant_zero
+#check HodgeConjecture.HolomorphicAtlas.constantSheaf
+#check HodgeConjecture.HolomorphicAtlas.augmentation
+#check HodgeConjecture.HolomorphicAtlas.augmentation_mono
+#check HodgeConjecture.HolomorphicAtlas.augmentation_exact
+#check HodgeConjecture.HolomorphicAtlas.comparison
+#check HodgeConjecture.HolomorphicAtlas.comparison_quasiIso
+#check HodgeConjecture.SheafCohomology.ConstantLift.mono
+#check HodgeConjecture.SheafCohomology.AugmentedComplex.quasiIso
+#check AlgebraicGeometry.Scheme.ComplexPoints.holomorphicComparison
+#check AlgebraicGeometry.Scheme.ComplexPoints.holomorphicComparison_quasiIso
+
+-- Actual rational singular sheaf resolution on the original cochains.
+#check HodgeConjecture.SingularCochains.presheaf
+#check HodgeConjecture.SingularCochains.sectionComplexIso
+#check HodgeConjecture.SingularCochains.globalCochainsToSheaf
+#check HodgeConjecture.SingularCochains.comparison_quasiIso
+#check AlgebraicGeometry.Scheme.ComplexPoints.stronglyLocallyContractibleSpace
+#check AlgebraicGeometry.Scheme.ComplexPoints.singularSheafComparison_quasiIso
+
+-- Arbitrary indexed open covers, using the original native chains and cochains.
+#check HodgeConjecture.SingularSubcomplexes.coverSingular
+#check HodgeConjecture.CoverSubdivision.exists_iteration_small
+#check HodgeConjecture.CoverSmallChains.inclusion_quasiIso
+#check HodgeConjecture.CoverSmallChains.refinementMap_quasiIso
+#check HodgeConjecture.CoverSmallCochains.restriction_quasiIso
+#check HodgeConjecture.CoverSmallCochains.vanishingComplex_acyclic
+#check HodgeConjecture.CoverSmallCochains.exists_vanishing_primitive
+
+-- The actual global unit kernel and its native all-degree acyclicity.
+#check HodgeConjecture.SingularCochains.globalCochainsToSheaf_eq_zero_iff
+#check HodgeConjecture.SingularCochains.globalCochainsToSheaf_ker_eq_iSup
+#check HodgeConjecture.SingularCochains.sheafificationKernel
+#check HodgeConjecture.SingularCochains.exists_kernel_primitive
+#check HodgeConjecture.SingularCochains.sheafificationKernel_acyclic
+#check AlgebraicGeometry.Scheme.ComplexPoints.singularSheafificationKernel_acyclic
+
+-- The original global unit to termwise sections, with actual topology hypotheses.
+#check HodgeConjecture.SheafCohomology.toSheafify_exists_local_lift
+#check HodgeConjecture.SingularCochains.exists_cochain_locally_eq_of_closed_cover
+#check HodgeConjecture.SingularCochains.globalCochainsToSheaf_surjective
+#check HodgeConjecture.SingularCochains.globalCochainsToSheaf_quasiIso
+#check HodgeConjecture.SingularCochains.globalCochainsToSheaf_homologyIso
+#check AlgebraicGeometry.Scheme.ComplexPoints.singularGlobalCochainsToSheaf_quasiIso
+#check HodgeConjecture.PolynomialComplexPoints.paracompactSpace
+#check HodgeConjecture.ProjectiveLineComplexPoints.canonicalParacompactSpace
+
+-- Actual open restriction and native flasqueness of the existing singular sheaves.
+#check HodgeConjecture.SheafCohomology.sheafifyOpenIso
+#check HodgeConjecture.SheafCohomology.toSheafify_sheafifyOpenIso
+#check HodgeConjecture.SingularCochains.openPresheafIso
+#check HodgeConjecture.SingularCochains.toSheafify_open_surjective
+#check HodgeConjecture.SingularCochains.exists_global_cochain_open_lift
+#check HodgeConjecture.SingularCochains.cochainSheaf_restriction_surjective
+#check HodgeConjecture.SingularCochains.cochainSheaf_isFlasque
+#check AlgebraicGeometry.Scheme.ComplexPoints.singularCochainSheaf_isFlasque
+
+-- Actual positive derived sections of the existing flasque sheaf terms.
+#check HodgeConjecture.BoundedBelowDerived.rightDerivedPostcomposeIso
+#check HodgeConjecture.SheafCohomology.LinearCoefficients.cohomologyForgetIso
+#check HodgeConjecture.SheafCohomology.LinearCoefficients.isZero_cohomology_of_isFlasque
+#check HodgeConjecture.SheafCohomology.LinearCoefficients.isZero_rightDerived_globalSections_of_isFlasque
+#check HodgeConjecture.SingularCochains.isZero_cochainSheaf_cohomology
+#check HodgeConjecture.SingularCochains.isZero_cochainSheaf_derivedGlobalSections
+#check AlgebraicGeometry.Scheme.ComplexPoints.singularCochainSheaf_cohomology_isZero
+#check AlgebraicGeometry.Scheme.ComplexPoints.singularCochainSheaf_derivedGlobalSections_isZero
+
+-- The original whole-complex comparison, with its actual homology maps.
+#check HodgeConjecture.SheafCohomology.FlasqueComplex.sections_acyclic
+#check HodgeConjecture.SheafHypercohomology.isIso_comparison_of_flasqueTerms
+#check HodgeConjecture.SheafHypercohomology.comparison_isIso_of_flasqueTerms
+#check HodgeConjecture.SheafHypercohomology.complexHomologyIsoHypercohomology
+#check HodgeConjecture.SingularCochains.derivedComparison_isIso
+#check HodgeConjecture.SingularCochains.sheafSectionsHomologyIsoHypercohomology
+#check AlgebraicGeometry.Scheme.ComplexPoints.singularSheafDerivedComparison_isIso
+#check AlgebraicGeometry.Scheme.ComplexPoints.singularSheafSectionsHomologyIsoHypercohomology
+
+-- Original rational singular groups and actual derived sections of the original constant sheaf.
+#check HodgeConjecture.SheafHypercohomology.nonnegativeSectionsHomologyIso
+#check HodgeConjecture.SheafHypercohomology.hypercohomologyIsoOfQuasiIso
+#check HodgeConjecture.SingularCochains.cohomologyToConstantSheafDerived
+#check HodgeConjecture.SingularCochains.cohomologyIsoConstantSheafDerived
+#check HodgeConjecture.SingularCochains.cohomologyToConstantSheafDerived_resolution
+#check HodgeConjecture.SingularCochains.cohomologyToConstantSheafDerived_eq_zero_iff
+#check AlgebraicGeometry.Scheme.ComplexPoints.singularCohomologyToConstantSheafDerived_isIso
+#check AlgebraicGeometry.Scheme.ComplexPoints.singularCohomologyIsoConstantSheafDerived
+
+-- Complex coefficient comparison to the original intrinsic holomorphic derived target.
+#check HodgeConjecture.SheafCohomology.ScalarRestriction.cohomologyIso
+#check HodgeConjecture.SheafCohomology.ScalarRestriction.constantCohomologyMap
+#check HodgeConjecture.HolomorphicAtlas.constantSheafDerivedIso
+#check HodgeConjecture.AnalyticBettiComparison.complexComparison
+#check HodgeConjecture.AnalyticBettiComparison.rationalComparison_mono
+#check HodgeConjecture.AnalyticBettiComparison.complexComparison_embedding_eq_zero_iff
+#check AlgebraicGeometry.Scheme.ComplexPoints.holomorphicBettiComparison
+#check AlgebraicGeometry.Scheme.ComplexPoints.holomorphicBettiComparison_embedding_eq_zero_iff
+
+-- Actual cochain coefficient change, finite only at the cohomology being compared.
+#check HodgeConjecture.HomCoefficients.complexComparison_quasiIsoAt
+#check HodgeConjecture.HomCoefficients.cohomologyIso
+#check HodgeConjecture.SingularCoefficientChange.complexCoordinates
+#check HodgeConjecture.SingularCoefficientChange.cochainComparison_apply
+#check HodgeConjecture.SingularCoefficientChange.cohomologyComparison_induced
+#check HodgeConjecture.SingularCoefficientChange.finiteHomology_of_finiteCohomology
+#check HodgeConjecture.SingularCoefficientChange.cohomologyComparison_isIso
+#check HodgeConjecture.SingularCoefficientChange.cohomologyIso
+
+-- Original coefficient map and its strict rational-to-complex sheaf squares.
+#check HodgeConjecture.SingularCoefficientChange.coefficientMap_coordinates
+#check HodgeConjecture.SingularCoefficientChange.comparison_coefficient
+#check HodgeConjecture.SingularCoefficientChange.globalUnit_coefficient_complex
+#check HodgeConjecture.SingularCoefficientChange.globalUnit_coefficient_homology
+#check HodgeConjecture.SingularCoefficientChange.coefficientCohomologyMap
+#check HodgeConjecture.SingularCoefficientChange.coefficientMap_factor
+#check HodgeConjecture.SingularCoefficientChange.coefficientCohomologyMap_sections
+#check HodgeConjecture.SingularCoefficientChange.restrictedHypercohomologyIso
+
+-- Unrestricted complex singular cochains and the native derived constant sheaf.
+#check HodgeConjecture.ComplexCoverSmallCochains.restriction_quasiIso
+#check HodgeConjecture.SingularCoefficientChange.sheafificationKernel_acyclic
+#check HodgeConjecture.SingularCoefficientChange.globalCochainsToSheaf_quasiIso
+#check HodgeConjecture.SingularCoefficientChange.cochainSheaf_isFlasque_of_locallyCompact_secondCountable
+#check HodgeConjecture.SingularCoefficientChange.cohomologyToConstantSheafDerived
+#check HodgeConjecture.SingularCoefficientChange.cohomologyToConstantSheafDerived_isIso
+#check HodgeConjecture.SingularCoefficientChange.cohomologyToConstantSheafDerived_resolution
+#check HodgeConjecture.AnalyticBettiComparison.complexSingularToHolomorphic_isIso
+#check HodgeConjecture.AnalyticBettiComparison.cochainHolomorphicComparison_isIso
+#check HodgeConjecture.ProjectiveLineHolomorphicComparisonIso.holomorphicBettiComparison_isIso
+#check HodgeConjecture.ProjectiveLineHolomorphicComparisonIso.comparisonEquiv
+
+-- Naturality stages toward the exact holomorphic comparison square.
+#check HodgeConjecture.BoundedBelowDerived.rightDerivedPostcomposeIso_hom_naturality
+#check HodgeConjecture.SheafHypercohomology.nonnegativeSectionsHomologyIso_hom_naturality
+#check HodgeConjecture.SheafHypercohomology.comparisonFromComplexHomology_naturality
+#check HodgeConjecture.SheafHypercohomology.complexHomologyIsoHypercohomology_inv_naturality

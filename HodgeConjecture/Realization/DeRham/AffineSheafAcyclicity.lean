@@ -3,8 +3,9 @@ module
 public import HodgeConjecture.SheafCohomology.LocalAffineCoefficients
 public import HodgeConjecture.SheafCohomology.StructureModule
 public import HodgeConjecture.SheafCohomology.LinearCoefficients
+public import HodgeConjecture.SheafCohomology.FlasqueDerived
 public import HodgeConjecture.SheafCohomology.TwoOpenModules
-public import HodgeConjecture.Realization.DeRham.SheafHypercohomology
+public import HodgeConjecture.Realization.DeRham.SheafComplex
 
 @[expose] public section
 
@@ -34,8 +35,8 @@ def underlyingAbelian : TopCat.Sheaf (ModuleCat.{u} k) X ⥤
     Sheaf (Opens.grothendieckTopology X) AddCommGrpCat.{u} :=
   LinearCoefficients.underlying k X
 
-instance : (underlyingAbelian k X).Additive where
-  map_add := by intros; rfl
+instance : (underlyingAbelian k X).Additive :=
+  inferInstanceAs (LinearCoefficients.underlying k X).Additive
 
 instance : PreservesLimits (underlyingAbelian k X) :=
   inferInstanceAs (PreservesLimits (LinearCoefficients.underlying k X))
@@ -54,9 +55,7 @@ def moduleCohomologyForgetIso (M : TopCat.Sheaf (ModuleCat.{u} k) X)
     (forget₂ (ModuleCat.{u} k) AddCommGrpCat.{u}).obj
         (TwoOpenModules.Hobj k (𝟭 _) U n M) ≅
       Cohomology.Basis.Hobj (underlyingAbelian k X) U n M :=
-  BoundedBelowDerived.rightDerivedPostcomposeIso
-    (TwoOpenModules.secFunctor k (𝟭 _) U)
-    (forget₂ (ModuleCat.{u} k) AddCommGrpCat.{u}) M n
+  LinearCoefficients.cohomologyForgetIso k X M U n
 
 /-- Local regular-function coordinates imply actual affine cohomology vanishing. -/
 theorem isZero_moduleCohomology_of_localFunctions

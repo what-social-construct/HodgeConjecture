@@ -1,6 +1,6 @@
 module
 
-public import HodgeConjecture.Boundary.ProjectorClosureDefect
+public import HodgeConjecture.Boundary.FilteredProjectorDefect
 public import HodgeConjecture.Cycles.ChowLocalization
 
 @[expose] public section
@@ -140,6 +140,23 @@ theorem exists_boundary_of_convolutionDefect {e : U}
     [ChowLocalizationHypotheses i P.restriction.toLinearMap] (x : P.Closure) :
     ∃ b : B, i b = P.convolutionDefect x :=
   convolutionDefect_mem_range i P x
+
+/-- The entire constructed cyclic detector, not only its generator, lies
+in the same additive boundary image. Exactness does not make it zero. -/
+theorem defectModule_embedding_mem_range {e : U}
+    (i : B →ₗ[ℚ] C) (P : AlgebraProjectorClosure.{w, v, t} U C e)
+    [ChowLocalizationHypotheses i P.restriction.toLinearMap] (x : P.Closure)
+    (z : P.DefectModule x) : P.defectEmbedding x z ∈ LinearMap.range i := by
+  rw [ChowLocalizationHypotheses.range_eq_ker (i := i) (r := P.restriction.toLinearMap)]
+  exact P.restriction_defectEmbedding x z
+
+/-- Every finite filtration stage has its actual image in the boundary image. -/
+theorem defectFiltration_map_le_range {e : U}
+    (i : B →ₗ[ℚ] C) (P : AlgebraProjectorClosure.{w, v, t} U C e)
+    [ChowLocalizationHypotheses i P.restriction.toLinearMap] (x : P.Closure) (n : ℕ) :
+    (P.defectFiltration x n).map (P.defectEmbedding x) ≤ LinearMap.range i := by
+  rintro _ ⟨z, _, rfl⟩
+  exact defectModule_embedding_mem_range i P x z
 
 end Algebra
 

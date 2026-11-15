@@ -32,7 +32,8 @@ namespace HodgeConjecture.SheafCohomology.LinearCoefficients
 variable (k : Type u) [CommRing k] (X : TopCat.{u})
 
 /-- The actual underlying abelian sheaf, retaining all sections and restrictions. -/
-def underlying : TopCat.Sheaf (ModuleCat.{u} k) X ⥤ TopCat.Sheaf AddCommGrpCat.{u} X :=
+def underlying : TopCat.Sheaf (ModuleCat.{u} k) X ⥤
+    Sheaf (Opens.grothendieckTopology X) AddCommGrpCat.{u} :=
   sheafCompose (Opens.grothendieckTopology X) (forget₂ (ModuleCat.{u} k) AddCommGrpCat.{u})
 
 instance : (underlying k X).Additive where
@@ -65,7 +66,7 @@ instance : PreservesFiniteColimits (underlying k X) := by
 
 /-- Underlying abelian sheaves of injective fixed-ring sheaves are flasque. -/
 instance underlying_isFlasque (I : TopCat.Sheaf (ModuleCat.{u} k) X) [Injective I] :
-    ((underlying k X).obj I).IsFlasque where
+    TopCat.Sheaf.IsFlasque (X := X) ((underlying k X).obj I) where
   epi {U V} i := by
     rw [AddCommGrpCat.epi_iff_surjective]
     exact Cohomology.LinearRestriction.injective_linear_restriction_surjective

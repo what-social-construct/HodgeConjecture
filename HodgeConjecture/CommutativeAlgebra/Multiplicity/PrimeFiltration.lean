@@ -220,7 +220,7 @@ variable {R : Type*} [CommRing R]
 
 /-- The localization of `R ⧸ 𝔭` at `𝔭` is the residue field of `R_𝔭`, in particular a simple
 `R_𝔭`-module. -/
-private theorem isSimpleModule_localizedModule_quotient (q : Ideal R) [q.IsPrime] :
+public theorem isSimpleModule_localizedModule_quotient (q : Ideal R) [q.IsPrime] :
     IsSimpleModule (Localization.AtPrime q) (LocalizedModule q.primeCompl (R ⧸ q)) := by
   have e := IsLocalizedModule.linearEquiv q.primeCompl
     (LocalizedModule.mkLinearMap q.primeCompl (R ⧸ q))

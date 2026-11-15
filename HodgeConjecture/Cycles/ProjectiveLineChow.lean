@@ -3,6 +3,7 @@ module
 public import HodgeConjecture.Cycles.ProjectiveLinePrincipalDegreeZero
 public import HodgeConjecture.Cycles.ProjectiveLineCycleDegree
 public import HodgeConjecture.Cycles.RationalChow
+public import HodgeConjecture.Geometry.ProjectiveLinePoints
 
 @[expose] public section
 
@@ -15,6 +16,10 @@ to the whole integral curve, and the actual projective-line principal
 divisor degree theorem supplies the vanishing. Integral and rational
 degree therefore descend to the existing Chow quotients, with the original
 homogeneous point cycles retaining degree one.
+
+The integral and rational infinity classes are defined here on those same
+quotients, with their degree-one normalization. Betti and de Rham
+realizations share these source classes.
 -/
 
 set_option autoImplicit false
@@ -89,6 +94,37 @@ theorem rationalChowDegree_chowRationalize (z : ChowGroup (dimensionFunction k) 
   obtain ⟨c, rfl⟩ := classMap_surjective (dimensionFunction k) 0 z
   rw [chowRationalize_classMap, rationalChowDegree_classMap,
     integralChowDegree_classMap, rationalDegree_rationalize]
+
+namespace Infinity
+
+omit [IsAlgClosed k] in
+/-- Infinity is an actual closed point rather than the ambient generic point. -/
+theorem ne_genericPoint :
+    projectiveLineInfinity k ≠ genericPoint (projectiveLine k) := by
+  intro h
+  apply projectiveLineInfinity_notMem_range_XChart k
+  rw [h]
+  exact ⟨genericPoint (Spec (.of (Polynomial k))), projectiveLineXChart_genericPoint_eq (k := k)⟩
+
+/-- The integral Chow class of the actual reduced infinity point. -/
+def integralClass : ChowGroup (dimensionFunction k) 0 :=
+  classMap (dimensionFunction k) 0 (pointCycle k ℤ (projectiveLineInfinity k)
+    (ne_genericPoint k))
+
+/-- The rational Chow class of the same reduced infinity point. -/
+def rationalClass : RationalChowGroup (dimensionFunction k) 0 :=
+  rationalClassMap (dimensionFunction k) 0 (pointCycle k ℚ (projectiveLineInfinity k)
+    (ne_genericPoint k))
+
+@[simp]
+theorem integralChowDegree_eq_one : integralChowDegree k (integralClass k) = 1 :=
+  integralChowDegree_pointCycle k _ _
+
+@[simp]
+theorem rationalChowDegree_eq_one : rationalChowDegree k (rationalClass k) = 1 :=
+  rationalChowDegree_pointCycle k _ _
+
+end Infinity
 
 end
 

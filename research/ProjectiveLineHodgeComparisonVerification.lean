@@ -55,6 +55,14 @@ example (p : ℤ) : IsCompl (geometricFiltration p)
 example : rationalHodgeClasses = ProjectiveLineHodgeStructure.rationalHodgeClasses :=
   rationalHodgeClasses_eq_candidate
 
+example : rationalHodgeClasses =
+    PureRationalHodgeStructure.rationalHodgeClasses 1 pureHodgeStructure :=
+  rationalHodgeClasses_eq_pureStructure
+
+example (z : Betti) : z ∈ rationalHodgeClasses ↔
+    RationalComplexification.embedding Betti z ∈ pureHodgeStructure.piece 1 1 :=
+  PureRationalHodgeStructure.mem_rationalHodgeClasses 1 pureHodgeStructure z
+
 example (z : Betti) : z ∈ rationalHodgeClasses ↔
     rationalEmbedding z ∈ geometricHodgePiece 1 1 := mem_rationalHodgeClasses z
 
@@ -137,6 +145,10 @@ run_cmd do
       `HodgeConjecture.ProjectiveLineHodgeComparison.geometricHodgePiece_one_one,
       `HodgeConjecture.ProjectiveLineHodgeComparison.geometricHodgePiece_eq_bot,
       `HodgeConjecture.ProjectiveLineHodgeComparison.rationalHodgeClasses,
+      `HodgeConjecture.ProjectiveLineHodgeStructure.pureHodgeStructure,
+      `HodgeConjecture.ProjectiveLineHodgeComparison.pureHodgeStructure,
+      `HodgeConjecture.ProjectiveLineHodgeComparison.rationalHodgeClasses_eq_pureStructure,
+      `HodgeConjecture.ProjectiveLineHodgeComparison.rationalHodgeClasses_eq_schemeTarget,
       `HodgeConjecture.ProjectiveLineHodgeComparison.mem_rationalHodgeClasses,
       `HodgeConjecture.ProjectiveLineHodgeComparison.rationalHodgeClasses_eq_candidate,
       `HodgeConjecture.ProjectiveLineHodgeComparison.all_rational_hodge,

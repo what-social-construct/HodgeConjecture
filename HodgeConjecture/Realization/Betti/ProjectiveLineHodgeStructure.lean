@@ -47,12 +47,14 @@ theorem finrank_complexification : Module.finrank ℂ Complexification = 1 := by
 
 /-- Conjugation coming from the original rational tensor factor. -/
 def conjugation (z : Complexification) : Complexification :=
-  coordinates.symm (conj (coordinates z))
+  RationalComplexification.conjugation Betti z
 
 @[simp]
 theorem coordinates_conjugation (z : Complexification) :
     coordinates (conjugation z) = conj (coordinates z) := by
-  simp [conjugation]
+  induction z using TensorProduct.inductionOn with
+  | tmul c x => simp [conjugation, coordinates_tmul]
+  | add x y hx hy => simp [conjugation, map_add] at hx hy ⊢; rw [hx, hy]
 
 @[simp]
 theorem conjugation_zero : conjugation 0 = 0 := by
@@ -97,19 +99,8 @@ theorem conjugation_rationalEmbedding (z : Betti) :
   simp
 
 /-- The conjugate subspace, expressed by the canonical involution's inverse image. -/
-def conjugateSubmodule (W : Submodule ℂ Complexification) : Submodule ℂ Complexification where
-  carrier := {z | conjugation z ∈ W}
-  zero_mem' := by change conjugation 0 ∈ W; rw [conjugation_zero]; exact W.zero_mem
-  add_mem' := by
-    intro z w hz hw
-    change conjugation (z + w) ∈ W
-    rw [conjugation_add]
-    exact W.add_mem hz hw
-  smul_mem' := by
-    intro c z hz
-    change conjugation (c • z) ∈ W
-    rw [conjugation_smul]
-    exact W.smul_mem (conj c) hz
+def conjugateSubmodule (W : Submodule ℂ Complexification) : Submodule ℂ Complexification :=
+  RationalComplexification.conjugateSubmodule Betti W
 
 @[simp]
 theorem mem_conjugateSubmodule (W : Submodule ℂ Complexification) (z : Complexification) :
@@ -251,6 +242,15 @@ theorem filtration_opposed (p : ℤ) :
     exact isCompl_top_bot
   · rw [filtration_eq_bot p (by omega), filtration_eq_top (3 - p) (by omega), conjugateSubmodule_top]
     exact isCompl_bot_top
+
+/-- The independent Betti filtration is a genuine pure rational weight-two structure. -/
+def pureHodgeStructure : PureRationalHodgeStructure Betti 2 where
+  finiteDimensional := inferInstance
+  filtration := filtration
+  antitone := filtration_antitone
+  exhaustive := ⟨1, filtration_one⟩
+  separated := ⟨2, filtration_two⟩
+  opposed := filtration_opposed
 
 /-- Rational classes are Hodge when their original tensor image lies in type (1,1). -/
 def rationalHodgeClasses : Submodule ℚ Betti :=

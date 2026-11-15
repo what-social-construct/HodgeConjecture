@@ -11,6 +11,7 @@ public import Mathlib.Algebra.Module.LocalizedModule.AtPrime
 public import Mathlib.RingTheory.KrullDimension.Module
 public import Mathlib.RingTheory.Length
 public import Mathlib.RingTheory.OrderOfVanishing.Basic
+public import HodgeConjecture.CommutativeAlgebra.Multiplicity.PrimeFiltration
 public import HodgeConjecture.CommutativeAlgebra.Multiplicity.SupportLength
 
 /-!
@@ -96,33 +97,13 @@ private lemma localized_length_eq_zero_of_not_mem_support
     Module.notMem_support_iff.mp hq
   exact Module.length_eq_zero
 
-/-- The localization of `R ⧸ q` at the prime `q` is a simple module. -/
-private theorem isSimpleModule_localizedModule_quotient
-    {R : Type*} [CommRing R] (q : Ideal R) [q.IsPrime] :
-    IsSimpleModule (Localization.AtPrime q) (LocalizedModule q.primeCompl (R ⧸ q)) := by
-  have e := IsLocalizedModule.linearEquiv q.primeCompl
-    (LocalizedModule.mkLinearMap q.primeCompl (R ⧸ q))
-    (Submodule.toLocalizedQuotient' (Localization.AtPrime q) q.primeCompl
-      (Algebra.linearMap R (Localization.AtPrime q)) q)
-  have hmax : Submodule.localized' (Localization.AtPrime q) q.primeCompl
-      (Algebra.linearMap R (Localization.AtPrime q)) q
-      = IsLocalRing.maximalIdeal (Localization.AtPrime q) := by
-    rw [Ideal.localized'_eq_map, IsLocalization.AtPrime.map_eq_maximalIdeal]
-  have hsimple : IsSimpleModule (Localization.AtPrime q)
-      (Localization.AtPrime q ⧸ IsLocalRing.maximalIdeal (Localization.AtPrime q)) :=
-    isSimpleModule_iff_quot_maximal.mpr
-      ⟨_, IsLocalRing.maximalIdeal.isMaximal _, ⟨LinearEquiv.refl _ _⟩⟩
-  exact IsSimpleModule.congr
-    ((LinearEquiv.extendScalarsOfIsLocalization q.primeCompl (Localization.AtPrime q) e).trans
-      (Submodule.quotEquivOfEq _ _ hmax))
-
 /-- The localization of `R ⧸ q` at the point `q` has length one. -/
 public lemma localized_length_quotientPrime_eq_one
     {R : Type*} [CommRing R] (q : PrimeSpectrum R) :
     Module.length (Localization.AtPrime q.asIdeal)
       (LocalizedModule q.asIdeal.primeCompl (R ⧸ q.asIdeal)) = 1 := by
   let : q.asIdeal.IsPrime := q.isPrime
-  have := isSimpleModule_localizedModule_quotient q.asIdeal
+  have := Stacks.Length.PrimeFiltration.isSimpleModule_localizedModule_quotient q.asIdeal
   exact Module.length_eq_one _ _
 
 /-- At a nonclosed point, a finite module whose support has dimension at most one localizes

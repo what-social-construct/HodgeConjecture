@@ -6,7 +6,6 @@ public import Mathlib.Algebra.Algebra.Bilinear
 public import Mathlib.Algebra.Algebra.Pi
 public import Mathlib.Algebra.Algebra.Rat
 public import Mathlib.LinearAlgebra.Pi
-public import Mathlib.Tactic.Ring
 
 @[expose] public section
 
@@ -125,48 +124,11 @@ theorem residualClass_coe :
 /--
 Evaluation at the marked sheet, together with the constant section, splits
 the sheet-function module into the marked line and the residual kernel.
+This is the generic marked-augmentation splitting specialized to sheets.
 -/
 def decomposition :
-    GenericSheetAlgebra ℚ H ≃ₗ[ℚ] ℚ × Residual H where
-  toFun f :=
-    (f (baseSheet H),
-      ⟨f - f (baseSheet H) • 1, by
-        simp⟩)
-  invFun tx := tx.1 • 1 + tx.2
-  left_inv f := by
-    ext s
-    simp
-  right_inv tx := by
-    rcases tx with ⟨t, x⟩
-    have hx := x.property
-    change (x : GenericSheetAlgebra ℚ H) (baseSheet H) = 0 at hx
-    apply Prod.ext
-    · simp [hx]
-    · apply Subtype.ext
-      ext s
-      simp [hx]
-  map_add' f g := by
-    apply Prod.ext
-    · simp
-    · apply Subtype.ext
-      change
-        f + g - (f + g) (baseSheet H) • 1 =
-          (f - f (baseSheet H) • 1) +
-            (g - g (baseSheet H) • 1)
-      ext s
-      simp only [Pi.add_apply, Pi.sub_apply, Pi.smul_apply, Pi.one_apply,
-        smul_eq_mul]
-      ring
-  map_smul' t f := by
-    apply Prod.ext
-    · simp
-    · apply Subtype.ext
-      change
-        t • f - (t • f) (baseSheet H) • 1 =
-          t • (f - f (baseSheet H) • 1)
-      ext s
-      simp only [Pi.smul_apply, Pi.sub_apply, Pi.one_apply, smul_eq_mul]
-      ring
+    GenericSheetAlgebra ℚ H ≃ₗ[ℚ] ℚ × Residual H :=
+  (markedAugmentedAlgebra H).decomposition
 
 @[simp]
 theorem decomposition_apply_fst
@@ -198,47 +160,11 @@ the selector is diagonal.
 /--
 The selector-marked splitting.  Its first summand is the image of
 multiplication by the base-sheet selector.
+This specializes the generic selector-coordinate splitting.
 -/
 def selectorDecomposition :
-    GenericSheetAlgebra ℚ H ≃ₗ[ℚ] ℚ × Residual H where
-  toFun f :=
-    (f (baseSheet H),
-      ⟨f - f (baseSheet H) • selector H, by
-        simp⟩)
-  invFun tx := tx.1 • selector H + tx.2
-  left_inv f := by
-    ext s
-    simp
-  right_inv tx := by
-    rcases tx with ⟨t, x⟩
-    have hx := x.property
-    change (x : GenericSheetAlgebra ℚ H) (baseSheet H) = 0 at hx
-    apply Prod.ext
-    · simp [hx]
-    · apply Subtype.ext
-      ext s
-      simp [hx]
-  map_add' f g := by
-    apply Prod.ext
-    · simp
-    · apply Subtype.ext
-      change
-        f + g - (f + g) (baseSheet H) • selector H =
-          (f - f (baseSheet H) • selector H) +
-            (g - g (baseSheet H) • selector H)
-      ext s
-      simp only [Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul]
-      ring
-  map_smul' t f := by
-    apply Prod.ext
-    · simp
-    · apply Subtype.ext
-      change
-        t • f - (t • f) (baseSheet H) • selector H =
-          t • (f - f (baseSheet H) • selector H)
-      ext s
-      simp only [Pi.smul_apply, Pi.sub_apply, smul_eq_mul]
-      ring
+    GenericSheetAlgebra ℚ H ≃ₗ[ℚ] ℚ × Residual H :=
+  (markedAugmentedAlgebra H).selectorDecomposition
 
 @[simp]
 theorem selectorDecomposition_apply_fst
@@ -303,16 +229,12 @@ theorem markedAugmentedAlgebra_residualClass :
   rfl
 
 theorem markedAugmentedAlgebra_decomposition :
-    (markedAugmentedAlgebra H).decomposition = decomposition H := by
-  apply LinearEquiv.ext
-  intro f
+    (markedAugmentedAlgebra H).decomposition = decomposition H :=
   rfl
 
 theorem markedAugmentedAlgebra_selectorDecomposition :
     (markedAugmentedAlgebra H).selectorDecomposition =
-      selectorDecomposition H := by
-  apply LinearEquiv.ext
-  intro f
+      selectorDecomposition H :=
   rfl
 
 @[simp]

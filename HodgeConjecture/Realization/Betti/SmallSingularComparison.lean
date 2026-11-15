@@ -1,6 +1,6 @@
 module
 
-public import HodgeConjecture.Realization.Betti.ChainHomologyClasses
+public import HodgeConjecture.Realization.Betti.CoverSmallChains
 public import HodgeConjecture.Realization.Betti.SmallSingularSubdivisionHomotopy
 
 @[expose] public section
@@ -15,6 +15,7 @@ induces an isomorphism in every degree of rational singular homology.
 -/
 
 set_option autoImplicit false
+set_option backward.defeqAttrib.useBackward true
 
 noncomputable section
 
@@ -27,16 +28,18 @@ open SingularSubdivision SingularSubdivisionSmallness SingularSubcomplexes
 theorem inclusion_quasiIso (X : TopCat.{0}) (U V : Set X)
     (hU : IsOpen U) (hV : IsOpen V) (hcover : U ∪ V = Set.univ) :
     QuasiIso (smallInclusion X U V) := by
-  apply ChainHomologyClasses.quasiIso_of_eventual_image (smallInclusion X U V)
-    (fun n ↦ SubcomplexChainCoordinates.inclusion_injective (smallSingular X U V) n)
-    (smallSubdivisionPower X U V) (subdivisionPower X)
-    (homologyMap_smallSubdivision_pow X U V) (homologyMap_subdivision_pow X)
-    (fun k ↦ (smallSubdivisionPower_inclusion X U V k).symm)
-  intro n c
-  obtain ⟨k, hk⟩ := exists_iteration_small X U V hU hV hcover n c
-  rw [smallChains_eq_chainSubmodule, ← SubcomplexChainCoordinates.range_inclusion] at hk
-  obtain ⟨a, ha⟩ := hk
-  exact ⟨k, a, ha.trans (subdivisionPower_apply X k n c).symm⟩
+  have hW : ∀ b : Bool, IsOpen (if b then V else U) := by
+    intro b; cases b <;> assumption
+  have hcoverW : (⋃ b : Bool, if b then V else U) = Set.univ := by
+    have h : (⋃ b : Bool, if b then V else U) = U ∪ V := by
+      ext p
+      simp only [Set.mem_iUnion, Bool.exists_bool, Bool.false_eq_true, ite_false,
+        ite_true, Set.mem_union]
+    exact h.trans hcover
+  change QuasiIso (SubcomplexChainCoordinates.inclusion (smallSingular X U V))
+  rw [← coverSingular_bool X U V]
+  exact CoverSmallChains.inclusion_quasiIso X (fun b : Bool ↦ if b then V else U) hW hcoverW
+
 
 /-- The original native homology map of the inclusion is an isomorphism in every degree. -/
 theorem isIso_homologyMap_inclusion (X : TopCat.{0}) (U V : Set X)

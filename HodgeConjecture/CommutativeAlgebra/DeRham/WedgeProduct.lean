@@ -194,49 +194,6 @@ end exteriorPower
 
 namespace KaehlerDifferential
 
-section Generators
-
-variable {A B : Type*} [CommRing A] [CommRing B] [Algebra A B]
-
-/-- The wedges `d b₁ ∧ ⋯ ∧ d b_p` of differentials of elements of `B` span `Ω^p_{B/A}` over `B`:
-they are the wedges of the `B`-spanning set `Set.range (D A B)` of `Ω[B⁄A]`. -/
-private lemma span_range_ιMulti_D_eq_top (p : ℕ) :
-    Submodule.span B (Set.range fun c : Fin p → B ↦
-      exteriorPower.ιMulti B p fun i ↦ D A B (c i)) = ⊤ := by
-  have himg : exteriorPower.ιMulti B p ''
-        {a : Fin p → Ω[B⁄A] | Set.range a ⊆ Set.range (D A B)} =
-      Set.range fun c : Fin p → B ↦ exteriorPower.ιMulti B p fun i ↦ D A B (c i) := by
-    refine Set.Subset.antisymm ?_ ?_
-    · rintro _ ⟨a, ha, rfl⟩
-      choose c hc using fun i ↦ ha (Set.mem_range_self i)
-      exact ⟨c, congrArg _ (funext hc)⟩
-    · rintro _ ⟨c, rfl⟩
-      exact ⟨_, Set.range_subset_iff.2 fun i ↦ ⟨c i, rfl⟩, rfl⟩
-  rw [← himg, exteriorPower.ιMulti_span_of_span B p (Ω[B⁄A])
-    (KaehlerDifferential.span_range_derivation A B)]
-
-open Pointwise in
-/-- The elements `b₀ · d b₁ ∧ ⋯ ∧ d b_p` span `Ω^p_{B/A}` already as an `A`-module, not merely as
-a `B`-module: they are `B • {d b₁ ∧ ⋯ ∧ d b_p}`, and multiplying a `B`-spanning set by all of `B`
-produces an `A`-spanning set. -/
-private lemma span_range_smul_ιMulti_D_eq_top (p : ℕ) :
-    Submodule.span A (Set.range fun b : Fin (p + 1) → B ↦
-      b 0 • exteriorPower.ιMulti B p fun i ↦ D A B (b i.succ)) = ⊤ := by
-  have hset : (Set.univ : Set B) • (Set.range fun c : Fin p → B ↦
-        exteriorPower.ιMulti B p fun i ↦ D A B (c i)) =
-      Set.range fun b : Fin (p + 1) → B ↦
-        b 0 • exteriorPower.ιMulti B p fun i ↦ D A B (b i.succ) := by
-    refine Set.Subset.antisymm ?_ ?_
-    · rintro _ ⟨x, -, _, ⟨c, rfl⟩, rfl⟩
-      exact ⟨Fin.cons x c, by simp⟩
-    · rintro _ ⟨b, rfl⟩
-      exact Set.smul_mem_smul (Set.mem_univ _) ⟨fun i ↦ b i.succ, rfl⟩
-  rw [← hset, Submodule.span_smul_of_span_eq_top Submodule.span_univ,
-    span_range_ιMulti_D_eq_top, Submodule.restrictScalars_top]
-
-
-end Generators
-
 section Leibniz
 
 variable {A B : Type*} [CommRing A] [CommRing B] [Algebra A B]

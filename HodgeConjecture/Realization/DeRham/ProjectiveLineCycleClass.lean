@@ -36,31 +36,26 @@ variable (k : Type u) [Field k]
 
 /-- Infinity is an actual closed point rather than the ambient generic point. -/
 theorem infinity_ne_genericPoint :
-    projectiveLineInfinity k ≠ genericPoint (projectiveLine k) := by
-  intro h
-  apply projectiveLineInfinity_notMem_range_XChart k
-  rw [h]
-  exact ⟨genericPoint (Spec (.of (Polynomial k))), projectiveLineXChart_genericPoint_eq (k := k)⟩
+    projectiveLineInfinity k ≠ genericPoint (projectiveLine k) :=
+  ProjectiveLineCycles.Infinity.ne_genericPoint k
 
 variable [IsAlgClosed k]
 
-/-- The original integral Chow class of the actual reduced infinity point. -/
+/-- Compatibility name for the shared integral infinity Chow class. -/
 def integralInfinityClass : ChowGroup (dimensionFunction k) 0 :=
-  classMap (dimensionFunction k) 0 (pointCycle k ℤ (projectiveLineInfinity k)
-    (infinity_ne_genericPoint k))
+  ProjectiveLineCycles.Infinity.integralClass k
 
-/-- The original rational Chow class of the same point. -/
+/-- Compatibility name for the shared rational infinity Chow class. -/
 def rationalInfinityClass : RationalChowGroup (dimensionFunction k) 0 :=
-  rationalClassMap (dimensionFunction k) 0 (pointCycle k ℚ (projectiveLineInfinity k)
-    (infinity_ne_genericPoint k))
+  ProjectiveLineCycles.Infinity.rationalClass k
 
 @[simp]
 theorem integralChowDegree_infinity : integralChowDegree k (integralInfinityClass k) = 1 :=
-  integralChowDegree_pointCycle k _ _
+  ProjectiveLineCycles.Infinity.integralChowDegree_eq_one k
 
 @[simp]
 theorem rationalChowDegree_infinity : rationalChowDegree k (rationalInfinityClass k) = 1 :=
-  rationalChowDegree_pointCycle k _ _
+  ProjectiveLineCycles.Infinity.rationalChowDegree_eq_one k
 
 /-- Integral ordinary cycle classes, constructed from the proved degree and actual first Chern class. -/
 def integralCycleClass : ChowGroup (dimensionFunction k) 0 →+ CechH2 k where

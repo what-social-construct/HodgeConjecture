@@ -1,5 +1,6 @@
 module
 
+public import HodgeConjecture.Realization.Betti.SimplicialCochains
 public import HodgeConjecture.Realization.Betti.SingularCochains
 public import Mathlib.AlgebraicTopology.SimplicialSet.Subcomplex
 public import Mathlib.Algebra.Homology.HomologicalComplexAbelian
@@ -10,8 +11,8 @@ public import Mathlib.Algebra.Homology.HomologySequence
 /-!
 # Cochains on a union of actual simplicial subcomplexes
 
-Rational functions on a simplicial set form its actual alternating coface
-complex. For two subcomplexes, restriction and restriction difference give
+The shared `SimplicialCochains` construction forms the actual alternating
+coface complex. For two subcomplexes, restriction and restriction difference give
 a short exact sequence of cochain complexes on their union, the two pieces
 and their intersection. Its connecting morphism and long exact sequence
 are therefore constructed without an excision hypothesis.
@@ -34,36 +35,32 @@ open CategoryTheory Simplicial Opposite
 universe u
 
 /-- Rational functions on the actual simplices in degree `n`. -/
-abbrev Cochain (S : SSet.{u}) (n : ℕ) := S.obj (op ⦋n⦌) → ℚ
+abbrev Cochain (S : SSet.{u}) (n : ℕ) := SimplicialCochains.Cochain S n
 
 /-- Actual rational cochains on an arbitrary simplicial set. -/
 def cosimplicial (S : SSet.{u}) : CosimplicialObject (ModuleCat.{u} ℚ) :=
-  S.rightOp ⋙ SingularCochains.functionModule
+  SimplicialCochains.cosimplicial S
 
 /-- The alternating coface complex of actual rational functions. -/
 def complex (S : SSet.{u}) : CochainComplex (ModuleCat.{u} ℚ) ℕ :=
-  (AlgebraicTopology.alternatingCofaceMapComplex _).obj (cosimplicial S)
+  SimplicialCochains.complex S
 
 /-- The alternating differential as an actual linear map on functions. -/
 def differential (S : SSet.{u}) (n : ℕ) : Cochain S n →ₗ[ℚ] Cochain S (n + 1) :=
-  (AlgebraicTopology.AlternatingCofaceMapComplex.objD (cosimplicial S) n).hom
+  SimplicialCochains.differential S n
 
 @[simp]
 theorem complex_d (S : SSet.{u}) (n : ℕ) :
-    (complex S).d n (n + 1) = ModuleCat.ofHom (differential S n) := by
-  simp only [complex, AlgebraicTopology.alternatingCofaceMapComplex,
-    AlgebraicTopology.AlternatingCofaceMapComplex.obj, CochainComplex.of_d]
-  rfl
+    (complex S).d n (n + 1) = ModuleCat.ofHom (differential S n) :=
+  SimplicialCochains.complex_d S n
 
 theorem differential_squared (S : SSet.{u}) (n : ℕ) (φ : Cochain S n) :
     differential S (n + 1) (differential S n φ) = 0 :=
-  congrArg (fun f ↦ f.hom φ)
-    (AlgebraicTopology.AlternatingCofaceMapComplex.d_squared (cosimplicial S) n)
+  SimplicialCochains.differential_squared S n φ
 
 /-- Precomposition along an actual simplicial map. -/
 def pullback {S T : SSet.{u}} (f : S ⟶ T) : complex T ⟶ complex S :=
-  (AlgebraicTopology.alternatingCofaceMapComplex _).map
-    (Functor.whiskerRight f.rightOp SingularCochains.functionModule)
+  SimplicialCochains.pullback f
 
 @[simp]
 theorem pullback_apply {S T : SSet.{u}} (f : S ⟶ T) (n : ℕ)
@@ -72,14 +69,8 @@ theorem pullback_apply {S T : SSet.{u}} (f : S ⟶ T) (n : ℕ)
 
 @[simp]
 theorem pullback_comp {S T U : SSet.{u}} (f : S ⟶ T) (g : T ⟶ U) :
-    pullback (f ≫ g) = pullback g ≫ pullback f := by
-  apply HomologicalComplex.Hom.ext
-  funext n
-  apply ModuleCat.hom_ext
-  apply LinearMap.ext
-  intro φ
-  funext σ
-  rfl
+    pullback (f ≫ g) = pullback g ≫ pullback f :=
+  SimplicialCochains.pullback_comp f g
 
 /-- This construction specializes to the existing full singular cochain complex. -/
 def singularComplexIso (X : TopCat.{u}) :

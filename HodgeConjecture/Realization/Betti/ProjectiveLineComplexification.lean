@@ -1,6 +1,7 @@
 module
 
 public import HodgeConjecture.Realization.Betti.ProjectiveLineOrientation
+public import HodgeConjecture.Realization.HodgeFiltration
 public import Mathlib.LinearAlgebra.TensorProduct.Tower
 
 @[expose] public section
@@ -25,7 +26,7 @@ open TensorProduct ProjectiveLineBettiCohomology
 abbrev Betti := SingularCochains.Cohomology (TopCat.of ProjectiveLineComplexPoints.Point) 2
 
 /-- Scalar extension of the actual rational singular cohomology group. -/
-abbrev Complexification := ℂ ⊗[ℚ] Betti
+abbrev Complexification := RationalComplexification.Space Betti
 
 /-- Scalar extension of the proved rational cover coordinate. -/
 def coordinates : Complexification ≃ₗ[ℂ] ℂ :=
@@ -38,12 +39,12 @@ theorem coordinates_tmul (c : ℂ) (z : Betti) :
   rw [Algebra.smul_def, mul_comm, eq_ratCast]
 
 /-- The original rational class embeds as its pure tensor with one. -/
-def rationalEmbedding : Betti →ₗ[ℚ] Complexification := TensorProduct.mk ℚ ℂ Betti 1
+def rationalEmbedding : Betti →ₗ[ℚ] Complexification := RationalComplexification.embedding Betti
 
 @[simp]
 theorem coordinates_rationalEmbedding (z : Betti) :
     coordinates (rationalEmbedding z) = (h2Equiv z : ℂ) := by
-  simp [rationalEmbedding]
+  simp [rationalEmbedding, RationalComplexification.embedding]
 
 /-- The tensor coordinate extends actual positive boundary-loop evaluation. -/
 theorem coordinates_tmul_boundaryPairing (c : ℂ) (z : Betti) :
@@ -72,11 +73,8 @@ theorem complexBoundaryPairing_eq_coordinates :
   | tmul c z => rw [complexBoundaryPairing_tmul, coordinates_tmul_boundaryPairing]
   | add x y hx hy => simpa only [map_add] using congrArg₂ (· + ·) hx hy
 
-theorem rationalEmbedding_injective : Function.Injective rationalEmbedding := by
-  intro x y h
-  apply h2Equiv.injective
-  have hc := congrArg coordinates h
-  simpa using hc
+theorem rationalEmbedding_injective : Function.Injective rationalEmbedding :=
+  RationalComplexification.embedding_injective Betti
 
 @[simp]
 theorem coordinates_symm_apply (c : ℂ) : coordinates.symm c = c ⊗ₜ[ℚ] coverGenerator := by

@@ -55,6 +55,18 @@ theorem cohomology_eq_zero (X : Type) [TopologicalSpace X] [ContractibleSpace X]
     (n : ℕ) (hn : n ≠ 0) (z : SingularCochains.Cohomology (TopCat.of X) n) : z = 0 :=
   (ModuleCat.isZero_iff_subsingleton.mp (isZero_cohomology X n hn)).elim z 0
 
+/-- The established vanishing theorem supplies actual positive-degree primitives. -/
+theorem exists_primitive (X : Type) [TopologicalSpace X] [ContractibleSpace X]
+    (n : ℕ) (z : SingularCochains.Cochain (TopCat.of X) (n + 1))
+    (hz : SingularCochains.differential (TopCat.of X) (n + 1) z = 0) :
+    ∃ b : SingularCochains.Cochain (TopCat.of X) n,
+      SingularCochains.differential (TopCat.of X) n b = z := by
+  let a : SingularCochains.Cocycle (TopCat.of X) (n + 1) := ⟨z, hz⟩
+  have ha := (SingularCochains.cohomologyClass_eq_zero_iff (TopCat.of X) (n + 1) a).mp
+    (cohomology_eq_zero X (n + 1) (by omega) (SingularCochains.cohomologyClass _ _ a))
+  obtain ⟨b, hb⟩ := ha
+  exact ⟨b, congrArg Subtype.val hb⟩
+
 /-- Evaluation at an original point identifies H⁰ of a contractible space with the rationals. -/
 def cohomologyZeroEquiv (X : Type) [TopologicalSpace X] [ContractibleSpace X] (x : X) :
     SingularCochains.Cohomology (TopCat.of X) 0 ≃ₗ[ℚ] ℚ :=

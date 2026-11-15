@@ -16,6 +16,7 @@ intertwines with the original inclusion. No open-cover assumption is needed.
 -/
 
 set_option autoImplicit false
+set_option backward.defeqAttrib.useBackward true
 
 noncomputable section
 
@@ -37,32 +38,21 @@ def restrictSmallOperator (X : TopCat) (U V : Set X) (i j : ℕ)
     (f : (complex X).X i →ₗ[ℚ] (complex X).X j)
     (hf : ∀ c, c ∈ smallChains X U V i → f c ∈ smallChains X U V j) :
     (smallComplex X U V).X i →ₗ[ℚ] (smallComplex X U V).X j :=
-  (chainSubmoduleEquiv (smallSingular X U V) j).symm.toLinearMap.comp
-    ((f.comp ((smallInclusion X U V).f i).hom).codRestrict
-      (chainSubmodule (smallSingular X U V) j) (fun c ↦ by
-        rw [← smallChains_eq_chainSubmodule]
-        apply hf
-        rw [smallChains_eq_chainSubmodule, ← chainSubmoduleEquiv_coe]
-        exact (chainSubmoduleEquiv (smallSingular X U V) i c).property))
+  restrictOperator (smallSingular X U V) (smallSingular X U V) i j f hf
 
 theorem inclusion_restrictSmallOperator (X : TopCat) (U V : Set X) (i j : ℕ)
     (f : (complex X).X i →ₗ[ℚ] (complex X).X j)
     (hf : ∀ c, c ∈ smallChains X U V i → f c ∈ smallChains X U V j)
     (c : (smallComplex X U V).X i) :
     (smallInclusion X U V).f j (restrictSmallOperator X U V i j f hf c) =
-      f ((smallInclusion X U V).f i c) := by
-  rw [← chainSubmoduleEquiv_coe]
-  change ((chainSubmoduleEquiv (smallSingular X U V) j)
-    ((chainSubmoduleEquiv (smallSingular X U V) j).symm _) : (complex X).X j) = _
-  rw [LinearEquiv.apply_symm_apply]
-  rfl
+      f ((smallInclusion X U V).f i c) :=
+  inclusion_restrictOperator (smallSingular X U V) (smallSingular X U V) i j f hf c
 
 theorem smallInclusion_boundary (X : TopCat) (U V : Set X) (n : ℕ)
     (c : (smallComplex X U V).X (n + 1)) :
     (smallInclusion X U V).f n ((smallComplex X U V).d (n + 1) n c) =
       (complex X).d (n + 1) n ((smallInclusion X U V).f (n + 1) c) :=
-  (congrArg (fun f : (smallComplex X U V).X (n + 1) ⟶ (complex X).X n ↦ f c)
-    ((smallInclusion X U V).comm (n + 1) n)).symm
+  inclusion_d (smallSingular X U V) (n + 1) n c
 
 def smallSubdivisionComponent (X : TopCat) (U V : Set X) (n : ℕ) :
     (smallComplex X U V).X n →ₗ[ℚ] (smallComplex X U V).X n :=
@@ -76,25 +66,13 @@ theorem inclusion_smallSubdivisionComponent (X : TopCat) (U V : Set X) (n : ℕ)
   inclusion_restrictSmallOperator X U V n n _ _ c
 
 /-- The actual subdivision restricted to the original small-chain complex. -/
-def smallSubdivision (X : TopCat) (U V : Set X) : smallComplex X U V ⟶ smallComplex X U V where
-  f n := ModuleCat.ofHom (smallSubdivisionComponent X U V n)
-  comm' i j hij := by
-    obtain rfl : j + 1 = i := hij
-    apply ModuleCat.hom_ext
-    apply LinearMap.ext
-    intro c
-    apply inclusion_injective (smallSingular X U V) j
-    change (smallInclusion X U V).f j
-        ((smallComplex X U V).d (j + 1) j (smallSubdivisionComponent X U V (j + 1) c)) =
-      (smallInclusion X U V).f j
-        (smallSubdivisionComponent X U V j ((smallComplex X U V).d (j + 1) j c))
-    rw [smallInclusion_boundary, inclusion_smallSubdivisionComponent,
-      inclusion_smallSubdivisionComponent, smallInclusion_boundary, subdivisionComponent_boundary]
+def smallSubdivision (X : TopCat) (U V : Set X) : smallComplex X U V ⟶ smallComplex X U V :=
+  restrictMap (smallSingular X U V) (smallSingular X U V) (subdivision X)
+    (fun n c hc ↦ subdivisionComponent_mem_smallChains X U V n c hc)
 
 theorem smallSubdivision_inclusion (X : TopCat) (U V : Set X) :
-    smallSubdivision X U V ≫ smallInclusion X U V = smallInclusion X U V ≫ subdivision X := by
-  ext n c
-  exact inclusion_smallSubdivisionComponent X U V n c
+    smallSubdivision X U V ≫ smallInclusion X U V = smallInclusion X U V ≫ subdivision X :=
+  restrictMap_inclusion _ _ _ _
 
 def smallHomotopyComponent (X : TopCat) (U V : Set X) (n : ℕ) :
     (smallComplex X U V).X n →ₗ[ℚ] (smallComplex X U V).X (n + 1) :=
@@ -139,39 +117,20 @@ theorem smallHomotopyDegree_succ (X : TopCat) (U V : Set X) (i : ℕ) :
 
 /-- The original explicit singular homotopy restricts to a native small-chain homotopy. -/
 def smallSubdivisionHomotopy (X : TopCat) (U V : Set X) :
-    Homotopy (𝟙 (smallComplex X U V)) (smallSubdivision X U V) where
-  hom := smallHomotopyDegree X U V
-  zero i j hij := by
-    have h : ¬ i + 1 = j := hij
-    simp [smallHomotopyDegree, h]
-  comm i := by
-    cases i with
-    | zero =>
-      rw [Homotopy.dNext_zero_chainComplex, Homotopy.prevD_chainComplex,
-        smallHomotopyDegree_succ, zero_add]
-      apply ModuleCat.hom_ext
-      apply LinearMap.ext
-      intro c
-      change c = (smallComplex X U V).d 1 0 (smallHomotopyComponent X U V 0 c) +
-        smallSubdivisionComponent X U V 0 c
-      rw [smallHomotopyComponent_identity_zero]
-      abel
-    | succ n =>
-      rw [Homotopy.dNext_succ_chainComplex, Homotopy.prevD_chainComplex,
-        smallHomotopyDegree_succ, smallHomotopyDegree_succ]
-      apply ModuleCat.hom_ext
-      apply LinearMap.ext
-      intro c
-      change c = smallHomotopyComponent X U V n ((smallComplex X U V).d (n + 1) n c) +
-        (smallComplex X U V).d (n + 2) (n + 1) (smallHomotopyComponent X U V (n + 1) c) +
-          smallSubdivisionComponent X U V (n + 1) c
-      calc
-        c = (smallComplex X U V).d (n + 2) (n + 1) (smallHomotopyComponent X U V (n + 1) c) +
-            smallHomotopyComponent X U V n ((smallComplex X U V).d (n + 1) n c) +
-              smallSubdivisionComponent X U V (n + 1) c := by
-          rw [smallHomotopyComponent_identity]
-          abel
-        _ = _ := by abel
+    Homotopy (𝟙 (smallComplex X U V)) (smallSubdivision X U V) := by
+  have h := restrictHomotopy (smallSingular X U V) (smallSingular X U V)
+    (f := 𝟙 (complex X)) (g := subdivision X)
+    (fun _ _ hc ↦ hc) (fun n c hc ↦ subdivisionComponent_mem_smallChains X U V n c hc)
+    (subdivisionHomotopy X) (fun i j c hc ↦ by
+      change homotopyDegree X i j c ∈ smallChains X U V j
+      by_cases hij : i + 1 = j
+      · subst j
+        rw [homotopyDegree_succ]
+        exact homotopyComponent_mem_small X U V i c hc
+      · rw [homotopyDegree, dite_eq_right hij]
+        exact (smallChains X U V j).zero_mem)
+  rw [restrictMap_id] at h
+  exact h
 
 theorem homologyMap_smallSubdivision (X : TopCat) (U V : Set X) (n : ℕ) :
     HomologicalComplex.homologyMap (smallSubdivision X U V) n =

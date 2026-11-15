@@ -59,10 +59,8 @@ theorem coordinates_symm_coordinates_single (S : SSet.{0}) (n : ℕ)
 theorem differential_apply (S : SSet.{0}) (n : ℕ)
     (φ : SubcomplexCochains.Cochain S n) (σ : S.obj (op ⦋n + 1⦌)) :
     SubcomplexCochains.differential S n φ σ =
-      ∑ i : Fin (n + 2), (-1 : ℤ) ^ (i : ℕ) • φ (S.δ i σ) := by
-  simp [SubcomplexCochains.differential, AlgebraicTopology.AlternatingCofaceMapComplex.objD,
-    SubcomplexCochains.cosimplicial, SingularCochains.functionModule, CosimplicialObject.δ,
-    SimplicialObject.δ]
+      ∑ i : Fin (n + 2), (-1 : ℤ) ^ (i : ℕ) • φ (S.δ i σ) :=
+  SimplicialCochains.differential_apply S n φ σ
 
 /-- The dual of the original native chain boundary is the actual cochain coboundary. -/
 theorem coordinates_differential (S : SSet.{0}) (n : ℕ)

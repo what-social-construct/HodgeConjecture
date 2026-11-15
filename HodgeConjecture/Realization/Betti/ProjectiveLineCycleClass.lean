@@ -38,29 +38,24 @@ abbrev Target := SingularCochains.Cohomology (TopCat.of ProjectiveLineComplexPoi
 
 /-- The original projective-line infinity point is not the generic point. -/
 theorem infinity_ne_genericPoint :
-    projectiveLineInfinity ℂ ≠ genericPoint (projectiveLine ℂ) := by
-  intro h
-  apply projectiveLineInfinity_notMem_range_XChart ℂ
-  rw [h]
-  exact ⟨genericPoint (Spec (.of (Polynomial ℂ))), projectiveLineXChart_genericPoint_eq (k := ℂ)⟩
+    projectiveLineInfinity ℂ ≠ genericPoint (projectiveLine ℂ) :=
+  ProjectiveLineCycles.Infinity.ne_genericPoint ℂ
 
-/-- The original integral ordinary Chow class of the reduced infinity point. -/
+/-- Compatibility name for the shared integral infinity Chow class over ℂ. -/
 def integralInfinityClass : ChowGroup (dimensionFunction ℂ) 0 :=
-  classMap (dimensionFunction ℂ) 0 (pointCycle ℂ ℤ (projectiveLineInfinity ℂ)
-    infinity_ne_genericPoint)
+  ProjectiveLineCycles.Infinity.integralClass ℂ
 
-/-- The original rational ordinary Chow class of the same reduced point. -/
+/-- Compatibility name for the shared rational infinity Chow class over ℂ. -/
 def rationalInfinityClass : RationalChowGroup (dimensionFunction ℂ) 0 :=
-  rationalClassMap (dimensionFunction ℂ) 0 (pointCycle ℂ ℚ (projectiveLineInfinity ℂ)
-    infinity_ne_genericPoint)
+  ProjectiveLineCycles.Infinity.rationalClass ℂ
 
 @[simp]
 theorem integralChowDegree_infinity : integralChowDegree ℂ integralInfinityClass = 1 :=
-  integralChowDegree_pointCycle ℂ _ _
+  ProjectiveLineCycles.Infinity.integralChowDegree_eq_one ℂ
 
 @[simp]
 theorem rationalChowDegree_infinity : rationalChowDegree ℂ rationalInfinityClass = 1 :=
-  rationalChowDegree_pointCycle ℂ _ _
+  ProjectiveLineCycles.Infinity.rationalChowDegree_eq_one ℂ
 
 /-- Integral ordinary cycles, normalized by the actual singular cover generator. -/
 def integralCycleClass : ChowGroup (dimensionFunction ℂ) 0 →+ Target where

@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-11-07 (actual projective-line zero-point Gysin and cycle comparison;
+Last audited: 2026-11-10 (canonical P¹ holomorphic comparison isomorphism;
 earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,512 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Original holomorphic Betti comparison on canonical P¹ (2026-11-10)
+
+Status: `FORMAL` for invertibility in degree two of the original
+`Scheme.ComplexPoints.holomorphicBettiComparison` on canonical scheme
+complex points of P¹. The source has a proved one-dimensional coordinate;
+the target dimension follows from the separately proved complex
+singular-to-holomorphic isomorphism. The original map has a nonzero value
+on the transported rational cover generator, so its scalar coordinate is
+nonzero and the original map is bijective. Its categorical `IsIso` theorem
+and inverse equivalence retain that exact forward map.
+
+`OPEN`: equality of the generic cochain-induced and original holomorphic
+maps, general invertibility, scheme topology, proper comparison, periods,
+purity and prescribed-class coverage. See
+[0056](working/0056-projective-line-holomorphic-comparison-iso.md).
+
+## Complex singular cochains and derived constant-sheaf cohomology (2026-11-10)
+
+Status: `FORMAL` for the literal ℚ-to-ℂ coefficient map on the original
+singular cochain complexes, presheaves, sheafifications, constant-sheaf
+augmentations and complete local resolutions. The original global units
+commute with this map as cochain complexes and on induced cohomology.
+
+`FORMAL` for the indexed small-cover comparison with unrestricted complex
+functionals, local-zero kernel acyclicity, global-unit quasi-isomorphism on
+paracompact Hausdorff spaces, open section lifting, and flasqueness under
+the stated open-subspace hypotheses. The same native complex cochains map
+isomorphically to right-derived sections of the native complex constant
+sheaf on locally compact second-countable Hausdorff, strongly locally
+contractible spaces. Generic naturality of extension by zero, nonnegative
+sections, flasque hypercohomology and derived postcomposition also has
+direct proofs.
+
+`FORMAL` for the composed map from complex singular cohomology to the
+intrinsic holomorphic derived target. Its composition with the separately
+proved finite-cohomology coefficient map is an isomorphism under the stated
+topology and finiteness hypotheses. This cochain-induced composite has its
+own name and is not yet identified with the earlier 0053 map.
+
+`OPEN`: equality of the induced coefficient map with the exact ordinary
+derived scalar-restriction map, and hence with the constructed holomorphic
+comparison. Its general invertibility, general scheme topology, proper comparison,
+periods, purity and prescribed-class coverage remain open. See
+[0055](working/0055-complex-singular-derived-comparison.md).
+
+## Coefficient change with finite-dimensional cohomology (2026-11-10)
+
+Status: `FORMAL` for shared exact functionals V ↦ Hom_k(V,A) on arbitrary
+vector spaces, with original `RationalDual.functor` delegated to k = A = ℚ.
+Original rational complexes and transpose maps retain their interfaces.
+Native scalar extension is exact over the source field. Coefficient
+evaluation is a natural transformation between the resulting exact functors.
+
+`FORMAL` for invertibility of the induced cochain coefficient map in a degree
+where the original chain homology is finite dimensional. The terms and sets
+of simplices may be infinite. The isomorphism has the actual cochain map as
+its induced map, through the native tensor-homology comparison.
+
+`FORMAL` for specialization to the original rational singular chains and
+cochains, with source exactly the existing tensor complexification of
+`SingularCochains.Cohomology`. The target is unrestricted complex-valued
+functionals on those same native chains, with their original transpose
+differential. Native duality shows finiteness of the original rational
+cohomology in that degree suffices. P¹ discharges that hypothesis, and its
+original generator has nonzero image in the actual complex-functional target.
+
+`OPEN`: the remaining derived naturality needed to identify this
+cochain-induced map with the exact holomorphic map in 0053; the latter map's
+invertibility is not yet proved. General geometric finiteness,
+scheme topology, proper comparison, periods, purity and prescribed-class
+coverage retain their earlier scope. See
+[0054](working/0054-finite-cohomology-coefficient-change.md).
+
+## Complex coefficients and the original holomorphic derived target (2026-11-10)
+
+Status: `FORMAL` for native scalar restriction on fixed-ring module sheaves,
+its exactness, the coefficient map between the original constant sheaves,
+and commutation of actual ordinary derived global sections with restriction.
+The proof uses the same larger-coefficient injective resolution and its
+restricted flasque terms; preservation of injectives is not assumed.
+
+`FORMAL` for the isomorphism from ordinary derived sections of the native
+complex constant sheaf to the existing intrinsic holomorphic hypercohomology,
+with the original Poincaré resolution map fixed. Coefficient inclusion and
+the previous rational comparison give a complex-linear map from the existing
+tensor complexification of rational Betti cohomology to that actual target.
+The tensor map uses the native universal property and existing algebra action.
+
+`FORMAL` for injectivity of the rational comparison, using a rational-linear
+splitting only in its proof, and zero detection on the rational diagonal.
+The existing P¹ generator has nonzero image in actual holomorphic degree-two
+hypercohomology. Smooth-scheme wrappers use the existing atlas and leave the
+additional general point-topology hypotheses explicit.
+
+The subsequent 0054 checkpoint above proves finite-cohomology coefficient
+change on the original cochains. Its identification with this exact
+holomorphic map remains open. `OPEN`: general invertibility of this holomorphic comparison,
+general scheme topology, proper algebraic/analytic comparison, general periods,
+purity and prescribed-class Chow coverage. No scalar extension through
+infinite products of simplex functions is asserted. See
+[0053](working/0053-complex-coefficients-holomorphic-comparison.md).
+
+## Original rational singular groups and derived constant-sheaf cohomology (2026-11-10)
+
+Status: `FORMAL` for the assembled map from the original rational singular
+cohomology to ordinary right-derived global sections of the original
+rational constant sheaf. It composes the original global unit, native
+extension by zero, the proved whole-complex comparison, the inverse of the
+original local resolution map, and the existing single-sheaf derived comparison.
+
+`FORMAL` for its invertibility in every nonnegative degree on locally
+compact second-countable Hausdorff spaces with a basis of contractible
+neighborhoods. Source and target are the existing native objects, and the
+resolution square and zero-class detection are proved for the actual map.
+The comparison is objectwise; no new derived pullback functor between spaces
+or natural-isomorphism statement against such a functor is asserted here.
+
+`FORMAL` for smooth-scheme wrappers with the remaining point-topology
+hypotheses explicit. The existing atlas supplies strong local contractibility.
+Canonical affine spaces in every dimension and the original P¹ meet the
+hypotheses. The original P¹ generator has a proved nonzero image in the
+actual derived constant-sheaf degree-two target.
+
+The subsequent 0053 checkpoint above constructs the complex-linear map
+to the original holomorphic derived target and proves rational-diagonal
+detection. Its invertibility, general scheme topology, proper algebraic/analytic
+comparison, general periods, purity and prescribed-class Chow coverage remain open. See
+[0052](working/0052-rational-singular-constant-sheaf-comparison.md).
+
+## Original whole-complex derived comparison for flasque terms (2026-11-10)
+
+Status: `FORMAL` for invertibility of the original bounded-below
+derived-functor unit on native flasque fixed-ring module sheaf complexes.
+Native cycle short exact sequences, flasque section lifting, the native
+monomorphic injective replacement and its native acyclic cokernel prove
+the comparison. No comparison isomorphism is supplied as a premise.
+
+`FORMAL` for the original singular sheaf complex under its proved
+flasqueness hypotheses, including canonical affine spaces in every
+dimension and the original P¹. The induced original comparison is
+invertible in every integer homology degree. The actual module category,
+global-sections functor, complex, differential and map are retained.
+
+`FORMAL` for moving the generic hypercohomology construction into the
+shared sheaf layer with its original public names. The old de Rham entry
+point re-exports it and retains the scheme wrappers.
+
+The subsequent 0052 checkpoint above exports the composite with the
+existing global-unit quasi-isomorphism and local rational constant-sheaf
+resolution. General scheme topology, complex coefficients and later
+proper/purity/coverage obligations retain their earlier scope. See
+[0051](working/0051-singular-derived-comparison.md).
+
+## Positive derived sections of the existing flasque terms (2026-11-10)
+
+Status: `FORMAL` for positive right-derived sections of any native
+flasque fixed-ring module sheaf on every original open, on any topological
+space. The existing full Čech-to-derived criterion is specialized to all
+opens and all covers, using the existing flasque Čech vanishing proof.
+Exact coefficient forgetting and its original injective-resolution
+comparison identify the actual module-valued derived cohomology.
+
+`FORMAL` for the original singular sheaf terms under their already proved
+flasqueness hypotheses, including canonical affine spaces in all dimensions
+and the original glued P¹. The global statement uses the existing
+`SheafHypercohomology.globalSections` functor directly. Arbitrary opens,
+including the same noncompact P¹ affine chart, are covered. The sheaf
+index and positive derived degree are independent; the original nonzero
+P¹ total singular H² class is retained.
+
+`FORMAL` for shared ownership of the original postcomposition comparison,
+with its public name retained. The old de Rham module-cohomology helper
+delegates to the shared all-space construction with the same endpoints.
+
+The subsequent 0051 checkpoint above proves invertibility of the
+existing bounded-below comparison for the whole singular sheaf complex.
+`OPEN`: the subsequent singular/constant-sheaf comparison on derived
+sections, general scheme topology, complex
+coefficients and later proper/purity/coverage obligations. See
+[0050](working/0050-flasque-derived-sections.md).
+
+## Open-subspace lifting and native flasque cochain sheaves (2026-11-09)
+
+Status: `FORMAL` for the native sheafification/restriction isomorphism,
+using the existing `restrictPresheaf` and `local_restrictSheaf` owners,
+with actual unit compatibility. The original singular cochain functor
+identifies the original cochains on a subopen with those on its ambient
+image. No alternative cochain or sheaf model is used.
+
+`FORMAL` for surjectivity of the existing ambient unit on any paracompact
+Hausdorff open. Every sheaf section there lifts to an original global
+cochain, using the existing extension by zero. Restriction maps of the
+original cochain sheaf are surjective whenever the smaller open has
+these properties; the ambient and larger open need no paracompactness
+assumption for that statement.
+
+`FORMAL` for the native module-valued `TopCat.Sheaf.IsFlasque` property
+in every degree when the ambient space is Hausdorff and every open is
+paracompact. Locally compact second-countable Hausdorff spaces satisfy
+that condition. These properties are proved on the original canonical
+affine spaces in every dimension and the original glued P¹. General
+scheme wrappers retain the explicit topology hypotheses.
+
+The subsequent 0050 checkpoint above proves positive right-derived
+section vanishing for these terms on all opens. The bounded-below
+whole-complex comparison, general scheme point-topology properties,
+complex coefficients and later proper/purity/coverage obligations remain
+`OPEN`. See
+[0049](working/0049-open-singular-sheaf-restrictions.md).
+
+## The actual global singular sheafification unit (2026-11-09)
+
+Status: `FORMAL` for degreewise surjectivity of the existing
+`globalCochainsToSheaf` on paracompact Hausdorff spaces. Actual local
+representatives extend using the existing relative extension by zero;
+a locally finite closed refinement patches original cochains.
+
+`FORMAL` for the quasi-isomorphism of that same map in every degree,
+using its native short exact kernel sequence and the already proved
+kernel acyclicity. Its target is ordinary termwise global sections of
+the original singular sheaf complex. The original unit induces the
+constructed homology isomorphism. Canonical affine spaces in every
+dimension and the original glued P¹ have independently proved
+paracompact Hausdorff point topologies; the real line and empty space
+also apply. General scheme wrappers retain explicit topology hypotheses.
+
+`OPEN`: sheaf-term acyclicity and comparison with actual derived global
+sections, the needed topology on general scheme point spaces, complex
+coefficients and the subsequent proper/purity/coverage obligations.
+This is not yet the full singular/sheaf-cohomology comparison. See
+[0048](working/0048-global-singular-sheaf-sections.md).
+
+## Actual global singular sheafification kernel (2026-11-09)
+
+Status: `FORMAL` for the kernel criterion on the existing
+`globalCochainsToSheaf`: an original rational singular cochain maps to
+zero exactly when it is locally zero. Every such cochain vanishes on
+some actual point-indexed open cover. Its degreewise linear kernel is
+the join of the existing cover restriction kernels.
+
+`FORMAL` for acyclicity in every degree of
+`Limits.kernel (globalCochainsToSheaf X)`, with actual primitives in
+that native kernel. The proof reuses the original cover kernels and
+native inclusion; degree zero is a zero object. No separation, local
+contractibility or finiteness assumption is required. The theorem applies
+to every canonical scheme point space, without smoothness assumptions.
+
+The subsequent 0048 checkpoint above proves global-unit surjectivity
+and its quasi-isomorphism on paracompact Hausdorff spaces. Sheaf-term
+acyclicity, the derived-section and complex-coefficient comparisons
+remain `OPEN`. Kernel acyclicity alone did not establish the global
+comparison; the additional surjectivity proof is used. See
+[0047](working/0047-global-sheafification-kernel.md).
+
+## Arbitrary open-cover comparison (2026-11-09)
+
+Status: `FORMAL` for the indexed small simplicial subcomplex, its original
+native chain complex, and actual finite-chain shrinking under the
+existing barycentric subdivision. The index type need not be finite or
+countable. The restricted original homotopy proves that the original
+inclusion is a quasi-isomorphism in every degree, on any topological
+space with a genuine indexed open cover. No separation or local
+contractibility hypothesis is needed for this cover comparison.
+
+`FORMAL` for the original rational cochain restriction quasi-isomorphism,
+using existing exact dualization, and degreewise surjectivity using the
+existing extension by zero. The original relative kernel is acyclic,
+including degree zero, and closed positive-degree vanishing cochains
+have actual primitives vanishing on the same cover. Original native
+refinement maps commute with the comparisons. The two-open API reuses
+these proofs with its original native complexes and retained names.
+
+The actual global-unit kernel identification and acyclicity are now
+proved in [0047](working/0047-global-sheafification-kernel.md), using
+these cover kernels. Global-unit surjectivity and comparison with
+termwise sections are now proved under the stated topology hypotheses
+in 0048 above. The derived-section and complex-coefficient comparisons
+remain `OPEN`. The per-cover construction
+is recorded in [0046](working/0046-arbitrary-open-cover-small-chains.md).
+
+## Rational singular sheaf resolution (2026-11-09)
+
+Status: `FORMAL` for the original rational singular cochain presheaves,
+with the existing restrictions and differential. Evaluation recovers the
+original singular complex. Native sheafification gives a sheaf complex
+and an actual map from original global singular cochains to its global
+sections.
+
+`FORMAL` for actual local primitives, local constancy, augmentation
+monomorphism and all-degree sheaf exactness on strongly locally
+contractible spaces. These prove the full rational constant-sheaf
+quasi-isomorphism. The topological hypothesis is proved from the existing
+canonical analytic atlas for smooth schemes of fixed relative dimension;
+canonical affine spaces in all dimensions and the original P¹ apply.
+The existing sheafification, constant-sheaf and global-sections owners
+are reused, with shared local proofs and retained de Rham interfaces.
+
+`OPEN`: proving the global-cochain map computes derived global sections,
+and comparing coefficients with the complex holomorphic resolution.
+Neither follows merely from the sheaf quasi-isomorphism. General proper
+comparison, periods, purity and prescribed-class coverage remain open.
+See [0045](working/0045-singular-cochain-sheaf-resolution.md).
+
+## Intrinsic local Poincaré comparison (2026-11-09)
+
+Status: `FORMAL` for the chart identification of the original descended
+forms and complexes. Derivative pullback constructs coordinate sections'
+full compatible families; the transition cocycle and both inverse laws
+are proved. The actual chart equivalence commutes with d.
+
+`FORMAL` for intrinsic local constancy in degree zero, actual local
+primitives in every positive degree and the genuine constant-sheaf
+augmentation. This augmentation is mono and exact in degree zero;
+positive exactness gives its full sheaf quasi-isomorphism. The proofs
+transport the existing coordinate constants and radial primitives.
+The old coordinate comparison reuses the shared constant-lift and
+augmented-complex proofs and retains its API.
+
+`FORMAL` on native complex C∞ manifolds with the compatible real scalar
+structure used by the coordinate proof, including the canonical analytic
+points of schemes smooth of fixed relative dimension. Actual canonical
+affine spaces in all dimensions and the original glued P¹ instantiate
+the same comparison. No replacement topology or supplied comparison data
+is introduced.
+
+Analytic constant-sheaf/singular comparison, proper algebraic/analytic
+comparison, the general period isomorphism and purity remain `OPEN`.
+This is a quasi-isomorphism of analytic sheaf complexes, without asserting
+a general global-section or singular comparison. See
+[0044](working/0044-intrinsic-holomorphic-poincare.md).
+
+## Atlas forms descent and the all-degree algebraic map (2026-11-09)
+
+Status: `FORMAL` for derivative pullback of the original coordinate forms,
+composition and commutation with d. Compatible chart families form the
+intrinsic forms module on any native complex C∞ manifold. The same
+coordinate differential descends, squares to zero and respects restriction.
+The sheaf property is proved by gluing the original coordinate sections,
+giving the intrinsic all-degree de Rham sheaf complex.
+
+`FORMAL` for the map from the original Kähler exterior powers to these
+forms on canonical analytic points of schemes smooth of fixed relative
+dimension. The determinant wedge extends the existing degree-one map;
+all degrees commute with the original algebraic differential, coordinate
+pullback and original section restrictions. Actual chart evaluation gives
+the map without a supplied evaluation or descent premise. Its components
+are natural transformations from the existing algebraic forms presheaves,
+compatible with their complex differential, and form a native morphism
+from the original algebraic de Rham presheaf complex. Shared section algebras and
+holomorphic-function scalar actions have a single owner.
+
+The intrinsic constant-sheaf/Poincaré comparison is now proved in
+[0044](working/0044-intrinsic-holomorphic-poincare.md). Analytic/singular and
+proper algebraic/analytic comparison, the general period isomorphism and
+purity remain `OPEN`. This constructs a map, without asserting that it is
+a comparison isomorphism. See [0043](working/0043-holomorphic-forms-descent.md).
+
+## Canonical analytic atlas and actual regular evaluations (2026-11-09)
+
+Status: `FORMAL` for the native analytic manifold structure on the original
+canonical complex points of schemes smooth of fixed relative dimension d.
+Standard-smooth algebraic local structure gives actual étale coordinates;
+complex analytic implicit inverses give the original open partial
+homeomorphisms. The proved chart family covers every point, and all
+transition maps are complex analytic. No atlas or holomorphic transition
+compatibility is supplied as a premise.
+
+`FORMAL` for analytic regular-function evaluations on every scheme open
+and analytic scheme maps, including maps between different dimensions.
+The actual section evaluations are bundled as complex-algebra maps into
+native C∞ functions on analytic opens and coordinate charts. Source
+scalars are the original structure-morphism constants. Restriction and
+pullback compatibility and equality of chartwise/intrinsic values are
+proved. The original glued P¹ is proved smooth of relative dimension one
+using its existing affine cover.
+
+Intrinsic forms descent and the all-degree algebraic forms map are now
+constructed in [0043](working/0043-holomorphic-forms-descent.md).
+Intrinsic local Poincaré comparison is proved in [0044](working/0044-intrinsic-holomorphic-poincare.md).
+Analytic/singular and proper algebraic/analytic comparisons, and general
+purity remain `OPEN`. This is not a claim for arbitrary
+singular or variable-relative-dimension schemes. See
+[0042](working/0042-canonical-analytic-atlas.md).
+
+## Holomorphic complex and local Poincaré comparison (2026-11-09)
+
+Status: `FORMAL` for the all-degree complex of native complex C∞
+alternating-form sections on complex normed coordinate spaces. Native
+exterior differentiation gives the actual arrows; local-extension
+independence, restriction compatibility, complex linearity and d² = 0
+are proved. The existing bundled-map sheaf supplies the coefficients.
+Actual sheafification constructs the constant-sheaf augmentation and
+the cochain comparison map.
+
+`FORMAL` for the actual holomorphic radial operator in every positive
+degree, its complex C∞ regularity, and dK + Kd = id. Shrinking to a ball
+proves local exactness in every positive degree. The actual constant-sheaf
+comparison is a full quasi-isomorphism in every coordinate dimension.
+The degree-one radial primitive equals the existing normalized segment
+primitive; the old degree-one and complex-line comparison theorems now
+specialize the general proof. This is a sheaf quasi-isomorphism, not an
+identification of arbitrary global-section cohomology with singular
+cohomology. See [0041](working/0041-higher-degree-holomorphic-poincare.md).
+
+`FORMAL` for the degree-one Kähler map associated to a genuine algebra
+map into holomorphic functions: da maps to the actual derivative d(φ(a)).
+The native polynomial evaluation map is constructed and agrees with
+ordinary evaluation. Evaluation on smooth canonical scheme points is now
+constructed above. The all-degree algebraic/analytic forms map is now
+constructed in [0043](working/0043-holomorphic-forms-descent.md).
+
+Intrinsic local Poincaré comparison is now proved in
+[0044](working/0044-intrinsic-holomorphic-poincare.md). Analytic/singular and
+proper algebraic/analytic comparisons, and general purity remain `OPEN`. No such input is installed as a project
+axiom or supplied as a new substantive comparison structure. See
+[0040](working/0040-holomorphic-derham-local-poincare.md).
+
+## Canonical scheme Betti target and existing P¹ identification (2026-11-08)
+
+Status: `FORMAL` for the constructed topology on actual sections over
+Spec ℂ, regular-function continuity, scheme-morphism functoriality and
+open/closed immersion embeddings. Affine algebra-point and original P¹
+chart models have proved homeomorphisms to these independently defined
+spaces. `SchemeBetti.Cohomology` is the existing rational singular
+cohomology on this space, and the original pullbacks form its
+contravariant scheme functor. The topology proofs are adapted from pinned
+Axiom Weil with attribution, using native Mathlib only.
+
+`FORMAL` for transport of canonical conjugation and pure rational Hodge
+structures along rational equivalences, and for the existing P¹ period,
+geometric filtration, purity and ordinary Chow square on this canonical
+target. The Chern period remains 2πi. This identifies an already proved
+example, without adding a new geometric class of Hodge-conjecture cases.
+
+`CONDITIONAL` on an explicit period isomorphism for the general canonical
+scheme-filtration adapter. General scheme holomorphic/Poincaré
+comparison, analytic/singular identification, proper algebraic/analytic
+comparison and general opposedness/purity remain `OPEN`. No general
+comparison or purity theorem is obtained from the audited Stacks
+realization or Weil Artin comparison. See
+[0039](working/0039-canonical-scheme-betti-target.md).
+
+## Proved Tate/Hodge graph compatibility (2026-11-08)
+
+Status: `FORMAL` for pure rational Hodge structures in the independently
+constructed target framework. The genuine Tate line has type (p,p),
+weight 2p and a proved bounded opposed filtration. The product uses native
+tensor distribution on the original rational carrier ℚ × H; canonical
+conjugation and pure product conditions are proved. Rational filtered maps
+preserve all recovered Hodge pieces.
+
+`graph_isHodge_iff` proves that the original graph projector is a Hodge
+morphism exactly for classes in the independent rational Hodge subspace.
+`classGraphHodgeCompatibility` discharges that input of the old equivalence.
+`rationalHodgeConjectureAt_iff_hodgeGraphLifts` retains the cycle map's type
+proof, correspondence action, Chow graph construction and lower-left
+detection as explicit inputs. Its equivalence is therefore `CONDITIONAL`
+on those independent geometric data. The actual P¹ model instantiates the
+Hodge compatibility, with no new full Chow-motive construction asserted.
+General geometric comparison/purity and coverage remain `OPEN`.
+See [0038](working/0038-tate-hodge-graph-bridge.md).
+
+## Cyclic filtered projector-defect detector (2026-11-08)
+
+Status: `FORMAL` as an algebraic construction on the existing raw closure.
+`ProjectorDefectModule` uses the native polynomial action by the original
+closure class q and the cyclic submodule generated by its original defect
+q²−q. Its inclusion into that same possibly noncommutative algebra is
+injective. The module is finitely presented over ℚ[T]; the quotient degree
+filtration has finite rational stages, is exhaustive and satisfies the
+native filtered-module interface. Its annihilator is exactly the polynomials
+p with p(q)(q²−q)=0. The module, or any stage, is zero exactly when q is
+idempotent. No cohomological faithfulness is used.
+
+`AlgebraProjectorClosure.DefectModule` specializes this same carrier. The
+original restriction kills every element and filtration stage; existing
+Chow localization places their images in the additive boundary image.
+Object vanishing gives the existing `ZeroDefectWitness`. It is not proved
+for arbitrary closures. Geometric coherent-sheaf/D-module identification,
+a Hodge or Rees construction, a connection across the relevant boundary
+and vanishing remain `OPEN`. The polynomial control has a nonzero detector,
+strictly growing filtration and zero annihilator despite zero restriction.
+See [0037](working/0037-filtered-projector-defect.md).
+
+## General filtered rational target (2026-11-08)
+
+Status: `FORMAL` as a general construction, with geometric instantiation
+`OPEN` beyond the proved examples. `RationalComplexification` owns the
+actual tensor product, injective rational embedding and canonical
+conjugation. `HodgeFiltration.rationalHodgeClasses` derives the rational
+diagonal intersection without cycles. `PureRationalHodgeStructure`
+records finite dimension, boundedness and opposedness; its target is
+derived rather than supplied. `FilteredHodgeTarget` connects this target
+to the existing model with the cycle map and its type proof explicit.
+
+`SchemeDeRham.bettiHodgeFiltration` transports the actual derived scheme
+filtration through an explicit isomorphism to actual complexified rational
+singular cohomology. This does not prove a general geometric comparison,
+identify arbitrary topological spaces with analytic complex points, or
+prove general purity. The existing P¹ geometric filtration provides a
+proved pure instance; its original target and ordinary Chow map are
+preserved. General Hodge coverage and the geometric equivalence bridge
+remain `OPEN`. The vanishing/source comparison in
+[0036](working/0036-filtered-hodge-target-and-vanishing.md) is `RESEARCH`,
+not an installed source theorem or an asserted zero-defect result.
 
 ## Actual P¹ zero-point Gysin and cycle comparison (2026-11-07)
 
@@ -2785,6 +3291,7 @@ conjecture.
 | A11au | FORMAL | The existing graded open restriction descends through the proved integer principal-relation span inclusion to the existing integral Chow quotient. Only the target scheme is assumed Noetherian; the source and intermediate open schemes inherit that property, and their dimension functions are the literal restrictions δ∘j. The map preserves the actual cycle representative and satisfies identity and contravariant composition. Independently of all finiteness hypotheses, raw and homogeneous finite-cycle open restriction commute with coefficientwise ℤ→ℚ extension. This coefficient compatibility and the genuine nonempty/empty relation-generator identities preserve the rational principal-relation span. The resulting rational Chow restriction is defined on the existing rational quotient, keeps the actual representative formula and is contravariantly functorial. It commutes with the integral-to-rational Chow map, and under the existing tensor comparisons it is exactly scalar extension of integral restriction on every tensor element. No new cycle, relation or quotient carrier, no additional descent hypothesis and no injectivity of Chow rationalization are introduced. A11av proves raw/graded cycle and integral/rational Chow restriction surjectivity via actual reduced support closures and class representatives. SP110 now proves the actual closed-complement support/kernel/image comparisons and integral/rational Chow localization exactness; see the current localization entry above. General proper/flat/Gysin laws, geometric target identification and reducible/componentwise conventions remain separate. | `chowOpenRestriction`, `chowOpenRestriction_classMap`, `chowOpenRestriction_id`, `chowOpenRestriction_comp` in `Cycles/ChowOpenRestriction.lean`; `openRestriction_rationalize`, `gradedOpenRestriction_rationalize` in `Cycles/CoefficientRestriction.lean`; `rationalPrincipalRelations_le_comap_openRestriction`, `rationalChowOpenRestriction`, `rationalChowOpenRestriction_classMap`, `rationalChowOpenRestriction_id`, `rationalChowOpenRestriction_comp`, `rationalChowOpenRestriction_chowRationalize`, `rationalChowOpenRestriction_chowRationalizationEquiv` in `Cycles/RationalChowOpenRestriction.lean`. |
 | A11av | FORMAL | For an open immersion of arbitrary schemes, every finite cycle over any semiring lifts by taking the actual reduced ambient closures of its integral supports with unchanged coefficients. The actual ideal-comap identities prove that restriction recovers the original cycle. The proved support-degree comparison makes this lift homogeneous for the supplied dimension function and its literal restriction, so the existing raw and graded restriction maps are surjective. No ambient integrality, Noetherianity, quasi-compactness, field-base or nonempty-source hypothesis is needed at cycle level. For a Noetherian target, the source is derived Noetherian; choosing an actual homogeneous cycle representative and lifting it proves surjectivity of both the existing integral and rational Chow restriction maps. Closure is used to lift cycles and is not asserted to preserve rational equivalence or define a Chow right inverse. No new cycle or quotient carrier is introduced. SP110 now supplies the actual closed-complement support/kernel/image comparison and integral/rational Chow localization exactness; see the current localization entry above. General proper/flat/Gysin laws, geometric target identification and reducible/componentwise conventions remain separate. | `openRestriction_surjective`, `gradedOpenRestriction_surjective` in `Cycles/OpenRestrictionSurjectivity.lean`; `chowOpenRestriction_surjective` in `Cycles/ChowOpenRestriction.lean`; `rationalChowOpenRestriction_surjective` in `Cycles/RationalChowOpenRestriction.lean`. |
 | A12 | CONDITIONAL | Given the exact local input that the selected prime of the inertia fixed ring is unramified, containment `I ≤ H` implies unramifiedness of the selected prime in the `H`-fixed ring. The basic theorem imposes Dedekind only on the selected localization. For a finite group and a height-one prime, invariant-theoretic going down preserves height one; normality and Noetherianity therefore make that localization a DVR. The normal-closure endpoint composes this with the formal valuation-to-prime-inertia comparison and remains based over the literal full invariant ring `S^G`; it does not silently replace `S^G` by `B`. The former global-Dedekind theorem remains as a wrapper. This controls one selected branch, not the entire `G/H` cover, and Tag `0BST` remains an explicit premise. | `NormalizationInertia.InertiaFixedRingUnramifiedAt` in `Inputs/FixedInertia.lean`; `fixedPointsLocalRingHom`, `fixedPointsLocalRingHom_injective`, and `fixedRing_isUnramifiedAt_of_inertia_le_localized` in `Boundary/Normalization/FixedRingUnramified.lean`; `fixedPoints_primeHeight_under_eq_one` and `fixedRing_isUnramifiedAt_of_inertia_le_of_primeHeight_eq_one` in `Boundary/Normalization/FixedRingLocalization.lean`; `normalizationFixedRing_isUnramifiedAt_of_primeInertia_le` and `Diagram.fixedRing_isUnramifiedAt_of_valuationInertia_le` in `Boundary/Normalization/PrimeInertiaDescent.lean` |
+| A12b | FORMAL (DVR) | For the integral closure of a discrete valuation ring in a finite Galois field extension, at a selected maximal prime, the ring fixed by its actual inertia group has an étale selected localization over the DVR. The proof adapts the AxiomMath/Stacks formalization of the étaleness component of Stacks Tag 09EH, with Apache-2.0 attribution. The project also proves its prime-inertia kernel equals Mathlib's inertia and that selected étaleness implies the existing local unramifiedness input. Transport from a height-one prime of the original normalization through base localization and fixed rings remains open; neither the general Tag 0BST theorem nor the arbitrary-base `hI` is claimed. | `primeInertiaSubgroup_eq_inertia` in `Boundary/Normalization/PrimeInertia.lean`; `ramificationIdx_eq_one_and_isSeparable_of_inertia` in `Boundary/Normalization/DvrInertiaEtale.lean`; `inertia_fixedSubalgebra_etale_atPrime` in `Boundary/Normalization/DvrInertiaFixedRing.lean`; `inertiaFixedRingUnramifiedAt_of_etaleAtPrime` in `Boundary/Normalization/FixedInertiaEtaleBridge.lean`; focused audit `research/FixedInertiaVerification.lean` |
 | A13 | FORMAL | Rational pull and push maps satisfying `push ∘ pull = d · id`, with nonzero integral degree `d`, define an idempotent normalized pull--push operator. The theorem proves the algebraic transfer calculation but does not construct Chow groups or the geometric pull/push maps. | `normalizedPullPush_isIdempotent` and `RationalDegreeTransfer.normalizedProjector_isIdempotent` in `Realization/Chow/TransferProjector.lean` |
 | A14 | FORMAL | Ring-theoretic prime inertia is realized as the stabilizer kernel of the residue action. A selected prime is the unique prime above its contraction to its own inertia-fixed ring; this needs only finiteness of the acting group. For every centered valuation in a normalization diagram, valuation inertia acts trivially modulo the center and is contained in prime inertia. For marked finite normal-closure data with separable `L/K`, an affine base integrally closed in that field is equivalent to the full invariant normalization ring. | `primeInertiaSubgroup`, `eq_of_under_primeInertiaSubgroup_eq`, `mem_primeInertiaSubgroup_iff`, `baseEquivFullInvariantNormalizationRing`, `Diagram.valuationInertia_sub_centerPrime`, and `Diagram.valuationInertia_le_normalizationPrimeInertiaGroup` in `Boundary/Normalization/PrimeInertia.lean` |
 | A15 | FORMAL | Compatible localization data supply the reverse containment from prime inertia to valuation inertia. For a normalization diagram over a Noetherian affine base, those data follow from the supplied finite normalization, height-one center, and centered discrete valuation: the height-one localization is a valuation ring and maximality in the common fraction field identifies it with the centered valuation ring. Hence `I_val ≤ H` implies the prime-inertia containment `I_Q ≤ H` required by the fixed-ring descent. Combining this with the independent Jacobian-inherited forward containment gives equality, but equality is not a dependency of the main endpoint. Without Noetherianity or direct localization data, the reverse comparison remains conditional. | `ValuationLocalizationAt.primeInertia_le_valuationInertia`, `Diagram.hasValuationLocalizationAt_of_isNoetherianRing`, and `Diagram.normalizationPrimeInertia_le_of_valuationInertia_le_of_isNoetherianRing` in `Boundary/Normalization/LocalizationBridge.lean`; equality is the optional `Diagram.valuationInertia_eq_normalizationPrimeInertiaGroup_of_isNoetherianRing` |

@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-11-07 (actual projective-line zero-point Gysin and cycle comparison;
+Last reviewed: 2026-11-10 (complex singular/derived constant-sheaf comparison;
 earlier checkpoint records retain
 their original validation scope).
 
@@ -9,6 +9,127 @@ the geometric statement, separates the two directions of the proved bridge,
 and identifies the minimal prescribed-class construction. This longer map
 records the component-level evidence. The standalone matrix diagnostic is
 [benched](bench/README.md), not a premise or obstruction in that route.
+
+The [holomorphic checkpoint](working/0040-holomorphic-derham-local-poincare.md)
+constructs the actual all-degree sheaf complex on complex coordinate
+spaces, with native exterior derivative, d² = 0 and restriction
+compatibility. The [higher-degree construction](working/0041-higher-degree-holomorphic-poincare.md)
+proves complex smoothness and dK + Kd = id for the actual radial integral.
+Local exactness in every positive degree gives a full constant-sheaf
+quasi-isomorphism in every coordinate dimension. Its degree-one operator
+agrees with the existing segment primitive. The existing Kähler pullback
+and universal property give da ↦ d(φ(a)); polynomial evaluation is
+constructed. The [canonical analytic atlas](working/0042-canonical-analytic-atlas.md)
+now provides compatible native analytic charts for schemes smooth of fixed
+relative dimension, holomorphy of their regular functions and scheme maps,
+and actual evaluation algebra maps. The
+[forms descent](working/0043-holomorphic-forms-descent.md) constructs the
+intrinsic forms sheaf and differential, plus the all-degree algebraic
+forms map compatible with d and restriction. The
+[intrinsic Poincaré comparison](working/0044-intrinsic-holomorphic-poincare.md)
+now proves the actual chart complex identifications, local primitives and
+local constants, and the full constant-sheaf quasi-isomorphism. The next
+step has its local rational singular sheaf resolution in
+[0045](working/0045-singular-cochain-sheaf-resolution.md). The
+[arbitrary-cover step](working/0046-arbitrary-open-cover-small-chains.md)
+proves the indexed small-chain/cochain comparisons and per-cover vanishing
+kernel acyclicity. The
+[global-kernel step](working/0047-global-sheafification-kernel.md) identifies
+locally zero cochains as exactly the kernel of the existing unit and
+proves its native categorical kernel acyclic in every degree, on any
+topological space. The
+[global-unit step](working/0048-global-singular-sheaf-sections.md) now
+proves degreewise surjectivity and a quasi-isomorphism to termwise global
+sections on paracompact Hausdorff spaces. These properties of the original
+point topology are proved for canonical affine spaces in every dimension
+and P¹. The [open-restriction step](working/0049-open-singular-sheaf-restrictions.md)
+proves ambient cochain lifts of sections on paracompact Hausdorff opens,
+and native flasqueness when all opens are paracompact. Locally compact
+second-countable Hausdorff spaces satisfy this condition; canonical
+affine spaces and P¹ have these proved properties. The
+[derived-vanishing step](working/0050-flasque-derived-sections.md) proves
+positive derived-section vanishing for every original sheaf term on
+every open, using the original module-valued functor. The
+[whole-complex step](working/0051-singular-derived-comparison.md) now
+proves invertibility of the existing bounded-below comparison, retaining
+the original homology maps in all integer degrees. The
+[rational composite](working/0052-rational-singular-constant-sheaf-comparison.md)
+now assembles the global unit, that comparison and local resolution into
+an isomorphism from the original rational singular groups to actual
+right-derived sections of the original rational constant sheaf, in all
+nonnegative degrees under the proved topology hypotheses. The original
+canonical P¹ generator remains nonzero in the derived target itself.
+The [complex-coefficient step](working/0053-complex-coefficients-holomorphic-comparison.md)
+now identifies actual derived sections of the native complex constant sheaf
+with intrinsic holomorphic hypercohomology. Original constant-sheaf coefficient
+inclusion gives a complex-linear map from the existing tensor complexification
+of rational Betti cohomology to this target. The map detects zero on the
+rational diagonal, and the original P¹ generator has nonzero image in the
+actual holomorphic target. The [finite-cohomology coefficient step](working/0054-finite-cohomology-coefficient-change.md)
+proves that the original cochain scalar-evaluation map induces an isomorphism
+to unrestricted complex-functional cohomology when the original rational
+cohomology in that degree is finite dimensional. Only homology needs this
+finiteness; the chain modules can be infinite. The
+[complex singular sheaf step](working/0055-complex-singular-derived-comparison.md)
+proves the native complex global-unit quasi-isomorphism, flasqueness, and
+the isomorphism from unrestricted complex singular cohomology to derived
+sections of the native complex constant sheaf. The original coefficient map
+commutes with the global units and sheaf resolutions. Its separately named
+cochain-induced composite to intrinsic holomorphic hypercohomology is
+invertible under finite rational cohomology and the stated topology. The
+exact derived scalar-restriction square still needs the pure-tensor
+homology transport and the flasque/injective-resolution canonicality
+argument before the 0053 map can be identified with the cochain map.
+The [canonical P¹ step](working/0056-projective-line-holomorphic-comparison-iso.md)
+independently proves the original 0053 map invertible in degree two.
+Generic invertibility remains open;
+no tensor/infinite-product interchange has been assumed.
+General scheme topology remains open. Proper comparison,
+the general period isomorphism and purity remain open within item 4.
+
+The [canonical scheme target](working/0039-canonical-scheme-betti-target.md)
+constructs actual complex points, their regular-function topology and the
+all-degree rational singular Betti functor, using the existing cochains
+and pullbacks. Proved affine and P¹ homeomorphisms identify the existing
+models. The old P¹ period comparison, derived filtration, pure structure
+and ordinary Chow square now land in this canonical target. The coordinate
+holomorphic complex and full coordinate local comparison are constructed above;
+the canonical analytic atlas is constructed for smooth schemes of fixed
+relative dimension. Intrinsic forms descent and the all-degree algebraic
+forms map and intrinsic local Poincaré comparison are constructed above.
+Generic invertibility of the constructed analytic/singular coefficient comparison,
+proper algebraic/analytic comparison and purity remain open. This is progress within item 4
+of the active checklist, not completion of that item.
+
+The [Tate/Hodge checkpoint](working/0038-tate-hodge-graph-bridge.md) proves
+the former graph/Hodge compatibility input from the independent filtration
+target. The genuine pure Tate-product object uses the original ℚ × H
+carrier and native tensor complexification. The existing graph projector
+is filtered exactly when α is rational type (p,p), and the old equivalence
+now consumes this proved compatibility. The actual P¹ Hodge model verifies
+the instance. General geometric comparison and purity, Chow construction
+and detection, correspondence action and prescribed-class coverage remain
+open; see the compact active checklist at the top of TARGET_BRIDGE.md.
+
+The [filtered defect checkpoint](working/0037-filtered-projector-defect.md)
+constructs an exact algebraic detector of the existing closure defect:
+the cyclic ℚ[T]-module generated by q²−q, with T acting by q and its
+finite-stage quotient degree filtration. It embeds injectively in the
+original compactified algebra and is zero exactly at idempotence. Original
+restriction kills the whole module; additive localization puts its image
+on the boundary. It is finitely presented, but its geometric D-module,
+Hodge/Rees-family interpretation, boundary control and vanishing remain
+open. T has not been identified with a geometric boundary parameter.
+
+The [general target checkpoint](working/0036-filtered-hodge-target-and-vanishing.md)
+constructs the rational diagonal subspace from canonical tensor conjugation
+and a complex filtration, with pure weight-2p hypotheses recorded separately.
+The actual scheme filtration has an adapter through an explicit comparison
+to actual rational singular cohomology; P¹ supplies a proved pure instance.
+General holomorphic comparison, period comparison, purity and cycle
+coverage remain open. The cross-repo vanishing audit isolates the new
+construction needed for Yun's method: a filtered obstruction family and
+control in the relevant boundary direction, not merely generic vanishing.
 
 When used, the marked realization spine follows one chosen algebraic
 projector `Π` for each prescribed class and detects its cycle `D(Π)`.
@@ -3373,12 +3494,47 @@ Tag `09EH` gives an alternative local route in its DVR setting: a DVR
 base, a finite Galois field extension, its integral closure, and a selected
 maximal ideal.  It identifies the inertia fixed ring with the integral
 closure in the inertia fixed field and proves the selected localization
-étale.  The Lean localization bridge proves the height-one identification and
-the needed containment `I_Q ≤ I_val`; it does not prove unramifiedness of the
-inertia-fixed map.  Equality `I_val = I_Q` follows only after adding the
-independent forward containment.  Formalizing the local fixed-inertia
-unramifiedness consequence remains the next normalization step.  Tag `09EH`
-still does not establish global étaleness over an arbitrary affine base.
+étale.  `DvrInertiaEtale.lean` and `DvrInertiaFixedRing.lean` now adapt the
+AxiomMath/Stacks proof of that étaleness component, including the inertia
+ramification-index and residue-separability calculation.  The public DVR
+theorem `inertia_fixedSubalgebra_etale_atPrime` has a focused Lean build and
+standard-axiom audit.  Separately, `primeInertiaSubgroup_eq_inertia` identifies
+the project's kernel subgroup with Mathlib's `Ideal.inertia`, and
+`FixedInertiaEtaleBridge.lean` turns a selected étale conclusion into the
+unramifiedness premise consumed by descent.  `LocalizationInertia.lean`
+proves inertia is unchanged by normalization localization at fixed base
+denominators; `FixedRingLocalizationComparison.lean` proves the corresponding
+generic fixed-ring localization.  `FullInvariantBaseProperties.lean` proves
+that the exact source `S^G` is normal, Noetherian under finite normalization,
+and has a DVR localization at a height-one contraction, without assuming
+the original affine base normal.  Its fraction-field map into `K` still needs
+proof of compatibility with the natural embedding `S^G → N`.
+`FixedRingAtPrimeComparison.lean` proves the generic local-ring equivalence,
+and `FixedRingPrimeLocalization.lean` proves the generic selected-prime
+contraction identity. `HeightOneDvrBaseChange.lean` specializes the selected
+prime maximality to `normalizationBaseChangeMap`, and
+`NormalizationFixedRingLocalization.lean` specializes equivariant fixed-ring
+localization to that map. `NormalizationFixedRingPrimeComparison.lean` proves
+the selected-prime contraction and local-ring equivalence for the same map.
+`HeightOneDvrInertiaEtale.lean` applies Tag `09EH` at the selected height-one
+DVR prime, `FixedPointsBaseComparison.lean` aligns the two presentations of
+the localized fixed ring, and `HeightOneInertiaGroupComparison.lean` identifies
+the localized inertia with the original named group.
+`NormalizationActionComparison.lean` proves equality of the project and
+Mathlib Galois actions on the localized normalization, and
+`FixedPointsAtPrimeTower.lean` proves the target local base-map coherence.
+`NormalizationActionInertiaComparison.lean` identifies the inertia subgroup
+under those two actions, and `NormalizationActionFixedPointsComparison.lean`
+identifies their localized fixed subalgebras.
+`NormalizationActionEtaleComparison.lean` transports selected DVR étaleness to
+the project's B-based localized fixed ring. The final assembly and formal
+unramifiedness transport to `hI` remain open. The current scratch assembly
+reaches the local equivalence but still needs the `B → F → U` scalar-tower
+instance aligned with Ore localization's scalar action, followed by the
+formal-unramifiedness transport.
+Tag `09EH`
+does not establish global étaleness over an
+arbitrary affine base or the general Tag `0BST` theorem.
 
 The former dimension mismatch in the downstream helper is now removed.
 `fixedRing_isUnramifiedAt_of_inertia_le_localized` contracts `Q` to
@@ -3395,8 +3551,11 @@ going-down argument, and
 that the local Dedekind hypothesis is automatic for the finite
 normal-closure normalization over a Noetherian affine base.  The status split
 is therefore: unique-prime, localization, containment, and local descent are
-formal; the fixed-inertia unramifiedness conclusion is open as a compiled Lean
-theorem; the forward containment and two-sided inertia equality are optional
+formal; the DVR fixed-inertia étaleness component and generic inertia and
+fixed-ring localization comparisons are formal; the selected-prime transport
+to the original height-one normalization and the resulting local
+unramifiedness conclusion remain open as a compiled Lean theorem; the forward
+containment and two-sided inertia equality are optional
 comparisons.  These local algebra lemmas do not themselves prove the open
 input or any compactification-purity statement.
 `PrimeInertiaDescent.lean` now records the exact composite endpoint:

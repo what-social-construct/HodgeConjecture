@@ -21,6 +21,7 @@ relative to the upstream repository; each adapted file also records its source.
 | `Cycles/ProjectiveLineInversionOrder.lean` | `StacksFrontier/AlgebraicGeometry/Chow/ProjectiveLineDivisorDegree/Inversion.lean` (selected rational-function inversion/order proof) |
 | `Cycles/ProjectiveLineFunctionField.lean` | `StacksFrontier/AlgebraicGeometry/Chow/ProperPushforwardPrincipal/{ProjectiveLineFunctionField,ProjectiveLineInfinity}.lean` (actual chart/function-field comparison and gluing inversion) |
 | `Cycles/FiberResidueField.lean` | `StacksFrontier/AlgebraicGeometry/F6Rank128/FiberResidueField.lean` |
+| `Boundary/Normalization/{DvrInertiaEtale,DvrInertiaFixedRing}.lean` | `StacksFrontier/RingTheory/DiscreteValuationRing/Inertia/InvariantRing.lean` (selected finite-presentation, ramification and residue arithmetic, and Tag 09EH étaleness at the inertia-fixed prime; not the general Tag 0BST theorem) |
 | `CommutativeAlgebra/Multiplicity/HomologicalComplexAbelian.lean` | `StacksCore/Algebra/Homology/HomologicalComplexAbelian.lean` |
 | `Multiplicity/{ModuleOrder,Multiplication,SupportLength,TwoPeriodic,RestrictedDivisors}.lean` | `StacksFrontier/AlgebraicGeometry/Chow/CalculationMultiplicities/{LocalOrder,Multiplication,SupportLength,TwoPeriodic,RestrictedDivisors}.lean` |
 | `Multiplicity/Periodic{Defs,Additivity,Length}.lean` | `StacksFrontier/AlgebraicGeometry/Chow/PeriodicComplexesHerbrand/{Defs,Additivity,Length}.lean` |
@@ -43,3 +44,6 @@ license is preserved in [LICENSE](LICENSE).
 The external library is a proof reference, not a Lake dependency. Its general
 reuse assessment is recorded in
 [`research/working/0019-axiom-stacks-reuse-audit.md`](../../research/working/0019-axiom-stacks-reuse-audit.md).
+The pinned inertia source is in Axiom's `StacksFrontier` tier: its Lean proof
+is kernel checked, while that tier is awaiting the upstream human review
+reserved for `StacksCore`.

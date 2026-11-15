@@ -1,6 +1,7 @@
 module
 
 public import HodgeConjecture.Correspondence.CollisionEtale
+public import HodgeConjecture.Correspondence.FilteredProjectorDefect
 public import HodgeConjecture.Correspondence.EtaleClasses
 public import HodgeConjecture.Correspondence.FiniteCoproduct
 public import HodgeConjecture.Correspondence.FiniteEtaleModel

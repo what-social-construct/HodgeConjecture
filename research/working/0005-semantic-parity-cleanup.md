@@ -262,6 +262,223 @@ the modified Lean file's placeholder scan and `git diff --check`.
 | Earlier commutative selector-realization chain | Historical selector-generated realization; no new notation | Archived `SelectorRealization.lean`, `BoundaryProjector.lean`, `CohomologicalProjector.lean`, `CompactificationProjector.lean` | **ARCHIVED / SUPERSEDED**; [legacy realization directory](../archive/legacy-lean/HodgeConjecture/Realization/); excluded from active library | ROUTE |
 | Earlier linear coset-average comparison | $gH\mapsto[g]e_H$ | Archived `SheetLinearization.lean` | **ARCHIVED**; [source](../archive/legacy-lean/HodgeConjecture/Realization/Chow/SheetLinearization.lean); not an algebra map from pointwise multiplication to convolution | ROUTE |
 
+### Shared projective-line infinity classes (reuse cleanup, 2026-11-07)
+
+For an algebraically closed field `k`, the infinity classes belong to the
+existing ordinary Chow quotients in the cycle layer. Both realization
+namespaces retain compatibility names for these same source objects.
+The shared names are scoped under `ProjectiveLineCycles.Infinity` to avoid
+ambiguity in existing callers that open the cycle and realization namespaces.
+
+| Object / mathematical role | LaTeX notation | Lean representation | Implementation status / source | Proof role |
+| --- | --- | --- | --- | --- |
+| Integral Chow class of the reduced infinity point | $[\infty]_{\mathbf Z}\in CH_0(\mathbf P^1_k)$ | `ProjectiveLineCycles.Infinity.integralClass` | CANONICAL; [shared cycle source](../../HodgeConjecture/Cycles/ProjectiveLineChow.lean) | ROUTE |
+| Rational Chow class of the same reduced point | $[\infty]_{\mathbf Q}\in CH_0(\mathbf P^1_k)_{\mathbf Q}$ | `ProjectiveLineCycles.Infinity.rationalClass` | CANONICAL; [shared cycle source](../../HodgeConjecture/Cycles/ProjectiveLineChow.lean) | ROUTE |
+| Realization-namespace compatibility names for the same classes | Same integral and rational classes; no independent notation | `ProjectiveLineCycleClass.integralInfinityClass`; `ProjectiveLineCycleClass.rationalInfinityClass`; `ProjectiveLineBettiCycleClass.integralInfinityClass`; `ProjectiveLineBettiCycleClass.rationalInfinityClass` | COMPAT; direct reuse of the shared classes over `k`, or specialized to `ℂ`; [de Rham names](../../HodgeConjecture/Realization/DeRham/ProjectiveLineCycleClass.lean), [Betti names](../../HodgeConjecture/Realization/Betti/ProjectiveLineCycleClass.lean) | ROUTE |
+
+`ProjectiveLineCycles.Infinity.ne_genericPoint` supplies the shared point
+witness over any field. `ProjectiveLineCycles.Infinity.integralChowDegree_eq_one`
+and `ProjectiveLineCycles.Infinity.rationalChowDegree_eq_one` prove degree one.
+The corresponding realization-namespace theorems delegate to these proofs;
+they require no independent notation. The two realization maps retain their
+distinct targets.
+
+### Shared simplicial cochain construction (reuse cleanup, 2026-11-07)
+
+`SimplicialCochains` owns the rational cochain construction on an arbitrary
+simplicial set `S`. Singular cochains specialize it to `TopCat.toSSet.obj X`;
+the subcomplex API forwards to it on the actual subcomplex simplicial sets.
+
+| Object / mathematical role | LaTeX notation | Lean representation | Implementation status / source | Proof role |
+| --- | --- | --- | --- | --- |
+| Contravariant rational-function module | $I\mapsto\mathbf Q^I$ | `SimplicialCochains.functionModule` | CANONICAL; [shared source](../../HodgeConjecture/Realization/Betti/SimplicialCochains.lean) | ROUTE |
+| Rational functions on degree-n simplices | $C^n(S;\mathbf Q)=\mathbf Q^{S_n}$ | `SimplicialCochains.Cochain` | CANONICAL carrier; existing rational function modules | ROUTE |
+| Cochains with the original cosimplicial operators | $n\mapsto\mathbf Q^{S_n}$ with coface maps | `SimplicialCochains.cosimplicial` | CANONICAL; original simplicial faces act by precomposition | ROUTE |
+| Alternating coface complex and differential | $(C^\bullet(S;\mathbf Q),d)$ | `SimplicialCochains.complex`; `SimplicialCochains.differential` | CANONICAL; native alternating complex and square-zero proof | ROUTE |
+| Original simplicial pullback before and after taking the complex | $f^*:C^\bullet(T;\mathbf Q)\to C^\bullet(S;\mathbf Q)$ for $f:S\to T$ | `SimplicialCochains.cosimplicialPullback`; `SimplicialCochains.pullback` | CANONICAL; original precomposition, identity, composition and differential compatibility | ROUTE |
+| Singular-set specialization and its coefficient-functor compatibility name | Same construction for $S=\operatorname{Sing}(X)$; no independent notation | `SingularCochains.functionModule`; `SingularCochains.Cochain`; `SingularCochains.cosimplicial`; `SingularCochains.complex`; `SingularCochains.differential`; `SingularCochains.cosimplicialPullback`; `SingularCochains.pullback` | ADAPTER; direct reuse; [singular API](../../HodgeConjecture/Realization/Betti/SingularCochains.lean) | ROUTE |
+| Existing simplicial/subcomplex API names | Same cochains and maps; no independent notation | `SubcomplexCochains.Cochain`; `SubcomplexCochains.cosimplicial`; `SubcomplexCochains.complex`; `SubcomplexCochains.differential`; `SubcomplexCochains.pullback` | COMPAT; direct reuse; [subcomplex API](../../HodgeConjecture/Realization/Betti/SubcomplexCochains.lean) | ROUTE |
+
+The alternating-face formula is proved once in
+`SimplicialCochains.differential_apply`; both singular evaluation and native
+chain-dual coordinates reuse it. The existing `singularComplexIso` remains
+`Iso.refl`, and `singular_pullback` remains `rfl`. Degree-zero algebra and
+its cohomology comparison, union/pair cochains, and relative kernels retain
+their existing roles and APIs.
+
+The adjacent homotopy reuse cleanup (2026-11-07) makes
+`SingularHomotopy.dualHomotopy` an ADAPTER applying native `Homotopy.op`
+and `Functor.mapHomotopy` through the existing `RationalDual.functor`.
+Its public signature and component transposition are retained; the wrapper
+receives no independent notation. See the
+[homotopy source](../../HodgeConjecture/Realization/Betti/SingularHomotopy.lean).
+
+### Shared spanning and localized-quotient proofs (reuse cleanup, 2026-11-08)
+
+The existing carriers and theorem hypotheses are retained; these proofs
+receive no independent object notation.
+
+- `KaehlerDifferential.span_range_ιMulti_D_eq_top` and
+  `KaehlerDifferential.span_range_smul_ιMulti_D_eq_top` are public shared
+  lemmas in [Differential.lean](../../HodgeConjecture/CommutativeAlgebra/DeRham/Differential.lean).
+  The wedge/Leibniz proofs import them directly. The existing public
+  `AlgebraDeRham.span_exactWedges` and `AlgebraDeRham.span_smul_exactWedges`
+  names in [PresheafComplex.lean](../../HodgeConjecture/Realization/DeRham/PresheafComplex.lean)
+  delegate to the same two proofs.
+- `Stacks.Length.PrimeFiltration.isSimpleModule_localizedModule_quotient`
+  is the public shared simplicity lemma in
+  [PrimeFiltration.lean](../../HodgeConjecture/CommutativeAlgebra/Multiplicity/PrimeFiltration.lean).
+  [ModuleOrder.lean](../../HodgeConjecture/CommutativeAlgebra/Multiplicity/ModuleOrder.lean)
+  imports it directly for `localized_length_quotientPrime_eq_one`, replacing
+  its private copy. The prime-filtration consumer uses the same lemma.
+
+### Intrinsic local Poincaré comparison (2026-11-09)
+
+| Object | Mathematical role | Lean owner/API | Status and reuse | Role |
+| --- | --- | --- | --- | --- |
+| Actual chart extension and derivative cocycle | Reconstruct the full intrinsic family from one coordinate section on a covered open | `chartPullback_compatible`, `fromChart`, `chartEquiv` in `Holomorphic.AtlasCoordinates` | FORMAL; both inverse laws and differential compatibility proved; original section carriers | BRIDGE |
+| Local identification of complexes | The same intrinsic and coordinate section complexes in a chart | `HolomorphicAtlas.chartComplexIso` | FORMAL native complex isomorphism, built from actual chart equivalences | BRIDGE |
+| Shared coordinate constants | Original constant native zero-form section and its derivative-zero proof | `HolomorphicDeRham.constant`, `differential_constant` in `Holomorphic.FunctionAlgebra` | SINGLE OWNER; moved unchanged from `HolomorphicComplex`, public names retained | TARGET |
+| Intrinsic local primitives and constants | Actual neighborhood primitives of closed forms, and local constants in degree zero | `HolomorphicAtlas.locally_exact_positive`, `locally_constant_zero` | FORMAL; transports existing radial primitives and coordinate local constancy through actual charts | BRIDGE |
+| Native constant-sheaf lift | Same constant (pre)sheaf and actual sheafification augmentation | `SheafCohomology.ConstantLift` | SHARED OWNER; coordinate and intrinsic comparisons use the same native lift and monomorphism proof | BRIDGE |
+| Exact augmented-complex assembly | Native constant-to-complex map with full quasi-isomorphism | `SheafCohomology.AugmentedComplex` | SHARED OWNER; proved degree-zero and positive exactness criterion; both concrete consumers discharge its premises | BRIDGE |
+| Intrinsic holomorphic comparison | Constant complex sheaf to the original descended sheaf complex | `HolomorphicAtlas.comparison`, `comparison_quasiIso`; `Scheme.ComplexPoints.holomorphicComparison_quasiIso` | FORMAL in every degree; canonical smooth fixed-dimension scheme points, including dimension zero and original P¹; no supplied comparison datum | BRIDGE |
+
+See [0044](0044-intrinsic-holomorphic-poincare.md). Analytic/singular,
+proper comparison, the general period isomorphism and purity remain open.
+
+### Intrinsic forms and the all-degree algebraic map (2026-11-09)
+
+| Object | Mathematical role | Lean owner/API | Status and reuse | Role |
+| --- | --- | --- | --- | --- |
+| Coordinate form pullback | Pullback by the actual complex derivative in every slot | `HolomorphicForms.pullback`, `pullback_comp`, `pullback_differential` | FORMAL; original coefficient and section carriers, native exterior-derivative naturality | BRIDGE |
+| Intrinsic atlas forms | Compatible coordinate sections on every actual overlap | `HolomorphicAtlas.Forms`, `inChart` | FORMAL; submodule of the product of original sections, using Jacobian pullback equations | TARGET |
+| Descended sheaf complex | The intrinsic holomorphic de Rham complex | `HolomorphicAtlas.formsSheaf`, `differential`, `complex` | FORMAL; unique gluing, restriction and d² = 0 proved | TARGET |
+| Shared section algebra and restrictions | Original structure-morphism constants on Γ(X,U) | `SchemeDeRham.sectionAlgebra`, `sectionMap` in `Geometry.SectionAlgebra` | SINGLE OWNER; extracted unchanged from scheme de Rham; regular evaluation uses the same instance | TARGET |
+| Shared holomorphic-function scalars | Native function ring acting on original coordinate sections | `Functions`, `functionScalarTower` in `Holomorphic.FunctionAlgebra` | SINGLE OWNER; extracted unchanged from the Kähler module | TARGET |
+| All-degree algebraic forms map | Original Kähler exterior powers mapped by a determinant wedge | `HolomorphicDeRham.algebraicFormsMap`, `algebraicFormsMap_one`, `algebraicComplexMap` | FORMAL; extends original degree-one map; precomposition, pullback, restriction and d compatibility proved | BRIDGE |
+| Canonical scheme forms comparison | Actual chart evaluations glued into intrinsic analytic forms | `Scheme.ComplexPoints.algebraicFormsMap`, `algebraicFormsComparison` | FORMAL; original algebraic forms presheaf, section restrictions and differential; no supplied descent premise or asserted isomorphism | BRIDGE |
+
+See [0043](0043-holomorphic-forms-descent.md). The intrinsic local Poincaré
+comparison is now proved in [0044](0044-intrinsic-holomorphic-poincare.md).
+Analytic/singular and proper comparison and purity remain open.
+
+### Canonical analytic atlas and actual regular evaluations (2026-11-09)
+
+| Object / mathematical role | LaTeX notation | Lean representation | Implementation status / source | Proof role |
+| --- | --- | --- | --- | --- |
+| Original polynomial coordinate model | $\operatorname{Spec}(\mathbf C[T_1,\ldots,T_d])(\mathbf C)\cong\mathbf C^d$ | `PolynomialComplexPoints.homeomorph`, `homeomorph_symm_apply` | FORMAL; shared affine structure map and same evaluations/topology, inverse is original scheme-valued polynomial evaluation | BRIDGE |
+| Actual analytic étale inverse | Prose only: local inverse of the original scheme map | `exists_analyticOpenPartialHomeomorph_of_etale` | FORMAL; standard-étale equations and native analytic implicit function; retains complex analytic regularity | BRIDGE |
+| Canonical smooth analytic atlas | $X(\mathbf C)$ with model $\mathbf C^d$ | `analyticChartedSpace`, `analyticIsManifold` | FORMAL for schemes smooth of fixed relative dimension d; constructed atlas covers original points and has proved analytic transitions; topology retained | TARGET |
+| Holomorphy of original sections and maps | $g^{an}$, $f^{an}$ | `contMDiffOn_evalOrZero`, `contMDiff_map` | FORMAL; every scheme open, scheme maps between different fixed dimensions, same section pullbacks | BRIDGE |
+| Actual native function evaluation maps | $\Gamma(X,U)\to\mathcal O(U(\mathbf C))$ and chart expressions | `regularEvaluation`, `chartEvaluation` | FORMAL; native C∞ functions; explicit original constant scalar structure; restriction, pullback and pointwise chart compatibility proved | BRIDGE |
+| Smoothness of original glued P¹ | $\mathbf P^1_k\to\operatorname{Spec}k$ | `projectiveLine_smoothOfRelativeDimension` | FORMAL; actual two polynomial charts and source locality, no substitute Proj model or smoothness premise | BRIDGE |
+
+See [0042](0042-canonical-analytic-atlas.md). Coordinate forms and d still
+need descent through this atlas before claiming an intrinsic complex on
+all smooth canonical point spaces. The all-degree algebraic forms map,
+analytic/singular and proper comparisons and purity remain open.
+
+### Holomorphic complex and local Poincaré comparison (2026-11-09)
+
+| Object / mathematical role | LaTeX notation | Lean representation | Implementation status / source | Proof role |
+| --- | --- | --- | --- | --- |
+| Native complex alternating coefficients | $\operatorname{Alt}_{\mathbf C}^n(E,\mathbf C)$ | `HolomorphicForms.Coeff E n` | ABBREVIATION of native `ContinuousAlternatingMap`; vanishing above actual finite dimension proved | TARGET |
+| Native holomorphic coordinate sections | $\Omega_{hol}^n(U)$ | `HolomorphicForms.Sections U n` | ABBREVIATION of bundled complex C∞ maps on U into those coefficients; no alternate function carrier | TARGET |
+| Auxiliary local extension | Prose only; no new geometric object | `extend`, `contDiffAt_extend`, `differential_eq_of_extension` | LOCAL DERIVATIVE HELPER; extension by zero is not asserted holomorphic outside U; local-extension independence proved | BRIDGE |
+| Actual exterior differential and restriction | $d$, $\omega\mapsto\omega|_V$ | `HolomorphicForms.differential`; `restrict`; `restrict_differential`; `differential_comp` | FORMAL; native `extDeriv`, complex linearity, holomorphic regularity, restriction and d² = 0 | TARGET |
+| Holomorphic sheaf complex and constant augmentation | $\mathbf C_E[0]\to\Omega_{hol}^{\bullet}$ | `HolomorphicDeRham.formsSheaf`; `complex`; `constantSheaf`; `augmentation`; `comparison` | FORMAL; original smooth-function sheaf and actual constant-sheaf sheafification; genuine cochain map | BRIDGE |
+| Normalized integral primitive | $F(x)=\int_{[a,x]}\eta$, $F(a)=0$ | `segmentPrimitive`; `primitive`; `differential_primitive` | FORMAL for an actual closed one-form on a convex coordinate open; actual segment integral, not a chosen compatibility witness | BRIDGE |
+| Actual radial contraction | $K_a\eta=\int_0^1 t^{p-1}\iota_{x-a}\eta(a+t(x-a))\,dt$ | `contraction`; `radialHomotopy`; `differential_radialHomotopy` | FORMAL; native insertion and interval integral, complex C∞ regularity and dK + Kd = id in positive degree. Degree-one section equals `primitive` | BRIDGE |
+| Local exactness on the same sheaves | Prose only: local constants and radial primitives | `locally_constant_zero`; `locally_exact_positive`; `LocalExactness.exact_of_exists_local_preimage` | FORMAL in every positive degree and every coordinate dimension; same germ representatives and shrinking maps | BRIDGE |
+| Full coordinate Poincaré comparison | Same constant-to-holomorphic map | `exact_positive`; `complex_exactAt_positive`; `comparison_quasiIso` | FORMAL; full sheaf quasi-isomorphism in every coordinate dimension. Previous degree-one and complex-line results specialize the same proof | BRIDGE |
+| Native scalar holomorphic-function ring | $\mathcal O(U)$ | `HolomorphicDeRham.Functions U` | ABBREVIATION of the existing native scalar bundled-map algebra; `functionsEquiv` identifies zero-forms | TARGET |
+| Existing universal Kähler source and analytic differential | $\Omega^1_{\mathcal O(U)/\mathbf C}\to\Omega^1_{hol}(U)$, $da\mapsto d(\varphi(a))$ | `holomorphicDerivation`; `kaehlerRealization`; `algebraicOneFormsMap` | FORMAL; native Leibniz rule and existing Kähler lift/pullback. Genuine φ remains the algebra map; general scheme evaluation is not supplied by this construction | BRIDGE |
+| Original polynomial evaluation | $\mathbf C[T]\to\mathcal O(U)$, $T\mapsto z$ | `polynomialEvaluation`; `polynomialEvaluation_apply` | FORMAL; native `Polynomial.aeval` at the actual coordinate function; ordinary evaluations agree | BRIDGE |
+
+See [0040](0040-holomorphic-derham-local-poincare.md) and
+[0041](0041-higher-degree-holomorphic-poincare.md). These coordinate
+objects do not install a manifold structure on every canonical scheme
+point space. The smooth fixed-relative-dimension atlas is constructed
+above. Intrinsic forms descent and the all-degree forms map are constructed
+in [0043](0043-holomorphic-forms-descent.md), and intrinsic local Poincaré
+comparison in [0044](0044-intrinsic-holomorphic-poincare.md).
+Analytic/singular and proper comparison and purity retain their open status.
+
+### Canonical scheme complex points and Betti target (2026-11-08)
+
+| Object / mathematical role | LaTeX notation | Lean representation | Implementation status / source | Proof role |
+| --- | --- | --- | --- | --- |
+| Actual complex points over the same base | $X(\mathbf C)=\{p:\operatorname{Spec}\mathbf C\to X:fp=1\}$ | `AlgebraicGeometry.Scheme.ComplexPoints f`; `hom`; `Mem` | FORMAL; [topology](../../HodgeConjecture/Geometry/ComplexPoints.lean) adapted from pinned Axiom Weil; actual section subtype, independently generated regular-function topology | TARGET |
+| Regular evaluation and actual scheme maps | $g(p)$, $f_{an}$ | `ComplexPoints.eval`; `evalHom`; `map`; `continuous_map` | FORMAL; original section restrictions and composition; [functoriality](../../HodgeConjecture/Geometry/ComplexPointsFunctoriality.lean), open/closed immersion and affine zero-locus proofs | TARGET |
+| Original algebra-valued affine point model | $\operatorname{Hom}_{\mathbf C\text{-alg}}(A,\mathbf C)$ | `AffineComplexPoints.algebraPointSpace`; `homeomorph` | ADAPTER to existing `AlgHom` and `Spec` maps; independently defined evaluation topology agrees by proof | TARGET |
+| Canonical scheme point and Betti functors | $X\mapsto X(\mathbf C)$, $X\mapsto H_B^n(X,\mathbf Q)$ | `SchemeBetti.space`; `complexPointsFunctor`; `Cohomology`; `pullback`; `cohomologyFunctor` | FORMAL; `Cohomology` is an abbreviation for existing singular cohomology; original continuous pullbacks, no new cochain carrier | TARGET |
+| Original P¹ point space identified with canonical space | Same P¹ scheme sections; no new geometric object | `ProjectiveLineComplexPoints.canonicalHomeomorph` | PROVED identity on scheme morphisms; original affine charts are open embeddings and cover the independently constructed topology | BRIDGE |
+| Rational transport and canonical conjugation | Prose only: $e_{\mathbf C}=\mathbf C\otimes e$ | `RationalComplexification.conjugateSubmodule_map`; `PureRationalHodgeStructure.transport` | FORMAL; native scalar extension, actual opposed filtration and rational membership preserved | BRIDGE |
+| Scheme Hodge target on canonical Betti group | Same $F^p$ and rational diagonal intersection | `SchemeDeRham.complexPointsHodgeFiltration`; `complexPointsRationalHodgeClasses` | ABBREVIATIONS of the existing scheme adapter; period comparison still explicit, separate free topological-space argument removed | TARGET |
+| Existing P¹ periods, pure structure and cycle square on canonical target | Same period map, 2πi, filtration and ordinary cycle class | `ProjectiveLineCanonicalComparison.bettiEquiv`; `comparison`; `pureHodgeStructure`; `cycleClass` | PROVED transport by original homeomorphism pullbacks, not a general period or purity instance | BRIDGE |
+
+These are the actual scheme and original singular objects. A holomorphic
+structure sheaf/complex, local Poincaré, analytic/singular, proper
+algebraic/analytic comparison and general purity remain open. See
+[0039](0039-canonical-scheme-betti-target.md) and the
+[source attribution](../../third_party/axiom-weil/README.md).
+
+### Tate/Hodge compatibility for the existing target bridge (2026-11-08)
+
+| Object / mathematical role | LaTeX notation | Lean representation | Implementation status / source | Proof role |
+| --- | --- | --- | --- | --- |
+| Canonical scalar extension of the same rational product | $\mathbf C\otimes_{\mathbf Q}(H\times K)\simeq(\mathbf C\otimes H)\times(\mathbf C\otimes K)$ | `RationalComplexification.prodEquiv` | ADAPTER to native `TensorProduct.prodRight`; canonical conjugation compatibility proved | TARGET |
+| Product subspace and decreasing filtration on the original carrier | $F^k(H\oplus K)=F^kH\oplus F^kK$ | `RationalComplexification.productSubmodule`; `HodgeFiltration.product` | FORMAL; pulled back through the native equivalence; no alternate rational carrier | TARGET |
+| Pure same-weight product | $S\oplus T$ | `PureRationalHodgeStructure.product` | FORMAL; finite dimension, boundedness and opposedness proved from the original structures | TARGET |
+| Cohomological Tate line and original Tate block | $\mathbf Q(-p)$, $\mathbf Q(-p)\oplus H$ | `HodgeFiltration.tate`; `PureRationalHodgeStructure.tate`; `tateBlock` | FORMAL; type (p,p), weight 2p; original rational carriers ℚ and ℚ × H | TARGET |
+| Actual rational Hodge-morphism predicate | $f_{\mathbf C}(F^k)\subseteq F^k$ | `PureRationalHodgeStructure.IsHodgeMorphism`; `map_mem_piece` | FORMAL; reuses `IsFilteredMap` and canonical conjugation; all recovered types preserved | BRIDGE |
+| Existing graph projector and lower-left line map | $e_\alpha(t,x)=(t,t\alpha)$, $t\mapsto t\alpha$ | Existing `BlockGraphProjector.operator`; `lineMap`; existing `ClassGraphProjector` aliases | REUSED; no second operator or encoding | BRIDGE |
+| Proved graph/Hodge comparison | $e_\alpha\text{ Hodge}\iff\alpha\in\operatorname{Hdg}^p(S)$ | `HodgeFiltration.graph_isFiltered_iff`; `PureRationalHodgeStructure.graph_isHodge_iff` | FORMAL; [Tate source](../../HodgeConjecture/Realization/TateHodgeStructure.lean), independent of cycles | BRIDGE |
+| Existing compatibility input and target equivalence | Same propositions; no new carrier or interface | `classGraphHodgeCompatibility`; `rationalHodgeConjectureAt_iff_hodgeGraphLifts` | PROVED compatibility; conditional old equivalence retains actual Chow construction/detection; [adapter](../../HodgeConjecture/Realization/Chow/FilteredTateGraphProjector.lean) | BRIDGE |
+
+The actual P¹ model verifies the compatibility. Wrong-Tate-cutoff and
+proper-subspace controls prevent the predicate from accepting every graph.
+See [0038](0038-tate-hodge-graph-bridge.md). General geometric comparison,
+purity, Chow construction/detection and class-dependent coverage remain open.
+
+### Cyclic filtered detector of the existing projector defect (2026-11-08)
+
+| Object / mathematical role | LaTeX notation | Lean representation | Implementation status / source | Proof role |
+| --- | --- | --- | --- | --- |
+| Existing compactified closure and its existing defect | $q=C(x)$, $d=q^2-q$ | `C.closureClass x`; `C.convolutionDefect x`; existing `projectorIdempotenceDefect` | REUSED; no second defect definition | ROUTE |
+| Native polynomial action on the same algebra | $T\cdot a=qa$ | `ProjectorDefectModule.Ambient q := Module.AEval ℚ A q` | ADAPTER; native action alias | ROUTE |
+| Actual cyclic defect submodule and its carrier | $M_q=\mathbf Q[T]d\subset A$ | `ProjectorDefectModule.submodule`; `Carrier`; `generator` | FORMAL; native span and subtype, finite presentation; [source](../../HodgeConjecture/Correspondence/FilteredProjectorDefect.lean) | ROUTE |
+| Injective inclusion and canonical cyclic presentation | $M_q\hookrightarrow A$, $p\mapsto p(q)d$ | `embedding`; `presentation` | FORMAL; inclusion retains original equalities; presentation surjective | ROUTE |
+| Native exact relation ideal | $\operatorname{Ann}_{\mathbf Q[T]}M_q=\{p:p(q)d=0\}$ | `Module.annihilator ℚ[X] (Carrier q)`; `mem_annihilator_iff`; `presentation_ker` | REUSED carrier; relation and presentation-kernel comparisons proved | ROUTE |
+| Quotient polynomial-degree filtration | $F_nM_q=\operatorname{span}_{\mathbf Q}\{q^id:0\leq i\leq n\}$ | `ProjectorDefectModule.filtration`; `isModuleFiltration` | FORMAL; image of native `Polynomial.degreeLE`, finite stages and exhaustion | ROUTE |
+| Raw-closure specialization | Same module, filtration and inclusion at $q=C(x)$; no independent carrier | `C.DefectModule x`; `C.defectFiltration x`; `C.defectEmbedding x` | ABBREVIATIONS; [adapter](../../HodgeConjecture/Boundary/FilteredProjectorDefect.lean) | ROUTE |
+| Original boundary and detection comparisons | $r(M_q)=0$, $M_q=0\iff d=0$ | `restriction_defectEmbedding`; `defectModule_detects`; `zeroDefectWitness`; `ChowLocalization.defectModule_embedding_mem_range` | FORMAL; Chow exactness and actual algebra restriction retain their explicit hypotheses | ROUTE |
+
+This is an algebraic degree filtration, not the target's Hodge filtration.
+The action variable is not identified with a geometric boundary equation
+or a twistor/Rees parameter. No mixed Hodge module, connection, geometric
+comparison or zero-defect theorem is inferred. See
+[0037](0037-filtered-projector-defect.md) for the nonzero raw-closure and
+strict-filtration controls.
+
+### General filtered rational Hodge target (2026-11-08)
+
+| Object / mathematical role | LaTeX notation | Lean representation | Implementation status / source | Proof role |
+| --- | --- | --- | --- | --- |
+| Complexification and rational embedding | $H_{\mathbf C}=\mathbf C\otimes_{\mathbf Q}H$, $x\mapsto1\otimes x$ | `RationalComplexification.Space`; `embedding` | CANONICAL; injectivity proved in [HodgeFiltration.lean](../../HodgeConjecture/Realization/HodgeFiltration.lean); P¹ wrappers reuse it | TARGET |
+| Canonical rational real structure and conjugate subspace | $c\otimes x\mapsto\bar c\otimes x$, $\bar W$ | `RationalComplexification.conjugation`; `conjugateSubmodule` | CANONICAL; P¹ wrappers reuse it | TARGET |
+| Rational diagonal intersection of a filtration | $\{x:1\otimes x\in F^p\cap\overline{F^p}\}$ | `HodgeFiltration.rationalHodgeClasses F p` | FORMAL construction independent of cycles; not a purity claim for arbitrary F | TARGET |
+| Pure rational Hodge structure and its diagonal piece | $(H,F,2p)$, $H^{p,p}$ | `PureRationalHodgeStructure H (2*p)`; `piece`; `rationalHodgeClasses` | FORMAL interface with finite dimension, boundedness and opposedness; actual geometric P¹ instance proved | TARGET |
+| Existing cycle-model adapter | Same target and original cycle map; no new carrier | `HodgeFiltration.cycleClassModel`; `PureRationalHodgeStructure.cycleClassModel` | ADAPTER; type proof supplied separately in [FilteredHodgeTarget.lean](../../HodgeConjecture/Realization/FilteredHodgeTarget.lean) | BRIDGE |
+| Actual transported scheme filtration and rational Betti target | $\mathrm{comp}(F^pH^n_{dR})$, $H_B^n(\mathbf Q)\cap F^p\cap\bar F^p$ | `SchemeDeRham.bettiHodgeFiltration`; `rationalBettiHodgeClasses` | CONDITIONAL on explicit comparison and intended analytic space; [scheme adapter](../../HodgeConjecture/Realization/DeRham/BettiHodgeTarget.lean); general geometric comparison and purity OPEN | TARGET |
+
+The existing P¹ target is definitionally the general scheme specialization
+and the target of its proved pure weight-two structure. The ordinary cycle
+model now delegates to the shared adapter; no target is defined as a cycle
+image. See [0036](0036-filtered-hodge-target-and-vanishing.md) for validation,
+the upstream comparison audit and the cross-repo vanishing dictionary.
+
 ### Current object index: cycles, codimension, and the finite-norm bridge
 
 Every notation table uses separate **Object / mathematical role**,
@@ -5834,7 +6051,7 @@ the hypotheses of their geometric applications.
 | Inertia-invariant pointwise selector | $gq=q\ (g\in I)$ | `InertiaInvariantSelector` | Existing definitions/adapters; [source](../../HodgeConjecture/Boundary/Sheets/GenericProjector.lean) | ROUTE |
 | Inertia orbit index at the marked sheet | $[I:I\cap H]$ | `inertiaQuotientIndex` | Existing definitions/adapters; [source](../../HodgeConjecture/Boundary/Sheets/InertiaQuotient.lean) | ROUTE |
 | An inertia orbit crosses the selected-set boundary | $\exists g\in I,\ s\in A:\ gs\notin A$ | `InertiaCrosses`; `baseSheet` | Existing definitions/adapters; [source](../../HodgeConjecture/Boundary/Sheets/InertiaSaturation.lean) | ROUTE |
-| Marked evaluation/augmentation and selector-coordinate adapters | $\operatorname{ev}_H:A_H\to\mathbf Q,\ A_H\simeq\mathbf Q\oplus E_H,\ P_{q_H-1}$ | `baseEvaluation`; `baseAugmentation`; `markedAugmentedAlgebra`; `selectorDecomposition`; `graphOperator`; `decomposition`; `multiplication` | Existing definitions/adapters; [source](../../HodgeConjecture/Boundary/Sheets/MarkedBlockProjector.lean) | ROUTE |
+| Marked evaluation/augmentation and selector-coordinate adapters | $\operatorname{ev}_H:A_H\to\mathbf Q,\ A_H\simeq\mathbf Q\oplus E_H,\ P_{q_H-1}$ | `baseEvaluation`; `baseAugmentation`; `markedAugmentedAlgebra`; `selectorDecomposition`; `graphOperator`; `decomposition`; `multiplication` | ADAPTER; the two linear splittings directly specialize `MarkedAugmentedAlgebra.decomposition` and `MarkedAugmentedAlgebra.selectorDecomposition` (reuse cleanup, 2026-11-07); public coordinate formulas and notation retained; [source](../../HodgeConjecture/Boundary/Sheets/MarkedBlockProjector.lean) | ROUTE |
 | Integral conjugate-tensor evaluation into the same normalization | $\varepsilon_B:\bigotimes_{\sigma:L\hookrightarrow N}\operatorname{IntCl}_B(L)\to\operatorname{IntCl}_B(N)$ | `normalizationTensorEvaluation` | Used by the selected-component construction in `FiniteEtaleNormalClosure.lean`; its output is the normal-closure refinement, not SP109's cycle family; [source](../../HodgeConjecture/Boundary/Normalization/NormalizationTensor.lean) | ROUTE |
 
 #### Collision: retained auxiliary objects
@@ -5992,3 +6209,186 @@ or hypothesis in its statement.
 - [ ] The source and claim ledgers describe only the active proof path.
 - [x] The working-tree changes introduce no project axiom, `sorry`, or
       `admit` under `HodgeConjecture/`.
+
+## Singular sheaf resolution follow-up (2026-11-09)
+
+| Object | Mathematical role | Lean owner/API | Status and reuse | Role |
+| --- | --- | --- | --- | --- |
+| Fixed-ring sheafification and its complex unit | Native functor and unit used by both realizations | `SheafCohomology.sheafification`, `sheafifyComplex`, `toSheafifyComplex` in `LinearSheaves` | SINGLE OWNER; algebraic de Rham delegates to these helpers | ROUTE |
+| Existing global sections | Evaluation on the original top open | `SheafHypercohomology.globalSections` in `LinearSheaves` | MOVED UNCHANGED; original public name retained | TARGET |
+| Original singular cochains on opens | Existing singular simplices, restrictions and differential | `SingularCochains.presheaf`, `presheafComplex`, `sectionComplexIso` | ADAPTER; evaluation is isomorphic to the same original singular complex | TARGET |
+| Singular sheaf complex | Native sheafification of those original cochains | `SingularCochains.sheafComplex` | FORMAL; uses the shared sheafification, without claiming raw cochains are a sheaf | TARGET |
+| Rational constant-sheaf resolution | Same native constant-sheaf constructor, with rational coefficients | `SingularCochains.comparison_quasiIso`; `Scheme.ComplexPoints.singularSheafComparison_quasiIso` | FORMAL local all-degree comparison; actual smooth canonical points; shared local-stalk and augmented-complex proofs | BRIDGE |
+| Actual global cochain unit | Original global cochains to sections of the sheaf complex | `SingularCochains.globalCochainsToSheaf` | FORMAL MAP; quasi-isomorphism to termwise global sections is proved under the topology hypotheses in 0048; derived-section comparison remains OPEN | BRIDGE |
+
+The [singular sheaf checkpoint](0045-singular-cochain-sheaf-resolution.md)
+uses the existing rational singular cochains on native open subspaces.
+Sheafification, its complex/unit and the existing global-sections
+definition now have one shared owner in `SheafCohomology.LinearSheaves`;
+the de Rham wrappers reuse them. `LocalExactness` shares one local-stalk
+lifting proof between sheaves and sheafified presheaves. `ConstantLift`
+shares its local-injectivity proof for both augmentation forms.
+The all-degree local rational resolution is proved on canonical smooth
+analytic points. Its global derived-section and complex-coefficient
+comparisons remain open; no comparison object is supplied as an input.
+
+## Arbitrary open-cover comparison follow-up (2026-11-09)
+
+| Object | Mathematical role | Lean owner/API | Status and reuse | Role |
+| --- | --- | --- | --- | --- |
+| Indexed small simplicial subcomplex | Original simplices wholly in one member | `SingularSubcomplexes.coverSingular` | NATIVE SUPREMUM of existing `subsetSingular`; Boolean family equals the original binary union | TARGET |
+| Cover-independent iteration | Original weights mesh, affine naturality and native iteration | `SingularSubdivisionIteration`, existing namespace/API | SINGLE OWNER; extracted unchanged, no independent subdivision implementation | ROUTE |
+| Supported operator and homotopy restriction | Native subcomplex chain objects identified with their existing inclusion ranges | `SubcomplexChainCoordinates.restrictOperator`, `restrictMap`, `restrictHomotopy` | SHARED PROOFS; indexed and legacy two-open constructions use the same lifting argument | ROUTE |
+| Actual indexed chain comparison | Native small-chain inclusion | `CoverSmallChains.inclusion_quasiIso`, `homologyIso` | FORMAL for any indexed open cover, without finite or countable index assumptions | BRIDGE |
+| Original cochain restriction | Rational functions on the original singular simplices | `CoverSmallCochains.restriction_quasiIso`, `restriction_surjective` | FORMAL; existing exact dualization and `RelativeCochains.extension` reused; no new cochain carrier | BRIDGE |
+| Per-cover vanishing kernel | Existing relative cochain kernel of original restriction | `CoverSmallCochains.vanishingComplex_acyclic`, `exists_vanishing_primitive` | FORMAL in all degrees, including zero; actual primitives retain vanishing on that cover | BRIDGE |
+| Native refinement maps | Original subcomplex inclusions and contravariant pullbacks | `refinementMap`, `refinementRestriction` | FORMAL; comparisons commute and genuine open-cover refinements are quasi-isomorphisms | BRIDGE |
+
+The previous `smallChains` name delegates to the shared native
+`chainSubmodule`, replacing its second equal comap description. The old
+two-open smallness, support and comparison proofs specialize the indexed
+proof. Public names and original native complexes remain available.
+The actual global-unit kernel identification and acyclicity are now
+proved in 0047 below; 0048 proves global surjectivity and the
+termwise-section comparison under its topology hypotheses. Derived
+sections and complex coefficients remain open. See
+[0046](0046-arbitrary-open-cover-small-chains.md).
+
+## Actual global-unit kernel follow-up (2026-11-09)
+
+| Object | Mathematical role | Lean owner/API | Status and reuse | Role |
+| --- | --- | --- | --- | --- |
+| Local zero criterion for sheafification | Actual native unit on every original open | `SheafCohomology.toSheafify_app_eq_zero_iff` in `SheafifyKernel` | SHARED PROOF; original stalk isomorphism and native germ equality, any commutative coefficient ring | ROUTE |
+| Locally zero original cochain | Predicate on the existing rational cochain carrier | `SingularCochains.LocallyZero`, `globalCochainsToSheaf_eq_zero_iff` | FORMAL KERNEL CRITERION for the existing global unit; no replacement cochain object | BRIDGE |
+| Cover witnesses for the actual kernel | Original locally zero cochain vanishes on one point-indexed open cover | `exists_point_cover_of_locallyZero`, `globalCochainsToSheaf_ker_eq_iSup` | FORMAL; reuses original `coverSingular` and relative restriction kernels; no common fixed cover assumed | BRIDGE |
+| Native complex kernel, degreewise | Evaluate the actual categorical kernel inclusion | `SheafCohomology.ComplexKernel.range_inclusion`, `exists_preimage`, `inclusion_d` | SHARED native exact-kernel-sequence proof; no second kernel complex | ROUTE |
+| Actual global sheafification kernel | Native kernel of `globalCochainsToSheaf` | `SingularCochains.sheafificationKernel`, `sheafificationKernelInclusion` | ABBREVIATIONS of the native kernel and its original inclusion | TARGET |
+| Acyclicity of that kernel | Closed elements have primitives in the same native kernel | `exists_kernel_primitive`, `sheafificationKernel_acyclic`; `Scheme.ComplexPoints.singularSheafificationKernel_acyclic` | FORMAL in every degree on every topological space; original cover primitives reused and lifted through the native inclusion | BRIDGE |
+
+The [global-kernel checkpoint](0047-global-sheafification-kernel.md)
+connects the existing global unit to the original cover kernels. The
+actual kernel is acyclic; 0048 below proves global surjectivity and
+the termwise-section comparison under its topology hypotheses.
+Sheaf-term acyclicity and the derived-section comparison remain open,
+together with complex-coefficient compatibility.
+
+## Actual global-unit comparison follow-up (2026-11-09)
+
+| Object | Mathematical role | Lean owner/API | Status and reuse | Role |
+| --- | --- | --- | --- | --- |
+| Local sheafification representatives | Actual local lifts and germ equality for the existing unit | `SheafCohomology.toSheafify_exists_local_lift`, `toSheafify_germ_eq_iff` in `SheafifyLocalLifts` | SHARED native stalk argument; any commutative coefficient ring, no new sheaf object | ROUTE |
+| Open cochain extension | Extend the original local rational simplex function | `SingularCochains.openExtension`, `pullback_openExtension` | ADAPTER to existing `RelativeCochains.extension` and existing subset/subspace maps | ROUTE |
+| Cochain patching on a closed cover | One original cochain locally agreeing with the representatives | `exists_cochain_locally_eq_of_closed_cover` in `SingularCochainPatching` | FORMAL; finite local germ agreements and original simplex values; no replacement carrier | ROUTE |
+| Original global unit | Original global cochains to the original sheaf complex's termwise sections | `globalCochainsToSheaf_surjective`, `globalCochainsToSheaf_quasiIso`, `globalCochainsToSheaf_homologyIso` | FORMAL on paracompact Hausdorff spaces; map and native kernel from 0047 reused | BRIDGE |
+| Native kernel comparison criterion | Surjectivity plus actual native-kernel acyclicity | `ComplexKernel.quasiIso_of_surjective_of_acyclic` in `ComplexKernelComparison` | SHARED native short exact sequence and original homology sequence, with all premises discharged for the unit | ROUTE |
+| Canonical scheme topology hypotheses | Hausdorffness and paracompactness of original affine and P¹ points | `PolynomialComplexPoints.t2Space`, `paracompactSpace`; `ProjectiveLineComplexPoints.canonicalT2Space`, `canonicalParacompactSpace` | FORMAL from existing independent homeomorphisms; installed locally, no new topology or global transported instances | BRIDGE |
+
+The [global-unit checkpoint](0048-global-singular-sheaf-sections.md)
+compares the same unit with ordinary termwise sections. Sheaf-term
+acyclicity, derived sections, the needed general scheme point-topology
+properties and complex coefficients remain open.
+
+## Open-subspace lifting and flasqueness follow-up (2026-11-09)
+
+| Object | Mathematical role | Lean owner/API | Status and reuse | Role |
+| --- | --- | --- | --- | --- |
+| Existing open restriction objects | Original ambient presheaf and sheaf evaluated on subopens | `restrictPresheaf`, `local_restrictSheaf` in `OpenImmersionRestriction` | REUSED UNCHANGED; no second restriction functor | TARGET |
+| Native open/sheafification comparison | Sheafification commutes with this original restriction, including the unit | `SheafCohomology.sheafifyOpenIso`, `toSheafify_sheafifyOpenIso` | SHARED native cover-lifting and compatibility proof, any fixed commutative coefficient ring | BRIDGE |
+| Original cochains on a subopen | Original native simplex functions identified with their ambient-image version | `SingularCochains.openPresheafIso` | FORMAL via the original cochain functor and native image homeomorphism, without a reconstructed differential or cochain carrier | BRIDGE |
+| Section lifts on an actual open | The existing ambient unit and original ambient cochain module | `toSheafify_open_surjective`, `exists_global_cochain_open_lift`, `cochainSheaf_restriction_surjective` | FORMAL; original global-surjectivity proof and extension by zero reused; only the smaller open needs paracompact Hausdorff topology | ROUTE |
+| Flasque singular cochain sheaf | Native flasque property of the same original module-valued sheaf | `cochainSheaf_isFlasque`, `cochainSheaf_isFlasque_of_locallyCompact_secondCountable` | FORMAL in every degree with explicit all-open paracompactness, derived from local compactness and second countability in the canonical examples | BRIDGE |
+| Canonical open-subspace topology | Local compactness and countable bases on the original affine and P¹ point spaces | `PolynomialComplexPoints.locallyCompactSpace`, `secondCountableTopology`; P¹ `canonicalLocallyCompactSpace`, `canonicalSecondCountableTopology` | FORMAL from original homeomorphisms and actual open chart quotient; no new topology or global transported instance | BRIDGE |
+
+The [open-restriction checkpoint](0049-open-singular-sheaf-restrictions.md)
+establishes native flasqueness of the existing sheaf terms. The 0050
+checkpoint below proves positive derived-section vanishing of those
+terms on every open. The bounded-below whole-complex comparison,
+general scheme topology and complex coefficients remain open.
+
+## Derived sections of flasque terms follow-up (2026-11-10)
+
+| Object | Mathematical role | Lean owner/API | Status and reuse | Role |
+| --- | --- | --- | --- | --- |
+| Original right-derived postcomposition comparison | Exact target-coefficient forgetting on the same injective resolution | `BoundedBelowDerived.rightDerivedPostcomposeIso` in `SheafCohomology.DerivedPostcompose` | MOVED UNCHANGED; original public name and de Rham re-export retained | ROUTE |
+| Existing abelian coefficient functor | Same original module-sheaf sections and restrictions with scalar action forgotten | `LinearCoefficients.underlying` | SAME FUNCTOR; native site target explicit; exactness and injective Čech-acyclicity reused | ROUTE |
+| Native module cohomology forgetting isomorphism | Compare the actual module-valued derived sections with their underlying groups | `LinearCoefficients.cohomologyForgetIso` | SHARED all-space/all-open owner; old `SchemeDeRham.moduleCohomologyForgetIso` delegates with original endpoints | BRIDGE |
+| Derived vanishing for flasque coefficients | Original derived sections on every open | `BasisCycles.isZero_Hobj_of_isFlasque`, `LinearCoefficients.isZero_cohomology_of_isFlasque` in `FlasqueDerived` | FORMAL; existing complete Čech-to-derived criterion and flasque Čech theorem applied to all opens and covers; no new resolution or vanishing premise | BRIDGE |
+| Original singular sheaf terms | Existing `SingularCochains.cochainSheaf X q` | `isZero_cochainSheaf_cohomology`, `isZero_cochainSheaf_derivedGlobalSections`; scheme wrappers | FORMAL positive derived-section vanishing on every open under the already proved flasqueness hypotheses | BRIDGE |
+| Existing bounded-below comparison | Native underived-to-derived map for the whole original singular sheaf complex | `SheafHypercohomology.comparison` | FORMAL in the subsequent 0051 checkpoint; original map retained, native flasque exactness discharges invertibility | TARGET |
+
+The [derived-vanishing checkpoint](0050-flasque-derived-sections.md)
+retains the original coefficient categories and global-sections functor.
+The subsequent [whole-complex checkpoint](0051-singular-derived-comparison.md)
+proves that comparison invertible. General scheme topology, complex
+coefficients and subsequent geometric comparisons remain open.
+
+## Whole-complex derived comparison follow-up (2026-11-10)
+
+| Object | Mathematical role | Lean owner/API | Status and reuse | Role |
+| --- | --- | --- | --- | --- |
+| Original generic hypercohomology construction | Existing derived target, unit and homology maps | `SheafCohomology.Hypercohomology` | MOVED UNCHANGED from the de Rham entry point; original public names and scheme wrappers retained | ROUTE |
+| Original native cycles | Bound-by-bound exactness on sections | `FlasqueComplex.cycles_shortExact`, `cycles_isFlasque`, `sections_acyclic` | FORMAL; native cycle objects and differential factorization, existing flasque quotient and section-lifting theorems | BRIDGE |
+| Native monomorphic injective replacement | Compute the existing derived functor | Pinned Mathlib `exists_mono_quasiIso_injective` | IMPORTED; its original acyclic cokernel supplies the sections comparison, without a new resolution constructor | ROUTE |
+| Existing scalar forgetting | Actual module-valued sections comparison | `FlasqueHypercohomology.globalSections_quasiIso_of_mono` | SAME `LinearCoefficients.underlying`; exact module forgetting reflects quasi-isomorphisms, without preserving injectives | BRIDGE |
+| Original whole-complex unit | Underived sections to actual derived sections | `isIso_comparison_of_flasqueTerms`, `comparison_isIso_of_flasqueTerms` | FORMAL from native replacement and original unit naturality; no comparison premise | BRIDGE |
+| Original singular sheaf complex | Actual complex on the existing point topology | `SingularCochains.derivedComparison_isIso`, `sheafSectionsHomologyIsoHypercohomology`; scheme wrappers | FORMAL under already proved flasqueness hypotheses, all integer homology degrees; original hom map retained | BRIDGE |
+
+The subsequent [0052 checkpoint](0052-rational-singular-constant-sheaf-comparison.md)
+exports the composite with the original global unit and local rational
+constant-sheaf resolution. General scheme topology, complex coefficients
+and the later geometric obligations retain their earlier scope.
+
+## Rational singular/constant-sheaf comparison follow-up (2026-11-10)
+
+| Object | Mathematical role | Lean owner/API | Status and reuse | Role |
+| --- | --- | --- | --- | --- |
+| Original degree-extension comparison | Original nonnegative sections homology and existing integer-degree homology | `SheafHypercohomology.nonnegativeSectionsHomologyIso` in `SheafCohomology.HypercohomologyComparison` | SHARED helper, reusing `mapExtendIso` and native `extendHomologyIso`; no new complex or degree convention | ROUTE |
+| Original hypercohomology map | Derived effect of the original local resolution | `hypercohomologyIsoOfQuasiIso` | FORMAL from native extension and localization; hom is the original `hypercohomologyMap` | ROUTE |
+| Native local contractibility | Generic local singular exactness versus geometric chart specialization | `Mathlib.Topology.Homotopy.LocallyContractible`; existing `Geometry.LocallyContractible` | NARROWED generic import to native class/theorems; scheme wrapper imports its actual chart helper directly; geometry guards strengthened for generic local exactness and resolution | ROUTE |
+| Original rational singular group | Source of the assembled comparison | `SingularCochains.Cohomology` and `cohomologyToHypercohomology` | SAME original global unit, degree comparison and whole-complex map | ROUTE |
+| Original rational constant sheaf | Independent derived target | `SingularCochains.constantSheaf`, definitionally `ConstantLift.sheaf ℚ X` | SAME native sheaf and ordinary `(globalSections ℚ X).rightDerived`; no transported target or new cohomology carrier | TARGET |
+| Composite comparison | Identify the original singular group with actual derived constant-sheaf cohomology | `cohomologyToConstantSheafDerived`, `cohomologyIsoConstantSheafDerived`; scheme wrappers | FORMAL all nonnegative degrees under stated topology hypotheses; original resolution square and zero-class detection proved | BRIDGE |
+| Existing P¹ class | Detect nontrivial cohomology in the actual derived target | Canonical homeomorphism, original `coverGenerator`, `SingularConstantSheafVerification.derivedGenerator_ne_zero` | FORMAL nonzero image in actual `R²Γ(ℚ_X)`; no replacement generator or transported target | CHECK |
+
+The [0052 checkpoint](0052-rational-singular-constant-sheaf-comparison.md)
+assembles the original rational comparison. The subsequent 0053 checkpoint
+below constructs the complex-linear map to the holomorphic target;
+invertibility and later geometric obligations retain their open scope.
+
+## Complex coefficients and holomorphic hypercohomology follow-up (2026-11-10)
+
+| Object | Mathematical role | Lean owner/API | Status and reuse | Role |
+| --- | --- | --- | --- | --- |
+| Native scalar restriction | Same original module sheaf sections and restrictions over smaller coefficients | `ScalarRestriction.sheaves` | SHARED native `sheafCompose` and `ModuleCat.restrictScalars`; exactness and flasqueness proved; no duplicate supported-section argument | ROUTE |
+| Original constant-sheaf coefficient map | Inclusion ℚ → ℂ on native constant sheaves | `coefficientModuleMap`, `constantIso`, `constantMap` | SHARED native constant-sheaf functor and `constantCommuteCompose`; original `ConstantLift.sheaf` objects retained | ROUTE |
+| Actual derived coefficient comparison | Ordinary right-derived sections commute with scalar restriction | `ScalarRestriction.cohomologyIso`, `constantCohomologyMap` | FORMAL using one original larger-coefficient injective resolution and its restricted flasque terms; no injective-preservation premise | BRIDGE |
+| Original holomorphic resolution | Native complex constant-sheaf derived cohomology and actual intrinsic hypercohomology | `HolomorphicAtlas.constantSheafDerivedIso`, resolution square | FORMAL from original Poincaré quasi-isomorphism and shared hypercohomology helpers; original map fixed | BRIDGE |
+| Existing complexification | Original tensor complexification of rational Betti cohomology | `ScalarRestriction.extendLinear`; `AnalyticBettiComparison.complexComparison` | SAME SOURCE; native `liftBaseChange` with existing algebra action; no complex-valued simplex-function reconstruction | TARGET |
+| Original rational diagonal | Zero detection under the constructed complex-linear comparison | `constantMap_isSplitMono`, `rationalComparison_mono`, `complexComparison_embedding_eq_zero_iff` | FORMAL from native coefficient splitting and derived functoriality; splitting only in proof, not in map | BRIDGE |
+| Canonical scheme comparison | Existing canonical Betti object and smooth analytic atlas | `Scheme.ComplexPoints.holomorphicBettiComparison` and zero-detection wrapper | FORMAL all fixed dimensions/degrees; atlas supplies local contractibility, other topology hypotheses explicit | BRIDGE |
+| Existing P¹ class | Nonzero image in the actual analytic derived target | Original `bettiEquiv`, `coverGenerator`; `AnalyticBettiComparisonVerification.mappedGenerator_ne_zero` | FORMAL actual holomorphic H² image; no replacement target, generator or old period map used to define comparison | CHECK |
+
+The [0053 checkpoint](0053-complex-coefficients-holomorphic-comparison.md)
+leaves invertibility of this exact complex-linear map as the next coefficient
+comparison. No tensor/infinite-product interchange is assumed. Proper
+algebraic/analytic comparison, periods, purity and prescribed-class coverage
+retain their earlier open scope.
+
+## Finite-cohomology coefficient change follow-up (2026-11-10)
+
+| Object | Mathematical role | Lean owner/API | Status and reuse | Role |
+| --- | --- | --- | --- | --- |
+| Unrestricted coefficient functionals | Exact Hom_k(-,A) on vector spaces | `HomCoefficients.functor`, `exists_factor`, `map_exact` | SHARED native kernel quotient and extension from subspaces; no finite-dimensional hypothesis | ROUTE |
+| Original rational dual | Existing cochain dualization, transpose differential and quasi-isomorphism proofs | `RationalDual.functor`, `map_exact` | DELEGATED to shared specialization k = A = ℚ; original public names and definitionally same rational complex retained | ROUTE |
+| Actual tensor functor | Existing coefficient algebra action and scalar extension maps | `HomCoefficients.tensorFunctor`, `tensorHomologyIso` | SHARED native `LinearMap.baseChange`, flatness over field and native homology comparison; no alternative complexification | ROUTE |
+| Native finite Hom base change | Coefficient evaluation at original homology | `HomCoefficients.comparison_bijective`, `coefficientTransform`, `complexComparison_quasiIsoAt` | FORMAL native `IsBaseChange.linearMapRightBaseChangeEquiv` and homology of a natural transformation; finite homology only, chain modules may be infinite | BRIDGE |
+| Original singular cochain coefficient map | Scalar multiplication of existing rational simplex functions | `SingularCoefficientChange.cochainComparison`, `cochainComparison_apply`, `cohomologyComparison_induced` | FORMAL original rational dual coordinates and tensor-homology naturality; target uses unrestricted complex functionals on original native rational chains | BRIDGE |
+| Original rational cohomology finiteness | Sufficient hypothesis for coefficient isomorphism | `finiteHomology_of_finiteCohomology`, `cohomologyComparison_isIso`, `cohomologyIso` | FORMAL through native duality and `Module.finite_dual_iff`; actual original tensor source retained | BRIDGE |
+| Existing P¹ degree-two class | Nonzero complex-functional image and concrete finite-dimensional control | Existing rational H² and canonical Betti equivalence; `SingularCoefficientChangeVerification` | FORMAL isomorphism on original/canonical P¹ targets, nonzero image of original cover generator | CHECK |
+
+The [0054 checkpoint](0054-finite-cohomology-coefficient-change.md)
+leaves the complex-coefficient constant-sheaf resolution and coefficient
+compatibility with the exact holomorphic map from 0053 next. Its holomorphic
+invertibility is not inferred from the new cochain isomorphism alone.
+General geometric finiteness and the later proper/purity/coverage obligations
+retain their earlier open scope.

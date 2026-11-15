@@ -10,6 +10,7 @@ public import HodgeConjecture.Boundary.GraphCycleRestriction
 public import HodgeConjecture.Boundary.HeightOneDifferent
 public import HodgeConjecture.Boundary.NoetherDifferentRamification
 public import HodgeConjecture.Boundary.ProjectorClosureDefect
+public import HodgeConjecture.Boundary.FilteredProjectorDefect
 public import HodgeConjecture.Boundary.Normalization.BoundedOverring
 public import HodgeConjecture.Boundary.Normalization.AffineSections
 public import HodgeConjecture.Boundary.Normalization.BoundarySections

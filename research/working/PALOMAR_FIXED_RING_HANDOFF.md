@@ -1,6 +1,35 @@
 # Palomar handoff: height-one fixed-ring descent
 
-Status: **packaging draft, not yet submittable**.
+Status: **isolated candidate committed locally; external verification pending**.
+
+## Candidate metadata checkpoint (2026-11-12)
+
+The restored, persistent sibling checkout on `palomar/fixed-ring-candidate`
+is committed at `66083460de203cd8218bccfe32f787fb107274b6`. Its 35 files
+include the user-selected MIT root licence and `formalization.yaml` naming
+Chloe van der Vlugt as author and maintainer. The metadata describes only
+the two compared fixed-ring lemmas and discloses internal agent review. A
+local file-layout, YAML-shape and licence check passes; official metadata
+validation, Comparator/NanoDa replay, publication and editorial review are
+still pending. This commit does not prove the fixed-inertia theorem.
+
+## Isolated candidate checkpoint (2026-11-10)
+
+The local branch `palomar/fixed-ring-candidate` at
+`f72678ecd87196dd7d1c302ae20153827df3e260` contains 33 files: the
+Mathlib-only Challenge, its Solution and 25 local proof modules, Comparator
+configuration, pinned Lake/toolchain files, and a concise README. It omits
+the main Hodge research tree and its historical Lean snapshots. No Axiom
+Stacks or Weil adaptation is in the selected proof import closure; the
+related Axiom Stacks inertia formalization is recorded as context below.
+
+Both `lake build Challenge Solution` and plain `lake build` passed locally
+using the main checkout's cached pinned Mathlib package. All 28 candidate
+Lean files satisfy the module-header and 10,000-line scan. The branch is
+committed locally but not pushed. It still lacks the required root licence
+and `formalization.yaml`; independent Comparator/NanoDa replay and Palomar
+editorial review have not run. The cited commit is a preparation checkpoint,
+not a submission commit.
 
 ## Preparation refresh (2026-11-05)
 
@@ -83,15 +112,12 @@ No license, metadata, toolchain, or publication-scope decision is made by this
 refactor. The migration values below are the historical policy snapshot
 listed at the end, and must be rechecked before submission.
 
-## Blocking choices and migrations
+## Remaining gates and recorded choices
 
-- **Human identity:** `formalization.yaml` requires nonempty human-only
-  `project.authors` and `project.responsible_maintainers`.  The user must
-  supply the names that should appear publicly.
-- **Licence:** the repository currently has no root licence.  The user must
-  choose a standard SPDX licence and authorize adding its exact text.
-  Palomar requires exactly one conventional root licence file and an exact
-  match with `project.license`; this is not a choice an agent should make.
+- **Human identity and licence:** the user selected Chloe van der Vlugt for
+  both public human fields and MIT for the isolated fixed-ring candidate.
+  The main Hodge checkout still has no root licence; the candidate's MIT
+  licence does not silently license the rest of the Hodge worktree.
 - **Toolchain:** the [2026-11-05 migration](0020-lean-4-35-migration.md)
   upgrades this repository to Lean `v4.35.0` and matching Mathlib. The policy
   snapshot below recorded a `v4.28.0` minimum and a `v4.32.0` template; recheck
@@ -100,9 +126,9 @@ listed at the end, and must be rechecked before submission.
 - **Public immutable snapshot:** confirm that the GitHub repository is
   public, commit every submitted file (including `lake-manifest.json`), and
   submit a full 40-character commit SHA rather than a branch or tag.
-- **Review disclosure:** the user must confirm the honest pre-submission
-  review status and any human reviewers.  `unchecked` is appropriate if no
-  distinct review has occurred.
+- **Review disclosure:** candidate metadata says `agent-reviewed` for the
+  separate internal Codex alignment audit and claims no human or external
+  review. Update this record if a distinct review occurs before submission.
 - **Editorial scope:** mechanical correctness alone does not meet Palomar's
   research-interest floor.  Before submission, add a restrained account of
   the specialist value of this particular formal composite and complete a
@@ -112,9 +138,9 @@ listed at the end, and must be rechecked before submission.
 
 ## Metadata draft
 
-Do not copy this block to a root `formalization.yaml` until every angle-bracket
-placeholder has been resolved and the chosen licence exists at repository
-root.
+The completed candidate metadata is in the sibling checkout's
+`formalization.yaml`. The block below is a historical planning draft; it
+still contains placeholders and must not be copied into a submission.
 
 ```yaml
 version: "v0.4"
@@ -127,8 +153,8 @@ project:
     height-one prime, unramifiedness for an I-fixed ring descends to an
     H-fixed ring when I is contained in H, under the stated finite-module,
     Noetherian-base, and integrally-closed fixed-ring hypotheses. The
-    fixed-inertia unramifiedness theorem itself is not formalized and remains
-    an explicit hypothesis.
+    fixed-inertia theorem itself is not formalized; unramifiedness for the
+    arbitrary I-fixed ring remains an explicit hypothesis.
   authors:
     - "<HUMAN AUTHOR NAME>"
   license: "<CHOSEN SPDX IDENTIFIER>"
@@ -165,11 +191,18 @@ sources:
     location: "https://stacks.math.columbia.edu/tag/0BST"
     relationship: background
     note: >-
-      Proves a stronger fixed-inertia etaleness theorem. It is not formalized
-      here; the compared descent theorem retains its unramified consequence
-      as the explicit hypothesis hI.
+      Proves etaleness for the actual inertia subgroup over the full
+      invariant ring. It is not formalized here. The compared descent
+      theorem instead assumes unramifiedness for an arbitrary I-fixed ring
+      over A; only a suitable specialization could use Tag 0BST to supply hI.
 
-related_formalizations: []
+related_formalizations:
+  - id: "https://github.com/AxiomMath/Stacks/blob/f8e70c5dd04bfabcb423d5e325461f527c85a5d6/StacksFrontier/RingTheory/Invariant/Inertia.lean"
+    relationship: other
+    note: >-
+      A pinned Lean formalization of Stacks Tag 0BST. The selected fixed-ring
+      theorems do not import it or identify their arbitrary subgroup I with
+      the actual inertia group.
 
 status:
   scope: >-
@@ -199,7 +232,8 @@ fidelity:
   divergences: >-
     Tag 0BST concludes etaleness for the actual inertia group. This
     formalization proves only selected-prime unramified descent after taking
-    that fixed-inertia input as a hypothesis. It also exposes hypotheses in
+    unramifiedness for an arbitrary I-fixed ring as a hypothesis. It also
+    exposes hypotheses in
     Mathlib's ring-theoretic vocabulary rather than claiming global etaleness.
 
 review:
@@ -221,7 +255,7 @@ alignment:
       module: "Challenge"
       status: partial
       note: >-
-        The fixed-inertia unramifiedness conclusion is the explicit premise
+        Unramifiedness for the arbitrary I-fixed ring is the explicit premise
         hI; the Lean result proves the subsequent subgroup descent.
 
 acknowledgements: "Mathlib and The Stacks Project."

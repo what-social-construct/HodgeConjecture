@@ -1,7 +1,7 @@
 module
 
 public import HodgeConjecture.Realization.Betti.SingularDegreeZero
-public import Mathlib.AlgebraicTopology.AlternatingFaceMapComplex
+public import HodgeConjecture.Realization.Betti.SimplicialCochains
 public import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
 public import Mathlib.Algebra.Homology.ShortComplex.HomologicalComplex
 
@@ -14,6 +14,7 @@ The cochains are rational functions on Mathlib's actual singular simplicial
 set. Precomposition makes these modules a cosimplicial object, whose
 alternating coface complex is the singular cochain complex. Thus the
 differential and its square-zero identity come from the singular face maps.
+These constructions specialize the shared `SimplicialCochains` implementation.
 
 The cohomology objects below are the categorical homology of this constructed
 complex. Continuous maps induce cochain maps and cohomology pullbacks. No
@@ -30,13 +31,9 @@ noncomputable section
 
 universe u
 
-/-- Rational functions, contravariant in their actual indexing set. -/
-def functionModule : (Type u)ᵒᵖ ⥤ ModuleCat.{u} ℚ where
-  obj S := ModuleCat.of ℚ (S.unop → ℚ)
-  map f := ModuleCat.ofHom
-    { toFun := fun φ s ↦ φ (f.unop s)
-      map_add' := fun _ _ ↦ rfl
-      map_smul' := fun _ _ ↦ rfl }
+/-- Compatibility name for the shared contravariant rational-function module. -/
+def functionModule : (Type u)ᵒᵖ ⥤ ModuleCat.{u} ℚ :=
+  SimplicialCochains.functionModule
 
 /-- Actual singular simplices, including Mathlib's universe lift. -/
 abbrev Simplex (X : TopCat.{u}) (n : ℕ) :=
@@ -48,15 +45,16 @@ def simplexEquivContinuous (X : TopCat.{u}) (n : ℕ) :
   TopCat.toSSetObjEquiv X (op ⦋n⦌)
 
 /-- Unrestricted rational singular cochains in degree `n`. -/
-abbrev Cochain (X : TopCat.{u}) (n : ℕ) := Simplex X n → ℚ
+abbrev Cochain (X : TopCat.{u}) (n : ℕ) :=
+  SimplicialCochains.Cochain (TopCat.toSSet.obj X) n
 
 /-- Rational functions on the singular set, as a genuine cosimplicial module. -/
 def cosimplicial (X : TopCat.{u}) : CosimplicialObject (ModuleCat.{u} ℚ) :=
-  (TopCat.toSSet.obj X).rightOp ⋙ functionModule
+  SimplicialCochains.cosimplicial (TopCat.toSSet.obj X)
 
 /-- The actual rational singular cochain complex. -/
 def complex (X : TopCat.{u}) : CochainComplex (ModuleCat.{u} ℚ) ℕ :=
-  (AlgebraicTopology.alternatingCofaceMapComplex _).obj (cosimplicial X)
+  SimplicialCochains.complex (TopCat.toSSet.obj X)
 
 /-- The singular face restriction supplied by the singular simplicial set. -/
 def face (X : TopCat.{u}) {n : ℕ} (σ : Simplex X (n + 1))
@@ -65,37 +63,33 @@ def face (X : TopCat.{u}) {n : ℕ} (σ : Simplex X (n + 1))
 
 /-- The differential is the alternating coface differential, on elements. -/
 def differential (X : TopCat.{u}) (n : ℕ) : Cochain X n →ₗ[ℚ] Cochain X (n + 1) :=
-  (AlgebraicTopology.AlternatingCofaceMapComplex.objD (cosimplicial X) n).hom
+  SimplicialCochains.differential (TopCat.toSSet.obj X) n
 
 @[simp]
 theorem complex_d (X : TopCat.{u}) (n : ℕ) :
-    (complex X).d n (n + 1) = ModuleCat.ofHom (differential X n) := by
-  simp only [complex, AlgebraicTopology.alternatingCofaceMapComplex,
-    AlgebraicTopology.AlternatingCofaceMapComplex.obj, CochainComplex.of_d]
-  rfl
+    (complex X).d n (n + 1) = ModuleCat.ofHom (differential X n) :=
+  SimplicialCochains.complex_d (TopCat.toSSet.obj X) n
 
 /-- The coboundary evaluates as the alternating sum over the actual faces. -/
 theorem differential_apply (X : TopCat.{u}) (n : ℕ)
     (φ : Cochain X n) (σ : Simplex X (n + 1)) :
     differential X n φ σ =
-      ∑ i : Fin (n + 2), (-1 : ℤ) ^ (i : ℕ) • φ (face X σ i) := by
-  simp [differential, AlgebraicTopology.AlternatingCofaceMapComplex.objD,
-    cosimplicial, functionModule, CosimplicialObject.δ, face]
+      ∑ i : Fin (n + 2), (-1 : ℤ) ^ (i : ℕ) • φ (face X σ i) :=
+  SimplicialCochains.differential_apply (TopCat.toSSet.obj X) n φ σ
 
 /-- The square-zero relation follows from the singular simplicial identities. -/
 theorem differential_squared (X : TopCat.{u}) (n : ℕ) (φ : Cochain X n) :
-    differential X (n + 1) (differential X n φ) = 0 := by
-  have h := AlgebraicTopology.AlternatingCofaceMapComplex.d_squared (cosimplicial X) n
-  exact congrArg (fun f ↦ f.hom φ) h
+    differential X (n + 1) (differential X n φ) = 0 :=
+  SimplicialCochains.differential_squared (TopCat.toSSet.obj X) n φ
 
 /-- Pullback of the cosimplicial module by an actual continuous map. -/
 def cosimplicialPullback {X Y : TopCat.{u}} (f : X ⟶ Y) :
     cosimplicial Y ⟶ cosimplicial X :=
-  Functor.whiskerRight (TopCat.toSSet.map f).rightOp functionModule
+  SimplicialCochains.cosimplicialPullback (TopCat.toSSet.map f)
 
 /-- Continuous pullback on the actual singular cochain complex. -/
 def pullback {X Y : TopCat.{u}} (f : X ⟶ Y) : complex Y ⟶ complex X :=
-  (AlgebraicTopology.alternatingCofaceMapComplex _).map (cosimplicialPullback f)
+  SimplicialCochains.pullback (TopCat.toSSet.map f)
 
 @[simp]
 theorem pullback_apply {X Y : TopCat.{u}} (f : X ⟶ Y) (n : ℕ)
@@ -104,25 +98,23 @@ theorem pullback_apply {X Y : TopCat.{u}} (f : X ⟶ Y) (n : ℕ)
 
 @[simp]
 theorem pullback_id (X : TopCat.{u}) : pullback (𝟙 X) = 𝟙 (complex X) := by
-  ext n φ
-  funext σ
-  simp
+  change SimplicialCochains.pullback (TopCat.toSSet.map (𝟙 X)) =
+    𝟙 (SimplicialCochains.complex (TopCat.toSSet.obj X))
+  rw [TopCat.toSSet.map_id]
+  exact SimplicialCochains.pullback_id (TopCat.toSSet.obj X)
 
 @[simp]
 theorem pullback_comp {X Y Z : TopCat.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) :
     pullback (f ≫ g) = pullback g ≫ pullback f := by
-  ext n φ
-  funext σ
-  simp
+  simpa only [pullback, Functor.map_comp] using
+    SimplicialCochains.pullback_comp (TopCat.toSSet.map f) (TopCat.toSSet.map g)
 
 /-- Actual continuous pullback commutes with the singular coboundary. -/
 theorem differential_pullback {X Y : TopCat.{u}} (f : X ⟶ Y) (n : ℕ)
     (φ : Cochain Y n) :
     differential X n ((pullback f).f n φ) =
-      (pullback f).f (n + 1) (differential Y n φ) := by
-  have h := (pullback f).comm n (n + 1)
-  rw [complex_d, complex_d] at h
-  exact congrArg (fun g ↦ g.hom φ) h
+      (pullback f).f (n + 1) (differential Y n φ) :=
+  SimplicialCochains.differential_pullback (TopCat.toSSet.map f) n φ
 
 /-- Rational singular cohomology, as homology of the constructed cochain complex. -/
 abbrev Cohomology (X : TopCat.{u}) (n : ℕ) : ModuleCat.{u} ℚ :=

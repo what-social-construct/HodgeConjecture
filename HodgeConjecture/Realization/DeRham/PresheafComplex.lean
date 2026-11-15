@@ -96,35 +96,14 @@ theorem formsMap_ιMulti_D (f : A →ₐ[k] B) (n : ℕ) (v : Fin n → A) :
 /-- The exact wedges span differential forms over the section algebra. -/
 theorem span_exactWedges (n : ℕ) :
     Submodule.span A (Set.range fun v : Fin n → A ↦
-      exteriorPower.ιMulti A n fun i ↦ D k A (v i)) = ⊤ := by
-  have hset : exteriorPower.ιMulti A n ''
-      {v : Fin n → Ω[A⁄k] | Set.range v ⊆ Set.range (D k A)} =
-      Set.range fun v : Fin n → A ↦ exteriorPower.ιMulti A n fun i ↦ D k A (v i) := by
-    refine Set.Subset.antisymm ?_ ?_
-    · rintro _ ⟨v, hv, rfl⟩
-      choose a ha using fun i ↦ hv (Set.mem_range_self i)
-      exact ⟨a, congrArg _ (funext ha)⟩
-    · rintro _ ⟨v, rfl⟩
-      exact ⟨_, Set.range_subset_iff.2 fun i ↦ ⟨v i, rfl⟩, rfl⟩
-  rw [← hset, exteriorPower.ιMulti_span_of_span A n (Ω[A⁄k])
-    (KaehlerDifferential.span_range_derivation k A)]
+      exteriorPower.ιMulti A n fun i ↦ D k A (v i)) = ⊤ :=
+  KaehlerDifferential.span_range_ιMulti_D_eq_top (A := k) (B := A) n
 
-open Pointwise in
 /-- Scalar multiples of exact wedges span forms already over the fixed base ring. -/
 theorem span_smul_exactWedges (n : ℕ) :
     Submodule.span k (Set.range fun v : Fin (n + 1) → A ↦
-      v 0 • exteriorPower.ιMulti A n fun i ↦ D k A (v i.succ)) = ⊤ := by
-  have hset : (Set.univ : Set A) • (Set.range fun v : Fin n → A ↦
-      exteriorPower.ιMulti A n fun i ↦ D k A (v i)) =
-      Set.range fun v : Fin (n + 1) → A ↦
-        v 0 • exteriorPower.ιMulti A n fun i ↦ D k A (v i.succ) := by
-    refine Set.Subset.antisymm ?_ ?_
-    · rintro _ ⟨a, -, _, ⟨v, rfl⟩, rfl⟩
-      exact ⟨Fin.cons a v, by simp⟩
-    · rintro _ ⟨v, rfl⟩
-      exact Set.smul_mem_smul (Set.mem_univ _) ⟨fun i ↦ v i.succ, rfl⟩
-  rw [← hset, Submodule.span_smul_of_span_eq_top Submodule.span_univ,
-    span_exactWedges, Submodule.restrictScalars_top]
+      v 0 • exteriorPower.ιMulti A n fun i ↦ D k A (v i.succ)) = ⊤ :=
+  KaehlerDifferential.span_range_smul_ιMulti_D_eq_top (A := k) (B := A) n
 
 /-- Test equality of base-linear maps on the actual de Rham generators. -/
 theorem forms_linearMap_ext {M : Type u} [AddCommGroup M] [Module k M] (n : ℕ)
