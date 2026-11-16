@@ -15,8 +15,8 @@ manuscript. Do not combine old checkpoint descriptions into a proof plan.
 - `0005-semantic-parity-cleanup.md` is the canonical pruning and notation
   registry; deferred compatibility and human review gates remain explicit.
 - [0058-chow-class-witness.md](0058-chow-class-witness.md) states the ordinary
-  Chow witness obligation, checked examples, and first new product geometry
-  test; arbitrary-class generation remains open.
+  Chow witness obligation and the completed P¹ × P¹ rational Chow/Betti
+  fiber-basis realization; arbitrary-class generation remains open.
 - `0017-proof-spine-and-archive.md` records the checked declaration
   dependencies, physical archival, and the supporting role of the retained
   block/coordinate calculations. It is an audit, not a new Hodge proof.

@@ -3278,14 +3278,37 @@ forms the actual rational cycle \(a[F_1]+b[F_2]\), its ordinary rational
 Chow class, and the same linear combination of the supported fiber
 classes. The latter maps to \(z\) after forgetting support.
 
-This verifies the specific fiber support and Gysin normalization. The
-formalization does not yet construct an ordinary
-\(\CH^1(X)_{\Q}\to H^2_{\mathrm B}(X,\Q)\) map respecting rational
-equivalence and prove that it sends the two Chow classes to \(u_1,u_2\).
-That comparison is required before the coefficientwise linear combination
-of the two Chow classes is a formal Chow witness for an arbitrary product
-Betti class. No arbitrary-variety Hodge conclusion follows from this
-checkpoint.
+The opposite product chart, using the second affine chart in each factor,
+has coordinate ring \(\mathbf C[x,y]\) and reduced closed complement
+\(F_1\cup F_2\). Every height-one prime cycle on this affine plane is the
+principal divisor of a generator of its prime ideal; hence its ordinary
+rational degree-one Chow group is zero. Chow localization, together with
+the fact that every degree-one integral carrier on the complement is one
+of the two fibers, shows that \([F_1]\) and \([F_2]\) span
+\(\CH^1(X)_{\Q}\).
+
+They are also independent in this original rational-equivalence quotient.
+After clearing denominators, a relation between the two fiber cycles is
+one principal divisor on the integral product. Its restriction to the
+affine chart is zero. A rational function with zero divisor on this
+affine UFD is a unit of \(\mathbf C[x,y]\), hence a nonzero scalar. The
+chart function-field map identifies that scalar with the same global
+base-field scalar, whose principal divisor is zero. Since the two fiber
+carriers are distinct, both relation coefficients vanish.
+
+Consequently the fiber coordinates define a unique linear realization
+\[
+  \operatorname{cl}_{\mathrm{fib}}:\CH^1(X)_{\Q}
+     \longrightarrow H^2_{\mathrm B}(X,\Q),
+  \qquad [F_i]\longmapsto u_i.
+\]
+The independently proved Betti basis makes this realization bijective.
+For each \(z=a u_1+b u_2\), its ordinary Chow witness is
+\(a[F_1]+b[F_2]\), and the realization sends that class to \(z\).
+The values on the two generators agree with their separately constructed
+supported Thom--Gysin classes. A general cycle-class construction and
+its naturality for arbitrary divisors or varieties remain open; no
+arbitrary-variety Hodge conclusion follows from this product calculation.
 
 \section{Residual realization and coverage}
 \label{sec:coverage}
@@ -6200,6 +6223,20 @@ Fiber Chow/Betti certificates and paired cycle &
 \leanpath{ProjectiveLineProductFiberPairedWitness.exists_paired_witness}\newline
 \leanpath{Realization/Betti/ProjectiveLineProductFiberChowBettiData.lean};
 \leanpath{Realization/Betti/ProjectiveLineProductFiberPairedWitness.lean}\\
+Affine product Chow vanishing and localization &
+\leanpath{ProjectiveLineProductAffineChowVanishing.chart_restricted_rationalChowGroup_one_eq_zero};
+\leanpath{ProjectiveLineProductZeroAffineChowLocalization.boundary_support_eq_zero_fibers}\newline
+\leanpath{Cycles/ProjectiveLineProductAffineChowVanishing.lean};
+\leanpath{Cycles/ProjectiveLineProductZeroAffineChowLocalization.lean}\\
+Product rational Chow fiber basis &
+\leanpath{ProjectiveLineProductZeroBoundaryGenerators.rationalChowGroup_span_zero_fibers};
+\leanpath{ProjectiveLineProductFiberChowIndependence.rational_zero_fiber_classes_independent}\newline
+\leanpath{Cycles/ProjectiveLineProductZeroBoundaryGenerators.lean};
+\leanpath{Cycles/ProjectiveLineProductFiberChowIndependence.lean}\\
+Product ordinary Chow--Betti equivalence &
+\leanpath{ProjectiveLineProductChowFiberRealization.ordinaryChowBettiEquiv};
+\leanpath{ProjectiveLineProductChowFiberRealization.ordinaryChowCycleClass_fiberChowClass}\newline
+\leanpath{Realization/Betti/ProjectiveLineProductChowFiberRealization.lean}\\
 Affine product dimension and coordinate height &
 \leanpath{projectiveLineAffineProduct_ringKrullDim}\newline
 \leanpath{projectiveLineAffineProduct_firstVariable_height_one}\newline

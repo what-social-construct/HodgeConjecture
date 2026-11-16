@@ -1,6 +1,6 @@
 # Intended target and equivalence bridge
 
-Assessed: 2026-11-10 (assembled rational singular/constant-sheaf comparison;
+Assessed: 2026-11-15 (product P¹ × P¹ ordinary Chow/Betti realization;
 SP108--SP113 retain their stated conditional and research scope).
 This is the current target-first sketch, not a second
 manuscript or a new theorem. The detailed component status remains in
@@ -23,6 +23,12 @@ is distinct from showing that the construction generates every Hodge class.
 The [Chow-class witness checkpoint](working/0058-chow-class-witness.md)
 records the current generation gap and the next concrete geometric test,
 without changing the arbitrary-variety target.
+For that first product test, the two zero-fiber classes now form a proved
+basis of the actual ordinary rational degree-one Chow quotient of
+P¹ × P¹, and their supported Gysin images form the proved singular H²
+basis. The resulting fiber-normalized Chow-to-Betti map is unconditional
+for this product. General natural cycle maps and arbitrary-variety
+prescribed-class coverage remain separate obligations.
 
 ### Current checklist (2026-11-10)
 
@@ -113,7 +119,8 @@ without changing the arbitrary-variety target.
    properties remain open. Proper algebraic/analytic
    comparison, the general period isomorphism and purity remain open.
 5. **Open:** actual Chow construction and detection, correspondence-action
-   comparisons and class-dependent coverage. The
+   comparisons and class-dependent coverage beyond the P¹ × P¹ product
+   realization. The
    [filtered defect detector](working/0037-filtered-projector-defect.md) is
    a completed supporting construction for the boundary-vanishing branch;
    its geometric realization and boundary control remain open.

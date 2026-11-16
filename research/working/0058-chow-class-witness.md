@@ -19,7 +19,7 @@ from a supplied algebraic support and component comparison. Neither selects
 sheet cycles or a suitable support from an arbitrary `α`; adding another
 abstract coverage predicate would not prove a new witness.
 
-## Checked examples and next geometric case
+## Checked examples and first product case
 
 - `ProjectiveLineHodgeCycleClass.infinity_class_witness` gives a witness in
   the original rational Chow group for every class of the bounded
@@ -29,9 +29,10 @@ abstract coverage predicate would not prove a new witness.
   split complex schemes.
 
 The first new positive-dimensional test case is codimension one on
-`P¹_ℂ × P¹_ℂ`. Its intended witness is `a [fiber₁] + b [fiber₂]` for the
-class with Betti coordinates `(a,b)`. This is a test of the witness mechanism,
-not a replacement for the arbitrary `X,p,α` goal.
+`P¹_ℂ × P¹_ℂ`. Its proved witness is `a [fiber₁] + b [fiber₂]` for the
+class with Betti coordinates `(a,b)`, under the product-specific
+fiber-normalized Chow-to-Betti equivalence below. This does not replace
+the arbitrary `X,p,α` goal.
 
 ## Product checkpoint (2026-11-15)
 
@@ -80,7 +81,7 @@ not a replacement for the arbitrary `X,p,α` goal.
   canonical singular `H²` projection-pullback classes and proves their linear
   independence by restriction to the coordinate maps. The P¹ generator is
   the established image of the actual infinity Chow class. The product
-  cycle-class comparison remains open.
+  comparison is completed by the fiber-basis realization below.
 - `Realization/Betti/ProjectiveLineDegreeOne.lean` proves the actual rational
   `H¹(P¹(ℂ)) = 0`: path connectedness makes degree-zero overlap classes
   constant, the chart-difference map is surjective, and singular
@@ -155,6 +156,32 @@ not a replacement for the arbitrary `X,p,α` goal.
   coordinates of any class to construct a rational combination of the
   actual fiber cycles, its ordinary Chow class, and the matching supported
   Betti combination. The supported combination forgets to that class.
+- `ProjectiveLineProductAffineChowVanishing.lean` proves that the actual
+  tensor-polynomial affine chart has zero rational degree-one Chow group:
+  height-one prime cycles on its UFD ring are principal divisors in the
+  existing relation quotient. `ProjectiveLineProductZeroAffineChowLocalization.lean`
+  identifies the opposite chart's closed complement as the union of the
+  two named zero fibers. `ProjectiveLineProductZeroBoundaryGenerators.lean`
+  classifies degree-one integral carriers there and proves the two fiber
+  classes span the ordinary rational Chow group of the product.
+- `Geometry/ProjectiveLineProductIntegral.lean` and
+  `Cycles/ProjectiveLineProductGenericDegree.lean` prove the actual product
+  is integral with generic degree two. `TopDegreePrincipalRelations.lean`
+  reduces a top-degree relation to one ambient principal divisor;
+  `RationalTopDegreeRelations.lean` clears denominators in the original
+  rational Chow quotient. `ProjectiveLineProductZeroFiberRestriction.lean`
+  proves both zero-fiber cycles restrict to zero on the opposite chart.
+  The affine UFD zero-order/unit theorem, unit-to-scalar classification,
+  and base-scalar field transport then prove the two Chow fiber classes
+  independent in `ProjectiveLineProductFiberChowIndependence.lean`.
+- `Realization/Betti/ProjectiveLineProductChowFiberRealization.lean`
+  constructs an unconditional linear equivalence from the original
+  rational degree-one Chow quotient to the actual product singular `H²`.
+  It sends each zero-fiber Chow class to its independently constructed
+  supported Gysin image and sends the earlier Chow witness for every
+  Betti class back to that class. This is a product-specific basis
+  construction; a general natural cycle-class map for arbitrary divisors
+  remains open.
 
 The focused `make check-projective-line-product` target builds the product
 topology and H² basis modules and audits 68 selected declarations for only
@@ -162,9 +189,10 @@ topology and H² basis modules and audits 68 selected declarations for only
 `make check-projective-line-product-fibers` target builds the added
 fiber Chow, codimension, certificate, supported-class, and paired-witness
 modules and audits 40 selected declarations under the same boundary.
-The remaining comparison is a product ordinary Chow-to-Betti cycle-class
-map respecting rational equivalence, with the two fiber classes sent to
-these independently constructed supported Betti classes.
+The new `make check-projective-line-product-chow-realization` target builds
+the product Chow basis, affine divisor and scalar transport, and the
+unconditional product realization, with a focused axiom audit. General
+cycle-class naturality and arbitrary-variety class generation remain open.
 
 ## Work order
 
@@ -178,9 +206,9 @@ these independently constructed supported Betti classes.
    independently computed product basis after forgetting support. The
    paired construction uses these basis coordinates for every product
    Betti class.
-4. Prove the ordinary product Chow-to-Betti cycle-class compatibility for
-   those two fibers, then use the basis coordinates to exhibit the
-   coefficientwise Chow witness.
+4. Completed for this product: prove the two fiber classes span and are
+   independent in the original rational Chow quotient, then construct the
+   fiber-normalized Chow-to-Betti equivalence and coefficientwise witness.
 5. For the general target, supply a class-dependent geometric construction
    of cycles or support and prove its Betti class identity. The current
    finite-cover, normalization, and fixed-inertia results support this step

@@ -29,6 +29,7 @@ PYTHON ?= python3
         build-projective-line-cohomology check-projective-line-cohomology \
         build-projective-line-product check-projective-line-product \
         build-projective-line-product-fibers check-projective-line-product-fibers \
+        build-projective-line-product-chow-realization check-projective-line-product-chow-realization \
         build-circle-orientation check-circle-orientation \
         build-projective-line-period-comparison check-projective-line-period-comparison \
         build-hodge-filtration check-hodge-filtration \
@@ -74,6 +75,7 @@ help:
 	@echo "build-projective-line-cohomology  Actual P1 rational singular H2 and cover generator"
 	@echo "build-projective-line-product  Actual P1 square geometry, fiber supports and Betti classes"
 	@echo "build-projective-line-product-fibers  Actual P1 square Chow fibers and supported Betti classes"
+	@echo "build-projective-line-product-chow-realization  Actual P1 square Chow-to-Betti map"
 	@echo "build-circle-orientation  Actual positive cycle and generator pairing"
 	@echo "build-projective-line-period-comparison  Actual boundary periods and ordinary cycle maps"
 	@echo "build-hodge-filtration  Actual derived degree filtration and P1 H2 calculation"
@@ -118,6 +120,7 @@ help:
 	@echo "check-projective-line-cohomology  Original affine charts, radial pullback and actual H2"
 	@echo "check-projective-line-product  Focused P1 square build and axiom audit"
 	@echo "check-projective-line-product-fibers  Focused fiber Chow/Betti build and axiom audit"
+	@echo "check-projective-line-product-chow-realization  Focused product Chow-to-Betti map and axiom audit"
 	@echo "check-circle-orientation  Native connecting representatives and positive-loop pairing"
 	@echo "check-projective-line-period-comparison  Tensor extension, actual periods and ordinary Chow square"
 	@echo "check-hodge-filtration  Brutal truncation, actual derived images and characteristic-two checks"
@@ -244,6 +247,31 @@ build-projective-line-product-fibers:
 	  HodgeConjecture.Realization.Betti.ProjectiveLineProductFiberSupportedClass \
 	  HodgeConjecture.Realization.Betti.ProjectiveLineProductFiberChowBettiData \
 	  HodgeConjecture.Realization.Betti.ProjectiveLineProductFiberPairedWitness
+
+build-projective-line-product-chow-realization:
+	$(LAKE) build HodgeConjecture.Cycles.PrincipalRelationOfDivisor \
+	  HodgeConjecture.Cycles.TopDegreePrincipalRelations \
+	  HodgeConjecture.Cycles.RationalTopDegreeRelations \
+	  HodgeConjecture.Cycles.UFDHeightOneLocalOrder \
+	  HodgeConjecture.Cycles.UFDPrincipalDivisor \
+	  HodgeConjecture.Cycles.UFDChowVanishing \
+	  HodgeConjecture.Cycles.UFDZeroDivisorUnit \
+	  HodgeConjecture.Cycles.SpecUFDZeroDivisorUnit \
+	  HodgeConjecture.Cycles.GlobalUnitPrincipalDivisor \
+	  HodgeConjecture.Cycles.BaseFieldScalarPrincipalDivisor \
+	  HodgeConjecture.Cycles.BaseFieldScalarOpenTransport \
+	  HodgeConjecture.Cycles.AffineProductScalarUnits \
+	  HodgeConjecture.Cycles.ProjectiveLineProductAffineChowLocalization \
+	  HodgeConjecture.Cycles.ProjectiveLineProductAffineChowVanishing \
+	  HodgeConjecture.Cycles.ProjectiveLineProductZeroAffineChowLocalization \
+	  HodgeConjecture.Cycles.ProjectiveLineProductZeroBoundaryGenerators \
+	  HodgeConjecture.Geometry.ProjectiveLineProductIntegral \
+	  HodgeConjecture.Cycles.ProjectiveLineProductGenericDegree \
+	  HodgeConjecture.Cycles.ProjectiveLineProductZeroFiberRestriction \
+	  HodgeConjecture.Cycles.ProjectiveLineProductZeroChartComplex \
+	  HodgeConjecture.Cycles.ProjectiveLineProductZeroCarriersDistinct \
+	  HodgeConjecture.Cycles.ProjectiveLineProductFiberChowIndependence \
+	  HodgeConjecture.Realization.Betti.ProjectiveLineProductChowFiberRealization
 
 build-circle-orientation:
 	$(LAKE) build HodgeConjecture.Realization.Betti.Examples.CircleOrientedPairing
@@ -388,6 +416,9 @@ check-projective-line-product: check-layers build-projective-line-product
 
 check-projective-line-product-fibers: check-layers build-projective-line-product-fibers
 	$(LAKE) env lean research/ProjectiveLineProductFibersVerification.lean
+
+check-projective-line-product-chow-realization: check-layers build-projective-line-product-chow-realization
+	$(LAKE) env lean research/ProjectiveLineProductChowRealizationVerification.lean
 
 check-circle-orientation: check-layers build-circle-orientation
 	$(LAKE) env lean research/ConnectingRepresentativeVerification.lean

@@ -1,6 +1,6 @@
 # Current gap map
 
-Last reviewed: 2026-11-10 (complex singular/derived constant-sheaf comparison;
+Last reviewed: 2026-11-15 (product P¹ × P¹ ordinary Chow/Betti realization;
 earlier checkpoint records retain
 their original validation scope).
 
@@ -304,6 +304,16 @@ The candidate comparison must name explicit geometric cycles, their Betti
 images and the property of the variety supporting the generation argument.
 Galois actions and projectors are mechanisms to use when needed, not
 prerequisites for a direct cycle-class construction.
+
+The first positive-dimensional product test now has a checked ordinary
+rational degree-one Chow basis: the two zero fibers of P¹ × P¹ span by
+affine-plane Chow vanishing and localization, and are independent by
+denominator clearing and the affine UFD unit criterion. Their separately
+proved supported Gysin classes form the rational singular H² basis. The
+resulting fiber-normalized map on the actual Chow quotient is unconditional
+and realizes every product H² class. It is specific to this product;
+general divisor cycle-class naturality and arbitrary-variety Hodge-class
+coverage remain open. See the top entry of [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
 
 SP94 makes this first obligation explicit in
 `Realization/Chow/UpstairsGeneration.lean`: for every independently

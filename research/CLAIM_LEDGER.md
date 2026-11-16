@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-11-10 (canonical P¹ holomorphic comparison isomorphism;
+Last audited: 2026-11-15 (product P¹ × P¹ ordinary Chow and Betti realization;
 earlier checkpoint records retain
 their original scope).
 
@@ -18,6 +18,36 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Ordinary rational Chow and Betti H² on P¹ × P¹ (2026-11-15)
+
+Status: `FORMAL` for the actual scheme product's integrality and generic
+degree two, the opposite affine tensor chart with closed complement equal to
+the two named zero fibers, and degree-one rational Chow localization. The
+two-variable polynomial chart has zero ordinary degree-one rational Chow
+group: its height-one prime cycles are actual principal divisors in the
+existing quotient. Every degree-one boundary carrier is one of the two
+zero fibers, so their ordinary rational Chow classes span the product's
+degree-one Chow group. Rational relation denominator clearing, the affine
+UFD zero-divisor unit criterion, base-scalar transport, and distinctness of
+the two carriers prove those classes independent. See
+`ProjectiveLineProductZeroBoundaryGenerators.rationalChowGroup_span_zero_fibers`
+and `ProjectiveLineProductFiberChowIndependence.rational_zero_fiber_classes_independent`.
+
+Status: `FORMAL` for the resulting unconditional linear map from that actual
+ordinary rational Chow quotient to actual rational singular H² of the same
+scheme product. It sends the two zero-fiber classes to the independently
+constructed supported Thom--Gysin images, and is a linear equivalence. It
+realizes every product H² class by the corresponding rational fiber cycle. See
+`ProjectiveLineProductChowFiberRealization.ordinaryChowCycleClass_first`,
+`.ordinaryChowCycleClass_second`, and
+`.ordinaryChowCycleClass_fiberChowClass`, and `.ordinaryChowBettiEquiv`.
+
+`OPEN`: a general natural cycle-class map for arbitrary divisors or smooth
+projective varieties, compatibility with a separately constructed universal
+first-Chern/Gysin map on every divisor, and prescribed-class coverage in the
+main Hodge target. The product map is determined by the proved two-fiber
+bases; it does not assert those general comparisons.
 
 ## Original holomorphic Betti comparison on canonical P¹ (2026-11-10)
 

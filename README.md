@@ -7,10 +7,11 @@ geometry, and boundary inertia provide supporting construction tools.
 
 **Current status:** proved mechanisms include finite split Chow/Betti/Hodge
 comparison, a P¹ Hodge-cycle model, and an oriented zero-point Gysin/cycle comparison.
-The two projection classes form a basis of rational singular H² on the actual
-scheme product P¹ × P¹. Its two zero fibers define actual codimension-one
-Chow classes and supported Betti classes mapping to that basis; ordinary
-Chow-to-Betti compatibility on the product remains open.
+The two zero fibers form a basis of the actual rational degree-one Chow group
+of P¹ × P¹, and their supported Gysin classes form a basis of its rational
+singular H². The resulting fiber-normalized Chow-to-Betti map is an
+isomorphism for this product. General divisor cycle maps and naturality
+remain open.
 General Betti comparison and prescribed-class generation remain open.
 No new case of the Hodge conjecture is claimed.
 
@@ -32,9 +33,9 @@ No new case of the Hodge conjecture is claimed.
 - A finite split Chow/Betti/Hodge model, a degree-normalized P¹ Chow map
   with point Gysin factorization, and conditional generation and
   boundary-correction theorems.
-- The actual P¹ × P¹ complex-point product topology and rational singular
+- The actual P¹ × P¹ complex-point topology and rational singular
   degree-two basis, proved through two-chart Mayer–Vietoris calculations;
-  actual codimension-one fiber Chow classes and supported fiber Betti classes.
+  actual codimension-one fiber Chow basis and its normalized Betti realization.
 - Canonical complex points of schemes, a smooth analytic atlas, intrinsic
   holomorphic forms, and an all-degree local holomorphic Poincaré comparison.
 - Rational and complex singular-cochain sheaves, open-cover comparisons,
