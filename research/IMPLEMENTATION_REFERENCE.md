@@ -233,7 +233,7 @@ The central distinction is now explicit:
 The first statement does not automatically imply the second. One formal
 branch, with its missing geometric step displayed, is
 
-\[
+```math
 \begin{aligned}
 \text{collision defects vanish}
 &\Longrightarrow
@@ -247,7 +247,7 @@ R_f \simeq \Delta_X \amalg R_f^{\mathrm{off}}\\
 &\Longrightarrow
 \text{cohomological projector}.
 \end{aligned}
-\]
+```
 
 The middle arrow is genuine geometry.  It includes properness and dimension
 conditions, passage to cycles modulo rational equivalence, refined
@@ -448,13 +448,13 @@ comparisons remain open.
 
 ## The Hodge-theoretic target
 
-For a smooth projective complex variety \(X\), the usual rational Hodge
-conjecture in codimension \(p\) is the surjectivity statement
+For a smooth projective complex variety $X$, the usual rational Hodge
+conjecture in codimension $p$ is the surjectivity statement
 
-\[
+```math
   \mathrm{cl}^p:\mathrm{CH}^p(X)_{\mathbf Q}
     \longrightarrow \operatorname{Hdg}^p(X).
-\]
+```
 
 `Realization/HodgeClasses.lean` now states an abstract schema with exactly
 this logical shape: a `RationalHodgeCycleClassModel` keeps the Hodge-class
@@ -601,45 +601,45 @@ geometric fibers remain distinct steps.
 Pruning follows checked dependencies and mathematical roles; objects are
 queued before any move to the bench. See [the live plan](../research/TARGET_BRIDGE.md#0-operative-plan-chow-to-betti-first).
 
-For a smooth projective \(d\)-fold, the correspondence language is
+For a smooth projective $d$-fold, the correspondence language is
 
-\[
+```math
 \operatorname{Corr}_{\mathrm{alg}}(X)
   = \mathrm{CH}^d(X\times X)_{\mathbf Q}
 \longrightarrow
 \operatorname{End}_{\mathrm{HS}}\!\bigl(H^\ast(X,\mathbf Q)\bigr).
-\]
+```
 
 A cohomological Hodge summand has an idempotent projector.  The desired
 lifting theorem asks when that idempotent is induced by an algebraic
 correspondence, and a decomposition of the diagonal asks for a finite family
-of orthogonal algebraic idempotents summing to \([\Delta_X]\).
+of orthogonal algebraic idempotents summing to $[\Delta_X]$.
 
 This projector language is related to, but not automatically identical with,
 the usual Hodge-conjecture cokernel
 
-\[
+```math
 \operatorname{Hdg}^p(X)/
   \operatorname{im}\bigl(\mathrm{cl}^p\bigr).
-\]
+```
 
 `Realization/Chow/TateGraphProjector.lean` makes the exact reduction explicit.
-A Hodge class \(\alpha\) determines the canonical graph projector
+A Hodge class $\alpha$ determines the canonical graph projector
 
-\[
+```math
 e_\alpha=
 \begin{pmatrix}1&0\\ \alpha&0\end{pmatrix}
 \quad\text{on}\quad
 \mathbf Q(-p)\oplus H^{2p}(X,\mathbf Q).
-\]
+```
 
-Its lower-left block recovers \(\alpha\).  Under explicit Chow-level graph
+Its lower-left block recovers $\alpha$.  Under explicit Chow-level graph
 construction and lower-left-block detection maps, Lean proves—pointwise and
 in every codimension—that the rational Hodge conjecture is equivalent to
 algebraic liftability of every such canonical projector.  The two directions
 use separate interfaces, and neither interface assumes Hodge surjectivity.
 An additional interface records the still-geometric equivalence between
-“\(\alpha\) has type \((p,p)\)” and “\(e_\alpha\) is a morphism of Hodge
+“$\alpha$ has type $(p,p)$” and “$e_\alpha$ is a morphism of Hodge
 structures”; the rational-module layer does not silently assume it.
 
 The cover-intended deck-action endpoint follows that separation literally.  A
@@ -665,27 +665,31 @@ data and a fixed finite subgroup.  At this abstract layer `pX` is not itself
 assumed finite or étale, and the condition remains only sufficient.
 
 The marked Galois-sheet calculation now explains the relevant block form.
-Write \(A_H=\mathbf Q^{G/H}\) and let \(q\) be its base-sheet selector.  The
+Write $A_H=\mathbf Q^{G/H}$ and let $q$ be its base-sheet selector.  The
 residual object is not merely a vector-space kernel: it is the augmentation
 ideal
-\[
+
+```math
 E_H=\ker(\operatorname{ev}_H)=(1-q)\triangleleft A_H.
-\]
-Giving its underlying ideal the internal unit \(1-q\) produces the residual
-corner \(E_H^{\mathrm{corner}}\), and Lean proves the genuine algebra
+```
+
+Giving its underlying ideal the internal unit $1-q$ produces the residual
+corner $E_H^{\mathrm{corner}}$, and Lean proves the genuine algebra
 equivalence
-\[
+
+```math
   A_H\simeq_{\mathbf Q\text{-alg}}\mathbf Q\times E_H^{\mathrm{corner}}.
-\]
-It sends \(q\) to \((1,0)\) and \(1-q\) to \((0,1)\); multiplication by
-\(q\) is therefore \(\operatorname{diag}(1,0)\) in these multiplicative
+```
+
+It sends $q$ to $(1,0)$ and $1-q$ to $(0,1)$; multiplication by
+$q$ is therefore $\operatorname{diag}(1,0)$ in these multiplicative
 selector/CRT coordinates.
 The regular source action
-\(A_H\to\operatorname{End}_{\mathbf Q}(A_H)\) is a
+$A_H\to\operatorname{End}_{\mathbf Q}(A_H)$ is a
 multiplicative algebra map.  For the active comparison, however, the common
 multiplicative source is only the universal one-idempotent algebra
-\(U=\mathbf Q\times\mathbf Q\).  Every chosen idempotent determines an honest
-algebra map from \(U\), so the generic restriction, compactified projector,
+$U=\mathbf Q\times\mathbf Q$.  Every chosen idempotent determines an honest
+algebra map from $U$, so the generic restriction, compactified projector,
 and cohomological action are compared by equalities of algebra-homomorphism
 composites without postulating a map between the larger sheet and convolution
 algebras. A map from the entire commutative sheet algebra into a generic
@@ -694,13 +698,13 @@ schema. The finite split model separately constructs such an embedding by
 actual diagonal Chow classes and an invertible Chow shear.
 In the separate
 constant-unit linear splitting
-\(A_H\simeq_{\mathbf Q}\mathbf Q\oplus E_H\), multiplication by \(q\) is the
-graph projector of the residual class \(q-1\).  Lean proves the ideal
+$A_H\simeq_{\mathbf Q}\mathbf Q\oplus E_H$, multiplication by $q$ is the
+graph projector of the residual class $q-1$.  Lean proves the ideal
 identification, both block formulas, and their shear transition.  A residual
-realization \(\theta:E_H\to V\) is only rational linear. The archived
+realization $\theta:E_H\to V$ is only rational linear. The archived
 `SheetLinearization.lean` experiment defines an auxiliary linear
 coset construction, but is outside the library and supplies no
-map of algebras from \(A_H\) to \(\mathbf Q[G]\).
+map of algebras from $A_H$ to $\mathbf Q[G]$.
 
 These coordinate identities are supporting calculations. A graph projector
 exists for every vector, whether or not that vector is algebraic. Neither
@@ -710,25 +714,25 @@ a Chow representative of a separately prescribed Hodge class.
 The next conditional arrow is also formalized.  An
 `AlgebraProjectorExtension` keeps the generic algebra separate from a
 possibly noncommutative compactified correspondence algebra.  It canonically
-produces maps \(U\to\Gamma_\eta\) and \(U\to\overline\Gamma\), and Lean proves
+produces maps $U\to\Gamma_\eta$ and $U\to\overline\Gamma$, and Lean proves
 that restriction composed with the compactified map equals the generic map.
 The canonical `MarkedProjectorActionComparison` needs only the chosen
 projector and the residual action square, not an ambient restriction map.
 The extension-based comparison remains its stronger specialization.
 The realization comparison is an honest morphism between the corresponding
-\(U\)-representations.  Under surjectivity, `palomarTargetSquare` states that
-the cohomological action composed with the compactified map from \(U\) equals
-the canonical map from \(U\) presenting the class-graph projector.  No
+$U$-representations.  Under surjectivity, `palomarTargetSquare` states that
+the cohomological action composed with the compactified map from $U$ equals
+the canonical map from $U$ presenting the class-graph projector.  No
 general geometric residual realization or comparison square is constructed.
 This is essential: Lean proves that two class-graph projectors commute exactly
 when their classes agree, so one fixed commutative action could not cover a
 nonzero Hodge-class space.
 Given a compactified idempotent restricting to the base-sheet selector, a
-residual realization \(\theta\), and an explicit square intertwining its
+residual realization $\theta$, and an explicit square intertwining its
 correspondence action with generic selector multiplication, evaluation at the
-marked unit identifies the lower-left class with \(\theta(q-1)\).  Lower-left
+marked unit identifies the lower-left class with $\theta(q-1)$.  Lower-left
 Chow-block detection therefore extracts an algebraic representative without
-requiring \(\theta\) to be surjective.  If \(\theta\) is surjective,
+requiring $\theta$ to be surjective.  If $\theta$ is surjective,
 cancellation gives the exact graph-projector action and an algebraic
 projector lift.  Class-dependent coverage by such surjective witnesses
 implies the modeled `RationalHodgeConjectureAt`; the reverse direction
@@ -872,7 +876,7 @@ their explicit premises remain unchanged. See the
 Beyond the canonical split example, the primary geometric task is to
 construct cycles and prove that their Betti classes generate the intended
 Hodge subspace. In the optional marked route, construct a geometric
-Chow-valued residual map whose cycle-class composite carries \(q-1\) to the
+Chow-valued residual map whose cycle-class composite carries $q-1$ to the
 prescribed class. A chosen-projector conclusion additionally requires an
 idempotent Chow correspondence with the prescribed action; an extension-based
 implementation also retains its extension package and compatibility square.
@@ -905,7 +909,7 @@ auditable and allows a smaller named subspace to be substituted.
 
 Finite covers give an abstract, noncircular branch:
 
-\[
+```math
 \text{Galois sheets}
 \longrightarrow
 \text{group/Hecke correspondence algebra}
@@ -913,7 +917,7 @@ Finite covers give an abstract, noncircular branch:
 \text{formal correspondence projectors}
 \longrightarrow
 \text{chosen rational-module summands}.
-\]
+```
 
 After a concrete Chow/Hodge realization is separately supplied, this branch
 can produce finite-monodromy or cover-generated projectors. No such
@@ -929,11 +933,11 @@ On the generic locus, a sheet selector is a characteristic-function
 idempotent.  At a boundary valuation, inertia acts on the generic sheets.
 The formal orbit criterion is
 
-\[
+```math
 \text{the generic selector is inertia-invariant}
 \iff
 \text{the selected sheets form a union of inertia orbits}.
-\]
+```
 
 Together with normalization and purity inputs, this is the proposed
 mechanism controlling extension of the clopen decomposition across the
@@ -1785,11 +1789,11 @@ Those advertised fixed-ring statements do not prove Tag `0BST` or global
 
 - [`Collision`](../HodgeConjecture/Collision) contains the diagonal and
   collision ideals, the global self-fiber product
-  \(R_f=X\times_YX\), the relative diagonal ideal sheaf, intrinsic and
+  $R_f=X\times_YX$, the relative diagonal ideal sheaf, intrinsic and
   ambient sheaf-colon residuals, decomposition defects, component selectors,
   and the literal clopen scheme decomposition.
 - [`Correspondence`](../HodgeConjecture/Correspondence) contains scheme
-  correspondences \(X\leftarrow Z\to Y\) over a base, the diagonal identity,
+  correspondences $X\leftarrow Z\to Y$ over a base, the diagonal identity,
   transpose, fiber-product composition, canonical unit and associativity
   isomorphisms, coproduct, isomorphism classes, and the free rational span
   algebra, with no commutativity assumption.  It also gives:
@@ -1798,34 +1802,36 @@ Those advertised fixed-ring statements do not prove Tag `0BST` or global
     rational algebra;
   - transpose reversal on correspondence classes and anti-involutions of the
     unrestricted and finite étale free rational algebras, carrying
-    \(\Gamma_g\) to \(\Gamma_{g^{-1}}\);
+    $\Gamma_g$ to $\Gamma_{g^{-1}}$;
   - finite indexed coproducts of spans and an explicit finite-additivity
     compatibility property for cycle models;
   - a `FiniteEtaleAlgebraModel` whose source is the admissible finite-etale
     convolution algebra and whose additivity laws cover only finite
     coproducts remaining in that class;
   - deck actions and their algebra maps
-    \(\mathbf Q[G]\to\operatorname{Corr}_{\mathrm{fe}}(X)\), transporting
+    $\mathbf Q[G]\to\operatorname{Corr}_{\mathrm{fe}}(X)$, transporting
     supplied group-algebra idempotents to algebraic-projector lifts and
-    finite ordered-orthogonal families summing to \(1\) to
+    finite ordered-orthogonal families summing to $1$ to
     diagonal-decomposition lifts; prescribed targets require explicit
     realization equalities;
   - finite-group averaging and complementary convolution idempotents,
     together with their algebraic-projector lifts, as a named special case;
-  - for every finite subgroup \(H\leq G\), the rational Hecke corner
-    \(e_H\mathbf Q[G]e_H\), normalized double-coset operators
-    \(e_H[g]e_H\), and their map to the corresponding correspondence corner;
+  - for every finite subgroup $H\leq G$, the rational Hecke corner
+    $e_H\mathbf Q[G]e_H$, normalized double-coset operators
+    $e_H[g]e_H$, and their map to the corresponding correspondence corner;
   - an explicit Galois/torsor collision datum
-    \[
+
+    ```math
     \coprod_{g\in G}X\;\simeq\;X\times_YX
-    \]
+    ```
+
     compatible with both collision projections;
   - an explicit additive/convolution-compatible algebra-model interface;
   - the collision correspondence
-    \(R_f\simeq 1_X\amalg R_f^{\mathrm{off}}\);
+    $R_f\simeq 1_X\amalg R_f^{\mathrm{off}}$;
   - algebraic-projector and diagonal-decomposition lift structures.
 - [`Boundary/Sheets`](../HodgeConjecture/Boundary/Sheets) contains generic
-  \(G/H\)-sheets, relative inertia indices, characteristic-function
+  $G/H$-sheets, relative inertia indices, characteristic-function
   selectors, the inertia-orbit criterion, and the marked selector/CRT versus
   graph-coordinate decomposition.
 - [`LinearAlgebra/BlockGraphProjector.lean`](../HodgeConjecture/LinearAlgebra/BlockGraphProjector.lean)
@@ -1930,21 +1936,20 @@ of an additional theorem or of a completed geometric bridge.
 
 ## Correspondence layer: what is formalized
 
-For schemes over a fixed base \(S\), the project proves:
+For schemes over a fixed base $S$, the project proves:
 
-- a scheme correspondence is a span over \(S\), equivalently a carrier
-  mapping to \(X\times_S Y\);
+- a scheme correspondence is a span over $S$, equivalently a carrier
+  mapping to $X\times_S Y$;
 - correspondences compose using the fiber product over the middle scheme;
 - the diagonal span is the identity;
 - raw composition is unital and associative up to canonical scheme
   isomorphism;
 - transpose reverses composition,
-  \((Q\circ P)^{\mathsf t}\simeq
-  P^{\mathsf t}\circ Q^{\mathsf t}\), and fixes the diagonal up to the
+  $(Q\circ P)^{\mathsf t}\simeq P^{\mathsf t}\circ Q^{\mathsf t}$, and fixes the diagonal up to the
   canonical isomorphism;
 - isomorphism classes of endocorrespondences form a monoid, with no
   commutativity assumption;
-- the monoid algebra over \(\mathbf Q\) is a free rational span algebra;
+- the monoid algebra over $\mathbf Q$ is a free rational span algebra;
 - the older unrestricted `AdditiveClassMap`/`AlgebraModel` records formal
   laws on all spans and is retained only as an exploratory interface; it is
   not used for the normalized finite-etale collision theorem because
@@ -1954,9 +1959,11 @@ For schemes over a fixed base \(S\), the project proves:
   the finite-etale free algebra plus binary and finite-indexed coproduct
   additivity within that admissible class;
 - the clopen collision decomposition yields
-  \[
+
+  ```math
   [R_f]=1+[R_f^{\mathrm{off}}]
-  \]
+  ```
+
   under every additive class map;
 - finite étale admissibility is invariant under span isomorphism and defines
   a convolution submonoid of strict correspondence classes;
@@ -1966,62 +1973,68 @@ For schemes over a fixed base \(S\), the project proves:
 - the collision and off-diagonal correspondences of a finite étale morphism
   belong to that admissible class;
 - deck transformations define finite étale graph correspondences satisfying
-  \(\Gamma_g\Gamma_h=\Gamma_{gh}\);
+  $\Gamma_g\Gamma_h=\Gamma_{gh}$;
 - graph transpose is inverse graph:
-  \(\Gamma_g^{\mathsf t}=\Gamma_{g^{-1}}\) at the class and free-algebra
+  $\Gamma_g^{\mathsf t}=\Gamma_{g^{-1}}$ at the class and free-algebra
   levels;
-- every supplied idempotent \(q\in\mathbf Q[G]\) transports through a finite
+- every supplied idempotent $q\in\mathbf Q[G]$ transports through a finite
   deck action to a correspondence idempotent and an algebraic-projector
   lift; a lift of a separately prescribed operator requires its realization
   equality as an explicit input;
 - a finite ordered-orthogonal family of group-algebra idempotents summing to
-  \(1\) transports to an algebraic decomposition of the diagonal;
+  $1$ transports to an algebraic decomposition of the diagonal;
 - for a finite deck action, the normalized graph sum
-  \[
+
+  ```math
   e_G=\frac{1}{|G|}\sum_{g\in G}\Gamma_g
-  \]
+  ```
+
   and its complement are convolution idempotents;
-- every finite subgroup \(H\leq G\) similarly gives the convolution
+- every finite subgroup $H\leq G$ similarly gives the convolution
   idempotent
-  \[
+
+  ```math
   e_H=\frac{1}{|H|}\sum_{h\in H}\Gamma_h,
-  \]
+  ```
+
   the structured class used by the boundary bridge;
 - the subgroup Hecke algebra is constructed as the honest unital corner
-  \(e_H\mathbf Q[G]e_H\), whose unit is \(e_H\); the normalized operator
-  \(e_H[g]e_H\) depends only on \(HgH\) and maps to the expected
+  $e_H\mathbf Q[G]e_H$, whose unit is $e_H$; the normalized operator
+  $e_H[g]e_H$ depends only on $HgH$ and maps to the expected
   projector--graph--projector sandwich in the correspondence corner;
 - any supplied idempotent in that Hecke corner gives canonical and prescribed
   algebraic-projector lifts; no commutativity, double-coset basis, structure
   constants, or idempotence of every double-coset operator is asserted;
 - for a finite etale morphism, an explicit Galois collision decomposition
   gives, in every supplied `FiniteEtaleAlgebraModel`,
-  \[
+
+  ```math
   [R_f]=\sum_{g\in G}[\Gamma_g],
   \qquad
   \frac{1}{|G|}[R_f]=e_G;
-  \]
+  ```
+
 - consequently the normalized full collision class is conditionally
   idempotent in the supplied realization and has a formal projector lift
   under every supplied correspondence action; no concrete nontrivial Chow
   realization for this general Galois interface is constructed here;
 - the off-diagonal class is
-  \(\sum_g[\Gamma_g]-1\), and is deliberately not asserted to be
+  $\sum_g[\Gamma_g]-1$, and is deliberately not asserted to be
   convolution-idempotent;
 - any supplied rational correspondence action carries algebraic idempotents
   to cohomological idempotents;
 - one algebraic projector lift canonically gives the two-term algebraic
   diagonal decomposition
-  \(p+(1-p)=1\), with both ordered cross-products zero;
+  $p+(1-p)=1$, with both ordered cross-products zero;
 - a finite algebraic decomposition of the diagonal realizes to a finite
   cohomological decomposition into orthogonal projectors.
 
 The free span algebra is deliberately **not** called a Chow algebra.  In
 particular, it does not itself impose
 
-\[
+```math
 [P\amalg Q]=[P]+[Q],
-\]
+```
 
 rational equivalence, refined-intersection relations, or pure-dimension
 conditions.  Those enter only through the explicit realization interfaces.
@@ -2031,13 +2044,15 @@ conditions.  Those enter only through the explicit realization interfaces.
 The project also formalizes:
 
 - the obstruction ideal sheaf
-  \(\mathcal I_{\Delta/R_f}\), its annihilator residual, and the ambient
-  sheaf-colon \(\mathcal I_{R_f}:\mathcal I_\Delta\);
+  $\mathcal I_{\Delta/R_f}$, its annihilator residual, and the ambient
+  sheaf-colon $\mathcal I_{R_f}:\mathcal I_\Delta$;
 - the affine identification
-  \[
+
+  ```math
   \operatorname{Spec}A\times_{\operatorname{Spec}B}\operatorname{Spec}A
   \cong \operatorname{Spec}(A\otimes_BA),
-  \]
+  ```
+
   with relative diagonal induced by tensor multiplication;
 - square-zero overlap and contact defects;
 - the Chinese-remainder product decomposition when both defects vanish;
@@ -2048,8 +2063,7 @@ The project also formalizes:
   open complement;
 - split generic sheet selectors and their exact inertia-orbit criterion;
 - the fixed-ring equivalence
-  \(\operatorname{IntCl}_B(N^H)\simeq
-  (\operatorname{IntCl}_B N)^H\), including its marked-intermediate-field
+  $\operatorname{IntCl}_B(N^H)\simeq (\operatorname{IntCl}_B N)^H$, including its marked-intermediate-field
   specialization;
 - chosen-representative maps from `L ⊗[K] L` and `N ⊗[K] L` to functions on
   the Galois sheets, with the formal-unramified diagonal element mapped
@@ -2081,11 +2095,13 @@ The project also formalizes:
   generic selector and exist precisely under an explicit purity/gluing
   hypothesis;
 - a compactified subgroup correspondence projector records both maps
-  \[
+
+  ```math
   \mathbf Q[\text{finite étale spans}]\longrightarrow\Gamma_\eta,
   \qquad
   \Gamma_{\overline X}\longrightarrow\Gamma_\eta,
-  \]
+  ```
+
   so the extended idempotent restricts to the realized subgroup average
   without reversing the natural cycle-realization map;
 - a supplied generic--compactified graph comparison square transports every
@@ -2139,7 +2155,7 @@ requires:
 1. refine the finite étale admissible algebra, or another chosen
    proper/equidimensional class, to the concrete geometric application;
 2. construct its cycle classes in
-   \(\mathrm{CH}^d(X\times X)_{\mathbf Q}\) and prove coproduct additivity;
+   $\mathrm{CH}^d(X\times X)_{\mathbf Q}$ and prove coproduct additivity;
 3. prove that fiber-product composition agrees with refined Chow
    convolution under the required transversality or Tor-independence
    hypotheses;
