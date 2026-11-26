@@ -11,6 +11,12 @@ projective-line checkpoints, and coverage. Three appendices hold the detailed
 proofs, split calculations, and Lean declaration crosswalk. They build into
 the same PDF.
 
+The target section includes finite harmonic class certificates and their
+normalized-descent corollary. The realization section retains the actual
+product fiber Chow--Betti equivalence and its harmonic coordinate control.
+The original circle and projective-line covers also give a finite quotient
+comparison preserving the ordinary cycle map and geometric Hodge target.
+
 The theorem hypotheses stay in the manuscript; working proof-status and gap
 records are maintained in [`research/GAP_MAP.md`](../research/GAP_MAP.md) and
 the [semantic-parity queue](../research/working/0005-semantic-parity-cleanup.md).

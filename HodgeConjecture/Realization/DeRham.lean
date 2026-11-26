@@ -10,6 +10,7 @@ public import HodgeConjecture.Realization.DeRham.ProjectiveLinePeriods
 public import HodgeConjecture.Realization.DeRham.ProjectiveLinePeriodComparison
 public import HodgeConjecture.Realization.DeRham.ProjectiveLineHodgeCycleClass
 public import HodgeConjecture.Realization.DeRham.ProjectiveLineCanonicalComparison
+public import HodgeConjecture.Realization.DeRham.ProjectiveLineCoverHodgeComparison
 public import HodgeConjecture.Realization.DeRham.HolomorphicPoincare
 public import HodgeConjecture.Realization.DeRham.HolomorphicKaehler
 public import HodgeConjecture.Realization.DeRham.SchemeHolomorphicForms

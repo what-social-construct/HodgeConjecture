@@ -6392,3 +6392,52 @@ compatibility with the exact holomorphic map from 0053 next. Its holomorphic
 invertibility is not inferred from the new cochain isomorphism alone.
 General geometric finiteness and the later proper/purity/coverage obligations
 retain their earlier open scope.
+
+## Complex comparison and product parity refresh (2026-11-25)
+
+These rows synchronize the registry with the existing 0055/0056 and product
+checkpoints; their geometric scope is unchanged.
+
+| Object | Mathematical role | Lean owner/API | Status and reuse | Role |
+| --- | --- | --- | --- | --- |
+| Complex cochain-induced holomorphic comparison | Actual complex singular/constant-sheaf comparison and finite-cohomology coefficient composite | `AnalyticBettiComparison.cochainHolomorphicComparison_isIso` | FORMAL under the stated topology and finiteness hypotheses; equality with the original generic holomorphic map remains OPEN; [0055](0055-complex-singular-derived-comparison.md) | BRIDGE |
+| Original canonical P¹ holomorphic comparison | Invertibility of the original map in degree two | `ProjectiveLineHolomorphicComparisonIso.holomorphicBettiComparison_isIso`, `comparisonEquiv` | FORMAL for the original P¹ map; general invertibility remains OPEN; [0056](0056-projective-line-holomorphic-comparison-iso.md) | BRIDGE |
+| Actual product Betti and Chow fiber coordinates | Rational H² and ordinary degree-one Chow quotient of P¹ × P¹ | `ProjectiveLineProductSpanning.coordinateEquiv`, `ProjectiveLineProductChowFiberRealization.ordinaryChowBettiEquiv` | FORMAL from the actual two-fiber bases; general cycle-map naturality remains OPEN; [0058](0058-chow-class-witness.md) | TARGET |
+
+## Attributed finite harmonic witness layer (2026-11-25)
+
+The copied mathematical core is pinned to `homotopical-encrypt` revision
+`b388870613f770cea64d03b4c4ff2c34905020e1`. Source links appear in each copied
+module; the original MIT notice is retained beside them. Only imports and
+the enclosing namespace change in `CellComplex`, `Cellular`, `Hodge`, and
+`Equivalence`. The quotient certificate and Hodge adapters are local extensions.
+The canonical manuscript now represents these objects in its finite harmonic
+class-certificate subsection and principal declaration crosswalk. The chosen
+product coordinate presentation is stated separately from geometric comparison.
+
+| Object | Mathematical role | Lean owner/API | Status and reuse | Role |
+| --- | --- | --- | --- | --- |
+| Finite cellular differential and genuine Laplacian | $\delta_0,\delta_1,\Delta_1=\delta_0\delta_0^*+\delta_1^*\delta_1$; $\mathcal H^1_{\mathrm{fin}}=\ker\Delta_1$ and $P_{\mathrm{harm}}$ | `Harmonic.CellularSheaf.delta1_comp_delta0`, `degreeOneLaplacian_energy`, `degreeOneLaplacian_apply_eq_zero_iff` | COPIED / FORMAL, with pinned attribution and MIT notice; independent of project geometry and realization | ROUTE |
+| Isometric cochain transport | Commutes with the Laplacian and preserves its kernel | `Harmonic.CellularSheaf.IsometricCochainEquiv.degreeOneLaplacian_naturality` | COPIED / FORMAL; isometry and both cochain squares remain explicit | ADAPTER |
+| Unique harmonic representative of a closed cochain | $[c]=[c′]\iff P_{\mathrm{harm}}c=P_{\mathrm{harm}}c′$ for closed representatives; manuscript Theorem `thm:finite-harmonic-certificates` | `Harmonic.CellularSheaf.existsUnique_harmonic_representative`, `quotient_class_eq_iff_harmonicOneProjection_eq` | FORMAL; closedness required, primitive not asserted unique; [source](../../HodgeConjecture/LinearAlgebra/Harmonic/Cohomology.lean) | BRIDGE |
+| Existing normalized Chow descent | $W_i(\operatorname{cl}_i z)-W_i(p_i\alpha)\in\operatorname{im}\delta_{0,i}$; manuscript Corollary `cor:harmonic-normalized-descent` | `normalizedPushforward_cycleClass_of_harmonicWitness` | CONDITIONAL on an injective harmonic realization, the original transfer laws, and supplied cycle/certificate; [source](../../HodgeConjecture/Realization/Chow/HarmonicWitness.lean) | ADAPTER |
+| Product harmonic coordinate control | $W_X(a u_1+b u_2)=(a,b)\in\mathbf R^2$; $\operatorname{cl}_{\mathrm{fib}}(a[F_1]+b[F_2])=a u_1+b u_2$ | `ProjectiveLineProductHarmonicWitness.witness_injective`, `fiberChowClass_harmonic_certificate` | FORMAL chosen zero-differential coordinate presentation; geometric Laplacian comparison is not claimed; [source](../../HodgeConjecture/Realization/Betti/ProjectiveLineProductHarmonicWitness.lean) | CHECK |
+| General geometric comparison and class coverage | Finite model computes the variety's Betti/Hodge target and cycle witnesses cover it | No general instance | OPEN; harmonic uniqueness does not construct cycle representatives | TARGET |
+
+`make check-harmonic-witness` runs the focused controls and axiom boundary.
+The three existing product verification targets are now included in `make check`.
+Release sign-offs and the human semantic audit remain open.
+
+## Original-cover geometric comparison (2026-11-26)
+
+| Object | Mathematical representation | Lean owner/API | Scope |
+| --- | --- | --- | --- |
+| Native finite cover quotient | $d_{\mathrm{cov}}(a,b)=(a-b,a-b)$, $K_{\mathrm{cov}}=\mathbf Q^2/\operatorname{im}d_{\mathrm{cov}}$ | `CircleCoverHarmonicComparison.quotientCircleEquiv`, `realize_coboundary` | FORMAL actual circle Mayer–Vietoris boundary and nonzero differential |
+| Original boundary and harmonic square | $W(\Phi_{\mathrm{cov}}[f])=P_{\mathrm{harm}}\iota(f)$ | `witness_componentBoundary`, `ProjectiveLineCoverHarmonicComparison.witness_original_boundaries` | FORMAL original radial map, P¹ boundary and canonical scheme-point homeomorphism |
+| Finite quotient Hodge target | $F^rK_{\mathrm{cov},\mathbf C}=\Phi_{\mathrm{cov},\mathbf C}^{-1}F^rH^2_{\mathrm B}$ | `ProjectiveLineCoverHodgeComparison.filtration_eq_geometric_transport`, `mem_rationalHodgeClasses` | FORMAL transport of the existing actual scheme filtration and rational target |
+| Original ordinary cycle square | $\operatorname{cl}_{\mathrm{cov}}z=[\operatorname{step}(\deg z)]$, $\Phi_{\mathrm{cov}}\operatorname{cl}_{\mathrm{cov}}z=\operatorname{cl}z$ | `finiteCycleClass_commutes`, `witness_canonicalCycleClass` | FORMAL for the original ordinary Chow map on P¹ |
+
+The manuscript proposition `prop:p1-cover-harmonic-comparison` gives the
+same maps and quantifiers. [0059](0059-finite-cover-harmonic-comparison.md)
+records the construction and focused check target. The general comparison
+and prescribed-class coverage row above remains OPEN.

@@ -358,3 +358,15 @@ checks passed.
 Other points, chart independence and general Gysin remain open. See
 [0035](working/0035-projective-line-zero-point-gysin.md). Release sign-offs
 and submission packaging remain unchanged.
+
+The finite harmonic and original-cover comparison checkpoint (2026-11-26)
+passes the public-library build `lake build HodgeConjecture` (5,396 jobs)
+and the complete root declaration inventory. The 1,858 printed axiom lists
+stay within the standard three axioms. Both focused targets pass 43 axiom
+audits, six controls and 124 import guards. The 730 active
+library/root/solution sources have no proof-gap tokens; the two intentional
+Challenge statement placeholders remain separate. The canonical 104-page
+manuscript rebuilds without overfull boxes or undefined references, with
+rendered review of the changed pages. This records cached working-tree
+validation; clean-clone and human release sign-offs remain separate. See
+[0059](working/0059-finite-cover-harmonic-comparison.md).

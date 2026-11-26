@@ -82,7 +82,7 @@
 
 \title{Galois Correspondences and the Hodge Conjecture}
 \author{Chloe van der Vlugt}
-\date{November 15, 2026}
+\date{November 26, 2026}
 
 \begin{document}
 
@@ -122,8 +122,11 @@ copies of the projective line and two projection-pullback singular
 degree-two classes form a rational basis. The fibers define actual
 codimension-one Chow classes. Pulling back the zero-point Thom class gives
 supported classes on the exact fiber complements whose absolute classes are
-the two basis vectors. Compatibility with an ordinary product Chow
-cycle-class map remains open.
+the two basis vectors. The two fiber classes also form a basis of the
+ordinary rational degree-one Chow quotient; their normalized realization
+is a linear equivalence with singular degree-two cohomology. Finite cellular
+harmonic representatives certify class equality and feed normalized cycle
+descent through an explicit faithful realization.
 For a supplied finite \'{e}tale extension, we also construct closed deck
 graphs and prove their scheme-theoretic restriction over the open base;
 for integral covers this extends to actual cycles and rational graph sums.
@@ -176,8 +179,9 @@ statement ranges over all smooth projective complex varieties and
 codimensions with these geometric models. The finite split degree-zero
 model and a fixed degree-two projective-line model are constructed below.
 The projective-line product supplies geometric codimension-one fiber Chow
-classes and a Betti basis realized by supported fiber classes. A comparison
-from its ordinary Chow group to this Betti realization remains to be proved.
+classes and a Betti basis realized by supported fiber classes. The two fiber
+bases define the normalized ordinary Chow--Betti linear equivalence used
+below.
 
 \subsection{Upstairs generation and descent}
 \label{subsec:upstairs-generation}
@@ -241,6 +245,94 @@ on Betti cohomology and \(s_i=f_{i,*}\) on Chow groups, with their
 cycle-class comparison and positive constant-degree transfer law as the
 displayed hypotheses. The generation condition concerns precisely
 \(f_i^*\alpha\); it does not require generation of every class upstairs.
+
+\subsection{Finite harmonic class certificates}
+\label{subsec:finite-harmonic-certificates}
+
+Let
+\[
+ C^0\xrightarrow{\delta_0}C^1\xrightarrow{\delta_1}C^2,
+ \qquad \delta_1\delta_0=0,
+\]
+be the finite-dimensional real cochain window of a cellular sheaf, equipped
+with positive-definite inner products. Define the genuine Laplacian,
+its harmonic space, and orthogonal projection by
+\[
+ \Delta_1=\delta_0\delta_0^*+\delta_1^*\delta_1,\qquad
+ \mathcal H^1_{\mathrm{fin}}=\ker\Delta_1,\qquad
+ P_{\mathrm{harm}}:C^1\longrightarrow\mathcal H^1_{\mathrm{fin}}.
+\]
+The energy identity
+\[
+ \langle\Delta_1c,c\rangle
+   =\|\delta_0^*c\|^2+\|\delta_1c\|^2
+\]
+identifies harmonicity with simultaneous closedness and coclosedness.
+
+\begin{theorem}[Harmonic certificates for closed cochains]
+\label{thm:finite-harmonic-certificates}
+For every \(c\in\ker\delta_1\), there is a unique
+\(h\in\mathcal H^1_{\mathrm{fin}}\) for which
+\[
+ c-h=\delta_0a\qquad\text{for some }a\in C^0.
+\]
+This representative is \(h=P_{\mathrm{harm}}c\). For closed \(c,c'\),
+\[
+ [c]=[c']\text{ in }\ker\delta_1/\operatorname{im}\delta_0
+ \quad\Longleftrightarrow\quad
+ P_{\mathrm{harm}}c=P_{\mathrm{harm}}c'.
+\]
+\end{theorem}
+\begin{proof}
+Put \(E=\operatorname{im}\delta_0\), let \(P_E\) be its orthogonal
+projection, and set \(h=c-P_Ec\). Since \(P_Ec\in E\), square-zero gives
+\(\delta_1h=0\). Orthogonality to \(E\) gives \(\delta_0^*h=0\), so the
+energy identity makes \(h\) harmonic. Harmonic vectors are orthogonal to
+\(E\); hence \(P_{\mathrm{harm}}c=h\).
+If \(h,h'\) are harmonic and \(h-h'=\delta_0a\), then
+\[
+ \|h-h'\|^2
+ =\langle\delta_0a,h-h'\rangle
+ =\langle a,\delta_0^*(h-h')\rangle=0.
+\]
+Thus the harmonic representative is unique. Applying the exact-residual
+statement to \(c,c'\), and observing that harmonic projection kills
+\(\operatorname{im}\delta_0\), proves the quotient-class criterion.
+The primitive \(a\) is existential throughout.
+\end{proof}
+
+\begin{corollary}[Harmonic verification of normalized descent]
+\label{cor:harmonic-normalized-descent}
+Fix the data and two comparison laws of
+Theorem~\ref{thm:upstairs-generation-descent}. Suppose, for a selected \(i\),
+that a rational-linear injection
+\[
+ W_i:V_i\lhook\joinrel\longrightarrow\mathcal H^1_{\mathrm{fin},i}
+\]
+is given, where the real harmonic space is viewed as a rational vector
+space. If \(z\in A_i\) and \(\alpha\in V\) satisfy the exact-difference
+certificate
+\[
+ W_i(\operatorname{cl}_i z)-W_i(p_i\alpha)
+       \in\operatorname{im}\delta_{0,i},
+\]
+then
+\[
+ \operatorname{cl}\left(d_i^{-1}s_i z\right)=\alpha.
+\]
+\end{corollary}
+\begin{proof}
+Both witness vectors are harmonic. Theorem~\ref{thm:finite-harmonic-certificates}
+therefore makes them equal, and injectivity of \(W_i\) gives
+\(\operatorname{cl}_i z=p_i\alpha\). The original degree-normalized descent
+calculation now applies.
+\end{proof}
+
+An isometric cochain equivalence intertwines the adjoints and Laplacians,
+and therefore carries the harmonic kernel to the harmonic kernel. The
+closedness hypothesis in Theorem~\ref{thm:finite-harmonic-certificates}
+concerns the representatives themselves; a general coexact perturbation is
+not an exact-difference certificate.
 
 \subsection{Graph-projector formulation}
 
@@ -3182,6 +3274,73 @@ Identifying that map with the original holomorphic comparison in general,
 and comparing algebraic with analytic de Rham cohomology in general, remain
 open.
 
+\subsubsection*{A finite model from the original covers}
+
+The two contractible circle charts have two overlap components. Their
+rational chart-difference complex is
+\[
+ \Q^2\xrightarrow{d_{\mathrm{cov}}}\Q^2\longrightarrow0,
+ \qquad d_{\mathrm{cov}}(a,b)=(a-b,a-b).
+\]
+Set \(K_{\mathrm{cov}}=\Q^2/\operatorname{im}d_{\mathrm{cov}}\), and let
+\(\iota:\Q^2\to\mathbf R^2\) be coefficient inclusion. The corresponding
+finite cellular sheaf has two chart vertices, two component edges, constant
+one-dimensional stalks, and the standard Euclidean metric.
+
+\begin{proposition}[Cover, harmonic, and Hodge comparison on the projective line]
+\label{prop:p1-cover-harmonic-comparison}
+On canonical scheme complex points, the original circle connecting map,
+followed by radial pullback and the original projective-line connecting map,
+induces a rational linear equivalence
+\[
+ \Phi_{\mathrm{cov}}:K_{\mathrm{cov}}
+       \xrightarrow{\sim}H^2_{\mathrm B}(\mathbf P^1_{\mathbf C},\Q),
+\]
+There is a rational-linear injection
+\(W\) into the finite cellular harmonic space such that
+\[
+ W\bigl(\Phi_{\mathrm{cov}}[f]\bigr)=P_{\mathrm{harm}}\iota(f)
+ \qquad(f\in\Q^2).
+\]
+Writing \(\operatorname{step}(q)=(0,q)\), the finite cycle map
+\[
+ \operatorname{cl}_{\mathrm{cov}}(z)
+   =[\operatorname{step}(\deg z)]\in K_{\mathrm{cov}}
+\]
+satisfies
+\(\Phi_{\mathrm{cov}}\operatorname{cl}_{\mathrm{cov}}(z)
+  =\operatorname{cl}(z)\) for the original degree-normalized ordinary
+Chow map. Transporting the existing geometric Hodge filtration through
+\(\Phi_{\mathrm{cov},\mathbf C}^{-1}\) gives a pure weight-two rational
+Hodge structure on \(K_{\mathrm{cov}}\), with
+\[
+ x\in\operatorname{Hdg}^{1}(K_{\mathrm{cov}})
+ \quad\Longleftrightarrow\quad
+ \Phi_{\mathrm{cov}}x\in
+       \operatorname{Hdg}^{1}(\mathbf P^1_{\mathbf C}).
+\]
+\end{proposition}
+\begin{proof}
+The actual circle Mayer--Vietoris boundary is surjective, with kernel the
+constant component pairs. This kernel is exactly
+\(\operatorname{im}d_{\mathrm{cov}}\), giving the first quotient
+isomorphism. The original radial and projective-line boundary maps, and the
+scheme-point homeomorphism, are the proved isomorphisms defining
+\(\Phi_{\mathrm{cov}}\).
+For \(f=(f_0,f_1)\), the difference
+\(f-\operatorname{step}(f_1-f_0)\) is the constant pair \((f_0,f_0)\).
+Coefficient inclusion intertwines \(d_{\mathrm{cov}}\) with the real
+cellular differential, and harmonic projection kills its image. Thus the
+projection depends only on the original boundary class. The functional
+\((r_0,r_1)\mapsto r_1-r_0\) is unchanged by harmonic projection and
+recovers the rational boundary coordinate, proving injectivity and the
+comparison square. The step class of \(1\) maps to the original positive
+projective-line cover generator, so Chow degree gives the cycle square.
+Rational scalar extension commutes with the canonical tensor conjugation;
+transport of the already constructed geometric filtration proves the Hodge
+assertion.
+\end{proof}
+
 For the first product test, put
 \[
   X=\mathbf P^1_{\mathbf C}\times_{\operatorname{Spec}\mathbf C}\mathbf P^1_{\mathbf C},
@@ -3309,6 +3468,25 @@ The values on the two generators agree with their separately constructed
 supported Thom--Gysin classes. A general cycle-class construction and
 its naturality for arbitrary divisors or varieties remain open; no
 arbitrary-variety Hodge conclusion follows from this product calculation.
+
+The harmonic coordinate control sends
+\[
+ a u_1+b u_2\longmapsto(a,b)\in\mathbf R^2,
+\]
+with rational coefficients embedded in the reals. This is the harmonic space
+of a finite three-term window with zero outer terms and zero differentials,
+using the standard coordinate metric. It is injective on the original
+rational Betti space. Consequently
+\[
+ \operatorname{cl}_{\mathrm{fib}}(z)=\alpha
+ \quad\Longleftrightarrow\quad
+ W_X\bigl(\operatorname{cl}_{\mathrm{fib}}(z)\bigr)-W_X(\alpha)
+       \in\operatorname{im}\delta_0,
+\]
+where \(\operatorname{im}\delta_0=0\) in this presentation. The original
+fiber recipe \(a[F_1]+b[F_2]\) satisfies this certificate for every
+\(\alpha=a u_1+b u_2\). The metric and harmonic space in this calculation
+are specified by the proved Betti coordinates.
 
 \section{Residual realization and coverage}
 \label{sec:coverage}
@@ -6189,6 +6367,26 @@ Upstairs recipe generation &
 Normalized cycle descent &
 \leanpath{rationalHodgeConjectureAt_of_classDependentChowBettiGeneration}\newline
 \leanpath{Realization/Chow/UpstairsGeneration.lean}\\
+Finite harmonic class certificates &
+\leanpath{Harmonic.CellularSheaf.existsUnique_harmonic_representative};
+\leanpath{Harmonic.CellularSheaf.quotient_class_eq_iff_harmonicOneProjection_eq}\newline
+\leanpath{LinearAlgebra/Harmonic/Cohomology.lean}\\
+Harmonic verification of upstairs descent &
+\leanpath{normalizedPushforward_cycleClass_of_harmonicWitness}\newline
+\leanpath{Realization/Chow/HarmonicWitness.lean}\\
+Product harmonic coordinate witnesses &
+\leanpath{ProjectiveLineProductHarmonicWitness.witness_injective};
+\leanpath{ProjectiveLineProductHarmonicWitness.fiberChowClass_harmonic_certificate}\newline
+\leanpath{Realization/Betti/ProjectiveLineProductHarmonicWitness.lean}\\
+Original-cover finite harmonic comparison &
+\leanpath{CircleCoverHarmonicComparison.quotientCircleEquiv};
+\leanpath{ProjectiveLineCoverHarmonicComparison.witness_original_boundaries}\newline
+\leanpath{Realization/Betti/CircleCoverHarmonicComparison.lean};
+\leanpath{Realization/Betti/ProjectiveLineCoverHarmonicComparison.lean}\\
+Finite-cover geometric Hodge and cycle comparison &
+\leanpath{ProjectiveLineCoverHodgeComparison.filtration_eq_geometric_transport};
+\leanpath{ProjectiveLineCoverHodgeComparison.finiteCycleClass_commutes}\newline
+\leanpath{Realization/DeRham/ProjectiveLineCoverHodgeComparison.lean}\\
 Projective-line degree-two Chow witness &
 \leanpath{ProjectiveLineHodgeCycleClass.infinity_class_witness}\newline
 \leanpath{Realization/DeRham/ProjectiveLineHodgeCycleClass.lean}\\
@@ -7874,6 +8072,14 @@ local appendix includes integral-closure normality
 rings \cite{StacksNoetherianLocalization,StacksNormalLocalization}, and the
 one-dimensional local criterion for a DVR \cite{StacksDVRCriterion}.  The fixed-field/integral-closure comparison is related to the normal
 Galois integral-closure statement \cite{StacksGaloisIntegralClosure}.
+
+The finite cellular cochain, Laplacian, and isometric-transport modules are
+adapted from the mathematical core of \emph{Homotopical Encryption}, revision
+\href{https://github.com/what-social-construct/homotopical-encrypt/tree/b388870613f770cea64d03b4c4ff2c34905020e1}{\texttt{b388870}}.
+The copied files carry pinned source links; the original MIT notice is
+retained in \leanpath{LinearAlgebra/Harmonic/LICENSE}. The closed-cochain
+quotient criterion and its normalized-descent adapter are the extensions
+used in Section~\ref{subsec:finite-harmonic-certificates}.
 
 For a finite-type ring map, containment of the Noether different detects
 the non-unramified locus \cite{StacksNoetherDifferent}. The

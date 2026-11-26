@@ -7,6 +7,16 @@ import sys
 
 ROOT = Path(__file__).resolve().parent.parent
 RULES = {
+    "HodgeConjecture.LinearAlgebra.Harmonic.Cohomology": (
+        "HodgeConjecture.Boundary",
+        "HodgeConjecture.Collision",
+        "HodgeConjecture.Correspondence",
+        "HodgeConjecture.Cycles",
+        "HodgeConjecture.Geometry",
+        "HodgeConjecture.Realization",
+        "HodgeConjecture.Inputs",
+        "HodgeConjecture.SheafCohomology",
+    ),
     "HodgeConjecture.Correspondence.FilteredProjectorDefect": (
         "HodgeConjecture.Boundary",
         "HodgeConjecture.Collision",
@@ -471,6 +481,14 @@ RULES["HodgeConjecture.Realization.Betti.ProjectiveLinePointGysin"] = RULES[
 RULES["HodgeConjecture.Realization.Betti.ProjectiveLineGysinCycleClass"] = RULES[
     "HodgeConjecture.Realization.Betti.ProjectiveLineCycleClass"
 ]
+
+
+RULES["HodgeConjecture.Realization.Betti.CircleCoverHarmonicComparison"] = RULES[
+    "HodgeConjecture.Realization.Betti.SingularCochains"
+]
+RULES["HodgeConjecture.Realization.Betti.ProjectiveLineCoverHarmonicComparison"] = (
+    "HodgeConjecture.Realization.DeRham",
+)
 
 
 def without_comments(source):

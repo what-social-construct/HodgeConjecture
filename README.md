@@ -41,6 +41,10 @@ No new case of the Hodge conjecture is claimed.
 - Rational and complex singular-cochain sheaves, open-cover comparisons,
   flasque resolutions, and comparison with derived constant-sheaf cohomology
   under the stated topology hypotheses.
+- Finite cellular harmonic class certificates and an upstairs-descent adapter.
+  The [original-cover P¹ comparison](research/working/0059-finite-cover-harmonic-comparison.md)
+  computes actual Betti H², preserves the ordinary Chow map, and transports
+  the existing geometric Hodge filtration.
 - A complex Betti-to-holomorphic map that detects rational classes. On P¹ in
   degree two the original map is an isomorphism; general invertibility and
   equality with the separate cochain-induced map remain open.

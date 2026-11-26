@@ -21,6 +21,8 @@ public import HodgeConjecture.Realization.Betti.ProjectiveLineComplexification
 public import HodgeConjecture.Realization.Betti.ProjectiveLineCycleClass
 public import HodgeConjecture.Realization.Betti.ProjectiveLineHodgeStructure
 public import HodgeConjecture.Realization.Betti.ProjectiveLineGysinCycleClass
+public import HodgeConjecture.Realization.Betti.ProjectiveLineProductHarmonicWitness
+public import HodgeConjecture.Realization.Betti.ProjectiveLineCoverHarmonicComparison
 
 @[expose] public section
 

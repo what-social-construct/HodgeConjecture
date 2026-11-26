@@ -1,8 +1,8 @@
 # Claim ledger
 
-Last audited: 2026-11-15 (product P¹ × P¹ ordinary Chow and Betti realization;
-earlier checkpoint records retain
-their original scope).
+Last audited: 2026-11-26 (finite cover/harmonic/Hodge comparison on P¹; the product
+P¹ × P¹ ordinary Chow/Betti checkpoint was audited 2026-11-15). Earlier
+checkpoint records retain their original scope.
 
 Status vocabulary:
 
@@ -18,6 +18,58 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Finite cover, harmonic and Hodge comparison on P¹ (2026-11-26)
+
+Status: `FORMAL` for the nonzero two-chart/two-component finite complex,
+its rational-to-real differential square, the native quotient equivalence
+to actual circle singular H¹, and harmonic projection compatibility with
+the original Mayer–Vietoris boundary.
+
+`FORMAL` for transport through the original radial pullback and original
+projective-line boundary to actual canonical scheme-point Betti H²,
+including the original positive generator and ordinary Chow cycle map.
+The actual scheme Hodge filtration transports to the same finite quotient;
+its rational target is exactly the preimage of the independently defined
+geometric Hodge target. The finite cycle map retains ordinary Chow degree,
+and its Betti image is proved equal to the original ordinary cycle map.
+
+`OPEN`: general finite-model/geometric comparison, intrinsic analytic
+harmonic operators, general proper/purity comparison and prescribed-class
+generation. This P¹ comparison does not establish any of these general
+statements. See [0059](working/0059-finite-cover-harmonic-comparison.md).
+
+## Finite harmonic class certificates (2026-11-25)
+
+Status: `FORMAL` for the copied finite cellular core, its genuine degree-one
+Laplacian and energy/kernel identity, and isometric cochain transport. The
+four source modules are adapted from `homotopical-encrypt` at
+`b388870613f770cea64d03b4c4ff2c34905020e1`; each copy points to its original,
+and `HodgeConjecture/LinearAlgebra/Harmonic/LICENSE` retains the MIT notice.
+No external package dependency is added.
+
+`FORMAL` for unique harmonic representatives of closed finite real cochains,
+exactness of their projection residual, and equality in the native
+kernel/range quotient iff harmonic projections agree. Only the harmonic
+representative is unique; an exact primitive remains existential.
+
+`CONDITIONAL` for `normalizedPushforward_cycleClass_of_harmonicWitness`:
+an injective rational linear realization into the finite harmonic space and
+an exact-difference certificate supply the equality argument of the existing
+upstairs descent theorem. Its original transfer/pushforward hypotheses and
+the supplied cycle remain explicit.
+
+`FORMAL` for `ProjectiveLineProductHarmonicWitness.witness_injective` and
+`.fiberChowClass_harmonic_certificate`: the existing actual product Betti
+coordinates embed in a two-dimensional real zero-differential presentation,
+and the original fiber-cycle recipe passes the certificate. This is a chosen
+coordinate metric, not a geometric Laplacian or triangulation comparison.
+
+`OPEN`: a general finite-model/Betti comparison respecting rational and Hodge
+structures, geometric harmonic/cycle compatibility, and prescribed-class
+coverage. The finite coordinate control does not discharge these obligations.
+Focused validation is `make check-harmonic-witness`; full release sign-offs
+remain separate.
 
 ## Ordinary rational Chow and Betti H² on P¹ × P¹ (2026-11-15)
 
