@@ -41,6 +41,11 @@ No new case of the Hodge conjecture is claimed.
 - Rational and complex singular-cochain sheaves, open-cover comparisons,
   flasque resolutions, and comparison with derived constant-sheaf cohomology
   under the stated topology hypotheses.
+- The [connected branched P¹ square cover](research/working/0064-projective-line-square-cover.md)
+  has geometric degree two and actual branch multiplicity two. Its native H²
+  pullback is computed independently of Chow; a trace through the singleton
+  zero support and the existing point-Gysin isomorphism gives the degree-two
+  aggregate with the original full Hodge target. General branched trace remains open.
 - The [split double cover of P¹](research/working/0063-projective-line-split-double-cover.md)
   has transfer on native singular cochains, original ordinary Chow
   pull–push comparisons in H², and an accepted full-target aggregate.

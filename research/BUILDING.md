@@ -6,6 +6,7 @@ repository. Existing build artifacts are reused.
 
 | Work area | Build | Build, examples and axiom checks |
 | --- | --- | --- |
+| Connected branched P¹ square cover, original Chow/native H² and supported trace | `make build-p1-square-cover` | `make check-p1-square-cover` |
 | Actual split double cover of P¹, original Chow/native H² and aggregate | `make build-p1-double-cover` | `make check-p1-double-cover` |
 | Actual finite split cover, ordinary Chow/native Betti squares and aggregate | `make build-geometric-cover-coverage` | `make check-geometric-cover-coverage` |
 | Galois coefficient descent, harmonic naturality and actual P¹ aggregates | `make build-galois-harmonic-coverage` | `make check-galois-harmonic-coverage` |

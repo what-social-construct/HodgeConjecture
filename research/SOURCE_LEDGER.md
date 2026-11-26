@@ -3021,3 +3021,18 @@ The ordinary Chow comparison retains the original principal relations and
 quotient maps. The P¹ instance uses the existing independently constructed
 Hodge target and component cycle maps; general Gysin compatibility remains
 outside this checkpoint.
+
+## Connected square-map comparison (2026-11-26)
+
+The eight modules in [0064](working/0064-projective-line-square-cover.md)
+are local proofs using existing project APIs and pinned Mathlib. No external
+source copy, package dependency, license input or theorem axiom is added.
+The coordinate proof uses even/odd coefficients of the actual square ring
+map, and the original glued scheme charts identify its finite flat rank.
+Original weighted fiber degree and residue degrees compute branch
+multiplicities. Native circle-square pullback uses literal angular singular
+triangles; a morphism of the original short exact cochain sequences proves
+Mayer–Vietoris naturality. The supported trace uses the actual fixed
+singleton map and the existing oriented zero-point Gysin isomorphism.
+Original Chow quotients, maps and the independent Hodge target are retained.
+General branched trace and arbitrary point-Gysin naturality remain separate.

@@ -8,6 +8,18 @@ Dated build observations and older API spellings below retain their historical
 scope; the [Lean 4.35 record](working/0020-lean-4-35-migration.md) gives the
 current toolchain and migration checks.
 
+The [connected P¹ square-cover checkpoint](working/0064-projective-line-square-cover.md)
+adds `CommutativeAlgebra.PolynomialSquare`, `Geometry.ProjectiveLineSquare`,
+`Betti.Examples.CircleSquare`, `Betti.SingularMayerVietorisNaturality`,
+`Betti.ProjectiveLineSquarePullback`, `Betti.ProjectiveLineSquareGysin`,
+`Chow.ProjectiveLineSquare` and `DeRham.ProjectiveLineSquareCoverage`.
+The actual connected branched map is finite flat of rank two; original branch
+multiplicities are two. Native H² pullback is computed independently of Chow.
+The degree-specific trace passes through the actual fixed singleton zero
+support and existing point-Gysin isomorphism. Both original Chow comparison
+squares feed the unchanged full-target aggregate. General branched trace and
+arbitrary point-Gysin naturality remain open.
+
 The [holomorphic checkpoint](working/0040-holomorphic-derham-local-poincare.md)
 adds `Geometry.Holomorphic.Forms`, `LowDegree`, `Poincare` and `Dimension`.
 These reuse native complex-smooth sections and alternating coefficients,

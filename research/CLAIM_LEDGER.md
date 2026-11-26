@@ -1,6 +1,7 @@
 # Claim ledger
 
-Last audited: 2026-11-26 (positive-dimensional split P¹ double-cover aggregate,
+Last audited: 2026-11-26 (connected branched P¹ square-cover aggregate,
+positive-dimensional split P¹ double-cover aggregate,
 finite split degree-zero cover, and original P¹ harmonic/Hodge comparison; the
 product P¹ × P¹ ordinary Chow/Betti checkpoint was audited 2026-11-15). Earlier
 checkpoint records retain their original scope.
@@ -19,6 +20,39 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Connected branched projective-line square cover (2026-11-26)
+
+Status: `FORMAL` for the actual glued scheme map `[u:v] ↦ [u²:v²]`.
+Its source is connected; the map is finite, flat, surjective and of geometric
+rank two. The actual coordinate algebra is free with basis `1,X`. The fibers
+over zero and infinity each have one underlying point and original local
+multiplicity two; the map
+is not étale. The coordinate zero fiber has length two over the base field
+and a nonzero square-zero element.
+
+`FORMAL` for the actual native circle-square pullback on singular H¹,
+proved using angular singular triangles and positive-loop pairing, and for
+naturality of the original full-singular Mayer–Vietoris boundary. The actual
+P¹ square map preserves the original two charts. These native comparisons
+prove its H² pullback is twice identity, independently of Chow groups.
+
+The trace is explicitly the degree-specific zero-supported point-Gysin
+construction: restrict the actual map to its fixed singleton zero support,
+invert native H⁰ pullback of that homeomorphism, and transport through the
+existing oriented point-Gysin isomorphism. This trace is proved identity
+and gives push–pull equal to twice identity. General branched trace and
+arbitrary point-Gysin naturality remain open.
+
+The source retains the original Chow quotient graded by the exact composite
+structure morphism. The proved equality with the base structure gives a
+representative-preserving grading identification. Original finite pushforward
+preserves degree, and original finite flat pullback doubles it. Both original
+Chow/native comparison squares hold. Actual pullback of the infinity class
+supplies the original aggregate column, and half its original pushforward
+recovers that same class. The unchanged full Hodge model, basis, denominator
+one and identity payload modulo three are retained. No new Hodge-conjecture
+case or general prescribed-class construction is claimed. See [0064](working/0064-projective-line-square-cover.md).
 
 ## Positive-dimensional split projective-line cover (2026-11-26)
 
@@ -50,9 +84,9 @@ same class. The original exact checker accepts the identity payload modulo
 three. The upstairs native H² has dimension two and the downstairs target
 has dimension one with its original type (1,1).
 
-This is a disconnected positive-dimensional cover comparison. Connected
-branched covers, general trace/Gysin naturality and general prescribed-class
-generation remain open. No new Hodge-conjecture case is claimed. See
+This is a disconnected positive-dimensional cover comparison. The connected
+square-map case is recorded above. General trace/Gysin naturality and general
+prescribed-class generation remain open. No new Hodge-conjecture case is claimed. See
 [0063](working/0063-projective-line-split-double-cover.md).
 
 ## Actual geometric cover aggregate (2026-11-26)

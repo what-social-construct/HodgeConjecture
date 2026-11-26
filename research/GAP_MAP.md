@@ -1,7 +1,17 @@
 # Current gap map
 
-Last reviewed: 2026-11-26 (positive-dimensional split P¹ double-cover
+Last reviewed: 2026-11-26 (connected branched P¹ square-cover
 comparison; earlier checkpoint records retain their original validation scope).
+
+The [connected square-map case](working/0064-projective-line-square-cover.md)
+now adds the actual finite flat degree-two selfmap of P¹, connected source,
+original branch multiplicities two and independently computed native H²
+pullback. A trace through the actual singleton zero support and existing
+point-Gysin isomorphism gives push–pull twice identity in degree two.
+Both original Chow comparison squares and the exact aggregate use the same
+independent full Hodge target and infinity class. This closes this connected
+branched example. It does not construct general branched trace, arbitrary
+point-Gysin naturality, or cycles for other prescribed Hodge classes.
 
 The [split projective-line cover](working/0063-projective-line-split-double-cover.md)
 now connects the actual finite étale fold `P¹ ⨿ P¹ ⟶ P¹`, original ordinary
@@ -10,9 +20,9 @@ is induced by the sum of original inclusion pullbacks on singular cochains.
 The component comparisons retain the original cycle maps, independently fixed
 Hodge target and complete basis. The resulting exact aggregate uses actual
 flat pullback of the infinity class and normalized original pushforward.
-This closes the split positive-dimensional example. Connected branched covers,
-general geometric trace/Gysin comparison and prescribed-class generation for
-other varieties remain open.
+This closes the split positive-dimensional example. The connected square-map
+case is now recorded above; general geometric trace/Gysin comparison and
+prescribed-class generation for other varieties remain open.
 
 Start with [the target and equivalence sketch](TARGET_BRIDGE.md): it fixes
 the geometric statement, separates the two directions of the proved bridge,

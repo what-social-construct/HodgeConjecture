@@ -6505,6 +6505,35 @@ new case of the Hodge conjecture.
 
 The manuscript proposition `prop:p1-double-cover-aggregate` and
 [0063](0063-projective-line-split-double-cover.md) record the same construction.
-The cover is disconnected. A connected branched cover, general trace/Gysin
-naturality and generation of cycles for other independently prescribed Hodge
-classes remain open; this claims no new case of the Hodge conjecture.
+The cover is disconnected. The connected square-map case is recorded below;
+general trace/Gysin naturality and generation of cycles for other independently
+prescribed Hodge classes remain open. This claims no new case of the Hodge conjecture.
+
+## Connected branched square map of P¹ (2026-11-26)
+
+| Object | Mathematical representation | Lean owner/API | Scope |
+| --- | --- | --- | --- |
+| Actual coordinate algebra | `T ↦ X²`, basis `1,X` | `PolynomialSquare.oneXBasis`, `squareHom_finrank`, `zeroFiber_length_over_base` | FORMAL actual rank two; zero-fiber square-zero element nonzero |
+| Connected branched cover | `[u:v] ↦ [u²:v²]` | `ProjectiveLineSquare.square`, `source_connected`, `square_finrank`; `ProjectiveLineSquareChow.square_not_etale` | FORMAL original glued scheme map, finite flat surjective, not étale |
+| Actual branch multiplicity | one point with multiplicity two over zero and infinity | `ProjectiveLineSquare.square_eq_zero_iff`, `ProjectiveLineSquareChow.zero_finiteFiberMultiplicity`, `infinity_finiteFiberMultiplicity` | FORMAL original weighted local multiplicity; point count is not degree |
+| Native pullback | `f_B^* = 2` on H² | `CircleSquare.cohomologyPullback_square`, `SingularMayerVietorisNaturality.connecting_naturality`, `ProjectiveLineSquarePullback.cohomologyPullback_square`, `canonicalSquare_naturality` | FORMAL angular singular boundaries and actual original-cover naturality; independent of Chow |
+| Supported trace | `γ₀ (f₀^*)⁻¹ γ₀⁻¹` | `ProjectiveLineSquareGysin.supportMap_inclusion`, `supportPullbackIso_hom`, `push_gysin`, `degreeTransfer` | FORMAL actual singleton zero support, oriented point-Gysin H⁰/H² isomorphism; general trace OPEN |
+| Original Chow maps and grading | `D(f ≫ π) = D(π)`, `deg f_* = deg`, `deg f^* = 2 deg` | `ProjectiveLineSquareChow.sourceDimension_eq`, `chowEquiv_classMap`, `degree_push`, `degree_pull` | FORMAL original quotients, representatives and geometric finite maps |
+| Both comparison squares | `cl_Y f_CH^* = f_B^* cl_X`, `cl_X f_*^CH = f_*^B cl_Y` | `ProjectiveLineSquareCoverage.pull_comparison`, `push_comparison` | FORMAL original cycle map with proved grading transport |
+| Full-target aggregate | `z=f_CH^*[∞]`, `½ f_*^CH z=[∞]` | `ProjectiveLineSquareCoverage.accepted`, `normalized_cycles`, `model_satisfies_from_square_cover` | FORMAL unchanged full one-dimensional geometric Hodge target, identity modulo three |
+
+The manuscript proposition `prop:p1-square-aggregate` and
+[0064](0064-projective-line-square-cover.md) record the same construction.
+The trace is limited to the singleton-supported degree-two construction.
+General branched trace, arbitrary point-Gysin naturality and generation of
+cycles for other prescribed Hodge classes remain open. No new classical
+Hodge-conjecture case or cryptographic compression is claimed.
+
+Validation: 18 controls, 67 enforced standard-three axiom audits and 146 import
+guards pass. The complete public library passes 5,430 jobs; the root inventory
+passes 2,351 declaration checks, 574 examples, 1,858 nonempty standard-three
+reports and 1 axiom-free report. All 759 active library/root/Solution sources
+pass proof-gap scanning. Pins are unchanged. The 112-page manuscript, its
+155 unique labels and 178 resolved references, and rendered pages 9–10 and
+83–84 pass review. Only legacy notices remain; clean-clone and human release
+sign-offs are separate. The complete record and manuscript hashes are in 0064.

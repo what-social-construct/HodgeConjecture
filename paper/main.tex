@@ -658,10 +658,111 @@ same fixed projective-line model.
 \end{proof}
 
 This completes a split, positive-dimensional cover comparison in native
-singular degree two. A connected branched cover, general Gysin
-naturality, general cover trace, and prescribed-class generation for
-other varieties remain separate. No new case of the Hodge conjecture
-is asserted.
+singular degree two. General Gysin naturality, a general cover trace,
+and prescribed-class generation for other varieties remain separate.
+No new case of the Hodge conjecture is asserted.
+
+\subsection{The connected squaring map and its supported trace}
+\label{subsec:p1-square-cover}
+
+Consider the actual endomorphism
+\[
+ f:\mathbf P^1_{\mathbf C}\longrightarrow\mathbf P^1_{\mathbf C},
+ \qquad [u:v]\longmapsto[u^2:v^2].
+\]
+It is constructed on the existing glued projective line from the two
+coordinate homomorphisms \(T\mapsto X^2\), with proved compatibility
+under Laurent inversion. Even and odd coefficient extraction gives the
+actual target module its basis \(1,X\) over the source polynomial ring.
+The original affine maps are finite flat of rank two, and the actual
+chart pullback squares transport these properties to \(f\). Its source
+is connected and its geometric rank is two everywhere.
+
+The original scheme fibers over zero and infinity each have one underlying
+point. Their local fiber multiplicities are two, computed from the
+original weighted finite-fiber degree formula and residue degree one.
+In the zero chart the inverse-image ideal is \((X^2)\); the corresponding
+coordinate quotient has length two over \(\mathbf C\) and a nonzero square-zero element.
+The actual local multiplicity also proves that \(f\) is not formally
+unramified, hence is not \'{e}tale.
+
+The native pullback degree is computed independently of Chow classes.
+For a closed singular one-cochain \(\varphi\) on the circle, let
+\(F_\varphi(a,b)\) be its value on the actual angular path from
+\(\exp(ia)\) to \(\exp(ib)\). An actual angular singular two-simplex
+has boundary giving
+\[
+ F_\varphi(a,c)=F_\varphi(a,b)+F_\varphi(b,c).
+\]
+Simultaneous \(2\pi\)-periodicity makes the full-loop value independent
+of its starting angle. Squaring the two original positive semicircles
+therefore doubles the original loop pairing. The existing native circle
+coordinate identifies this with multiplication by two on singular
+\(H^1\). Naturality of the original restriction/difference short exact
+sequences gives a new full-singular Mayer--Vietoris naturality theorem.
+Applied to the actual projective-line square map and its preserved
+two-chart cover, it yields
+\[
+ f_B^*=2\operatorname{id}
+ \quad\text{on the original rational singular }H^2(\mathbf P^1(\mathbf C)).
+\]
+The actual scheme-complex-point map is explicitly compared with the
+original point model throughout.
+
+The push map used here has an explicit supported construction. The
+existing oriented zero-point Gysin isomorphism is
+\(\gamma_0:H^0(\{0\},\mathbf Q)\simeq H^2(\mathbf P^1(\mathbf C),\mathbf Q)\).
+The restriction \(f_0\) of the actual square map to its singleton zero
+support is a bijection. Define its support transfer as inverse native
+pullback and put
+\[
+ \operatorname{Tr}^{2}_{f,0}
+    =\gamma_0(f_0)_*\gamma_0^{-1}.
+\]
+After this construction the support map is proved to be identity, so
+\(\operatorname{Tr}^{2}_{f,0}=\operatorname{id}\) and
+\(\operatorname{Tr}^{2}_{f,0}f_B^*=2\operatorname{id}\).
+This is a zero-supported point-Gysin trace in this particular degree.
+A general branched cohomological trace or arbitrary point-Gysin
+naturality is not inferred from it.
+
+The original upstairs Chow group keeps the structural grading for
+\(f\) followed by the original base morphism. Their proved composite
+equality gives a representative-preserving identification with the
+original projective-line Chow quotient. Finite pushforward preserves
+ordinary Chow degree: actual closed-point sections over \(\mathbf C\)
+prove residue degree one. Original flat pullback doubles degree by the
+geometric rank-two law. Consequently the original cycle maps satisfy
+\[
+ \operatorname{cl}_Y f_{\CH}^*=f_B^*\operatorname{cl}_X,
+ \qquad
+ \operatorname{cl}_X f_*^{\CH}
+       =\operatorname{Tr}^{2}_{f,0}\operatorname{cl}_Y.
+\]
+The native pullback and supported trace are constructed before these
+Chow comparison equations.
+
+\begin{proposition}[Connected projective-line square aggregate]
+\label{prop:p1-square-aggregate}
+For this connected finite-flat cover, the actual flat pullback
+\(z=f_{\CH}^*[\infty]\) supplies the upstairs column of an accepted
+aggregate for the original full projective-line Hodge target, using
+\(\operatorname{Tr}^{2}_{f,0}\). Normalized original Chow pushforward
+recovers the same ordinary infinity class.
+\end{proposition}
+\begin{proof}
+The two comparison squares and degree-two law bind the selected column.
+The original geometric Chow identity gives
+\(\tfrac12 f_*^{\CH} f_{\CH}^*[\infty]=[\infty]\).
+The unchanged checker accepts the rank-one identity payload, denominator
+one and modulus three. Theorem~\ref{thm:geometric-cover-aggregate}
+applies to the same independently fixed Hodge model and full basis.
+\end{proof}
+
+This constructs a connected ramified example and a complete exact
+aggregate with its stated supported trace. It does not assert a general
+trace theory, prescribed-class generation for other varieties, or a new
+case of the Hodge conjecture.
 
 \subsection{Graph-projector formulation}
 
@@ -6786,6 +6887,42 @@ Accepted projective-line split double cover &
 \leanpath{ProjectiveLineDoubleCoverCoverage.accepted};
 \leanpath{ProjectiveLineDoubleCoverCoverage.model_satisfies_from_double_cover}\newline
 \leanpath{Realization/DeRham/ProjectiveLineDoubleCoverCoverage.lean}\\
+Polynomial square and nonreduced origin quotient &
+\leanpath{PolynomialSquare.oneXBasis};
+\leanpath{PolynomialSquare.squareHom_finite};
+\leanpath{PolynomialSquare.squareHom_flat};
+\leanpath{PolynomialSquare.zeroFiber_root_ne_zero}\newline
+\leanpath{CommutativeAlgebra/PolynomialSquare.lean}\\
+Actual connected projective-line square &
+\leanpath{ProjectiveLineSquare.square};
+\leanpath{ProjectiveLineSquare.chart_x_isPullback};
+\leanpath{ProjectiveLineSquare.source_connected};
+\leanpath{ProjectiveLineSquare.square_finrank}\newline
+\leanpath{Geometry/ProjectiveLineSquare.lean}\\
+Native circle degree and Mayer--Vietoris naturality &
+\leanpath{CircleSquare.cohomologyPullback_square};
+\leanpath{SingularMayerVietorisNaturality.connecting_naturality}\newline
+\leanpath{Realization/Betti/Examples/CircleSquare.lean};
+\leanpath{Realization/Betti/SingularMayerVietorisNaturality.lean}\\
+Original native projective-line pullback and supported trace &
+\leanpath{ProjectiveLineSquarePullback.canonicalSquare_naturality};
+\leanpath{ProjectiveLineSquarePullback.cohomologyPullback_square};
+\leanpath{ProjectiveLineSquareGysin.supportMap_inclusion};
+\leanpath{ProjectiveLineSquareGysin.push_gysin}\newline
+\leanpath{Realization/Betti/ProjectiveLineSquarePullback.lean};
+\leanpath{Realization/Betti/ProjectiveLineSquareGysin.lean}\\
+Original ramified Chow maps and multiplicities &
+\leanpath{ProjectiveLineSquareChow.chowEquiv_classMap};
+\leanpath{ProjectiveLineSquareChow.degree_push};
+\leanpath{ProjectiveLineSquareChow.zero_finiteFiberMultiplicity};
+\leanpath{ProjectiveLineSquareChow.square_not_etale}\newline
+\leanpath{Realization/Chow/ProjectiveLineSquare.lean}\\
+Accepted connected square aggregate &
+\leanpath{ProjectiveLineSquareCoverage.pull_comparison};
+\leanpath{ProjectiveLineSquareCoverage.push_comparison};
+\leanpath{ProjectiveLineSquareCoverage.accepted};\newline
+{\footnotesize\leanpath{ProjectiveLineSquareCoverage.model_satisfies_from_square_cover}}\newline
+\leanpath{Realization/DeRham/ProjectiveLineSquareCoverage.lean}\\
 Original-cover finite harmonic comparison &
 \leanpath{CircleCoverHarmonicComparison.quotientCircleEquiv};
 \leanpath{ProjectiveLineCoverHarmonicComparison.witness_original_boundaries}\newline

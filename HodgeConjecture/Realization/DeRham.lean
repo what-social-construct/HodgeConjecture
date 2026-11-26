@@ -14,6 +14,7 @@ public import HodgeConjecture.Realization.DeRham.ProjectiveLineCoverHodgeCompari
 public import HodgeConjecture.Realization.DeRham.ProjectiveLineCoverageCertificate
 public import HodgeConjecture.Realization.DeRham.ProjectiveLineGaloisCoverage
 public import HodgeConjecture.Realization.DeRham.ProjectiveLineDoubleCoverCoverage
+public import HodgeConjecture.Realization.DeRham.ProjectiveLineSquareCoverage
 public import HodgeConjecture.Realization.DeRham.HolomorphicPoincare
 public import HodgeConjecture.Realization.DeRham.HolomorphicKaehler
 public import HodgeConjecture.Realization.DeRham.SchemeHolomorphicForms

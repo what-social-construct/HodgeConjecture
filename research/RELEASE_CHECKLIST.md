@@ -448,3 +448,29 @@ Lean style/deprecation warnings and one existing bibliography underfull-box noti
 remain. This is cached working-tree validation; clean-clone and human release
 sign-offs remain separate.
 See [0063](working/0063-projective-line-split-double-cover.md).
+
+## Connected branched P¹ square-cover validation (2026-11-26)
+
+Validation on 2026-11-26: `make check-p1-square-cover` passes 18
+controls, 67 enforced standard-three axiom audits and all 146 import guards.
+The controls retain the actual composite source grading and original maps,
+separate singleton fibers from multiplicity two, compute the actual nilpotent
+coordinate quotient, bind the native scheme map, reject an unnormalized
+column and a degree-one transfer, and accept the unchanged full target.
+All three realization exports pass serialized integration builds. The complete
+public-library build `lake build HodgeConjecture` passes 5,430 jobs.
+The root inventory passes 2,351 declaration checks and 574 examples, with
+1,858 nonempty standard-three axiom reports and 1 axiom-free report.
+All 759 active library/root/Solution sources pass proof-gap scanning;
+intentional Challenge statement placeholders remain separate. Dependencies
+and source pins are unchanged. Local document links, whitespace, 155 unique
+manuscript labels and 178 resolved manuscript references pass inspection.
+The canonical 112-page PDF rebuilds without overfull boxes, undefined
+references or LaTeX errors. Pages 9–10 and 83–84 pass rendered visual review.
+Only existing Lean style/deprecation notices and one bibliography underfull
+notice remain. This is cached working-tree validation; clean-clone and human
+release sign-offs remain separate.
+
+The degree-specific trace is the singleton-supported point-Gysin construction;
+general branched trace and arbitrary point-Gysin naturality remain open.
+See [0064](working/0064-projective-line-square-cover.md).

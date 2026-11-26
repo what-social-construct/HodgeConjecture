@@ -2,6 +2,9 @@ module
 
 public import HodgeConjecture.Realization.Betti.Scheme
 public import HodgeConjecture.Realization.Betti.SplitDoubleCover
+public import HodgeConjecture.Realization.Betti.SingularMayerVietorisNaturality
+public import HodgeConjecture.Realization.Betti.ProjectiveLineSquarePullback
+public import HodgeConjecture.Realization.Betti.ProjectiveLineSquareGysin
 public import HodgeConjecture.Realization.Betti.SchemeSingularSheaves
 public import HodgeConjecture.Realization.Betti.CoefficientChange
 public import HodgeConjecture.Realization.Betti.SingularCoefficientCohomology

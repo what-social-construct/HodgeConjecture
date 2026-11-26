@@ -560,6 +560,29 @@ RULES["HodgeConjecture.Realization.Chow.SplitDoubleCover"] = (
 )
 
 
+RULES["HodgeConjecture.CommutativeAlgebra.PolynomialSquare"] = ()
+RULES["HodgeConjecture.Geometry.ProjectiveLineSquare"] = (
+    "HodgeConjecture.Realization", "HodgeConjecture.Boundary",
+    "HodgeConjecture.Inputs", "HodgeConjecture.SheafCohomology",
+)
+RULES["HodgeConjecture.Realization.Betti.Examples.CircleSquare"] = RULES[
+    "HodgeConjecture.Realization.Betti.SingularDoubleCover"
+]
+RULES["HodgeConjecture.Realization.Betti.SingularMayerVietorisNaturality"] = RULES[
+    "HodgeConjecture.Realization.Betti.SingularDoubleCover"
+]
+RULES["HodgeConjecture.Realization.Betti.ProjectiveLineSquarePullback"] = (
+    "HodgeConjecture.Realization.Chow", "HodgeConjecture.Realization.DeRham",
+    "HodgeConjecture.LinearAlgebra.Harmonic", "HodgeConjecture.Inputs",
+)
+RULES["HodgeConjecture.Realization.Betti.ProjectiveLineSquareGysin"] = RULES[
+    "HodgeConjecture.Realization.Betti.ProjectiveLineSquarePullback"
+]
+RULES["HodgeConjecture.Realization.Chow.ProjectiveLineSquare"] = RULES[
+    "HodgeConjecture.Realization.Chow.SplitDoubleCover"
+]
+
+
 def without_comments(source):
     """Remove line comments and nested Lean block comments before reading imports."""
     result = []
@@ -618,8 +641,9 @@ def check_layers():
                 failed = True
                 continue
             pending.extend((name, chain + [name]) for name in project_imports(module))
-        if entry == "HodgeConjecture.Geometry.SectionAlgebra" and len(seen) != 1:
-            print("FAIL shared section algebra must remain a project-independent leaf", file=sys.stderr)
+        if entry in ("HodgeConjecture.Geometry.SectionAlgebra",
+                     "HodgeConjecture.CommutativeAlgebra.PolynomialSquare") and len(seen) != 1:
+            print(f"FAIL {entry} must remain a project-independent leaf", file=sys.stderr)
             failed = True
         print(f"Checked {entry}: {len(seen)} project modules")
     return 1 if failed else 0
