@@ -10169,6 +10169,29 @@ Focused regressions and enforced standard-axiom checks are in
 #check HodgeConjecture.ProjectiveLineProductChowFiberRealization.ordinaryChowBettiEquiv
 #check HodgeConjecture.ProjectiveLineProductChowFiberRealization.ordinaryChowCycleClass_fiberChowClass
 
+-- Positive-dimensional split double cover, original Chow and native H².
+#check HodgeConjecture.SplitDoubleCover.fold_finrank
+#check HodgeConjecture.SplitDoubleCover.fold_stalkMap_isIso
+#check AlgebraicGeometry.Scheme.ComplexPoints.coprodHomeomorph
+#check HodgeConjecture.SingularDoubleCover.cochain_reassembly
+#check HodgeConjecture.SingularDoubleCover.cochainPush_pullback
+#check HodgeConjecture.SingularDoubleCover.cohomologyEquiv
+#check HodgeConjecture.SplitDoubleCoverBetti.actualPush_eq_homologyMap
+#check HodgeConjecture.SplitDoubleCoverBetti.cohomologyEquiv_pull
+#check HodgeConjecture.SplitDoubleCoverBetti.actualPush_eq_sum
+#check HodgeConjecture.SplitDoubleCoverBetti.degreeTransfer
+#check HodgeConjecture.SplitDoubleCoverChow.chowEquiv
+#check HodgeConjecture.SplitDoubleCoverChow.chowEquiv_pull
+#check HodgeConjecture.SplitDoubleCoverChow.actualPush_eq_sum
+#check HodgeConjecture.ProjectiveLineDoubleCoverCoverage.upstairsCycleClass_unique
+#check HodgeConjecture.ProjectiveLineDoubleCoverCoverage.pull_comparison
+#check HodgeConjecture.ProjectiveLineDoubleCoverCoverage.push_comparison
+#check HodgeConjecture.ProjectiveLineDoubleCoverCoverage.degree_eq_geometric_rank
+#check HodgeConjecture.ProjectiveLineDoubleCoverCoverage.upstairs_columns
+#check HodgeConjecture.ProjectiveLineDoubleCoverCoverage.accepted
+#check HodgeConjecture.ProjectiveLineDoubleCoverCoverage.normalized_cycles
+#check HodgeConjecture.ProjectiveLineDoubleCoverCoverage.model_satisfies_from_double_cover
+
 -- Actual geometric cover, original ordinary Chow and native singular comparison.
 #check HodgeConjecture.SplitPointGeometry.coverProjection_finrank
 #check HodgeConjecture.SplitPointGeometry.twoSheetCover_isFiniteEtaleSurjective

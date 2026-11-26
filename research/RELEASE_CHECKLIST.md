@@ -423,3 +423,28 @@ style/deprecation warnings and one existing bibliography underfull-box notice
 remain. This records cached working-tree validation; clean-clone and human
 release sign-offs remain separate.
 See [0062](working/0062-geometric-cover-coverage.md).
+
+The positive-dimensional split projective-line cover checkpoint (2026-11-26)
+constructs the actual fold `P¹ ⨿ P¹ ⟶ P¹`, native all-degree cochain transfer,
+ordinary Chow decomposition and both original-map comparison squares in H².
+The accepted aggregate retains the original full P¹ Hodge target. Connected
+branched covers, general trace/Gysin naturality and general generation remain
+open. No new Hodge-conjecture case is claimed.
+Validation on 2026-11-26: `make check-p1-double-cover` passes 14
+controls, 51 enforced standard-three axiom audits and all 139 import guards.
+The controls include the two native component generators, failed diagonal
+generation by one component, failed unnormalized binding, and a nonzero
+anti-diagonal class killed by original Chow and native cohomological push.
+The complete public-library build `lake build HodgeConjecture` passes
+5,421 jobs. The root declaration inventory passes with 1,858 nonempty
+standard-three axiom reports and 1 axiom-free report. All 751 active
+library/root/Solution sources pass proof-gap scanning; intentional Challenge
+statement placeholders remain separate. The pinned dependencies are unchanged.
+Changed-document links, unique manuscript labels and whitespace checks pass.
+The canonical 111-page manuscript rebuilds without overfull boxes,
+undefined references or LaTeX errors. Its new proposition, construction and
+declaration crosswalk pass rendered visual review. Nonblocking
+Lean style/deprecation warnings and one existing bibliography underfull-box notice
+remain. This is cached working-tree validation; clean-clone and human release
+sign-offs remain separate.
+See [0063](working/0063-projective-line-split-double-cover.md).

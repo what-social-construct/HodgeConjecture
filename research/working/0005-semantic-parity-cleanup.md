@@ -6490,3 +6490,21 @@ The manuscript theorem `thm:geometric-cover-aggregate` and
 Positive-dimensional cover comparison, general upstairs generation and
 cryptographic compression remain open. This finite split example claims no
 new case of the Hodge conjecture.
+
+## Positive-dimensional split double cover of P¹ (2026-11-26)
+
+| Object | Mathematical representation | Lean owner/API | Scope |
+| --- | --- | --- | --- |
+| Actual split cover | $p:X\sqcup X\to X$, $\operatorname{rk}p=2$ | `SplitDoubleCover.fold_finrank`, `fold_stalkMap_isIso` | FORMAL generic finite étale surjective scheme fold; exact original structure map |
+| Canonical analytic coproduct | $(X\sqcup Y)(\mathbf C)\cong X(\mathbf C)\sqcup Y(\mathbf C)$ | `Scheme.ComplexPoints.coprodHomeomorph` | FORMAL original open scheme inclusions and analytic topology |
+| Native cochain decomposition | $C^\bullet(X\sqcup X)\cong C^\bullet(X)\times C^\bullet(X)$ | `SingularDoubleCover.cochain_reassembly`, `cohomologyEquiv` | FORMAL connected standard simplices; original cochains/differentials; no chosen cohomology basis |
+| Native geometric transfer | $p_*^B=i_0^*+i_1^*$, $p_*^Bp_B^*=2$ | `SplitDoubleCoverBetti.actualPush_eq_homologyMap`, `cohomologyEquiv_pull`, `actualPush_eq_sum` | FORMAL all degrees on actual scheme complex points |
+| Ordinary Chow decomposition | $CH_n(X\sqcup X)_{\mathbf Q}\cong CH_n(X)_{\mathbf Q}^2$ | `SplitDoubleCoverChow.chowEquiv`, `chowEquiv_pull`, `actualPush_eq_sum` | FORMAL original quotient, grading, principal relations and finite maps |
+| Unique component cycle map | $E_B\operatorname{cl}_Y=(\operatorname{cl}_X\times\operatorname{cl}_X)E_{CH}$ | `ProjectiveLineDoubleCoverCoverage.upstairsCycleClass_unique`, `pull_comparison`, `push_comparison` | FORMAL original P¹ component maps and native singular H² |
+| Accepted positive-dimensional aggregate | $z=p_{CH}^*[\infty]$, $\tfrac12p_*^{CH}z=[\infty]$ | `ProjectiveLineDoubleCoverCoverage.accepted`, `normalized_cycles`, `model_satisfies_from_double_cover` | FORMAL original full one-dimensional type-(1,1) target; native upstairs H² dimension two |
+
+The manuscript proposition `prop:p1-double-cover-aggregate` and
+[0063](0063-projective-line-split-double-cover.md) record the same construction.
+The cover is disconnected. A connected branched cover, general trace/Gysin
+naturality and generation of cycles for other independently prescribed Hodge
+classes remain open; this claims no new case of the Hodge conjecture.

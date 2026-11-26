@@ -533,6 +533,33 @@ RULES["HodgeConjecture.Realization.Betti.Examples.SplitCoverTransfer"] = (
 )
 
 
+RULES["HodgeConjecture.Geometry.ComplexPointsCoproduct"] = RULES[
+    "HodgeConjecture.Geometry.ComplexPointsFunctoriality"
+]
+RULES["HodgeConjecture.Geometry.SplitDoubleCover"] = (
+    "HodgeConjecture.Realization", "HodgeConjecture.Cycles",
+    "HodgeConjecture.Boundary", "HodgeConjecture.Collision",
+    "HodgeConjecture.Correspondence", "HodgeConjecture.LinearAlgebra",
+    "HodgeConjecture.Inputs", "HodgeConjecture.SheafCohomology",
+)
+RULES["HodgeConjecture.Realization.Betti.SingularDoubleCover"] = (
+    "HodgeConjecture.Geometry", "HodgeConjecture.Cycles", "HodgeConjecture.Boundary",
+    "HodgeConjecture.Collision", "HodgeConjecture.Correspondence",
+    "HodgeConjecture.Realization.Chow", "HodgeConjecture.Realization.DeRham",
+    "HodgeConjecture.Inputs", "HodgeConjecture.SheafCohomology",
+    "HodgeConjecture.LinearAlgebra.Harmonic",
+)
+RULES["HodgeConjecture.Realization.Betti.SplitDoubleCover"] = (
+    "HodgeConjecture.Cycles", "HodgeConjecture.Realization.Chow",
+    "HodgeConjecture.Realization.DeRham", "HodgeConjecture.Boundary",
+    "HodgeConjecture.Inputs", "HodgeConjecture.LinearAlgebra.Harmonic",
+)
+RULES["HodgeConjecture.Realization.Chow.SplitDoubleCover"] = (
+    "HodgeConjecture.Realization.Betti", "HodgeConjecture.Realization.DeRham",
+    "HodgeConjecture.LinearAlgebra.Harmonic",
+)
+
+
 def without_comments(source):
     """Remove line comments and nested Lean block comments before reading imports."""
     result = []

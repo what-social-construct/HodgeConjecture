@@ -582,6 +582,87 @@ This closes the geometric cover comparison in this zero-dimensional case.
 It supplies neither a positive-dimensional cover comparison nor general
 upstairs generation, and establishes no new case of the Hodge conjecture.
 
+\subsection{A projective-line split double cover in singular degree two}
+\label{subsec:p1-double-cover}
+
+The next instance has positive-dimensional source and target. Let
+\(X=\mathbf P^1_{\mathbf C}\), let \(Y=X\sqcup X\) be the actual scheme
+coproduct, and let \(p:Y\to X\) be the fold whose restriction to each
+component is the identity. This is a disconnected finite \'{e}tale cover.
+Its geometric rank is two at every point, computed on affine opens from
+the diagonal algebra map \(R\to R\times R\) and the original flat-rank
+base-change law. Each fold stalk map is an isomorphism, and its actual
+local fiber multiplicities are one. The upstairs structure map is the
+literal composite through \(p\).
+
+The canonical analytic complex-point space of a scheme coproduct is
+homeomorphic to the topological disjoint union of the component spaces.
+The comparison is induced by the original open scheme inclusions and
+their existing analytic maps. Every singular simplex lies in a single
+component, by connectedness of the standard simplex. Restriction to the
+two components and extension by zero therefore give an isomorphism of
+the original rational singular cochain complexes
+\[
+ C^\bullet_{\mathrm{sing}}(Y(\mathbf C),\mathbf Q)
+ \simeq C^\bullet_{\mathrm{sing}}(X(\mathbf C),\mathbf Q)
+             \times C^\bullet_{\mathrm{sing}}(X(\mathbf C),\mathbf Q).
+\]
+This is proved before choosing cohomology coordinates. In every degree,
+the native pullback along \(p\) is diagonal, and transfer is the sum of
+the original two inclusion pullbacks. Thus
+\[
+ E_B(p_B^*a)=(a,a),\qquad
+ p_*^B b=(E_Bb)_0+(E_Bb)_1,\qquad p_*^Bp_B^*=2\operatorname{id}.
+\]
+
+On the ordinary rational Chow groups, restriction to the actual clopen
+components and the sum of their original closed pushforwards give
+\[
+ E_{\CH}:\CH_0(Y)_{\mathbf Q}
+       \simeq\CH_0(X)_{\mathbf Q}\times\CH_0(X)_{\mathbf Q}.
+\]
+The proof retains the original homogeneous cycles, principal relations
+and quotient maps, with proved identifications of the structural
+dimension functions. In particular, this positive-dimensional instance
+does not use an absence of curve relations. The original finite flat
+pullback is diagonal under \(E_{\CH}\), and the original finite
+pushforward sums the two components.
+
+The existing projective-line cycle map \(\operatorname{cl}_X\) is
+retained. Its two component restrictions uniquely specify the upstairs
+map by
+\[
+ E_B\operatorname{cl}_Y
+   =(\operatorname{cl}_X\times\operatorname{cl}_X)E_{\CH}.
+\]
+Consequently both squares for the original Chow maps and native singular
+maps commute. The upstairs native singular \(H^2\) has dimension two;
+the downstairs Hodge target remains the original independently computed
+one-dimensional type-\((1,1)\) subspace, with its original full basis.
+
+\begin{proposition}[Projective-line split-cover aggregate]
+\label{prop:p1-double-cover-aggregate}
+For this actual fold, the cycle \(z=p_{\CH}^*[\infty]\) supplies the
+upstairs column of an accepted aggregate for the original full
+projective-line Hodge target. Its normalized pushforward is the original
+ordinary infinity class.
+\end{proposition}
+\begin{proof}
+Both component cycles of \(z\) are the original reduced infinity class,
+and both native components of its class are the original projective-line
+generator. The Chow degree law gives
+\(\tfrac12p_*^{\CH}z=[\infty]\). The existing checker accepts the
+rank-one identity payload with denominator one and modulus three.
+Theorem~\ref{thm:geometric-cover-aggregate} therefore applies to this
+same fixed projective-line model.
+\end{proof}
+
+This completes a split, positive-dimensional cover comparison in native
+singular degree two. A connected branched cover, general Gysin
+naturality, general cover trace, and prescribed-class generation for
+other varieties remain separate. No new case of the Hodge conjecture
+is asserted.
+
 \subsection{Graph-projector formulation}
 
 Let \(\Gamma\) be a rational algebra acting on \(\Q\oplus V\) through
@@ -6676,6 +6757,35 @@ Accepted rank-two geometric cover aggregate &
 \leanpath{SplitGeometricCoverage.normalized_cycles};
 \leanpath{SplitGeometricCoverage.model_satisfies_from_geometric_cover}\newline
 \leanpath{Realization/Betti/Examples/SplitGeometricCoverage.lean}\\
+Actual split double cover and geometric rank &
+\leanpath{SplitDoubleCover.fold};
+\leanpath{SplitDoubleCover.fold_finrank};
+\leanpath{SplitDoubleCover.fold_stalkMap_isIso}\newline
+\leanpath{Geometry/SplitDoubleCover.lean}\\
+Canonical analytic coproduct points &
+\leanpath{Scheme.ComplexPoints.coprodHomeomorph};
+\leanpath{Scheme.ComplexPoints.coprodHomeomorph_inl};
+\leanpath{Scheme.ComplexPoints.coprodHomeomorph_inr}\newline
+\leanpath{Geometry/ComplexPointsCoproduct.lean}\\
+Native all-degree singular split transfer &
+\leanpath{SingularDoubleCover.cochain_reassembly};
+\leanpath{SplitDoubleCoverBetti.actualPush_eq_homologyMap};
+\leanpath{SplitDoubleCoverBetti.cohomologyEquiv_pull};
+\leanpath{SplitDoubleCoverBetti.actualPush_eq_sum}\newline
+\leanpath{Realization/Betti/SingularDoubleCover.lean};
+\leanpath{Realization/Betti/SplitDoubleCover.lean}\\
+Original ordinary Chow coproduct comparison &
+\leanpath{SplitDoubleCoverChow.chowEquiv};
+\leanpath{SplitDoubleCoverChow.chowEquiv_pull};
+\leanpath{SplitDoubleCoverChow.actualPush_eq_sum}\newline
+\leanpath{Realization/Chow/SplitDoubleCover.lean}\\
+Accepted projective-line split double cover &
+\leanpath{ProjectiveLineDoubleCoverCoverage.upstairsCycleClass_unique};
+\leanpath{ProjectiveLineDoubleCoverCoverage.pull_comparison};
+\leanpath{ProjectiveLineDoubleCoverCoverage.push_comparison};
+\leanpath{ProjectiveLineDoubleCoverCoverage.accepted};
+\leanpath{ProjectiveLineDoubleCoverCoverage.model_satisfies_from_double_cover}\newline
+\leanpath{Realization/DeRham/ProjectiveLineDoubleCoverCoverage.lean}\\
 Original-cover finite harmonic comparison &
 \leanpath{CircleCoverHarmonicComparison.quotientCircleEquiv};
 \leanpath{ProjectiveLineCoverHarmonicComparison.witness_original_boundaries}\newline

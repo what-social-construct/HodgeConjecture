@@ -1,9 +1,9 @@
 # Claim ledger
 
-Last audited: 2026-11-26 (actual split geometric-cover aggregate and original
-P¹ finite-cover/harmonic/Hodge comparison; the product P¹ × P¹ ordinary
-Chow/Betti checkpoint was audited 2026-11-15). Earlier checkpoint records
-retain their original scope.
+Last audited: 2026-11-26 (positive-dimensional split P¹ double-cover aggregate,
+finite split degree-zero cover, and original P¹ harmonic/Hodge comparison; the
+product P¹ × P¹ ordinary Chow/Betti checkpoint was audited 2026-11-15). Earlier
+checkpoint records retain their original scope.
 
 Status vocabulary:
 
@@ -19,6 +19,41 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Positive-dimensional split projective-line cover (2026-11-26)
+
+Status: `FORMAL` for the actual scheme fold `X ⨿ X ⟶ X`, finite étale,
+surjective and of geometric rank two. The original stalk maps are isomorphisms.
+Canonical analytic complex points of the coproduct are homeomorphic to the
+topological disjoint union through the original component inclusions, retaining
+the exact composite structure morphism.
+
+`FORMAL` for extension by zero and reassembly of original singular cochains
+on a double sum, using connectedness of each standard simplex. Transfer is
+the sum of the two actual inclusion pullbacks. Its induced native cohomology
+decomposition, diagonal fold pullback and degree-two push–pull hold in every
+degree, independently of Chow classes or cohomology coordinates.
+
+`FORMAL` for the representative-preserving decomposition of the original
+ordinary rational Chow quotients under their structural dimension functions.
+The components are original clopen restrictions and their inverse is the sum
+of original closed pushforwards. The original finite flat fold pullback is
+diagonal and its original finite pushforward sums the components. Principal
+relations are retained; their vanishing is not assumed.
+
+For `X = P¹`, the existing ordinary cycle map, independent geometric Hodge
+target and full basis are retained. The component cycle maps uniquely determine
+the upstairs map through the native H² decomposition. Both original-map
+comparison squares hold. Actual flat pullback of the infinity class supplies
+the aggregate column; half its original geometric pushforward recovers that
+same class. The original exact checker accepts the identity payload modulo
+three. The upstairs native H² has dimension two and the downstairs target
+has dimension one with its original type (1,1).
+
+This is a disconnected positive-dimensional cover comparison. Connected
+branched covers, general trace/Gysin naturality and general prescribed-class
+generation remain open. No new Hodge-conjecture case is claimed. See
+[0063](working/0063-projective-line-split-double-cover.md).
 
 ## Actual geometric cover aggregate (2026-11-26)
 

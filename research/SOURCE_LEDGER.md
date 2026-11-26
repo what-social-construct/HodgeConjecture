@@ -17,8 +17,8 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-11-26 (actual split geometric-cover comparison, original ordinary Chow maps and native singular H⁰).
-Latest formal checkpoint: 2026-11-26 (exact aggregate through the actual rank-two split cover;
+Last source/interface review: 2026-11-26 (split P¹ double cover, original ordinary Chow and native singular-cochain transfer).
+Latest formal checkpoint: 2026-11-26 (positive-dimensional split-cover aggregate in H²;
 earlier checkpoints retain their scope).
 Earlier source records retain their original
 validation scope.
@@ -3007,3 +3007,17 @@ The ordinary Chow comparison retains identical cycle representatives and the
 original finite maps; the native comparison uses actual point fibers and the
 canonical complex-point homeomorphism. General upstairs generation is an input
 to the adapter, proved here only for the displayed zero-dimensional example.
+
+## Split projective-line cover and native cochain transfer (2026-11-26)
+
+The six modules in [0063](working/0063-projective-line-split-double-cover.md)
+are local proofs using existing project APIs and pinned Mathlib. No external
+source copy, package dependency, license input or theorem axiom is added.
+The geometric rank is calculated from the actual affine product-ring model.
+Canonical analytic points are compared using original open immersions.
+Connectedness of the standard simplex proves the original cochain split;
+native categorical homology transports the resulting maps to cohomology.
+The ordinary Chow comparison retains the original principal relations and
+quotient maps. The P¹ instance uses the existing independently constructed
+Hodge target and component cycle maps; general Gysin compatibility remains
+outside this checkpoint.

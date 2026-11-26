@@ -41,6 +41,9 @@ No new case of the Hodge conjecture is claimed.
 - Rational and complex singular-cochain sheaves, open-cover comparisons,
   flasque resolutions, and comparison with derived constant-sheaf cohomology
   under the stated topology hypotheses.
+- The [split double cover of P¹](research/working/0063-projective-line-split-double-cover.md)
+  has transfer on native singular cochains, original ordinary Chow
+  pull–push comparisons in H², and an accepted full-target aggregate.
 - An [actual geometric cover aggregate](research/working/0062-geometric-cover-coverage.md)
   uses the degree-two finite étale cover from four complex points to two,
   with original ordinary Chow maps, native singular H⁰ comparisons,

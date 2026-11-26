@@ -6,6 +6,7 @@ repository. Existing build artifacts are reused.
 
 | Work area | Build | Build, examples and axiom checks |
 | --- | --- | --- |
+| Actual split double cover of P¹, original Chow/native H² and aggregate | `make build-p1-double-cover` | `make check-p1-double-cover` |
 | Actual finite split cover, ordinary Chow/native Betti squares and aggregate | `make build-geometric-cover-coverage` | `make check-geometric-cover-coverage` |
 | Galois coefficient descent, harmonic naturality and actual P¹ aggregates | `make build-galois-harmonic-coverage` | `make check-galois-harmonic-coverage` |
 | Fixed-target aggregate coverage and modular rank certificates | `make build-finite-coverage` | `make check-finite-coverage` |
