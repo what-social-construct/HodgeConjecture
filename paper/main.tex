@@ -334,6 +334,70 @@ closedness hypothesis in Theorem~\ref{thm:finite-harmonic-certificates}
 concerns the representatives themselves; a general coexact perturbation is
 not an exact-difference certificate.
 
+\subsection{Aggregate finite coverage certificates}
+\label{subsec:finite-coverage-certificate}
+
+Fix the model \(\mathscr H=(A,V,V_{\mathrm{Hdg}},\operatorname{cl})\)
+and a rational basis \((\alpha_i)_{i\in I}\) of its independently defined
+Hodge subspace, with \(I\) finite. A proposed aggregate supplies actual
+cycles \(z_j\in A\) and a rational coordinate matrix \(C=(c_{ij})\),
+together with checked column identities
+\[
+ \operatorname{cl}(z_j)=\sum_{i\in I}c_{ij}\alpha_i
+ \qquad(j\in I).
+\]
+The index set is the full target-basis index set. A faithful harmonic
+realization can certify each column identity using
+Theorem~\ref{thm:finite-harmonic-certificates}.
+
+\begin{theorem}[Exact aggregate coverage from a modular inverse]
+\label{thm:aggregate-finite-coverage}
+Suppose the column identities hold. Let \(d\in\mathbf Z\setminus\{0\}\),
+\(B\in\operatorname{Mat}_{I}(\mathbf Z)\), and a prime \(\ell\) satisfy
+\[
+ B_{\Q}=dC.
+\]
+If a matrix \(R\in\operatorname{Mat}_{I}(\mathbf F_\ell)\) satisfies
+\[
+ \overline B R=1,
+\]
+then every class of \(V_{\mathrm{Hdg}}\) is represented by a rational
+linear combination of the supplied cycles \(z_j\). In particular,
+\(\mathrm{HC}_{\Q}(\mathscr H)\) holds.
+\end{theorem}
+\begin{proof}
+The modular inverse implies \(\det\overline B\ne0\). Determinants commute
+with integer reduction, so \(\det B\ne0\) in \(\mathbf Z\), and hence
+\(B_{\Q}\) is invertible over \(\Q\). Thus \(C\) is surjective. For
+\(\alpha=\sum_i a_i\alpha_i\), choose \(v\) with \(Cv=a\). The column
+identities and linearity give
+\[
+ \operatorname{cl}\left(\sum_j v_j z_j\right)
+   =\sum_i(Cv)_i\alpha_i=\alpha.
+\]
+\end{proof}
+
+The arithmetic checker requires all four gates: \(d\ne0\), the exact
+rational equality \(B_{\Q}=dC\), primality of \(\ell\), and the modular
+inverse equation. Only the cleared integer matrix \(B\) is reduced.
+Nonzero modular determinant implies nonzero integer determinant without an
+entry-size bound. The binding equality is checked over \(\Q\), not inferred
+from equality modulo \(\ell\). Thus this rank certificate does not require
+inverting \(d\) modulo \(\ell\).
+
+The model, its complete target basis, and the column identities are proof
+parameters of the aggregate. The finite arithmetic check is executable;
+the geometric column bindings are checked proof terms. On the actual
+projective-line Hodge target, the infinity Chow class gives the single
+column \(C=(1)\), with \(d=1\), \(B=(1)\), \(\ell=3\), and \(R=(1)\).
+The existing cover-harmonic comparison supplies its column certificate,
+and aggregate acceptance gives the fixed-model surjectivity statement.
+
+This is an exact inner certificate. A SNARK wrapper would additionally
+require a fixed encoding, verified circuit refinement and a sound
+cryptographic backend. No such backend or extension-field batching is
+constructed here.
+
 \subsection{Graph-projector formulation}
 
 Let \(\Gamma\) be a rational algebra acting on \(\Q\oplus V\) through
@@ -6378,6 +6442,15 @@ Product harmonic coordinate witnesses &
 \leanpath{ProjectiveLineProductHarmonicWitness.witness_injective};
 \leanpath{ProjectiveLineProductHarmonicWitness.fiberChowClass_harmonic_certificate}\newline
 \leanpath{Realization/Betti/ProjectiveLineProductHarmonicWitness.lean}\\
+Exact aggregate coverage certificate &
+\leanpath{ModularRankCertificate.check_eq_true_iff};
+\leanpath{FiniteCoverageCertificate.rationalHodgeConjectureAt_of_check}\newline
+\leanpath{LinearAlgebra/ModularRankCertificate.lean};
+\leanpath{Realization/Chow/FiniteCoverageCertificate.lean}\\
+Accepted geometric projective-line aggregate &
+\leanpath{ProjectiveLineCoverageCertificate.accepted};
+\leanpath{ProjectiveLineCoverageCertificate.model_satisfies_from_aggregate}\newline
+\leanpath{Realization/DeRham/ProjectiveLineCoverageCertificate.lean}\\
 Original-cover finite harmonic comparison &
 \leanpath{CircleCoverHarmonicComparison.quotientCircleEquiv};
 \leanpath{ProjectiveLineCoverHarmonicComparison.witness_original_boundaries}\newline

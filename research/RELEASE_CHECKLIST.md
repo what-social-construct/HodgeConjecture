@@ -370,3 +370,18 @@ manuscript rebuilds without overfull boxes or undefined references, with
 rendered review of the changed pages. This records cached working-tree
 validation; clean-clone and human release sign-offs remain separate. See
 [0059](working/0059-finite-cover-harmonic-comparison.md).
+
+The exact finite-coverage aggregate checkpoint (2026-11-26) passes
+`make check-finite-coverage`: ten arithmetic/geometric controls, fifteen
+enforced standard-three axiom audits, 126 import guards, and executable
+output `(true, false)`. The public-library build passes 5,399 jobs, and the
+complete root inventory passes with 1,858 nonempty standard-three axiom
+lists plus one axiom-free report. All 733 active library/root/Solution
+sources pass proof-gap scanning; the two intentional Challenge placeholders
+remain separate. Nonblocking Lean style/deprecation warnings remain.
+The canonical 106-page manuscript builds without overfull boxes or undefined
+references, with rendered review of the aggregate theorem, backend boundary
+and declaration crosswalk. Local links and whitespace checks pass.
+See [0060](working/0060-finite-coverage-certificate.md). This records cached
+working-tree validation and leaves the clean-clone and human sign-offs above
+unchanged.

@@ -6441,3 +6441,18 @@ The manuscript proposition `prop:p1-cover-harmonic-comparison` gives the
 same maps and quantifiers. [0059](0059-finite-cover-harmonic-comparison.md)
 records the construction and focused check target. The general comparison
 and prescribed-class coverage row above remains OPEN.
+
+## Exact aggregate finite coverage (2026-11-26)
+
+| Object | Mathematical representation | Lean owner/API | Scope |
+| --- | --- | --- | --- |
+| Modular rank payload | $d\ne0$, $B_{\mathbf Q}=dC$, $\ell$ prime, $\overline B R=1$ | `ModularRankCertificate.check`, `check_eq_true_iff` | EXECUTABLE four mandatory arithmetic gates; rational binding is exact |
+| Rank lift | $\det\overline B\ne0\Rightarrow\det B\ne0\Rightarrow C$ surjective over $\mathbf Q$ | `integer_det_ne_zero_of_check`, `mulVec_surjective_of_check` | FORMAL selected square columns; no entry-size bound needed for this implication |
+| Proof-bound aggregate | Fixed full Hodge basis, actual cycles, $\operatorname{cl}(z_j)=\sum_i c_{ij}\alpha_i$ | `FiniteCoverageCertificate.Certificate`, `of_harmonic` | Typed geometric/basis gates; harmonic bindings need the proved faithful comparison |
+| Global fixed-target coverage | Accepted aggregate implies $\mathrm{HC}_{\mathbf Q}(\mathscr H)$ | `rationalHodgeConjectureAt_of_check`, `exists_cycle_of_check` | FORMAL; target fixed independently of cycle image |
+| Actual P¹ aggregate | Infinity cycle, $C=B=R=(1)$, $d=1$, $\ell=3$ | `ProjectiveLineCoverageCertificate.accepted`, `model_satisfies_from_aggregate` | FORMAL inhabited geometric instance |
+| Succinct proof backend | Circuit/codec refinement and sound external verification of this exact relation | No backend instance | OPEN; no SNARK soundness or extension-field aggregation is inferred from labels |
+
+The canonical manuscript theorem `thm:aggregate-finite-coverage` has the same
+fixed-target quantifiers and gates. [0060](0060-finite-coverage-certificate.md)
+records the executable checker, rejection controls and remaining backend work.

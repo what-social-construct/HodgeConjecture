@@ -10169,6 +10169,14 @@ Focused regressions and enforced standard-axiom checks are in
 #check HodgeConjecture.ProjectiveLineProductChowFiberRealization.ordinaryChowBettiEquiv
 #check HodgeConjecture.ProjectiveLineProductChowFiberRealization.ordinaryChowCycleClass_fiberChowClass
 
+-- Exact aggregate acceptance and the inhabited geometric P¹ instance.
+#check HodgeConjecture.ModularRankCertificate.check_eq_true_iff
+#check HodgeConjecture.ModularRankCertificate.mulVec_surjective_of_check
+#check HodgeConjecture.FiniteCoverageCertificate.rationalHodgeConjectureAt_of_check
+#check HodgeConjecture.FiniteCoverageCertificate.of_harmonic
+#check HodgeConjecture.ProjectiveLineCoverageCertificate.accepted
+#check HodgeConjecture.ProjectiveLineCoverageCertificate.model_satisfies_from_aggregate
+
 -- The finite model from the original geometric covers.
 #check HodgeConjecture.CircleCoverHarmonicComparison.quotientCircleEquiv
 #check HodgeConjecture.CircleCoverHarmonicComparison.witness_componentBoundary

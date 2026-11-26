@@ -41,6 +41,9 @@ No new case of the Hodge conjecture is claimed.
 - Rational and complex singular-cochain sheaves, open-cover comparisons,
   flasque resolutions, and comparison with derived constant-sheaf cohomology
   under the stated topology hypotheses.
+- An [exact aggregate coverage certificate](research/working/0060-finite-coverage-certificate.md)
+  binds actual cycle images to a complete rational Hodge basis and certifies
+  spanning by a modular inverse, with an accepted geometric P¹ instance.
 - Finite cellular harmonic class certificates and an upstairs-descent adapter.
   The [original-cover P¹ comparison](research/working/0059-finite-cover-harmonic-comparison.md)
   computes actual Betti H², preserves the ordinary Chow map, and transports

@@ -491,6 +491,18 @@ RULES["HodgeConjecture.Realization.Betti.ProjectiveLineCoverHarmonicComparison"]
 )
 
 
+RULES["HodgeConjecture.LinearAlgebra.ModularRankCertificate"] = (
+    "HodgeConjecture.Boundary", "HodgeConjecture.Collision",
+    "HodgeConjecture.Correspondence", "HodgeConjecture.Cycles",
+    "HodgeConjecture.Geometry", "HodgeConjecture.Realization",
+    "HodgeConjecture.Inputs", "HodgeConjecture.SheafCohomology",
+)
+RULES["HodgeConjecture.Realization.Chow.FiniteCoverageCertificate"] = (
+    "HodgeConjecture.Realization.Betti", "HodgeConjecture.Realization.DeRham",
+    "HodgeConjecture.Geometry", "HodgeConjecture.Cycles", "HodgeConjecture.Boundary",
+)
+
+
 def without_comments(source):
     """Remove line comments and nested Lean block comments before reading imports."""
     result = []

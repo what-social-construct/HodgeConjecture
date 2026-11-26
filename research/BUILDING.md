@@ -6,6 +6,7 @@ repository. Existing build artifacts are reused.
 
 | Work area | Build | Build, examples and axiom checks |
 | --- | --- | --- |
+| Fixed-target aggregate coverage and modular rank certificates | `make build-finite-coverage` | `make check-finite-coverage` |
 | Original circle/P¹ covers, finite harmonic model and geometric Hodge filtration | `make build-cover-harmonic-comparison` | `make check-cover-harmonic-comparison` |
 | Finite harmonic certificates, upstairs descent and product coordinates | `make build-harmonic-witness` | `make check-harmonic-witness` |
 | Generic linear transfer | `make build-transfer` | Included in the de Rham core checks |

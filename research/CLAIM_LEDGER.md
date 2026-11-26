@@ -19,6 +19,28 @@ Status vocabulary:
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
 
+## Exact fixed-target aggregate coverage (2026-11-26)
+
+Status: `FORMAL` for an executable rational/integer/prime-field rank checker:
+nonzero denominator, exact rational matrix binding, primality, and a modular
+right inverse are all mandatory. Accepted rank evidence lifts to rational
+surjectivity without an entry-size bound; no map ℚ → Fp is assumed.
+
+`FORMAL` for aggregate acceptance implying `RationalHodgeConjectureAt M` for
+a fixed model with a complete independently specified target basis. Actual
+cycle classes and every coordinate-column equality are proof gates; the
+harmonic constructor discharges those equalities through a supplied faithful
+realization. Surjectivity is a conclusion, not a certificate field.
+
+`FORMAL` for an accepted actual P¹ instance using its original infinity Chow
+class, geometric Hodge target, cover-harmonic realization, and the identity
+matrix modulo three. See [0060](working/0060-finite-coverage-certificate.md).
+
+`OPEN`: construction of spanning cycle families and geometric comparisons
+for general varieties; generic executable geometric decoding, full circuit
+refinement, and a concrete sound succinct-proof backend. The code does not
+advertise the inner checker as a SNARK or extension-field batching system.
+
 ## Finite cover, harmonic and Hodge comparison on P¹ (2026-11-26)
 
 Status: `FORMAL` for the nonzero two-chart/two-component finite complex,
