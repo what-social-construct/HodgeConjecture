@@ -486,6 +486,102 @@ by \(0\) kills the nonzero witness and cannot pass transported injectivity.
 The coefficient descent and harmonic transport are formalized; a SNARK
 wrapper, cryptographic backend, and extension-field batching remain open.
 
+\subsection{Geometric cover comparisons in the exact aggregate}
+\label{subsec:geometric-cover-coverage}
+
+Keep a fixed rational model
+\(\mathscr H_X=(A_X,V_X,V_{X,\mathrm{Hdg}},\operatorname{cl}_X)\)
+and a finite basis \((\alpha_i)_{i\in I}\) of its full, independently defined
+Hodge subspace. Let \(A_Y,V_Y\) be rational vector spaces with a rational-linear cycle map
+\(\operatorname{cl}_Y:A_Y\to V_Y\). The cover adapter requires
+rational-linear maps
+\[
+ p_B^*:V_X\longrightarrow V_Y,\qquad
+ p_*^B:V_Y\longrightarrow V_X,\qquad
+ p_*^{\CH}:A_Y\longrightarrow A_X.
+\]
+The degree and comparison gates are exact equalities for these maps:
+\begin{equation}\label{eq:geometric-cover-transfer-gates}
+ p_*^B p_B^*=\nu\operatorname{id}_{V_X},\qquad
+ \operatorname{cl}_X p_*^{\CH}=p_*^B\operatorname{cl}_Y,
+ \qquad \nu\in\mathbf N_{>0}.
+\end{equation}
+
+\begin{theorem}[Fixed-model aggregate coverage through a cover]
+\label{thm:geometric-cover-aggregate}
+Suppose \eqref{eq:geometric-cover-transfer-gates} holds. Supply cycles
+\(z_j\in A_Y\) and a rational matrix \(C=(c_{ij})_{i,j\in I}\) such that
+\[
+ \operatorname{cl}_Y(z_j)
+   =p_B^*\!\left(\sum_{i\in I}c_{ij}\alpha_i\right)
+ \qquad(j\in I).
+\]
+Define actual downstairs cycles
+\(w_j=\nu^{-1}p_*^{\CH}(z_j)\).
+If the exact arithmetic gates of
+Theorem~\ref{thm:aggregate-finite-coverage} accept \(C\), then
+\(\mathrm{HC}_{\Q}(\mathscr H_X)\) holds, with representatives in the
+rational span of the cycles \(w_j\).
+\end{theorem}
+\begin{proof}
+The comparison and degree equalities give, for each \(j\),
+\[
+ \operatorname{cl}_X(w_j)
+ =\nu^{-1}p_*^B\operatorname{cl}_Y(z_j)
+ =\nu^{-1}p_*^B p_B^*\!\left(\sum_i c_{ij}\alpha_i\right)
+ =\sum_i c_{ij}\alpha_i.
+\]
+These are precisely the original aggregate column bindings, so
+Theorem~\ref{thm:aggregate-finite-coverage} applies.
+\end{proof}
+
+The upstairs column equations are explicit generation inputs to this
+generic theorem. A finite cover alone does not supply them. The constructor
+also accepts faithful harmonic certificates proving these same equations;
+faithfulness and the exact witness differences remain separate proof gates.
+The model, full target basis, original cycle map, and arithmetic acceptance
+criterion are retained throughout.
+
+There is a complete scheme-theoretic instance in dimension zero. Put
+\(I=J=\{0,1\}\) and take the actual morphism
+\[
+ p:\Spec\bigl((I\times J)\to\mathbf C\bigr)
+       \longrightarrow\Spec\bigl(I\to\mathbf C\bigr)
+\]
+induced by precomposition with \((i,j)\mapsto i\). It is finite,
+\'{e}tale, flat, and surjective. Its geometric rank is \(|J|=2\),
+computed from the actual scheme product comparison and finite flat
+rank under base change. Thus this is a cover from four reduced points
+to two reduced points.
+
+The Chow groups in this instance are the original ordinary rational
+\(\CH_0\) groups, including the actual composite structure map upstairs.
+Their bridge to the split-cycle presentation preserves identical cycle
+representatives: every integral support has dimension zero, and there are no
+integral curves supplying principal relations. The original finite
+pushforward has the original scheme-theoretic image and residue degree one;
+the original flat pullback has actual fiber-stalk multiplicity one.
+
+A canonical homeomorphism identifies scheme-valued complex points with
+the existing algebra-valued points in their regular-function evaluation
+topology, naturally for the same morphism \(p\). On native rational
+singular \(H^0\), pullback is continuous precomposition and transfer sums
+over the actual point fibers. Both original-map squares are proved:
+\[
+ \operatorname{cl}_Y p_{\CH}^*=p_B^*\operatorname{cl}_X,
+ \qquad
+ \operatorname{cl}_X p_*^{\CH}=p_*^B\operatorname{cl}_Y.
+\]
+The independently computed full Hodge target has dimension two and its
+point-evaluation basis has type \((0,0)\). Choosing
+\(z_j=p_{\CH}^*[j]\) proves every required upstairs column for \(C=1_2\).
+The geometric Chow degree law gives \(\tfrac12p_*^{\CH}z_j=[j]\).
+With denominator \(1\), integer matrix \(1_2\), modulus \(3\), and modular
+inverse \(1_2\), the existing exact checker accepts the aggregate.
+This closes the geometric cover comparison in this zero-dimensional case.
+It supplies neither a positive-dimensional cover comparison nor general
+upstairs generation, and establishes no new case of the Hodge conjecture.
+
 \subsection{Graph-projector formulation}
 
 Let \(\Gamma\) be a rational algebra acting on \(\Q\oplus V\) through
@@ -6555,6 +6651,31 @@ Accepted projective-line aggregate and negative controls &
 \leanpath{ProjectiveLineGaloisCoverage.imaginaryCycle_not_fixed};
 \leanpath{ProjectiveLineGaloisCoverage.zero_transport_not_injective}\newline
 \leanpath{Realization/DeRham/ProjectiveLineGaloisCoverage.lean}\\
+Aggregate coverage through a geometric transfer &
+\leanpath{FiniteCoverageCertificate.normalizedCoverCycles};
+\leanpath{FiniteCoverageCertificate.of_degree_transfer};
+\leanpath{FiniteCoverageCertificate.of_degree_transfer_harmonic}\newline
+\leanpath{Realization/Chow/FiniteCoverCoverage.lean}\\
+Actual split cover, ordinary Chow bridge, and native transfer &
+\leanpath{SplitPointGeometry.coverProjection_finrank};
+\leanpath{SplitPointGeometry.twoSheetCover_isFiniteEtaleSurjective};
+\leanpath{SplitZeroCycles.ordinaryChowEquivOfStructure};
+\leanpath{SplitZeroCycles.finiteFiberMultiplicity_eq_one};
+\leanpath{SplitComplexPoints.schemePointHomeomorph_map};
+\leanpath{SplitBetti.projectionTransfer_degree_eq_finrank};
+\leanpath{SplitOrdinaryBetti.cycleClassOfStructure_finiteFlatPullback};
+\leanpath{SplitOrdinaryBetti.cycleClassOfStructure_finitePushforward}\newline
+\leanpath{Correspondence/Examples/SplitFiniteCover.lean};
+\leanpath{Realization/Chow/Examples/SplitOrdinaryChow.lean};
+\leanpath{Realization/Betti/Examples/SplitCoverTransfer.lean}\\
+Accepted rank-two geometric cover aggregate &
+\leanpath{SplitGeometricCoverage.pull_comparison};
+\leanpath{SplitGeometricCoverage.push_comparison};
+\leanpath{SplitGeometricCoverage.upstairs_columns};
+\leanpath{SplitGeometricCoverage.accepted};
+\leanpath{SplitGeometricCoverage.normalized_cycles};
+\leanpath{SplitGeometricCoverage.model_satisfies_from_geometric_cover}\newline
+\leanpath{Realization/Betti/Examples/SplitGeometricCoverage.lean}\\
 Original-cover finite harmonic comparison &
 \leanpath{CircleCoverHarmonicComparison.quotientCircleEquiv};
 \leanpath{ProjectiveLineCoverHarmonicComparison.witness_original_boundaries}\newline

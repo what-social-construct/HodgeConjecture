@@ -1,6 +1,7 @@
 .DEFAULT_GOAL := help
 .NOTPARALLEL:
 
+.PHONY: build-geometric-cover-coverage check-geometric-cover-coverage
 .PHONY: build-galois-harmonic-coverage check-galois-harmonic-coverage
 .PHONY: build-finite-coverage check-finite-coverage build-harmonic-witness check-harmonic-witness build-cover-harmonic-comparison check-cover-harmonic-comparison
 
@@ -139,6 +140,8 @@ help:
 	@echo "check-analytic-charts  Actual smooth schemes, chart evaluations and axiom audit"
 	@echo "check-relative-cohomology  Kernel pairs, actual excision and positive boundary checks"
 	@echo "check-projective-line-point-gysin  Local Thom orientation, original chart and zero-cycle checks"
+	@echo "build-geometric-cover-coverage  Original Chow/native Betti geometric cover aggregate"
+	@echo "check-geometric-cover-coverage  Normalization, full coverage and axiom controls"
 	@echo "build-galois-harmonic-coverage  Galois coefficient descent and quotient harmonic transport"
 	@echo "check-galois-harmonic-coverage  Descent, faithful transport, rejection and axiom checks"
 	@echo "build-finite-coverage  Exact modular rank and fixed-target aggregate coverage"
@@ -328,6 +331,9 @@ build-relative-cohomology:
 
 build-projective-line-point-gysin:
 	$(LAKE) build HodgeConjecture.Realization.Betti.ProjectiveLineGysinCycleClass
+
+build-geometric-cover-coverage:
+	$(LAKE) build HodgeConjecture.Realization.Betti.Examples.SplitGeometricCoverage
 
 build-galois-harmonic-coverage:
 	$(LAKE) build HodgeConjecture.Realization.DeRham.ProjectiveLineGaloisCoverage
@@ -538,6 +544,9 @@ check-projective-line-point-gysin: check-layers build-projective-line-point-gysi
 	$(LAKE) env lean research/ProjectiveLineNormalChartVerification.lean
 	$(LAKE) env lean research/ProjectiveLinePointGysinVerification.lean
 
+check-geometric-cover-coverage: check-layers build-geometric-cover-coverage
+	$(LAKE) env lean research/GeometricCoverCoverageVerification.lean
+
 check-galois-harmonic-coverage: check-finite-coverage build-galois-harmonic-coverage
 	$(LAKE) env lean research/GaloisHarmonicCoverageVerification.lean
 
@@ -568,4 +577,4 @@ check-palomar-proofs: build-palomar
 check-palomar:
 	$(PYTHON) scripts/check_palomar.py
 
-check: check-derham-core check-derham-components check-affine-line-comparison check-positive-degree check-scheme-comparison check-projective-line-betti check-projective-line-periods check-small-chains check-open-cover-small-chains check-sheafification-kernel check-global-singular-sheaves check-open-singular-sheaves check-flasque-derived check-singular-derived-comparison check-singular-constant-comparison check-analytic-betti-comparison check-singular-coefficient-change check-complex-singular-comparison check-singular-cohomology check-circle-cohomology check-projective-line-cohomology check-circle-orientation check-projective-line-period-comparison check-hodge-filtration check-projective-line-hodge check-filtered-hodge-target check-filtered-projector-defect check-tate-hodge-bridge check-scheme-betti check-holomorphic-derham check-analytic-charts check-holomorphic-descent check-intrinsic-poincare check-singular-sheaves check-relative-cohomology check-projective-line-point-gysin check-chow check-graph-chow check-comparison check-integration check-projective-line-product check-projective-line-product-fibers check-projective-line-product-chow-realization check-harmonic-witness check-cover-harmonic-comparison check-finite-coverage check-galois-harmonic-coverage
+check: check-derham-core check-derham-components check-affine-line-comparison check-positive-degree check-scheme-comparison check-projective-line-betti check-projective-line-periods check-small-chains check-open-cover-small-chains check-sheafification-kernel check-global-singular-sheaves check-open-singular-sheaves check-flasque-derived check-singular-derived-comparison check-singular-constant-comparison check-analytic-betti-comparison check-singular-coefficient-change check-complex-singular-comparison check-singular-cohomology check-circle-cohomology check-projective-line-cohomology check-circle-orientation check-projective-line-period-comparison check-hodge-filtration check-projective-line-hodge check-filtered-hodge-target check-filtered-projector-defect check-tate-hodge-bridge check-scheme-betti check-holomorphic-derham check-analytic-charts check-holomorphic-descent check-intrinsic-poincare check-singular-sheaves check-relative-cohomology check-projective-line-point-gysin check-chow check-graph-chow check-comparison check-integration check-projective-line-product check-projective-line-product-fibers check-projective-line-product-chow-realization check-harmonic-witness check-cover-harmonic-comparison check-finite-coverage check-galois-harmonic-coverage check-geometric-cover-coverage

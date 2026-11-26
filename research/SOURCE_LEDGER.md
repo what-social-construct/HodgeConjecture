@@ -17,8 +17,8 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-11-10 (canonical P¹ holomorphic comparison and complex singular coefficient squares).
-Latest formal checkpoint: 2026-11-10 (original canonical P¹ holomorphic comparison isomorphism;
+Last source/interface review: 2026-11-26 (actual split geometric-cover comparison, original ordinary Chow maps and native singular H⁰).
+Latest formal checkpoint: 2026-11-26 (exact aggregate through the actual rank-two split cover;
 earlier checkpoints retain their scope).
 Earlier source records retain their original
 validation scope.
@@ -2995,3 +2995,15 @@ The native harmonic quotient is over ℝ, and raw endomorphism naturality requir
 symmetry. The aggregate additionally requires the transported witness to be
 injective. [0061](working/0061-galois-harmonic-coverage.md) records source paths,
 hashes, gates and the actual P¹ instance; the manuscript preserves these scopes.
+
+## Actual split geometric cover comparison (2026-11-26)
+
+The geometric rank, ordinary Chow bridge, native transfer comparison and
+aggregate adapter in [0062](working/0062-geometric-cover-coverage.md) are local
+proofs using existing project APIs and pinned Mathlib. No external source copy,
+new license input, package dependency or source-theorem axiom is introduced.
+The rank proof uses the actual scheme product and finite-flat rank base change.
+The ordinary Chow comparison retains identical cycle representatives and the
+original finite maps; the native comparison uses actual point fibers and the
+canonical complex-point homeomorphism. General upstairs generation is an input
+to the adapter, proved here only for the displayed zero-dimensional example.

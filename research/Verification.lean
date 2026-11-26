@@ -10169,6 +10169,24 @@ Focused regressions and enforced standard-axiom checks are in
 #check HodgeConjecture.ProjectiveLineProductChowFiberRealization.ordinaryChowBettiEquiv
 #check HodgeConjecture.ProjectiveLineProductChowFiberRealization.ordinaryChowCycleClass_fiberChowClass
 
+-- Actual geometric cover, original ordinary Chow and native singular comparison.
+#check HodgeConjecture.SplitPointGeometry.coverProjection_finrank
+#check HodgeConjecture.SplitPointGeometry.twoSheetCover_isFiniteEtaleSurjective
+#check HodgeConjecture.SplitZeroCycles.ordinaryChowEquivOfStructure
+#check HodgeConjecture.SplitZeroCycles.finiteFiberMultiplicity_eq_one
+#check HodgeConjecture.SplitComplexPoints.schemePointHomeomorph_map
+#check HodgeConjecture.SplitBetti.projectionTransfer_degree_eq_finrank
+#check HodgeConjecture.SplitOrdinaryBetti.cycleClassOfStructure_finiteFlatPullback
+#check HodgeConjecture.SplitOrdinaryBetti.cycleClassOfStructure_finitePushforward
+#check HodgeConjecture.FiniteCoverageCertificate.of_degree_transfer
+#check HodgeConjecture.FiniteCoverageCertificate.of_degree_transfer_harmonic
+#check HodgeConjecture.SplitGeometricCoverage.pull_comparison
+#check HodgeConjecture.SplitGeometricCoverage.push_comparison
+#check HodgeConjecture.SplitGeometricCoverage.upstairs_columns
+#check HodgeConjecture.SplitGeometricCoverage.accepted
+#check HodgeConjecture.SplitGeometricCoverage.normalized_cycles
+#check HodgeConjecture.SplitGeometricCoverage.model_satisfies_from_geometric_cover
+
 -- Galois scalar descent and faithful quotient-defined harmonic transport.
 #check HodgeConjecture.GaloisDescent.tensorInclude_injective
 #check HodgeConjecture.GaloisDescent.mem_range_tensorInclude_iff_fixed

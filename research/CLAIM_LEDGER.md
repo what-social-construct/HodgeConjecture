@@ -1,8 +1,9 @@
 # Claim ledger
 
-Last audited: 2026-11-26 (finite cover/harmonic/Hodge comparison on P¹; the product
-P¹ × P¹ ordinary Chow/Betti checkpoint was audited 2026-11-15). Earlier
-checkpoint records retain their original scope.
+Last audited: 2026-11-26 (actual split geometric-cover aggregate and original
+P¹ finite-cover/harmonic/Hodge comparison; the product P¹ × P¹ ordinary
+Chow/Betti checkpoint was audited 2026-11-15). Earlier checkpoint records
+retain their original scope.
 
 Status vocabulary:
 
@@ -18,6 +19,32 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Actual geometric cover aggregate (2026-11-26)
+
+Status: `FORMAL` for the adapter from a positive-degree cohomological transfer,
+an original cycle pushforward comparison square, and supplied upstairs column
+representatives to the existing exact aggregate. It constructs normalized
+pushforward cycles in the original target. The independently fixed full finite Hodge
+basis, original cycle map, and arithmetic checker are retained. General
+upstairs generation remains an explicit input, including in the faithful
+harmonic variant.
+
+`FORMAL` for the actual finite étale projection from four reduced complex points
+to two. Its original geometric rank is two. A representative-preserving bridge
+identifies ordinary rational CH₀ with the existing split-cycle quotient;
+original pushforward residue degrees and flat-pullback local multiplicities
+are one. Canonical scheme-valued complex points agree naturally with the native
+point model. Both original Chow/native singular H⁰ comparison squares hold,
+including the actual composite upstairs structure morphism.
+
+The actual pullbacks of the two reduced point classes supply every column of
+the independent full Hodge target. Original geometric push–pull proves that
+half their pushforward recovers those point classes. The rank-two identity
+matrix with denominator one and modulus three passes the exact aggregate.
+This is a complete zero-dimensional comparison and introduces no new Hodge
+conjecture case. Positive-dimensional cover comparisons and general geometric
+generation remain open. See [0062](working/0062-geometric-cover-coverage.md).
 
 ## Galois coefficient descent and harmonic transport (2026-11-26)
 

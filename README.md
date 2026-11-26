@@ -41,6 +41,10 @@ No new case of the Hodge conjecture is claimed.
 - Rational and complex singular-cochain sheaves, open-cover comparisons,
   flasque resolutions, and comparison with derived constant-sheaf cohomology
   under the stated topology hypotheses.
+- An [actual geometric cover aggregate](research/working/0062-geometric-cover-coverage.md)
+  uses the degree-two finite étale cover from four complex points to two,
+  with original ordinary Chow maps, native singular H⁰ comparisons,
+  and coverage of the full two-dimensional Hodge target.
 - [Galois descent and harmonic transport](research/working/0061-galois-harmonic-coverage.md)
   supply coefficient-invariance and faithful transport proof gates, with
   accepted P¹ aggregates over the degree-two coefficient extension ℚ(i).

@@ -15,6 +15,7 @@ public import HodgeConjecture.Realization.Chow.FiniteFlatTransfer
 public import HodgeConjecture.Realization.Chow.UpstairsGeneration
 public import HodgeConjecture.Realization.Chow.HarmonicWitness
 public import HodgeConjecture.Realization.Chow.FiniteCoverageCertificate
+public import HodgeConjecture.Realization.Chow.FiniteCoverCoverage
 public import HodgeConjecture.Realization.Chow.GaloisHarmonicCoverage
 public import HodgeConjecture.Realization.Chow.BoundaryCorrection
 public import HodgeConjecture.Realization.Chow.MarkedCycleMap
@@ -24,6 +25,7 @@ public import HodgeConjecture.Realization.Chow.Examples.SplitSpanRealization
 public import HodgeConjecture.Realization.Chow.Examples.SplitSpanQuotient
 public import HodgeConjecture.Realization.Chow.Examples.SplitRationalEquivalence
 public import HodgeConjecture.Realization.Chow.Examples.SplitCycleMultiplicity
+public import HodgeConjecture.Realization.Chow.Examples.SplitOrdinaryChow
 public import HodgeConjecture.Realization.Chow.Examples.SplitChowAction
 public import HodgeConjecture.Realization.Chow.Examples.GeometricSplitPoints
 public import HodgeConjecture.Realization.Chow.Examples.SplitGaloisResidual

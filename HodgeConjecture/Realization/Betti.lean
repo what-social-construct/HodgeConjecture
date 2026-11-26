@@ -10,6 +10,7 @@ public import HodgeConjecture.Realization.Betti.ComplexSingularConstantSheafCoho
 public import HodgeConjecture.Realization.Betti.Examples.ProjectiveLineCanonicalPoints
 
 public import HodgeConjecture.Realization.Betti.Examples.SplitGaloisAction
+public import HodgeConjecture.Realization.Betti.Examples.SplitGeometricCoverage
 public import HodgeConjecture.Realization.Betti.ZeroSimplexTransfer
 public import HodgeConjecture.Realization.Betti.SingularPathConnected
 public import HodgeConjecture.Realization.Betti.Examples.AffineLineComplexPoints

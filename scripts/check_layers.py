@@ -517,6 +517,22 @@ RULES["HodgeConjecture.Realization.Chow.GaloisHarmonicCoverage"] = RULES[
 ]
 
 
+RULES["HodgeConjecture.Correspondence.Examples.SplitFiniteCover"] = (
+    "HodgeConjecture.Realization",
+    "HodgeConjecture.Boundary", "HodgeConjecture.Geometry",
+    "HodgeConjecture.Inputs", "HodgeConjecture.SheafCohomology",
+)
+RULES["HodgeConjecture.Realization.Chow.Examples.SplitOrdinaryChow"] = (
+    "HodgeConjecture.Realization.Betti", "HodgeConjecture.Realization.DeRham",
+)
+RULES["HodgeConjecture.Realization.Chow.FiniteCoverCoverage"] = RULES[
+    "HodgeConjecture.Realization.Chow.FiniteCoverageCertificate"
+]
+RULES["HodgeConjecture.Realization.Betti.Examples.SplitCoverTransfer"] = (
+    "HodgeConjecture.Realization.DeRham", "HodgeConjecture.LinearAlgebra.Harmonic",
+)
+
+
 def without_comments(source):
     """Remove line comments and nested Lean block comments before reading imports."""
     result = []

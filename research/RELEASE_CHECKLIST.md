@@ -401,3 +401,25 @@ Local links and whitespace checks pass; nonblocking wider-library style and
 deprecation warnings remain. See [0061](working/0061-galois-harmonic-coverage.md).
 This cached working-tree validation leaves clean-clone and human sign-offs
 unchanged.
+
+The actual geometric-cover checkpoint (2026-11-26) constructs the degree-two
+finite étale cover from four reduced complex points to two, with original
+ordinary Chow maps, native singular H⁰ comparison squares, and normalized
+aggregate coverage of the whole independently computed two-dimensional Hodge
+target. Positive-dimensional comparison and general generation remain open.
+Validation on 2026-11-26: `make check-geometric-cover-coverage` passes
+11 named normalization, fiber-coverage and degree controls, 40 enforced axiom
+audits, and all 134 import guards. Every audited dependency is among
+`propext`, `Classical.choice` and `Quot.sound`. The public-library build
+`lake build HodgeConjecture` passes 5,415 jobs. The complete root inventory
+passes with 1,858 nonempty standard-three axiom lists and 1 axiom-free report.
+All 745 active library/root/Solution sources pass proof-gap scanning;
+intentional Challenge statement placeholders remain separate. Local links,
+dependency pins, unique manuscript labels and whitespace checks pass.
+The canonical 109-page manuscript rebuilds without overfull boxes, undefined
+references or LaTeX errors. Rendered pages 7–8 and 80–81 verify the new theorem,
+concrete example and declaration crosswalk. Nonblocking wider-library Lean
+style/deprecation warnings and one existing bibliography underfull-box notice
+remain. This records cached working-tree validation; clean-clone and human
+release sign-offs remain separate.
+See [0062](working/0062-geometric-cover-coverage.md).

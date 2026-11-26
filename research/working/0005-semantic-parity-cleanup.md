@@ -6472,3 +6472,21 @@ The coefficient field $N$ and modular rank field $\mathbf F_\ell$ have separate
 roles. These results do not construct geometric Chow base change, finite-field
 harmonic comparison, extension-field batching or a cryptographic backend.
 See [0061](0061-galois-harmonic-coverage.md).
+
+## Actual geometric cover aggregate (2026-11-26)
+
+| Object | Mathematical representation | Lean owner/API | Scope |
+| --- | --- | --- | --- |
+| Actual finite étale cover and rank | $p:Z_{I\times J}\to Z_I$, $\operatorname{rk}p=|J|$ | `SplitPointGeometry.coverProjection_finrank`, `twoSheetCover_isFiniteEtaleSurjective` | FORMAL actual scheme map; four-to-two instance has rank two |
+| Original ordinary Chow quotient | $CH_0(Z_I)_{\mathbf Q}\simeq CH_0^{\mathrm{split}}(Z_I)_{\mathbf Q}$ | `SplitZeroCycles.ordinaryChowEquivOfStructure`, `finiteFiberMultiplicity_eq_one` | FORMAL identical cycle representatives, no curve relations, original residue degrees and local fiber lengths |
+| Canonical scheme complex points | $Z_I(\mathbf C)\cong\operatorname{Hom}_{\mathbf C\text{-alg}}(\mathbf C^I,\mathbf C)$ | `SplitComplexPoints.schemePointHomeomorph_map` | FORMAL homeomorphism, natural for the same actual scheme morphism |
+| Native cohomological degree | $p_*^Bp_B^*=|J|\operatorname{id}$ on singular $H^0$ | `SplitBetti.projectionTransfer_degree_eq_finrank` | FORMAL actual point-fiber transfer; agrees with original geometric rank |
+| Both original cycle squares | $\operatorname{cl}_Yp^*_{CH}=p_B^*\operatorname{cl}_X$, $\operatorname{cl}_Xp_*^{CH}=p_*^B\operatorname{cl}_Y$ | `SplitOrdinaryBetti.cycleClassOfStructure_finiteFlatPullback`, `cycleClassOfStructure_finitePushforward` | FORMAL original finite Chow maps and actual composite structure grading |
+| Normalized exact aggregate | $w_j=\nu^{-1}p_*^{CH}z_j$, $\operatorname{cl}_Xw_j=\sum_i c_{ij}\alpha_i$ | `FiniteCoverageCertificate.of_degree_transfer`, `of_degree_transfer_harmonic` | FORMAL adapter; selected upstairs generation, comparison, positivity and arithmetic gates remain explicit |
+| Complete rank-two example | $z_j=p^*_{CH}[j]$, $\tfrac12p_*^{CH}z_j=[j]$, $C=I_2$ | `SplitGeometricCoverage.upstairs_columns`, `normalized_cycles`, `model_satisfies_from_geometric_cover` | FORMAL whole independently computed two-dimensional Hodge target; zero-dimensional scope |
+
+The manuscript theorem `thm:geometric-cover-aggregate` and
+[0062](0062-geometric-cover-coverage.md) describe the same maps and gates.
+Positive-dimensional cover comparison, general upstairs generation and
+cryptographic compression remain open. This finite split example claims no
+new case of the Hodge conjecture.
