@@ -385,3 +385,19 @@ and declaration crosswalk. Local links and whitespace checks pass.
 See [0060](working/0060-finite-coverage-certificate.md). This records cached
 working-tree validation and leaves the clean-clone and human sign-offs above
 unchanged.
+
+The Galois coefficient-descent and harmonic-transport checkpoint (2026-11-26)
+passes the new standalone verification's 17 controls and 35 enforced
+standard-three axiom audits. The retained aggregate suite adds ten controls,
+fifteen audits and runtime output `(true, false)`. All 130 import guards
+pass. The public-library build passes 5,410 jobs and the complete root
+inventory passes with 1,858 nonempty standard-three axiom lists plus one
+axiom-free report. All 740 active library/root/Solution sources pass proof-gap
+scanning; intentional Challenge placeholders remain separate. The three
+copied source hashes and MIT notices are retained. The 107-page canonical
+manuscript rebuilds without overfull boxes or undefined references, with
+rendered review of the descent/transport section and declaration crosswalk.
+Local links and whitespace checks pass; nonblocking wider-library style and
+deprecation warnings remain. See [0061](working/0061-galois-harmonic-coverage.md).
+This cached working-tree validation leaves clean-clone and human sign-offs
+unchanged.

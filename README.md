@@ -41,6 +41,9 @@ No new case of the Hodge conjecture is claimed.
 - Rational and complex singular-cochain sheaves, open-cover comparisons,
   flasque resolutions, and comparison with derived constant-sheaf cohomology
   under the stated topology hypotheses.
+- [Galois descent and harmonic transport](research/working/0061-galois-harmonic-coverage.md)
+  supply coefficient-invariance and faithful transport proof gates, with
+  accepted P¹ aggregates over the degree-two coefficient extension ℚ(i).
 - An [exact aggregate coverage certificate](research/working/0060-finite-coverage-certificate.md)
   binds actual cycle images to a complete rational Hodge basis and certifies
   spanning by a modular inverse, with an accepted geometric P¹ instance.

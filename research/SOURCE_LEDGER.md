@@ -2977,3 +2977,21 @@ For each proposed source, record:
 3. a symbol-by-symbol mapping to the Lean declaration;
 4. every extra source hypothesis absent from the current interface; and
 5. whether the source proves the implication used or only a nearby result.
+
+## Galois coefficient descent and harmonic transport source copies
+
+The local `galois-obstruction-theory` workspace supplies three source snapshots.
+It is not a Git checkout, so the copied file headers identify the exact source
+bytes by SHA-256. The Jacobian tensor-invariant proof is generalized to arbitrary
+vector spaces in `LinearAlgebra/GaloisDescent.lean`; its complete MIT notice is
+retained inline. The two Homotopical sources become `LinearAlgebra/Harmonic/`
+`Morphism.lean` and `HarmonicCohomology.lean`, retaining the original MIT notice
+in that directory's `LICENSE`. The quotient bridge and rational witness
+transport are local additions. These files use the existing Lean/Mathlib pin;
+no new package dependency is introduced.
+
+The scalar inclusion acts on coefficient tensors of the existing Chow module.
+The native harmonic quotient is over ℝ, and raw endomorphism naturality requires
+symmetry. The aggregate additionally requires the transported witness to be
+injective. [0061](working/0061-galois-harmonic-coverage.md) records source paths,
+hashes, gates and the actual P¹ instance; the manuscript preserves these scopes.

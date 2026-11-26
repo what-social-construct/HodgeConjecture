@@ -398,6 +398,94 @@ require a fixed encoding, verified circuit refinement and a sound
 cryptographic backend. No such backend or extension-field batching is
 constructed here.
 
+\subsection{Galois coefficient descent and harmonic transport}
+\label{subsec:galois-harmonic-coverage}
+
+\begin{proposition}[Descent of fixed coefficient tensors]
+\label{prop:galois-coefficient-descent}
+Let \(N/K\) be a finite Galois extension and \(U\) any \(K\)-vector space.
+Let \(\operatorname{Gal}(N/K)\) act on \(N\otimes_K U\) by
+\(g(n\otimes u)=g(n)\otimes u\). Then
+\[
+ (N\otimes_K U)^{\operatorname{Gal}(N/K)}
+   =\{1\otimes u:u\in U\}.
+\]
+Each fixed tensor has a unique expression \(1\otimes u\).
+No finite-dimensionality assumption on \(U\) is required.
+\end{proposition}
+\begin{proof}
+Choose a \(K\)-basis \((e_s)\) of \(U\). Its scalar extension is an
+\(N\)-basis, so each tensor has a unique finite expansion
+\(\sum_s n_s\otimes e_s\). Fixedness implies \(g(n_s)=n_s\) for every
+\(g\) and \(s\). The fixed field is \(K\), so write each \(n_s\) uniquely
+as the image of \(a_s\in K\). The tensor is
+\(1\otimes\sum_s a_s e_s\). Conversely every included vector is fixed.
+The same basis calculation proves injectivity of \(u\mapsto1\otimes u\),
+and hence uniqueness.
+\end{proof}
+
+\begin{corollary}[Fixed-model aggregate coverage after coefficient descent]
+\label{cor:galois-aggregate-coverage}
+Keep the fixed rational model, full Hodge basis \((\alpha_i)_{i\in I}\),
+and arithmetic data of Theorem~\ref{thm:aggregate-finite-coverage}.
+Let \(N/\Q\) be finite Galois and supply fixed tensors
+\(\widetilde z_j\in N\otimes_{\Q}A\), one for each \(j\in I\).
+Let \(z_j\in A\) be their unique descents. If the extended cycle map
+\(\operatorname{cl}_N=\operatorname{id}_N\otimes\operatorname{cl}\) satisfies
+\[
+ \operatorname{cl}_N(\widetilde z_j)
+   =1\otimes\sum_i c_{ij}\alpha_i,
+\]
+then the unchanged arithmetic acceptance gates imply
+\(\mathrm{HC}_{\Q}(\mathscr H)\).
+\end{corollary}
+\begin{proof}
+Naturality gives \(\operatorname{cl}_N(1\otimes z_j)
+=1\otimes\operatorname{cl}(z_j)\). Injectivity of scalar inclusion into
+\(N\otimes_{\Q}V\) recovers every original rational column identity.
+Theorem~\ref{thm:aggregate-finite-coverage} now applies to the descended cycles.
+\end{proof}
+
+These are coefficient tensors in the scalar extension of the original Chow
+module \(A\). The construction makes no identification with the Chow group
+of a scheme after geometric base change. The coefficient field \(N\) is
+independent of the rank-checking field \(\mathbf F_\ell\); the exact rational
+binding and all four arithmetic gates remain those of the preceding subsection.
+
+For a finite real cellular sheaf on a fixed oriented complex, put
+\(H^1_{\mathrm{fin}}=\ker\delta_1/\operatorname{im}\delta_0\), with boundaries
+viewed inside the cocycles. Its harmonic comparison is
+\(\rho:H^1_{\mathrm{fin}}\simeq\mathcal H^1_{\mathrm{fin}}\).
+A cellular endomorphism \(\eta\) induces the quotient-defined operator
+\[
+ T_\eta=\rho\circ H^1(\eta)\circ\rho^{-1}.
+\]
+Let \(W:V\to\mathcal H^1_{\mathrm{fin}}\) be rational-linear.
+If the degree-one cochain map \(\eta^1\) is symmetric, naturality gives
+\(T_\eta h=\eta^1h\) for every harmonic \(h\).
+Thus the column identities for the descended cycles can also be certified by
+\[
+ \eta^1W(\operatorname{cl}(z_j))-
+ \eta^1W\!\left(\sum_i c_{ij}\alpha_i\right)
+       \in\operatorname{im}\delta_0,
+\]
+provided the rational-linear map \(T_\eta\circ W\) is injective.
+Both terms are harmonic, so their exact difference vanishes; this injectivity
+then recovers the original column. It is a required hypothesis: symmetry
+alone does not make a transported witness faithful.
+
+For the existing geometric projective-line model, take \(N=\Q(i)\) and
+\(\widetilde z=1\otimes[\infty]\). This fixed tensor descends to the original
+infinity Chow class. On the existing cover sheaf, multiplication by \(2\)
+is symmetric and preserves witness injectivity, while it doubles a nonzero
+witness and is therefore nonisometric. The quotient-defined transport yields
+an accepted aggregate with \(C=B=R=(1)\), \(d=1\), and \(\ell=3\).
+Two negative controls separate the gates: conjugation moves
+\(i\otimes[\infty]\), so it cannot pass fixedness, whereas multiplication
+by \(0\) kills the nonzero witness and cannot pass transported injectivity.
+The coefficient descent and harmonic transport are formalized; a SNARK
+wrapper, cryptographic backend, and extension-field batching remain open.
+
 \subsection{Graph-projector formulation}
 
 Let \(\Gamma\) be a rational algebra acting on \(\Q\oplus V\) through
@@ -6451,6 +6539,22 @@ Accepted geometric projective-line aggregate &
 \leanpath{ProjectiveLineCoverageCertificate.accepted};
 \leanpath{ProjectiveLineCoverageCertificate.model_satisfies_from_aggregate}\newline
 \leanpath{Realization/DeRham/ProjectiveLineCoverageCertificate.lean}\\
+Galois scalar descent and native harmonic transport &
+\leanpath{GaloisDescent.mem_range_tensorInclude_iff_fixed};
+\leanpath{GaloisDescent.descendFixed_unique};
+\leanpath{Harmonic.CellularSheaf.Morphism.cohomologyOneEquivHarmonic_naturality}\newline
+\leanpath{LinearAlgebra/GaloisDescent.lean};
+\leanpath{LinearAlgebra/Harmonic/HarmonicCohomology.lean}\\
+Aggregate factories with descent and transport gates &
+\leanpath{FiniteCoverageCertificate.of_galois_fixed};
+\leanpath{FiniteCoverageCertificate.of_galois_transported_harmonic}\newline
+\leanpath{Realization/Chow/GaloisHarmonicCoverage.lean}\\
+Accepted projective-line aggregate and negative controls &
+\leanpath{ProjectiveLineGaloisCoverage.transported_accepted};
+\leanpath{ProjectiveLineGaloisCoverage.model_satisfies_from_transported_aggregate};
+\leanpath{ProjectiveLineGaloisCoverage.imaginaryCycle_not_fixed};
+\leanpath{ProjectiveLineGaloisCoverage.zero_transport_not_injective}\newline
+\leanpath{Realization/DeRham/ProjectiveLineGaloisCoverage.lean}\\
 Original-cover finite harmonic comparison &
 \leanpath{CircleCoverHarmonicComparison.quotientCircleEquiv};
 \leanpath{ProjectiveLineCoverHarmonicComparison.witness_original_boundaries}\newline

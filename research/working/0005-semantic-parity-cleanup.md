@@ -6456,3 +6456,19 @@ and prescribed-class coverage row above remains OPEN.
 The canonical manuscript theorem `thm:aggregate-finite-coverage` has the same
 fixed-target quantifiers and gates. [0060](0060-finite-coverage-certificate.md)
 records the executable checker, rejection controls and remaining backend work.
+
+## Galois coefficient descent and harmonic transport (2026-11-26)
+
+| Object | Mathematical representation | Lean owner/API | Scope |
+| --- | --- | --- | --- |
+| Scalar descent | $(N\otimes_K V)^{\operatorname{Gal}(N/K)}=1\otimes V$ | `GaloisDescent.tensorInclude_injective`, `mem_range_tensorInclude_iff_fixed`, `descendFixed` | FORMAL finite Galois extension; arbitrary vector space; no multiplication on $V$ required |
+| Native harmonic quotient | $\rho:H^1(C^\bullet)\simeq\mathcal H^1$ | `CellularSheaf.cohomologyOneEquivHarmonic`, `cohomologyOneEquivExactClosedQuotient` | FORMAL finite real cellular cochains; identifies the existing kernel/range quotient |
+| Harmonic transport | $T_\eta=\rho H^1(\eta)\rho^{-1}$ | `Morphism.transportHarmonicWitness`, `cohomologyOneEquivHarmonic_naturality` | FORMAL; symmetry identifies raw cellular transport; injectivity remains a separate gate |
+| Original-cycle aggregate | Fixed coefficient tensors descend; exact extended columns bind original columns | `FiniteCoverageCertificate.of_galois_fixed` | FORMAL; original Chow module and full independently fixed Hodge target |
+| Combined aggregate | Fixed coefficients and injective transported harmonic witness | `of_transported_harmonic`, `of_galois_transported_harmonic` | FORMAL typed proof gates; the same exact arithmetic checker concludes coverage |
+| P¹ example and rejection | Coefficient extension $\mathbb Q(i)$, original infinity cycle, scalar-two transport | `ProjectiveLineGaloisCoverage.certificate`, `transportedCertificate`, `imaginaryCycle_not_fixed`, `zero_transport_not_injective` | FORMAL; imaginary coefficient and lossy transport fail mandatory gates |
+
+The coefficient field $N$ and modular rank field $\mathbf F_\ell$ have separate
+roles. These results do not construct geometric Chow base change, finite-field
+harmonic comparison, extension-field batching or a cryptographic backend.
+See [0061](0061-galois-harmonic-coverage.md).

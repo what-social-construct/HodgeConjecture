@@ -10169,6 +10169,24 @@ Focused regressions and enforced standard-axiom checks are in
 #check HodgeConjecture.ProjectiveLineProductChowFiberRealization.ordinaryChowBettiEquiv
 #check HodgeConjecture.ProjectiveLineProductChowFiberRealization.ordinaryChowCycleClass_fiberChowClass
 
+-- Galois scalar descent and faithful quotient-defined harmonic transport.
+#check HodgeConjecture.GaloisDescent.tensorInclude_injective
+#check HodgeConjecture.GaloisDescent.mem_range_tensorInclude_iff_fixed
+#check HodgeConjecture.GaloisDescent.descendFixed
+#check HodgeConjecture.GaloisDescent.Gaussian.finrank_eq_two
+#check HodgeConjecture.Harmonic.CellularSheaf.cohomologyOneEquivHarmonic
+#check HodgeConjecture.Harmonic.CellularSheaf.Morphism.cohomologyOneEquivHarmonic_naturality
+#check HodgeConjecture.Harmonic.CellularSheaf.Morphism.transportHarmonicWitness_scalar_injective
+#check HodgeConjecture.FiniteCoverageCertificate.of_galois_fixed
+#check HodgeConjecture.FiniteCoverageCertificate.of_transported_harmonic
+#check HodgeConjecture.FiniteCoverageCertificate.of_galois_transported_harmonic
+#check HodgeConjecture.ProjectiveLineGaloisCoverage.accepted
+#check HodgeConjecture.ProjectiveLineGaloisCoverage.transported_accepted
+#check HodgeConjecture.ProjectiveLineGaloisCoverage.model_satisfies_from_galois_aggregate
+#check HodgeConjecture.ProjectiveLineGaloisCoverage.model_satisfies_from_transported_aggregate
+#check HodgeConjecture.ProjectiveLineGaloisCoverage.imaginaryCycle_not_fixed
+#check HodgeConjecture.ProjectiveLineGaloisCoverage.zero_transport_not_injective
+
 -- Exact aggregate acceptance and the inhabited geometric P¹ instance.
 #check HodgeConjecture.ModularRankCertificate.check_eq_true_iff
 #check HodgeConjecture.ModularRankCertificate.mulVec_surjective_of_check

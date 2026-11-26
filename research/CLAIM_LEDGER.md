@@ -19,6 +19,31 @@ Status vocabulary:
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
 
+## Galois coefficient descent and harmonic transport (2026-11-26)
+
+Status: `FORMAL` for fixed-tensor descent over a finite Galois extension,
+generalized from algebras to arbitrary vector spaces. Inclusion is injective,
+and every invariant tensor descends uniquely. This concerns coefficients in
+the existing rational Chow module; geometric Chow base change remains open.
+
+`FORMAL` for the native real cellular cohomology/harmonic equivalence,
+morphism-induced quotient maps, and naturality under symmetric same-complex
+endomorphisms. The aggregate uses quotient-defined transport and requires
+injectivity of the transported witness. A symmetric projector alone does
+not supply this faithfulness gate.
+
+`FORMAL` for constructors binding the original fixed Hodge target through
+Galois-invariant coefficient tensors, exact extended cycle columns, and/or
+faithful harmonic transport. Actual P¹ instances over ℚ(i) use the original
+infinity Chow class and full Hodge basis. Multiplication by two exercises
+nonisometric transport; conjugation moves an imaginary infinity tensor,
+and zero transport fails faithfulness.
+
+The source copies retain SHA-256 provenance and MIT notices. See
+[0061](working/0061-galois-harmonic-coverage.md). General geometric comparison,
+cycle-family generation, extension-field batching, codecs and a sound
+concrete SNARK backend remain separate obligations.
+
 ## Exact fixed-target aggregate coverage (2026-11-26)
 
 Status: `FORMAL` for an executable rational/integer/prime-field rank checker:

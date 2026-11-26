@@ -503,6 +503,20 @@ RULES["HodgeConjecture.Realization.Chow.FiniteCoverageCertificate"] = (
 )
 
 
+RULES["HodgeConjecture.LinearAlgebra.GaloisDescent"] = RULES[
+    "HodgeConjecture.LinearAlgebra.ModularRankCertificate"
+]
+RULES["HodgeConjecture.LinearAlgebra.GaloisGaussian"] = RULES[
+    "HodgeConjecture.LinearAlgebra.GaloisDescent"
+] + ("HodgeConjecture.LinearAlgebra.Harmonic",)
+RULES["HodgeConjecture.LinearAlgebra.Harmonic.Transport"] = RULES[
+    "HodgeConjecture.LinearAlgebra.Harmonic.Cohomology"
+]
+RULES["HodgeConjecture.Realization.Chow.GaloisHarmonicCoverage"] = RULES[
+    "HodgeConjecture.Realization.Chow.FiniteCoverageCertificate"
+]
+
+
 def without_comments(source):
     """Remove line comments and nested Lean block comments before reading imports."""
     result = []

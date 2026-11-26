@@ -1,6 +1,7 @@
 .DEFAULT_GOAL := help
 .NOTPARALLEL:
 
+.PHONY: build-galois-harmonic-coverage check-galois-harmonic-coverage
 .PHONY: build-finite-coverage check-finite-coverage build-harmonic-witness check-harmonic-witness build-cover-harmonic-comparison check-cover-harmonic-comparison
 
 LAKE ?= lake
@@ -138,6 +139,8 @@ help:
 	@echo "check-analytic-charts  Actual smooth schemes, chart evaluations and axiom audit"
 	@echo "check-relative-cohomology  Kernel pairs, actual excision and positive boundary checks"
 	@echo "check-projective-line-point-gysin  Local Thom orientation, original chart and zero-cycle checks"
+	@echo "build-galois-harmonic-coverage  Galois coefficient descent and quotient harmonic transport"
+	@echo "check-galois-harmonic-coverage  Descent, faithful transport, rejection and axiom checks"
 	@echo "build-finite-coverage  Exact modular rank and fixed-target aggregate coverage"
 	@echo "check-finite-coverage  Gate rejection controls, execution and axiom audits"
 	@echo "build-cover-harmonic-comparison  Actual circle/P1 cover, Chow and Hodge comparison"
@@ -325,6 +328,9 @@ build-relative-cohomology:
 
 build-projective-line-point-gysin:
 	$(LAKE) build HodgeConjecture.Realization.Betti.ProjectiveLineGysinCycleClass
+
+build-galois-harmonic-coverage:
+	$(LAKE) build HodgeConjecture.Realization.DeRham.ProjectiveLineGaloisCoverage
 
 build-finite-coverage:
 	$(LAKE) build HodgeConjecture.Realization.DeRham.ProjectiveLineCoverageCertificate
@@ -532,6 +538,9 @@ check-projective-line-point-gysin: check-layers build-projective-line-point-gysi
 	$(LAKE) env lean research/ProjectiveLineNormalChartVerification.lean
 	$(LAKE) env lean research/ProjectiveLinePointGysinVerification.lean
 
+check-galois-harmonic-coverage: check-finite-coverage build-galois-harmonic-coverage
+	$(LAKE) env lean research/GaloisHarmonicCoverageVerification.lean
+
 check-finite-coverage: check-layers build-finite-coverage
 	$(LAKE) env lean research/FiniteCoverageCertificateVerification.lean
 
@@ -559,4 +568,4 @@ check-palomar-proofs: build-palomar
 check-palomar:
 	$(PYTHON) scripts/check_palomar.py
 
-check: check-derham-core check-derham-components check-affine-line-comparison check-positive-degree check-scheme-comparison check-projective-line-betti check-projective-line-periods check-small-chains check-open-cover-small-chains check-sheafification-kernel check-global-singular-sheaves check-open-singular-sheaves check-flasque-derived check-singular-derived-comparison check-singular-constant-comparison check-analytic-betti-comparison check-singular-coefficient-change check-complex-singular-comparison check-singular-cohomology check-circle-cohomology check-projective-line-cohomology check-circle-orientation check-projective-line-period-comparison check-hodge-filtration check-projective-line-hodge check-filtered-hodge-target check-filtered-projector-defect check-tate-hodge-bridge check-scheme-betti check-holomorphic-derham check-analytic-charts check-holomorphic-descent check-intrinsic-poincare check-singular-sheaves check-relative-cohomology check-projective-line-point-gysin check-chow check-graph-chow check-comparison check-integration check-projective-line-product check-projective-line-product-fibers check-projective-line-product-chow-realization check-harmonic-witness check-cover-harmonic-comparison check-finite-coverage
+check: check-derham-core check-derham-components check-affine-line-comparison check-positive-degree check-scheme-comparison check-projective-line-betti check-projective-line-periods check-small-chains check-open-cover-small-chains check-sheafification-kernel check-global-singular-sheaves check-open-singular-sheaves check-flasque-derived check-singular-derived-comparison check-singular-constant-comparison check-analytic-betti-comparison check-singular-coefficient-change check-complex-singular-comparison check-singular-cohomology check-circle-cohomology check-projective-line-cohomology check-circle-orientation check-projective-line-period-comparison check-hodge-filtration check-projective-line-hodge check-filtered-hodge-target check-filtered-projector-defect check-tate-hodge-bridge check-scheme-betti check-holomorphic-derham check-analytic-charts check-holomorphic-descent check-intrinsic-poincare check-singular-sheaves check-relative-cohomology check-projective-line-point-gysin check-chow check-graph-chow check-comparison check-integration check-projective-line-product check-projective-line-product-fibers check-projective-line-product-chow-realization check-harmonic-witness check-cover-harmonic-comparison check-finite-coverage check-galois-harmonic-coverage
