@@ -597,6 +597,31 @@ RULES["HodgeConjecture.Realization.Chow.ProjectiveLineSquareRamification"] = RUL
 ]
 
 
+RULES["HodgeConjecture.Topology.OnePointHomotopy"] = ()
+RULES["HodgeConjecture.Geometry.ProjectiveLineAffineChart"] = (
+    "HodgeConjecture.Realization", "HodgeConjecture.Boundary",
+    "HodgeConjecture.Inputs", "HodgeConjecture.SheafCohomology",
+)
+RULES["HodgeConjecture.Realization.Betti.Examples.ProjectiveLineAffine"] = (
+    *RULES["HodgeConjecture.Realization.Betti.ProjectiveLineSquarePullback"],
+    "HodgeConjecture.Geometry.ProjectiveLineSquare",
+    "HodgeConjecture.Realization.Betti.ProjectiveLineSquarePullback",
+    "HodgeConjecture.Realization.Betti.ProjectiveLineSquareGysin",
+    "HodgeConjecture.Realization.Betti.ProjectiveLineSquareRamification",
+    "HodgeConjecture.Realization.Betti.Examples.ComplexSquareThom",
+    "HodgeConjecture.Realization.Betti.Examples.CircleSquare",
+)
+RULES["HodgeConjecture.Realization.Betti.Examples.ProjectiveLineFinitePointSupport"] = RULES[
+    "HodgeConjecture.Realization.Betti.Examples.ProjectiveLineAffine"
+]
+RULES["HodgeConjecture.Realization.Betti.ProjectiveLineFinitePointGysin"] = RULES[
+    "HodgeConjecture.Realization.Betti.Examples.ProjectiveLineAffine"
+]
+RULES["HodgeConjecture.Realization.Chow.ProjectiveLineFinitePoint"] = RULES[
+    "HodgeConjecture.Realization.Chow.SplitDoubleCover"
+]
+
+
 def without_comments(source):
     """Remove line comments and nested Lean block comments before reading imports."""
     result = []
@@ -656,7 +681,8 @@ def check_layers():
                 continue
             pending.extend((name, chain + [name]) for name in project_imports(module))
         if entry in ("HodgeConjecture.Geometry.SectionAlgebra",
-                     "HodgeConjecture.CommutativeAlgebra.PolynomialSquare") and len(seen) != 1:
+                     "HodgeConjecture.CommutativeAlgebra.PolynomialSquare",
+                     "HodgeConjecture.Topology.OnePointHomotopy") and len(seen) != 1:
             print(f"FAIL {entry} must remain a project-independent leaf", file=sys.stderr)
             failed = True
         print(f"Checked {entry}: {len(seen)} project modules")

@@ -8,6 +8,18 @@ Dated build observations and older API spellings below retain their historical
 scope; the [Lean 4.35 record](working/0020-lean-4-35-migration.md) gives the
 current toolchain and migration checks.
 
+The [finite-point checkpoint](working/0066-projective-line-finite-point-gysin.md)
+adds `Topology.OnePointHomotopy`, `Geometry.ProjectiveLineAffineChart`,
+`Betti.Examples.ProjectiveLineAffine`, `Betti.Examples.ProjectiveLineFinitePointSupport`,
+`Betti.ProjectiveLineFinitePointGysin`, `Chow.ProjectiveLineFinitePoint` and
+`DeRham.ProjectiveLineFinitePointComparison`. Original scheme charts and
+relative Thom/excision maps construct the finite-point Gysin family. Native
+affine homotopy and faithful forgetting prove independence of affine unit
+coordinates. Original support scheme images, ordinary cycle classes, full
+Hodge model and original square-cover maps are retained in a certificate family
+with GLOBAL degree two and recovery of the same class at the same finite point.
+General nonlinear coordinates and proper trace remain separate.
+
 The [ramification checkpoint](working/0065-projective-line-ramification-comparison.md)
 adds `Betti.RelativeCochainsNaturality`, `Betti.Examples.ComplexSquareThom`,
 `Betti.ProjectiveLineSquareRamification`, `Chow.ProjectiveLineSquareRamification`
