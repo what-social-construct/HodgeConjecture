@@ -1,6 +1,7 @@
 # Claim ledger
 
-Last audited: 2026-11-27 (finite-point Gysin and affine-coordinate independence,
+Last audited: 2026-11-27 (infinity Gysin and every complex-valued point,
+finite-point Gysin and affine-coordinate independence,
 local relative Thom/Gysin ramification and zero-point aggregate,
 connected branched P¹ square-cover aggregate,
 positive-dimensional split P¹ double-cover aggregate,
@@ -22,6 +23,32 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Infinity Gysin and every complex-valued point (2026-11-27)
+
+Status: `FORMAL` for actual unit-scaled second scheme charts, original closed
+infinity support and native point H⁰. Original local Thom, actual chart pullback,
+relative excision and forgetting construct infinity Gysin. Original cochain
+pair swap negates the Mayer–Vietoris boundary; actual circle inversion negates
+overlap H¹. Their two signs prove reciprocal pullback is positive identity on
+native P¹ H², independently of the absolute P¹ coordinates and cycle maps.
+This fixes the new geometric Gysin unit's positive normalization. Faithful
+forgetting proves independence of unit scale for supported maps and classes
+as well as absolute Gysin.
+
+`FORMAL` for explicit finite-or-infinity geometric Gysin isomorphism witnesses
+and a scale-independent map family at every actual complex-valued point.
+Each original support scheme image defines the same ordinary reduced point
+cycle and original Chow class. The full-target certificate family recovers
+that same original point class for every point, including infinity. Its degree
+is original GLOBAL square-cover rank two; its push remains the earlier
+zero-supported trace. No per-point local-multiplicity-two statement is made.
+
+Coordinate independence is within the selected finite affine or reciprocal
+unit-scaled normal charts. Nonlinear atlas-transition/overlap naturality,
+finite-support additivity, higher codimension and general proper/branched
+trace remain open. No global scheme inversion or new Hodge-conjecture case
+is claimed. See [0067](working/0067-projective-line-infinity-gysin.md).
 
 ## Every finite point and affine-coordinate-independent Gysin (2026-11-26)
 

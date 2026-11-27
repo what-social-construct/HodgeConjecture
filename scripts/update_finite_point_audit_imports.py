@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Refresh the finite-point audit's explicit private project import closure."""
+"""Refresh a point-Gysin audit's explicit private project import closure."""
 from __future__ import annotations
 
 import argparse
@@ -10,6 +10,7 @@ from check_layers import without_comments
 
 BEGIN = '-- BEGIN GENERATED PROJECT PRIVATE IMPORTS'
 END = '-- END GENERATED PROJECT PRIVATE IMPORTS'
+DEFAULT_AUDIT = Path('research/ProjectiveLineFinitePointGysinVerification.lean')
 IMPORT = re.compile(r'(?:(?:public|meta)\s+)*import\s+(?:all\s+)?([\w.]+)\s*$')
 
 
@@ -27,8 +28,10 @@ def header_imports(text: str) -> list[str]:
     return result
 
 
-def update(root: Path, check: bool) -> int:
-    audit = root / 'research/ProjectiveLineFinitePointGysinVerification.lean'
+def update(root: Path, check: bool, audit_path: Path = DEFAULT_AUDIT) -> int:
+    if audit_path.is_absolute() or '..' in audit_path.parts:
+        raise ValueError('--audit must be a repository-relative path')
+    audit = root / audit_path
     text = audit.read_text()
     if text.count(BEGIN) != 1 or text.count(END) != 1:
         raise ValueError('Expected exactly one marked project-private import block')
@@ -52,16 +55,18 @@ def update(root: Path, check: bool) -> int:
     expected = before + BEGIN + '\n' + block + '\n' + END + after
     if check:
         if text != expected:
-            print('STALE finite-point project-private imports; run this script without --check')
+            print(f'STALE project-private imports in {audit_path}; run this script without --check')
             return 1
     else:
         audit.write_text(expected)
-    print(f'PASS finite-point private import closure: {len(projects)} project modules')
+    label = 'finite-point' if audit_path == DEFAULT_AUDIT else audit_path.stem
+    print(f'PASS {label} private import closure: {len(projects)} project modules')
     return 0
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true', help='reject a stale block without writing')
+    parser.add_argument('--audit', type=Path, default=DEFAULT_AUDIT, help='repository-relative audit file (default: finite-point verification)')
     args = parser.parse_args()
-    raise SystemExit(update(Path(__file__).resolve().parents[1], args.check))
+    raise SystemExit(update(Path(__file__).resolve().parents[1], args.check, args.audit))

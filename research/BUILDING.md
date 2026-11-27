@@ -6,6 +6,7 @@ repository. Existing build artifacts are reused.
 
 | Work area | Build | Build, examples and axiom checks |
 | --- | --- | --- |
+| Infinity Gysin, native reciprocal orientation and every-point original-cycle certificates | `make build-p1-infinity-gysin` | `make check-p1-infinity-gysin` |
 | Gysin at every finite P¹ point, affine-coordinate independence and certificate family | `make build-p1-finite-point-gysin` | `make check-p1-finite-point-gysin` |
 | Actual local Thom/Gysin ramification, original zero-cycle weight and aggregate | `make build-p1-ramification` | `make check-p1-ramification` |
 | Connected branched P¹ square cover, original Chow/native H² and supported trace | `make build-p1-square-cover` | `make check-p1-square-cover` |
@@ -71,6 +72,11 @@ upstream proof bodies. Missing project bodies or upstream return edges fail
 the check. Its generated import block is checked by Make; after changing its
 project import closure, refresh it with
 `python3 scripts/update_finite_point_audit_imports.py`, then rerun the target.
+
+The infinity audit uses the same import generator and recursive upstream
+metadata checks. Refresh its block with
+`python3 scripts/update_finite_point_audit_imports.py --audit research/ProjectiveLineInfinityGysinVerification.lean`.
+The default generator invocation continues to check the finite-point audit.
 
 Direct Lake targets also work:
 

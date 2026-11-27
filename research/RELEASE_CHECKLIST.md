@@ -551,3 +551,51 @@ The certificate uses global square-cover rank two at the selected target
 point; its push retains the earlier singleton-zero trace. Infinity Gysin,
 nonlinear coordinates, finite-support additivity and general proper trace
 remain open. See [0066](working/0066-projective-line-finite-point-gysin.md).
+
+## Infinity Gysin and every-point validation (2026-11-27)
+
+Validation on 2026-11-27: `make check-p1-infinity-gysin` passes
+24 controls, 84 distinct enforced standard-three axiom audits and all 162 import
+guards. Actual chart maps, support images, native singleton units and original
+ordinary classes are retained. The controls compute actual circle H¹ minus and
+reciprocal P¹ H² plus, reject omission of the cover-swap sign, exercise negative
+and imaginary normal scales, reject a zero scale and reversed unit, and check
+the complete point dichotomy. They retain the original full model, basis,
+source grading and finite maps; reject unnormalized binding and degree one;
+and recover the same original class, including the original infinity class.
+
+Three checked native project proof closures exclude all six old square/local
+ramification module origins and all Chow/DeRham declarations. The reciprocal
+H² proof additionally excludes the entire absolute P¹ coordinate/generator
+module. The checked final project closure excludes all three earlier aggregate
+fixtures and all three earlier absolute-square H² results, including private
+and generated declarations from excluded origins. All ten required actual
+dependencies are present: reciprocal scheme-section evaluation, infinity's
+support-to-scheme binding, original Mayer–Vietoris cover swap, native circle
+inverse H¹, native reciprocal H², original infinity chart/excision pullback,
+both finite and infinity Gysin units, the complete geometric point dichotomy
+and original global finite-flat rank. The visibility gate checks all 408
+project private-body imports and 6,239 upstream metadata nodes, reading
+442 additional exported headers to include omitted private imports.
+Missing bodies or any upstream return edge into the project fail the audit.
+These gates audit the current formal proof route, rather than minimal
+mathematical assumptions.
+
+All three realization exports pass serialized integration builds. The full
+public-library build `lake build HodgeConjecture` passes 5,449 jobs. The root
+inventory passes 2,466 declaration checks and 574 examples, with 1,858 nonempty
+standard-three axiom reports and 1 axiom-free report. All 778 active
+library/root/Solution sources pass proof-gap scanning; intentional Challenge
+statement placeholders remain separate. Dependency and source pins are
+unchanged. Changed-document links and whitespace pass; the manuscript has
+161 unique labels and 183 resolved references. The canonical
+118-page PDF rebuilds without overfull boxes, undefined references or LaTeX
+errors. The changed proposition, proof, scope and declaration crosswalk pass
+rendered visual review. Only existing wider-library Lean notices and one
+bibliography underfull notice remain. This is cached working-tree validation;
+clean-clone and human release sign-offs remain separate.
+
+
+This covers selected-chart point Gysin and original point-class certificates;
+nonlinear overlap naturality, finite-support additivity and general proper
+trace remain separate. See [0067](working/0067-projective-line-infinity-gysin.md).

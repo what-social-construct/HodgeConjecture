@@ -82,7 +82,7 @@
 
 \title{Galois Correspondences and the Hodge Conjecture}
 \author{Chloe van der Vlugt}
-\date{November 26, 2026}
+\date{November 27, 2026}
 
 \begin{document}
 
@@ -860,8 +860,9 @@ This proves a ramification correction for this distinguished point and
 the actual square map. Its new zero-cycle certificate retains the
 original full target, basis, ordinary cycle map and arithmetic data.
 Its transfer law follows from the local relative calculation and
-actual chart/excision diagram. General finite-map Gysin pullback,
-transport to infinity or other varieties, nonlinear analytic-coordinate
+actual chart/excision diagram. The subsequent point constructions include
+infinity in Subsection~\ref{subsec:p1-infinity-gysin}. General finite-map
+Gysin pullback, transport to other varieties, nonlinear analytic-coordinate
 independence and a general proper cohomological trace remain separate;
 no new Hodge-conjecture case is claimed.
 
@@ -962,10 +963,119 @@ aggregate for each \(a\).
 \end{proof}
 
 This proves coordinate independence under invertible affine complex
-normal coordinates at every finite point. Transport to infinity,
-nonlinear analytic-coordinate independence, finite-support additivity
-and a general proper cohomological trace remain separate. No new case
-of the Hodge conjecture is claimed.
+normal coordinates at every finite point. The reciprocal construction
+in Subsection~\ref{subsec:p1-infinity-gysin} includes infinity. Nonlinear
+analytic-coordinate independence, finite-support additivity and a general
+proper cohomological trace remain separate. No new case of the Hodge
+conjecture is claimed.
+
+\subsection{Infinity Gysin maps and the complete point family}
+\label{subsec:p1-infinity-gysin}
+
+The original reciprocal scheme chart completes the preceding finite-point
+construction. For every unit \(u\in\mathbf C^\times\), scaling the
+affine coordinate and following the original second scheme chart gives
+an actual open immersion
+\[
+ N_{\infty,u}:\mathbf A^1\longrightarrow\mathbf P^1,
+ \qquad z\longmapsto\operatorname{reciprocal}(uz).
+\]
+The displayed formula is the proved complex-point formula of this same
+scheme map. Its range and base structure are those of the original
+second chart, and evaluation at zero has exactly the original closed
+scheme point \(x_\infty\) as image. This is local scheme chart data.
+
+Let \(S_\infty=\{\infty\}\) in the original native complex point
+space. Its actual complement is the original finite open, hence is
+contractible. The reciprocal open and this complement cover the space.
+Original relative restriction, the scaled chart comparison and excision
+therefore give
+\[
+ \gamma^{\mathrm{sup}}_{\infty,u}:H^0(S_\infty;\Q)
+ \longrightarrow
+ H^2\bigl(\mathbf P^1(\mathbf C),
+              \mathbf P^1(\mathbf C)\setminus S_\infty;\Q\bigr).
+\]
+It is the original local Thom map followed by inverse chart/excision
+comparison. Forgetting support defines the absolute map
+\(\gamma_{\infty,u}\); this forgetting map is an isomorphism here.
+
+Orientation is determined independently in native singular cohomology.
+The actual native reciprocal homeomorphism exchanges finite and
+reciprocal coordinates, and sends zero to infinity. On the overlap its
+restriction corresponds to circle inversion, whose original singular
+\(H^1\) pullback is minus identity. Independently, interchanging the
+ordered Mayer--Vietoris cover changes the original connecting map by a
+minus sign. Naturality gives cancellation of these two signs, so the
+native reciprocal map has identity pullback on the original \(H^2\).
+Composing with native unit scaling retains this positive action. The
+original relative chart diagram then transports the infinity Thom class
+to the zero-point Thom class and commutes with support forgetting.
+
+\begin{proposition}[Infinity Gysin maps and every-point cycle normalization]
+\label{prop:p1-infinity-gysin}
+For units \(u,v\), the original supported and absolute infinity maps
+satisfy
+\[
+ \gamma^{\mathrm{sup}}_{\infty,u}
+   =\gamma^{\mathrm{sup}}_{\infty,v},
+ \qquad \gamma_{\infty,u}=\gamma_{\infty,v}.
+\]
+The absolute map is an isomorphism sending the original constant point
+unit to the existing positive projective-line class.
+
+Every original complex-valued point \(p\) admits such a positively
+normalized geometric Gysin isomorphism
+\(H^0(\{p\};\Q)\simeq H^2(\mathbf P^1(\mathbf C);\Q)\),
+independent of the nonzero scale in its selected finite or reciprocal
+normal chart. Its unit image is the retained cycle class of the
+original ordinary point cycle at the actual scheme image \(x_p\).
+Actual square-cover flat pullback of this same ordinary class supplies
+an accepted full-target aggregate, with
+\[
+ z_p=f_{\CH}^*[x_p],\qquad
+ \tfrac12 f_*^{\CH}z_p=[x_p].
+\]
+For \(p=\infty\), this is exactly the pre-existing ordinary infinity
+class, rather than a newly chosen cycle representative or quotient.
+\end{proposition}
+\begin{proof}
+The native reciprocal calculation and the proved chart/excision/forget
+diagram send the infinity Gysin unit to the same positive absolute
+generator for every \(u\). The constant point unit generates its
+\(H^0\), so the absolute maps agree. Injective support forgetting
+then gives equality of the supported maps and supported Thom classes.
+Their original factors are isomorphisms, giving the stated Gysin
+isomorphism.
+
+The actual finite-or-infinity dichotomy applies the preceding
+finite-point construction or this reciprocal construction to each
+\(p\). In both cases its underlying scheme image is a nongeneric
+closed point of the original projective line. Applying the original
+ordinary rational class map to its original point cycle defines
+\([x_p]\), in the original structural grading. The geometric Gysin
+unit and the existing ordinary cycle-class calculation identify its
+class with the same positive generator.
+
+Use the original square-cover Chow maps and the earlier native
+zero-supported cohomological push. The transfer degree is the actual
+global finite-flat rank at \(x_p\), equal to two; this is not a claim
+of local fiber multiplicity two at every point. Both original
+cycle-class comparison squares hold, and the actual Chow push--pull
+identity proves the displayed normalization. The retained full Hodge
+target and basis, identity rank-one payload, denominator one and
+modulus three give an accepted aggregate by
+Theorem~\ref{thm:geometric-cover-aggregate} for every \(p\).
+\end{proof}
+
+This completes the point family with unit-scale independence in the
+selected original charts. It constructs no global algebraic inversion
+and makes no claim of nonlinear coordinate or general atlas-overlap
+naturality. Finite-support additivity, transport to other varieties and
+a general proper cohomological trace remain separate. No new case of
+the Hodge conjecture is claimed.
+
+\clearpage
 
 \subsection{Graph-projector formulation}
 
@@ -7182,6 +7292,39 @@ Same-support cycle comparison and finite-point aggregate family &
 \leanpath{ProjectiveLineFinitePointComparison.accepted};\newline
 \leanpath{ProjectiveLineFinitePointComparison.normalized_cycles}\newline
 \leanpath{Realization/DeRham/ProjectiveLineFinitePointComparison.lean}\\
+Actual reciprocal scheme normal charts and original infinity &
+\leanpath{ProjectiveLineInfinityChart.normalChart};\newline
+\leanpath{ProjectiveLineInfinityChart.affineSection_normalChart};\newline
+\leanpath{ProjectiveLineInfinityChart.normalChart_origin}\newline
+\leanpath{Geometry/ProjectiveLineInfinityChart.lean}\\
+Original infinity support and scheme image &
+\leanpath{ProjectiveLineInfinitySupport.complement_eq};\newline
+\leanpath{ProjectiveLineInfinitySupport.pointSupport_scheme_base}\newline
+{\footnotesize\leanpath{Realization/Betti/Examples/ProjectiveLineInfinitySupport.lean}}\\
+Native reciprocal orientation from two original signs &
+\leanpath{CircleInversion.cohomologyPullback_inversion};\newline
+\leanpath{SingularMayerVietorisSwap.connecting_swap};\newline
+{\footnotesize\leanpath{ProjectiveLineReciprocal.cohomologyPullback_reciprocal_two}}\newline
+\leanpath{Realization/Betti/Examples/CircleInversion.lean};\newline
+\leanpath{Realization/Betti/SingularMayerVietorisSwap.lean};\newline
+\leanpath{Realization/Betti/Examples/ProjectiveLineReciprocal.lean}\\
+Infinity Gysin and supported scale independence &
+\leanpath{ProjectiveLineInfinityGysin.chartPullback_eq_original};\newline
+\leanpath{ProjectiveLineInfinityGysin.gysin_pointUnit};\newline
+\leanpath{ProjectiveLineInfinityGysin.gysin_coordinate_independent};\newline
+{\footnotesize\leanpath{ProjectiveLineInfinityGysin.supportedGysin_coordinate_independent}}\newline
+\leanpath{Realization/Betti/ProjectiveLineInfinityGysin.lean}\\
+Original geometric Gysin isomorphisms at every native point &
+\leanpath{ProjectiveLineInfinityGysin.every_point_gysinIso};\newline
+\leanpath{ProjectiveLineInfinityGysin.every_point_scale_independent}\newline
+\leanpath{Realization/Betti/ProjectiveLineInfinityGysin.lean}\\
+Same-point ordinary cycle comparison and accepted complete family &
+\leanpath{ProjectiveLinePointGysinComparison.geometric_gysin_unit};\newline
+\leanpath{ProjectiveLinePointGysinComparison.pointClass_infinity};\newline
+\leanpath{ProjectiveLinePointGysinComparison.accepted};\newline
+\leanpath{ProjectiveLinePointGysinComparison.normalized_cycles};\newline
+{\footnotesize\leanpath{ProjectiveLinePointGysinComparison.normalized_cycles_infinity}}\newline
+\leanpath{Realization/DeRham/ProjectiveLinePointGysinComparison.lean}\\
 Original-cover finite harmonic comparison &
 \leanpath{CircleCoverHarmonicComparison.quotientCircleEquiv};
 \leanpath{ProjectiveLineCoverHarmonicComparison.witness_original_boundaries}\newline

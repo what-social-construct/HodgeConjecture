@@ -8,6 +8,18 @@ Dated build observations and older API spellings below retain their historical
 scope; the [Lean 4.35 record](working/0020-lean-4-35-migration.md) gives the
 current toolchain and migration checks.
 
+The [infinity and every-point construction](working/0067-projective-line-infinity-gysin.md)
+now adds actual reciprocal scheme normal charts and original infinity-supported
+Gysin. Native overlap inversion and original cover swap each contribute a
+minus sign. The signs cancel, fixing the same positive absolute generator. Supported and
+absolute maps are independent of unit scale. The actual finite-or-infinity
+point dichotomy supplies geometric Gysin at every complex-valued point; its
+same original scheme image supplies the ordinary point class. Certificates
+retain the full original target and global square-cover rank, recovering the
+same original class at every point. Nonlinear atlas/overlap naturality,
+finite-support additivity, higher codimension and general proper trace remain
+open; the existing zero-supported push is retained.
+
 The [finite-point checkpoint](working/0066-projective-line-finite-point-gysin.md)
 adds `Topology.OnePointHomotopy`, `Geometry.ProjectiveLineAffineChart`,
 `Betti.Examples.ProjectiveLineAffine`, `Betti.Examples.ProjectiveLineFinitePointSupport`,

@@ -6600,3 +6600,35 @@ pins, local links and whitespace checks pass. The 116-page manuscript has
 159 unique labels and 180 resolved references; rendered pages 12–13 and
 87–89 pass review. Full scope, evidence and artifact hashes are in 0066.
 Only legacy notices remain; clean-clone and human release sign-offs are separate.
+
+## Infinity Gysin and every complex-valued point (2026-11-27)
+
+| Object | Mathematical representation | Lean owner/API | Scope |
+| --- | --- | --- | --- |
+| Original cover swap | pair swap, negative intersection map, native boundary minus | `SingularMayerVietorisSwap.coverShortComplexSwap`, `connecting_swap` | FORMAL original cochains and native connecting maps |
+| Actual circle inversion | inverse swaps actual overlap components; H¹ acts by minus | `CircleInversion.overlap_coordinates`, `cohomologyPullback_inversion` | FORMAL original circle topology and degree-zero evaluation |
+| Native reciprocal orientation | compactified inverse switches original P¹ charts; two signs cancel | `ProjectiveLineReciprocal.reciprocalMap`, `cohomologyPullback_reciprocal_two` | FORMAL original H² identity, independent of absolute P¹ coordinates and Chow |
+| Actual Y normal chart | original Spec isomorphism for unit scale followed by original Y chart | `ProjectiveLineInfinityChart.normalChart`, `affineSection_normalChart`, `normalChart_origin` | FORMAL original base, open range and closed infinity center; no global scheme inversion claim |
+| Actual infinity support | singleton infinity with original finite-chart complement and native H⁰ | `ProjectiveLineInfinitySupport.complement_eq`, `pointSupport_scheme_base` | FORMAL actual topology and original scheme image |
+| Infinity Gysin | local Thom, original relative chart/excision, support forgetting | `ProjectiveLineInfinityGysin.chartPullback_eq_original`, `supportedPull_chart`, `gysin_pointUnit` | FORMAL original supported and absolute maps with positive native normalization |
+| Reciprocal scale independence | supported/absolute maps and Thom class agree for all complex units | `gysin_coordinate_independent`, `supportedGysin_coordinate_independent`, `supportedThomClass_coordinate_independent` in `ProjectiveLineInfinityGysin` | FORMAL unit-scaled Y normal coordinates |
+| Complete native point coverage | actual finite-or-infinity cases give geometric isomorphism witnesses | `ProjectiveLineInfinityGysin.every_point_gysinIso`, `every_point_scale_independent` | FORMAL every complex-valued point; no nonlinear atlas-transition claim |
+| Same original point cycle | quotient of reduced cycle of actual scheme image | `ProjectiveLinePointGysinComparison.pointClass`, `pointClass_finite`, `pointClass_infinity`, `geometric_gysin_unit` | FORMAL original grading, quotient, class map and same selected point |
+| Every-point certificate | full-target check, original finite maps, normalized recovery at same point | `ProjectiveLinePointGysinComparison.accepted`, `normalized_cycles`, `normalized_cycles_infinity`, `model_satisfies_from_every_point` | FORMAL original full Hodge model/basis, GLOBAL square rank two and old zero-supported push |
+
+The manuscript proposition `prop:p1-infinity-gysin` and
+[0067](0067-projective-line-infinity-gysin.md) record the same scope.
+Nonlinear overlap/transition naturality, finite-support additivity, higher
+codimension and general proper trace remain open. No new Hodge-conjecture case
+or per-point local-multiplicity-two assertion is made.
+
+Validation on 2026-11-27: 24 controls, 84 distinct enforced standard-three
+axiom audits, all 162 import guards, four checked project dependency-exclusion
+closures and all ten required actual dependencies pass. All three realization
+exports and the full 5,449-job public build pass. The root inventory passes
+2,466 checks and 574 examples, with 1,858 nonempty standard-three axiom reports
+and 1 axiom-free report. All 778 active sources pass proof-gap scanning; pins,
+local links and whitespace pass. The 118-page manuscript has
+161 unique labels and 183 resolved references and passes changed-page
+render review. Full scope, evidence and artifact hashes are in 0067. Only
+legacy notices remain; clean-clone and human release sign-offs are separate.

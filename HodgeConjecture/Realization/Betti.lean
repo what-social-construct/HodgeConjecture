@@ -8,6 +8,7 @@ public import HodgeConjecture.Realization.Betti.ProjectiveLineSquareGysin
 public import HodgeConjecture.Realization.Betti.RelativeCochainsNaturality
 public import HodgeConjecture.Realization.Betti.ProjectiveLineSquareRamification
 public import HodgeConjecture.Realization.Betti.ProjectiveLineFinitePointGysin
+public import HodgeConjecture.Realization.Betti.ProjectiveLineInfinityGysin
 public import HodgeConjecture.Realization.Betti.SchemeSingularSheaves
 public import HodgeConjecture.Realization.Betti.CoefficientChange
 public import HodgeConjecture.Realization.Betti.SingularCoefficientCohomology

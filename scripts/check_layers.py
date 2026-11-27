@@ -622,6 +622,29 @@ RULES["HodgeConjecture.Realization.Chow.ProjectiveLineFinitePoint"] = RULES[
 ]
 
 
+
+RULES["HodgeConjecture.Geometry.ProjectiveLineInfinityChart"] = RULES[
+    "HodgeConjecture.Geometry.ProjectiveLineAffineChart"
+]
+RULES["HodgeConjecture.Realization.Betti.SingularMayerVietorisSwap"] = RULES[
+    "HodgeConjecture.Realization.Betti.SingularMayerVietorisNaturality"
+]
+RULES["HodgeConjecture.Realization.Betti.Examples.CircleInversion"] = (
+    *RULES["HodgeConjecture.Realization.Betti.SingularDoubleCover"],
+    "HodgeConjecture.Realization.Betti.Examples.CircleSquare",
+    "HodgeConjecture.Realization.Betti.Examples.ComplexSquareThom",
+)
+RULES["HodgeConjecture.Realization.Betti.Examples.ProjectiveLineReciprocal"] = RULES[
+    "HodgeConjecture.Realization.Betti.Examples.ProjectiveLineAffine"
+]
+RULES["HodgeConjecture.Realization.Betti.Examples.ProjectiveLineInfinitySupport"] = RULES[
+    "HodgeConjecture.Realization.Betti.Examples.ProjectiveLineAffine"
+]
+RULES["HodgeConjecture.Realization.Betti.ProjectiveLineInfinityGysin"] = RULES[
+    "HodgeConjecture.Realization.Betti.Examples.ProjectiveLineAffine"
+]
+
+
 def without_comments(source):
     """Remove line comments and nested Lean block comments before reading imports."""
     result = []

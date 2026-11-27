@@ -17,10 +17,10 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-11-27 (finite-point affine scheme charts,
-original relative Gysin maps and native affine homotopy).
-Latest formal checkpoint: 2026-11-27 (every finite P¹ point, affine-coordinate
-independence and the original global-rank certificate family;
+Last source/interface review: 2026-11-27 (actual reciprocal scheme charts,
+original cover-swap/circle-inverse signs and infinity Gysin).
+Latest formal checkpoint: 2026-11-27 (every complex-valued P¹ point, selected
+normal-chart unit-scale independence and original point-class certificates;
 earlier checkpoints retain their scope).
 Earlier source records retain their original
 validation scope.
@@ -3069,3 +3069,19 @@ scheme image and ordinary reduced cycle are retained in the certificate family.
 The global native affine map is not presented as a proved global scheme
 morphism, and general analytic-coordinate or proper-trace conclusions are
 not inferred from this finite-point affine case.
+
+## Infinity Gysin and complete point coverage (2026-11-27)
+
+The seven modules in [0067](working/0067-projective-line-infinity-gysin.md)
+use local proofs and the same pinned Mathlib inputs. The cover pair is swapped
+on the original cochain complexes; its negative intersection map gives the
+original boundary sign. Actual circle component evaluation computes inverse
+H¹, and actual reciprocal-chart naturality proves native H² positivity. The
+local Thom class passes through original actual Y-chart pullback, relative
+excision and forgetting. Both chart cases retain their original singleton
+source and ordinary reduced cycle of the same actual scheme image.
+
+No new source axiom, external copied module, dependency pin or license input
+is introduced. The full model and original finite maps are unchanged; global
+rank two and the earlier zero-supported push are explicitly retained.
+Nonlinear transition naturality and general proper trace remain separate.

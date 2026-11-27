@@ -41,6 +41,11 @@ No new case of the Hodge conjecture is claimed.
 - Rational and complex singular-cochain sheaves, open-cover comparisons,
   flasque resolutions, and comparison with derived constant-sheaf cohomology
   under the stated topology hypotheses.
+- The [infinity and every-point Gysin construction](research/working/0067-projective-line-infinity-gysin.md)
+  computes the native reciprocal orientation, constructs actual infinity
+  Gysin, and covers every complex-valued P¹ point with its original point
+  cycle and full-target certificate. Unit-scale independence holds in the
+  selected finite or reciprocal normal chart.
 - The [finite-point Gysin family](research/working/0066-projective-line-finite-point-gysin.md)
   constructs actual supported and absolute maps at every finite P¹ point,
   independently of the nonzero affine complex normal-coordinate scale.
