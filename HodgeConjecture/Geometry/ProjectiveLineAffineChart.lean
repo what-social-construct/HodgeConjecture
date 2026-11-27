@@ -94,7 +94,8 @@ theorem affineIso_over_base (a : k) (v : kˣ) :
   rw [← Spec.map_comp]
   apply congrArg Spec.map
   apply CommRingCat.hom_ext
-  ext c
+  apply RingHom.ext
+  intro c
   exact coordinateEquiv_C k a c v
 
 /-- The chart retains the actual original base structure. -/

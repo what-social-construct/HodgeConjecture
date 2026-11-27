@@ -65,6 +65,13 @@ repository. Existing build artifacts are reused.
 and checks the import boundaries. Make runs the groups sequentially; Lake
 retains its own build parallelism. A failed command stops the checks.
 
+The finite-point dependency audit imports every project private proof body
+and recursively checks upstream exported import metadata before pruning
+upstream proof bodies. Missing project bodies or upstream return edges fail
+the check. Its generated import block is checked by Make; after changing its
+project import closure, refresh it with
+`python3 scripts/update_finite_point_audit_imports.py`, then rerun the target.
+
 Direct Lake targets also work:
 
 ```sh

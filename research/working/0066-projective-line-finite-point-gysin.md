@@ -1,7 +1,5 @@
 # Every finite P¹ point and affine-coordinate-independent Gysin (2026-11-26)
 
-Status: implementation checkpoint; end-to-end finite-point validation is pending.
-
 For every complex number a and unit u in ℂ, the normal coordinate is the actual
 scheme map induced by X ↦ uX+a, followed by the original first affine chart
 of the original glued P¹. The native point support is the original singleton
@@ -10,8 +8,8 @@ original local Thom class, these actual normal charts, original relative
 excision and support forgetting. Both maps are independent of u.
 
 `Topology/OnePointHomotopy.lean` proves joint continuity of compact-parameter
-families on one-point compactifications from jointly continuous forward and
-left-inverse maps. A compact target complement has all parameterized preimages
+families on one-point compactifications with Hausdorff source, from jointly
+continuous forward and left-inverse maps. A compact target complement has all parameterized preimages
 contained in a compact image of the inverse family. The result uses no metric,
 norm estimate or local-compactness hypothesis. This leaf uses only Mathlib.
 
@@ -81,4 +79,43 @@ The parity table and manuscript proposition `prop:p1-finite-point-gysin`
 record the same construction. Provenance is local proofs and pinned Mathlib;
 no external source copy, dependency pin or license input is added.
 
-Validation record follows after the focused and integration checks.
+Validation on 2026-11-27: `make check-p1-finite-point-gysin` passes
+21 controls, 68 enforced standard-three axiom audits and all 156 import guards.
+The controls retain the same original model, full basis, source grading,
+scheme sections and cycle maps; exercise negative and imaginary affine units;
+reject a zero scale, reversed normalization, unnormalized column and degree-one
+transfer; and recover the same original class at a nonzero finite center.
+The two checked native Gysin project proof closures exclude all six old square/local
+ramification module origins and every Chow/DeRham declaration. The checked
+final family project closure excludes both earlier aggregate fixtures and all three
+earlier global-square H² results, including private/generated declarations
+from excluded origins. All seven required dependencies are present: actual
+support-to-scheme binding, actual affine scheme-section evaluation, the compact
+one-point extension, native affine homotopy, its original cohomology action,
+the new geometric Gysin normalization and the original global finite-flat rank.
+An additional visibility gate checks all 401 project private-body imports and
+6,239 upstream metadata nodes, reading 442 additional exported headers
+to include omitted private imports. It rejects every upstream edge back into
+the project. Thus omitted upstream proof bodies cannot hide a project
+dependency in these project closures.
+These gates audit the current formal proof route, rather than minimal
+mathematical assumptions.
+
+All three realization exports pass serialized integration builds. The full
+public-library build `lake build HodgeConjecture` passes 5,442 jobs. The root
+inventory passes 2,416 declaration checks and 574 examples, with 1,858 nonempty
+standard-three axiom reports and 1 axiom-free report. All 771 active
+library/root/Solution sources pass proof-gap scanning; intentional Challenge
+statement placeholders remain separate. Dependency and source pins are
+unchanged. Changed-document links, whitespace, 159 unique manuscript labels
+and 180 resolved references pass inspection. The canonical 116-page PDF
+rebuilds without overfull boxes, undefined references or LaTeX errors.
+Rendered pages 12–13 and 87–89 verify the proposition, proof, scope and
+declaration crosswalk. Only existing wider-library Lean notices and one
+bibliography underfull notice remain. This is cached working-tree validation;
+clean-clone and human release sign-offs remain separate.
+
+Canonical source SHA-256:
+`6c713f9e55deaeed105b420e532bbcc7db2bd59da72ccf8047b03c5b78a3eff8`.
+Canonical PDF SHA-256:
+`a5587ba4c5ace4cb1b50fbaa37bdc696bfbeae87baccb2b8dad90340f46d9f63`.

@@ -6589,3 +6589,14 @@ coordinates. Infinity Gysin, nonlinear analytic-coordinate independence,
 finite-support additivity and general proper/branched trace remain separate.
 No new Hodge-conjecture case or per-point local-multiplicity-two statement
 is claimed.
+
+Validation on 2026-11-27: 21 controls, 68 enforced standard-three axiom
+audits, all 156 import guards, three checked project dependency-exclusion closures and
+all seven required actual dependencies pass. All three realization exports
+and the full 5,442-job public build pass. The root inventory passes 2,416
+declaration checks and 574 examples, with 1,858 nonempty standard-three axiom
+reports and 1 axiom-free report. All 771 active sources pass proof-gap scanning;
+pins, local links and whitespace checks pass. The 116-page manuscript has
+159 unique labels and 180 resolved references; rendered pages 12–13 and
+87–89 pass review. Full scope, evidence and artifact hashes are in 0066.
+Only legacy notices remain; clean-clone and human release sign-offs are separate.

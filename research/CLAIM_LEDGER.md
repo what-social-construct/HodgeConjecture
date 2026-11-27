@@ -1,6 +1,6 @@
 # Claim ledger
 
-Last audited: 2026-11-26 (finite-point Gysin and affine-coordinate independence,
+Last audited: 2026-11-27 (finite-point Gysin and affine-coordinate independence,
 local relative Thom/Gysin ramification and zero-point aggregate,
 connected branched P¹ square-cover aggregate,
 positive-dimensional split P¹ double-cover aggregate,
@@ -25,17 +25,16 @@ The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
 
 ## Every finite point and affine-coordinate-independent Gysin (2026-11-26)
 
-Status: `OPEN` pending end-to-end validation of this implementation checkpoint.
-The draft scope is the actual affine scheme normal charts X ↦ uX+a,
+Status: `FORMAL` for the actual affine scheme normal charts X ↦ uX+a,
 with a arbitrary and u a complex unit, their original Spec isomorphisms,
 open immersion/range, base structure and actual closed center. A pure topology
 lemma extends compact-parameter families with jointly continuous left inverses
-to one-point compactifications. Native affine homeomorphisms of the fixed point
-space are homotopic to identity, and act identically on all singular cohomology.
+to one-point compactifications of Hausdorff sources. Native affine
+homeomorphisms of the fixed point space are homotopic to identity, and act identically on all singular cohomology.
 This is a native global point map and actual local scheme chart; a global
 scheme affine automorphism of the glued P¹ is not claimed.
 
-Draft original relative Thom/excision constructions of supported and
+`FORMAL` for original relative Thom/excision constructions of supported and
 absolute Gysin maps at every finite point, with positive unit normalization
 and independence under every invertible affine complex coordinate. Faithful
 support forgetting gives equality of the supported maps themselves. The

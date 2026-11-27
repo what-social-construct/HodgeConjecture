@@ -102,10 +102,19 @@ theorem normalSSetIso_inclusion (a : ℂ) (u : ℂˣ) :
       (TopCat.ofHom (⟨normalHomeomorph a u, (normalHomeomorph a u).continuous⟩ :
         C(ℂ, finiteOpen))) ≫
       SingularSubcomplexes.subtypeToSubset space finiteOpen ≫ first.ι = _
-  rw [Category.assoc, SingularSubcomplexes.subtypeToSubset_ι, ← Functor.map_comp]
+  rw [SingularSubcomplexes.subtypeToSubset_ι, ← Functor.map_comp]
   apply congrArg TopCat.toSSet.map
   ext z : 1
   exact (normalChartPoint_finite a u z).symm
+
+theorem coordinate_ne_center_iff (a : ℂ) (u : ℂˣ) (z : ℂ) :
+    a + (u : ℂ) * z ≠ a ↔ z ≠ 0 := by
+  constructor
+  · intro h hz
+    exact h (by rw [hz, mul_zero, add_zero])
+  · intro hz h
+    have hm : (u : ℂ) * z = 0 := add_left_cancel (h.trans (add_zero a).symm)
+    exact hz ((mul_eq_zero.mp hm).resolve_left u.ne_zero)
 
 theorem punctured_preimage (a : ℂ) (u : ℂˣ) :
     ComplexPointThom.puncturedSubcomplex = (localBoundary a).preimage (normalSSetIso a u).hom := by
@@ -113,7 +122,7 @@ theorem punctured_preimage (a : ℂ) (u : ℂˣ) :
   change (∀ t, SingularSubcomplexes.simplexMap (TopCat.of ℂ) n σ t ≠ 0) ↔
     ∀ t, finite (a + (u : ℂ) * SingularSubcomplexes.simplexMap (TopCat.of ℂ) n σ t) ∈ complement a
   simp only [ProjectiveLineFinitePointSupport.finite_mem_complement_iff,
-    add_eq_left, mul_eq_zero, u.ne_zero, false_or]
+    coordinate_ne_center_iff]
 
 def normalPullbackIso (a : ℂ) (u : ℂˣ) : RelativeCochains.complex (localBoundary a) ≅
     RelativeCochains.complex ComplexPointThom.puncturedSubcomplex :=
@@ -128,8 +137,9 @@ theorem chartCondition (a : ℂ) (u : ℂˣ) : ComplexPointThom.puncturedSubcomp
     (second a).preimage (TopCat.toSSet.map (normalChartMap a u)) := by
   intro n σ hσ t
   change normalChartPoint a u (SingularSubcomplexes.simplexMap (TopCat.of ℂ) n σ t) ∈ complement a
-  rw [normalChartPoint_finite, ProjectiveLineFinitePointSupport.finite_mem_complement_iff]
-  simpa only [add_eq_left, mul_eq_zero, u.ne_zero, false_or] using hσ t
+  rw [normalChartPoint_finite, ProjectiveLineFinitePointSupport.finite_mem_complement_iff,
+    coordinate_ne_center_iff]
+  exact hσ t
 
 def chartPullback (a : ℂ) (u : ℂˣ) : RelativeCochains.complex (second a) ⟶
     RelativeCochains.complex ComplexPointThom.puncturedSubcomplex :=
@@ -161,7 +171,7 @@ def chartComparison (a : ℂ) (u : ℂˣ) (n : ℕ) : RelativeCochains.Cohomolog
 
 theorem chartComparison_hom (a : ℂ) (u : ℂˣ) (n : ℕ) :
     (chartComparison a u n).hom = homologyMap (chartPullback a u) n := by
-  rw [chartComparison, Iso.trans_hom]
+  rw [chartComparison, Iso.trans_hom, excisionIso, RelativeExcision.excisionIso_hom]
   change homologyMap (RelativeExcision.restriction first (second a)) n ≫
     homologyMap (normalPullbackIso a u).hom n = _
   rw [← homologyMap_comp, chartPullback_eq_original]
@@ -246,7 +256,7 @@ theorem zeroChartComparison_hom (n : ℕ) :
 theorem zeroChartComparison_two_hom :
     (zeroChartComparison 2).hom = ProjectiveLinePointGysin.thomToSupportIso.inv := rfl
 
-def affinePairCondition (a : ℂ) (u : ℂˣ) :
+theorem affinePairCondition (a : ℂ) (u : ℂˣ) :
     ProjectiveLinePointGysin.complementSubcomplex ≤
       (second a).preimage (TopCat.toSSet.map (ProjectiveLineAffine.affineMap a u)) :=
   RelativeCochains.subsetCondition (ProjectiveLineAffine.affineMap a u) reciprocalOpen
@@ -297,6 +307,13 @@ theorem affineSupportedPull_forget (a : ℂ) (u : ℂˣ) (n : ℕ) :
         SingularCochains.cohomologyPullback (ProjectiveLineAffine.affineMap a u) n :=
   RelativeCochains.cohomologyPullback_forget _ (affinePairCondition a u) n
 
+theorem chartComparison_supportedThomClass (a : ℂ) (u : ℂˣ) :
+    (chartComparison a u 2).hom (supportedThomClass a u) = ComplexPointThom.thomClass := by
+  rw [chartComparison_two_hom]
+  change (thomToSupportIso a u).inv
+    ((thomToSupportIso a u).hom ComplexPointThom.thomClass) = ComplexPointThom.thomClass
+  exact congrArg (fun f ↦ f ComplexPointThom.thomClass) (thomToSupportIso a u).hom_inv_id
+
 theorem affineSupportedPull_thomClass (a : ℂ) (u : ℂˣ) :
     affineSupportedPull a u 2 (supportedThomClass a u) =
       ProjectiveLinePointGysin.supportedThomClass := by
@@ -304,10 +321,15 @@ theorem affineSupportedPull_thomClass (a : ℂ) (u : ℂˣ) :
   have h := congrArg (fun f ↦ f (supportedThomClass a u)) (affineSupportedPull_chart a u 2)
   change (zeroChartComparison 2).hom (affineSupportedPull a u 2 (supportedThomClass a u)) =
     (chartComparison a u 2).hom (supportedThomClass a u) at h
-  rw [chartComparison_two_hom, supportedThomClass, ← ModuleCat.comp_apply,
-    Iso.hom_inv_id, ModuleCat.id_apply] at h
-  rw [h, zeroChartComparison_two_hom, ProjectiveLinePointGysin.supportedThomClass,
-    ← ModuleCat.comp_apply, Iso.hom_inv_id, ModuleCat.id_apply]
+  rw [chartComparison_supportedThomClass] at h
+  have hz : (zeroChartComparison 2).hom ProjectiveLinePointGysin.supportedThomClass =
+      ComplexPointThom.thomClass := by
+    rw [zeroChartComparison_two_hom]
+    change ProjectiveLinePointGysin.thomToSupportIso.inv
+      (ProjectiveLinePointGysin.thomToSupportIso.hom ComplexPointThom.thomClass) = _
+    exact congrArg (fun f ↦ f ComplexPointThom.thomClass)
+      ProjectiveLinePointGysin.thomToSupportIso.hom_inv_id
+  exact h.trans hz.symm
 
 /-- The native affine homotopy, not a chosen absolute coordinate, fixes positive normalization. -/
 theorem forget_supportedThomClass (a : ℂ) (u : ℂˣ) :

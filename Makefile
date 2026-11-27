@@ -569,6 +569,7 @@ check-projective-line-point-gysin: check-layers build-projective-line-point-gysi
 	$(LAKE) env lean research/ProjectiveLinePointGysinVerification.lean
 
 check-p1-finite-point-gysin: check-layers build-p1-finite-point-gysin
+	python3 scripts/update_finite_point_audit_imports.py --check
 	$(LAKE) env lean research/ProjectiveLineFinitePointGysinVerification.lean
 
 check-p1-ramification: check-layers build-p1-ramification

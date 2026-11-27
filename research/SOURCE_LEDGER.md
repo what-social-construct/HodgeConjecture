@@ -17,8 +17,10 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-11-26 (split P¹ double cover, original ordinary Chow and native singular-cochain transfer).
-Latest formal checkpoint: 2026-11-26 (positive-dimensional split-cover aggregate in H²;
+Last source/interface review: 2026-11-27 (finite-point affine scheme charts,
+original relative Gysin maps and native affine homotopy).
+Latest formal checkpoint: 2026-11-27 (every finite P¹ point, affine-coordinate
+independence and the original global-rank certificate family;
 earlier checkpoints retain their scope).
 Earlier source records retain their original
 validation scope.

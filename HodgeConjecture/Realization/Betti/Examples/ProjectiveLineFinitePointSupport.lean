@@ -69,7 +69,7 @@ theorem mapsTo_complement (a : ℂ) (u : ℂˣ) :
   rw [preimage_complement]
   exact hp
 
-private theorem translation_inverse_mem (a : ℂ) (p : Point) :
+theorem translation_inverse_mem (a : ℂ) (p : Point) :
     p ∈ complement a ↔
       (ProjectiveLineAffine.affineHomeomorph a 1).symm p ∈
         ProjectiveLinePointSupport.puncturedOpen := by
@@ -96,7 +96,7 @@ theorem complementHomeomorph_coe (a : ℂ) (p : ↥(complement a)) :
       (ProjectiveLineAffine.affineHomeomorph a 1).symm p := rfl
 
 instance complementContractibleSpace (a : ℂ) : ContractibleSpace ↥(complement a) :=
-  (complementHomeomorph a).symm.contractibleSpace
+  (complementHomeomorph a).contractibleSpace
 
 abbrev PointSupport (a : ℂ) := ↥(support a)
 

@@ -1,7 +1,5 @@
 # Collision Decompositions and Correspondence Projector Lifting
 
-> WIP checkpoint: finite-point validation is pending; see [CHECKPOINT.md](CHECKPOINT.md).
-
 A Lean development toward constructing algebraic cycles representing rational
 Hodge classes on smooth projective complex varieties. The current work starts
 with actual Chow groups and their cycle maps; correspondences, collision
