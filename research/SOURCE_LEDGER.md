@@ -3036,3 +3036,18 @@ Mayer–Vietoris naturality. The supported trace uses the actual fixed
 singleton map and the existing oriented zero-point Gysin isomorphism.
 Original Chow quotients, maps and the independent Hodge target are retained.
 General branched trace and arbitrary point-Gysin naturality remain separate.
+
+## Original relative Thom and ramification comparison (2026-11-26)
+
+The five modules in [0065](working/0065-projective-line-ramification-comparison.md)
+are local proofs using original project cochain, relative-boundary, normal-chart,
+excision, Gysin and ordinary cycle APIs plus pinned Mathlib. The actual complex
+algebraic-closedness instance is imported explicitly for the Chow adapter.
+No external source copy, new dependency, license input or theorem axiom is
+added. The native local result uses the existing angular circle-square proof
+and the original relative connecting map; the global result uses literal
+cochain precomposition and original excision. The ordinary zero-cycle result
+uses actual finite-fiber coefficients with original local multiplicity.
+Dependency audits distinguish this local proof route from the prior global
+P¹ square calculation and prior square-cover fixture. This does not supply
+general point transport, coordinate independence or general proper trace.

@@ -583,6 +583,20 @@ RULES["HodgeConjecture.Realization.Chow.ProjectiveLineSquare"] = RULES[
 ]
 
 
+RULES["HodgeConjecture.Realization.Betti.RelativeCochainsNaturality"] = RULES[
+    "HodgeConjecture.Realization.Betti.SingularDoubleCover"
+]
+RULES["HodgeConjecture.Realization.Betti.Examples.ComplexSquareThom"] = RULES[
+    "HodgeConjecture.Realization.Betti.SingularDoubleCover"
+]
+RULES["HodgeConjecture.Realization.Betti.ProjectiveLineSquareRamification"] = RULES[
+    "HodgeConjecture.Realization.Betti.ProjectiveLineSquarePullback"
+]
+RULES["HodgeConjecture.Realization.Chow.ProjectiveLineSquareRamification"] = RULES[
+    "HodgeConjecture.Realization.Chow.SplitDoubleCover"
+]
+
+
 def without_comments(source):
     """Remove line comments and nested Lean block comments before reading imports."""
     result = []

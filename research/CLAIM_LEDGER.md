@@ -1,6 +1,7 @@
 # Claim ledger
 
-Last audited: 2026-11-26 (connected branched P¹ square-cover aggregate,
+Last audited: 2026-11-26 (local relative Thom/Gysin ramification and zero-point aggregate,
+connected branched P¹ square-cover aggregate,
 positive-dimensional split P¹ double-cover aggregate,
 finite split degree-zero cover, and original P¹ harmonic/Hodge comparison; the
 product P¹ × P¹ ordinary Chow/Betti checkpoint was audited 2026-11-15). Earlier
@@ -20,6 +21,31 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Actual local ramification and point-Gysin pullback (2026-11-26)
+
+Status: `FORMAL` for identity/composition and native forgetting/connecting
+naturality of the original relative cochain maps of pairs. The actual complex
+square map pulls the original positively oriented relative Thom class back
+to twice itself, using punctured-plane H¹ and the original relative boundary.
+The actual singleton H⁰ pullback is identity, so the unweighted Gysin square
+fails. This local proof has no P¹ or Chow dependency.
+
+`FORMAL` for the original normal-chart/excision cochain diagram, its native
+homology square, and the supported and absolute point-Gysin pullback formulas
+for the original P¹ square map. Their coefficient is identified with the
+actual scheme-fiber multiplicity at zero. The reduced point square is not
+claimed cartesian; the scheme fiber is nonreduced of length two.
+
+The original finite pullback of the actual zero cycle carries the same local
+multiplicity. Its original ordinary Chow identity retains the representatives
+and exact structural grading. A new aggregate uses that weighted zero-cycle
+formula and the local-to-global native proof, retaining the same independent
+full Hodge model and basis. Its degree is the actual local multiplicity, equal
+to global rank in this fiber. Normalized original geometric pushforward
+recovers the same zero class. General point transport, coordinate independence,
+higher-codimension Gysin and general branched trace remain open. No new Hodge
+conjecture case is claimed. See [0065](working/0065-projective-line-ramification-comparison.md).
 
 ## Connected branched projective-line square cover (2026-11-26)
 

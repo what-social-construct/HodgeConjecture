@@ -8,6 +8,17 @@ Dated build observations and older API spellings below retain their historical
 scope; the [Lean 4.35 record](working/0020-lean-4-35-migration.md) gives the
 current toolchain and migration checks.
 
+The [ramification checkpoint](working/0065-projective-line-ramification-comparison.md)
+adds `Betti.RelativeCochainsNaturality`, `Betti.Examples.ComplexSquareThom`,
+`Betti.ProjectiveLineSquareRamification`, `Chow.ProjectiveLineSquareRamification`
+and `DeRham.ProjectiveLineRamificationComparison`. Original relative kernels,
+normal chart/excision maps and support forgetting carry the independent local
+Thom pullback to the actual supported/absolute Gysin formula. The original
+zero-cycle coefficient is the same actual scheme-fiber multiplicity. A new
+certificate consumes those local and representative-level proofs and recovers
+the same original zero class in the unchanged independent full Hodge target.
+General point transport and proper/branched trace remain separate.
+
 The [connected P¹ square-cover checkpoint](working/0064-projective-line-square-cover.md)
 adds `CommutativeAlgebra.PolynomialSquare`, `Geometry.ProjectiveLineSquare`,
 `Betti.Examples.CircleSquare`, `Betti.SingularMayerVietorisNaturality`,

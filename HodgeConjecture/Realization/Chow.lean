@@ -14,6 +14,7 @@ public import HodgeConjecture.Realization.Chow.TransferProjector
 public import HodgeConjecture.Realization.Chow.FiniteFlatTransfer
 public import HodgeConjecture.Realization.Chow.SplitDoubleCover
 public import HodgeConjecture.Realization.Chow.ProjectiveLineSquare
+public import HodgeConjecture.Realization.Chow.ProjectiveLineSquareRamification
 public import HodgeConjecture.Realization.Chow.UpstairsGeneration
 public import HodgeConjecture.Realization.Chow.HarmonicWitness
 public import HodgeConjecture.Realization.Chow.FiniteCoverageCertificate

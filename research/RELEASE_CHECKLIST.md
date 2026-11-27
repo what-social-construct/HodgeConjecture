@@ -474,3 +474,36 @@ release sign-offs remain separate.
 The degree-specific trace is the singleton-supported point-Gysin construction;
 general branched trace and arbitrary point-Gysin naturality remain open.
 See [0064](working/0064-projective-line-square-cover.md).
+
+## Actual local Thom/Gysin ramification validation (2026-11-26)
+
+Validation on 2026-11-26: `make check-p1-ramification` passes 17 controls,
+59 enforced standard-three axiom audits and all 150 import guards. The three
+checked proof closures exclude all three earlier global-square H² results
+and every declaration originating in the earlier square-cover aggregate,
+including private/generated declarations. Final acceptance contains all five
+required dependencies: the new local relative calculation, original relative
+boundary naturality, actual chart/excision naturality, raw weighted zero-cycle
+pullback and its original Chow quotient identity. These audit the current
+formal proof route, rather than asserting minimal mathematical assumptions.
+The controls reject the unweighted Gysin formula, reversed local orientation,
+unnormalized target binding and a degree-one transfer, while retaining the
+original model, full basis, actual maps, source grading and zero class.
+
+All three realization exports pass serialized integration builds. The complete
+public-library build `lake build HodgeConjecture` passes 5,435 jobs. The root
+inventory passes 2,382 declaration checks and 574 examples, with 1,858 nonempty
+standard-three axiom reports and 1 axiom-free report. All 764 active
+library/root/Solution sources pass proof-gap scanning; intentional Challenge
+statement placeholders remain separate. Dependencies and source pins are
+unchanged. Local document links, whitespace, 157 unique manuscript labels
+and 179 resolved references pass inspection. The canonical 114-page PDF
+rebuilds without overfull boxes, undefined references or LaTeX errors.
+Pages 10–12 and 84–86 pass rendered visual review. Only existing Lean
+style/deprecation notices and one bibliography underfull notice remain.
+This is cached working-tree validation; clean-clone and human release
+sign-offs remain separate.
+
+General point transport, coordinate independence, higher-codimension Gysin
+and general proper/branched trace remain open. The reduced point square is
+not claimed cartesian. See [0065](working/0065-projective-line-ramification-comparison.md).

@@ -41,6 +41,10 @@ No new case of the Hodge conjecture is claimed.
 - Rational and complex singular-cochain sheaves, open-cover comparisons,
   flasque resolutions, and comparison with derived constant-sheaf cohomology
   under the stated topology hypotheses.
+- The [ramified Gysin comparison](research/working/0065-projective-line-ramification-comparison.md)
+  computes local relative Thom pullback and carries it through the original
+  normal chart and excision. The same actual scheme-fiber multiplicity weights
+  the original zero cycle and supplies a certificate for the unchanged full Hodge target.
 - The [connected branched P¹ square cover](research/working/0064-projective-line-square-cover.md)
   has geometric degree two and actual branch multiplicity two. Its native H²
   pullback is computed independently of Chow; a trace through the singleton

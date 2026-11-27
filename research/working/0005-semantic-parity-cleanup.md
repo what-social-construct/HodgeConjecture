@@ -6537,3 +6537,34 @@ pass proof-gap scanning. Pins are unchanged. The 112-page manuscript, its
 155 unique labels and 178 resolved references, and rendered pages 9–10 and
 83–84 pass review. Only legacy notices remain; clean-clone and human release
 sign-offs are separate. The complete record and manuscript hashes are in 0064.
+
+## Actual relative Thom and ramified Gysin comparison (2026-11-26)
+
+| Object | Mathematical representation | Lean owner/API | Scope |
+| --- | --- | --- | --- |
+| Original relative functoriality | `(g∘f)*=f*g*`, support forgetting and boundary squares | `RelativeCochains.pullback_comp`, `cohomologyPullback_forget`, `connecting_subtype_naturality` | FORMAL literal vanishing-cochain kernels and supplied actual subtype map |
+| Local ramification | `s(z)=z²`, `s*τ₀=2τ₀` in `H²(ℂ,ℂ\{0})` | `ComplexSquareThom.localRelativePullback`, `connecting_square_naturality`, `localPull_square`, `localPull_thomClass` | FORMAL original positive Thom class, actual circle inclusion and native boundary; no P¹/Chow dependency |
+| Singleton and Gysin distinction | `s₀*=1`, `s* i_!=2 i_! s₀*` | `ComplexSquareThom.pointPull_eq_id`, `localGysin_pullback`, `localPull_thomClass_ne_thomClass` | FORMAL unweighted pullback square fails on the nonzero Thom class |
+| Original local-to-global diagram | `R f_support*=s_local* R` | `ProjectiveLineSquareRamification.chartPullback_eq_original`, `relativePullback_chart`, `chartComparison_naturality` | FORMAL original normal chart/excision restriction already commutes on cochains |
+| Supported/absolute ramified Gysin | `f_support* i_!=2 i_! f₀*`, then forget support | `ProjectiveLineSquareRamification.supportedGysin_pullback`, `gysin_pullback`, `degreeTransfer` | FORMAL native relative proof route; old global square H² theorem not used |
+| Actual zero-cycle weight | `f_CH*[0]=e₀[0]`, `e₀=length(O_fiber,0)=2` | `ProjectiveLineSquareRamifiedChow.finiteFiberPullback_zero`, `chowEquiv_pull_zero_weighted` | FORMAL actual raw cycle coefficients and original ordinary quotient with exact composite grading |
+| Same geometric ramification coefficient | native Gysin coefficient equals original local multiplicity | `ProjectiveLineRamificationComparison.ramificationIndex_eq_two`, `supportedGysin_ramification`, `gysin_ramification`, `actual_zero_pull` | FORMAL actual scheme-fiber coefficient, equal to global rank in this fully ramified fiber |
+| New zero-point aggregate | `z=f_CH*[0]`, `e₀⁻¹ f_*^CH z=[0]` | `ProjectiveLineRamificationComparison.upstairs_columns`, `accepted`, `normalized_cycles`, `model_satisfies_from_ramification` | FORMAL unchanged independent full Hodge model/basis, identity modulo three; consumes local proof and weighted actual representative |
+
+The manuscript proposition `prop:p1-square-ramification` and
+[0065](0065-projective-line-ramification-comparison.md) record the same objects.
+The reduced point square only commutes; it is not asserted cartesian, since
+the actual zero fiber is nonreduced of length two. General point transport,
+coordinate independence, higher-codimension Gysin and general proper/branched
+trace remain open. No new Hodge-conjecture case is claimed.
+
+Validation: 17 controls, 59 enforced standard-three audits, 150 import guards,
+three independent-route exclusion checks and five required positive proof
+dependencies pass. The full public library passes 5,435 jobs; the root inventory
+passes 2,382 declaration checks, 574 examples, 1,858 nonempty standard-three
+reports and 1 axiom-free report. All 764 active library/root/Solution sources
+pass proof-gap scanning. Pins are unchanged. The 114-page manuscript has
+157 unique labels and 179 resolved references; rendered pages 10–12 and
+84–86 pass review. The complete scope, validation and artifact hashes are
+in 0065. Only legacy notices remain; clean-clone and human release sign-offs
+are separate.

@@ -764,6 +764,106 @@ aggregate with its stated supported trace. It does not assert a general
 trace theory, prescribed-class generation for other varieties, or a new
 case of the Hodge conjecture.
 
+\subsection{Ramification and the zero-point Gysin pullback}
+\label{subsec:p1-square-ramification}
+
+The squaring map also gives a local ramification comparison for the
+original point Gysin map. Let \(f\) be the same actual scheme
+endomorphism and let \(S=\{0\}\) be its original singleton topological
+support. Write
+\[
+ H^2_S=H^2\bigl(\mathbf P^1(\mathbf C),
+                    \mathbf P^1(\mathbf C)\setminus S;\Q\bigr).
+\]
+The original supported Gysin map
+\(\gamma^{\mathrm{sup}}_0:H^0(S;\Q)\to H^2_S\) uses the local Thom class,
+normal-chart comparison and inverse actual excision. Forgetting support
+gives the existing absolute map \(\gamma_0\).
+
+The restriction \(f_0:S\to S\) is the actual fixed-point map. Its
+ordinary native pullback \(f_0^*\) is identity. The map \(f\) preserves
+the complement of \(S\), so actual relative cochain pullback defines
+\(f_S^*:H^2_S\to H^2_S\). These definitions retain the original
+absolute, relative and point cohomology groups and their native maps.
+
+In the original finite chart the corresponding map is the literal
+complex map \(q(z)=z^2\) of the pair
+\((\mathbf C,\mathbf C\setminus\{0\})\). The actual unit-circle
+inclusion intertwines its punctured-plane restriction with circle
+squaring. The native circle pullback calculation and the punctured-plane
+homotopy equivalence therefore give multiplication by two on punctured
+\(H^1\). Naturality of the original relative connecting map then yields
+\[
+ q^*_{\mathrm{rel}}\tau_0=2\tau_0,
+\]
+where \(\tau_0\) is the existing oriented local Thom class. This
+calculation uses the actual local pair and the native relative boundary.
+The original Thom class is nonzero, so its pullback differs from itself.
+
+The original finite chart intertwines \(q\) and the actual scheme
+square map. Naturality of its relative chart comparison and original
+excision restriction transports the local formula to \(H^2_S\).
+Naturality of relative forgetting then transports it to absolute
+singular cohomology.
+
+The coefficient has the original geometric meaning
+\[
+ e_0=\operatorname{length}_0(f^{-1}(0))=2.
+\]
+It is the proved finite-fiber multiplicity of the actual scheme map.
+The reduced zero-section square commutes, but is not cartesian: the
+actual scheme fiber retains its nonreduced length-two structure. The
+affine-chart pullback squares used above are the actual cartesian
+squares. The singleton topological support records the point, while
+\(e_0\) records its scheme-fiber multiplicity.
+
+\begin{proposition}[Ramification-weighted Gysin pullback and zero-cycle aggregate]
+\label{prop:p1-square-ramification}
+For every \(u\in H^0(S;\Q)\), the original maps satisfy
+\[
+ f_S^*\gamma^{\mathrm{sup}}_0(u)
+      =e_0\gamma^{\mathrm{sup}}_0(f_0^*u),
+ \qquad
+ f_B^*\gamma_0(u)=e_0\gamma_0(f_0^*u).
+\]
+The same coefficient is the multiplicity in original flat pullback of
+the ordinary zero-point cycle. With degree \(e_0\), that actual flat
+pullback supplies a column of an accepted aggregate for the original
+full Hodge target, and normalized original pushforward recovers the
+same ordinary zero-point class.
+\end{proposition}
+\begin{proof}
+The native local Thom pullback formula passes through the proved
+normal-chart and excision diagram. The original point pullback is
+identity, and the independently computed local fiber multiplicity is
+two. Relative forgetting gives the absolute formula. The original
+zero-point cycle-class normalization identifies this Gysin class with
+the class of that same ordinary Chow point, whose actual flat pullback
+retains the multiplicity \(e_0\).
+
+Use \(z=f_{\CH}^*[0]\) as the upstairs cycle and the original
+zero-supported Gysin push map as the cohomological push. The new local
+ramification calculation gives their positive-degree transfer law,
+with degree the actual multiplicity \(e_0\), also equal to the global
+geometric rank. The original Chow push--pull identity yields
+\[
+ e_0^{-1} f_*^{\CH}z=[0].
+\]
+Both original cycle-class comparison squares bind this column to the
+independently fixed Hodge model and its full basis. The unchanged
+checker accepts the rank-one identity matrix, denominator one and
+modulus three. Theorem~\ref{thm:geometric-cover-aggregate} gives the
+accepted zero-cycle aggregate.
+\end{proof}
+
+This proves a ramification correction for this distinguished point and
+the actual square map. Its new zero-cycle certificate retains the
+original full target, basis, ordinary cycle map and arithmetic data.
+Its transfer law follows from the local relative calculation and
+actual chart/excision diagram. General finite-map Gysin pullback,
+arbitrary point transport and a general proper cohomological trace
+remain separate; no new Hodge-conjecture case is claimed.
+
 \subsection{Graph-projector formulation}
 
 Let \(\Gamma\) be a rational algebra acting on \(\Q\oplus V\) through
@@ -6923,6 +7023,33 @@ Accepted connected square aggregate &
 \leanpath{ProjectiveLineSquareCoverage.accepted};\newline
 {\footnotesize\leanpath{ProjectiveLineSquareCoverage.model_satisfies_from_square_cover}}\newline
 \leanpath{Realization/DeRham/ProjectiveLineSquareCoverage.lean}\\
+Native relative pullback and boundary naturality &
+\leanpath{RelativeCochains.cohomologyPullback_comp};
+\leanpath{RelativeCochains.cohomologyPullback_forget};
+\leanpath{RelativeCochains.connecting_subtype_naturality}\newline
+\leanpath{Realization/Betti/RelativeCochainsNaturality.lean}\\
+Actual local square and Thom ramification &
+\leanpath{ComplexSquareThom.pointMap_inclusion};
+\leanpath{ComplexSquareThom.localPull_thomClass};
+\leanpath{ComplexSquareThom.localGysin_pullback}\newline
+\leanpath{Realization/Betti/Examples/ComplexSquareThom.lean}\\
+Original chart, excision and ramified Gysin pullback &
+\leanpath{ProjectiveLineSquareRamification.chartPullback_eq_original};
+\leanpath{ProjectiveLineSquareRamification.chartComparison_naturality};
+\leanpath{ProjectiveLineSquareRamification.supportedGysin_pullback};
+\leanpath{ProjectiveLineSquareRamification.gysin_pullback}\newline
+\leanpath{Realization/Betti/ProjectiveLineSquareRamification.lean}\\
+Original zero-cycle and geometric fiber multiplicity &
+\leanpath{ProjectiveLineSquareRamifiedChow.finiteFiberPullback_zero};\newline
+{\footnotesize\leanpath{ProjectiveLineSquareRamifiedChow.chowEquiv_pull_zero_weighted}}\newline
+\leanpath{Realization/Chow/ProjectiveLineSquareRamification.lean}\\
+Geometric ramification index and accepted zero-cycle aggregate &
+\leanpath{ProjectiveLineRamificationComparison.ramificationIndex};
+\leanpath{ProjectiveLineRamificationComparison.actual_zero_pull};
+\leanpath{ProjectiveLineRamificationComparison.gysin_ramification};
+\leanpath{ProjectiveLineRamificationComparison.accepted};
+\leanpath{ProjectiveLineRamificationComparison.normalized_cycles}\newline
+\leanpath{Realization/DeRham/ProjectiveLineRamificationComparison.lean}\\
 Original-cover finite harmonic comparison &
 \leanpath{CircleCoverHarmonicComparison.quotientCircleEquiv};
 \leanpath{ProjectiveLineCoverHarmonicComparison.witness_original_boundaries}\newline

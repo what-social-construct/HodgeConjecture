@@ -1,7 +1,18 @@
 # Current gap map
 
-Last reviewed: 2026-11-26 (connected branched P¹ square-cover
+Last reviewed: 2026-11-26 (actual relative Thom/Gysin ramification
 comparison; earlier checkpoint records retain their original validation scope).
+
+The [local ramification comparison](working/0065-projective-line-ramification-comparison.md)
+now computes the original relative Thom pullback and carries it through the
+actual normal chart, excision and support forgetting. The coefficient matches
+the actual local scheme-fiber multiplicity and original weighted zero-cycle
+pullback. A new certificate uses both proof routes and recovers the same
+ordinary zero class in the unchanged full Hodge target. This closes the
+ramification-corrected Gysin pullback square at the distinguished zero point.
+Arbitrary point transport, coordinate independence, higher codimension and
+general proper/branched trace remain open. The reduced point square is not
+asserted cartesian; the actual fiber has nilpotents and length two.
 
 The [connected square-map case](working/0064-projective-line-square-cover.md)
 now adds the actual finite flat degree-two selfmap of P¹, connected source,

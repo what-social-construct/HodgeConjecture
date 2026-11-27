@@ -6,6 +6,7 @@ repository. Existing build artifacts are reused.
 
 | Work area | Build | Build, examples and axiom checks |
 | --- | --- | --- |
+| Actual local Thom/Gysin ramification, original zero-cycle weight and aggregate | `make build-p1-ramification` | `make check-p1-ramification` |
 | Connected branched P¹ square cover, original Chow/native H² and supported trace | `make build-p1-square-cover` | `make check-p1-square-cover` |
 | Actual split double cover of P¹, original Chow/native H² and aggregate | `make build-p1-double-cover` | `make check-p1-double-cover` |
 | Actual finite split cover, ordinary Chow/native Betti squares and aggregate | `make build-geometric-cover-coverage` | `make check-geometric-cover-coverage` |
