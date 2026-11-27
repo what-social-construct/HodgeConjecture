@@ -6,6 +6,7 @@ repository. Existing build artifacts are reused.
 
 | Work area | Build | Build, examples and axiom checks |
 | --- | --- | --- |
+| Gysin at every finite P¹ point, affine-coordinate independence and certificate family | `make build-p1-finite-point-gysin` | `make check-p1-finite-point-gysin` |
 | Actual local Thom/Gysin ramification, original zero-cycle weight and aggregate | `make build-p1-ramification` | `make check-p1-ramification` |
 | Connected branched P¹ square cover, original Chow/native H² and supported trace | `make build-p1-square-cover` | `make check-p1-square-cover` |
 | Actual split double cover of P¹, original Chow/native H² and aggregate | `make build-p1-double-cover` | `make check-p1-double-cover` |
@@ -63,6 +64,13 @@ repository. Existing build artifacts are reused.
 `make help` lists the commands. `make check` runs the verification groups above
 and checks the import boundaries. Make runs the groups sequentially; Lake
 retains its own build parallelism. A failed command stops the checks.
+
+The finite-point dependency audit imports every project private proof body
+and recursively checks upstream exported import metadata before pruning
+upstream proof bodies. Missing project bodies or upstream return edges fail
+the check. Its generated import block is checked by Make; after changing its
+project import closure, refresh it with
+`python3 scripts/update_finite_point_audit_imports.py`, then rerun the target.
 
 Direct Lake targets also work:
 

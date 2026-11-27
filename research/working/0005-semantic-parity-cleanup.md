@@ -6568,3 +6568,35 @@ pass proof-gap scanning. Pins are unchanged. The 114-page manuscript has
 84–86 pass review. The complete scope, validation and artifact hashes are
 in 0065. Only legacy notices remain; clean-clone and human release sign-offs
 are separate.
+
+## Every finite P¹ point and affine-coordinate-independent Gysin (2026-11-26)
+
+| Object | Mathematical representation | Lean owner/API | Scope |
+| --- | --- | --- | --- |
+| Compact-family extension | `Fₚ:X→Y`, continuous left-inverse family, extend over infinity | `OnePointHomotopy.continuous_map_family_of_leftInverse` | FORMAL compact parameter, Hausdorff source; original one-point topology; no metric assumptions |
+| Actual affine normal charts | `Nₐ,ᵤ(z)=a+uz`, `u∈ℂˣ` | `ProjectiveLineAffineChart.coordinateEquiv`, `normalChart`, `affineSection_normalChart`, `center_ne_genericPoint` | FORMAL original Spec isomorphism and X chart; actual base/range/closed center; no global scheme affine automorphism claim |
+| Native affine homotopy | `Fₐ,ᵤ*=1` in every singular degree | `ProjectiveLineAffine.affineHomotopy`, `cohomologyPullback_affine` | FORMAL fixed-unit path `exp(t log u)` including infinity; no joint-in-unit continuity assertion |
+| Actual moved support | `{finite a}` and original open complement | `ProjectiveLineFinitePointSupport.preimage_complement`, `complementHomeomorph`, `pointCoordinates_pointUnit` | FORMAL original subspace topology, native H⁰, actual affine complement map and contractibility |
+| Geometric Gysin family | local Thom→original normal-chart/excision→support forgetting | `ProjectiveLineFinitePointGysin.normalChartPoint_schemeMorphism`, `chartPullback_eq_original`, `affineSupportedPull_chart`, `gysin_pointUnit` | FORMAL actual scheme-section chart binding; native normalization independent of Chow and old square fixtures |
+| Affine-coordinate independence | `iₐ,ᵤ!=iₐ,ᵥ!` in supported and absolute H² | `ProjectiveLineFinitePointGysin.gysin_coordinate_independent`, `supportedGysin_coordinate_independent`, `supportedThomClass_coordinate_independent` | FORMAL every nonzero affine complex scale, including negative real/imaginary units; same supported target |
+| Original ordinary point cycle | actual singleton scheme image equals original affine center | `ProjectiveLineFinitePointChow.pointClass_classMap`, `ProjectiveLineFinitePointComparison.schemePoint_eq_center`, `pointClass_eq_original`, `gysin_pointUnit_eq_cycleClass` | FORMAL original representatives, grading, quotient and class map at the same finite point |
+| Certificate family | `∀a, check(Cₐ)=true`, normalized original push recovers `[a]` | `ProjectiveLineFinitePointComparison.degree_eq_geometric_rank`, `upstairs_columns`, `accepted`, `normalized_cycles`, `model_satisfies_from_finite_point` | FORMAL original full Hodge model/basis, GLOBAL square-cover rank two, original finite maps; old zero-support push retained |
+
+The manuscript proposition `prop:p1-finite-point-gysin` and
+[0066](0066-projective-line-finite-point-gysin.md) record the same objects.
+The construction covers finite points and invertible affine complex normal
+coordinates. Infinity Gysin, nonlinear analytic-coordinate independence,
+finite-support additivity and general proper/branched trace remain separate.
+No new Hodge-conjecture case or per-point local-multiplicity-two statement
+is claimed.
+
+Validation on 2026-11-27: 21 controls, 68 enforced standard-three axiom
+audits, all 156 import guards, three checked project dependency-exclusion closures and
+all seven required actual dependencies pass. All three realization exports
+and the full 5,442-job public build pass. The root inventory passes 2,416
+declaration checks and 574 examples, with 1,858 nonempty standard-three axiom
+reports and 1 axiom-free report. All 771 active sources pass proof-gap scanning;
+pins, local links and whitespace checks pass. The 116-page manuscript has
+159 unique labels and 180 resolved references; rendered pages 12–13 and
+87–89 pass review. Full scope, evidence and artifact hashes are in 0066.
+Only legacy notices remain; clean-clone and human release sign-offs are separate.

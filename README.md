@@ -41,6 +41,11 @@ No new case of the Hodge conjecture is claimed.
 - Rational and complex singular-cochain sheaves, open-cover comparisons,
   flasque resolutions, and comparison with derived constant-sheaf cohomology
   under the stated topology hypotheses.
+- The [finite-point Gysin family](research/working/0066-projective-line-finite-point-gysin.md)
+  constructs actual supported and absolute maps at every finite P¹ point,
+  independently of the nonzero affine complex normal-coordinate scale.
+  Actual scheme charts, native affine homotopy and original ordinary point
+  cycles give certificates retaining the same full Hodge target.
 - The [ramified Gysin comparison](research/working/0065-projective-line-ramification-comparison.md)
   computes local relative Thom pullback and carries it through the original
   normal chart and excision. The same actual scheme-fiber multiplicity weights

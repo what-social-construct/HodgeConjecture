@@ -507,3 +507,47 @@ sign-offs remain separate.
 General point transport, coordinate independence, higher-codimension Gysin
 and general proper/branched trace remain open. The reduced point square is
 not claimed cartesian. See [0065](working/0065-projective-line-ramification-comparison.md).
+
+## Finite-point Gysin and affine-coordinate validation (2026-11-27)
+
+Validation on 2026-11-27: `make check-p1-finite-point-gysin` passes
+21 controls, 68 enforced standard-three axiom audits and all 156 import guards.
+The controls retain the same original model, full basis, source grading,
+scheme sections and cycle maps; exercise negative and imaginary affine units;
+reject a zero scale, reversed normalization, unnormalized column and degree-one
+transfer; and recover the same original class at a nonzero finite center.
+The two checked native Gysin project proof closures exclude all six old square/local
+ramification module origins and every Chow/DeRham declaration. The checked
+final family project closure excludes both earlier aggregate fixtures and all three
+earlier global-square H² results, including private/generated declarations
+from excluded origins. All seven required dependencies are present: actual
+support-to-scheme binding, actual affine scheme-section evaluation, the compact
+one-point extension, native affine homotopy, its original cohomology action,
+the new geometric Gysin normalization and the original global finite-flat rank.
+An additional visibility gate checks all 401 project private-body imports and
+6,239 upstream metadata nodes, reading 442 additional exported headers
+to include omitted private imports. It rejects every upstream edge back into
+the project. Thus omitted upstream proof bodies cannot hide a project
+dependency in these project closures.
+These gates audit the current formal proof route, rather than minimal
+mathematical assumptions.
+
+All three realization exports pass serialized integration builds. The full
+public-library build `lake build HodgeConjecture` passes 5,442 jobs. The root
+inventory passes 2,416 declaration checks and 574 examples, with 1,858 nonempty
+standard-three axiom reports and 1 axiom-free report. All 771 active
+library/root/Solution sources pass proof-gap scanning; intentional Challenge
+statement placeholders remain separate. Dependency and source pins are
+unchanged. Changed-document links, whitespace, 159 unique manuscript labels
+and 180 resolved references pass inspection. The canonical 116-page PDF
+rebuilds without overfull boxes, undefined references or LaTeX errors.
+Rendered pages 12–13 and 87–89 verify the proposition, proof, scope and
+declaration crosswalk. Only existing wider-library Lean notices and one
+bibliography underfull notice remain. This is cached working-tree validation;
+clean-clone and human release sign-offs remain separate.
+
+
+The certificate uses global square-cover rank two at the selected target
+point; its push retains the earlier singleton-zero trace. Infinity Gysin,
+nonlinear coordinates, finite-support additivity and general proper trace
+remain open. See [0066](working/0066-projective-line-finite-point-gysin.md).

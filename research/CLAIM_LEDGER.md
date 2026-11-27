@@ -1,6 +1,7 @@
 # Claim ledger
 
-Last audited: 2026-11-26 (local relative Thom/Gysin ramification and zero-point aggregate,
+Last audited: 2026-11-27 (finite-point Gysin and affine-coordinate independence,
+local relative Thom/Gysin ramification and zero-point aggregate,
 connected branched P¹ square-cover aggregate,
 positive-dimensional split P¹ double-cover aggregate,
 finite split degree-zero cover, and original P¹ harmonic/Hodge comparison; the
@@ -21,6 +22,33 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Every finite point and affine-coordinate-independent Gysin (2026-11-26)
+
+Status: `FORMAL` for the actual affine scheme normal charts X ↦ uX+a,
+with a arbitrary and u a complex unit, their original Spec isomorphisms,
+open immersion/range, base structure and actual closed center. A pure topology
+lemma extends compact-parameter families with jointly continuous left inverses
+to one-point compactifications of Hausdorff sources. Native affine
+homeomorphisms of the fixed point space are homotopic to identity, and act identically on all singular cohomology.
+This is a native global point map and actual local scheme chart; a global
+scheme affine automorphism of the glued P¹ is not claimed.
+
+`FORMAL` for original relative Thom/excision constructions of supported and
+absolute Gysin maps at every finite point, with positive unit normalization
+and independence under every invertible affine complex coordinate. Faithful
+support forgetting gives equality of the supported maps themselves. The
+construction retains original topology and cochains, independently of Chow.
+The fixed-unit logarithm path makes no joint-in-unit continuity claim.
+
+The same actual native support has the original affine-center scheme image
+and ordinary reduced point cycle. Gysin's unit agrees with its original cycle
+class. The full-target certificate family uses original square-cover maps and
+GLOBAL finite-flat rank two, recovering the same original point class after
+normalization for every finite parameter. This is not a local-multiplicity-two
+statement for all points. Infinity Gysin, nonlinear coordinate independence,
+finite-support additivity and general proper trace remain open. No new Hodge
+conjecture case is claimed. See [0066](working/0066-projective-line-finite-point-gysin.md).
 
 ## Actual local ramification and point-Gysin pullback (2026-11-26)
 

@@ -1,7 +1,19 @@
 # Current gap map
 
-Last reviewed: 2026-11-26 (actual relative Thom/Gysin ramification
-comparison; earlier checkpoint records retain their original validation scope).
+Last reviewed: 2026-11-27 (finite-point Gysin and affine-coordinate
+independence; earlier checkpoint records retain their original validation scope).
+
+The [finite-point family](working/0066-projective-line-finite-point-gysin.md)
+now constructs Gysin maps at every finite P¹ point from actual affine scheme
+normal charts and original relative excision. Native affine homotopy fixes
+positive normalization; faithful support forgetting proves independence of
+the nonzero affine complex scale, including for supported maps. Actual support
+scheme images agree with the original ordinary point representatives. A
+certificate family uses GLOBAL square-cover rank two and recovers the same
+ordinary class at every selected finite point. It does not assert local
+multiplicity two at every point. Infinity Gysin, nonlinear analytic-coordinate
+independence, finite-support additivity and general proper/branched trace
+remain open; no global algebraic affine automorphism is assumed.
 
 The [local ramification comparison](working/0065-projective-line-ramification-comparison.md)
 now computes the original relative Thom pullback and carries it through the
@@ -10,8 +22,8 @@ the actual local scheme-fiber multiplicity and original weighted zero-cycle
 pullback. A new certificate uses both proof routes and recovers the same
 ordinary zero class in the unchanged full Hodge target. This closes the
 ramification-corrected Gysin pullback square at the distinguished zero point.
-Arbitrary point transport, coordinate independence, higher codimension and
-general proper/branched trace remain open. The reduced point square is not
+Transport to infinity, nonlinear coordinate independence, higher codimension
+and general proper/branched trace remain open. The reduced point square is not
 asserted cartesian; the actual fiber has nilpotents and length two.
 
 The [connected square-map case](working/0064-projective-line-square-cover.md)

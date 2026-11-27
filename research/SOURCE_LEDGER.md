@@ -17,8 +17,10 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-11-26 (split P¹ double cover, original ordinary Chow and native singular-cochain transfer).
-Latest formal checkpoint: 2026-11-26 (positive-dimensional split-cover aggregate in H²;
+Last source/interface review: 2026-11-27 (finite-point affine scheme charts,
+original relative Gysin maps and native affine homotopy).
+Latest formal checkpoint: 2026-11-27 (every finite P¹ point, affine-coordinate
+independence and the original global-rank certificate family;
 earlier checkpoints retain their scope).
 Earlier source records retain their original
 validation scope.
@@ -3051,3 +3053,19 @@ uses actual finite-fiber coefficients with original local multiplicity.
 Dependency audits distinguish this local proof route from the prior global
 P¹ square calculation and prior square-cover fixture. This does not supply
 general point transport, coordinate independence or general proper trace.
+
+## Finite-point Gysin and affine coordinates (2026-11-26)
+
+The seven modules in [0066](working/0066-projective-line-finite-point-gysin.md)
+are local proofs using pinned Mathlib and original project point/cochain/chart,
+relative excision, Gysin and ordinary cycle APIs. No external source copy,
+package pin, license input or theorem axiom is added. The compact-parameter
+one-point extension uses compact inverse images; the affine homotopy uses a
+fixed-unit complex exponential/logarithm path. Actual scheme normal charts
+use the original polynomial algebra equivalence X ↦ uX+a. Original native
+relative restriction and support forgetting connect these actual charts to
+positive Gysin normalization and coordinate independence. The original support
+scheme image and ordinary reduced cycle are retained in the certificate family.
+The global native affine map is not presented as a proved global scheme
+morphism, and general analytic-coordinate or proper-trace conclusions are
+not inferred from this finite-point affine case.
