@@ -8,6 +8,20 @@ Dated build observations and older API spellings below retain their historical
 scope; the [Lean 4.35 record](working/0020-lean-4-35-migration.md) gives the
 current toolchain and migration checks.
 
+The [finite-support construction](working/0068-projective-line-finite-support-gysin.md)
+now proves canonical relative decomposition for finite supports in every degree
+on T₁ spaces. Actual singleton restrictions and the original point Thom maps
+give finite-support Gysin as an isomorphism on P¹. Forgetting sums point
+coefficients and is not injective when two points are present: a balanced
+delta difference remains nonzero supported but vanishes absolutely. Original
+weighted point cycles pass through the same ordinary quotient and cycle map.
+Nonempty support-unit averages supply full-target certificates and retain
+the same original average class after normalized geometric pushforward.
+Empty support and zero-total weighted classes cannot supply the unit column.
+The average-cardinality normalization and the cover's global rank two are
+separate; its earlier zero-supported push is retained. Nonlinear atlas
+naturality, higher codimension and general proper trace remain open.
+
 The [infinity and every-point construction](working/0067-projective-line-infinity-gysin.md)
 now adds actual reciprocal scheme normal charts and original infinity-supported
 Gysin. Native overlap inversion and original cover swap each contribute a

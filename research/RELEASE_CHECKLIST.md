@@ -599,3 +599,55 @@ clean-clone and human release sign-offs remain separate.
 This covers selected-chart point Gysin and original point-class certificates;
 nonlinear overlap naturality, finite-support additivity and general proper
 trace remain separate. See [0067](working/0067-projective-line-infinity-gysin.md).
+
+## Finite-support Gysin validation (2026-11-27)
+
+Validation on 2026-11-27: `make check-p1-finite-support-gysin` passes
+28 controls, 100 distinct enforced standard-three axiom audits and all 168
+import guards. Controls retain actual H⁰, literal singleton restrictions,
+native delta classes, original support extensions and the canonical finite
+assembly. Empty native source and target are zero. The zero/infinity balanced
+class is nonzero in original supported H², has zero forgotten class, and
+proves that forgetting is not injective. No supported injectivity argument
+uses forgetting. The original weighted cycle, quotient map, full Hodge model,
+basis, source grading and finite maps are retained. Empty support and
+zero-total weighted classes fail the unit target-column condition; nonempty
+unit averages and normalized original geometric pushforward recover the same
+original average class. These are cycle-class statements, without asserting
+that an arbitrary zero-total ordinary Chow class is zero.
+
+Four checked native project proof closures and the final aggregate closure
+pass their exclusion gates. Generic assembly excludes geometry, Gysin and
+Chow/de Rham origins. Supported bijectivity and balanced nonzero proofs exclude
+the absolute P¹ coordinate module and all three specified forget/absolute-Gysin
+symbols, as well as old square and Chow/de Rham routes. The final endpoint
+excludes all four older aggregate fixtures and three old absolute-square H²
+results, including their private/generated declarations. All thirteen
+required actual dependencies occur: original cochain gluing, relative sum-map
+bijectivity, canonical finite assembly, original point restriction/evaluation,
+actual point-chart Thom data, supported Gysin comparison, original raw cycle,
+original rational quotient, unit mass and original global cover rank.
+The visibility gate checks all 415 project private-body imports and
+6,239 upstream metadata nodes, reading 442 additional exported headers
+to include omitted private imports. Missing bodies and upstream return edges
+into the project fail the audit. These gates describe the current formal proof
+route, rather than minimal mathematical assumptions.
+
+All three realization exports pass serialized integration builds. The full
+public-library build `lake build HodgeConjecture` passes 5,456 jobs. The root
+inventory passes 2,516 declaration checks and 574 examples, with 1,858 nonempty
+standard-three axiom reports and 1 axiom-free report. All 785 active
+library/root/Solution sources pass proof-gap scanning; intentional Challenge
+statement placeholders remain separate. Dependency and source pins are
+unchanged. Changed-document links and whitespace pass; the manuscript has
+163 unique labels and 186 resolved references. The canonical
+121-page PDF rebuilds without overfull boxes, undefined references or LaTeX
+errors. Changed proposition, proof, scope and declaration-crosswalk pages pass
+rendered visual review. Only existing wider-library Lean notices and one
+bibliography underfull notice remain. This is cached working-tree validation;
+clean-clone and human release sign-offs remain separate.
+
+
+This proves finite-support additivity and the original weighted-cycle comparison;
+nonlinear atlas naturality, higher codimension and general proper trace remain
+separate. See [0068](working/0068-projective-line-finite-support-gysin.md).

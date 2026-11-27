@@ -41,6 +41,11 @@ No new case of the Hodge conjecture is claimed.
 - Rational and complex singular-cochain sheaves, open-cover comparisons,
   flasque resolutions, and comparison with derived constant-sheaf cohomology
   under the stated topology hypotheses.
+- The [finite-support Gysin construction](research/working/0068-projective-line-finite-support-gysin.md)
+  gives an actual supported isomorphism by original relative decomposition.
+  Forgetting sums local coefficients and has a nonzero balanced kernel for
+  two points. Original weighted cycles and nonempty support averages supply
+  certificates for the unchanged full Hodge target.
 - The [infinity and every-point Gysin construction](research/working/0067-projective-line-infinity-gysin.md)
   computes the native reciprocal orientation, constructs actual infinity
   Gysin, and covers every complex-valued P¹ point with its original point

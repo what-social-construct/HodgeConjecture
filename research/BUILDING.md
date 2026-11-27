@@ -6,6 +6,7 @@ repository. Existing build artifacts are reused.
 
 | Work area | Build | Build, examples and axiom checks |
 | --- | --- | --- |
+| Finite-support relative decomposition, geometric Gysin and original weighted cycles | `make build-p1-finite-support-gysin` | `make check-p1-finite-support-gysin` |
 | Infinity Gysin, native reciprocal orientation and every-point original-cycle certificates | `make build-p1-infinity-gysin` | `make check-p1-infinity-gysin` |
 | Gysin at every finite P¹ point, affine-coordinate independence and certificate family | `make build-p1-finite-point-gysin` | `make check-p1-finite-point-gysin` |
 | Actual local Thom/Gysin ramification, original zero-cycle weight and aggregate | `make build-p1-ramification` | `make check-p1-ramification` |
@@ -77,6 +78,9 @@ The infinity audit uses the same import generator and recursive upstream
 metadata checks. Refresh its block with
 `python3 scripts/update_finite_point_audit_imports.py --audit research/ProjectiveLineInfinityGysinVerification.lean`.
 The default generator invocation continues to check the finite-point audit.
+
+The finite-support audit uses `--audit research/ProjectiveLineFiniteSupportGysinVerification.lean`
+with the same import generator; Make checks its generated block.
 
 Direct Lake targets also work:
 

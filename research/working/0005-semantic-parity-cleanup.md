@@ -6632,3 +6632,33 @@ local links and whitespace pass. The 118-page manuscript has
 161 unique labels and 183 resolved references and passes changed-page
 render review. Full scope, evidence and artifact hashes are in 0067. Only
 legacy notices remain; clean-clone and human release sign-offs are separate.
+
+## Finite-support additivity and geometric Gysin (2026-11-27)
+
+| Object | Mathematical representation | Lean owner/API | Scope |
+| --- | --- | --- | --- |
+| Actual finite H⁰ | original singular cohomology, actual point evaluation and delta reconstruction | `SingularFiniteSupport.coordinates`, `pointRestriction`, `sum_coordinates_deltaClass`, `empty_eq_zero` | FORMAL finite subspace of a T₁ space; literal singleton sources and empty source zero |
+| Original relative split | vanishing union cochains restrict to two zero-overlap pieces; compatible gluing is inverse | `RelativeUnionSplit.glueLinear`, `cochainEquiv`, `cohomologyEquiv` | FORMAL actual cochain biproduct and all-degree native cohomology |
+| Topological binary addition | original identity-pair support extensions sum to an isomorphism | `RelativeAdditivity.sumEquiv_apply`, `sumMap_bijective` | FORMAL original full/small comparison and excision; no absolute coordinate choice |
+| Canonical finite assembly | sum of actual singleton support extensions | `SingularSupports.assemble`, `assemble_bijective`, `assembleEquiv` | FORMAL every degree, finite support in T₁ spaces, including empty support |
+| Actual common point interface | selected finite/Y Thom data, identity-relative infinity comparison | `ProjectiveLineSupportedPoint.isoOfChart`, `gysinIso` | FORMAL literal singleton source and supported target; no absolute preimage selection |
+| Finite-support geometric Gysin | actual singleton restriction, point Thom, canonical assembly | `ProjectiveLineFiniteSupportGysin.gysinEquiv_apply`, `supportedGysin_bijective`, `supportedGysin_deltaClass` | FORMAL original H⁰→supported H² isomorphism, not proved by forgetting |
+| Nonmonic forgetting | sum of coefficients; balanced supported class is nonzero but absolute zero | `gysin_apply`, `supported_difference_ne_zero`, `forget_difference_zero`, `forget_not_injective` in `ProjectiveLineFiniteSupportGysin` | FORMAL distinct points retain independent supported contributions |
+| Same original weighted cycle | raw reduced point-cycle sum, original rational quotient, original cycle map | `ProjectiveLineFiniteSupportComparison.cycle`, `classMap`, `supported_cycleClass_comparison` | FORMAL same actual scheme images and original grading; no zero Chow-class inference |
+| Nonempty average certificate | original support-unit cycle/cardinality, full target, same recovered average | `averageClass_cycleClass`, `accepted`, `normalized_cycles`, `empty_does_not_supply_target`, `zero_mass_does_not_supply_target` in `ProjectiveLineFiniteSupportComparison` | FORMAL nonempty support; GLOBAL cover rank two/old zero-supported push; empty and zero-total classes fail the unit column |
+
+The manuscript proposition `prop:p1-finite-support-gysin` and
+[0068](0068-projective-line-finite-support-gysin.md) record the same scope.
+Nonlinear atlas-transition naturality, higher codimension and general proper
+trace remain open. No new Hodge-conjecture case is claimed.
+
+Validation on 2026-11-27: 28 controls, 100 distinct enforced standard-three
+axiom audits, all 168 import guards, five checked project exclusion closures
+and all thirteen required dependencies pass. All three realization exports
+and the full 5,456-job public build pass. The root inventory passes 2,516
+checks and 574 examples, with 1,858 nonempty standard-three axiom reports and
+1 axiom-free report. All 785 active sources pass proof-gap scanning; pins,
+local links and whitespace pass. The 121-page manuscript has
+163 unique labels and 186 resolved references and passes changed-page
+render review. Full scope, evidence and artifact hashes are in 0068. Only
+legacy notices remain; clean-clone and human release sign-offs are separate.

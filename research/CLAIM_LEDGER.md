@@ -1,6 +1,7 @@
 # Claim ledger
 
-Last audited: 2026-11-27 (infinity Gysin and every complex-valued point,
+Last audited: 2026-11-27 (finite-support decomposition and geometric Gysin,
+infinity Gysin and every complex-valued point,
 finite-point Gysin and affine-coordinate independence,
 local relative Thom/Gysin ramification and zero-point aggregate,
 connected branched P¹ square-cover aggregate,
@@ -23,6 +24,38 @@ Status vocabulary:
   library exports and manuscript claims.
 
 The current target-first sketch is [TARGET_BRIDGE.md](TARGET_BRIDGE.md).
+
+## Finite-support decomposition and geometric Gysin (2026-11-27)
+
+Status: `FORMAL` for canonical finite-support assembly in every degree on T₁
+spaces, including empty support. Original cochains vanishing on an intersection
+split by their actual two restrictions, with original compatible gluing as
+inverse. Original full/small relative comparison and excision identify the
+actual sum of support extensions as a bijection. Finite induction gives the
+canonical sum of singleton support extensions; no Gysin or absolute H²
+coordinate defines this generic decomposition.
+
+`FORMAL` on the original P¹ complex-point space for an isomorphism from actual
+finite-subspace H⁰ to original cohomology supported on that same finite set.
+It is defined by original singleton restrictions, selected actual point
+Thom/excision isomorphisms and canonical support assembly. Forgetting sums the
+actual rational point coefficients. Distinct balanced delta contributions
+are supported-nonzero but forget to zero, so support forgetting is not monic
+once two points are present. Supported injectivity uses relative decomposition.
+
+Original weighted reduced scheme-image cycles are summed before the same
+ordinary Chow quotient. Their original cycle map compares with the actual
+supported isomorphism after forgetting. For nonempty finite support, dividing
+the whole original unit cycle by its actual support cardinality gives an
+accepted full-target certificate. Normalized original cover pushforward
+recovers this same original average class. Empty support and zero-total
+weighted classes cannot supply the target unit column; no general vanishing
+of their ordinary Chow classes is asserted. The cover degree is still GLOBAL
+rank two and its native push is the earlier zero-supported trace.
+
+Nonlinear atlas-transition naturality, higher codimension and general
+proper/branched trace remain open. No new Hodge-conjecture case or cryptographic
+backend is claimed. See [0068](working/0068-projective-line-finite-support-gysin.md).
 
 ## Infinity Gysin and every complex-valued point (2026-11-27)
 

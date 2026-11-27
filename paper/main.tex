@@ -964,10 +964,11 @@ aggregate for each \(a\).
 
 This proves coordinate independence under invertible affine complex
 normal coordinates at every finite point. The reciprocal construction
-in Subsection~\ref{subsec:p1-infinity-gysin} includes infinity. Nonlinear
-analytic-coordinate independence, finite-support additivity and a general
-proper cohomological trace remain separate. No new case of the Hodge
-conjecture is claimed.
+in Subsection~\ref{subsec:p1-infinity-gysin} includes infinity, and finite
+supports are treated in Subsection~\ref{subsec:p1-finite-support-gysin}.
+Nonlinear analytic-coordinate independence and a general proper
+cohomological trace remain separate. No new case of the Hodge conjecture
+is claimed.
 
 \subsection{Infinity Gysin maps and the complete point family}
 \label{subsec:p1-infinity-gysin}
@@ -1071,9 +1072,137 @@ Theorem~\ref{thm:geometric-cover-aggregate} for every \(p\).
 This completes the point family with unit-scale independence in the
 selected original charts. It constructs no global algebraic inversion
 and makes no claim of nonlinear coordinate or general atlas-overlap
-naturality. Finite-support additivity, transport to other varieties and
-a general proper cohomological trace remain separate. No new case of
-the Hodge conjecture is claimed.
+naturality. Subsection~\ref{subsec:p1-finite-support-gysin} proves
+finite-support additivity. Transport to other varieties and a general
+proper cohomological trace remain separate. No new case of the Hodge
+conjecture is claimed.
+
+\clearpage
+
+\subsection{Finite-support additivity and the original supported target}
+\label{subsec:p1-finite-support-gysin}
+
+Let \(P=\mathbf P^1(\mathbf C)\) be the original native complex point
+space and \(S\subset P\) a finite set, including the empty set. The
+source is the original singular group \(H^0(S;\Q)\) of the actual
+subspace. Finiteness and the original Hausdorff topology make this
+subspace discrete. Evaluation of the canonical singular zero-cocycle
+gives coordinates \(c_p(h)\), for \(p\in S\), and original point
+delta classes \(e_p\), with
+\[
+ h=\sum_{p\in S}c_p(h)e_p,\qquad
+ m_S(h)=\sum_{p\in S}c_p(h).
+\]
+Actual continuous inclusion \(\{p\}\hookrightarrow S\) induces
+the original singleton restriction \(r_p\), satisfying
+\(r_p(h)=c_p(h)\one_p\). Empty support has zero original \(H^0\),
+without introducing a substitute coordinate.
+
+Write \(H^2_S(P;\Q)=H^2(P,P\setminus S;\Q)\). For each
+\(p\in S\), original identity-pair pullback gives the support
+extension \(j_{p,S}:H^2_{\{p\}}(P;\Q)\to H^2_S(P;\Q)\).
+The sum of these actual extensions is an isomorphism from the finite
+family of original singleton-supported groups. This is proved by
+splitting native relative cochains on the actual complement cover,
+passing through the original small-chain comparison, and induction on
+the finite support. It uses no absolute cohomology coordinates to
+define or invert the extension maps.
+
+The previously constructed finite or reciprocal normal chart supplies
+the original point Thom/excision map \(\gamma_p^{\mathrm{sup}}\).
+Its nonzero scale can be changed within that selected chart by the
+preceding coordinate-independence results. Define
+\[
+ \gamma_S^{\mathrm{sup}}(h)
+   =\sum_{p\in S}j_{p,S}\bigl(
+          \gamma_p^{\mathrm{sup}}(r_p(h))\bigr),
+ \qquad
+ \gamma_S=\operatorname{forget}_S\circ\gamma_S^{\mathrm{sup}}.
+\]
+
+\begin{proposition}[Finite-support Gysin additivity and ordinary cycle comparison]
+\label{prop:p1-finite-support-gysin}
+For every finite \(S\), including \(S=\varnothing\), the displayed
+map is an isomorphism
+\[
+ \gamma_S^{\mathrm{sup}}:H^0(S;\Q)\simeq H^2_S(P;\Q).
+\]
+Let \(\eta\) be the existing positive projective-line generator.
+Original support forgetting satisfies
+\[
+ \gamma_S(h)=m_S(h)\eta.
+\]
+If \(p\ne q\) lie in \(S\), the supported class
+\(\gamma_S^{\mathrm{sup}}(e_p-e_q)\) is nonzero, while its
+absolute class is zero. Thus support forgetting is not injective for
+such \(S\).
+
+For each original complex-valued point \(p\), let \(x_p\) be its
+actual underlying scheme image and \(C_{x_p}\) its original point-cycle
+representative. Write \(q_{\CH}\) for the original ordinary rational
+Chow quotient map and \([x_p]=q_{\CH}(C_{x_p})\). The raw zero-cycle
+\[
+ Z_S(h)=\sum_{p\in S}c_p(h)C_{x_p}
+\]
+retains the original structural grading and satisfies
+\[
+ \operatorname{cl}\bigl(q_{\CH}(Z_S(h))\bigr)=\gamma_S(h).
+\]
+If \(S\ne\varnothing\), set
+\[
+ A_S=\frac{1}{|S|}\sum_{p\in S}[x_p].
+\]
+The original Chow class \(A_S\) supplies an accepted full-target
+aggregate through the actual square cover, and normalized original
+pushforward recovers that same average class.
+\end{proposition}
+\begin{proof}
+The original \(H^0\) evaluation isomorphism identifies the actual
+singleton restrictions with all point coordinates. Each original
+point Thom/excision map is an isomorphism, and the independently
+proved finite sum of support extensions is an isomorphism. Their
+composition is exactly the displayed supported Gysin map. The empty
+case is the isomorphism of the original zero groups.
+
+Original support extensions commute with forgetting. Each singleton
+Gysin unit has absolute class \(\eta\), so forgetting the sum gives
+\(m_S(h)\eta\). Distinct delta classes differ in an actual point
+coordinate, hence their difference is nonzero; the supported
+isomorphism preserves that nonzero class. Its total coordinate is
+zero, proving the claimed failure of injectivity.
+
+Apply the original ordinary rational class map to the displayed raw
+point-cycle sum. Linearity and the previously proved same-point
+cycle-class normalization give its absolute comparison. The original
+constant unit on a nonempty \(S\) has total coordinate \(|S|\),
+so \(A_S\) has positive class \(\eta\). Use its actual flat
+pullback \(z_S=f_{\CH}^*A_S\) as the upstairs cycle. The original
+square-cover comparison squares, global finite-flat rank two and
+earlier zero-supported cohomological push retain the degree law, and
+the original Chow identity gives
+\[
+ \tfrac12 f_*^{\CH}z_S=A_S.
+\]
+Any selected support point is used only to evaluate that global rank;
+the ordinary average retains every actual point of \(S\).
+The factors \(|S|^{-1}\) and \(1/2\) normalize the support unit and
+the cover transfer, respectively.
+The same independent full Hodge target, basis and identity rank-one
+payload with denominator one and modulus three give the accepted
+aggregate by Theorem~\ref{thm:geometric-cover-aggregate}.
+\end{proof}
+
+Empty support and zero-total-coordinate inputs have zero absolute
+class and do not supply the required full-target column. In
+particular, nonzero balanced supported data cannot be promoted using
+faithful support forgetting. This zero cycle-class conclusion makes
+no assertion that the original ordinary Chow class vanishes.
+Certificate acceptance here is for the constant-unit average.
+The construction retains the previously
+proved nonzero-scale independence in the selected original point
+charts. Nonlinear or general atlas-overlap naturality, a general
+proper cohomological trace, higher-codimension extensions and new
+Hodge-conjecture cases remain separate.
 
 \clearpage
 
@@ -7325,6 +7454,49 @@ Same-point ordinary cycle comparison and accepted complete family &
 \leanpath{ProjectiveLinePointGysinComparison.normalized_cycles};\newline
 {\footnotesize\leanpath{ProjectiveLinePointGysinComparison.normalized_cycles_infinity}}\newline
 \leanpath{Realization/DeRham/ProjectiveLinePointGysinComparison.lean}\\
+Original finite-support singular \(H^0\), restrictions and mass &
+\leanpath{SingularFiniteSupport.pointRestriction};\newline
+\leanpath{SingularFiniteSupport.sum_coordinates_deltaClass};\newline
+\leanpath{SingularFiniteSupport.sumCoordinates_constantClass};\newline
+\leanpath{SingularFiniteSupport.empty_eq_zero}\newline
+\leanpath{Realization/Betti/SingularFiniteSupport.lean}\\
+Native relative union splitting before cohomology &
+\leanpath{RelativeUnionSplit.cochainEquiv};\newline
+\leanpath{RelativeUnionSplit.total};\newline
+\leanpath{RelativeUnionSplit.toUnion_quasiIso}\newline
+\leanpath{Realization/Betti/RelativeUnionSplit.lean}\\
+Actual two-open relative support additivity &
+\leanpath{RelativeAdditivity.sumEquiv};\newline
+\leanpath{RelativeAdditivity.sumEquiv_toLinearMap};\newline
+\leanpath{RelativeAdditivity.sumMap_bijective}\newline
+\leanpath{Realization/Betti/RelativeAdditivity.lean}\\
+Original finite sum of singleton support extensions &
+\leanpath{SingularSupports.singletonExtension};\newline
+\leanpath{SingularSupports.forget_assemble};\newline
+\leanpath{SingularSupports.assembleEquiv};\newline
+\leanpath{SingularSupports.empty_isZero}\newline
+\leanpath{Realization/Betti/SingularSupports.lean}\\
+Common original point Thom/excision interface &
+\leanpath{ProjectiveLineSupportedPoint.isoOfChart};\newline
+\leanpath{ProjectiveLineSupportedPoint.gysinIso};\newline
+\leanpath{ProjectiveLineSupportedPoint.gysin_pointUnit}\newline
+\leanpath{Realization/Betti/ProjectiveLineSupportedPoint.lean}\\
+Finite-support Gysin isomorphism and noninjective forgetting &
+\leanpath{ProjectiveLineFiniteSupportGysin.gysinEquiv};\newline
+\leanpath{ProjectiveLineFiniteSupportGysin.gysin_apply};\newline
+{\footnotesize\leanpath{ProjectiveLineFiniteSupportGysin.supported_difference_ne_zero}};\newline
+\leanpath{ProjectiveLineFiniteSupportGysin.forget_not_injective}\newline
+\leanpath{Realization/Betti/ProjectiveLineFiniteSupportGysin.lean}\\
+Original weighted cycles and accepted averages &
+\leanpath{ProjectiveLineFiniteSupportComparison.cycle};\newline
+\leanpath{ProjectiveLineFiniteSupportComparison.classMap};\newline
+{\scriptsize\leanpath{ProjectiveLineFiniteSupportComparison.supported_cycleClass_comparison}};\newline
+{\footnotesize\leanpath{ProjectiveLineFiniteSupportComparison.averageClass_cycleClass}};\newline
+\leanpath{ProjectiveLineFiniteSupportComparison.accepted};\newline
+\leanpath{ProjectiveLineFiniteSupportComparison.normalized_cycles};\newline
+{\footnotesize\leanpath{ProjectiveLineFiniteSupportComparison.empty_does_not_supply_target}};\newline
+{\scriptsize\leanpath{ProjectiveLineFiniteSupportComparison.zero_mass_does_not_supply_target}}\newline
+{\footnotesize\leanpath{Realization/DeRham/ProjectiveLineFiniteSupportComparison.lean}}\\
 Original-cover finite harmonic comparison &
 \leanpath{CircleCoverHarmonicComparison.quotientCircleEquiv};
 \leanpath{ProjectiveLineCoverHarmonicComparison.witness_original_boundaries}\newline

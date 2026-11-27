@@ -1,6 +1,20 @@
 # Current gap map
 
-Last reviewed: 2026-11-27 (infinity Gysin and every complex-valued point; earlier checkpoint records retain their original validation scope).
+Last reviewed: 2026-11-27 (finite-support decomposition and Gysin; earlier checkpoint records retain their original validation scope).
+
+The [finite-support construction](working/0068-projective-line-finite-support-gysin.md)
+now proves canonical relative decomposition for finite supports in every degree
+on T₁ spaces. Actual singleton restrictions and the original point Thom maps
+give finite-support Gysin as an isomorphism on P¹. Forgetting sums point
+coefficients and is not injective when two points are present: a balanced
+delta difference remains nonzero supported but vanishes absolutely. Original
+weighted point cycles pass through the same ordinary quotient and cycle map.
+Nonempty support-unit averages supply full-target certificates and retain
+the same original average class after normalized geometric pushforward.
+Empty support and zero-total weighted classes cannot supply the unit column.
+The average-cardinality normalization and the cover's global rank two are
+separate; its earlier zero-supported push is retained. Nonlinear atlas
+naturality, higher codimension and general proper trace remain open.
 
 The [infinity and every-point construction](working/0067-projective-line-infinity-gysin.md)
 now adds actual reciprocal scheme normal charts and original infinity-supported
@@ -11,7 +25,7 @@ point dichotomy supplies geometric Gysin at every complex-valued point; its
 same original scheme image supplies the ordinary point class. Certificates
 retain the full original target and global square-cover rank, recovering the
 same original class at every point. Nonlinear atlas/overlap naturality,
-finite-support additivity, higher codimension and general proper trace remain
+higher codimension and general proper trace remain
 open; the existing zero-supported push is retained.
 
 The [finite-point family](working/0066-projective-line-finite-point-gysin.md)
@@ -23,8 +37,8 @@ scheme images agree with the original ordinary point representatives. A
 certificate family uses GLOBAL square-cover rank two and recovers the same
 ordinary class at every selected finite point. It does not assert local
 multiplicity two at every point. Infinity Gysin is now recorded above; nonlinear
-analytic-coordinate independence, finite-support additivity and general
-proper/branched trace remain open; no global algebraic affine automorphism is assumed.
+analytic-coordinate independence and general proper/branched trace remain
+open; no global algebraic affine automorphism is assumed.
 
 The [local ramification comparison](working/0065-projective-line-ramification-comparison.md)
 now computes the original relative Thom pullback and carries it through the

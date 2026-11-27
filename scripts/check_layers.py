@@ -645,6 +645,24 @@ RULES["HodgeConjecture.Realization.Betti.ProjectiveLineInfinityGysin"] = RULES[
 ]
 
 
+
+for _finite_support_leaf in (
+    "HodgeConjecture.Realization.Betti.SingularFiniteSupport",
+    "HodgeConjecture.Realization.Betti.RelativeUnionSplit",
+    "HodgeConjecture.Realization.Betti.RelativeAdditivity",
+    "HodgeConjecture.Realization.Betti.SingularSupports",
+):
+    RULES[_finite_support_leaf] = RULES[
+        "HodgeConjecture.Realization.Betti.SingularDoubleCover"
+    ]
+RULES["HodgeConjecture.Realization.Betti.ProjectiveLineSupportedPoint"] = RULES[
+    "HodgeConjecture.Realization.Betti.Examples.ProjectiveLineAffine"
+]
+RULES["HodgeConjecture.Realization.Betti.ProjectiveLineFiniteSupportGysin"] = RULES[
+    "HodgeConjecture.Realization.Betti.Examples.ProjectiveLineAffine"
+]
+
+
 def without_comments(source):
     """Remove line comments and nested Lean block comments before reading imports."""
     result = []

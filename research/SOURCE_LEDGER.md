@@ -17,10 +17,10 @@ instance supplies them. Their conditional consumers are distinct from the
 still-open source-to-geometric instantiations and the application-specific
 graph/action and coverage problems; see `working/0016-source-input-packages.md`.
 
-Last source/interface review: 2026-11-27 (actual reciprocal scheme charts,
-original cover-swap/circle-inverse signs and infinity Gysin).
-Latest formal checkpoint: 2026-11-27 (every complex-valued P¹ point, selected
-normal-chart unit-scale independence and original point-class certificates;
+Last source/interface review: 2026-11-27 (original relative cochain gluing,
+finite support assembly and ordinary weighted point cycles).
+Latest formal checkpoint: 2026-11-27 (finite-support Gysin, nonmonic
+forgetting and nonempty support-average certificates;
 earlier checkpoints retain their scope).
 Earlier source records retain their original
 validation scope.
@@ -3085,3 +3085,22 @@ No new source axiom, external copied module, dependency pin or license input
 is introduced. The full model and original finite maps are unchanged; global
 rank two and the earlier zero-supported push are explicitly retained.
 Nonlinear transition naturality and general proper trace remain separate.
+
+## Actual finite-support additivity (2026-11-27)
+
+The seven modules in [0068](working/0068-projective-line-finite-support-gysin.md)
+use original cochain functions, original compatible gluing, the existing
+full-to-small quasi-isomorphism and actual relative excision. Their binary sum
+is proved equal to original identity-pair extension, before finite induction.
+Native finite H⁰ is evaluated at its actual subspace points and restricted by
+actual singleton inclusions. Selected finite/reciprocal point Thom data and
+canonical finite assembly construct supported Gysin before any absolute class
+comparison. Original weighted cycles are formed in the same graded cycle group
+before its unchanged rational quotient.
+
+No new source axiom, external module copy, dependency pin or license input is
+introduced. Balanced support nonzero and absolute zero are distinguished;
+ordinary Chow-class vanishing is not inferred from the latter. The nonempty
+unit average uses the actual support cardinality. The separate cover degree
+remains original global rank two, with the earlier zero-supported native push.
+General nonlinear chart naturality and proper trace remain separate.
